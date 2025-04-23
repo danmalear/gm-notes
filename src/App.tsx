@@ -22,7 +22,6 @@ function App() {
   }
 
   const handleRegionClick = (regionKey: string) => {
-    console.log(`Clicked on region: ${regionKey}`);
     setCurrentRegion(regionKey);
   };
 
@@ -30,7 +29,7 @@ function App() {
     <div id="main" className="container">
       <div id="map-col" className="item">
         <Map
-          mapSrc={mapData.imgSrc}
+          mapImage={mapData.image}
           areas={areas}
           onRegionClick={handleRegionClick}
         />
