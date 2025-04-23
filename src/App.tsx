@@ -39,6 +39,7 @@ function App() {
           <RegionDetails
             key={currentRegion}
             data={mapData.regions[currentRegion]}
+            timeOfDay="day"
           />
         </div>
       </div>

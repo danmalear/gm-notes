@@ -1,13 +1,19 @@
 import classNames from 'classnames';
-import React, { type PropsWithChildren, useState } from 'react';
+import { useState } from 'react';
 import './Collapsible.css';
 
-export interface CollapsibleProps extends PropsWithChildren {
+export interface CollapsibleProps extends React.PropsWithChildren {
   open?: boolean;
   title: string;
+  headingElement: React.ElementType<React.HTMLProps<HTMLHeadingElement>>;
 }
 
-const Collapsible: React.FC<CollapsibleProps> = ({ open, children, title }) => {
+const Collapsible: React.FC<CollapsibleProps> = ({
+  open,
+  children,
+  title,
+  ...props
+}) => {
   const [isOpen, setIsOpen] = useState(open ?? false);
 
   const handleTitleClick = () => {
@@ -21,15 +27,15 @@ const Collapsible: React.FC<CollapsibleProps> = ({ open, children, title }) => {
         className="heading color-text"
         onClick={handleTitleClick}
       >
-        <h2
+        <props.headingElement
           className={classNames({
             'color-inactive': !isOpen,
           })}
         >
           {title}
-        </h2>
+        </props.headingElement>
       </button>
-      {isOpen ? <div className="ml-1">{children}</div> : null}
+      {isOpen ? <div className="text ml-1">{children}</div> : null}
     </>
   );
 };
