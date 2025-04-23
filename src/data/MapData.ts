@@ -73,7 +73,7 @@ export interface Item {
 export interface ItemGroup {
   name: string;
   description?: string;
-  items: Item[];
+  items: (Item | ItemGroup)[];
 }
 
 export interface Handout {
@@ -89,7 +89,7 @@ export interface Region {
   lighting?: Lighting;
   creatures?: Creature[];
   checks?: AbilityCheck[];
-  items?: ItemGroup[];
+  items?: (Item | ItemGroup)[];
   handouts?: Handout[];
   opportunities?: string[];
   notes?: string[];
