@@ -8,7 +8,7 @@ export interface CollapsibleProps extends PropsWithChildren {
 }
 
 const Collapsible: React.FC<CollapsibleProps> = ({ open, children, title }) => {
-  const [isOpen, setIsOpen] = useState(open);
+  const [isOpen, setIsOpen] = useState(open ?? false);
 
   const handleTitleClick = () => {
     setIsOpen((prev) => !prev);

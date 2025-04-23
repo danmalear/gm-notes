@@ -16,7 +16,7 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({ key, data }) => {
           {data.name}
         </h1>
         {data.description ? (
-          <Collapsible title="Description" open={false}>
+          <Collapsible title="Description">
             <p>{data.description}</p>
           </Collapsible>
         ) : null}
