@@ -66,3 +66,15 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.container {
+  display: grid;
+}
+
+.item {
+  overflow-y: scroll;
+}
+
+.w-100 {
+  width: 100%;
+}
