@@ -78,3 +78,7 @@ button:focus-visible {
 .w-100 {
   width: 100%;
 }
+
+.card {
+  padding: 2em;
+}
