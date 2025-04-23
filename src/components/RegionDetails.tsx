@@ -3,13 +3,14 @@ import Collapsible from './Collapsible.tsx';
 import './RegionDetails.css';
 
 export interface RegionDetailsProps extends React.PropsWithChildren {
+  key: string;
   data: Region;
 }
 
-const RegionDetails: React.FC<RegionDetailsProps> = ({ data }) => {
+const RegionDetails: React.FC<RegionDetailsProps> = ({ key, data }) => {
   return (
     <>
-      <div id={data.code + '-details'} className="region-details card">
+      <div id={key + '-details'} className="region-details card">
         <h1>
           {data.code ? data.code + '. ' : ''}
           {data.name}

@@ -36,7 +36,10 @@ function App() {
       </div>
       <div id="detail-col" className="item">
         <div className="region-data">
-          <RegionDetails data={mapData.regions[currentRegion]} />
+          <RegionDetails
+            key={currentRegion}
+            data={mapData.regions[currentRegion]}
+          />
         </div>
       </div>
     </div>
