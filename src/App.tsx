@@ -7,7 +7,7 @@ import data from './data/data.ts';
 function App() {
   const [currentMap] = useState('deathHouse');
   const [currentRegion] = useState('foyer');
-  const [mapData] = useState(data[currentMap]);
+  const mapData = data[currentMap];
 
   return (
     <div id="main" className="container">
