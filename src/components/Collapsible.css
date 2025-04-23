@@ -1,0 +1,11 @@
+.heading {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+}
+
+.heading:focus {
+  outline: none;
+}
