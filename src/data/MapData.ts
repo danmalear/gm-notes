@@ -1,11 +1,11 @@
-export interface RoomData {
+export interface RegionData {
   name: string;
   description: string;
 }
 
 export interface MapData {
   imgSrc: string;
-  rooms: {
-    [key: string]: RoomData;
+  regions: {
+    [key: string]: RegionData;
   };
 }

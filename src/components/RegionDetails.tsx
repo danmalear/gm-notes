@@ -1,14 +1,15 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-import './DetailCard.css';
+import type { RegionData } from '../data/MapData.ts';
+import './RegionDetails.css';
 
-function DetailCard() {
-  // const [count, setCount] = useState(0)
+export interface RegionDetailsProps {
+  data: RegionData;
+}
 
+function RegionDetails({ data }: RegionDetailsProps) {
   return (
     <>
       <div className="card">
-        <h1>H1</h1>
+        <h1>{data.name}</h1>
         <p>data</p>
         <h2>H2</h2>
         <p>more data</p>
@@ -37,4 +38,4 @@ function DetailCard() {
   );
 }
 
-export default DetailCard;
+export default RegionDetails;

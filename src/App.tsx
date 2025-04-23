@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import './App.css';
-import DetailCard from './components/DetailCard.tsx';
 import Map from './components/Map.tsx';
+import RegionDetails from './components/RegionDetails.tsx';
 import data from './data/data.ts';
 
 function App() {
   const [currentMap] = useState('deathHouse');
+  const [currentRegion] = useState('foyer');
   const [mapData] = useState(data[currentMap]);
 
   return (
@@ -15,7 +16,7 @@ function App() {
       </div>
       <div id="detail-col" className="item">
         <div className="region-data">
-          <DetailCard />
+          <RegionDetails data={mapData.regions[currentRegion]} />
         </div>
       </div>
     </div>
