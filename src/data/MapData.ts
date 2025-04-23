@@ -1,7 +1,7 @@
 import { JSX } from 'react';
 
 export type TimeOfDay = 'day' | 'night' | 'between';
-export type LightLevel = 'dark' | 'dim' | 'bright';
+export type LightLevel = 'Darkness' | 'Dim light' | 'Bright light';
 export type Skill =
   | 'Acrobatics'
   | 'Animal Handling'
@@ -91,6 +91,7 @@ export interface Region {
   checks?: AbilityCheck[];
   items?: ItemGroup[];
   handouts?: Handout[];
+  opportunities?: string[];
   notes?: string[];
 }
 
