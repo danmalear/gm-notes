@@ -1,15 +1,18 @@
-import type { RegionData } from '../data/MapData.ts';
+import type { Region } from '../data/MapData.ts';
 import './RegionDetails.css';
 
 export interface RegionDetailsProps {
-  data: RegionData;
+  data: Region;
 }
 
 function RegionDetails({ data }: RegionDetailsProps) {
   return (
     <>
       <div className="card">
-        <h1>{data.name}</h1>
+        <h1>
+          {data.code ? data.code + '. ' : ''}
+          {data.name}
+        </h1>
         <p>data</p>
         <h2>H2</h2>
         <p>more data</p>

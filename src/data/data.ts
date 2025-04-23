@@ -1,8 +1,8 @@
 import deathHouse from './deathHouse';
-import type { MapData } from './MapData';
+import type { Map } from './MapData';
 
 interface Data {
-  [key: string]: MapData;
+  [key: string]: Map;
 }
 
 const data: Data = {
