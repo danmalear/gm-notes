@@ -8,34 +8,13 @@ export interface RegionDetailsProps {
 function RegionDetails({ data }: RegionDetailsProps) {
   return (
     <>
-      <div className="card">
+      <div id={data.code + '-details'} className="region-details card">
         <h1>
           {data.code ? data.code + '. ' : ''}
           {data.name}
         </h1>
-        <p>data</p>
-        <h2>H2</h2>
-        <p>more data</p>
-        <h2>H2</h2>
-        <p>more data</p>
-        <h2>H2</h2>
-        <p>more data</p>
-        <h2>H2</h2>
-        <p>more data</p>
-        <h2>H2</h2>
-        <p>more data</p>
-        <h2>H2</h2>
-        <p>more data</p>
-        <h2>H2</h2>
-        <p>more data</p>
-        <h2>H2</h2>
-        <p>more data</p>
-        <h2>H2</h2>
-        <p>more data</p>
-        <h2>H2</h2>
-        <p>more data</p>
-        <h2>H2</h2>
-        <p>more data</p>
+        <h2>Description</h2>
+        <p>{data.description}</p>
       </div>
     </>
   );
