@@ -1,11 +1,11 @@
 import type { Region } from '../data/MapData.ts';
 import './RegionDetails.css';
 
-export interface RegionDetailsProps {
+export interface RegionDetailsProps extends React.PropsWithChildren {
   data: Region;
 }
 
-function RegionDetails({ data }: RegionDetailsProps) {
+const RegionDetails: React.FC<RegionDetailsProps> = ({ data }) => {
   return (
     <>
       <div id={data.code + '-details'} className="region-details card">
@@ -18,6 +18,6 @@ function RegionDetails({ data }: RegionDetailsProps) {
       </div>
     </>
   );
-}
+};
 
 export default RegionDetails;

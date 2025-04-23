@@ -8,13 +8,13 @@ export type MapArea = {
   regionKey: string;
 };
 
-export type MapProps = {
+export interface MapProps extends React.PropsWithChildren {
   mapImage: MapImage;
   areas: MapArea[];
   onRegionClick?: (regionKey: string) => void;
-};
+}
 
-function Map({ mapImage, areas, onRegionClick }: MapProps) {
+const Map: React.FC<MapProps> = ({ mapImage, areas, onRegionClick }) => {
   const imgRef = useRef<HTMLImageElement | null>(null);
   const [imgLoaded, setImgLoaded] = useState(false);
 
@@ -76,6 +76,6 @@ function Map({ mapImage, areas, onRegionClick }: MapProps) {
       ) : null}
     </div>
   );
-}
+};
 
 export default Map;
