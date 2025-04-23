@@ -43,12 +43,6 @@ export type Lighting = {
   [key in TimeOfDay]: LightLevel;
 };
 
-export interface Item {
-  name: string;
-  quantity: number;
-  notes: string;
-}
-
 export interface Creature {
   name: string;
   trigger?: string;
@@ -72,11 +66,11 @@ export interface AbilityCheck {
 
 export interface Item {
   name: string;
-  quantity: number;
+  quantity?: number;
   notes: string;
 }
 
-export interface ItemLocation {
+export interface ItemGroup {
   name: string;
   description?: string;
   items: Item[];
@@ -95,7 +89,7 @@ export interface Region {
   lighting?: Lighting;
   creatures?: Creature[];
   checks?: AbilityCheck[];
-  items?: ItemLocation[];
+  items?: ItemGroup[];
   handouts?: Handout[];
   notes?: string[];
 }
