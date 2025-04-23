@@ -54,17 +54,8 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.card {
+  padding: 2em;
 }
 
 .container {
@@ -87,6 +78,42 @@ button:focus-visible {
   margin-left: 2em;
 }
 
-.card {
-  padding: 2em;
+.color-text {
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.color-inactive {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.fw-normal {
+  font-weight: 400;
+}
+
+.fw-bold {
+  font-weight: 700;
+}
+
+.fw-bolder {
+  font-weight: 900;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+
+  .color-text {
+    color: #213547;
+  }
+  .color-inactive {
+    color: rgba(33, 53, 71, 0.5);
+  }
 }

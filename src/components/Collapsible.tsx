@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { type PropsWithChildren, useState } from 'react';
 import './Collapsible.css';
 
@@ -15,8 +16,18 @@ const Collapsible: React.FC<CollapsibleProps> = ({ open, children, title }) => {
 
   return (
     <>
-      <button type="button" className="heading" onClick={handleTitleClick}>
-        <h2>{title}</h2>
+      <button
+        type="button"
+        className="heading color-text"
+        onClick={handleTitleClick}
+      >
+        <h2
+          className={classNames({
+            'color-inactive': !isOpen,
+          })}
+        >
+          {title}
+        </h2>
       </button>
       {isOpen ? <div className="ml-1">{children}</div> : null}
     </>
