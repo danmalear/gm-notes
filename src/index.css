@@ -79,6 +79,14 @@ button:focus-visible {
   width: 100%;
 }
 
+.ml-1 {
+  margin-left: 1em;
+}
+
+.ml-2 {
+  margin-left: 2em;
+}
+
 .card {
   padding: 2em;
 }

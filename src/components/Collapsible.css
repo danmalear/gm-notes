@@ -9,3 +9,7 @@
 .heading:focus {
   outline: none;
 }
+
+.heading h2 {
+  margin-bottom: 0;
+}

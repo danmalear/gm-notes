@@ -18,7 +18,7 @@ const Collapsible: React.FC<CollapsibleProps> = ({ open, children, title }) => {
       <button type="button" className="heading" onClick={handleTitleClick}>
         <h2>{title}</h2>
       </button>
-      {isOpen ? <div className="p-3">{children}</div> : null}
+      {isOpen ? <div className="ml-1">{children}</div> : null}
     </>
   );
 };
