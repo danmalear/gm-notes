@@ -2,7 +2,7 @@ import type { Map } from './MapData.ts';
 
 const deathHouseData: Map = {
   image: {
-    src: '/src/assets/deathhousedm.jpg',
+    src: '/src/assets/death-house.jpg',
     sizeX: 5455,
     sizeY: 7500,
   },
