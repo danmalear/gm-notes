@@ -1,4 +1,5 @@
 import type { Region } from '../data/MapData.ts';
+import Collapsible from './Collapsible.tsx';
 import './RegionDetails.css';
 
 export interface RegionDetailsProps extends React.PropsWithChildren {
@@ -13,8 +14,11 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({ data }) => {
           {data.code ? data.code + '. ' : ''}
           {data.name}
         </h1>
-        <h2>Description</h2>
-        <p>{data.description}</p>
+        {data.description ? (
+          <Collapsible title="Description" open={false}>
+            <p>{data.description}</p>
+          </Collapsible>
+        ) : null}
       </div>
     </>
   );
