@@ -67,13 +67,13 @@ export interface AbilityCheck {
 export interface Item {
   name: string;
   quantity?: number;
-  notes: string;
+  notes: string[];
 }
 
 export interface ItemGroup {
   name: string;
   description?: string;
-  items: (Item | ItemGroup)[];
+  items: Item[];
 }
 
 export interface Handout {
