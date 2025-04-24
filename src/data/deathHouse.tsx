@@ -10,6 +10,12 @@ const deathHouseData: Map = {
     portico: {
       code: '1A',
       name: 'Main Entrance - Portico',
+      lighting: {
+        day: 'Bright light',
+        between: 'Dim light',
+        night: 'Darkness',
+      },
+
       descriptions: [
         {
           prompt: 'Entry',
@@ -46,7 +52,28 @@ const deathHouseData: Map = {
             </>
           ),
         },
+        {
+          prompt: 'Re-entry',
+          text: (
+            <>
+              <p>
+                Looking back outside, you find that the exterior of the house
+                has been fully surrounded by enormous, fleshy tendrils,
+                extruding from beneath the house.
+              </p>
+            </>
+          ),
+        },
       ],
+
+      items: [
+        {
+          name: 'Oil lamps',
+          quantity: 2,
+          notes: ['Hanging from ceiling', 'Currently unlit'],
+        },
+      ],
+
       areas: [
         {
           shape: 'rect',
