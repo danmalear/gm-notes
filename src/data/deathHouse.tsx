@@ -155,6 +155,93 @@ const deathHouseData: Map = {
 
     // ...
 
+    secretStairs: {
+      code: '21',
+      name: 'Secret Stairs',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              The secret door opens to reveal a narrow spiral staircase built of
+              aged-looking wood within a tight shaft of mortared stone. Thick
+              cobwebs fill the staircase as it descends into the darkness below.
+            </p>
+          ),
+        },
+        {
+          prompt: 'Descent',
+          text: (
+            <>
+              <p>
+                The broken cobwebs around you sway like a gossamer wedding veil,
+                beckoning you forward as the ancient stairs creak and groan
+                underfoot. The gaping maw of the stairwell draws you deeper,
+                swallowing you up as you descend further down its gullet. You
+                descend one floor—two floors—three.
+              </p>
+              <p>
+                The walls of the stone shaft narrow around you, forcing you to
+                hunch your shoulders and pull in your elbows to continue
+                downward. In the darkness, you can only hear the shuffle of your
+                feet, the choking groan of the stairs, and the pounding of your
+                blood in your ears.
+              </p>
+            </>
+          ),
+        },
+      ],
+
+      areas: [
+        {
+          shape: 'circle',
+          coords: {
+            x: 495,
+            y: 5739,
+            r: 70,
+          },
+        },
+        {
+          shape: 'circle',
+          coords: {
+            x: 1812,
+            y: 5739,
+            r: 70,
+          },
+        },
+        {
+          shape: 'circle',
+          coords: {
+            x: 489,
+            y: 3598,
+            r: 70,
+          },
+        },
+        {
+          shape: 'circle',
+          coords: {
+            x: 1808,
+            y: 3598,
+            r: 70,
+          },
+        },
+        {
+          shape: 'circle',
+          coords: {
+            x: 3788,
+            y: 1289,
+            r: 70,
+          },
+        },
+      ],
+    },
+
     dungeonAccess: {
       code: '22',
       name: 'Dungeon Level Access',
@@ -166,8 +253,25 @@ const deathHouseData: Map = {
 
       descriptions: [
         {
-          prompt: 'None',
-          text: <p>See Stairs.</p>,
+          prompt: 'Entry',
+          text: (
+            <>
+              <p>
+                Finally, after what feels like hours, the descent levels out,
+                and the spiral staircase ends at a darkened landing of packed
+                earth. A narrow tunnel supported by aged timber braces stretches
+                ahead of you, its stone walls seeming to bleed with deposits of
+                streaked, red clay. Eight feet ahead, the tunnel splits,
+                branching to the left and right.
+              </p>
+              <p>
+                As your eyes and ears adjust to the cold, subterranean corridor,
+                you notice that the tunnel isn't as silent as the staircase
+                above. An eerie, low-pitched sound echoes through the space—and
+                you soon recognize it as a deep, incessant chanting.
+              </p>
+            </>
+          ),
         },
       ],
 
@@ -247,8 +351,7 @@ const deathHouseData: Map = {
           skills: ['Athletics'],
           target: 'Slab',
           dc: 15,
-          success:
-            'You hear the faint sound of chanting coming from the crypts.',
+          success: 'The slab is pushed aside',
           notes: ['Using crowbar or similar grants advantage'],
         },
       ],
