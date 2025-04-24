@@ -88,19 +88,61 @@ const deathHouseData: Map = {
     },
     foyer: {
       code: '1B',
-      name: 'Main Entrance - Foyer',
+      name: 'Entrance - Grand Foyer',
+      lighting: {
+        day: 'Dim light',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      checks: [
+        {
+          skills: ['Perception', 'Insight'],
+          target: 'Portraits',
+          dc: 16,
+          prerequisites: ['Party has seen other portraits in the house'],
+          success:
+            'The subjects in the portraits bear a striking resemblance to the other portraits in the house.',
+        },
+        {
+          skills: ['History'],
+          target: 'Portraits',
+          dc: 20,
+          success:
+            'The subjects of the portraits are not of any noble family in Faerûnian history.',
+        },
+      ],
+
       descriptions: [
         {
           prompt: 'Entry',
           text: (
             <>
               <p>
-                The foyer is a grand space, its high ceiling adorned with ornate
+                Just inside the front door is a grand foyer. In contrast to the
+                decrepit look of the house from outside, the interior seems
+                well-preserved and maintained. The wall to your right bears a
+                polished shield with a windmill coat of arms, flanked by elegant
+                portraits of aristocrats. Through a pair of open doors ahead,
+                you can see a well-appointed hall, lit warmly by a fireplace.
               </p>
             </>
           ),
         },
       ],
+
+      items: [
+        {
+          name: 'Shield',
+          quantity: 1,
+          notes: ['Windmill coat of arms'],
+        },
+        {
+          name: 'Portraits',
+          quantity: 4,
+        },
+      ],
+
       areas: [
         {
           shape: 'rect',
