@@ -63,6 +63,7 @@ export interface AbilityCheck {
   prerequisites?: string[];
   success?: string;
   failure?: string;
+  notes?: string[];
 }
 
 export interface Item {
