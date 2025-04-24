@@ -95,6 +95,16 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
             )}
           </Collapsible>
         ) : null}
+
+        {notes?.length ? (
+          <Collapsible headingElement="h2" title="Other Notes">
+            <ul>
+              {notes.map((note, index) => (
+                <li key={`region-note-${index}`}>{note}</li>
+              ))}
+            </ul>
+          </Collapsible>
+        ) : null}
       </div>
     </>
   );
