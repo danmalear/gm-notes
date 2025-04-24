@@ -55,13 +55,11 @@ const deathHouseData: Map = {
         {
           prompt: 'Re-entry',
           text: (
-            <>
-              <p>
-                Looking back outside, you find that the exterior of the house
-                has been fully surrounded by enormous, fleshy tendrils,
-                extruding from beneath the house.
-              </p>
-            </>
+            <p>
+              Looking back outside, you find that the exterior of the house has
+              been fully surrounded by enormous, fleshy tendrils, extruding from
+              beneath the house.
+            </p>
           ),
         },
       ],
@@ -86,6 +84,7 @@ const deathHouseData: Map = {
         },
       ],
     },
+
     foyer: {
       code: '1B',
       name: 'Entrance - Grand Foyer',
@@ -117,16 +116,14 @@ const deathHouseData: Map = {
         {
           prompt: 'Entry',
           text: (
-            <>
-              <p>
-                Just inside the front door is a grand foyer. In contrast to the
-                decrepit look of the house from outside, the interior seems
-                well-preserved and maintained. The wall to your right bears a
-                polished shield with a windmill coat of arms, flanked by elegant
-                portraits of aristocrats. Through a pair of open doors ahead,
-                you can see a well-appointed hall, lit warmly by a fireplace.
-              </p>
-            </>
+            <p>
+              Just inside the front door is a grand foyer. In contrast to the
+              decrepit look of the house from outside, the interior seems
+              well-preserved and maintained. The wall to your right bears a
+              polished shield with a windmill coat of arms, flanked by elegant
+              portraits of aristocrats. Through a pair of open doors ahead, you
+              can see a well-appointed hall, lit warmly by a fireplace.
+            </p>
           ),
         },
       ],
@@ -151,6 +148,401 @@ const deathHouseData: Map = {
             y1: 6320,
             x2: 737,
             y2: 6804,
+          },
+        },
+      ],
+    },
+
+    // ...
+
+    dungeonAccess: {
+      code: '22',
+      name: 'Dungeon Level Access',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'None',
+          text: <p>See Stairs.</p>,
+        },
+      ],
+
+      notes: ['Chanting is indiscernible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3862,
+            y1: 1216,
+            x2: 4028,
+            y2: 1356,
+          },
+        },
+      ],
+    },
+
+    crypts: {
+      code: '23',
+      name: 'Family Crypts',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'A + B Corridor',
+          text: (
+            <>
+              <p>
+                This side corridor branches again to the left and right. On
+                either side, large standing stone slabs have been set aside to
+                lean against the walls, opening the way to a pair of dark, quiet
+                crypts. The slab to the right is etched with the name "Walter
+                Durst"; the slab to the left is blank.
+              </p>
+            </>
+          ),
+        },
+        {
+          prompt: 'C + D Corridor',
+          text: (
+            <>
+              <p>
+                This side corridor branches again to the left and right. Large
+                standing stone slabs seal the entrance to the tunnels on either
+                side, blocking the way forward. The slab to the left is etched
+                with the name "Gustav Durst"; the slab to the right is etched
+                with the name "Elisabeth Durst." The tunnel here is unnaturally
+                quiet, and a thin mist clings to the floor.
+              </p>
+            </>
+          ),
+        },
+        {
+          prompt: 'E + F Corridor',
+          text: (
+            <>
+              <p>
+                This side corridor branches again to the left and right. Large
+                standing stone slabs seal the entrance to the tunnels on either
+                side, blocking the way forward. The slab to the left is etched
+                with the name "Rosavalda Durst"; the slab to the right is etched
+                with the name "Thornboldt Durst." Each slab exudes the silence
+                of a forgotten grave.
+              </p>
+            </>
+          ),
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Athletics'],
+          target: 'Slab',
+          dc: 15,
+          success:
+            'You hear the faint sound of chanting coming from the crypts.',
+          notes: ['Using crowbar or similar grants advantage'],
+        },
+      ],
+
+      notes: ['Chanting is indiscernible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3698,
+            y1: 888,
+            x2: 4178,
+            y2: 1034,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 4040,
+            y1: 1034,
+            x2: 4178,
+            y2: 2022,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 4178,
+            y1: 1050,
+            x2: 4368,
+            y2: 1198,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 4368,
+            y1: 888,
+            x2: 4516,
+            y2: 1358,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 4016,
+            y1: 1716,
+            x2: 4370,
+            y2: 1848,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3872,
+            y1: 1546,
+            x2: 4016,
+            y2: 2008,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 4370,
+            y1: 1546,
+            x2: 4518,
+            y2: 2008,
+          },
+        },
+      ],
+    },
+
+    emptyCrypt: {
+      code: '23A',
+      name: 'Empty Crypt',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              You peer past the leaning stone slab to see an empty earthen
+              crypt.
+            </p>
+          ),
+        },
+      ],
+
+      notes: ['Chanting is indiscernible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 4528,
+            y1: 888,
+            x2: 4838,
+            y2: 1034,
+          },
+        },
+      ],
+    },
+
+    waltersCrypt: {
+      code: '23B',
+      name: "Walter's Crypt",
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              Swollen, bloody cysts cover the walls of this crypt like tumors.
+              From time to time, they pulsate and burst, streams of pus oozing
+              down to collect on the floor. Each time they do, you can hear an
+              infant's quiet whimpers, which are swiftly quieted by the sound of
+              distant humming.
+            </p>
+          ),
+        },
+      ],
+
+      notes: [
+        'Chanting is indiscernible',
+        'Humming is Waltz for Klara (tune from harpsichord)',
+      ],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 4528,
+            y1: 1216,
+            x2: 4838,
+            y2: 1356,
+          },
+        },
+      ],
+    },
+
+    gustavsCrypt: {
+      code: '23C',
+      name: "Gustav's Crypt",
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              The crypt beyond the slab contains a stone coffin lying atop a
+              dusty stone bier. Silence hangs heavy over the lonely chamber.
+            </p>
+          ),
+        },
+      ],
+
+      notes: ['Chanting is indiscernible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 4528,
+            y1: 1546,
+            x2: 4838,
+            y2: 1692,
+          },
+        },
+      ],
+    },
+
+    elisabethsCrypt: {
+      code: '23D',
+      name: "Elisabeth's Crypt",
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              A thick, acrid miasma hangs over the interior of this crypt, which
+              holds a stone-carved coffin resting atop a stone bier. The floor
+              before it is littered with the bodies of hundreds of dead
+              termites. Many cling to the elongated, bloated body of a dead
+              termite queen, while others appear to have died atop the scarred,
+              mutilated bodies of four larger beetles not far away.
+            </p>
+          ),
+        },
+      ],
+
+      notes: ['Chanting is indiscernible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 4528,
+            y1: 1872,
+            x2: 4838,
+            y2: 2008,
+          },
+        },
+      ],
+    },
+
+    rosesCrypt: {
+      code: '23E',
+      name: "Rose's Crypt",
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              This small chamber contains a stone coffin resting on a stone
+              bier. The air in this crypt hangs heavy with sorrow.
+            </p>
+          ),
+        },
+      ],
+
+      notes: ['Chanting is indiscernible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3552,
+            y1: 1546,
+            x2: 3858,
+            y2: 1692,
+          },
+        },
+      ],
+    },
+
+    thornsCrypt: {
+      code: '23F',
+      name: "Thorn's Crypt",
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              This small chamber contains a stone coffin resting on a stone
+              bier. The air in this crypt hangs heavy with sorrow.
+            </p>
+          ),
+        },
+      ],
+
+      notes: ['Chanting is indiscernible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3552,
+            y1: 1872,
+            x2: 3858,
+            y2: 2008,
           },
         },
       ],
