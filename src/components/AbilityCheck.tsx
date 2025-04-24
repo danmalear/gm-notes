@@ -41,6 +41,16 @@ const AbilityCheck: React.FC<AbilityCheckProps> = ({
           {check.failure}
         </p>
       ) : null}
+      {check.notes?.length ? (
+        <>
+          <props.prereqsHeadingElement>Notes</props.prereqsHeadingElement>
+          <ul>
+            {check.notes.map((note, noteIndex) => (
+              <li key={`check-note-${noteIndex}`}>{note}</li>
+            ))}
+          </ul>
+        </>
+      ) : null}
     </Collapsible>
   );
 };
