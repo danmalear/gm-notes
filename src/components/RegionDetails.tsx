@@ -1,5 +1,6 @@
 import type { Region, TimeOfDay } from '../data/MapData.ts';
 import Collapsible from './Collapsible.tsx';
+import Item from './Item.tsx';
 import './RegionDetails.css';
 
 export interface RegionDetailsProps extends React.PropsWithChildren {
@@ -8,23 +9,75 @@ export interface RegionDetailsProps extends React.PropsWithChildren {
   timeOfDay: TimeOfDay;
 }
 
-const RegionDetails: React.FC<RegionDetailsProps> = ({ key, data }) => {
+const RegionDetails: React.FC<RegionDetailsProps> = ({
+  key,
+  data,
+  timeOfDay,
+}) => {
+  const {
+    code,
+    name,
+    descriptions,
+    lighting,
+    creatures,
+    checks,
+    items,
+    handouts,
+    opportunities,
+    notes,
+  } = data;
+
   return (
     <>
       <div id={key + '-details'} className="region-details card">
         <h1>
-          {data.code ? data.code + '. ' : ''}
-          {data.name}
+          {code ? code + '. ' : ''}
+          {name}
         </h1>
-        {data.descriptions?.length ? (
+
+        {lighting ? (
+          <p>
+            <span className="fw-bold">Lighting: </span>
+            {lighting[timeOfDay]}
+          </p>
+        ) : null}
+
+        {descriptions?.length ? (
           <Collapsible headingElement="h2" title="Descriptions">
-            {data.descriptions.map((desc, index) => (
+            {descriptions.map((desc, index) => (
               <div key={`description-${index}`}>
                 <Collapsible headingElement="h3" title={desc.prompt}>
                   {desc.text}
                 </Collapsible>
               </div>
             ))}
+          </Collapsible>
+        ) : null}
+
+        {items?.length ? (
+          <Collapsible headingElement="h2" title="Items">
+            {items.map((itemOrItemGroup, index) =>
+              // Check if the item is an item group or a single Item
+              'items' in itemOrItemGroup ? (
+                <div key={`item-group-${index}`}>
+                  <Collapsible headingElement="h3" title={itemOrItemGroup.name}>
+                    {itemOrItemGroup.items.map((subItem, subIndex) => (
+                      <Item
+                        key={`item-${index}-${subIndex}`}
+                        item={subItem}
+                        headingElement="h4"
+                      />
+                    ))}
+                  </Collapsible>
+                </div>
+              ) : (
+                <Item
+                  key={`item-${index}`}
+                  item={itemOrItemGroup}
+                  headingElement="h3"
+                />
+              ),
+            )}
           </Collapsible>
         ) : null}
       </div>
