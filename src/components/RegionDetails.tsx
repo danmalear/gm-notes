@@ -111,6 +111,16 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
           </Collapsible>
         ) : null}
 
+        {opportunities?.length ? (
+          <Collapsible headingElement="h2" title="Opportunities">
+            <ul>
+              {opportunities.map((opportunity, index) => (
+                <li key={`opportunity-${index}`}>{opportunity}</li>
+              ))}
+            </ul>
+          </Collapsible>
+        ) : null}
+
         {notes?.length ? (
           <Collapsible headingElement="h2" title="Other Notes">
             <ul>
