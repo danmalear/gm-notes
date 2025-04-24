@@ -564,6 +564,18 @@ const deathHouseData: Map = {
         },
       ],
 
+      creatures: [
+        {
+          name: 'Swarm of Centipedes',
+          quantity: 1,
+          statBlockUrl:
+            'https://www.dndbeyond.com/monsters/5195224-swarm-of-insects',
+          statBlockText: 'Swarm of Insects',
+          trigger: 'Coffin is disturbed',
+          combatBehavior: 'Attacks nearest creature(s) until defeated',
+        },
+      ],
+
       notes: ['Chanting is indiscernible'],
 
       areas: [
