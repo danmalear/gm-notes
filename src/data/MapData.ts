@@ -60,6 +60,7 @@ export interface AbilityCheck {
   skills: Skill[];
   target: string;
   dc: number;
+  prerequisites?: string[];
   success?: string;
   failure?: string;
 }
