@@ -37,7 +37,7 @@ function App() {
       <div id="detail-col" className="item">
         <div className="region-data">
           <RegionDetails
-            key={currentRegion}
+            regionKey={currentRegion}
             data={mapData.regions[currentRegion]}
             timeOfDay="day"
           />

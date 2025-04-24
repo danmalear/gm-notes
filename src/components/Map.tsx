@@ -61,9 +61,9 @@ const Map: React.FC<MapProps> = ({ mapImage, areas, onRegionClick }) => {
       />
       {imgLoaded ? (
         <map name="map">
-          {areas.map((area) => (
+          {areas.map((area, index) => (
             <area
-              key={area.regionKey}
+              key={`${area.regionKey}-${index}-area`}
               shape={area.shape}
               coords={relativeCoords(area.coords)}
               alt={area.regionKey}

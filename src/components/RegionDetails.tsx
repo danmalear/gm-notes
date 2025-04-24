@@ -5,13 +5,13 @@ import Item from './Item.tsx';
 import './RegionDetails.css';
 
 export interface RegionDetailsProps extends React.PropsWithChildren {
-  key: string;
+  regionKey: string;
   data: Region;
   timeOfDay: TimeOfDay;
 }
 
 const RegionDetails: React.FC<RegionDetailsProps> = ({
-  key,
+  regionKey,
   data,
   timeOfDay,
 }) => {
@@ -30,7 +30,7 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
 
   return (
     <>
-      <div id={key + '-details'} className="region-details card">
+      <div id={regionKey + '-details'} className="region-details card">
         <h1>
           {code ? code + '. ' : ''}
           {name}
@@ -74,17 +74,19 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
             {items.map((itemOrItemGroup, index) =>
               // Check if the item is an item group or a single Item
               'items' in itemOrItemGroup ? (
-                <div key={`item-group-${index}`}>
-                  <Collapsible headingElement="h3" title={itemOrItemGroup.name}>
-                    {itemOrItemGroup.items.map((subItem, subIndex) => (
-                      <Item
-                        key={`item-${index}-${subIndex}`}
-                        item={subItem}
-                        headingElement="h4"
-                      />
-                    ))}
-                  </Collapsible>
-                </div>
+                <Collapsible
+                  key={`item-group-${index}`}
+                  headingElement="h3"
+                  title={itemOrItemGroup.name}
+                >
+                  {itemOrItemGroup.items.map((subItem, subIndex) => (
+                    <Item
+                      key={`item-${index}-${subIndex}`}
+                      item={subItem}
+                      headingElement="h4"
+                    />
+                  ))}
+                </Collapsible>
               ) : (
                 <Item
                   key={`item-${index}`}
