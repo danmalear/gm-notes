@@ -1,4 +1,5 @@
 import type { Region, TimeOfDay } from '../data/MapData.ts';
+import AbilityCheck from './AbilityCheck.tsx';
 import Collapsible from './Collapsible.tsx';
 import Item from './Item.tsx';
 import './RegionDetails.css';
@@ -49,6 +50,20 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
                 <Collapsible headingElement="h3" title={desc.prompt}>
                   {desc.text}
                 </Collapsible>
+              </div>
+            ))}
+          </Collapsible>
+        ) : null}
+
+        {checks?.length ? (
+          <Collapsible headingElement="h2" title="Ability Checks">
+            {checks.map((check, index) => (
+              <div key={`check-${index}`}>
+                <AbilityCheck
+                  check={check}
+                  headingElement="h3"
+                  prereqsHeadingElement="h4"
+                />
               </div>
             ))}
           </Collapsible>
