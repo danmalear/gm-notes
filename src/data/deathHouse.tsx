@@ -9,7 +9,7 @@ const deathHouseData: Map = {
   regions: {
     portico: {
       code: '1A',
-      name: 'Main Entrance - Portico',
+      name: 'Entrance - Portico',
       lighting: {
         day: 'Bright light',
         between: 'Dim light',
