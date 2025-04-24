@@ -58,7 +58,11 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
           <Collapsible headingElement="h2" title="Creatures">
             {creatures.map((creature, index) => (
               <div key={`creature-${index}`}>
-                <Creature creature={creature} headingElement="h3" />
+                <Creature
+                  creature={creature}
+                  headingElement="h3"
+                  rolesHeadingElement="h4"
+                />
               </div>
             ))}
           </Collapsible>

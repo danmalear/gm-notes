@@ -5,9 +5,14 @@ import Trait from './Trait';
 export interface CreatureProps extends React.PropsWithChildren {
   creature: Creature;
   headingElement: React.ElementType<React.HTMLProps<HTMLHeadingElement>>;
+  rolesHeadingElement: React.ElementType<React.HTMLProps<HTMLHeadingElement>>;
 }
 
-const Creature: React.FC<CreatureProps> = ({ creature, headingElement }) => {
+const Creature: React.FC<CreatureProps> = ({
+  creature,
+  headingElement,
+  ...props
+}) => {
   return (
     <Collapsible
       headingElement={headingElement}
@@ -34,6 +39,16 @@ const Creature: React.FC<CreatureProps> = ({ creature, headingElement }) => {
       ) : null}
       {creature.combatBehavior ? (
         <Trait label="Combat Behavior">{creature.combatBehavior}</Trait>
+      ) : null}
+      {creature.roles?.length ? (
+        <>
+          <props.rolesHeadingElement> Roles</props.rolesHeadingElement>
+          <ul>
+            {creature.roles.map((role, roleIndex) => (
+              <li key={`role-${roleIndex}`}>{role}</li>
+            ))}
+          </ul>
+        </>
       ) : null}
     </Collapsible>
   );
