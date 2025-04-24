@@ -1,5 +1,6 @@
 import type { AbilityCheck } from '../data/MapData.ts';
 import Collapsible from './Collapsible.tsx';
+import Trait from './Trait.tsx';
 
 export interface AbilityCheckProps extends React.PropsWithChildren {
   check: AbilityCheck;
@@ -29,18 +30,8 @@ const AbilityCheck: React.FC<AbilityCheckProps> = ({
           </ul>
         </>
       ) : null}
-      {check.success ? (
-        <p>
-          <span className="fw-bold">Success: </span>
-          {check.success}
-        </p>
-      ) : null}
-      {check.failure ? (
-        <p>
-          <span className="fw-bold">Failure: </span>
-          {check.failure}
-        </p>
-      ) : null}
+      {check.success ? <Trait label="Success">{check.success}</Trait> : null}
+      {check.failure ? <Trait label="Failure">{check.failure}</Trait> : null}
       {check.notes?.length ? (
         <>
           <props.prereqsHeadingElement>Notes</props.prereqsHeadingElement>

@@ -1,8 +1,10 @@
 import type { Region, TimeOfDay } from '../data/MapData.ts';
 import AbilityCheck from './AbilityCheck.tsx';
 import Collapsible from './Collapsible.tsx';
+import Creature from './Creature.tsx';
 import Item from './Item.tsx';
 import './RegionDetails.css';
+import Trait from './Trait.tsx';
 
 export interface RegionDetailsProps extends React.PropsWithChildren {
   regionKey: string;
@@ -37,10 +39,7 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
         </h1>
 
         {lighting ? (
-          <p>
-            <span className="fw-bold">Lighting: </span>
-            {lighting[timeOfDay]}
-          </p>
+          <Trait label="Lighting">{lighting[timeOfDay]}</Trait>
         ) : null}
 
         {descriptions?.length ? (
@@ -50,6 +49,16 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
                 <Collapsible headingElement="h3" title={desc.prompt}>
                   {desc.text}
                 </Collapsible>
+              </div>
+            ))}
+          </Collapsible>
+        ) : null}
+
+        {creatures?.length ? (
+          <Collapsible headingElement="h2" title="Creatures">
+            {creatures.map((creature, index) => (
+              <div key={`creature-${index}`}>
+                <Creature creature={creature} headingElement="h3" />
               </div>
             ))}
           </Collapsible>
