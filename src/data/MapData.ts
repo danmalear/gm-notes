@@ -88,7 +88,7 @@ export interface ItemGroup {
 
 export interface Handout {
   text: string;
-  url: string;
+  url?: string;
 }
 
 export interface Region {

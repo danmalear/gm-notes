@@ -25,8 +25,8 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
     creatures,
     checks,
     items,
-    handouts,
     opportunities,
+    handouts,
     notes,
   } = data;
 
@@ -116,6 +116,24 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
             <ul>
               {opportunities.map((opportunity, index) => (
                 <li key={`opportunity-${index}`}>{opportunity}</li>
+              ))}
+            </ul>
+          </Collapsible>
+        ) : null}
+
+        {handouts?.length ? (
+          <Collapsible headingElement="h2" title="Handouts">
+            <ul>
+              {handouts.map((handout, index) => (
+                <li key={`handout-${index}`}>
+                  {handout.url ? (
+                    <a href={handout.url} target="_blank">
+                      {handout.text}
+                    </a>
+                  ) : (
+                    handout.text
+                  )}
+                </li>
               ))}
             </ul>
           </Collapsible>
