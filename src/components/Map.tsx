@@ -32,20 +32,32 @@ const Map: React.FC<MapProps> = ({ mapImage, areas, onRegionClick }) => {
     }
   };
 
-  const relativeCoords = ({ x1, y1, x2, y2 }: Coords) => {
+  const relativeCoords = (coords: Coords) => {
     if (imgRef?.current && imgLoaded) {
       const imgWidth = imgRef.current.width;
       const imgHeight = imgRef.current.height;
 
-      const relativeX1 = (x1 / mapImage.sizeX) * imgWidth;
-      const relativeY1 = (y1 / mapImage.sizeY) * imgHeight;
-      const relativeX2 = (x2 / mapImage.sizeX) * imgWidth;
-      const relativeY2 = (y2 / mapImage.sizeY) * imgHeight;
+      const isCircle = 'r' in coords;
+      if (isCircle) {
+        const { x, y, r } = coords;
 
-      return `${relativeX1},${relativeY1},${relativeX2},${relativeY2}`;
+        const relativeX = (x / mapImage.sizeX) * imgWidth;
+        const relativeY = (y / mapImage.sizeY) * imgHeight;
+        const relativeR = (r / mapImage.sizeX) * imgWidth; // Assuming r is a radius in the same units as x and y
+
+        return `${relativeX},${relativeY},${relativeR}`;
+      } else {
+        const { x1, y1, x2, y2 } = coords;
+
+        const relativeX1 = (x1 / mapImage.sizeX) * imgWidth;
+        const relativeY1 = (y1 / mapImage.sizeY) * imgHeight;
+        const relativeX2 = (x2 / mapImage.sizeX) * imgWidth;
+        const relativeY2 = (y2 / mapImage.sizeY) * imgHeight;
+        return `${relativeX1},${relativeY1},${relativeX2},${relativeY2}`;
+      }
     } else {
       console.error('Image not found in the DOM');
-      return `${x1},${y1},${x2},${y2}`; // Fallback to original coords if image is not found
+      return undefined;
     }
   };
 

@@ -22,12 +22,20 @@ export type Skill =
   | 'Stealth'
   | 'Survival';
 
-export interface Coords {
+export interface RectCoords {
   x1: number;
   y1: number;
   x2: number;
   y2: number;
 }
+
+export interface CircleCoords {
+  x: number;
+  y: number;
+  r: number;
+}
+
+export type Coords = RectCoords | CircleCoords;
 
 export interface Area {
   shape: string;
