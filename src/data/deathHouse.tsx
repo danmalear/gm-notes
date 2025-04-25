@@ -662,6 +662,52 @@ const deathHouseData: Map = {
         },
       ],
     },
+
+    initiatesQuarters: {
+      code: '24',
+      name: "Cult Initiates' Quarters",
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              A wooden table and four chairs stand at the east end of this room.
+              Meanwhile to the west you see four alcoves containing straw
+              pallets, each overtaken by mold.
+            </p>
+          ),
+        },
+      ],
+
+      notes: ['Chanting is indiscernible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3227,
+            y1: 734,
+            x2: 3686,
+            y2: 1526,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3054,
+            y1: 1056,
+            x2: 3519,
+            y2: 1844,
+          },
+        },
+      ],
+    },
   },
 };
 
