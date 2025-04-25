@@ -78,6 +78,30 @@ button:focus-visible {
   overflow-y: scroll;
 }
 
+.pos-absolute {
+  position: absolute;
+}
+
+.l-1 {
+  left: 1em;
+}
+
+.l-15 {
+  left: 15em;
+}
+
+.t-1 {
+  top: 1em;
+}
+
+.w-5 {
+  width: 5em;
+}
+
+.w-10 {
+  width: 10em;
+}
+
 .w-100 {
   width: 100%;
 }

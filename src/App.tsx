@@ -3,11 +3,32 @@ import './App.css';
 import Map, { MapArea } from './components/Map.tsx';
 import RegionDetails from './components/RegionDetails.tsx';
 import data from './data/data.ts';
+import type { TimeOfDay } from './data/MapData.ts';
 
 function App() {
-  const [currentMap] = useState('deathHouse');
+  const [currentMap, setCurrentMap] = useState('deathHouse');
   const [currentRegion, setCurrentRegion] = useState('foyer');
-  const mapData = data[currentMap];
+  const [timeOfDay, setTimeOfDay] = useState<TimeOfDay>('day');
+  const mapData = currentMap ? data[currentMap] : null;
+
+  if (!mapData) {
+    return (
+      <div id="main" className="container">
+        <div id="map-col" className="item">
+          <div className="pos-absolute l-1 t-1">
+            <select
+              className="w-10"
+              value={currentMap}
+              onChange={(e) => setCurrentMap(e.target.value)}
+            >
+              <option value="">--</option>
+              <option value="deathHouse">Death House</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const areas: MapArea[] = [];
 
@@ -28,6 +49,27 @@ function App() {
   return (
     <div id="main" className="container">
       <div id="map-col" className="item">
+        <div className="pos-absolute l-1 t-1 w-10">
+          <select
+            className="w-100"
+            value={currentMap}
+            onChange={(e) => setCurrentMap(e.target.value)}
+          >
+            <option value="">--</option>
+            <option value="deathHouse">Death House</option>
+          </select>
+        </div>
+        <div className="pos-absolute l-15 t-1 w-10">
+          <select
+            className="w-100"
+            value={timeOfDay}
+            onChange={(e) => setTimeOfDay(e.target.value as TimeOfDay)}
+          >
+            <option value="day">Day</option>
+            <option value="between">Between</option>
+            <option value="night">Night</option>
+          </select>
+        </div>
         <Map
           mapImage={mapData.image}
           areas={areas}
@@ -39,7 +81,7 @@ function App() {
           <RegionDetails
             regionKey={currentRegion}
             data={mapData.regions[currentRegion]}
-            timeOfDay="day"
+            timeOfDay={timeOfDay}
           />
         </div>
       </div>
