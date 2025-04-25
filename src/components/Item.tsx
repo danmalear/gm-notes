@@ -7,14 +7,12 @@ export interface ItemProps extends React.PropsWithChildren {
   headingElement: React.ElementType<React.HTMLProps<HTMLHeadingElement>>;
 }
 
-const Item: React.FC<ItemProps> = ({ item, headingElement }) => {
+const Item: React.FC<ItemProps> = ({ item, ...props }) => {
   const quantity = (item.quantity ?? 1 > 1) ? ` x${item.quantity}` : '';
+  const headingText = `${item.name}${quantity}`;
 
-  return (
-    <Collapsible
-      headingElement={headingElement}
-      title={`${item.name}${quantity}`}
-    >
+  return item.value || item.notes?.length ? (
+    <Collapsible headingElement={props.headingElement} title={headingText}>
       <div>
         {item.value ? <Trait label="Value">{item.value}</Trait> : null}
         {item.notes ? (
@@ -26,6 +24,8 @@ const Item: React.FC<ItemProps> = ({ item, headingElement }) => {
         ) : null}
       </div>
     </Collapsible>
+  ) : (
+    <props.headingElement>{headingText}</props.headingElement>
   );
 };
 
