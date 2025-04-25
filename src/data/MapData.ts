@@ -37,10 +37,17 @@ export interface CircleCoords {
 
 export type Coords = RectCoords | CircleCoords;
 
-export interface Area {
-  shape: string;
-  coords: Coords;
+export interface RectArea {
+  shape: 'rect';
+  coords: RectCoords;
 }
+
+export interface CircleArea {
+  shape: 'circle';
+  coords: CircleCoords;
+}
+
+export type Area = RectArea | CircleArea;
 
 export interface Description {
   prompt: string;
