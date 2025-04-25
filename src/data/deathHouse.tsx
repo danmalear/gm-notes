@@ -703,7 +703,385 @@ const deathHouseData: Map = {
             x1: 3054,
             y1: 1056,
             x2: 3519,
-            y2: 1844,
+            y2: 1848,
+          },
+        },
+      ],
+    },
+
+    well: {
+      code: '25',
+      name: 'Well and Cultist Quarters',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <>
+              <p>
+                The ceiling of this dark, earthen chamber rises a foot higher
+                than the cramped tunnel. It's supported by thick wooden posts
+                and cross beams that have rotted with age and bear deep holes
+                indicative of hungry insects.
+              </p>
+              <p>
+                Here, a lonely well stands at the center of the room, surrounded
+                on three sides by several smaller, alcove-like chambers that
+                have been carved into the walls. Old footprints criss-cross the
+                floor, leading into the alcoves, around the well, up a staircase
+                on the other end of the room, and back upstairs the way you
+                came.
+              </p>
+              <p>
+                An old hempen rope attached to a rusted pulley descends past the
+                mouth of the well, swaying gently in the stagnant air as if just
+                abandoned by an unseen occupant.
+              </p>
+            </>
+          ),
+        },
+      ],
+
+      items: [
+        {
+          name: 'Well',
+          notes: [
+            '4-foot diameter',
+            '3-foot high stone lip',
+            '30-foot depth',
+            'Interior covered by ash-black fungi',
+            'If an object is thrown in, it is loudly torn apart when they look away',
+          ],
+        },
+      ],
+
+      notes: ['Chanting is indiscernible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2396,
+            y1: 1548,
+            x2: 3032,
+            y2: 2180,
+          },
+        },
+      ],
+    },
+
+    cultistQuartersSE: {
+      code: '25A',
+      name: 'Well and Cultist Quarters - SE Quarters',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              A small alcove is carved out, furnished to be quarters, with a
+              single bed and wooden chest.
+            </p>
+          ),
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Sleight of Hand'],
+          target: 'Chest',
+          dc: 15,
+          success: 'The chest is opened',
+          notes: ["Thieves' tools proficiency grants advantage"],
+        },
+      ],
+
+      items: [
+        {
+          name: 'Wooden chest',
+          notes: ['Locked'],
+          items: [
+            {
+              name: 'GP',
+              quantity: 11,
+              notes: ['Contained in a pouch made of human skin'],
+            },
+            {
+              name: 'SP',
+              quantity: 60,
+              notes: ['Contained in a pouch made of human skin'],
+            },
+          ],
+        },
+      ],
+
+      notes: ['Chanting is indiscernible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2567,
+            y1: 1216,
+            x2: 2865,
+            y2: 1526,
+          },
+        },
+      ],
+    },
+
+    cultistQuartersNE: {
+      code: '25B',
+      name: 'Well and Cultist Quarters - NE Quarters',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              A small alcove is carved out, furnished to be quarters, with a
+              single bed and wooden chest.
+            </p>
+          ),
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Sleight of Hand'],
+          target: 'Chest',
+          dc: 15,
+          success: 'The chest is opened',
+          notes: ["Thieves' tools proficiency grants advantage"],
+        },
+      ],
+
+      items: [
+        {
+          name: 'Chest',
+          notes: ['Locked'],
+          items: [
+            {
+              name: 'Moss agate',
+              value: '10 gp',
+              quantity: 3,
+              notes: [
+                'Contained in a folded piece of black cloth',
+                'Pink gem with mossy gray markings',
+              ],
+            },
+          ],
+        },
+      ],
+
+      notes: ['Chanting is indiscernible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2243,
+            y1: 1216,
+            x2: 2537,
+            y2: 1526,
+          },
+        },
+      ],
+    },
+
+    cultistQuartersN: {
+      code: '25C',
+      name: 'Well and Cultist Quarters - N Quarters',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              A small alcove is carved out, furnished to be quarters, with a
+              single bed and wooden chest.
+            </p>
+          ),
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Sleight of Hand'],
+          target: 'Chest',
+          dc: 15,
+          success: 'The chest is opened',
+          notes: ["Thieves' tools proficiency grants advantage"],
+        },
+      ],
+
+      items: [
+        {
+          name: 'Chest',
+          notes: ['Locked'],
+          items: [
+            {
+              name: 'Black leather eye patch with carnelian sewn in',
+              value: '50 gp',
+              notes: ['Red brown gem'],
+            },
+          ],
+        },
+      ],
+
+      notes: ['Chanting is indiscernible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2070,
+            y1: 1716,
+            x2: 2375,
+            y2: 2008,
+          },
+        },
+      ],
+    },
+
+    cultistQuartersNW: {
+      code: '25D',
+      name: 'Well and Cultist Quarters - NW Quarters',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              A small alcove is carved out, furnished to be quarters, with a
+              single bed and wooden chest.
+            </p>
+          ),
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Sleight of Hand'],
+          target: 'Chest',
+          dc: 15,
+          success: 'The chest is opened',
+          notes: ["Thieves' tools proficiency grants advantage"],
+        },
+      ],
+
+      items: [
+        {
+          name: 'Chest',
+          notes: ['Locked'],
+          items: [
+            {
+              name: 'Ivory hairbrush with silver bristles',
+              value: '25 gp',
+            },
+          ],
+        },
+      ],
+
+      notes: ['Chanting is indiscernible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2243,
+            y1: 2214,
+            x2: 2537,
+            y2: 2505,
+          },
+        },
+      ],
+    },
+
+    cultistQuartersSW: {
+      code: '25E',
+      name: 'Well and Cultist Quarters - SW Quarters',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              A small alcove is carved out, furnished to be quarters, with a
+              single bed and wooden chest.
+            </p>
+          ),
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Sleight of Hand'],
+          target: 'Chest',
+          dc: 15,
+          success: 'The chest is opened',
+          notes: ["Thieves' tools proficiency grants advantage"],
+        },
+      ],
+
+      items: [
+        {
+          name: 'Chest',
+          notes: ['Locked'],
+          items: [
+            {
+              name: 'Black leather-bound book',
+              notes: [
+                'List of sacrifices',
+                'Descriptions: "Struggled profusely," "no sedative given"',
+                'Each ends with "Fed to Walter"',
+                'Signed by Drasha',
+              ],
+            },
+          ],
+        },
+      ],
+
+      notes: ['Chanting is indiscernible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2567,
+            y1: 2214,
+            x2: 2865,
+            y2: 2505,
           },
         },
       ],
