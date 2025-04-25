@@ -1253,6 +1253,16 @@ const deathHouseData: Map = {
         },
       ],
 
+      checks: [
+        {
+          skills: ['Perception'],
+          target: 'Larder',
+          dc: 17,
+          success:
+            'There is some kind of creature coiled on the ceiling of the alcove, poised to attack',
+        },
+      ],
+
       items: [
         {
           name: 'Wooden table',
@@ -1276,6 +1286,67 @@ const deathHouseData: Map = {
             y1: 2047,
             x2: 4518,
             y2: 2505,
+          },
+        },
+      ],
+    },
+
+    larder: {
+      code: '28',
+      name: 'Larder',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <>
+              <p>
+                A horrific creature drops from the ceiling—a long, flesh-like
+                worm the breadth and length of a human man, its trunk resembling
+                a humanoid body with its arms sewn to its torso and both legs
+                sewn together. Its flayed muscles split open to reveal a
+                flapping, gaping maw ringed by hundreds of tiny, human-like
+                teeth and a gnashing, bony beak.
+              </p>
+              <p>
+                It lets out a high-pitched, gurgling squeal as it hurls itself
+                forward, writhing, tendon-like tentacles lashing toward your
+                face.
+              </p>
+            </>
+          ),
+        },
+      ],
+
+      creatures: [
+        {
+          name: 'Grick',
+          quantity: 1,
+          statBlockUrl: 'https://www.dndbeyond.com/monsters/5195061-grick',
+          statBlockText: 'Grick',
+          trigger: 'Entry',
+          combatBehavior: 'Attacks most obvious threat until defeated',
+        },
+      ],
+
+      notes: [
+        'Chanting is indiscernible',
+        'PCs with passive perception below 12 are surprised',
+      ],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 4528,
+            y1: 2214,
+            x2: 4682,
+            y2: 2349,
           },
         },
       ],
