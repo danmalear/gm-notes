@@ -685,6 +685,20 @@ const deathHouseData: Map = {
         },
       ],
 
+      items: [
+        {
+          name: 'Wooden table',
+        },
+        {
+          name: 'Wooden chairs',
+          quantity: 4,
+        },
+        {
+          name: 'Straw pallets',
+          quantity: 4,
+        },
+      ],
+
       notes: ['Chanting is indiscernible'],
 
       areas: [
@@ -808,6 +822,9 @@ const deathHouseData: Map = {
 
       items: [
         {
+          name: 'Bed',
+        },
+        {
           name: 'Wooden chest',
           notes: ['Locked'],
           items: [
@@ -873,7 +890,10 @@ const deathHouseData: Map = {
 
       items: [
         {
-          name: 'Chest',
+          name: 'Bed',
+        },
+        {
+          name: 'Wooden chest',
           notes: ['Locked'],
           items: [
             {
@@ -937,7 +957,10 @@ const deathHouseData: Map = {
 
       items: [
         {
-          name: 'Chest',
+          name: 'Bed',
+        },
+        {
+          name: 'Wooden chest',
           notes: ['Locked'],
           items: [
             {
@@ -997,7 +1020,10 @@ const deathHouseData: Map = {
 
       items: [
         {
-          name: 'Chest',
+          name: 'Bed',
+        },
+        {
+          name: 'Wooden chest',
           notes: ['Locked'],
           items: [
             {
@@ -1056,7 +1082,10 @@ const deathHouseData: Map = {
 
       items: [
         {
-          name: 'Chest',
+          name: 'Bed',
+        },
+        {
+          name: 'Wooden chest',
           notes: ['Locked'],
           items: [
             {
@@ -1081,6 +1110,171 @@ const deathHouseData: Map = {
             x1: 2567,
             y1: 2214,
             x2: 2865,
+            y2: 2505,
+          },
+        },
+      ],
+    },
+
+    spikedPit: {
+      code: '26',
+      name: 'Hidden Spiked Pit',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry from Well',
+          text: (
+            <>
+              <p>
+                The staircase leads to a quiet landing. In front of you, the
+                stairs continue upward and vanish around a bend. To the right,
+                the landing continues straight into a lonely corridor. This
+                tunnel hallway seems surprisingly clean and bereft of debris; at
+                its far end, another earthen staircase descends into darkness.
+              </p>
+              <p>
+                The incessant chanting that has filled the air of this
+                underground complex grows stronger toward the far end of this
+                corridor. Its source seems to lie beyond the descending stairs.
+              </p>
+            </>
+          ),
+        },
+        {
+          prompt: 'Entry from Dining Hall',
+          text: (
+            <>
+              <p>
+                The staircase descends to a quiet landing. In front of you, the
+                stairs continue to descend, opening into a broader chamber. To
+                the left, the landing continues straight into a lonely corridor.
+                This tunnel hallway seems surprisingly clean and bereft of
+                debris; at its far end, another earthen staircase descends into
+                darkness.
+              </p>
+              <p>
+                The incessant chanting that has filled the air of this
+                underground complex grows stronger toward the far end of this
+                corridor.
+              </p>
+            </>
+          ),
+        },
+        {
+          prompt: 'Entry from Ghoul Hall',
+          text: (
+            <>
+              <p>
+                The staircase descends to a quiet landing. To the left, the
+                stairs continue to descend, rounding a bend before vanishing
+                into darkness. The incessant chanting that has filled the air of
+                this underground complex appears to be echoing from below.
+              </p>
+              <p>
+                To the right, the landing continues straight into a lonely
+                corridor. This tunnel hallway seems surprisingly clean and
+                bereft of debris; at its far end, the corridor branches left and
+                right.
+              </p>
+            </>
+          ),
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Perception'],
+          target: 'Tunnel',
+          dc: 15,
+          success: "Unlike other tunnels, this one doesn't have any footprints",
+        },
+      ],
+
+      items: [
+        {
+          name: 'Pit',
+          notes: [
+            '5 feet long',
+            '10 feet deep',
+            '1d6 bludgeoning damage + 2d10 piercing damage',
+          ],
+        },
+      ],
+
+      notes: [
+        'Chanting is louder, still unclear',
+        'Checking the floor specifically reveals the pit',
+      ],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3380,
+            y1: 2047,
+            x2: 3519,
+            y2: 2844,
+          },
+        },
+      ],
+    },
+
+    diningHall: {
+      code: '27',
+      name: 'Dining Hall',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <>
+              <p>
+                This room contains a plain wooden table flanked by long benches.
+                Moldy humanoid bones lie strewn on the dirt floor. A thick
+                stench of rot and gore fills the chamber, so coppery with blood
+                that you can taste it on your tongue.
+              </p>
+              <p>
+                A few dozen moldy bones have been piled into a grotesque and
+                misshapen pyramid in a dark alcove to the south.
+              </p>
+            </>
+          ),
+        },
+      ],
+
+      items: [
+        {
+          name: 'Wooden table',
+        },
+        {
+          name: 'Wooden benches',
+          quantity: 2,
+        },
+        {
+          name: 'Moldy humanoid bones',
+        },
+      ],
+
+      notes: ['Chanting is indiscernible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3872,
+            y1: 2047,
+            x2: 4518,
             y2: 2505,
           },
         },
