@@ -102,8 +102,8 @@ export interface Region {
   code?: string;
   name: string;
   areas: Area[];
-  descriptions: Description[];
   lighting?: Lighting;
+  descriptions: Description[];
   creatures?: Creature[];
   checks?: AbilityCheck[];
   items?: (Item | ItemGroup)[];

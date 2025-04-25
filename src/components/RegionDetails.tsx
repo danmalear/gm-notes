@@ -20,8 +20,8 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
   const {
     code,
     name,
-    descriptions,
     lighting,
+    descriptions,
     creatures,
     checks,
     items,
