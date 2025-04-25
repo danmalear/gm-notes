@@ -21,6 +21,7 @@ export type Skill =
   | 'Sleight of Hand'
   | 'Stealth'
   | 'Survival';
+export type Value = `${number} ${'gp' | 'sp' | 'cp' | 'ep' | 'pp'}`;
 
 export interface RectCoords {
   x1: number;
@@ -84,6 +85,7 @@ export interface AbilityCheck {
 export interface Item {
   name: string;
   quantity?: number;
+  value?: Value;
   notes?: string[];
 }
 

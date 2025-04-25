@@ -8,10 +8,15 @@ export interface ItemProps extends React.PropsWithChildren {
 }
 
 const Item: React.FC<ItemProps> = ({ item, headingElement }) => {
+  const quantity = (item.quantity ?? 1 > 1) ? ` x${item.quantity}` : '';
+
   return (
-    <Collapsible headingElement={headingElement} title={item.name}>
+    <Collapsible
+      headingElement={headingElement}
+      title={`${item.name}${quantity}`}
+    >
       <div>
-        {item.quantity ? <Trait label="Quantity">{item.quantity}</Trait> : null}
+        {item.value ? <Trait label="Value">{item.value}</Trait> : null}
         {item.notes ? (
           <ul>
             {item.notes.map((note, noteIndex) => (
