@@ -107,8 +107,8 @@ export interface Region {
   creatures?: Creature[];
   checks?: AbilityCheck[];
   items?: (Item | ItemGroup)[];
-  handouts?: Handout[];
   opportunities?: string[];
+  handouts?: Handout[];
   notes?: string[];
 }
 
