@@ -2261,6 +2261,164 @@ const deathHouseData: Map = {
         },
       ],
     },
+
+    ritualChamber: {
+      code: '38',
+      name: 'Ritual Chamber',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <>
+              <p>
+                The smooth masonry walls of this forty-foot-square room provide
+                excellent acoustics. Featureless stone pillars support the
+                ceiling, and murky water covers most of the floor. Stairs lead
+                up to dry stone ledges that hug the walls. In the middle of the
+                room, more stairs rise to form an octagonal dais that also rises
+                above the water. Rusty chains with shackles dangle from the
+                ceiling directly above a stone altar mounted on the dais. The
+                altar is carved with hideous depictions of grasping ghouls and
+                is stained with dry blood. A small, white bundle lies atop it,
+                surrounded by pulsating, fleshy tendrils.
+              </p>
+              <p>
+                The tendrils run to a breach in the far wall that leads to a
+                dark cave, their fleshy masses connecting to a dark, hulking
+                shadow that lies within, its bloated mass rising and falling
+                with a slow, shuddering rhythm.
+              </p>
+              <p>
+                As soon as you step foot into the chamber, the ghostly chanting
+                you've heard suddenly falls silent.
+              </p>
+            </>
+          ),
+        },
+      ],
+
+      creatures: [
+        {
+          name: 'Walter Phase 1',
+          statBlock: {
+            3: {
+              text: 'The Flesh Mound (3P)',
+            },
+            4: {
+              text: 'The Flesh Mound (4P)',
+            },
+            5: {
+              url: 'https://www.dndbeyond.com/monsters/5353772-flesh-mound',
+              text: 'The Flesh Mound',
+            },
+            6: {
+              text: 'The Flesh Mound (6P)',
+            },
+          },
+          trigger: 'Entry',
+          combatBehavior: 'When attacked, attacks chaotically until defeated',
+        },
+        {
+          name: 'Walter Phase 2',
+          statBlock: {
+            3: {
+              text: 'Walter, the Graveborn (3P)',
+            },
+            4: {
+              text: 'Walter, the Graveborn (4P)',
+            },
+            5: {
+              url: 'https://www.dndbeyond.com/monsters/5353772-flesh-mound',
+              text: 'Walter, the Graveborn',
+            },
+            6: {
+              text: 'Walter, the Graveborn (6P)',
+            },
+          },
+          trigger: 'Walter Phase 1 defeated',
+          combatBehavior: 'Attacks chaotically until defeated',
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Intimidation'],
+          target: 'Amber shard (see opportunities)',
+          dc: 13,
+          success: `The flesh mound must immediately use its Reaction, if
+            available, to follow the command, moving up to its Speed to do so
+            if necessary. The mound won't obey a command that is directly
+            harmful to it, and can stop following a command at the start of its
+            next turn.`,
+        },
+      ],
+
+      items: [
+        {
+          name: 'Stone altar',
+          notes: ['The words "FEED HIM" are carved into the stone surface'],
+          items: [
+            {
+              name: 'White bundle',
+              notes: [
+                'Shaped like a swaddled baby',
+                'Contains a rusted, serrated dagger stained with ancient blood',
+              ],
+            },
+          ],
+        },
+        {
+          name: 'Rusty chains',
+          notes: ['Hanging from ceiling above altar'],
+        },
+        {
+          name: 'Wooden wheel',
+          notes: [
+            'Raises and lowers portcullis',
+            'Chain-link mechanism has broken',
+          ],
+        },
+      ],
+
+      opportunities: [
+        `A player in possession of Elisabeth's amber shard from the Master Suite
+        can present the shard as a bonus action while within 30 feet of the
+        flesh mound, speak the name "Walter," and give a brief command. If the
+        player succeeds on a DC 13 Charisma (Intimidation) check, the mound must
+        immediately use a reaction, if available, to follow the command, moving
+        up to its speed to do so if necessary. The mound won't obey a command
+        that is directly harmful to it, and can stop following a command at the
+        start of its next turn.`,
+      ],
+
+      notes: ['Chanting is silent'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3700,
+            y1: 5159,
+            x2: 5021,
+            y2: 6483,
+          },
+        },
+        {
+          shape: 'circle',
+          coords: {
+            x: 4197,
+            y: 6621,
+            r: 184,
+          },
+        },
+      ],
+    },
   },
 };
 
