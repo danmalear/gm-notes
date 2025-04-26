@@ -1940,6 +1940,193 @@ const deathHouseData: Map = {
         },
       ],
     },
+
+    reliquary: {
+      code: '35',
+      name: 'Reliquary',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <>
+              <p>
+                The dusty stone steps descend past a landing and around a bend
+                until they end at a cold, rectangular chamber. A thin, wafting
+                mist clings to the ground, and the wooden cross beams that
+                support the ceiling groan beneath the weight of the house and
+                underground complex above.
+              </p>
+              <p>
+                The walls of this room are cut with small, chiseled alcoves,
+                each holding a strange, ghastly trinket or relic. A corridor
+                with a sagging ceiling exits the chamber and bends out of sight
+                to the right. Past it, you can see a stone slope that descends
+                into black, murky water. The ghostly chant you've heard since
+                entering the basement is strongest here, and seems to be
+                emanating from the other side of a rusted, closed portcullis.
+              </p>
+              <p>You can finally understand the words.</p>
+              <p>They say, over and over again, in a ceaseless refrain:</p>
+              <p>"He is the Ancient."</p>
+              <p>"He is the Land."</p>
+            </>
+          ),
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Medicine', 'Nature'],
+          target: 'Yellow hand',
+          dc: 10,
+          success: "The hand is a goblin's hand",
+        },
+        {
+          skills: ['Medicine', 'Nature'],
+          target: 'Bone knife',
+          dc: 15,
+          success: 'The knife is made from human bone',
+        },
+        {
+          skills: ['Arcana'],
+          target: 'Orb',
+          dc: 17,
+          success: 'The eye is from a nothic',
+        },
+        {
+          skills: ['Medicine', 'Nature'],
+          target: 'Aspergillum',
+          dc: 15,
+          success: 'The aspergillum is made of deer bone',
+        },
+        {
+          skills: ['Survival'],
+          target: 'Aspergillum',
+          dc: 20,
+          success: 'The aspergillum is made of deer bone',
+        },
+        {
+          skills: ['Medicine', 'Arcana'],
+          target: 'Cloak',
+          dc: 15,
+          success: 'The cloak is made of stitched ghoul skin',
+        },
+        {
+          skills: ['Nature'],
+          target: 'Bag',
+          dc: 5,
+          success: 'The bag is full of bat guano',
+        },
+        {
+          skills: ['Medicine', 'Arcana'],
+          target: 'Finger',
+          dc: 15,
+          success: 'The finger was severed from a hag',
+        },
+        {
+          skills: ['Medicine', 'Nature'],
+          target: 'Tongue',
+          dc: 15,
+          success: 'The tongue is from a dire wolf',
+        },
+        {
+          skills: ['Arcana', 'Investigation'],
+          target: 'Any relic',
+          dc: 12,
+          success: 'The apparent relic is worthless trash',
+          notes: [
+            'If they fail Arcana on the frog stick, but beat a DC 7, they think it could be a wand of polymorph',
+          ],
+        },
+      ],
+
+      items: [
+        {
+          name: 'Yellow hand',
+          notes: [
+            "A small, mummified, yellow hand with sharp claws (a goblin's hand) on a loop of rope",
+          ],
+        },
+        {
+          name: 'Bone knife',
+          notes: ['A knife carved from a human bone'],
+        },
+        {
+          name: 'Dagger',
+          notes: ["A dagger with a rat's skull set into the pommel"],
+        },
+        {
+          name: 'Orb',
+          notes: ["An 8-inch-diameter varnished orb made from a nothic's eye"],
+        },
+        {
+          name: 'Aspergillum',
+          notes: [
+            'An aspergillum carved from bone',
+            'Used to sprinkle holy water',
+          ],
+        },
+        {
+          name: 'Cloak',
+          notes: ['A folded cloak made of stitched ghoul skin'],
+        },
+        {
+          name: 'Frog stick',
+          notes: [
+            'A desiccated frog lashed to a stick',
+            'Looks like a wand of polymorph',
+          ],
+        },
+        {
+          name: 'Bag',
+          notes: ['A bag full of bat guano'],
+        },
+        {
+          name: 'Severed finger',
+          notes: ["A hag's severed finger"],
+        },
+        {
+          name: 'Wooden figurine',
+          notes: [
+            'A 6-inch-tall wooden figurine of a mummy, its arms crossed over its chest',
+          ],
+        },
+        {
+          name: 'Pendant',
+          notes: ["An iron pendant adorned with a devil's face"],
+        },
+        {
+          name: 'Shrunken head',
+          notes: ['The shrunken, shriveled head of a halfling'],
+        },
+        {
+          name: 'Tongue',
+          notes: [
+            "A small wooden coffer containing a severed dire wolf's withered tongue",
+          ],
+        },
+      ],
+
+      notes: ['Chanting is fully audible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3552,
+            y1: 4337,
+            x2: 4346,
+            y2: 4815,
+          },
+        },
+      ],
+    },
   },
 };
 
