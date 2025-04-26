@@ -567,10 +567,10 @@ const deathHouseData: Map = {
       creatures: [
         {
           name: 'Swarm of Centipedes',
-          quantity: 1,
-          statBlockUrl:
-            'https://www.dndbeyond.com/monsters/5195224-swarm-of-insects',
-          statBlockText: 'Swarm of Insects',
+          statBlock: {
+            text: 'Swarm of Insects',
+            url: 'https://www.dndbeyond.com/monsters/5195224-swarm-of-insects',
+          },
           trigger: 'Coffin is disturbed',
           combatBehavior: 'Attacks nearest creature(s) until defeated',
         },
@@ -1327,8 +1327,10 @@ const deathHouseData: Map = {
         {
           name: 'Grick',
           quantity: 1,
-          statBlockUrl: 'https://www.dndbeyond.com/monsters/5195061-grick',
-          statBlockText: 'Grick',
+          statBlock: {
+            url: 'https://www.dndbeyond.com/monsters/5195061-grick',
+            text: 'Grick',
+          },
           trigger: 'Entry',
           combatBehavior: 'Attacks most obvious threat until defeated',
         },

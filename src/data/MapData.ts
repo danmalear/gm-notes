@@ -22,6 +22,7 @@ export type Skill =
   | 'Stealth'
   | 'Survival';
 export type Value = `${number} ${'gp' | 'sp' | 'cp' | 'ep' | 'pp'}`;
+export type ValidPartySize = 3 | 4 | 5 | 6;
 
 export interface RectCoords {
   x1: number;
@@ -59,13 +60,25 @@ export type Lighting = {
   [key in TimeOfDay]: LightLevel;
 };
 
+export interface StatBlock {
+  text: string;
+  url?: string;
+}
+
+export type ScaledStatBlock = {
+  [key in ValidPartySize]: StatBlock;
+};
+
+export type ScaledQuantity = {
+  [key in ValidPartySize]: number;
+};
+
 export interface Creature {
   name: string;
   trigger?: string;
   pronouns?: string;
-  quantity: number;
-  statBlockText?: string;
-  statBlockUrl: string;
+  quantity?: number | ScaledQuantity;
+  statBlock: StatBlock | ScaledStatBlock;
   personality?: string;
   motivation?: string;
   combatBehavior?: string;

@@ -1,33 +1,48 @@
-import type { Creature } from '../data/MapData';
+import type { Creature, ValidPartySize } from '../data/MapData';
 import Collapsible from './Collapsible';
 import Trait from './Trait';
 
 export interface CreatureProps extends React.PropsWithChildren {
   creature: Creature;
+  partySize?: ValidPartySize;
   headingElement: React.ElementType<React.HTMLProps<HTMLHeadingElement>>;
   rolesHeadingElement: React.ElementType<React.HTMLProps<HTMLHeadingElement>>;
 }
 
 const Creature: React.FC<CreatureProps> = ({
   creature,
+  partySize = 5,
   headingElement,
   ...props
 }) => {
+  const quantity = !creature.quantity
+    ? 1
+    : typeof creature.quantity === 'number'
+      ? creature.quantity
+      : (creature.quantity[partySize] ?? 1);
+
+  const statBlock =
+    'text' in creature.statBlock
+      ? creature.statBlock
+      : (creature.statBlock[partySize] ?? creature.statBlock[5]);
+
   return (
     <Collapsible
       headingElement={headingElement}
-      title={`${creature.name}${creature.quantity > 1 ? ` x${creature.quantity}` : ''}`}
+      title={`${creature.name}${quantity > 1 ? ` x${quantity}` : ''}`}
     >
       {creature.pronouns ? (
         <Trait label="Pronouns">{creature.pronouns}</Trait>
       ) : null}
-      {creature.statBlockUrl ? (
+      {statBlock.url ? (
         <Trait label="Stat Block">
-          <a href={creature.statBlockUrl} target="_blank">
-            {creature.statBlockText}
+          <a href={statBlock.url} target="_blank">
+            {statBlock.text}
           </a>
         </Trait>
-      ) : null}
+      ) : (
+        statBlock.text
+      )}
       {creature.trigger ? (
         <Trait label="Trigger">{creature.trigger}</Trait>
       ) : null}
