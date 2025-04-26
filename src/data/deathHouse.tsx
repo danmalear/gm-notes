@@ -400,7 +400,7 @@ const deathHouseData: Map = {
           coords: {
             x1: 4016,
             y1: 1716,
-            x2: 4370,
+            x2: 4368,
             y2: 1848,
           },
         },
@@ -416,7 +416,7 @@ const deathHouseData: Map = {
         {
           shape: 'rect',
           coords: {
-            x1: 4370,
+            x1: 4368,
             y1: 1546,
             x2: 4518,
             y2: 2008,
@@ -524,6 +524,12 @@ const deathHouseData: Map = {
         },
       ],
 
+      items: [
+        {
+          name: 'Empty coffin',
+        },
+      ],
+
       notes: ['Chanting is indiscernible'],
 
       areas: [
@@ -576,6 +582,12 @@ const deathHouseData: Map = {
         },
       ],
 
+      items: [
+        {
+          name: 'Empty coffin',
+        },
+      ],
+
       notes: ['Chanting is indiscernible'],
 
       areas: [
@@ -612,6 +624,12 @@ const deathHouseData: Map = {
         },
       ],
 
+      items: [
+        {
+          name: 'Empty coffin',
+        },
+      ],
+
       notes: ['Chanting is indiscernible'],
 
       areas: [
@@ -645,6 +663,12 @@ const deathHouseData: Map = {
               bier. The air in this crypt hangs heavy with sorrow.
             </p>
           ),
+        },
+      ],
+
+      items: [
+        {
+          name: 'Empty coffin',
         },
       ],
 
@@ -1517,6 +1541,173 @@ const deathHouseData: Map = {
         },
       ],
     },
+
+    darklordsShrine: {
+      code: '31',
+      name: "Darklord's Shrine",
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <>
+              <p>
+                This room is festooned with moldy skeletons that hang from rusty
+                shackles against the walls, their mouths hanging open in silent
+                screams.
+              </p>
+              <p>
+                A wide alcove in the south wall contains a painted wooden statue
+                carved in the likeness of a gaunt, pale-faced man wearing a
+                voluminous black cloak, his pale left hand resting on the head
+                of a wolf that stands beside him. The statue's right hand holds
+                a smoky-gray crystal orb, and its painted gaze stares down
+                toward you, a cold and cruel glint to its eye.
+              </p>
+              <p>
+                [X] ashen shadows are burned into the walls, with soot marks
+                stretching across the floor toward the statue.
+              </p>
+              <p>
+                The room has exits to the west and north. Chanting can be heard
+                coming from the north.
+              </p>
+            </>
+          ),
+        },
+        {
+          prompt: 'Approaching the Orb',
+          text: (
+            <p>
+              As you near the orb in the statue's palm, you begin to hear voices
+              whispering around you. "His gaze burns upon us. The Darklord's
+              eyes are always watching." As you glance around, you see your
+              shadow on the floor begin to writhe and twist, its edges growing
+              tattered and blurred.
+            </p>
+          ),
+        },
+        {
+          prompt: 'Touching the Orb',
+          text: (
+            <p>
+              As soon as you make contact with the orb, a feeling rises within
+              you, as though a dark, ancient evil has suddenly turned its eye
+              upon you.
+            </p>
+          ),
+        },
+        {
+          prompt: 'Removing the Orb',
+          text: (
+            <p>
+              As you pluck the orb from the statue's hand, around you you see
+              two of the ashen shadows on the walls start to stir. Roll
+              initiative. [First round] You hear murmurings coming from the
+              shadows: "Begone from this place!"
+            </p>
+          ),
+        },
+      ],
+
+      creatures: [
+        {
+          name: 'Shadow',
+          quantity: {
+            3: 3,
+            4: 4,
+            5: 5,
+            6: 6,
+          },
+          statBlock: {
+            url: 'https://www.dndbeyond.com/monsters/5428469-shadow-death-house',
+            text: 'Shadow (Death House)',
+          },
+          trigger: 'Removing the orb',
+          combatBehavior:
+            'Once all shadows are awakened, they each attack a different target, until defeated or orb is returned',
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Perception'],
+          target: 'Walls',
+          dc: 10,
+          success:
+            'On the eastern wall, uUnder a thin layer of clay, there is a concealed wooden door.',
+        },
+      ],
+
+      items: [
+        {
+          name: 'Wooden statue',
+          notes: [
+            "Depicts Strahd (PCs don't know this)",
+            'Standing next to wolf',
+          ],
+        },
+        {
+          name: 'Orb',
+          value: '25 gp',
+        },
+        {
+          name: 'Moldy skeletons',
+          quantity: 7,
+        },
+      ],
+
+      notes: [
+        'Chanting is indiscernible',
+        'Note number of shadows before reading description',
+        'Shadows also murmur and moan, "Look not upon us" and "Return the Darklord\'s offering!"',
+        'Two shadows awaken each round',
+      ],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 4368,
+            y1: 2870,
+            x2: 4838,
+            y2: 3665,
+          },
+        },
+        {
+          shape: 'circle',
+          coords: {
+            x: 4771,
+            y: 3264,
+            r: 253,
+          },
+        },
+      ],
+    },
+
+    // hiddenTrapdoor: {
+    //   code: '32',
+    //   name: 'Hidden Trapdoor',
+    //   lighting: {
+    //     day: 'Darkness',
+    //     between: 'Darkness',
+    //     night: 'Darkness',
+    //   },
+
+    //   descriptions: [
+    //     {
+    //       prompt: 'Entry',
+    //       text: <></>,
+    //     },
+    //   ],
+
+    //   notes: ['Chanting is indiscernible'],
+    // },
   },
 };
 
