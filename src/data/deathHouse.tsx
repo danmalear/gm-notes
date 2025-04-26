@@ -1326,7 +1326,6 @@ const deathHouseData: Map = {
       creatures: [
         {
           name: 'Grick',
-          quantity: 1,
           statBlock: {
             3: {
               text: 'Grick (3P)',
