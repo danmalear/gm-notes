@@ -1377,34 +1377,95 @@ const deathHouseData: Map = {
 
       descriptions: [
         {
-          prompt: 'Entry',
-          text: <></>,
+          prompt: 'Approach',
+          text: (
+            <p>
+              A deathly stench emanates from this corridor. The stone walls bear
+              cracked, red stains, and a trail of old bones leads deeper down
+              the tunnel.
+            </p>
+          ),
+        },
+        {
+          prompt: 'Continuing further',
+          text: (
+            <p>
+              The trail ends at the center of a quiet intersection. The
+              incessant chanting you've heard since first entering the dungeon
+              is noticeably louder down the northern branch of the intersection.
+            </p>
+          ),
         },
       ],
 
       creatures: [
         {
           name: 'Ghoul',
-          quantity: 2,
+          quantity: {
+            3: 1,
+            4: 2,
+            5: 3,
+            6: 4,
+          },
           statBlock: {
             url: 'https://www.dndbeyond.com/monsters/5195060-ghoul',
             text: 'Ghoul',
           },
-          trigger: 'Entry',
-          combatBehavior: 'Attacks most obvious threat until defeated',
+          trigger: 'Trigger points (see notes)',
+          combatBehavior: 'Move to choke point and attack character in front',
         },
       ],
 
-      notes: ['Chanting is indiscernible'],
+      notes: [
+        'Chanting is louder, still unclear',
+        'Trigger points are the two spaces that are two spaces before the intersection',
+        'Xes on map are wrong - use Reloaded',
+      ],
 
       areas: [
         {
           shape: 'rect',
           coords: {
             x1: 3872,
-            y1: 2505,
-            x2: 4518,
+            y1: 2535,
+            x2: 4016,
+            y2: 3332,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 4016,
+            y1: 2535,
+            x2: 4178,
+            y2: 2675,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3552,
+            y1: 2705,
+            x2: 4346,
             y2: 2844,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 4209,
+            y1: 2844,
+            x2: 4346,
+            y2: 3005,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 4016,
+            y1: 3203,
+            x2: 4346,
+            y2: 3333,
           },
         },
       ],
