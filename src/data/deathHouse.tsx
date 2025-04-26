@@ -2127,6 +2127,71 @@ const deathHouseData: Map = {
         },
       ],
     },
+
+    prison: {
+      code: '36',
+      name: 'Prison',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              The sound of clinking chains melds with a quiet,
+              near-imperceptible rustling as you round the bend into a long,
+              darkened dungeon. Rusted shackles hang patiently from the walls,
+              as if waiting to bite into prisoners' flesh once more.
+            </p>
+          ),
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Perception'],
+          target: 'Walls',
+          dc: 15,
+          success: 'A secret door is hidden on the southern wall',
+        },
+      ],
+
+      items: [
+        {
+          name: 'Shackles',
+          quantity: 12,
+          notes: ['Rusty shackles hanging from walls'],
+        },
+        {
+          name: 'Human skeleton',
+          notes: ['Marked by X on map', 'Wearing a tattered black robe'],
+          items: [
+            {
+              name: 'Gold ring',
+              value: '25 gp',
+            },
+          ],
+        },
+      ],
+
+      notes: ['Chanting is fully audible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3227,
+            y1: 5159,
+            x2: 3686,
+            y2: 6302,
+          },
+        },
+      ],
+    },
   },
 };
 
