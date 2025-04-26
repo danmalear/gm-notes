@@ -2397,7 +2397,10 @@ const deathHouseData: Map = {
         start of its next turn.`,
       ],
 
-      notes: ['Chanting is silent'],
+      notes: [
+        'Chanting is silent',
+        'Areas with water are 2 feet deep and difficult terrain',
+      ],
 
       areas: [
         {
