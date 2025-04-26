@@ -92,6 +92,13 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
                   headingElement="h3"
                   title={itemOrItemGroup.name}
                 >
+                  {itemOrItemGroup.notes ? (
+                    <ul>
+                      {itemOrItemGroup.notes.map((note, noteIndex) => (
+                        <li key={`note-${noteIndex}`}>{note}</li>
+                      ))}
+                    </ul>
+                  ) : null}
                   {itemOrItemGroup.items.map((subItem, subIndex) => (
                     <Item
                       key={`item-${index}-${subIndex}`}
