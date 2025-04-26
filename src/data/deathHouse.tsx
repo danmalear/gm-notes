@@ -2192,6 +2192,75 @@ const deathHouseData: Map = {
         },
       ],
     },
+
+    portcullis: {
+      code: '37',
+      name: 'Portcullis',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Approach',
+          text: (
+            <p>
+              The floor is submerged beneath two feet of dark, murky water that
+              sloshes around your calves and boots. The tunnel forward is
+              blocked by a rusty iron portcullis. Beyond its iron bars, you can
+              make out the dark outline of a half-submerged chamber, a raised
+              stone dais, and a thick cloud of rolling mist.
+            </p>
+          ),
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Athletics'],
+          target: 'Portcullis',
+          dc: 20,
+          success: 'The portcullis is lifted',
+        },
+
+        {
+          skills: ['Investigation'],
+          target: 'Portcullis',
+          dc: 12,
+          success:
+            'The portcullis is rigged to a chain-link mechanism that is operated by a wheel on the other side. The mechanism is broken.',
+        },
+      ],
+
+      items: [
+        {
+          name: 'Portcullis',
+        },
+        {
+          name: 'Wooden wheel',
+          notes: ['Chain-link mechanism has broken'],
+        },
+      ],
+
+      notes: [
+        'Chanting is fully audible',
+        'Part of the floor under 2 feet of water (difficult terrain)',
+      ],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 4040,
+            y1: 4844,
+            x2: 4178,
+            y2: 5158,
+          },
+        },
+      ],
+    },
   },
 };
 
