@@ -1328,8 +1328,21 @@ const deathHouseData: Map = {
           name: 'Grick',
           quantity: 1,
           statBlock: {
-            url: 'https://www.dndbeyond.com/monsters/5195061-grick',
-            text: 'Grick',
+            3: {
+              text: 'Grick (3P)',
+            },
+            4: {
+              url: 'https://www.dndbeyond.com/monsters/5360510-grick-4p',
+              text: 'Grick (4P)',
+            },
+            5: {
+              url: 'https://www.dndbeyond.com/monsters/5195061-grick',
+              text: 'Grick',
+            },
+            6: {
+              url: 'https://www.dndbeyond.com/monsters/5353579-grick-6p',
+              text: 'Grick (6P)',
+            },
           },
           trigger: 'Entry',
           combatBehavior: 'Attacks most obvious threat until defeated',
@@ -1349,6 +1362,50 @@ const deathHouseData: Map = {
             y1: 2214,
             x2: 4682,
             y2: 2349,
+          },
+        },
+      ],
+    },
+
+    ghoulHall: {
+      code: '29',
+      name: 'Ghoulish Encounter',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
+
+      creatures: [
+        {
+          name: 'Ghoul',
+          quantity: 2,
+          statBlock: {
+            url: 'https://www.dndbeyond.com/monsters/5195060-ghoul',
+            text: 'Ghoul',
+          },
+          trigger: 'Entry',
+          combatBehavior: 'Attacks most obvious threat until defeated',
+        },
+      ],
+
+      notes: ['Chanting is indiscernible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3872,
+            y1: 2505,
+            x2: 4518,
+            y2: 2844,
           },
         },
       ],
