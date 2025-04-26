@@ -1690,24 +1690,47 @@ const deathHouseData: Map = {
       ],
     },
 
-    // hiddenTrapdoor: {
-    //   code: '32',
-    //   name: 'Hidden Trapdoor',
-    //   lighting: {
-    //     day: 'Darkness',
-    //     between: 'Darkness',
-    //     night: 'Darkness',
-    //   },
+    hiddenTrapdoor: {
+      code: '32',
+      name: 'Hidden Trapdoor',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
 
-    //   descriptions: [
-    //     {
-    //       prompt: 'Entry',
-    //       text: <></>,
-    //     },
-    //   ],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              The clay staircase ends at a cramped landing. Six feet above the
+              ground, a half-rotted ceiling of close-fitting planks holds a
+              closed wooden trapdoor leading to an upper floor. The trapdoor is
+              bolted shut from this side.
+            </p>
+          ),
+        },
+      ],
 
-    //   notes: ['Chanting is indiscernible'],
-    // },
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 4528,
+            y1: 2375,
+            x2: 4682,
+            y2: 2844,
+          },
+        },
+      ],
+
+      opportunities: [
+        'Opening the trapdoor enables quick travel to and from den of wolves',
+      ],
+
+      notes: ['Chanting is indiscernible'],
+    },
   },
 };
 
