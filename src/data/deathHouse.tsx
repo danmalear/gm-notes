@@ -1420,6 +1420,7 @@ const deathHouseData: Map = {
         'Chanting is louder, still unclear',
         'Trigger points are the two spaces that are two spaces before the intersection',
         'Xes on map are wrong - use Reloaded',
+        'While attacking, ghouls say "Beautiful. We\'re so beautiful," We are perfect. We are immortal," and "Help up live forever."',
       ],
 
       areas: [
