@@ -1471,6 +1471,52 @@ const deathHouseData: Map = {
         },
       ],
     },
+
+    stairsDown: {
+      code: '30',
+      name: 'Stairs Down',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Approach',
+          text: (
+            <p>
+              A dark set of chiseled stone steps descends into darkness. It's
+              clear that the origin of the muffled chanting you've been hearing
+              lies below.
+            </p>
+          ),
+        },
+      ],
+
+      notes: ['Chanting is louder, still unclear'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3227,
+            y1: 2705,
+            x2: 3362,
+            y2: 3164,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3362,
+            y1: 2870,
+            x2: 3519,
+            y2: 3164,
+          },
+        },
+      ],
+    },
   },
 };
 
