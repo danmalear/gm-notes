@@ -1701,7 +1701,7 @@ const deathHouseData: Map = {
 
       descriptions: [
         {
-          prompt: 'Entry',
+          prompt: 'Ascent',
           text: (
             <p>
               The clay staircase ends at a cramped landing. Six feet above the
@@ -1730,6 +1730,215 @@ const deathHouseData: Map = {
       ],
 
       notes: ['Chanting is indiscernible'],
+    },
+
+    leadersDen: {
+      code: '33',
+      name: "Cult Leaders' Den",
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              This quiet room contains a wooden table flanked by two high-backed
+              chairs and holding a clay jug and two flagons. Above the table is
+              suspended an unlit cast-iron chandelier. Iron candlesticks stand
+              in two corners of the chamber, their candles long since melted
+              away. A short corridor at the north end of the room leads to a
+              darkened chamber beyond.
+            </p>
+          ),
+        },
+      ],
+
+      items: [
+        {
+          name: 'Wooden table',
+          items: [
+            {
+              name: 'Clay jug',
+            },
+            {
+              name: 'Flagons',
+              quantity: 2,
+            },
+          ],
+        },
+        {
+          name: 'Wooden chairs',
+          quantity: 2,
+        },
+        {
+          name: 'Iron candlesticks',
+          quantity: 2,
+          notes: ['Candles melted away'],
+        },
+        {
+          name: 'Cast-iron chandelier',
+        },
+      ],
+
+      notes: ['Chanting is indiscernible'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3872,
+            y1: 3359,
+            x2: 4346,
+            y2: 3833,
+          },
+        },
+      ],
+    },
+
+    leadersQuarters: {
+      code: '34',
+      name: "Cult Leaders' Quarters",
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <>
+              <p>
+                This room contains a large wood-framed bed, the feather mattress
+                rotted by years of disuse. An old wooden wardrobe carved with
+                demonic faces stands against the wall to the left, and a faded
+                wooden footlocker stands quietly at the foot of the bed.
+              </p>
+              <p>
+                The room is suffused with a familiar stench of death—but far
+                stronger, mixing with a noxious scent that fills your lungs with
+                every breath.
+              </p>
+            </>
+          ),
+        },
+      ],
+
+      creatures: [
+        {
+          name: 'Boneless',
+          statBlock: {
+            3: {
+              text: 'Boneless (3P)',
+            },
+            4: {
+              text: 'Boneless (4P)',
+            },
+            5: {
+              url: 'https://www.dndbeyond.com/monsters/5353772-boneless',
+              text: 'Boneless',
+            },
+            6: {
+              text: 'Boneless (6P)',
+            },
+          },
+          trigger: 'Footlocker is opened',
+          combatBehavior: 'Attacks nearest creature until defeated',
+        },
+      ],
+
+      items: [
+        {
+          name: 'Wooden footlocker',
+          items: [
+            {
+              name: 'Cloak of protection',
+            },
+            {
+              name: 'Potions of healing',
+              quantity: 4,
+              notes: ['Contained in a small wooden coffer'],
+            },
+            {
+              name: 'Chain shirt',
+            },
+            {
+              name: 'Mess kit',
+            },
+            {
+              name: "Flask of alchemist's fire",
+            },
+            {
+              name: 'Bullseye lantern',
+            },
+            {
+              name: "Thieves' tools",
+            },
+            {
+              name: 'Yellow leather-bound spellbook',
+              notes: [
+                'Contains the following wizard spells:',
+                '1st level: Disguise Self, Mage Armor, Magic Missile, Protection from Evil and Good',
+                '2nd level: Darkvision, Hold Person, Invisibility, Magic Weapon',
+              ],
+            },
+          ],
+        },
+        {
+          name: 'Wood-framed bed',
+        },
+        {
+          name: 'Wooden wardrobe',
+          notes: ['Carved with demonic faces'],
+          items: [
+            {
+              name: 'Old robes',
+              quantity: 4,
+            },
+            {
+              name: 'Rotted organs',
+              quantity: 2,
+              notes: [
+                'Contained beneath the hems the robes',
+                'One half-eaten liver, one gnawed intestine',
+              ],
+            },
+            {
+              name: 'Iron candlesticks',
+              quantity: 2,
+            },
+            {
+              name: 'Torches',
+              quantity: 30,
+              notes: ['Contained in an open crate'],
+            },
+            {
+              name: 'Candles',
+              quantity: 15,
+              notes: ['Contained in a leather sack in an open crate'],
+            },
+          ],
+        },
+      ],
+
+      notes: ['Chanting is indiscernible', 'Ignore cavities, per Reloaded'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 3227,
+            y1: 3524,
+            x2: 3686,
+            y2: 3993,
+          },
+        },
+      ],
     },
   },
 };
