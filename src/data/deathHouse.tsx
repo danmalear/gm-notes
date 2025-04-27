@@ -1432,7 +1432,7 @@ const deathHouseData: Map = {
             6: 4,
           },
           statBlock: {
-            url: 'https://www.dndbeyond.com/monsters/5195060-ghoul',
+            url: 'https://www.dndbeyond.com/monsters/5195009-ghoul',
             text: 'Ghoul',
           },
           trigger: 'Trigger points (see notes)',
