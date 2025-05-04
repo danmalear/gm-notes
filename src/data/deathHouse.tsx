@@ -238,6 +238,71 @@ const deathHouseData: Map = {
             y2: 6310,
           },
         },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 908,
+            y1: 5658,
+            x2: 1060,
+            y2: 5823,
+          },
+        },
+      ],
+    },
+
+    cloakroom: {
+      code: '2B',
+      name: 'Cloakroom',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              Several black cloaks hang in this small closet, with a top hat
+              sitting on an upper shelf. An envelope protrudes from the pocket
+              of one of the cloaks.
+            </p>
+          ),
+        },
+      ],
+
+      items: [
+        {
+          name: 'Envelope',
+          notes: ['Contains the Invitation handout'],
+        },
+        {
+          name: 'Cloaks',
+          quantity: 4,
+        },
+        {
+          name: 'Top hat',
+        },
+      ],
+
+      handouts: [
+        {
+          text: 'Invitation',
+          url: 'https://www.strahdreloaded.com/Act+I+-+Into+the+Mists/Arc+A+-+Escape+From+Death+House#Cloakroom',
+        },
+      ],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 744,
+            y1: 5658,
+            x2: 897,
+            y2: 5816,
+          },
+        },
       ],
     },
 
