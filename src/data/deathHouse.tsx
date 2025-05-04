@@ -153,6 +153,94 @@ const deathHouseData: Map = {
       ],
     },
 
+    mainHall: {
+      code: '2A',
+      name: 'Main Hall',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <>
+              <p>
+                As soon as you enter the main hall, the front door to the house
+                slams shut, and all of the lights you can see immediately
+                extinguish. The pitter-patter of rain outside ceases, leaving
+                the house in a deathly silence. On the right, above a marble
+                staircase spiralling up to the upper levels, unnaturally
+                illuminated letters appear in blood, one by one, spelling out a
+                poem: [HANDOUT: Poem]
+              </p>
+              <p>
+                A grandfather clock in the center of the stairwell tolls six
+                times. Glancing around, you see that the walls comprise
+                intricately carved wooden panels. Above the recently
+                extinguished fireplace, a family portrait hangs, with a
+                descriptive plaque underneath. You also see several doors
+                leading out from the hall in addition to the one behind you.
+              </p>
+            </>
+          ),
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Insight'],
+          target: 'Portrait',
+          dc: 10,
+          success:
+            'The mother in the portrait is regarding the baby with a hint of scorn.',
+        },
+        {
+          skills: ['Perception'],
+          target: 'Walls',
+          dc: 12,
+          success:
+            'Worked into the wood panel carvings are hidden serpents and skulls.',
+        },
+      ],
+
+      items: [
+        {
+          name: 'Family portrait',
+          notes: ['Portrays the Durst family'],
+        },
+        {
+          name: 'Wooden panels',
+          notes: ['Portray vines, flowers, nymphs, and satyrs'],
+        },
+        {
+          name: 'Grandfather clock',
+          notes: ['Sits in the center of the stairwell (not on map)'],
+        },
+      ],
+
+      handouts: [
+        {
+          text: 'Poem',
+          url: 'https://www.strahdreloaded.com/Act+I+-+Into+the+Mists/Arc+A+-+Escape+From+Death+House#Main+Hall',
+        },
+      ],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 413,
+            y1: 5823,
+            x2: 1392,
+            y2: 6310,
+          },
+        },
+      ],
+    },
+
     // ...
 
     secretStairs: {
