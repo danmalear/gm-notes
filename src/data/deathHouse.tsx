@@ -306,6 +306,203 @@ const deathHouseData: Map = {
       ],
     },
 
+    denOfWolves: {
+      code: '3',
+      name: 'Den of Wolves',
+      lighting: {
+        day: 'Dim light',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Opening door',
+          text: (
+            <p>
+              As you crack the door to this room open, you catch a glimpse of
+              something feral beyond: an amber eye that flashes in the darkness,
+              and a bestial muzzle curled into a snarl.
+            </p>
+          ),
+        },
+        {
+          prompt: 'Entry',
+          text: (
+            <>
+              <p>
+                The door cracks open, revealing a gray-furred wolf frozen into
+                place. It's only a moment before you realize that it's not
+                moving—and another before you realize that it's not alone.
+              </p>
+              <p>
+                This oak-paneled room looks like a hunter's den. Mounted above a
+                fireplace is a stag's head, and positioned around the outskirts
+                of the room are two additional stuffed wolves—a large gray wolf
+                and a smaller brown wolf.
+              </p>
+              <p>
+                Two padded chairs draped in animal furs face the hearth, with an
+                oak table between them supporting an assortment of objects. A
+                chandelier hangs above a cloth-covered table surrounded by four
+                chairs, and two cabinets stand against the walls. A pair of
+                small toys seems to have been forgotten beneath one of the
+                chairs.
+              </p>
+            </>
+          ),
+        },
+        {
+          prompt: 'Looking back at wolves',
+          text: (
+            <p>
+              When you turn back around, you see that the wolves are no longer
+              in the same positions they were before. The larger wolf and the
+              smaller brown wolf now stand beside each other, while the smaller
+              gray wolf has turned its snarl toward the other two.
+            </p>
+          ),
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Nature'],
+          target: 'Stuffed wolves',
+          dc: 7,
+          success: 'The wolves are dead and stuffed.',
+        },
+        {
+          skills: ['Nature'],
+          target: 'Stuffed wolves',
+          dc: 12,
+          success:
+            'The large, gray wolf is a male, the smaller ones are female.',
+        },
+        {
+          skills: ['Sleight of Hand'],
+          target: 'East cabinet',
+          dc: 15,
+          success: 'The cabinet is unlocked',
+          notes: ["Thieves' tools proficiency grants advantage"],
+        },
+      ],
+
+      items: [
+        {
+          name: 'North cabinet',
+          notes: ['Unlocked'],
+          items: [
+            {
+              name: 'Needlework',
+              notes: [
+                'Depicts boy and girl holding hands with young woman',
+                '"FOR MISS KLARA" in clumsy writing',
+                "Young woman's face is slashed out",
+                'Mounted',
+              ],
+            },
+            {
+              name: 'Deck of cards',
+              notes: ['Contained in a small box'],
+            },
+            {
+              name: 'Wine glasses',
+              quantity: 12,
+            },
+          ],
+        },
+        {
+          name: 'East cabinet',
+          notes: ['Locked'],
+          items: [
+            {
+              name: 'Heavy crossbow',
+            },
+            {
+              name: 'Light crossbow',
+            },
+            {
+              name: 'Hand crossbow',
+            },
+            {
+              name: 'Crossbow bolts',
+              quantity: 60,
+            },
+            {
+              name: 'Silvered crossbow bolts',
+              quantity: 5,
+            },
+          ],
+        },
+        {
+          name: 'Stuffed wolves',
+          notes: ['Large gray wolf', 'Small brown wolf', 'Small gray wolf'],
+        },
+        {
+          name: 'Toys',
+          quantity: 2,
+          notes: [
+            'Stuffed toy wolves',
+            "Each has a child's name sewn on: ROSE and THORN",
+          ],
+        },
+        {
+          name: 'Trapdoor',
+          notes: ['Impossible to notice from this side'],
+        },
+        {
+          name: 'Padded armchairs',
+          quantity: 2,
+        },
+        {
+          name: 'Oak table',
+          items: [
+            {
+              name: 'Cask of wine',
+            },
+            {
+              name: 'Wooden goblets',
+              quantity: 2,
+            },
+            {
+              name: 'Pipe rack',
+            },
+            {
+              name: 'Candelabrum',
+            },
+          ],
+        },
+        {
+          name: 'Stag head',
+          notes: ['Mounted above fireplace'],
+        },
+        {
+          name: 'Chandelier',
+          notes: ['Hanging above covered table'],
+        },
+        {
+          name: 'Covered table',
+        },
+        {
+          name: 'Chairs',
+          quantity: 4,
+        },
+      ],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 747,
+            y1: 6320,
+            x2: 1392,
+            y2: 6973,
+          },
+        },
+      ],
+    },
+
     // ...
 
     secretStairs: {
