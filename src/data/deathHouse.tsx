@@ -234,7 +234,7 @@ const deathHouseData: Map = {
           coords: {
             x1: 413,
             y1: 5823,
-            x2: 1392,
+            x2: 1136,
             y2: 6310,
           },
         },
@@ -245,6 +245,14 @@ const deathHouseData: Map = {
             y1: 5658,
             x2: 1060,
             y2: 5823,
+          },
+        },
+        {
+          shape: 'circle',
+          coords: {
+            x: 1136,
+            y: 6067,
+            r: 241,
           },
         },
       ],
@@ -498,6 +506,153 @@ const deathHouseData: Map = {
             y1: 6320,
             x2: 1392,
             y2: 6973,
+          },
+        },
+      ],
+    },
+
+    kitchen: {
+      code: '4A',
+      name: 'Kitchen',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <>
+              <p>
+                You enter a tidy kitchen, with dishware, cookware, and utensils
+                neatly placed on shelves. A worktable has a cutting board and
+                rolling pin atop it. A stone, dome-shaped oven stands near the
+                east wall, its bent iron stovepipe connecting to a hole in the
+                ceiling. Behind the stove and to the left is a thin door.
+              </p>
+              <p>
+                In the front right-hand corner of the room stands a small wooden
+                door set into the wall.
+              </p>
+            </>
+          ),
+        },
+      ],
+
+      notes: ['Largest kitchen knife is missing'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 1073,
+            y1: 5331,
+            x2: 1392,
+            y2: 5816,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 1315,
+            y1: 5816,
+            x2: 1392,
+            y2: 5886,
+          },
+        },
+      ],
+    },
+
+    pantry: {
+      code: '4B',
+      name: 'Pantry',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              Inside the pantry you find various typical dry goods, as well as
+              on one shelf, a set of decorative plates, each mounted upright and
+              painted with pictures of windmills. One of the plates has been
+              knocked off the shelf, leaving shattered remnants on the ground,
+              and a gap between its neighboring plates.
+            </p>
+          ),
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Nature'],
+          target: 'Vial of brown powder',
+          dc: 14,
+          success: 'The powder is dried silphium, a contraceptive herb.',
+        },
+      ],
+
+      items: [
+        {
+          name: 'Copper pot',
+          notes: ['Behind the empty spot on the shelf'],
+          items: [
+            {
+              name: 'Bottle of wine',
+              notes: [
+                'Wizards of Wine: Champagne du le Stomp',
+                'If a PC drinks it, they realize it has turned to vinegar',
+              ],
+            },
+            {
+              name: 'Folded lace',
+              notes: ['Initial "K" sewn in one corner'],
+            },
+            {
+              name: 'Vial of brown powder',
+              notes: [
+                '(see checks) Contains dried silphium, a contraceptive herb',
+              ],
+            },
+            {
+              name: 'Bouquet of wilted sunflowers',
+            },
+            {
+              name: 'Small scroll of parchment',
+              notes: [
+                'Tied to the bouquet',
+                'If someone reads it, a kitchen knife flies into the opposite wall',
+              ],
+            },
+          ],
+        },
+        {
+          name: 'Decorative plates',
+          quantity: 6,
+          notes: ['Each painted with a windmill'],
+        },
+        {
+          name: 'Shattered plate',
+          notes: ['Remnants on the ground'],
+        },
+      ],
+
+      notes: ['Food is extremely bland, but not dangerous'],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 1073,
+            y1: 5176,
+            x2: 1392,
+            y2: 5320,
           },
         },
       ],
