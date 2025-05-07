@@ -55,12 +55,14 @@ const deathHouseData: Map = {
           ),
         },
         {
-          prompt: 'Re-entry',
+          prompt: 'Re-entry (first time outside)',
           text: (
             <p>
-              Looking back outside, you find that the exterior of the house has
-              been fully surrounded by enormous, fleshy tendrils, extruding from
-              beneath the house.
+              Going back outside, the first thing that hits you is a rank smell,
+              like old meat. Its source is obvious: fully surrounding the
+              exterior of the house, you see enormous, fleshy tendrils,
+              extruding from beneath the manor and tightly packed together,
+              forming a solid wall.
             </p>
           ),
         },
@@ -1007,7 +1009,21 @@ const deathHouseData: Map = {
       descriptions: [
         {
           prompt: 'Entry',
-          text: <></>,
+          text: (
+            <>
+              <p>
+                Red velvet drapes cover the windows of this room. An exquisite
+                mahogany desk and a matching high-back chair face the entrance
+                and the fireplace, above which hangs a framed picture of a
+                windmill perched atop a rocky crag. Situated in corners of the
+                room are two overstuffed chairs.
+              </p>
+              <p>
+                Floor-to-ceiling bookshelves line the south wall. A rolling
+                wooden ladder allows one to more easily reach the high shelves.
+              </p>
+            </>
+          ),
         },
       ],
 
@@ -1048,7 +1064,15 @@ const deathHouseData: Map = {
       descriptions: [
         {
           prompt: 'Entry',
-          text: <></>,
+          text: (
+            <p>
+              This small hidden room is packed with bookshelves groaning with
+              old and ominous-looking leather-bound tomes. A heavy wooden chest
+              with clawed iron feet stands against the south wall, its lid
+              half-closed. Sticking out of the chest, its ribs and head caught
+              beneath the lid, is a skeleton in leather armor.
+            </p>
+          ),
         },
       ],
 
@@ -1080,7 +1104,66 @@ const deathHouseData: Map = {
       descriptions: [
         {
           prompt: 'Entry',
-          text: <></>,
+          text: (
+            <>
+              <p>
+                You enter into an elegantly appointed hall, the windows of which
+                are covered by gossamer drapes. A brass-plated chandelier hangs
+                from the ceiling, and upholstered chairs line the walls.
+              </p>
+              <p>
+                Several stained-glass wall hangings depict beautiful men, women,
+                and children singing and playing instruments. A harpsichord with
+                a bench rests in the northwest corner. Near the fireplace is a
+                large standing harp. Alabaster figurines of well-dressed dancers
+                adorn the mantelpiece.
+              </p>
+            </>
+          ),
+        },
+        {
+          prompt: 'Harpsichord',
+          text: (
+            <>
+              <p>
+                As you press your fingers to the keys, the notes echo, a
+                haunting melody filling the quiet, dusty room. As you continue
+                to play, the music seems to take on a life of its own, your
+                hands moving across the keys unbidden as if guided by an unseen
+                force.
+              </p>
+              <p>
+                From the edges of the room, spectral figures begin to
+                materialize, spinning and weaving in a ghostly dance as though
+                led by the song. Most are unfamiliar to you, but you recognize
+                two: Elisabeth Durst, in the corner, watching Gustav's
+                apparition dancing with a beautiful young woman wearing humble
+                clothes.
+              </p>
+              <p>
+                The eyes of Elisabeth's apparition narrow into a cold, furious
+                stare. The dancers pay her little heed, however, the song
+                growing faster as the spirits whirl to the rhythm of the
+                harpsichord's crescendo.
+              </p>
+              <p>
+                With a swift movement, Elisabeth reaches for a pendant around
+                her spectral neck—a shimmering amber shard hung on a cord of
+                ethereal mist. As her ghostly fist curls around it, her eyes
+                flash a bright, menacing amber—and the spectral dancers
+                dissipate, swept away as if by an unseen wind.
+              </p>
+              <p>
+                Elisabeth's apparition lingers but a moment longer before
+                disappearing with the rest. As it does, a sound resonates
+                through the room: the low sound of scraping wood, originating
+                from the room across the hall. The floor trembles faintly—and
+                you hear a crash from the mantelpiece. Two of the alabaster
+                figurines have fallen from their place on the shelf: one,
+                toppled over on its side; the other, shattered across the floor.
+              </p>
+            </>
+          ),
         },
       ],
 
@@ -1107,7 +1190,21 @@ const deathHouseData: Map = {
       descriptions: [
         {
           prompt: 'Entry',
-          text: <></>,
+          text: (
+            <>
+              <p>
+                You climb the red marble staircase to its full height, arriving
+                at a dusty balcony. The air here is dry and musty, but tinged
+                with a strange, coppery scent.
+              </p>
+              <p>
+                A suit of black plate armor stands against one wall, draped in
+                cobwebs and marked by age. Oil lamps are mounted on the faded
+                oak-paneled walls, which are carved with woodland scenes of
+                trees, falling leaves, and tiny beasts.
+              </p>
+            </>
+          ),
         },
       ],
 
@@ -1157,8 +1254,75 @@ const deathHouseData: Map = {
 
       descriptions: [
         {
+          prompt: 'Approach',
+          text: (
+            <>
+              <p>
+                These grand doors loom tall, their dark wood frames enclosing a
+                pair of dusty stained-glass windows. Each pane is etched with
+                intricate designs that resemble windmills, their once-vibrant
+                hues now faded and obscured beneath a thick veil of grime.
+              </p>
+              <p>
+                Through the dusty haze that prickles your eyes, you catch a
+                glimpse of something through the windows: a silhouette, standing
+                mere inches behind the glass, lit from behind by a dim, amber
+                glow. It's still and unmoving, but the mere sight of it seizes
+                your muscles in a vice-like grip, your limbs refusing to obey
+                your conscious mind.
+              </p>
+              <p>
+                The air around you thickens, its temperature plummeting to a
+                bone-chilling cold. Your breath fogs the glass panes, a delicate
+                frost creeping across them as the house's distant creaks and
+                whispers are swallowed by a heavy silence.
+              </p>
+              <p>
+                The shadow behind the door is nearly formless—insubstantial—but
+                its presence invokes a primordial dread deep within your marrow.
+                Your heart beats faster, sweat beading on your forehead, pulse
+                racing through your veins. Slowly, the silhouette begins to turn
+                its head toward yours.
+              </p>
+              <p>
+                [Feign coming out of spacing out] Sorry, lost my train of
+                thought. You were heading through the ornate doors, right?
+              </p>
+            </>
+          ),
+        },
+        {
           prompt: 'Entry',
-          text: <></>,
+          text: (
+            <>
+              <p>
+                You enter a dusty, cobweb-filled master bedroom with burgundy
+                drapes covering the windows. A four-poster bed with embroidered
+                curtains and tattered gossamer veils stands against the center
+                wall.
+              </p>
+              <p>
+                A door facing the foot of the bed has a faded full-length mirror
+                mounted on it. In the right-hand corner of the room stands a
+                small wooden door, its surface half-rotted by age. A tarnished
+                metal button is set into the wall beside it.
+              </p>
+              <p>
+                A rotting tiger-skin rug lies on the floor in front of the
+                fireplace, which has a dust-covered portrait of the man and
+                woman from the first-floor portrait hanging above it. A
+                web-filled parlor in the southwest corner contains two chairs
+                and a table holding several items, as well as a door with a
+                dark, dirt-flecked window.
+              </p>
+              <p>
+                The room also contains a matching pair of wardrobes, a padded
+                chair, and a vanity with a wood-framed mirror and a silver
+                jewelry box. A soft amber glow emanates from beneath the jewelry
+                box's lid.
+              </p>
+            </>
+          ),
         },
       ],
 
@@ -1217,7 +1381,7 @@ const deathHouseData: Map = {
       descriptions: [
         {
           prompt: 'Entry',
-          text: <></>,
+          text: <p>Inside the closet, you see nothing but darkness.</p>,
         },
       ],
 
@@ -1241,8 +1405,27 @@ const deathHouseData: Map = {
 
       descriptions: [
         {
+          prompt: 'Entry (first time outdoors)',
+          text: (
+            <p>
+              As you open the door, the first thing that hits you is a rank
+              smell, like old meat. Its source is obvious: fully surrounding the
+              balcony you find yourself on, as well as the entire exterior of
+              the house, you see enormous, fleshy tendrils, extruding from
+              beneath the manor and tightly packed together, forming a solid
+              wall.
+            </p>
+          ),
+        },
+        {
           prompt: 'Entry',
-          text: <></>,
+          text: (
+            <p>
+              The door leads out to a small exterior balcony, the view only of
+              the fleshy tendrils that surround the house. Nothing else is
+              immediately visible.
+            </p>
+          ),
         },
       ],
 
@@ -1267,7 +1450,13 @@ const deathHouseData: Map = {
       descriptions: [
         {
           prompt: 'Entry',
-          text: <></>,
+          text: (
+            <p>
+              The door opens to a dark bathroom, containing a wooden tub with
+              clawed feet, a small iron stove with a kettle resting atop it, and
+              a barrel under a spigot.
+            </p>
+          ),
         },
       ],
 
@@ -1292,7 +1481,13 @@ const deathHouseData: Map = {
       descriptions: [
         {
           prompt: 'Entry',
-          text: <></>,
+          text: (
+            <p>
+              Dusty shelves line the walls of this room. A few of the shelves
+              have folded sheets, blankets, and old bars of soap on them. A
+              cobweb-covered broom leans against the far wall.
+            </p>
+          ),
         },
       ],
 
@@ -1317,7 +1512,34 @@ const deathHouseData: Map = {
       descriptions: [
         {
           prompt: 'Entry',
-          text: <></>,
+          text: (
+            <>
+              <p>
+                Dust and cobwebs shroud this elegantly appointed bedroom. A
+                large bed stands against the far wall, its once-opulent
+                coverings now faded and threadbare.
+              </p>
+              <p>
+                Beside the bed, a mildew-covered towel covers most of a dusty
+                yellowed book on one of its two end tables. On the far side of
+                the room, you can see a pair of two more stained-glass doors,
+                their windows flecked with dirt and grime.
+              </p>
+              <p>
+                To the left stands an empty wardrobe, its doors slightly ajar.
+                Mounted beside it stands a full-length mirror, its wooden frame
+                carved to resemble ivy and berries. To the right stands a closed
+                door.
+              </p>
+              <p>
+                As you look around the room, you notice that the blankets atop
+                the bed lift slightly away from the mattress, as though
+                something is lying atop the mattress beneath. As you watch, you
+                can see the coverings, almost imperceptibly, slowly rise and
+                fall with low, rhythmic rustling.
+              </p>
+            </>
+          ),
         },
       ],
 
@@ -1342,7 +1564,23 @@ const deathHouseData: Map = {
       descriptions: [
         {
           prompt: 'Entry',
-          text: <></>,
+          text: (
+            <>
+              <p>
+                The air in this small nursery is strangely warm and tinged with
+                a coppery scent. Blood-red runes cover the walls, arranged in
+                concentric circles around the crib in the center, which seems to
+                have a name carved into its side. Strange, flesh-like tumors
+                have grown along the floor around it in sparse clusters, and
+                slowly pulsate as if they're breathing.
+              </p>
+              <p>
+                Looking down, you notice that a small object seems to have
+                fallen beneath the crib. In the distance, you can faintly hear
+                the sound of an infant's soft whimpering.
+              </p>
+            </>
+          ),
         },
       ],
 
@@ -1366,8 +1604,27 @@ const deathHouseData: Map = {
 
       descriptions: [
         {
+          prompt: 'Entry (first time outdoors)',
+          text: (
+            <p>
+              As you open the door, the first thing that hits you is a rank
+              smell, like old meat. Its source is obvious: fully surrounding the
+              balcony you find yourself on, as well as the entire exterior of
+              the house, you see enormous, fleshy tendrils, extruding from
+              beneath the manor and tightly packed together, forming a solid
+              wall.
+            </p>
+          ),
+        },
+        {
           prompt: 'Entry',
-          text: <></>,
+          text: (
+            <p>
+              The door leads out to a small exterior balcony, the view only of
+              the fleshy tendrils that surround the house. Nothing else is
+              immediately visible.
+            </p>
+          ),
         },
       ],
 
@@ -1394,7 +1651,19 @@ const deathHouseData: Map = {
       descriptions: [
         {
           prompt: 'Entry',
-          text: <></>,
+          text: (
+            <>
+              <p>
+                This bare hall is choked with dust and cobwebs. Several doors
+                lead from this attic corridor, including a door held shut with a
+                padlock.
+              </p>
+              <p>
+                A low [creak] cuts through the air as one of the unlocked doors
+                slowly creaks open.
+              </p>
+            </>
+          ),
         },
       ],
 
@@ -1446,7 +1715,15 @@ const deathHouseData: Map = {
       descriptions: [
         {
           prompt: 'Entry',
-          text: <></>,
+          text: (
+            <p>
+              This cold, dust-choked room contains a slender bed, a nightstand,
+              a small iron stove, a writing desk with a stool, an empty
+              wardrobe, and a rocking chair. A frowning doll in a lacy yellow
+              dress sits in the northern window box beside a tarnished old music
+              box, cobwebs draping it like a wedding veil.
+            </p>
+          ),
         },
       ],
 
@@ -1505,7 +1782,14 @@ const deathHouseData: Map = {
       descriptions: [
         {
           prompt: 'Entry',
-          text: <></>,
+          text: (
+            <p>
+              This dusty chamber is packed with lumpy, squat shapes draped in
+              dusty white sheets. An old iron stove stands against the
+              right-side wall, next to what looks to be a large trunk covered by
+              a sheet.
+            </p>
+          ),
         },
       ],
 
@@ -1539,7 +1823,12 @@ const deathHouseData: Map = {
       descriptions: [
         {
           prompt: 'Entry',
-          text: <></>,
+          text: (
+            <p>
+              This web-filled room contains a slender bed, a nightstand, a
+              rocking chair, an open and empty wardrobe, and a small iron stove.
+            </p>
+          ),
         },
       ],
 
@@ -1564,7 +1853,17 @@ const deathHouseData: Map = {
       descriptions: [
         {
           prompt: 'Entry',
-          text: <></>,
+          text: (
+            <p>
+              This room contains a bricked-up window flanked by two dusty,
+              wood-framed beds sized for children. Closer to the door is a toy
+              chest with windmills painted on its sides and a dollhouse that's a
+              perfect replica of the dreary edifice in which you stand. These
+              furnishings are draped in cobwebs. Lying in the middle of the
+              floor are two small skeletons wearing tattered clothing. The
+              smaller of the two cradles a stuffed doll.
+            </p>
+          ),
         },
       ],
 
@@ -3141,6 +3440,10 @@ const deathHouseData: Map = {
         },
       ],
 
+      opportunities: [
+        'Opening the trapdoor enables quick travel to and from den of wolves',
+      ],
+
       areas: [
         {
           shape: 'rect',
@@ -3151,10 +3454,6 @@ const deathHouseData: Map = {
             y2: 2844,
           },
         },
-      ],
-
-      opportunities: [
-        'Opening the trapdoor enables quick travel to and from den of wolves',
       ],
 
       notes: ['Chanting is indiscernible'],
