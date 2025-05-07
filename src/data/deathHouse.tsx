@@ -225,6 +225,10 @@ const deathHouseData: Map = {
 
       handouts: [
         {
+          text: 'Durst family portrait',
+          url: 'https://publish-01.obsidian.md/access/7db64b11c71d88572ddc6cd06b888976/images/The%20Durst%20Family.png',
+        },
+        {
           text: 'Poem',
           url: 'https://www.strahdreloaded.com/Act+I+-+Into+the+Mists/Arc+A+-+Escape+From+Death+House#Main+Hall',
         },
@@ -628,6 +632,7 @@ const deathHouseData: Map = {
             {
               name: 'Small scroll of parchment',
               notes: [
+                '"For the light of my life. - G."',
                 'Tied to the bouquet',
                 'If someone reads it, a kitchen knife flies into the opposite wall',
               ],
@@ -647,7 +652,7 @@ const deathHouseData: Map = {
 
       handouts: [
         {
-          text: 'Scroll of parchment',
+          text: 'Bouquet scroll',
           url: 'https://www.strahdreloaded.com/Act+I+-+Into+the+Mists/Arc+A+-+Escape+From+Death+House#Kitchen+and+Pantry',
         },
       ],
