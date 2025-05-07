@@ -776,6 +776,98 @@ const deathHouseData: Map = {
       ],
     },
 
+    // 1st floor to 2nd floor: x + 1316
+
+    upperHall: {
+      code: '6',
+      name: 'Upper Hall',
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <>
+              <p>
+                Unlit oil lamps are mounted on the walls of this elegant hall.
+                Hanging above the mantelpiece is a longsword with a windmill
+                cameo worked into the hilt.
+              </p>
+              <p>
+                Standing suits of armor flank wooden doors in the east and west
+                walls. Each suit of armor clutches a spear and has a visored
+                helm shaped like a wolf's head. The doors between them are
+                carved with images of dancing youths.
+              </p>
+              <p>
+                The red marble staircase continues its upward spiral to a third
+                floor, a cold draft whispering down from above.
+              </p>
+            </>
+          ),
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Perception'],
+          target: 'Doors',
+          dc: 12,
+          success:
+            "The youths aren't actually dancing, but instead fighting off swarms of bats.",
+        },
+      ],
+
+      items: [
+        {
+          name: 'Longsword',
+          notes: [
+            'Mounted above the fireplace',
+            'Windmill cameo worked into the hilt',
+          ],
+        },
+        {
+          name: 'Suits of armor',
+          quantity: 4,
+          notes: ["Visored helm shaped like a wolf's head"],
+        },
+        {
+          name: 'Spears',
+          quantity: 4,
+          notes: ['Held by suits of armor'],
+        },
+        {
+          name: 'Oil lamps',
+          quantity: 2,
+          notes: ['Hanging from walls'],
+        },
+      ],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 1729,
+            y1: 5823,
+            x2: 2452,
+            y2: 6310,
+          },
+        },
+        {
+          shape: 'circle',
+          coords: {
+            x: 2452,
+            y: 6067,
+            r: 241,
+          },
+        },
+      ],
+    },
+
     // ...
 
     secretStairs: {
