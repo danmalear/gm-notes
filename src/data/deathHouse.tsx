@@ -658,6 +658,124 @@ const deathHouseData: Map = {
       ],
     },
 
+    diningRoom: {
+      code: '5',
+      name: 'Dining Room',
+      lighting: {
+        day: 'Dim light',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Approach',
+          text: (
+            <p>
+              As you approach the door, you can hear the muffled sounds of a
+              lively dinner coming from within--laughter and chatter punctuated
+              by the clinking of silverware and crystalware.
+            </p>
+          ),
+        },
+        {
+          prompt: 'Entry',
+          text: (
+            <>
+              <p>
+                You enter into a wood-paneled dining room. The centerpiece is a
+                carved mahogany table surrounded by eight high-backed chairs
+                with sculpted armrests and cushioned seats. A crystal chandelier
+                hangs above the table, which is set with resplendent silverware
+                and crystal glasses polished to a dazzling shine. Mounted above
+                the marble fireplace is a mahogany-framed painting of an alpine
+                vale.
+              </p>
+              <p>
+                The wall paneling is carved with elegant images of deer among
+                the trees. Red silk drapes cover the windows, and a tapestry
+                hangs from an iron rod bolted to the south wall.
+              </p>
+              <p>
+                The table groans beneath the weight of a delicious-looking
+                feast. Exquisite dishes lay on grand platters: succulent roasted
+                poultry glazed with a shimmering honey sauce, perfectly grilled
+                cuts of beef still steaming lightly, a variety of cheeses and
+                fresh fruits, and freshly baked breads giving off a comforting
+                aroma.
+              </p>
+            </>
+          ),
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Perception'],
+          target: 'Walls',
+          dc: 12,
+          success:
+            'On the wood paneling, twisted faces are carved into the tree trunks, and wolves lurk amid the foliage.',
+        },
+      ],
+
+      items: [
+        {
+          name: 'Tapestry',
+          notes: [
+            'Depicts hunting dogs and horse-mounted aristocrats chasing a wolf',
+            'Rots if it leaves the house',
+          ],
+        },
+        {
+          name: 'Painting',
+          notes: ['Depicts an alpine vale', 'Fades if it leaves the house'],
+        },
+        {
+          name: 'Dining table',
+          items: [
+            {
+              name: 'Silverware',
+              notes: ['Tarnishes if it leaves the house'],
+            },
+            {
+              name: 'Crystalware',
+              notes: ['Cracks if it leaves the house'],
+            },
+          ],
+        },
+        {
+          name: 'Dining chairs',
+          quantity: 8,
+        },
+        {
+          name: 'Crystal chandelier',
+          notes: ['Hanging above the table'],
+        },
+      ],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 413,
+            y1: 5176,
+            x2: 1060,
+            y2: 5650,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 584,
+            y1: 5650,
+            x2: 737,
+            y2: 5816,
+          },
+        },
+      ],
+    },
+
     // ...
 
     secretStairs: {
