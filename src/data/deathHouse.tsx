@@ -645,6 +645,13 @@ const deathHouseData: Map = {
         },
       ],
 
+      handouts: [
+        {
+          text: 'Scroll of parchment',
+          url: 'https://www.strahdreloaded.com/Act+I+-+Into+the+Mists/Arc+A+-+Escape+From+Death+House#Kitchen+and+Pantry',
+        },
+      ],
+
       notes: ['Food is extremely bland, but not dangerous'],
 
       areas: [
