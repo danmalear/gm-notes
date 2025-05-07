@@ -868,6 +868,123 @@ const deathHouseData: Map = {
       ],
     },
 
+    servantsRoom: {
+      code: '7A',
+      name: "Servants' Room",
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <>
+              <p>
+                This undecorated bedroom contains a pair of beds with
+                straw-stuffed mattresses. At the foot of each bed is a closed
+                foot locker. A door to the left appears to lead to a closet.
+              </p>
+              <p>
+                In the right-hand corner stands a small wooden door, a metal
+                button set into the wall beside it. A basket full of unwashed
+                laundry appears to have been left beside it.
+              </p>
+            </>
+          ),
+        },
+      ],
+
+      checks: [
+        {
+          skills: ['Investigation'],
+          target: 'Dumbwaiter',
+          dc: 10,
+          success:
+            'The button is rigged to a system of wires that rings a bell in the kitchen.',
+        },
+      ],
+
+      items: [
+        {
+          name: 'Laundry basket',
+          notes: ["Contains men's clothing, except one smaller woman's slip"],
+        },
+        {
+          name: 'Footlockers',
+          quantity: 2,
+        },
+        {
+          name: 'Beds',
+          quantity: 2,
+        },
+      ],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2389,
+            y1: 5331,
+            x2: 2708,
+            y2: 5816,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2631,
+            y1: 5816,
+            x2: 2708,
+            y2: 5886,
+          },
+        },
+      ],
+    },
+
+    servantsCloset: {
+      code: '7B',
+      name: "Servants' Room - Closet",
+      lighting: {
+        day: 'Darkness',
+        between: 'Darkness',
+        night: 'Darkness',
+      },
+
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: (
+            <p>
+              The closet within only contains servants' uniforms hanging in
+              darkness.
+            </p>
+          ),
+        },
+      ],
+
+      items: [
+        {
+          name: "Servants' uniforms",
+          quantity: 4,
+        },
+      ],
+
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2224,
+            y1: 5658,
+            x2: 2376,
+            y2: 5816,
+          },
+        },
+      ],
+    },
+
     // ...
 
     secretStairs: {
