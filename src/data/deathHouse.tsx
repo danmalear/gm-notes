@@ -7,6 +7,8 @@ const deathHouseData: Map = {
     sizeY: 7500,
   },
   regions: {
+    // 1st floor
+
     portico: {
       code: '1A',
       name: 'Entrance - Portico',
@@ -776,7 +778,7 @@ const deathHouseData: Map = {
       ],
     },
 
-    // 1st floor to 2nd floor: x + 1316
+    // 2nd floor
 
     upperHall: {
       code: '6',
@@ -992,7 +994,26 @@ const deathHouseData: Map = {
 
       descriptions: [],
 
-      areas: [],
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 1729,
+            y1: 5176,
+            x2: 2376,
+            y2: 5650,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 1900,
+            y1: 5650,
+            x2: 2213,
+            y2: 5816,
+          },
+        },
+      ],
     },
 
     // @TODO unfinished
@@ -1002,7 +1023,17 @@ const deathHouseData: Map = {
 
       descriptions: [],
 
-      areas: [],
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2389,
+            y1: 5176,
+            x2: 2708,
+            y2: 5320,
+          },
+        },
+      ],
     },
 
     // @TODO unfinished
@@ -1012,8 +1043,20 @@ const deathHouseData: Map = {
 
       descriptions: [],
 
-      areas: [],
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 1729,
+            y1: 6320,
+            x2: 2708,
+            y2: 6973,
+          },
+        },
+      ],
     },
+
+    // 3rd floor
 
     // @TODO unfinished
     interiorBalcony: {
@@ -1022,7 +1065,43 @@ const deathHouseData: Map = {
 
       descriptions: [],
 
-      areas: [],
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 744,
+            y1: 3682,
+            x2: 1136,
+            y2: 4169,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 744,
+            y1: 3675,
+            x2: 897,
+            y2: 3682,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 584,
+            y1: 3517,
+            x2: 897,
+            y2: 3675,
+          },
+        },
+        {
+          shape: 'circle',
+          coords: {
+            x: 1136,
+            y: 3926,
+            r: 241,
+          },
+        },
+      ],
     },
 
     // @TODO unfinished
@@ -1032,7 +1111,44 @@ const deathHouseData: Map = {
 
       descriptions: [],
 
-      areas: [],
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 413,
+            y1: 3035,
+            x2: 1219,
+            y2: 3509,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 908,
+            y1: 2976,
+            x2: 1060,
+            y2: 3035,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 1073,
+            y1: 3363,
+            x2: 1392,
+            y2: 3675,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 1315,
+            y1: 3675,
+            x2: 1392,
+            y2: 3745,
+          },
+        },
+      ],
     },
 
     // @TODO unfinished
@@ -1042,7 +1158,17 @@ const deathHouseData: Map = {
 
       descriptions: [],
 
-      areas: [],
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 908,
+            y1: 3517,
+            x2: 1060,
+            y2: 3675,
+          },
+        },
+      ],
     },
 
     // @TODO unfinished
@@ -1052,7 +1178,17 @@ const deathHouseData: Map = {
 
       descriptions: [],
 
-      areas: [],
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 1247,
+            y1: 3035,
+            x2: 1392,
+            y2: 3335,
+          },
+        },
+      ],
     },
 
     // @TODO unfinished
@@ -1062,7 +1198,17 @@ const deathHouseData: Map = {
 
       descriptions: [],
 
-      areas: [],
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 413,
+            y1: 3682,
+            x2: 737,
+            y2: 4000,
+          },
+        },
+      ],
     },
 
     // @TODO unfinished
@@ -1072,7 +1218,17 @@ const deathHouseData: Map = {
 
       descriptions: [],
 
-      areas: [],
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 413,
+            y1: 4013,
+            x2: 737,
+            y2: 4169,
+          },
+        },
+      ],
     },
 
     // @TODO unfinished
@@ -1082,7 +1238,17 @@ const deathHouseData: Map = {
 
       descriptions: [],
 
-      areas: [],
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 747,
+            y1: 4179,
+            x2: 1392,
+            y2: 4832,
+          },
+        },
+      ],
     },
 
     // @TODO unfinished
@@ -1092,7 +1258,17 @@ const deathHouseData: Map = {
 
       descriptions: [],
 
-      areas: [],
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 413,
+            y1: 4179,
+            x2: 737,
+            y2: 4490,
+          },
+        },
+      ],
     },
 
     // @TODO unfinished
@@ -1102,8 +1278,20 @@ const deathHouseData: Map = {
 
       descriptions: [],
 
-      areas: [],
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 413,
+            y1: 4520,
+            x2: 737,
+            y2: 4832,
+          },
+        },
+      ],
     },
+
+    // Attic
 
     // @TODO unfinished
     atticHall: {
@@ -1112,7 +1300,44 @@ const deathHouseData: Map = {
 
       descriptions: [],
 
-      areas: [],
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2224,
+            y1: 3517,
+            x2: 2708,
+            y2: 4169,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 1900,
+            y1: 3517,
+            x2: 2224,
+            y2: 3675,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2563,
+            y1: 3472,
+            x2: 2708,
+            y2: 3517,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2389,
+            y1: 4169,
+            x2: 2708,
+            y2: 4327,
+          },
+        },
+      ],
     },
 
     // @TODO unfinished
@@ -1122,7 +1347,44 @@ const deathHouseData: Map = {
 
       descriptions: [],
 
-      areas: [],
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2224,
+            y1: 4347,
+            x2: 2708,
+            y2: 4663,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2224,
+            y1: 4179,
+            x2: 2376,
+            y2: 4347,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2157,
+            y1: 4597,
+            x2: 2224,
+            y2: 4743,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2224,
+            y1: 4663,
+            x2: 2535,
+            y2: 4832,
+          },
+        },
+      ],
     },
 
     // @TODO unfinished
@@ -1132,7 +1394,26 @@ const deathHouseData: Map = {
 
       descriptions: [],
 
-      areas: [],
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 1729,
+            y1: 3682,
+            x2: 2213,
+            y2: 4420,
+          },
+        },
+        {
+          shape: 'rect',
+          coords: {
+            x1: 1900,
+            y1: 4420,
+            x2: 2053,
+            y2: 4490,
+          },
+        },
+      ],
     },
 
     // @TODO unfinished
@@ -1142,7 +1423,17 @@ const deathHouseData: Map = {
 
       descriptions: [],
 
-      areas: [],
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 1729,
+            y1: 3035,
+            x2: 2053,
+            y2: 3509,
+          },
+        },
+      ],
     },
 
     // @TODO unfinished
@@ -1152,10 +1443,18 @@ const deathHouseData: Map = {
 
       descriptions: [],
 
-      areas: [],
+      areas: [
+        {
+          shape: 'rect',
+          coords: {
+            x1: 2063,
+            y1: 3035,
+            x2: 2535,
+            y2: 3509,
+          },
+        },
+      ],
     },
-
-    // ...
 
     secretStairs: {
       code: '21',
@@ -1243,6 +1542,8 @@ const deathHouseData: Map = {
         },
       ],
     },
+
+    // Dungeon Level 1
 
     dungeonAccess: {
       code: '22',
@@ -2942,6 +3243,8 @@ const deathHouseData: Map = {
         },
       ],
     },
+
+    // Dungeon Level 2
 
     reliquary: {
       code: '35',
