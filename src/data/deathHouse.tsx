@@ -985,6 +985,176 @@ const deathHouseData: Map = {
       ],
     },
 
+    // @TODO unfinished
+    library: {
+      code: '8',
+      name: 'Library',
+
+      descriptions: [],
+
+      areas: [],
+    },
+
+    // @TODO unfinished
+    secretRoom: {
+      code: '9',
+      name: 'Secret Room',
+
+      descriptions: [],
+
+      areas: [],
+    },
+
+    // @TODO unfinished
+    conservatory: {
+      code: '10',
+      name: 'Conservatory',
+
+      descriptions: [],
+
+      areas: [],
+    },
+
+    // @TODO unfinished
+    interiorBalcony: {
+      code: '11',
+      name: 'Balcony',
+
+      descriptions: [],
+
+      areas: [],
+    },
+
+    // @TODO unfinished
+    masterBedroom: {
+      code: '12A',
+      name: 'Master Suite - Bedroom',
+
+      descriptions: [],
+
+      areas: [],
+    },
+
+    // @TODO unfinished
+    masterCloset: {
+      code: '12B',
+      name: 'Master Suite - Closet',
+
+      descriptions: [],
+
+      areas: [],
+    },
+
+    // @TODO unfinished
+    masterBalcony: {
+      code: '12C',
+      name: 'Master Suite - Balcony',
+
+      descriptions: [],
+
+      areas: [],
+    },
+
+    // @TODO unfinished
+    bathroom: {
+      code: '13',
+      name: 'Bathroom',
+
+      descriptions: [],
+
+      areas: [],
+    },
+
+    // @TODO unfinished
+    storageRoom1: {
+      code: '14',
+      name: 'Storage Room (Third Floor)',
+
+      descriptions: [],
+
+      areas: [],
+    },
+
+    // @TODO unfinished
+    nursemaidsBedroom: {
+      code: '15A',
+      name: "Nursemaid's Suite - Bedroom",
+
+      descriptions: [],
+
+      areas: [],
+    },
+
+    // @TODO unfinished
+    nursery: {
+      code: '15B',
+      name: "Nursemaid's Suite - Nursery",
+
+      descriptions: [],
+
+      areas: [],
+    },
+
+    // @TODO unfinished
+    nursemaidsBalcony: {
+      code: '15C',
+      name: "Nursemaid's Suite - Balcony",
+
+      descriptions: [],
+
+      areas: [],
+    },
+
+    // @TODO unfinished
+    atticHall: {
+      code: '16',
+      name: 'Attic Hall',
+
+      descriptions: [],
+
+      areas: [],
+    },
+
+    // @TODO unfinished
+    spareBedroom: {
+      code: '17',
+      name: 'Spare Bedroom',
+
+      descriptions: [],
+
+      areas: [],
+    },
+
+    // @TODO unfinished
+    storageRoom2: {
+      code: '18',
+      name: 'Storage Room (Attic)',
+
+      descriptions: [],
+
+      areas: [],
+    },
+
+    // @TODO unfinished
+    guestBedroom: {
+      code: '19',
+      name: 'Guest Bedroom',
+
+      descriptions: [],
+
+      areas: [],
+    },
+
+    // @TODO unfinished
+    childrensRoom: {
+      code: '20',
+      name: "Children's Room",
+
+      descriptions: [],
+
+      areas: [],
+    },
+
     // ...
 
     secretStairs: {
