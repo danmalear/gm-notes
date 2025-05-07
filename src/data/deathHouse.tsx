@@ -1157,6 +1157,13 @@ const deathHouseData: Map = {
         },
       ],
 
+      handouts: [
+        {
+          text: 'Note for Drasha',
+          url: 'https://www.strahdreloaded.com/Act+I+-+Into+the+Mists/Arc+A+-+Escape+From+Death+House#Master+Suite',
+        },
+      ],
+
       areas: [
         {
           shape: 'rect',
