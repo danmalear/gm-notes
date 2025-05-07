@@ -1006,6 +1006,13 @@ const deathHouseData: Map = {
         },
       ],
 
+      handouts: [
+        {
+          text: 'Note from Klara',
+          url: 'https://www.strahdreloaded.com/Act+I+-+Into+the+Mists/Arc+A+-+Escape+From+Death+House#Library',
+        },
+      ],
+
       areas: [
         {
           shape: 'rect',
@@ -1037,6 +1044,13 @@ const deathHouseData: Map = {
         {
           prompt: 'Entry',
           text: <></>,
+        },
+      ],
+
+      handouts: [
+        {
+          text: 'Letter from Strahd',
+          url: 'https://www.strahdreloaded.com/Act+I+-+Into+the+Mists/Arc+A+-+Escape+From+Death+House#Secret+Room',
         },
       ],
 
@@ -1421,6 +1435,13 @@ const deathHouseData: Map = {
         {
           prompt: 'Entry',
           text: <></>,
+        },
+      ],
+
+      handouts: [
+        {
+          text: 'Floor plan',
+          url: 'https://publish-01.obsidian.md/access/7db64b11c71d88572ddc6cd06b888976/images/Death%20House%20Dungeon%20Map.png',
         },
       ],
 
