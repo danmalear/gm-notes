@@ -992,7 +992,12 @@ const deathHouseData: Map = {
       code: '8',
       name: 'Library',
 
-      descriptions: [],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
 
       areas: [
         {
@@ -1021,7 +1026,12 @@ const deathHouseData: Map = {
       code: '9',
       name: 'Secret Room',
 
-      descriptions: [],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
 
       areas: [
         {
@@ -1041,7 +1051,12 @@ const deathHouseData: Map = {
       code: '10',
       name: 'Conservatory',
 
-      descriptions: [],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
 
       areas: [
         {
@@ -1063,7 +1078,12 @@ const deathHouseData: Map = {
       code: '11',
       name: 'Balcony',
 
-      descriptions: [],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
 
       areas: [
         {
@@ -1109,7 +1129,12 @@ const deathHouseData: Map = {
       code: '12A',
       name: 'Master Suite - Bedroom',
 
-      descriptions: [],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
 
       areas: [
         {
@@ -1156,7 +1181,12 @@ const deathHouseData: Map = {
       code: '12B',
       name: 'Master Suite - Closet',
 
-      descriptions: [],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
 
       areas: [
         {
@@ -1176,7 +1206,12 @@ const deathHouseData: Map = {
       code: '12C',
       name: 'Master Suite - Balcony',
 
-      descriptions: [],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
 
       areas: [
         {
@@ -1196,7 +1231,12 @@ const deathHouseData: Map = {
       code: '13',
       name: 'Bathroom',
 
-      descriptions: [],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
 
       areas: [
         {
@@ -1216,7 +1256,12 @@ const deathHouseData: Map = {
       code: '14',
       name: 'Storage Room (Third Floor)',
 
-      descriptions: [],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
 
       areas: [
         {
@@ -1236,7 +1281,12 @@ const deathHouseData: Map = {
       code: '15A',
       name: "Nursemaid's Suite - Bedroom",
 
-      descriptions: [],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
 
       areas: [
         {
@@ -1256,7 +1306,12 @@ const deathHouseData: Map = {
       code: '15B',
       name: "Nursemaid's Suite - Nursery",
 
-      descriptions: [],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
 
       areas: [
         {
@@ -1276,7 +1331,12 @@ const deathHouseData: Map = {
       code: '15C',
       name: "Nursemaid's Suite - Balcony",
 
-      descriptions: [],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
 
       areas: [
         {
@@ -1298,7 +1358,12 @@ const deathHouseData: Map = {
       code: '16',
       name: 'Attic Hall',
 
-      descriptions: [],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
 
       areas: [
         {
@@ -1345,7 +1410,12 @@ const deathHouseData: Map = {
       code: '17',
       name: 'Spare Bedroom',
 
-      descriptions: [],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
 
       areas: [
         {
@@ -1392,7 +1462,12 @@ const deathHouseData: Map = {
       code: '18',
       name: 'Storage Room (Attic)',
 
-      descriptions: [],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
 
       areas: [
         {
@@ -1421,7 +1496,12 @@ const deathHouseData: Map = {
       code: '19',
       name: 'Guest Bedroom',
 
-      descriptions: [],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
 
       areas: [
         {
@@ -1441,7 +1521,12 @@ const deathHouseData: Map = {
       code: '20',
       name: "Children's Room",
 
-      descriptions: [],
+      descriptions: [
+        {
+          prompt: 'Entry',
+          text: <></>,
+        },
+      ],
 
       areas: [
         {
