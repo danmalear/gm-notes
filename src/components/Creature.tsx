@@ -5,8 +5,6 @@ import Trait from './Trait';
 export interface CreatureProps extends React.PropsWithChildren {
   creature: Creature;
   partySize?: ValidPartySize;
-  isOpen: boolean;
-  onToggleOpen: (isOpen: boolean) => void;
   headingElement: React.ElementType<React.HTMLProps<HTMLHeadingElement>>;
   rolesHeadingElement: React.ElementType<React.HTMLProps<HTMLHeadingElement>>;
 }
@@ -14,8 +12,6 @@ export interface CreatureProps extends React.PropsWithChildren {
 const Creature: React.FC<CreatureProps> = ({
   creature,
   partySize = 5,
-  isOpen,
-  onToggleOpen,
   headingElement,
   ...props
 }) => {
@@ -34,8 +30,6 @@ const Creature: React.FC<CreatureProps> = ({
     <Collapsible
       headingElement={headingElement}
       title={`${creature.name}${quantity > 1 ? ` x${quantity}` : ''}`}
-      isOpen={isOpen}
-      onToggleOpen={onToggleOpen}
     >
       {creature.pronouns ? (
         <Trait label="Pronouns">{creature.pronouns}</Trait>

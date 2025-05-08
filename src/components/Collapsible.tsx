@@ -1,22 +1,40 @@
 import classNames from 'classnames';
+import { useContext, useState } from 'react';
 import './Collapsible.css';
+import {
+  RegionDetailsContext,
+  RegionDetailsDispatchContext,
+} from './RegionDetailsContext';
 
 export interface CollapsibleProps extends React.PropsWithChildren {
-  isOpen?: boolean;
   title: string;
-  onToggleOpen: (isOpen: boolean) => void;
   headingElement: React.ElementType<React.HTMLProps<HTMLHeadingElement>>;
 }
 
 const Collapsible: React.FC<CollapsibleProps> = ({
-  isOpen,
   children,
   title,
-  onToggleOpen,
   ...props
 }) => {
+  const [stateId] = useState(self.crypto.randomUUID());
+
+  const collapsibles = useContext(RegionDetailsContext);
+  const dispatch = useContext(RegionDetailsDispatchContext);
+
+  const handleToggleOpen = (isOpen: boolean) => {
+    dispatch({
+      type: 'openToggled',
+      collapsibleId: stateId,
+      isOpen,
+    });
+  };
+
+  const isOpen = () => {
+    return collapsibles.openCollapsibles[stateId] ?? false;
+  };
+
   const handleTitleClick = () => {
-    onToggleOpen(!isOpen);
+    handleToggleOpen(!isOpen());
   };
 
   return (
@@ -28,13 +46,13 @@ const Collapsible: React.FC<CollapsibleProps> = ({
       >
         <props.headingElement
           className={classNames({
-            'color-inactive': !isOpen,
+            'color-inactive': !isOpen(),
           })}
         >
           {title}
         </props.headingElement>
       </button>
-      {isOpen ? <div className="text ml-1">{children}</div> : null}
+      {isOpen() ? <div className="text ml-1">{children}</div> : null}
     </>
   );
 };
