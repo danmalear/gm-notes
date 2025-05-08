@@ -1,23 +1,22 @@
 import classNames from 'classnames';
-import { useState } from 'react';
 import './Collapsible.css';
 
 export interface CollapsibleProps extends React.PropsWithChildren {
-  open?: boolean;
+  isOpen?: boolean;
   title: string;
+  onToggleOpen: (isOpen: boolean) => void;
   headingElement: React.ElementType<React.HTMLProps<HTMLHeadingElement>>;
 }
 
 const Collapsible: React.FC<CollapsibleProps> = ({
-  open,
+  isOpen,
   children,
   title,
+  onToggleOpen,
   ...props
 }) => {
-  const [isOpen, setIsOpen] = useState(open ?? false);
-
   const handleTitleClick = () => {
-    setIsOpen((prev) => !prev);
+    onToggleOpen(!isOpen);
   };
 
   return (

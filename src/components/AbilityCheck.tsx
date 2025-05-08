@@ -4,6 +4,8 @@ import Trait from './Trait.tsx';
 
 export interface AbilityCheckProps extends React.PropsWithChildren {
   check: AbilityCheck;
+  isOpen: boolean;
+  onToggleOpen: (isOpen: boolean) => void;
   headingElement: React.ElementType<React.HTMLProps<HTMLHeadingElement>>;
   prereqsHeadingElement: React.ElementType<React.HTMLProps<HTMLHeadingElement>>;
 }
@@ -11,12 +13,16 @@ export interface AbilityCheckProps extends React.PropsWithChildren {
 const AbilityCheck: React.FC<AbilityCheckProps> = ({
   check,
   headingElement,
+  isOpen,
+  onToggleOpen,
   ...props
 }) => {
   return (
     <Collapsible
       headingElement={headingElement}
       title={`${check.skills.join('/')} (DC ${check.dc}) on ${check.target}`}
+      isOpen={isOpen}
+      onToggleOpen={onToggleOpen}
     >
       {check.prerequisites ? (
         <>
