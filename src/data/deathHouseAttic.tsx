@@ -3,10 +3,15 @@ import type { Region } from './MapData.ts';
 const atticRegions: {
   [key: string]: Region;
 } = {
-  // @TODO lighting, creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, opportunities, notes
   atticHall: {
     code: '16',
     name: 'Attic Hall',
+    lighting: {
+      day: 'Darkness',
+      between: 'Darkness',
+      night: 'Darkness',
+    },
 
     descriptions: [
       {
@@ -67,10 +72,15 @@ const atticRegions: {
     ],
   },
 
-  // @TODO lighting, creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, opportunities, notes
   spareBedroom: {
     code: '17',
     name: 'Spare Bedroom',
+    lighting: {
+      day: 'Dim light',
+      between: 'Darkness',
+      night: 'Darkness',
+    },
 
     descriptions: [
       {
@@ -134,10 +144,15 @@ const atticRegions: {
     ],
   },
 
-  // @TODO lighting, creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, opportunities, notes
   storageRoom2: {
     code: '18',
     name: 'Storage Room (Attic)',
+    lighting: {
+      day: 'Dim light',
+      between: 'Darkness',
+      night: 'Darkness',
+    },
 
     descriptions: [
       {
@@ -174,10 +189,15 @@ const atticRegions: {
     ],
   },
 
-  // @TODO lighting, creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, opportunities, notes
   guestBedroom: {
     code: '19',
     name: 'Guest Bedroom',
+    lighting: {
+      day: 'Dim light',
+      between: 'Darkness',
+      night: 'Darkness',
+    },
 
     descriptions: [
       {
@@ -204,10 +224,15 @@ const atticRegions: {
     ],
   },
 
-  // @TODO lighting, creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, opportunities, notes
   childrensRoom: {
     code: '20',
     name: "Children's Room",
+    lighting: {
+      day: 'Darkness',
+      between: 'Darkness',
+      night: 'Darkness',
+    },
 
     descriptions: [
       {

@@ -210,10 +210,15 @@ const secondFloorRegions: {
     ],
   },
 
-  // @TODO lighting, creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, opportunities, notes
   library: {
     code: '8',
     name: 'Library',
+    lighting: {
+      day: 'Dim light',
+      between: 'Darkness',
+      night: 'Darkness',
+    },
 
     descriptions: [
       {
@@ -265,10 +270,15 @@ const secondFloorRegions: {
     ],
   },
 
-  // @TODO lighting, creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, opportunities, notes
   secretRoom: {
     code: '9',
     name: 'Secret Room',
+    lighting: {
+      day: 'Darkness',
+      between: 'Darkness',
+      night: 'Darkness',
+    },
 
     descriptions: [
       {
@@ -305,10 +315,15 @@ const secondFloorRegions: {
     ],
   },
 
-  // @TODO lighting, creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, opportunities, notes
   conservatory: {
     code: '10',
     name: 'Conservatory',
+    lighting: {
+      day: 'Dim light',
+      between: 'Darkness',
+      night: 'Darkness',
+    },
 
     descriptions: [
       {

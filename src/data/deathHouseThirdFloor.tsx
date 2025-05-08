@@ -3,10 +3,15 @@ import type { Region } from './MapData.ts';
 const thirdFloorRegions: {
   [key: string]: Region;
 } = {
-  // @TODO lighting, creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, opportunities, notes
   interiorBalcony: {
     code: '11',
     name: 'Balcony',
+    lighting: {
+      day: 'Darkness',
+      between: 'Darkness',
+      night: 'Darkness',
+    },
 
     descriptions: [
       {
@@ -68,10 +73,15 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO lighting, creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, opportunities, notes
   masterBedroom: {
     code: '12A',
     name: 'Master Suite - Bedroom',
+    lighting: {
+      day: 'Dim light',
+      between: 'Darkness',
+      night: 'Darkness',
+    },
 
     descriptions: [
       {
@@ -194,10 +204,15 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO lighting, creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, opportunities, notes
   masterCloset: {
     code: '12B',
     name: 'Master Suite - Closet',
+    lighting: {
+      day: 'Darkness',
+      between: 'Darkness',
+      night: 'Darkness',
+    },
 
     descriptions: [
       {
@@ -219,10 +234,15 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO lighting, creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, opportunities, notes
   masterBalcony: {
     code: '12C',
     name: 'Master Suite - Balcony',
+    lighting: {
+      day: 'Bright light',
+      between: 'Dim light',
+      night: 'Darkness',
+    },
 
     descriptions: [
       {
@@ -262,10 +282,15 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO lighting, creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, opportunities, notes
   bathroom: {
     code: '13',
     name: 'Bathroom',
+    lighting: {
+      day: 'Darkness',
+      between: 'Darkness',
+      night: 'Darkness',
+    },
 
     descriptions: [
       {
@@ -293,10 +318,15 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO lighting, creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, opportunities, notes
   storageRoom1: {
     code: '14',
     name: 'Storage Room (Third Floor)',
+    lighting: {
+      day: 'Darkness',
+      between: 'Darkness',
+      night: 'Darkness',
+    },
 
     descriptions: [
       {
@@ -324,10 +354,15 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO lighting, creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, opportunities, notes
   nursemaidsBedroom: {
     code: '15A',
     name: "Nursemaid's Suite - Bedroom",
+    lighting: {
+      day: 'Dim light',
+      between: 'Darkness',
+      night: 'Darkness',
+    },
 
     descriptions: [
       {
@@ -376,10 +411,15 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO lighting, creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, opportunities, notes
   nursery: {
     code: '15B',
     name: "Nursemaid's Suite - Nursery",
+    lighting: {
+      day: 'Dim light',
+      between: 'Darkness',
+      night: 'Darkness',
+    },
 
     descriptions: [
       {
@@ -417,10 +457,15 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO lighting, creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, opportunities, notes
   nursemaidsBalcony: {
     code: '15C',
     name: "Nursemaid's Suite - Balcony",
+    lighting: {
+      day: 'Bright light',
+      between: 'Dim light',
+      night: 'Darkness',
+    },
 
     descriptions: [
       {
