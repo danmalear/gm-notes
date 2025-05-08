@@ -52,7 +52,7 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
 
   return (
     <RegionDetailsContext.Provider value={collapsibles}>
-      <RegionDetailsDispatchContext value={dispatch}>
+      <RegionDetailsDispatchContext.Provider value={dispatch}>
         <div id={regionKey + '-details'} className="region-details card">
           <h1>
             {code ? code + '. ' : ''}
@@ -177,7 +177,7 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
             </Collapsible>
           ) : null}
         </div>
-      </RegionDetailsDispatchContext>
+      </RegionDetailsDispatchContext.Provider>
     </RegionDetailsContext.Provider>
   );
 };
