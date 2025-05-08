@@ -210,7 +210,7 @@ const secondFloorRegions: {
     ],
   },
 
-  // @TODO unfinished
+  // @TODO lighting, creatures, checks, items, opportunities, notes
   library: {
     code: '8',
     name: 'Library',
@@ -265,7 +265,7 @@ const secondFloorRegions: {
     ],
   },
 
-  // @TODO unfinished
+  // @TODO lighting, creatures, checks, items, opportunities, notes
   secretRoom: {
     code: '9',
     name: 'Secret Room',
@@ -305,7 +305,7 @@ const secondFloorRegions: {
     ],
   },
 
-  // @TODO unfinished
+  // @TODO lighting, creatures, checks, items, opportunities, notes
   conservatory: {
     code: '10',
     name: 'Conservatory',

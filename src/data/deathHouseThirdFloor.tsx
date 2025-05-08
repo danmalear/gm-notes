@@ -3,7 +3,7 @@ import type { Region } from './MapData.ts';
 const thirdFloorRegions: {
   [key: string]: Region;
 } = {
-  // @TODO unfinished
+  // @TODO lighting, creatures, checks, items, opportunities, notes
   interiorBalcony: {
     code: '11',
     name: 'Balcony',
@@ -68,7 +68,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO unfinished
+  // @TODO lighting, creatures, checks, items, opportunities, notes
   masterBedroom: {
     code: '12A',
     name: 'Master Suite - Bedroom',
@@ -194,7 +194,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO unfinished
+  // @TODO lighting, creatures, checks, items, opportunities, notes
   masterCloset: {
     code: '12B',
     name: 'Master Suite - Closet',
@@ -219,7 +219,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO unfinished
+  // @TODO lighting, creatures, checks, items, opportunities, notes
   masterBalcony: {
     code: '12C',
     name: 'Master Suite - Balcony',
@@ -262,7 +262,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO unfinished
+  // @TODO lighting, creatures, checks, items, opportunities, notes
   bathroom: {
     code: '13',
     name: 'Bathroom',
@@ -293,7 +293,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO unfinished
+  // @TODO lighting, creatures, checks, items, opportunities, notes
   storageRoom1: {
     code: '14',
     name: 'Storage Room (Third Floor)',
@@ -324,7 +324,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO unfinished
+  // @TODO lighting, creatures, checks, items, opportunities, notes
   nursemaidsBedroom: {
     code: '15A',
     name: "Nursemaid's Suite - Bedroom",
@@ -376,7 +376,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO unfinished
+  // @TODO lighting, creatures, checks, items, opportunities, notes
   nursery: {
     code: '15B',
     name: "Nursemaid's Suite - Nursery",
@@ -417,7 +417,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO unfinished
+  // @TODO lighting, creatures, checks, items, opportunities, notes
   nursemaidsBalcony: {
     code: '15C',
     name: "Nursemaid's Suite - Balcony",

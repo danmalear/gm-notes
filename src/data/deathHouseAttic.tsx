@@ -3,7 +3,7 @@ import type { Region } from './MapData.ts';
 const atticRegions: {
   [key: string]: Region;
 } = {
-  // @TODO unfinished
+  // @TODO lighting, creatures, checks, items, opportunities, notes
   atticHall: {
     code: '16',
     name: 'Attic Hall',
@@ -67,7 +67,7 @@ const atticRegions: {
     ],
   },
 
-  // @TODO unfinished
+  // @TODO lighting, creatures, checks, items, opportunities, notes
   spareBedroom: {
     code: '17',
     name: 'Spare Bedroom',
@@ -134,7 +134,7 @@ const atticRegions: {
     ],
   },
 
-  // @TODO unfinished
+  // @TODO lighting, creatures, checks, items, opportunities, notes
   storageRoom2: {
     code: '18',
     name: 'Storage Room (Attic)',
@@ -174,7 +174,7 @@ const atticRegions: {
     ],
   },
 
-  // @TODO unfinished
+  // @TODO lighting, creatures, checks, items, opportunities, notes
   guestBedroom: {
     code: '19',
     name: 'Guest Bedroom',
@@ -204,7 +204,7 @@ const atticRegions: {
     ],
   },
 
-  // @TODO unfinished
+  // @TODO lighting, creatures, checks, items, opportunities, notes
   childrensRoom: {
     code: '20',
     name: "Children's Room",
