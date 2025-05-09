@@ -355,7 +355,6 @@ const secondFloorRegions: {
     ],
   },
 
-  // @TODO checks, items, notes
   secretRoom: {
     code: '9',
     name: 'Secret Room',
@@ -377,6 +376,66 @@ const secondFloorRegions: {
             is a skeleton in leather armor.
           </p>
         ),
+      },
+    ],
+
+    checks: [
+      {
+        skills: ['Arcana'],
+        target: 'Tomes',
+        dc: 12,
+        success:
+          'The tomes go into incredible detail, but the more you read, the more you realize that they are totally bogus - they would not work to do what they say they would.',
+        prerequisites: ['After reading for at least an hour'],
+      },
+    ],
+
+    items: [
+      {
+        name: 'Wooden chest',
+        notes: ['Propped open by skeleton'],
+        items: [
+          {
+            name: 'Black leather-bound books',
+            quantity: 3,
+            value: '25 gp',
+            notes: ['Blank'],
+          },
+          {
+            name: 'Spell scroll of bless',
+          },
+          {
+            name: 'Spell scroll of protection from poison',
+          },
+          {
+            name: 'Spell scroll of spiritual weapon',
+          },
+          {
+            name: 'Deed to the manor',
+          },
+          {
+            name: 'Will',
+            notes: [
+              'Leaves manor and windmill to Rose and Thorn',
+              'Signed by Gustav and Elisabeth',
+            ],
+          },
+        ],
+      },
+      {
+        name: 'Skeleton',
+        notes: ['Halfway in chest, propping it open'],
+        items: [
+          { name: 'Letter from Strahd', notes: ['Clutched in left hand'] },
+          { name: 'Leather armor' },
+          { name: 'Darts', quantity: 3 },
+        ],
+      },
+
+      {
+        name: 'Tomes',
+        quantity: 50,
+        notes: ['Describe demon-summoning rituals'],
       },
     ],
 
@@ -404,7 +463,6 @@ const secondFloorRegions: {
     ],
   },
 
-  // @TODO checks, items, notes
   conservatory: {
     code: '10',
     name: 'Conservatory',
@@ -475,6 +533,42 @@ const secondFloorRegions: {
             </p>
           </>
         ),
+      },
+    ],
+
+    checks: [
+      {
+        skills: ['Perception'],
+        target: 'Figurines',
+        dc: 7,
+        success:
+          'On close inspection, the figurines are each actually well-dressed skeletons, except three, which vaguely resemble the parents in the family portrait in the hall, along with a younger woman.',
+      },
+    ],
+
+    items: [
+      {
+        name: 'Harpsichord',
+        notes: [
+          'One key is stuck down by a sheet of music crammed inside the harpsichord',
+        ],
+        items: [
+          {
+            name: 'Sheet music',
+            notes: [
+              'Waltz for Klara',
+              'Playing it triggers a scene (see descriptions)',
+            ],
+          },
+        ],
+      },
+      {
+        name: 'Alabaster figurines',
+        quantity: 12,
+        notes: ['Three resemble Gustav, Elisabeth, and Klara'],
+      },
+      {
+        name: 'Harp',
       },
     ],
 
