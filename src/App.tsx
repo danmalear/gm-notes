@@ -3,12 +3,13 @@ import './App.css';
 import Map, { MapArea } from './components/Map.tsx';
 import RegionDetails from './components/RegionDetails.tsx';
 import data from './data/data.ts';
-import type { TimeOfDay } from './data/MapData.ts';
+import { ValidPartySize, type TimeOfDay } from './data/MapData.ts';
 
 function App() {
   const [currentMap, setCurrentMap] = useState('deathHouse');
   const [currentRegion, setCurrentRegion] = useState('foyer');
-  const [timeOfDay, setTimeOfDay] = useState<TimeOfDay>('day');
+  const [timeOfDay, setTimeOfDay] = useState<TimeOfDay>('night');
+  const [partySize] = useState<ValidPartySize>(3);
   const mapData = currentMap ? data[currentMap] : null;
 
   if (!mapData) {
@@ -82,6 +83,7 @@ function App() {
             regionKey={currentRegion}
             data={mapData.regions[currentRegion]}
             timeOfDay={timeOfDay}
+            partySize={partySize}
           />
         </div>
       </div>

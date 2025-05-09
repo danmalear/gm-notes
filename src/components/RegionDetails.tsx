@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from 'react';
-import type { Region, TimeOfDay } from '../data/MapData.ts';
+import type { Region, TimeOfDay, ValidPartySize } from '../data/MapData.ts';
 import collapsiblesReducer from '../reducers/collapsibleReducer.ts';
 import AbilityCheck from './AbilityCheck.tsx';
 import Collapsible from './Collapsible.tsx';
@@ -16,12 +16,14 @@ export interface RegionDetailsProps extends React.PropsWithChildren {
   regionKey: string;
   data: Region;
   timeOfDay: TimeOfDay;
+  partySize: ValidPartySize;
 }
 
 const RegionDetails: React.FC<RegionDetailsProps> = ({
   regionKey,
   data,
   timeOfDay,
+  partySize,
 }) => {
   const {
     code,
@@ -81,6 +83,7 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
                 <div key={`creature-${index}`}>
                   <Creature
                     creature={creature}
+                    partySize={partySize}
                     headingElement="h3"
                     rolesHeadingElement="h4"
                   />
