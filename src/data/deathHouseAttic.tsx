@@ -3,7 +3,7 @@ import type { Region } from './MapData.ts';
 const atticRegions: {
   [key: string]: Region;
 } = {
-  // @TODO creatures, checks, items, notes
+  // @TODO checks, items, notes
   atticHall: {
     code: '16',
     name: 'Attic Hall',
@@ -72,7 +72,7 @@ const atticRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, notes
+  // @TODO checks, items, notes
   spareBedroom: {
     code: '17',
     name: 'Spare Bedroom',
@@ -144,7 +144,7 @@ const atticRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, notes
+  // @TODO checks, items, notes
   storageRoom2: {
     code: '18',
     name: 'Storage Room (Attic)',
@@ -202,7 +202,7 @@ const atticRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, notes
+  // @TODO checks, items, notes
   guestBedroom: {
     code: '19',
     name: 'Guest Bedroom',
@@ -237,7 +237,7 @@ const atticRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, notes
+  // @TODO checks, items, notes
   childrensRoom: {
     code: '20',
     name: "Children's Room",
@@ -264,9 +264,37 @@ const atticRegions: {
       },
     ],
 
+    creatures: [
+      {
+        name: 'Rosavalda Durst',
+        trigger: 'Someone examines the dollhouse or toy chest',
+        pronouns: 'she/her',
+        statBlock: {
+          text: 'Rose Durst',
+        },
+        personality:
+          'Defiant, curious, apprehensive, fiercely protective of Thorn',
+        motivation: 'Keep Thorn safe, bring their souls to peace',
+        combatBehavior:
+          'Tries desperately to create peace, but flees with Thorn if pressed',
+      },
+      {
+        name: 'Thornboldt Durst',
+        trigger: 'Someone examines the dollhouse or toy chest',
+        pronouns: 'he/him',
+        statBlock: {
+          text: 'Thorn Durst',
+        },
+        personality: 'Joyous, anxious, fearful, observant and insightful',
+        motivation: 'Keep close to Rose, and play with fun toys',
+        combatBehavior: 'Cowers and cries, depends on Rose to protect him',
+      },
+    ],
+
     opportunities: [
       'Any secret door revealed by dollhouse (see checks) has Advantage to be found in person.',
       'Rose can be convinced to show the party the entrance to the basement in the dollhouse, which is conjured and will be automatically revealed when next sought in person.',
+      'Upon exit, Rose and Thorn offer to join the party by possessing them',
     ],
 
     areas: [

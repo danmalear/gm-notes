@@ -3,7 +3,7 @@ import type { Region } from './MapData.ts';
 const thirdFloorRegions: {
   [key: string]: Region;
 } = {
-  // @TODO creatures, checks, items, notes
+  // @TODO checks, items, notes
   interiorBalcony: {
     code: '11',
     name: 'Balcony',
@@ -31,6 +31,24 @@ const thirdFloorRegions: {
             </p>
           </>
         ),
+      },
+    ],
+
+    creatures: [
+      {
+        name: 'Animated armor',
+        trigger: 'Creature gets within reach',
+        statBlock: {
+          '3': { text: 'Animated Armor (3P)' },
+          '4': { text: 'Animated Armor (4P)' },
+          '5': {
+            text: 'Animated Armor',
+            url: 'https://www.dndbeyond.com/monsters/5194893-animated-armor',
+          },
+          '6': { text: 'Animated Armor (6P)' },
+        },
+        combatBehavior:
+          'Attempts to shove the creature over the railing, and then it fights until defeated',
       },
     ],
 
@@ -73,7 +91,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, notes
+  // @TODO checks, items, notes
   masterBedroom: {
     code: '12A',
     name: 'Master Suite - Bedroom',
@@ -204,7 +222,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, notes
+  // @TODO checks, items, notes
   masterCloset: {
     code: '12B',
     name: 'Master Suite - Closet',
@@ -234,7 +252,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, notes
+  // @TODO checks, items, notes
   masterBalcony: {
     code: '12C',
     name: 'Master Suite - Balcony',
@@ -289,7 +307,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, notes
+  // @TODO checks, items, notes
   bathroom: {
     code: '13',
     name: 'Bathroom',
@@ -325,7 +343,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, notes
+  // @TODO checks, items, notes
   storageRoom1: {
     code: '14',
     name: 'Storage Room (Third Floor)',
@@ -348,6 +366,19 @@ const thirdFloorRegions: {
       },
     ],
 
+    creatures: [
+      {
+        name: 'Broom of animated attack',
+        trigger: 'A creature within reach looks away',
+        statBlock: {
+          text: 'Broom of Animated Attack',
+          url: 'https://www.dndbeyond.com/monsters/5194893-animated-armor',
+        },
+        combatBehavior:
+          'Whacks creature on the back of the head, then goes immobile, rinse repeat until detected. When engaged, fights until defeated.',
+      },
+    ],
+
     areas: [
       {
         shape: 'rect',
@@ -361,7 +392,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, notes
+  // @TODO checks, items, notes
   nursemaidsBedroom: {
     code: '15A',
     name: "Nursemaid's Suite - Bedroom",
@@ -436,7 +467,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, notes
+  // @TODO checks, items, notes
   nursery: {
     code: '15B',
     name: "Nursemaid's Suite - Nursery",
@@ -494,7 +525,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, notes
+  // @TODO checks, items, notes
   nursemaidsBalcony: {
     code: '15C',
     name: "Nursemaid's Suite - Balcony",

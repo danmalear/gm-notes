@@ -210,7 +210,7 @@ const secondFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, notes
+  // @TODO checks, items, notes
   library: {
     code: '8',
     name: 'Library',
@@ -274,7 +274,7 @@ const secondFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, notes
+  // @TODO checks, items, notes
   secretRoom: {
     code: '9',
     name: 'Secret Room',
@@ -323,7 +323,7 @@ const secondFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, notes
+  // @TODO checks, items, notes
   conservatory: {
     code: '10',
     name: 'Conservatory',
