@@ -108,22 +108,22 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
 
           {items?.length ? (
             <Collapsible headingElement="h2" title="Items">
-              {items.map((itemOrItemGroup, index) =>
+              {items.map((item, index) =>
                 // Check if the item is an item group or a single Item
-                'items' in itemOrItemGroup ? (
+                item.items ? (
                   <Collapsible
                     key={`item-group-${index}`}
                     headingElement="h3"
-                    title={itemOrItemGroup.name}
+                    title={item.name}
                   >
-                    {itemOrItemGroup.notes ? (
+                    {item.notes ? (
                       <ul>
-                        {itemOrItemGroup.notes.map((note, noteIndex) => (
+                        {item.notes.map((note, noteIndex) => (
                           <li key={`note-${noteIndex}`}>{note}</li>
                         ))}
                       </ul>
                     ) : null}
-                    {itemOrItemGroup.items.map((subItem, subIndex) => (
+                    {item.items.map((subItem, subIndex) => (
                       <Item
                         key={`item-${index}-${subIndex}`}
                         item={subItem}
@@ -132,11 +132,7 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
                     ))}
                   </Collapsible>
                 ) : (
-                  <Item
-                    key={`item-${index}`}
-                    item={itemOrItemGroup}
-                    headingElement="h3"
-                  />
+                  <Item key={`item-${index}`} item={item} headingElement="h3" />
                 ),
               )}
             </Collapsible>

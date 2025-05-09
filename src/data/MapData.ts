@@ -99,12 +99,7 @@ export interface Item {
   name: string;
   quantity?: number;
   value?: Value;
-  notes?: string[];
-}
-
-export interface ItemGroup {
-  name: string;
-  items: Item[];
+  items?: Item[];
   notes?: string[];
 }
 
@@ -120,7 +115,7 @@ export interface Region {
   descriptions: Description[];
   creatures?: Creature[];
   checks?: AbilityCheck[];
-  items?: (Item | ItemGroup)[];
+  items?: Item[];
   opportunities?: string[];
   handouts?: Handout[];
   notes?: string[];
