@@ -3,7 +3,6 @@ import type { Region } from './MapData.ts';
 const thirdFloorRegions: {
   [key: string]: Region;
 } = {
-  // @TODO checks, items, notes
   interiorBalcony: {
     code: '11',
     name: 'Balcony',
@@ -52,6 +51,30 @@ const thirdFloorRegions: {
       },
     ],
 
+    checks: [
+      {
+        skills: ['Perception'],
+        target: 'Walls',
+        dc: 12,
+        success:
+          'Among the natural scenes carved into the walls, corpses hang from the trees, and worms burst from the ground',
+      },
+      {
+        skills: ['Perception'],
+        target: 'Walls',
+        dc: 15,
+        success:
+          'On the west wall, you spot a telltale groove indicating the presence of an secret door.',
+      },
+    ],
+
+    items: [
+      {
+        name: 'Oil lamps',
+        quantity: 2,
+      },
+    ],
+
     areas: [
       {
         shape: 'rect',
@@ -91,7 +114,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO checks, items, notes
+  // @TODO checks, items
   masterBedroom: {
     code: '12A',
     name: 'Master Suite - Bedroom',
@@ -222,7 +245,6 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO checks, items, notes
   masterCloset: {
     code: '12B',
     name: 'Master Suite - Closet',
@@ -252,7 +274,6 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO checks, items, notes
   masterBalcony: {
     code: '12C',
     name: 'Master Suite - Balcony',
@@ -307,7 +328,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO checks, items, notes
+  // @TODO items
   bathroom: {
     code: '13',
     name: 'Bathroom',
@@ -343,7 +364,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO checks, items, notes
+  // @TODO items
   storageRoom1: {
     code: '14',
     name: 'Storage Room (Third Floor)',
@@ -392,7 +413,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO checks, items, notes
+  // @TODO checks, items
   nursemaidsBedroom: {
     code: '15A',
     name: "Nursemaid's Suite - Bedroom",
@@ -467,7 +488,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO checks, items, notes
+  // @TODO checks, items
   nursery: {
     code: '15B',
     name: "Nursemaid's Suite - Nursery",
@@ -525,7 +546,6 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO checks, items, notes
   nursemaidsBalcony: {
     code: '15C',
     name: "Nursemaid's Suite - Balcony",
