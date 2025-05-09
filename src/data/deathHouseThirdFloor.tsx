@@ -3,7 +3,7 @@ import type { Region } from './MapData.ts';
 const thirdFloorRegions: {
   [key: string]: Region;
 } = {
-  // @TODO creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, notes
   interiorBalcony: {
     code: '11',
     name: 'Balcony',
@@ -73,7 +73,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, notes
   masterBedroom: {
     code: '12A',
     name: 'Master Suite - Bedroom',
@@ -204,7 +204,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, notes
   masterCloset: {
     code: '12B',
     name: 'Master Suite - Closet',
@@ -234,7 +234,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, opportunities, notes
+  // @TODO descriptions (looking up), creatures, checks, items, notes
   masterBalcony: {
     code: '12C',
     name: 'Master Suite - Balcony',
@@ -282,7 +282,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, notes
   bathroom: {
     code: '13',
     name: 'Bathroom',
@@ -318,7 +318,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, notes
   storageRoom1: {
     code: '14',
     name: 'Storage Room (Third Floor)',
@@ -354,7 +354,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, opportunities, notes
+  // @TODO descriptions (Mirror), creatures, checks, items, notes
   nursemaidsBedroom: {
     code: '15A',
     name: "Nursemaid's Suite - Bedroom",
@@ -398,6 +398,10 @@ const thirdFloorRegions: {
       },
     ],
 
+    opportunities: [
+      'Approaching the mirror reveals the spirit of Klara; asking for her help causes her to swing open the secret door behind the mirror.',
+    ],
+
     areas: [
       {
         shape: 'rect',
@@ -411,7 +415,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, opportunities, notes
+  // @TODO descriptions (Approach), creatures, checks, items, notes
   nursery: {
     code: '15B',
     name: "Nursemaid's Suite - Nursery",
@@ -457,7 +461,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, opportunities, notes
+  // @TODO descriptions (looking up), creatures, checks, items, notes
   nursemaidsBalcony: {
     code: '15C',
     name: "Nursemaid's Suite - Balcony",

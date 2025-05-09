@@ -3,7 +3,7 @@ import type { Region } from './MapData.ts';
 const atticRegions: {
   [key: string]: Region;
 } = {
-  // @TODO creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, notes
   atticHall: {
     code: '16',
     name: 'Attic Hall',
@@ -72,7 +72,7 @@ const atticRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, notes
   spareBedroom: {
     code: '17',
     name: 'Spare Bedroom',
@@ -144,7 +144,7 @@ const atticRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, opportunities, notes
+  // @TODO descriptions (Elisabeth's specter), creatures, checks, items, notes
   storageRoom2: {
     code: '18',
     name: 'Storage Room (Attic)',
@@ -189,7 +189,7 @@ const atticRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, notes
   guestBedroom: {
     code: '19',
     name: 'Guest Bedroom',
@@ -224,7 +224,7 @@ const atticRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, notes
   childrensRoom: {
     code: '20',
     name: "Children's Room",
@@ -249,6 +249,11 @@ const atticRegions: {
           </p>
         ),
       },
+    ],
+
+    opportunities: [
+      'Any secret door revealed by dollhouse (see checks) has Advantage to be found in person.',
+      'Rose can be convinced to show the party the entrance to the basement in the dollhouse, which is conjured and will be automatically revealed when next sought in person.',
     ],
 
     areas: [

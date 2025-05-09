@@ -210,7 +210,7 @@ const secondFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, notes
   library: {
     code: '8',
     name: 'Library',
@@ -248,6 +248,10 @@ const secondFloorRegions: {
       },
     ],
 
+    opportunities: [
+      'Inserting the amber shard in to the niche opens the hidden door into the secret room.',
+    ],
+
     areas: [
       {
         shape: 'rect',
@@ -270,7 +274,7 @@ const secondFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, notes
   secretRoom: {
     code: '9',
     name: 'Secret Room',
@@ -295,6 +299,10 @@ const secondFloorRegions: {
       },
     ],
 
+    opportunities: [
+      "When Strahd's letter is read, the secret stairs to the basement are conjured, but still require a skill check to find.",
+    ],
+
     handouts: [
       {
         text: 'Letter from Strahd',
@@ -315,7 +323,7 @@ const secondFloorRegions: {
     ],
   },
 
-  // @TODO creatures, checks, items, opportunities, notes
+  // @TODO creatures, checks, items, notes
   conservatory: {
     code: '10',
     name: 'Conservatory',
@@ -387,6 +395,10 @@ const secondFloorRegions: {
           </>
         ),
       },
+    ],
+
+    opportunities: [
+      'Starting to play the harpsichord triggers a scene to unfold (see descriptions), and then swings the bookshelf in the library open.',
     ],
 
     areas: [
