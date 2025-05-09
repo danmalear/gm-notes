@@ -210,7 +210,6 @@ const secondFloorRegions: {
     ],
   },
 
-  // @TODO checks, items, notes
   library: {
     code: '8',
     name: 'Library',
@@ -238,6 +237,88 @@ const secondFloorRegions: {
             </p>
           </>
         ),
+      },
+    ],
+
+    checks: [
+      {
+        skills: ['Perception'],
+        target: 'Bookshelf',
+        dc: 13,
+        success:
+          'A fake book pulls out, and the bookshelf swings open revealing a wall with a panel in the center, which has carved into it a small niche, glowing amber.',
+      },
+      {
+        skills: ['Investigation'],
+        target: 'Bookshelf',
+        dc: 18,
+        success:
+          'A fake book pulls out, and the bookshelf swings open revealing a wall with a panel in the center, which has carved into it a small niche, glowing amber.',
+      },
+      {
+        skills: ['Perception'],
+        target: 'Room',
+        dc: 15,
+        success:
+          'A faint candle light emanates from beneath one of the bookshelves',
+        prerequisites: ['Has searched room for at least 1 minute'],
+      },
+      {
+        skills: ['Investigation'],
+        target: 'Niche',
+        dc: 10,
+        success:
+          'You likely need to find something that matches the shape of the niche to advance that line of investigation. OR That amber shard you found matches the shape of the niche.',
+      },
+    ],
+
+    items: [
+      {
+        name: 'Books',
+        quantity: 200,
+        notes: [
+          'Generally cover history, warfare, and alchemy',
+          'A few are fiction or poetry collections',
+          'Rot upon exit',
+        ],
+      },
+      {
+        name: 'Desk drawer',
+        items: [
+          { name: 'Receipts', notes: ['For candles'] },
+          { name: 'Daggers', quantity: 3 },
+          { name: 'Incense' },
+        ],
+      },
+      {
+        name: 'Desktop',
+        items: [
+          {
+            name: 'Oil lamp',
+          },
+          {
+            name: 'Jar of ink',
+          },
+          {
+            name: 'Quill pen',
+          },
+          {
+            name: 'Tinderbox',
+          },
+          {
+            name: 'Red wax candle',
+            notes: ['Contained in letter kit'],
+          },
+          {
+            name: 'Blank sheets of parchment',
+            quantity: 4,
+            notes: ['Contained in letter kit'],
+          },
+          {
+            name: 'Wooden seal',
+            notes: ['Contained in letter kit', 'Bears windmill insignia'],
+          },
+        ],
       },
     ],
 
