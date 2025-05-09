@@ -116,7 +116,6 @@ export interface Handout {
 export interface Region {
   code?: string;
   name: string;
-  areas: Area[];
   lighting?: Lighting;
   descriptions: Description[];
   creatures?: Creature[];
@@ -125,6 +124,7 @@ export interface Region {
   opportunities?: string[];
   handouts?: Handout[];
   notes?: string[];
+  areas: Area[];
 }
 
 export interface MapImage {
