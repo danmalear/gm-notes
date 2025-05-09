@@ -144,7 +144,7 @@ const atticRegions: {
     ],
   },
 
-  // @TODO descriptions (Elisabeth's specter), creatures, checks, items, notes
+  // @TODO creatures, checks, items, notes
   storageRoom2: {
     code: '18',
     name: 'Storage Room (Attic)',
@@ -162,6 +162,19 @@ const atticRegions: {
             This dusty chamber is packed with lumpy, squat shapes draped in
             dusty white sheets. An old iron stove stands against the right-side
             wall, next to what looks to be a large trunk covered by a sheet.
+          </p>
+        ),
+      },
+      {
+        prompt: 'Inspecting remains',
+        text: (
+          <p>
+            As you examine the corpse, you feel an icy cold breath on your
+            shoulder, and a horrible feeling of being watched. [mirror] [PC],
+            you see in the mirror the cold, stern countenance of Elisabeth Durst
+            staring daggers at [PC]. She then turns to look at you and
+            vanishes.[/mirror] Then as suddenly as it started, the feeling
+            washes away.
           </p>
         ),
       },

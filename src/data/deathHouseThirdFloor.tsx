@@ -234,7 +234,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO descriptions (looking up), creatures, checks, items, notes
+  // @TODO creatures, checks, items, notes
   masterBalcony: {
     code: '12C',
     name: 'Master Suite - Balcony',
@@ -248,13 +248,20 @@ const thirdFloorRegions: {
       {
         prompt: 'Entry (first time outdoors)',
         text: (
-          <p>
-            As you open the door, the first thing that hits you is a rank smell,
-            like old meat. Its source is obvious: fully surrounding the balcony
-            you find yourself on, as well as the entire exterior of the house,
-            you see enormous, fleshy tendrils, extruding from beneath the manor
-            and tightly packed together, forming a solid wall.
-          </p>
+          <>
+            <p>
+              As you open the door, the first thing that hits you is a rank
+              smell, like old meat. Its source is obvious: fully surrounding the
+              balcony you find yourself on, as well as the entire exterior of
+              the house, you see enormous, fleshy tendrils, extruding from
+              beneath the manor and tightly packed together, forming a solid
+              wall.
+            </p>
+            <p>
+              Other than that, the balcony is empty, and looking up you can see
+              the attic extending above you, with a boarded up window visible
+            </p>
+          </>
         ),
       },
       {
@@ -354,7 +361,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO descriptions (Mirror), creatures, checks, items, notes
+  // @TODO creatures, checks, items, notes
   nursemaidsBedroom: {
     code: '15A',
     name: "Nursemaid's Suite - Bedroom",
@@ -396,6 +403,20 @@ const thirdFloorRegions: {
           </>
         ),
       },
+      {
+        prompt: 'Mirror',
+        text: (
+          <>
+            <p>
+              As you approach the mirror, a form fades into view, overtaking the
+              reflection that was previously visible. The form takes the shape
+              of a woman, horribly emaciated and gaunt, with all of her fingers
+              and toes removed, her eyes sewn shut, and no lips or teeth, scars
+              decorating her entire body and her hair hacked to stubble
+            </p>
+          </>
+        ),
+      },
     ],
 
     opportunities: [
@@ -415,7 +436,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO descriptions (Approach), creatures, checks, items, notes
+  // @TODO creatures, checks, items, notes
   nursery: {
     code: '15B',
     name: "Nursemaid's Suite - Nursery",
@@ -426,6 +447,18 @@ const thirdFloorRegions: {
     },
 
     descriptions: [
+      {
+        prompt: 'Approach',
+        text: (
+          <>
+            <p>
+              Moving towards the door, you hear the faint sound of a woman
+              humming from within. [heard]It sounds like the song from the sheet
+              music in the harpsichord, Waltz for Klara[/heard]
+            </p>
+          </>
+        ),
+      },
       {
         prompt: 'Entry',
         text: (
@@ -461,7 +494,7 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO descriptions (looking up), creatures, checks, items, notes
+  // @TODO creatures, checks, items, notes
   nursemaidsBalcony: {
     code: '15C',
     name: "Nursemaid's Suite - Balcony",
@@ -475,13 +508,20 @@ const thirdFloorRegions: {
       {
         prompt: 'Entry (first time outdoors)',
         text: (
-          <p>
-            As you open the door, the first thing that hits you is a rank smell,
-            like old meat. Its source is obvious: fully surrounding the balcony
-            you find yourself on, as well as the entire exterior of the house,
-            you see enormous, fleshy tendrils, extruding from beneath the manor
-            and tightly packed together, forming a solid wall.
-          </p>
+          <>
+            <p>
+              As you open the door, the first thing that hits you is a rank
+              smell, like old meat. Its source is obvious: fully surrounding the
+              balcony you find yourself on, as well as the entire exterior of
+              the house, you see enormous, fleshy tendrils, extruding from
+              beneath the manor and tightly packed together, forming a solid
+              wall.
+            </p>
+            <p>
+              Other than that, the balcony is empty, and looking up you can see
+              the attic extending above you, with two windows visible
+            </p>
+          </>
         ),
       },
       {
