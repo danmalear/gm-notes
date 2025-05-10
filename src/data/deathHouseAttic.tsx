@@ -312,7 +312,6 @@ const atticRegions: {
     ],
   },
 
-  // @TODO checks, items
   guestBedroom: {
     code: '19',
     name: 'Guest Bedroom',
@@ -331,6 +330,24 @@ const atticRegions: {
             chair, an open and empty wardrobe, and a small iron stove.
           </p>
         ),
+      },
+    ],
+
+    items: [
+      {
+        name: 'Wardrobe',
+      },
+      {
+        name: 'Nightstand',
+      },
+      {
+        name: 'Rocking chair',
+      },
+      {
+        name: 'Bed',
+      },
+      {
+        name: 'Iron stove',
       },
     ],
 
