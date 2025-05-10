@@ -205,7 +205,6 @@ const atticRegions: {
     ],
   },
 
-  // @TODO checks, items
   storageRoom2: {
     code: '18',
     name: 'Storage Room (Attic)',
@@ -238,6 +237,56 @@ const atticRegions: {
             washes away.
           </p>
         ),
+      },
+    ],
+
+    checks: [
+      {
+        skills: ['Medicine'],
+        target: 'Remains',
+        dc: 14,
+        success:
+          "Though the woman's body bears many physical lacerations, you determine that she actually died of starvation",
+      },
+      {
+        skills: ['Perception'],
+        target: 'Walls',
+        dc: 15,
+        success:
+          'On the west wall, you find that a secret door has been carved out',
+        prerequisites: ["Found Strahd's letter"],
+        notes: [
+          'If this secret door was revealed by the dollhouse, it is revealed in person without a check',
+        ],
+      },
+    ],
+
+    items: [
+      {
+        name: 'Trunk',
+        notes: ['Covered by sheet'],
+        items: [
+          {
+            name: 'Remains',
+            notes: [
+              "Similar wounds to those on the spirit in the mirror in the nursemaid's suite",
+            ],
+          },
+        ],
+      },
+      {
+        name: 'Mirror',
+        notes: ['Covered by sheet'],
+      },
+      {
+        name: 'Miscellany',
+        notes: [
+          'Sculptures, generic paintings, crates full of knickknacks',
+          'Covered by sheets',
+        ],
+      },
+      {
+        name: 'Iron stove',
       },
     ],
 
