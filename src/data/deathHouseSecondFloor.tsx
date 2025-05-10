@@ -573,7 +573,7 @@ const secondFloorRegions: {
     ],
 
     opportunities: [
-      'Starting to play the harpsichord triggers a scene to unfold (see descriptions), and then swings the bookshelf in the library open.',
+      'Starting to play the harpsichord triggers a scene (see descriptions), and then swings the bookshelf in the library open.',
     ],
 
     areas: [
