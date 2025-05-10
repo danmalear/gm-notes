@@ -285,7 +285,7 @@ const secondFloorRegions: {
       {
         name: 'Desk drawer',
         items: [
-          { name: 'Receipts', notes: ['For candles'] },
+          { name: 'Candle receipts' },
           { name: 'Daggers', quantity: 3 },
           { name: 'Incense' },
         ],
