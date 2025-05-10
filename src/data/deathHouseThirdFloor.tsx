@@ -114,7 +114,6 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO checks, items
   masterBedroom: {
     code: '12A',
     name: 'Master Suite - Bedroom',
@@ -195,6 +194,57 @@ const thirdFloorRegions: {
             </p>
           </>
         ),
+      },
+    ],
+
+    checks: [
+      {
+        skills: ['Investigation'],
+        target: 'Dumbwaiter',
+        dc: 10,
+        success:
+          'The button is rigged to a system of wires that rings a bell in the kitchen.',
+      },
+    ],
+
+    items: [
+      {
+        name: 'Jewelry box',
+        value: '75 gp',
+        notes: ['Sitting on the vanity'],
+        items: [
+          {
+            name: 'Amber shard',
+          },
+        ],
+      },
+      {
+        name: 'Portrait',
+        notes: ['Portrays Gustav and Elisabeth', 'Hanging above fireplace'],
+      },
+      {
+        name: 'Wardrobes',
+        quantity: 2,
+      },
+      {
+        name: 'Table',
+        items: [{ name: 'Porcelain bowl' }, { name: 'Porcelain jug' }],
+      },
+      {
+        name: 'Chairs',
+        quantity: 2,
+      },
+      {
+        name: 'Four-poster bed',
+      },
+      {
+        name: 'Full-length mirror',
+      },
+      {
+        name: 'Tiger-skin rug',
+      },
+      {
+        name: 'Padded chair',
       },
     ],
 
@@ -328,7 +378,6 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO items
   bathroom: {
     code: '13',
     name: 'Bathroom',
@@ -348,6 +397,23 @@ const thirdFloorRegions: {
             barrel under a spigot.
           </p>
         ),
+      },
+    ],
+
+    items: [
+      {
+        name: 'Wooden tub',
+      },
+      {
+        name: 'Iron stove',
+        items: [{ name: 'Kettle' }],
+      },
+      {
+        name: 'Barrel',
+        notes: [
+          'Sitting under spigot',
+          'Used to catch rainwater, but plumbing no longer works',
+        ],
       },
     ],
 
