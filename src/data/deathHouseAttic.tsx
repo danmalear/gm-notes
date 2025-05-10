@@ -3,7 +3,6 @@ import type { Region } from './MapData.ts';
 const atticRegions: {
   [key: string]: Region;
 } = {
-  // @TODO checks, items, notes
   atticHall: {
     code: '16',
     name: 'Attic Hall',
@@ -29,6 +28,16 @@ const atticRegions: {
             </p>
           </>
         ),
+      },
+    ],
+
+    checks: [
+      {
+        skills: ['Sleight of Hand'],
+        target: "Children's room door",
+        dc: 15,
+        success: 'Door is unlocked',
+        notes: ["Thieves' tools proficiency grants advantage"],
       },
     ],
 
@@ -72,7 +81,7 @@ const atticRegions: {
     ],
   },
 
-  // @TODO checks, items, notes
+  // @TODO checks, items
   spareBedroom: {
     code: '17',
     name: 'Spare Bedroom',
@@ -144,7 +153,7 @@ const atticRegions: {
     ],
   },
 
-  // @TODO checks, items, notes
+  // @TODO checks, items
   storageRoom2: {
     code: '18',
     name: 'Storage Room (Attic)',
@@ -202,7 +211,7 @@ const atticRegions: {
     ],
   },
 
-  // @TODO checks, items, notes
+  // @TODO checks, items
   guestBedroom: {
     code: '19',
     name: 'Guest Bedroom',
@@ -237,7 +246,7 @@ const atticRegions: {
     ],
   },
 
-  // @TODO checks, items, notes
+  // @TODO checks, items
   childrensRoom: {
     code: '20',
     name: "Children's Room",
