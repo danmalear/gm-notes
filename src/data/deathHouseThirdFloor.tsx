@@ -430,7 +430,6 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO items
   storageRoom1: {
     code: '14',
     name: 'Storage Room (Third Floor)',
@@ -463,6 +462,21 @@ const thirdFloorRegions: {
         },
         combatBehavior:
           'Whacks creature on the back of the head, then goes immobile, rinse repeat until detected. When engaged, fights until defeated.',
+      },
+    ],
+
+    items: [
+      {
+        name: 'Linens',
+        quantity: 8,
+      },
+      {
+        name: 'Blankets',
+        quantity: 6,
+      },
+      {
+        name: 'Bars of soap',
+        quantity: 10,
       },
     ],
 
