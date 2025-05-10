@@ -364,7 +364,6 @@ const atticRegions: {
     ],
   },
 
-  // @TODO checks, items
   childrensRoom: {
     code: '20',
     name: "Children's Room",
@@ -418,10 +417,45 @@ const atticRegions: {
       },
     ],
 
+    checks: [
+      {
+        skills: ['Religion'],
+        target: 'Rose/Thorn',
+        dc: 15,
+        success:
+          'Their specific nature is that of a ghost - an undead phantom that died with some unfinished business or extreme emotion',
+      },
+    ],
+
+    items: [
+      {
+        name: 'Dollhouse',
+        notes: [
+          "Exact reconstruction of the current house, with figures portraying everyone's current position",
+          'Shows secret rooms',
+        ],
+      },
+      {
+        name: "Rose's diary",
+        notes: ['Contains the mending, light, and shocking grasp cantrips'],
+      },
+      {
+        name: 'Toy chest',
+      },
+      {
+        name: 'Skeletons',
+        quantity: 2,
+      },
+      {
+        name: 'Beds',
+        quantity: 2,
+      },
+    ],
+
     opportunities: [
       'Any secret door revealed by dollhouse (see checks) has Advantage to be found in person.',
       'Rose can be convinced to show the party the entrance to the basement in the dollhouse, which is conjured and will be automatically revealed when next sought in person.',
-      'Upon exit, Rose and Thorn offer to join the party by possessing them',
+      'Upon exit, Rose and Thorn offer to join the party by possessing them. Anyone Rose possesses gets the cantrips in her diary, and anyone Thorn possesses gets the mage hand cantrip, with the spectral hand being invisible.',
     ],
 
     areas: [
