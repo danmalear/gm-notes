@@ -493,7 +493,6 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO checks, items
   nursemaidsBedroom: {
     code: '15A',
     name: "Nursemaid's Suite - Bedroom",
@@ -515,9 +514,9 @@ const thirdFloorRegions: {
             </p>
             <p>
               Beside the bed, a mildew-covered towel covers most of a dusty
-              yellowed book on one of its two end tables. On the far side of the
-              room, you can see a pair of two more stained-glass doors, their
-              windows flecked with dirt and grime.
+              yellowed book on one of its two nightstands. On the far side of
+              the room, you can see a pair of two more stained-glass doors,
+              their windows flecked with dirt and grime.
             </p>
             <p>
               To the left stands an empty wardrobe, its doors slightly ajar.
@@ -551,6 +550,70 @@ const thirdFloorRegions: {
       },
     ],
 
+    creatures: [
+      {
+        name: 'Klara',
+        trigger: 'Approaching mirror',
+        pronouns: 'She/her',
+        statBlock: { text: 'None' },
+        personality: 'Curious, shy, cannot speak',
+        motivation: 'Wants to help party destroy this place',
+      },
+    ],
+
+    checks: [
+      {
+        skills: ['Perception'],
+        target: 'Mirror',
+        dc: 12,
+        success:
+          'Looking closely, you notice that among the berries carved into the frame, eyeballs stare back at you.',
+      },
+      {
+        skills: ['Perception'],
+        target: 'Walls or mirror',
+        dc: 15,
+        success:
+          'After a bit of searching, you see that the portion of the east wall bearing the mirror shows the hallmark groove of a secret door',
+      },
+    ],
+
+    items: [
+      {
+        name: 'Mirror',
+        notes: [
+          'Approaching triggers scene (see descriptions)',
+          'Carved to portray ivy and berries',
+          'Mounted on the wall where the secret door is',
+        ],
+      },
+      {
+        name: 'Bed',
+        notes: [
+          'A portion of its covers rhythmically rise and fall',
+          'Lifting the covers reveals nobody beneath',
+          'Mattress is bloodstained, and barbed wire restraints are nailed to the posts of the frame',
+        ],
+      },
+      {
+        name: 'Nightstands',
+        quantity: 2,
+        items: [
+          {
+            name: 'Book',
+            notes: [
+              'Blue-Blooded Lips',
+              'Raunchy romance novel',
+              "About a peasant woman's romance with a wealthy duke",
+            ],
+          },
+        ],
+      },
+      {
+        name: 'Wardrobe',
+      },
+    ],
+
     opportunities: [
       'Approaching the mirror reveals the spirit of Klara; asking for her help causes her to swing open the secret door behind the mirror.',
     ],
@@ -568,7 +631,6 @@ const thirdFloorRegions: {
     ],
   },
 
-  // @TODO checks, items
   nursery: {
     code: '15B',
     name: "Nursemaid's Suite - Nursery",
@@ -610,6 +672,33 @@ const thirdFloorRegions: {
             </p>
           </>
         ),
+      },
+    ],
+
+    checks: [
+      {
+        skills: ['Medicine'],
+        target: 'Severed finger',
+        dc: 12,
+        success:
+          'The finger comes from a woman, and the toothmarks match the pattern of a human child',
+      },
+      {
+        skills: ['Arcana'],
+        target: 'Runes',
+        dc: 14,
+        success: 'The runes are infused with dark, necromantic magic',
+      },
+    ],
+
+    items: [
+      {
+        name: 'Severed finger',
+        notes: ['Prominent toothmarks', 'Several pieces of flesh stripped'],
+      },
+      {
+        name: 'Crib',
+        notes: ['"Walter" has been lovingly carved into the head'],
       },
     ],
 
