@@ -455,11 +455,11 @@ const thirdFloorRegions: {
 
     creatures: [
       {
-        name: 'Broom of animated attack',
+        name: 'Broom',
         trigger: 'A creature within reach looks away',
         statBlock: {
-          text: 'Broom of Animated Attack',
-          url: 'https://www.dndbeyond.com/monsters/5194893-animated-armor',
+          text: 'Animated Broom',
+          url: 'https://www.dndbeyond.com/monsters/5194894-animated-broom',
         },
         combatBehavior:
           'Whacks creature on the back of the head, then goes immobile, rinse repeat until detected. When engaged, fights until defeated.',
