@@ -81,7 +81,6 @@ const atticRegions: {
     ],
   },
 
-  // @TODO checks, items
   spareBedroom: {
     code: '17',
     name: 'Spare Bedroom',
@@ -103,6 +102,59 @@ const atticRegions: {
             draping it like a wedding veil.
           </p>
         ),
+      },
+    ],
+
+    checks: [
+      {
+        skills: ['Investigation'],
+        target: 'Recruitment list',
+        dc: 12,
+        success: 'You spot the name Drasha among the listed names',
+        prerequisites: ['Have found notes referring to Drasha'],
+      },
+    ],
+
+    items: [
+      {
+        name: 'Music box',
+        items: [
+          {
+            name: 'Key',
+            notes: ["Opens padlock on children's room door"],
+          },
+          {
+            name: 'Floor plan',
+            notes: ['See handouts'],
+          },
+          {
+            name: 'Recruitment list',
+            notes: ['Contains a bunch of unfamiliar names'],
+          },
+          {
+            name: 'Skinning knife',
+            notes: ['Rusted and bloodstained'],
+          },
+        ],
+      },
+      {
+        name: 'Doll',
+        notes: ['Same doll that Thorn was holding in the portrait'],
+      },
+      {
+        name: 'Wardrobe',
+      },
+      {
+        name: 'Nightstand',
+      },
+      {
+        name: 'Iron stove',
+      },
+      {
+        name: 'Bed',
+      },
+      {
+        name: 'Rocking chair',
       },
     ],
 
