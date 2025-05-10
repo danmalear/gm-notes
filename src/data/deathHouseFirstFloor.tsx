@@ -65,7 +65,7 @@ const firstFloorRegions: {
       {
         name: 'Oil lamps',
         quantity: 2,
-        notes: ['Hanging from ceiling', 'Currently unlit'],
+        notes: ['Hanging from ceiling'],
       },
     ],
 
