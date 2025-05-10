@@ -358,8 +358,9 @@ const thirdFloorRegions: {
         text: (
           <p>
             The door leads out to a small exterior balcony, the view only of the
-            fleshy tendrils that surround the house. Nothing else is immediately
-            visible.
+            fleshy tendrils that surround the house. Looking up, you can see the
+            attic extending above you, with a boarded up window. Nothing else is
+            immediately visible.
           </p>
         ),
       },
@@ -749,8 +750,9 @@ const thirdFloorRegions: {
         text: (
           <p>
             The door leads out to a small exterior balcony, the view only of the
-            fleshy tendrils that surround the house. Nothing else is immediately
-            visible.
+            fleshy tendrils that surround the house. Looking up you can see the
+            attic extending above you, with two windows. Nothing else is
+            immediately visible.
           </p>
         ),
       },
