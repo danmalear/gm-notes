@@ -1395,7 +1395,7 @@ const dungeonLevel1Regions: {
         target: 'Walls',
         dc: 10,
         success:
-          'On the eastern wall, uUnder a thin layer of clay, there is a concealed wooden door.',
+          'On the eastern wall, under a thin layer of clay, there is a concealed wooden door.',
       },
     ],
 
