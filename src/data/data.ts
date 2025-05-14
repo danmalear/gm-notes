@@ -2,11 +2,11 @@ import deathHouse from './deathHouse';
 import type { Map } from './MapData.tsx';
 
 interface Data {
-  [key: string]: Map;
+	[key: string]: Map;
 }
 
 const data: Data = {
-  deathHouse,
+	deathHouse,
 };
 
 export default data;
