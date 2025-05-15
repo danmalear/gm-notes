@@ -1,4 +1,4 @@
-import { UUID } from '../types/Crypto';
+import { UUID } from 'crypto';
 
 interface OpenCollapsibles {
 	[key: UUID]: boolean;
