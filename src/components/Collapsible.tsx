@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { randomUUID } from 'crypto';
 import { useContext, useState } from 'react';
 import './Collapsible.css';
 import {
@@ -17,7 +16,7 @@ const Collapsible: React.FC<CollapsibleProps> = ({
 	title,
 	...props
 }) => {
-	const [stateId] = useState(randomUUID());
+	const [stateId] = useState(self.crypto.randomUUID());
 
 	const collapsibles = useContext(RegionDetailsContext);
 	const dispatch = useContext(RegionDetailsDispatchContext);
