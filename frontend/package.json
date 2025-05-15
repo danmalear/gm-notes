@@ -1,5 +1,5 @@
 {
-	"name": "map-data",
+	"name": "map-data-frontend",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
@@ -12,10 +12,7 @@
 	"dependencies": {
 		"classnames": "^2.5.1",
 		"react": "^19.0.0",
-		"react-dom": "^19.0.0",
-		"reflect-metadata": "^0.2.2",
-		"sqlite3": "^5.1.7",
-		"typeorm": "^0.3.24"
+		"react-dom": "^19.0.0"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.22.0",

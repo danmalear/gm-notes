@@ -1,0 +1,24 @@
+{
+	"name": "map-data-backend",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"lint": "eslint ."
+	},
+	"dependencies": {
+		"@sequelize/core": "7.0.0-alpha.46",
+		"@sequelize/sqlite3": "7.0.0-alpha.46",
+		"sqlite3": "^5.1.7"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.22.0",
+		"@types/node": "^22.15.18",
+		"eslint": "^9.22.0",
+		"eslint-config-prettier": "^10.1.2",
+		"globals": "^16.0.0",
+		"prettier": "3.5.3",
+		"typescript": "~5.7.2",
+		"typescript-eslint": "^8.26.1"
+	}
+}

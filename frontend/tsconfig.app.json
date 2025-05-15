@@ -20,11 +20,7 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
-		"noUncheckedSideEffectImports": true,
-
-		/* Decorators */
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true
+		"noUncheckedSideEffectImports": true
 	},
 	"include": ["src"]
 }

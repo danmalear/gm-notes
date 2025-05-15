@@ -1,5 +1,5 @@
 import deathHouse from './deathHouse';
-import type { Map } from './MapData.tsx';
+import type { Map } from './MapData.ts';
 
 interface Data {
 	[key: string]: Map;
