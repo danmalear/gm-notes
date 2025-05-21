@@ -1,10 +1,10 @@
 import { createBrowserRouter } from 'react-router';
-import App from './App';
+import MapView from './MapView';
 
 const router = createBrowserRouter([
 	{
 		path: '/',
-		Component: App,
+		Component: MapView,
 	},
 ]);
 
