@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import './App.css';
-import Map, { MapArea } from './components/Map.tsx';
+import Map, { type MapArea } from './components/Map.tsx';
 import RegionDetails from './components/RegionDetails.tsx';
 import data from './data/data.ts';
-import { ValidPartySize, type TimeOfDay } from './data/MapData.ts';
+import type { TimeOfDay, ValidPartySize } from './data/MapData.ts';
 
-function App() {
+export default function App() {
 	const [currentMap, setCurrentMap] = useState('deathHouse');
 	const [currentRegion, setCurrentRegion] = useState('foyer');
 	const [timeOfDay, setTimeOfDay] = useState<TimeOfDay>('night');
@@ -90,5 +90,3 @@ function App() {
 		</div>
 	);
 }
-
-export default App;
