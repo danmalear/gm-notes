@@ -29,9 +29,11 @@ export class CampaignTemplateService
 	 */
 	async getById(id: UUID): Promise<CampaignTemplate | undefined> {
 		try {
-			return await db<CampaignTemplate>(CampaignTemplate.tableName)
+			const record = await db<CampaignTemplate>(CampaignTemplate.tableName)
 				.where(CampaignTemplate.idColumn, id)
 				.first();
+
+			return record ? new CampaignTemplate(record) : undefined;
 		} catch (e) {
 			throw Error(
 				`Error getting ${CampaignTemplate.tableName} by ID: ${getMessage(e)}`,
@@ -45,11 +47,14 @@ export class CampaignTemplateService
 	 * @returns The inserted record
 	 */
 	async insert(data: CampaignTemplate) {
+		console.log('insert', data);
 		try {
-			return await db<CampaignTemplate>(CampaignTemplate.tableName)
+			const record = await db<CampaignTemplate>(CampaignTemplate.tableName)
 				.insert(data)
 				.returning('*')
 				.then((returning) => returning[0]);
+
+			return new CampaignTemplate(record);
 		} catch (e) {
 			throw Error(
 				`Error inserting ${CampaignTemplate.tableName}: ${getMessage(e)}`,
@@ -65,11 +70,13 @@ export class CampaignTemplateService
 	 */
 	async update(id: string, data: CampaignTemplate) {
 		try {
-			return await db<CampaignTemplate>(CampaignTemplate.tableName)
+			const record = await db<CampaignTemplate>(CampaignTemplate.tableName)
 				.where(CampaignTemplate.idColumn, id)
 				.update(data)
 				.returning('*')
 				.then((returning) => returning[0]);
+
+			return new CampaignTemplate(record);
 		} catch (e) {
 			throw Error(
 				`Error updating ${CampaignTemplate.tableName} with ID ${id}: ${getMessage(e)}`,
