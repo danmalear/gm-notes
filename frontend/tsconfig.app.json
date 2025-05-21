@@ -22,5 +22,8 @@
 		"noFallthroughCasesInSwitch": true,
 		"noUncheckedSideEffectImports": true
 	},
+	"paths": {
+		"#dtos/*": ["../dtos/*"]
+	},
 	"include": ["src"]
 }
