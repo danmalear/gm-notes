@@ -1,6 +1,6 @@
 import type { CampaignTemplate as CampaignTemplateDto } from '#dtos/models/CampaignTemplate.ts';
 import { type UUID, randomUUID } from 'crypto';
-import { Entity } from './Entity.ts';
+import type { Entity } from './Entity.ts';
 
 export class CampaignTemplate implements Entity<CampaignTemplateDto> {
 	// Static properties

@@ -2,7 +2,7 @@ import { type UUID } from 'crypto';
 import { db } from '../db.ts';
 import { CampaignTemplate } from '../entities/CampaignTemplate.ts';
 import { getMessage } from '../helpers/error.ts';
-import { EntityService } from './EntityService.ts';
+import type { EntityService } from './EntityService.ts';
 
 export class CampaignTemplateService
 	implements EntityService<CampaignTemplate>
