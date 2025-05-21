@@ -6,6 +6,9 @@
 	"scripts": {
 		"lint": "eslint ."
 	},
+	"imports": {
+		"#dtos/": "../dtos/"
+	},
 	"dependencies": {
 		"cors": "^2.8.5",
 		"express": "^5.1.0",
