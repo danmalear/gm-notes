@@ -1,0 +1,12 @@
+export const getMessage = (e: unknown): string => {
+	if (e instanceof Error) {
+		return e.message;
+	} else if (typeof e === 'string') {
+		return e;
+	} else if (typeof e === 'object' && e !== null) {
+		if ('message' in e && typeof e.message === 'string') {
+			return e.message;
+		}
+	}
+	return 'Unknown error';
+};
