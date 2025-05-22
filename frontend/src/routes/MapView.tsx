@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import Map, { type MapArea } from './components/Map.tsx';
-import RegionDetails from './components/RegionDetails.tsx';
-import data from './data/data.ts';
-import type { TimeOfDay, ValidPartySize } from './data/MapData.ts';
+import Map, { type MapArea } from '../components/Map.tsx';
+import RegionDetails from '../components/RegionDetails.tsx';
+import data from '../data/data.ts';
+import type { TimeOfDay, ValidPartySize } from '../data/MapData.ts';
 import './MapView.css';
 
 export default function MapView() {
