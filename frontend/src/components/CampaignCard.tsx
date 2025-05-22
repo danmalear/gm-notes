@@ -1,5 +1,5 @@
 import { Button, Card, Text, Title } from '@mantine/core';
-import React from 'react';
+import type React from 'react';
 import './CampaignCard.css';
 
 export interface CampaignCardProps extends React.PropsWithChildren {
@@ -9,6 +9,10 @@ export interface CampaignCardProps extends React.PropsWithChildren {
 }
 
 const CampaignCard: React.FC<CampaignCardProps> = ({ imageUrl }) => {
+	const handleMouseDown = (e: React.MouseEvent) => {
+		e.preventDefault();
+	};
+
 	return (
 		<Card
 			shadow="md"
@@ -16,6 +20,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ imageUrl }) => {
 			radius="md"
 			style={{ backgroundImage: `url(${imageUrl})` }}
 			className="card"
+			onMouseDown={handleMouseDown}
 		>
 			<div>
 				<Text className="category" size="xs">
