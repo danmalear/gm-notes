@@ -1,0 +1,20 @@
+#main {
+	height: 100%;
+	width: 100%;
+	padding-left: 20%;
+	padding-right: 20%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.carousel {
+	mask-image:
+		linear-gradient(to left, black, 95%, transparent),
+		linear-gradient(to right, black, 95%, transparent);
+	mask-position:
+		left center,
+		right center;
+	mask-size: 50% 100%;
+	mask-repeat: no-repeat;
+}
