@@ -16,6 +16,7 @@
 		"@mantine/carousel": "^8.0.1",
 		"@mantine/core": "^8.0.1",
 		"@mantine/hooks": "^8.0.1",
+		"@tabler/icons-react": "^3.33.0",
 		"axios": "^1.9.0",
 		"classnames": "^2.5.1",
 		"embla-carousel": "^8.6.0",

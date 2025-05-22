@@ -5,6 +5,7 @@ specifiers:
   '@mantine/carousel': ^8.0.1
   '@mantine/core': ^8.0.1
   '@mantine/hooks': ^8.0.1
+  '@tabler/icons-react': ^3.33.0
   '@types/node': ^22.15.18
   '@types/react': ^19.0.10
   '@types/react-dom': ^19.0.4
@@ -33,6 +34,7 @@ dependencies:
   '@mantine/carousel': 8.0.1_2pbiysqp4pzsidgswxbru3c4oq
   '@mantine/core': 8.0.1_fwznigcnottjh273aoobylexta
   '@mantine/hooks': 8.0.1_react@19.1.0
+  '@tabler/icons-react': 3.33.0_react@19.1.0
   axios: 1.9.0
   classnames: 2.5.1
   embla-carousel: 8.6.0
@@ -869,6 +871,19 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@tabler/icons-react/3.33.0_react@19.1.0:
+    resolution: {integrity: sha512-ay+HDecCjmFl25Lg14hcl59ffSjnOcgfrlV14shu8Qjbz+Xh4LRus93DuoyLQte8YSxE7Pe5gnEz6OF0GtwNtw==}
+    peerDependencies:
+      react: '>= 16'
+    dependencies:
+      '@tabler/icons': 3.33.0
+      react: 19.1.0
+    dev: false
+
+  /@tabler/icons/3.33.0:
+    resolution: {integrity: sha512-NZeFfzcYe7xcBHR3zKoCSrw/cFWvfj6LjenPQ48yVMTGdX854HH9nH44ZfMH8rrDzHBllfjwl4CIX6Vh2tyN0Q==}
+    dev: false
 
   /@types/babel__core/7.20.5:
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
