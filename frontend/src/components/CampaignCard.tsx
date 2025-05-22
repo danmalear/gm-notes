@@ -9,10 +9,6 @@ export interface CampaignCardProps extends React.PropsWithChildren {
 }
 
 const CampaignCard: React.FC<CampaignCardProps> = ({ imageUrl }) => {
-	const handleMouseDown = (e: React.MouseEvent) => {
-		e.preventDefault();
-	};
-
 	return (
 		<Card
 			shadow="md"
@@ -20,7 +16,6 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ imageUrl }) => {
 			radius="md"
 			style={{ backgroundImage: `url(${imageUrl})` }}
 			className="card"
-			onMouseDown={handleMouseDown}
 		>
 			<div>
 				<Text className="category" size="xs">

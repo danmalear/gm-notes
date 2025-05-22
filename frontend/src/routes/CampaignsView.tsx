@@ -44,6 +44,20 @@ export default function CampaignsView() {
 		</Carousel.Slide>
 	));
 
+	const spacer = (
+		<Carousel.Slide styles={{ slide: { flexShrink: 1 } }}>
+			<div
+				style={{
+					width: '25px',
+				}}
+			></div>
+		</Carousel.Slide>
+	);
+
+	const handleMouseDown = (e: React.MouseEvent) => {
+		e.preventDefault();
+	};
+
 	return (
 		<div id="main">
 			<Carousel
@@ -55,8 +69,11 @@ export default function CampaignsView() {
 					dragFree: true,
 				}}
 				className="carousel"
+				onMouseDown={handleMouseDown}
 			>
+				{spacer}
 				{slides}
+				{spacer}
 			</Carousel>
 		</div>
 	);
