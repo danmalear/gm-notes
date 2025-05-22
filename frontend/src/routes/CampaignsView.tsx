@@ -1,78 +1,83 @@
 import { Carousel } from '@mantine/carousel';
-
 import '@mantine/carousel/styles.css';
+import { ActionIcon } from '@mantine/core';
+import { IconPlus } from '@tabler/icons-react';
+import React from 'react';
+import { useNavigate } from 'react-router';
 import CampaignCard from '../components/CampaignCard';
-import './CampaignsView.css';
+import classes from './CampaignsView.module.css';
 
 const data = [
 	{
 		image: '/src/assets/death-house.jpg',
-		title: 'Best forests to visit in North America',
-		category: 'nature',
-	},
-	{
-		image: '/src/assets/death-house.jpg',
-		title: 'Hawaii beaches review: better than you think',
-		category: 'beach',
-	},
-	{
-		image: '/src/assets/death-house.jpg',
-		title: 'Mountains at night: 12 best locations to enjoy the view',
-		category: 'nature',
-	},
-	{
-		image: '/src/assets/death-house.jpg',
-		title: 'Aurora in Norway: when to visit for best experience',
-		category: 'nature',
-	},
-	{
-		image: '/src/assets/death-house.jpg',
-		title: 'Best places to visit this winter',
-		category: 'tourism',
-	},
-	{
-		image: '/src/assets/death-house.jpg',
-		title: 'Active volcanos reviews: travel at your own risk',
-		category: 'nature',
+		name: 'Curse of Strahd',
 	},
 ];
 
 export default function CampaignsView() {
+	const navigate = useNavigate();
+
+	const handleMouseDown: React.MouseEventHandler<HTMLDivElement> = (
+		e: React.MouseEvent,
+	) => {
+		e.preventDefault();
+	};
+
+	const handleAddCampaignClicked: React.MouseEventHandler<HTMLButtonElement> = (
+		e,
+	) => {
+		e.preventDefault();
+		alert('Add Campaign clicked');
+	};
+
+	const handleOpenCampaignClicked = () => {
+		navigate('/map');
+	};
+
 	const slides = data.map((item) => (
-		<Carousel.Slide key={item.title}>
-			<CampaignCard imageUrl={item.image} />
+		<Carousel.Slide key={item.name}>
+			<CampaignCard
+				imageUrl={item.image}
+				name={item.name}
+				onOpenCampaignClicked={handleOpenCampaignClicked}
+			/>
 		</Carousel.Slide>
 	));
 
 	const spacer = (
-		<Carousel.Slide styles={{ slide: { flexShrink: 1 } }}>
-			<div
-				style={{
-					width: '25px',
-				}}
-			></div>
+		<Carousel.Slide style={{ flexShrink: 1 }}>
+			<div className={classes.spacer} />
 		</Carousel.Slide>
 	);
 
-	const handleMouseDown = (e: React.MouseEvent) => {
-		e.preventDefault();
-	};
+	const addNew = (
+		<Carousel.Slide>
+			<ActionIcon
+				id={classes['add-campaign']}
+				variant="outline"
+				color="gray"
+				onClick={handleAddCampaignClicked}
+			>
+				<IconPlus />
+			</ActionIcon>
+		</Carousel.Slide>
+	);
 
 	return (
-		<div id="main">
+		<div id={classes.main} onMouseDown={handleMouseDown}>
 			<Carousel
-				slideSize="470px"
+				slideSize="520px"
 				slideGap={20}
 				withControls={false}
-				height="450px"
+				height="500px"
 				emblaOptions={{
 					dragFree: true,
 				}}
-				className="carousel"
-				onMouseDown={handleMouseDown}
+				className={classes.carousel}
 			>
 				{spacer}
 				{slides}
+				{addNew}
 				{spacer}
 			</Carousel>
 		</div>

@@ -3,7 +3,7 @@ import Map, { type MapArea } from '../components/Map.tsx';
 import RegionDetails from '../components/RegionDetails.tsx';
 import data from '../data/data.ts';
 import type { TimeOfDay, ValidPartySize } from '../data/MapData.ts';
-import './MapView.css';
+import classes from './MapView.module.css';
 
 export default function MapView() {
 	const [currentMap, setCurrentMap] = useState('deathHouse');
@@ -14,7 +14,7 @@ export default function MapView() {
 
 	if (!mapData) {
 		return (
-			<div id="main" className="container">
+			<div id={classes.main} className="container">
 				<div id="map-col" className="item">
 					<div className="pos-absolute l-1 t-1">
 						<select
@@ -48,8 +48,11 @@ export default function MapView() {
 	};
 
 	return (
-		<div id="main" className="container">
-			<div id="map-col" className="item">
+		<div
+			id={classes.main}
+			className={['container', classes.container].join(' ')}
+		>
+			<div id={classes['map-col']} className={classes.item}>
 				<div className="pos-absolute l-1 t-1 w-10">
 					<select
 						className="w-100"
@@ -77,8 +80,8 @@ export default function MapView() {
 					onRegionClick={handleRegionClick}
 				/>
 			</div>
-			<div id="detail-col" className="item">
-				<div className="region-data">
+			<div id={classes['detail-col']} className={classes.item}>
+				<div className={classes['region-data']}>
 					<RegionDetails
 						regionKey={currentRegion}
 						data={mapData.regions[currentRegion]}
