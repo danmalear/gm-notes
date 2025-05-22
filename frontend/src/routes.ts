@@ -3,7 +3,7 @@ import MapView from './MapView';
 
 const router = createBrowserRouter([
 	{
-		path: '/',
+		path: '/map?',
 		Component: MapView,
 	},
 ]);
