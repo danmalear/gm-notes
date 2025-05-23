@@ -26,8 +26,8 @@ export class CampaignTemplate implements Entity<CampaignTemplateDto> {
 
 	// Constructors
 	constructor(data: Partial<CampaignTemplate>) {
-		this.CampaignTemplateId = data.CampaignTemplateId || randomUUID();
-		this.Name = data.Name || 'New Campaign Template';
+		this.CampaignTemplateId = data.CampaignTemplateId ?? randomUUID();
+		this.Name = data.Name ?? 'New Campaign Template';
 	}
 
 	// Methods
