@@ -3,20 +3,10 @@ import type { DataResponse } from '#dtos/responses/DataResponse.ts';
 import type { ErrorResponse } from '#dtos/responses/ErrorResponse.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
-import {
-	type CampaignTemplate,
-	pkColumn,
-	tableName,
-} from '../entities/CampaignTemplate.ts';
 import { getMessage } from '../helpers/error.ts';
 import type { WithRequired } from '../helpers/types.ts';
 import { isUUID } from '../helpers/uuid.ts';
-import { Repository } from '../services/Repository.ts';
-
-const campaignTemplateRepository = new Repository<CampaignTemplate>(
-	tableName,
-	pkColumn,
-);
+import { campaignTemplateRepository } from '../repositories.init.ts';
 
 const apiNamespace = 'campaign-template';
 
