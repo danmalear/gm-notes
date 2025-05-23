@@ -1,4 +1,4 @@
-import { type UUID } from 'crypto';
+import type { UUID } from 'crypto';
 
 export const tableName = 'CampaignTemplate';
 export const pkColumn = 'CampaignTemplateId';
