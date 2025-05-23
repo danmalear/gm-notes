@@ -47,7 +47,6 @@ export class CampaignTemplateService
 	 * @returns The inserted record
 	 */
 	async insert(data: CampaignTemplate) {
-		console.log('insert', data);
 		try {
 			const record = await db<CampaignTemplate>(CampaignTemplate.tableName)
 				.insert(data)
@@ -64,7 +63,7 @@ export class CampaignTemplateService
 
 	/**
 	 * Updates an existing Campaign Template database record with new data
-	 * @param id UUId of the existing Campaign Template to update
+	 * @param id UUID of the existing record to update
 	 * @param data New Campaign Template data to update the record with
 	 * @returns The updated record
 	 */
