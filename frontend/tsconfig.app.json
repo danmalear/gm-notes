@@ -7,7 +7,7 @@
 		"module": "ESNext",
 		"skipLibCheck": true,
 		"paths": {
-			"#dtos/*": ["../dtos/*"]
+			"#dtos/*": ["../backend/src/dtos/*"]
 		},
 
 		/* Bundler mode */

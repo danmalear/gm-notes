@@ -7,7 +7,7 @@
 		"lint": "eslint ."
 	},
 	"imports": {
-		"#dtos/": "../dtos/"
+		"#dtos/": "./src/dtos/"
 	},
 	"dependencies": {
 		"cors": "^2.8.5",
