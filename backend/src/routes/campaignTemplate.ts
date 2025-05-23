@@ -31,7 +31,13 @@ const campaignTemplateRoutes = (app: Express, apiNamespace: string) => {
 				});
 				return;
 			}
-			res.send({ data: campaignTemplate.toDto() });
+
+			const dto: CampaignTemplateDto = {
+				campaignTemplateId: campaignTemplate.CampaignTemplateId,
+				name: campaignTemplate.Name,
+			};
+
+			res.send({ data: dto });
 		},
 	);
 
@@ -53,11 +59,20 @@ const campaignTemplateRoutes = (app: Express, apiNamespace: string) => {
 				res.status(400).send({ error: 'Request malformed' });
 				return;
 			}
-			const campaignTemplate = await service.insert(
-				CampaignTemplate.fromDto(req.body),
-			);
 
-			res.send({ data: campaignTemplate.toDto() });
+			let campaignTemplate = new CampaignTemplate({
+				CampaignTemplateId: req.body.campaignTemplateId,
+				Name: req.body.name,
+			});
+
+			campaignTemplate = await service.insert(campaignTemplate);
+
+			const dto: CampaignTemplateDto = {
+				campaignTemplateId: campaignTemplate.CampaignTemplateId,
+				name: campaignTemplate.Name,
+			};
+
+			res.send({ data: dto });
 		},
 	);
 };
