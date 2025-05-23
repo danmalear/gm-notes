@@ -1,4 +1,4 @@
-import { Button, Card, Text, Title } from '@mantine/core';
+import { Button, Card, Title } from '@mantine/core';
 import type { UUID } from 'crypto';
 import type React from 'react';
 import classes from './CampaignCard.module.css';
@@ -25,9 +25,6 @@ const CampaignCard: React.FC<CampaignCardProps> = ({
 			className={classes.card}
 		>
 			<div>
-				<Text className="category" size="xs">
-					Category Here
-				</Text>
 				<Title order={3} className="title">
 					{name}
 				</Title>
