@@ -22,12 +22,12 @@ export class CampaignTemplate implements Entity<CampaignTemplateDto> {
 
 	// Properties
 	CampaignTemplateId: UUID;
-	Name: string | undefined;
+	Name: string;
 
 	// Constructors
 	constructor(data: Partial<CampaignTemplate>) {
 		this.CampaignTemplateId = data.CampaignTemplateId || randomUUID();
-		this.Name = data.Name;
+		this.Name = data.Name || 'New Campaign Template';
 	}
 
 	// Methods
