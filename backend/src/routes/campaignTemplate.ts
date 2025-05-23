@@ -24,7 +24,6 @@ const campaignTemplateRoutes = (app: Express, apiNamespace: string) => {
 				return;
 			}
 			const campaignTemplate = await service.getById(req.params.id);
-			console.log('getById', JSON.stringify(campaignTemplate));
 			if (!campaignTemplate) {
 				res.status(404).send({
 					error: `Campaign Template with ID ${req.params.id} not found`,
