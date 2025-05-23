@@ -9,9 +9,9 @@ export class CampaignTemplate implements Entity<CampaignTemplateDto> {
 
 	// Static methods
 	/**
-	 *
-	 * @param dto
-	 * @returns
+	 * Converts a campaign template DTO into entity equivalent
+	 * @param dto Campaign template DTO to convert
+	 * @returns Campaign template entity
 	 */
 	static fromDto(dto: CampaignTemplateDto) {
 		return new CampaignTemplate({
