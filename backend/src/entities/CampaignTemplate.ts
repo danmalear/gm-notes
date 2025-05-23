@@ -1,17 +1,9 @@
-import { type UUID, randomUUID } from 'crypto';
+import { type UUID } from 'crypto';
 
-export class CampaignTemplate {
-	// Static properties
-	static readonly tableName = 'CampaignTemplate';
-	static readonly idColumn = 'CampaignTemplateId';
+export const tableName = 'CampaignTemplate';
+export const pkColumn = 'CampaignTemplateId';
 
-	// Properties
+export interface CampaignTemplate {
 	CampaignTemplateId: UUID;
 	Name: string;
-
-	// Constructors
-	constructor(data: Partial<CampaignTemplate>) {
-		this.CampaignTemplateId = data.CampaignTemplateId ?? randomUUID();
-		this.Name = data.Name ?? 'New Campaign Template';
-	}
 }

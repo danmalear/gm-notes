@@ -1,12 +1,20 @@
 import type { CampaignTemplate as CampaignTemplateDto } from '#dtos/models/CampaignTemplate.ts';
 import type { DataResponse } from '#dtos/responses/DataResponse.ts';
 import type { ErrorResponse } from '#dtos/responses/ErrorResponse.ts';
+import { randomUUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
-import { CampaignTemplate } from '../entities/CampaignTemplate.ts';
+import {
+	CampaignTemplate,
+	pkColumn,
+	tableName,
+} from '../entities/CampaignTemplate.ts';
 import { isUUID } from '../helpers/uuid.ts';
-import { CampaignTemplateService } from '../services/CampaignTemplateService.ts';
+import { Repository } from '../services/Repository.ts';
 
-const service = CampaignTemplateService.getInstance();
+const campaignTemplateRepository = new Repository<CampaignTemplate>(
+	tableName,
+	pkColumn,
+);
 
 const campaignTemplateRoutes = (app: Express, apiNamespace: string) => {
 	app.get(
@@ -23,7 +31,9 @@ const campaignTemplateRoutes = (app: Express, apiNamespace: string) => {
 				res.status(400).send({ error: 'Invalid UUID format' });
 				return;
 			}
-			const campaignTemplate = await service.getById(req.params.id);
+			const campaignTemplate = await campaignTemplateRepository.getById(
+				req.params.id,
+			);
 			if (!campaignTemplate) {
 				res.status(404).send({
 					error: `Campaign Template with ID ${req.params.id} not found`,
@@ -59,12 +69,13 @@ const campaignTemplateRoutes = (app: Express, apiNamespace: string) => {
 				return;
 			}
 
-			let campaignTemplate = new CampaignTemplate({
-				CampaignTemplateId: req.body.campaignTemplateId,
-				Name: req.body.name,
-			});
+			let campaignTemplate = {
+				CampaignTemplateId: req.body.campaignTemplateId ?? randomUUID(),
+				Name: req.body.name ?? 'New Campaign Template',
+			};
 
-			campaignTemplate = await service.insert(campaignTemplate);
+			campaignTemplate =
+				await campaignTemplateRepository.insert(campaignTemplate);
 
 			const dto: CampaignTemplateDto = {
 				campaignTemplateId: campaignTemplate.CampaignTemplateId,
