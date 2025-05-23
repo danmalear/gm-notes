@@ -7,9 +7,6 @@ import type { EntityService } from './EntityService.ts';
 export class CampaignTemplateService
 	implements EntityService<CampaignTemplate>
 {
-	static readonly tableName = 'CampaignTemplate';
-	static readonly idColumn = 'CampaignTemplateId';
-
 	static _instance: CampaignTemplateService;
 
 	/**
