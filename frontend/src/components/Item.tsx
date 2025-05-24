@@ -30,12 +30,14 @@ const Item: React.FC<ItemProps> = ({ item, ...props }) => {
 			{item.items?.map((subItem, subIndex) =>
 				subItem.value || subItem.notes?.length ? (
 					<Collapsible
-						key={`item-${item.name}-${subIndex}`}
+						key={`item-${subItem.name}-${subIndex}`}
 						headingElement={props.subHeadingElement}
 						title={headingText(subItem)}
 					>
 						<div>
-							{subItem.value ? <Trait label="Value">{item.value}</Trait> : null}
+							{subItem.value ? (
+								<Trait label="Value">{subItem.value}</Trait>
+							) : null}
 							{subItem.notes ? (
 								<ul>
 									{subItem.notes.map((note, noteIndex) => (
