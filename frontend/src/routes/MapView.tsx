@@ -52,7 +52,7 @@ export default function MapView() {
 			id={classes.main}
 			className={['container', classes.container].join(' ')}
 		>
-			<div id={classes['map-col']} className={classes.item}>
+			<div id={classes['map-col']} className="item">
 				<div className="pos-absolute l-1 t-1 w-10">
 					<select
 						className="w-100"
