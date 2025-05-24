@@ -80,7 +80,7 @@ export default function MapView() {
 					onRegionClick={handleRegionClick}
 				/>
 			</div>
-			<div id={classes['detail-col']} className={classes.item}>
+			<div id={classes['detail-col']} className="item">
 				<div className={classes['region-data']}>
 					<RegionDetails
 						regionKey={currentRegion}
