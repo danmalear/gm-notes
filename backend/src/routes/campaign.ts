@@ -1,11 +1,15 @@
-import type { Campaign as CampaignDto } from '#dtos/models/Campaign.ts';
+import type {
+	CampaignCreate,
+	CampaignResponse,
+} from '#dtos/models/Campaign.ts';
 import type { DataResponse } from '#dtos/responses/DataResponse.ts';
 import type { ErrorResponse } from '#dtos/responses/ErrorResponse.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
+import type { Campaign } from '../entities/Campaign.ts';
 import { getMessage } from '../helpers/error.ts';
-import { WithRequired } from '../helpers/types.ts';
 import { isUUID } from '../helpers/uuid.ts';
+import { validatePostBody } from '../helpers/validation.ts';
 import { campaignRepository } from '../repositories.init.ts';
 
 const apiNamespace = 'campaign';
@@ -13,7 +17,10 @@ const apiNamespace = 'campaign';
 const campaignRoutes = (app: Express) => {
 	app.get(
 		`/${apiNamespace}/:id`,
-		async (req, res: Response<ErrorResponse | DataResponse<CampaignDto>>) => {
+		async (
+			req,
+			res: Response<ErrorResponse | DataResponse<CampaignResponse>>,
+		) => {
 			console.log(
 				`Campaign GET request received. params: ${JSON.stringify(req.params)}`,
 			);
@@ -36,57 +43,43 @@ const campaignRoutes = (app: Express) => {
 
 			res.send({
 				data: {
-					campaignId: campaign.CampaignId,
-					campaignTemplateId: campaign.CampaignTemplateId ?? undefined,
+					id: campaign.CampaignId,
 					name: campaign.Name,
-					activeMapId: campaign.ActiveMapId ?? undefined,
+					// @TODO campaignTemplate,
+					// @TODO activeMap,
 				},
 			});
 		},
 	);
 
-	type ValidPostBody = WithRequired<Omit<CampaignDto, 'campaignId'>, 'name'>;
-
-	function validatePostBody(body: unknown): body is ValidPostBody {
-		if (!body) {
-			throw Error('No request body supplied to POST request');
-		}
-
-		if (typeof body !== 'object') {
-			throw Error('Request body is of an unsupported format');
-		}
-
-		if ('campaignId' in body && body.campaignId) {
-			throw Error(
-				'POST request received with UUID - either remove it if it should be a new record, or use PUT to update existing record',
-			);
-		}
-
-		if (!('name' in body) || !body.name) {
-			throw Error('Campaigns must have a name specified');
-		}
-
-		return true;
-	}
-
 	app.post(
 		`/${apiNamespace}`,
 		async (
-			req: Request<object, ErrorResponse | DataResponse<CampaignDto>>,
+			req: Request<object, ErrorResponse | DataResponse<CampaignResponse>>,
 			res,
 		) => {
 			console.log(
 				`Campaign POST request received. body: ${JSON.stringify(req.body)}`,
 			);
 
+			function validateBody(body: unknown): body is CampaignCreate {
+				if (!validatePostBody(body)) return false;
+
+				if (!('name' in body) || !body.name) {
+					throw Error('Campaigns must have a name specified');
+				}
+
+				return true;
+			}
+
 			try {
-				if (!validatePostBody(req.body)) return;
+				if (!validateBody(req.body)) return;
 			} catch (e) {
 				res.status(400).send({ error: getMessage(e) });
 				return;
 			}
 
-			let campaign = {
+			let campaign: Campaign = {
 				CampaignId: randomUUID(),
 				CampaignTemplateId: req.body.campaignTemplateId ?? null,
 				Name: req.body.name,
@@ -95,11 +88,13 @@ const campaignRoutes = (app: Express) => {
 
 			campaign = await campaignRepository.insert(campaign);
 
+			// @TODO fetch campaign template
+
 			res.send({
 				data: {
-					campaignId: campaign.CampaignId,
-					campaignTemplateId: campaign.CampaignTemplateId ?? undefined,
+					id: campaign.CampaignId,
 					name: campaign.Name,
+					// @TODO campaignTemplate,
 				},
 			});
 		},
