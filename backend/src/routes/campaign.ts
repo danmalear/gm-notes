@@ -45,6 +45,28 @@ async function buildResponse(campaign: Campaign) {
 
 const campaignRoutes = (app: Express) => {
 	app.get(
+		`/${apiNamespace}`,
+		async (
+			_req,
+			res: Response<ErrorResponse | DataResponse<CampaignResponse[]>>,
+		) => {
+			console.log(`Campaign GET all request received.`);
+
+			const campaigns = await campaignRepository.getAll();
+
+			const data: CampaignResponse[] = [];
+
+			for (const campaign of campaigns) {
+				data.push(await buildResponse(campaign));
+			}
+
+			res.send({
+				data,
+			});
+		},
+	);
+
+	app.get(
 		`/${apiNamespace}/:id`,
 		async (
 			req,
