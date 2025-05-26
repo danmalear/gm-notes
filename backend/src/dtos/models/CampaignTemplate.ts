@@ -13,3 +13,5 @@ export interface CampaignTemplateResponse {
 	id: UUID;
 	name: string;
 }
+
+export type CampaignTemplateStub = CampaignTemplateResponse;
