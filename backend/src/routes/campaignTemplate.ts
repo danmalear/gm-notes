@@ -39,10 +39,14 @@ export function campaignTemplateRoutes(app: Express) {
 				return;
 			}
 
+			// @TODO fetch map templates associated with campaign template
+
 			res.send({
 				data: {
 					id: campaignTemplate.CampaignTemplateId,
 					name: campaignTemplate.Name,
+					// @TODO
+					mapTemplates: [],
 				},
 			});
 		},
@@ -86,10 +90,14 @@ export function campaignTemplateRoutes(app: Express) {
 			campaignTemplate =
 				await campaignTemplateRepository.insert(campaignTemplate);
 
+			// @TODO fetch map templates associated with campaign template
+
 			res.send({
 				data: {
 					id: campaignTemplate.CampaignTemplateId,
 					name: campaignTemplate.Name,
+					// @TODO
+					mapTemplates: [],
 				},
 			});
 		},
