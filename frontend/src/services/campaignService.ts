@@ -11,7 +11,7 @@ export const getAllCampaigns = async () => {
 
 export const getCampaign = async (id: UUID) => {
 	const response = await api.get<DataResponse<CampaignResponse>>(
-		`/campaign/${id}`,
+		`/campaigns/${id}`,
 	);
 
 	return response.data.data;
@@ -19,7 +19,7 @@ export const getCampaign = async (id: UUID) => {
 
 export const insertCampaign = async (data: CampaignCreate) => {
 	const response = await api.post<DataResponse<CampaignResponse>>(
-		`/campaign`,
+		`/campaigns`,
 		data,
 	);
 

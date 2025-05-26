@@ -8,7 +8,7 @@ import api from './api.ts';
 
 export const getCampaignTemplate = async (id: UUID) => {
 	const response = await api.get<DataResponse<CampaignTemplateResponse>>(
-		`/campaign-template/${id}`,
+		`/campaign-templates/${id}`,
 	);
 
 	return response.data.data;
@@ -16,7 +16,7 @@ export const getCampaignTemplate = async (id: UUID) => {
 
 export const insertCampaignTemplate = async (data: CampaignTemplateCreate) => {
 	const response = await api.post<DataResponse<CampaignTemplateResponse>>(
-		`/campaign-template`,
+		`/campaign-templates`,
 		data,
 	);
 
