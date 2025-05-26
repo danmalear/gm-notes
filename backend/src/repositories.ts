@@ -8,7 +8,7 @@ import {
 	tableName as campaignTemplateTableName,
 	type CampaignTemplate,
 } from './entities/CampaignTemplate.ts';
-import { Repository } from './Repository.ts';
+import { Repository } from './repositories/Repository.ts';
 
 export const campaignTemplateRepository = new Repository<CampaignTemplate>(
 	campaignTemplateTableName,
