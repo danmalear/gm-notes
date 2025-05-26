@@ -10,6 +10,7 @@ import { requiredFields, validatePostBody } from '../helpers/validation.ts';
 import {
 	campaignRepository,
 	campaignTemplateRepository,
+	mapRepository,
 } from '../repositories.ts';
 
 const apiNamespace = 'campaign';
@@ -19,7 +20,7 @@ async function buildResponse(campaign: Campaign) {
 		? await campaignTemplateRepository.getById(campaign.CampaignTemplateId)
 		: undefined;
 
-	// @TODO fetch maps
+	const maps = await mapRepository.getByCampaignId(campaign.CampaignId);
 
 	const campaignResponse: CampaignResponse = {
 		id: campaign.CampaignId,
@@ -30,8 +31,13 @@ async function buildResponse(campaign: Campaign) {
 					name: campaignTemplate.Name,
 				}
 			: undefined,
-		// @TODO
-		maps: [],
+		maps: maps.map((map) => ({
+			id: map.MapId,
+			campaignId: map.CampaignId,
+			mapTemplateId: map.MapTemplateId ?? undefined,
+			name: map.Name,
+			imagePath: map.ImagePath,
+		})),
 	};
 
 	return campaignResponse;
