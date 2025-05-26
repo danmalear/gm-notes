@@ -7,7 +7,10 @@ import type { Campaign } from '../entities/Campaign.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';
 import { requiredFields, validatePostBody } from '../helpers/validation.ts';
-import { campaignRepository } from '../repositories.init.ts';
+import {
+	campaignRepository,
+	campaignTemplateRepository,
+} from '../repositories.init.ts';
 
 const apiNamespace = 'campaign';
 
@@ -35,18 +38,26 @@ const campaignRoutes = (app: Express) => {
 				return;
 			}
 
-			// @TODO fetch campaign template
+			const campaignTemplate = campaign.CampaignTemplateId
+				? await campaignTemplateRepository.getById(campaign.CampaignTemplateId)
+				: undefined;
+
 			// @TODO fetch maps
 
-			res.send({
-				data: {
-					id: campaign.CampaignId,
-					name: campaign.Name,
-					// @TODO campaignTemplate,
-					// @TODO
-					maps: [],
-				},
-			});
+			const campaignResponse: CampaignResponse = {
+				id: campaign.CampaignId,
+				name: campaign.Name,
+				campaignTemplate: campaignTemplate
+					? {
+							id: campaignTemplate.CampaignTemplateId,
+							name: campaignTemplate.Name,
+						}
+					: undefined,
+				// @TODO
+				maps: [],
+			};
+
+			res.send({ data: campaignResponse });
 		},
 	);
 
@@ -81,18 +92,26 @@ const campaignRoutes = (app: Express) => {
 
 			campaign = await campaignRepository.insert(campaign);
 
-			// @TODO fetch campaign template
+			const campaignTemplate = campaign.CampaignTemplateId
+				? await campaignTemplateRepository.getById(campaign.CampaignTemplateId)
+				: undefined;
+
 			// @TODO fetch maps
 
-			res.send({
-				data: {
-					id: campaign.CampaignId,
-					name: campaign.Name,
-					// @TODO campaignTemplate,
-					// @TODO
-					maps: [],
-				},
-			});
+			const campaignResponse: CampaignResponse = {
+				id: campaign.CampaignId,
+				name: campaign.Name,
+				campaignTemplate: campaignTemplate
+					? {
+							id: campaignTemplate.CampaignTemplateId,
+							name: campaignTemplate.Name,
+						}
+					: undefined,
+				// @TODO
+				maps: [],
+			};
+
+			res.send({ data: campaignResponse });
 		},
 	);
 };
