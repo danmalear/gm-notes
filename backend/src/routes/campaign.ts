@@ -6,7 +6,7 @@ import type { Express, Request, Response } from 'express';
 import type { Campaign } from '../entities/Campaign.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';
-import { validatePostBody } from '../helpers/validation.ts';
+import { requiredFields, validatePostBody } from '../helpers/validation.ts';
 import { campaignRepository } from '../repositories.init.ts';
 
 const apiNamespace = 'campaign';
@@ -60,18 +60,13 @@ const campaignRoutes = (app: Express) => {
 				`Campaign POST request received. body: ${JSON.stringify(req.body)}`,
 			);
 
-			function validateBody(body: unknown): body is CampaignCreate {
-				if (!validatePostBody(body)) return false;
-
-				if (!('name' in body) || !body.name) {
-					throw Error('Campaigns must have a name specified');
-				}
-
-				return true;
+			function validateBody(body: unknown): asserts body is CampaignCreate {
+				validatePostBody(body);
+				requiredFields(body, ['name'], 'Campaigns must have a name specified');
 			}
 
 			try {
-				if (!validateBody(req.body)) return;
+				validateBody(req.body);
 			} catch (e) {
 				res.status(400).send({ error: getMessage(e) });
 				return;

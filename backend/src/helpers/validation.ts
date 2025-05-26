@@ -1,9 +1,9 @@
-export function validatePostBody(body: unknown): body is object {
+export function validatePostBody(body: unknown): asserts body is object {
 	if (!body) {
 		throw Error('No request body supplied to POST request');
 	}
 
-	if (typeof body !== 'object') {
+	if (typeof body !== 'object' || Array.isArray(body)) {
 		throw Error('Request body is of an unsupported format');
 	}
 
@@ -12,6 +12,19 @@ export function validatePostBody(body: unknown): body is object {
 			'POST request received with ID - either remove it if it should be a new record, or use PUT to update existing record',
 		);
 	}
+}
 
-	return true;
+export function requiredFields(
+	body: object,
+	fields: string[],
+	errorOverride?: string,
+) {
+	const error = (field: string) =>
+		errorOverride ?? `Request body missing required field: ${field}`;
+
+	for (const field of fields) {
+		if (!(field in body) || !(body as { [field]: unknown })[field]) {
+			throw Error(error(field));
+		}
+	}
 }

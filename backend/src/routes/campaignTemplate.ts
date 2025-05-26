@@ -5,10 +5,10 @@ import type {
 import type { DataResponse } from '#dtos/DataResponse.ts';
 import type { ErrorResponse } from '#dtos/ErrorResponse.ts';
 import { randomUUID } from 'crypto';
-import type { Express, Request, Response } from 'express';
+import type { Express, Response } from 'express';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';
-import { validatePostBody } from '../helpers/validation.ts';
+import { requiredFields, validatePostBody } from '../helpers/validation.ts';
 import { campaignTemplateRepository } from '../repositories.init.ts';
 
 const apiNamespace = 'campaign-template';
@@ -55,28 +55,26 @@ export function campaignTemplateRoutes(app: Express) {
 	app.post(
 		`/${apiNamespace}`,
 		async (
-			req: Request<
-				object,
-				ErrorResponse | DataResponse<CampaignTemplateResponse>
-			>,
-			res,
+			req,
+			res: Response<ErrorResponse | DataResponse<CampaignTemplateResponse>>,
 		) => {
 			console.log(
 				`Campaign Template POST request received. body: ${JSON.stringify(req.body)}`,
 			);
 
-			function validateBody(body: unknown): body is CampaignTemplateCreate {
-				if (!validatePostBody(body)) return false;
-
-				if (!('name' in body) || !body.name) {
-					throw Error('Campaign Templates must have a name specified');
-				}
-
-				return true;
+			function validateBody(
+				body: unknown,
+			): asserts body is CampaignTemplateCreate {
+				validatePostBody(body);
+				requiredFields(
+					body,
+					['name'],
+					'Campaign Templates must have a name specified',
+				);
 			}
 
 			try {
-				if (!validateBody(req.body)) return;
+				validateBody(req.body);
 			} catch (e) {
 				res.status(400).send({ error: getMessage(e) });
 				return;
