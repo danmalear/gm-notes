@@ -1,5 +1,6 @@
 import type { UUID } from 'crypto';
 import type { CampaignTemplateStub } from './CampaignTemplate.ts';
+import type { MapStub } from './Map.ts';
 
 export interface CampaignCreate {
 	campaignTemplateId?: UUID;
@@ -17,7 +18,7 @@ export interface CampaignResponse {
 	name: string;
 	activeMapId?: UUID;
 	campaignTemplate?: CampaignTemplateStub;
-	// @TODO activeMap?: Map;
+	maps: MapStub[];
 }
 
 export interface CampaignStub {

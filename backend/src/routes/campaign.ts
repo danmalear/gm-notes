@@ -36,14 +36,15 @@ const campaignRoutes = (app: Express) => {
 			}
 
 			// @TODO fetch campaign template
-			// @TODO fetch active map
+			// @TODO fetch maps
 
 			res.send({
 				data: {
 					id: campaign.CampaignId,
 					name: campaign.Name,
 					// @TODO campaignTemplate,
-					// @TODO activeMap,
+					// @TODO
+					maps: [],
 				},
 			});
 		},
@@ -86,12 +87,15 @@ const campaignRoutes = (app: Express) => {
 			campaign = await campaignRepository.insert(campaign);
 
 			// @TODO fetch campaign template
+			// @TODO fetch maps
 
 			res.send({
 				data: {
 					id: campaign.CampaignId,
 					name: campaign.Name,
 					// @TODO campaignTemplate,
+					// @TODO
+					maps: [],
 				},
 			});
 		},
