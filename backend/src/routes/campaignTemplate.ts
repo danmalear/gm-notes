@@ -13,9 +13,9 @@ import { requiredFields, validatePostBody } from '../helpers/validation.ts';
 import {
 	campaignTemplateRepository,
 	mapTemplateRepository,
-} from '../repositories.ts';
+} from '../repositories/repositories.ts';
 
-const apiNamespace = 'campaign-template';
+const apiNamespace = 'campaign-templates';
 
 async function buildResponse(campaignTemplate: CampaignTemplate) {
 	const mapTemplates = await mapTemplateRepository.getByCampaignTemplateId(

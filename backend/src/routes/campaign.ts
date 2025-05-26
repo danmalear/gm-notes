@@ -11,9 +11,9 @@ import {
 	campaignRepository,
 	campaignTemplateRepository,
 	mapRepository,
-} from '../repositories.ts';
+} from '../repositories/repositories.ts';
 
-const apiNamespace = 'campaign';
+const apiNamespace = 'campaigns';
 
 async function buildResponse(campaign: Campaign) {
 	const campaignTemplate = campaign.CampaignTemplateId
@@ -43,7 +43,7 @@ async function buildResponse(campaign: Campaign) {
 	return campaignResponse;
 }
 
-const campaignRoutes = (app: Express) => {
+export const campaignRoutes = (app: Express) => {
 	app.get(
 		`/${apiNamespace}`,
 		async (
@@ -128,5 +128,3 @@ const campaignRoutes = (app: Express) => {
 		},
 	);
 };
-
-export default campaignRoutes;
