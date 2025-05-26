@@ -3,32 +3,27 @@ import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
 import { ActionIcon } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import CampaignCard from '../components/CampaignCard';
+import CampaignCard from '../components/CampaignCard.tsx';
+import { getAllCampaigns } from '../services/campaignService.ts';
 import classes from './CampaignsView.module.css';
-
-const dummyCampaignId = self.crypto.randomUUID();
-const dummyMapId = self.crypto.randomUUID();
 
 export default function CampaignsView() {
 	const navigate = useNavigate();
 
-	const [dummyCampaigns] = useState<Campaign[]>([
-		{
-			id: dummyCampaignId,
-			name: 'Curse of Strahd',
-			activeMapId: dummyMapId,
-			maps: [
-				{
-					id: dummyMapId,
-					campaignId: dummyCampaignId,
-					name: 'Death House',
-					imagePath: '/src/assets/death-house.jpg',
-				},
-			],
-		},
-	]);
+	const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+
+	useEffect(() => {
+		getAllCampaigns()
+			.then((responseData) => {
+				console.log('responseData', responseData);
+				setCampaigns(responseData);
+			})
+			.catch((e) => {
+				console.error(e);
+			});
+	}, []);
 
 	const handleMouseDown: React.MouseEventHandler<HTMLDivElement> = (
 		e: React.MouseEvent,
@@ -47,7 +42,7 @@ export default function CampaignsView() {
 		navigate('/map');
 	};
 
-	const slides = dummyCampaigns.map((campaign) => (
+	const slides = campaigns.map((campaign) => (
 		<Carousel.Slide key={campaign.name}>
 			<CampaignCard
 				campaign={campaign}
