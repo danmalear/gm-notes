@@ -10,18 +10,27 @@ import { CampaignTemplate } from '../entities/CampaignTemplate.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';
 import { requiredFields, validatePostBody } from '../helpers/validation.ts';
-import { campaignTemplateRepository } from '../repositories.ts';
+import {
+	campaignTemplateRepository,
+	mapTemplateRepository,
+} from '../repositories.ts';
 
 const apiNamespace = 'campaign-template';
 
 async function buildResponse(campaignTemplate: CampaignTemplate) {
-	// @TODO fetch map templates
+	const mapTemplates = await mapTemplateRepository.getByCampaignTemplateId(
+		campaignTemplate.CampaignTemplateId,
+	);
 
 	const campaignTemplateResponse: CampaignTemplateResponse = {
 		id: campaignTemplate.CampaignTemplateId,
 		name: campaignTemplate.Name,
-		// @TODO
-		mapTemplates: [],
+		mapTemplates: mapTemplates.map((mapTemplate) => ({
+			id: mapTemplate.MapTemplateId,
+			campaignTemplateId: mapTemplate.CampaignTemplateId ?? undefined,
+			name: mapTemplate.Name,
+			imagePath: mapTemplate.ImagePath,
+		})),
 	};
 
 	return campaignTemplateResponse;
