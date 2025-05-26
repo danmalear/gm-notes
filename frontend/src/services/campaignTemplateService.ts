@@ -1,8 +1,8 @@
 import type {
 	CampaignTemplateCreate,
 	CampaignTemplateResponse,
-} from '#dtos/models/CampaignTemplate.ts';
-import type { DataResponse } from '#dtos/responses/DataResponse.ts';
+} from '#dtos/CampaignTemplate.ts';
+import type { DataResponse } from '#dtos/DataResponse.ts';
 import type { UUID } from 'crypto';
 import api from './api.ts';
 
