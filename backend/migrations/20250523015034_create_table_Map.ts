@@ -6,6 +6,7 @@ export async function up(knex: Knex): Promise<void> {
 		table.uuid('CampaignId').notNullable();
 		table.uuid('MapTemplateId').nullable();
 		table.string('Name', 63).notNullable();
+		table.string('ImagePath').notNullable();
 	});
 }
 
