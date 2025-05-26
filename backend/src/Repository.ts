@@ -16,15 +16,27 @@ export class Repository<T> {
 	 * @param id UUID of the record to retrieve
 	 * @returns The record with the given UUID, or undefined if not found
 	 */
-	async getById(id: UUID): Promise<T | undefined> {
+	async getById(id: UUID) {
 		try {
-			const record = (await db(this.tableName)
+			return (await db(this.tableName)
 				.where(this.pkColumn as string, id)
 				.first()) as T | undefined;
-
-			return record;
 		} catch (e) {
 			throw Error(`Error getting ${this.tableName} by ID: ${getMessage(e)}`);
+		}
+	}
+
+	/**
+	 * Retrieves all records from the database
+	 * @returns An array of all records (empty array if not found)
+	 */
+	async getAll() {
+		try {
+			return (await db(this.tableName)) as T[];
+		} catch (e) {
+			throw Error(
+				`Error getting all ${this.tableName} records: ${getMessage(e)}`,
+			);
 		}
 	}
 
@@ -35,12 +47,10 @@ export class Repository<T> {
 	 */
 	async insert(data: T) {
 		try {
-			const record = await db(this.tableName)
+			return (await db(this.tableName)
 				.insert(data)
 				.returning('*')
-				.then((returning) => returning[0]);
-
-			return record;
+				.then((returning) => returning[0])) as T;
 		} catch (e) {
 			throw Error(`Error inserting ${this.tableName}: ${getMessage(e)}`);
 		}
@@ -54,13 +64,11 @@ export class Repository<T> {
 	 */
 	async update(id: string, data: T) {
 		try {
-			const record = await db(this.tableName)
+			return (await db(this.tableName)
 				.where(this.pkColumn as string, id)
 				.update(data)
 				.returning('*')
-				.then((returning) => returning[0]);
-
-			return record as T;
+				.then((returning) => returning[0])) as T;
 		} catch (e) {
 			throw Error(
 				`Error updating ${this.tableName} with ID ${id}: ${getMessage(e)}`,
