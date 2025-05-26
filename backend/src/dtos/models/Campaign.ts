@@ -22,5 +22,7 @@ export interface CampaignResponse {
 
 export interface CampaignStub {
 	id: UUID;
+	campaignTemplateId?: UUID;
 	name: string;
+	activeMapId?: UUID;
 }
