@@ -2,7 +2,7 @@ import type { UUID } from 'crypto';
 import type { CampaignTemplateResponse } from './CampaignTemplate';
 
 export interface CampaignCreate {
-	campaignTemplateId: UUID;
+	campaignTemplateId?: UUID;
 	name: string;
 }
 
