@@ -1,21 +1,6 @@
-import {
-	pkColumn as campaignPkColumn,
-	tableName as campaignTableName,
-	type Campaign,
-} from './entities/Campaign.ts';
-import {
-	pkColumn as campaignTemplatePkColumn,
-	tableName as campaignTemplateTableName,
-	type CampaignTemplate,
-} from './entities/CampaignTemplate.ts';
-import { Repository } from './repositories/Repository.ts';
+import { CampaignRepository } from './repositories/CampaignRepository.ts';
+import { CampaignTemplateRepository } from './repositories/CampaignTemplateRepository.ts';
 
-export const campaignTemplateRepository = new Repository<CampaignTemplate>(
-	campaignTemplateTableName,
-	campaignTemplatePkColumn,
-);
+export const campaignTemplateRepository = new CampaignTemplateRepository();
 
-export const campaignRepository = new Repository<Campaign>(
-	campaignTableName,
-	campaignPkColumn,
-);
+export const campaignRepository = new CampaignRepository();
