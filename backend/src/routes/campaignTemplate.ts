@@ -6,12 +6,26 @@ import type { DataResponse } from '#dtos/DataResponse.ts';
 import type { ErrorResponse } from '#dtos/ErrorResponse.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
+import { CampaignTemplate } from '../entities/CampaignTemplate.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';
 import { requiredFields, validatePostBody } from '../helpers/validation.ts';
 import { campaignTemplateRepository } from '../repositories.init.ts';
 
 const apiNamespace = 'campaign-template';
+
+async function buildResponse(campaignTemplate: CampaignTemplate) {
+	// @TODO fetch map templates
+
+	const campaignTemplateResponse: CampaignTemplateResponse = {
+		id: campaignTemplate.CampaignTemplateId,
+		name: campaignTemplate.Name,
+		// @TODO
+		mapTemplates: [],
+	};
+
+	return campaignTemplateResponse;
+}
 
 export function campaignTemplateRoutes(app: Express) {
 	app.get(
@@ -39,16 +53,7 @@ export function campaignTemplateRoutes(app: Express) {
 				return;
 			}
 
-			// @TODO fetch map templates associated with campaign template
-
-			res.send({
-				data: {
-					id: campaignTemplate.CampaignTemplateId,
-					name: campaignTemplate.Name,
-					// @TODO
-					mapTemplates: [],
-				},
-			});
+			res.send({ data: await buildResponse(campaignTemplate) });
 		},
 	);
 
@@ -88,16 +93,7 @@ export function campaignTemplateRoutes(app: Express) {
 			campaignTemplate =
 				await campaignTemplateRepository.insert(campaignTemplate);
 
-			// @TODO fetch map templates associated with campaign template
-
-			res.send({
-				data: {
-					id: campaignTemplate.CampaignTemplateId,
-					name: campaignTemplate.Name,
-					// @TODO
-					mapTemplates: [],
-				},
-			});
+			res.send({ data: await buildResponse(campaignTemplate) });
 		},
 	);
 }
