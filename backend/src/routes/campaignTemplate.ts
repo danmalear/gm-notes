@@ -6,7 +6,7 @@ import type { DataResponse } from '#dtos/DataResponse.ts';
 import type { ErrorResponse } from '#dtos/ErrorResponse.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
-import { CampaignTemplate } from '../entities/CampaignTemplate.ts';
+import type { CampaignTemplate } from '../entities/CampaignTemplate.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';
 import { requiredFields, validatePostBody } from '../helpers/validation.ts';
