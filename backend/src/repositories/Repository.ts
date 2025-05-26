@@ -28,7 +28,7 @@ export class Repository<T> {
 
 	/**
 	 * Retrieves all records from the database
-	 * @returns An array of all records (empty array if not found)
+	 * @returns An array of all records (empty array if none found)
 	 */
 	async getAll() {
 		try {
