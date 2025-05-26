@@ -22,6 +22,7 @@ export interface MapTemplateResponse {
 
 export interface MapTemplateStub {
 	id: UUID;
+	campaignTemplateId?: UUID;
 	name: string;
 	imagePath: string;
 }
