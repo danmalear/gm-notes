@@ -2,7 +2,7 @@ import type { CampaignCreate, CampaignResponse } from '#dtos/Campaign.ts';
 import type { DataResponse } from '#dtos/DataResponse.ts';
 import type { ErrorResponse } from '#dtos/ErrorResponse.ts';
 import { randomUUID } from 'crypto';
-import type { Express, Request, Response } from 'express';
+import type { Express, Response } from 'express';
 import type { Campaign } from '../entities/Campaign.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';
@@ -13,6 +13,29 @@ import {
 } from '../repositories.init.ts';
 
 const apiNamespace = 'campaign';
+
+async function buildResponse(campaign: Campaign) {
+	const campaignTemplate = campaign.CampaignTemplateId
+		? await campaignTemplateRepository.getById(campaign.CampaignTemplateId)
+		: undefined;
+
+	// @TODO fetch maps
+
+	const campaignResponse: CampaignResponse = {
+		id: campaign.CampaignId,
+		name: campaign.Name,
+		campaignTemplate: campaignTemplate
+			? {
+					id: campaignTemplate.CampaignTemplateId,
+					name: campaignTemplate.Name,
+				}
+			: undefined,
+		// @TODO
+		maps: [],
+	};
+
+	return campaignResponse;
+}
 
 const campaignRoutes = (app: Express) => {
 	app.get(
@@ -38,34 +61,15 @@ const campaignRoutes = (app: Express) => {
 				return;
 			}
 
-			const campaignTemplate = campaign.CampaignTemplateId
-				? await campaignTemplateRepository.getById(campaign.CampaignTemplateId)
-				: undefined;
-
-			// @TODO fetch maps
-
-			const campaignResponse: CampaignResponse = {
-				id: campaign.CampaignId,
-				name: campaign.Name,
-				campaignTemplate: campaignTemplate
-					? {
-							id: campaignTemplate.CampaignTemplateId,
-							name: campaignTemplate.Name,
-						}
-					: undefined,
-				// @TODO
-				maps: [],
-			};
-
-			res.send({ data: campaignResponse });
+			res.send({ data: await buildResponse(campaign) });
 		},
 	);
 
 	app.post(
 		`/${apiNamespace}`,
 		async (
-			req: Request<object, ErrorResponse | DataResponse<CampaignResponse>>,
-			res,
+			req,
+			res: Response<ErrorResponse | DataResponse<CampaignResponse>>,
 		) => {
 			console.log(
 				`Campaign POST request received. body: ${JSON.stringify(req.body)}`,
@@ -92,26 +96,7 @@ const campaignRoutes = (app: Express) => {
 
 			campaign = await campaignRepository.insert(campaign);
 
-			const campaignTemplate = campaign.CampaignTemplateId
-				? await campaignTemplateRepository.getById(campaign.CampaignTemplateId)
-				: undefined;
-
-			// @TODO fetch maps
-
-			const campaignResponse: CampaignResponse = {
-				id: campaign.CampaignId,
-				name: campaign.Name,
-				campaignTemplate: campaignTemplate
-					? {
-							id: campaignTemplate.CampaignTemplateId,
-							name: campaignTemplate.Name,
-						}
-					: undefined,
-				// @TODO
-				maps: [],
-			};
-
-			res.send({ data: campaignResponse });
+			res.send({ data: await buildResponse(campaign) });
 		},
 	);
 };
