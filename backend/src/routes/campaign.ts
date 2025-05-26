@@ -10,7 +10,7 @@ import { requiredFields, validatePostBody } from '../helpers/validation.ts';
 import {
 	campaignRepository,
 	campaignTemplateRepository,
-} from '../repositories.init.ts';
+} from '../repositories.ts';
 
 const apiNamespace = 'campaign';
 

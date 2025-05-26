@@ -10,7 +10,7 @@ import { CampaignTemplate } from '../entities/CampaignTemplate.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';
 import { requiredFields, validatePostBody } from '../helpers/validation.ts';
-import { campaignTemplateRepository } from '../repositories.init.ts';
+import { campaignTemplateRepository } from '../repositories.ts';
 
 const apiNamespace = 'campaign-template';
 
