@@ -1,21 +1,34 @@
+import type { CampaignResponse as Campaign } from '#dtos/Campaign.ts';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
 import { ActionIcon } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import CampaignCard from '../components/CampaignCard';
 import classes from './CampaignsView.module.css';
 
-const data = [
-	{
-		image: '/src/assets/death-house.jpg',
-		name: 'Curse of Strahd',
-	},
-];
+const dummyCampaignId = self.crypto.randomUUID();
+const dummyMapId = self.crypto.randomUUID();
 
 export default function CampaignsView() {
 	const navigate = useNavigate();
+
+	const [dummyCampaigns] = useState<Campaign[]>([
+		{
+			id: dummyCampaignId,
+			name: 'Curse of Strahd',
+			activeMapId: dummyMapId,
+			maps: [
+				{
+					id: dummyMapId,
+					campaignId: dummyCampaignId,
+					name: 'Death House',
+					imagePath: '/src/assets/death-house.jpg',
+				},
+			],
+		},
+	]);
 
 	const handleMouseDown: React.MouseEventHandler<HTMLDivElement> = (
 		e: React.MouseEvent,
@@ -34,11 +47,10 @@ export default function CampaignsView() {
 		navigate('/map');
 	};
 
-	const slides = data.map((item) => (
-		<Carousel.Slide key={item.name}>
+	const slides = dummyCampaigns.map((campaign) => (
+		<Carousel.Slide key={campaign.name}>
 			<CampaignCard
-				imageUrl={item.image}
-				name={item.name}
+				campaign={campaign}
 				onOpenCampaignClicked={handleOpenCampaignClicked}
 			/>
 		</Carousel.Slide>
