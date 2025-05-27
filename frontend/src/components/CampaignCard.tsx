@@ -1,5 +1,5 @@
 import type { CampaignResponse as Campaign } from '#dtos/Campaign.ts';
-import { Button, Card, Title } from '@mantine/core';
+import { Card, Title } from '@mantine/core';
 import type { UUID } from 'crypto';
 import type React from 'react';
 import { useMemo } from 'react';
@@ -27,28 +27,25 @@ const CampaignCard: React.FC<CampaignCardProps> = ({
 		[campaign.maps, campaign.activeMapId],
 	);
 
+	// @TODO Eventually make this customizable?
+	const campaignColor = 'black';
+
 	return (
 		<Card
 			shadow="md"
-			p="xl"
+			p="lg"
 			radius="md"
 			style={{
-				backgroundImage: map?.imagePath ? `url(${map.imagePath})` : undefined,
+				backgroundImage: map?.imagePath
+					? `linear-gradient(to bottom, ${campaignColor} 15%, 30%, transparent 40%), url(${map.imagePath})`
+					: undefined,
 			}}
 			className={classes.card}
+			onClick={() => onOpenCampaignClicked(campaign.id)}
 		>
-			<div>
-				<Title order={3} className="title">
-					{name}
-				</Title>
-			</div>
-			<Button
-				variant="white"
-				color="dark"
-				onClick={() => onOpenCampaignClicked(self.crypto.randomUUID())}
-			>
-				Open Campaign
-			</Button>
+			<Title order={2} className="title" ff="heading">
+				{name}
+			</Title>
 		</Card>
 	);
 };
