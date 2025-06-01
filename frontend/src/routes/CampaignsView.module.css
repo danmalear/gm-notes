@@ -28,17 +28,11 @@ button#add-campaign {
 	border-color: var(--ai-bd);
 	height: 100%;
 	width: 100%;
-}
-
-button#add-campaign:active {
-	background: rgba(200, 200, 200, 0.1);
-}
-
-button#add-campaign {
 	position: relative;
 	overflow: hidden;
 }
 
 button#add-campaign:active {
+	background: rgba(200, 200, 200, 0.1);
 	transform: none;
 }
