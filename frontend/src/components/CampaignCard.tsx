@@ -3,6 +3,7 @@ import { Card, Title } from '@mantine/core';
 import type { UUID } from 'crypto';
 import type React from 'react';
 import { useMemo } from 'react';
+import { filePath } from '../services/fileService';
 import classes from './CampaignCard.module.css';
 
 export interface CampaignCardProps extends React.PropsWithChildren {
@@ -27,6 +28,8 @@ const CampaignCard: React.FC<CampaignCardProps> = ({
 		[campaign.maps, campaign.activeMapId],
 	);
 
+	const imagePath = map?.imagePath ? filePath(map?.imagePath) : undefined;
+
 	// @TODO Eventually make this customizable?
 	const campaignColor = 'black';
 
@@ -36,8 +39,8 @@ const CampaignCard: React.FC<CampaignCardProps> = ({
 			p="lg"
 			radius="md"
 			style={{
-				backgroundImage: map?.imagePath
-					? `linear-gradient(to bottom, ${campaignColor} 15%, 30%, transparent 40%), url(${map.imagePath})`
+				backgroundImage: imagePath
+					? `linear-gradient(to bottom, ${campaignColor} 15%, 30%, transparent 40%), url(${imagePath})`
 					: undefined,
 			}}
 			className={classes.card}
