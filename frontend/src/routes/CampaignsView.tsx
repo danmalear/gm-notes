@@ -17,7 +17,6 @@ export default function CampaignsView() {
 	useEffect(() => {
 		getAllCampaigns()
 			.then((responseData) => {
-				console.log('responseData', responseData);
 				setCampaigns(responseData);
 			})
 			.catch((e) => {
