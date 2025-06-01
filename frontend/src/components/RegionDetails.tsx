@@ -55,7 +55,7 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
 	return (
 		<RegionDetailsContext.Provider value={collapsibles}>
 			<RegionDetailsDispatchContext.Provider value={dispatch}>
-				<div id={regionKey + '-details'} className="region-details card">
+				<div id={regionKey + '-details'} className="region-details p-2">
 					<h1>
 						{code ? code + '. ' : ''}
 						{name}
