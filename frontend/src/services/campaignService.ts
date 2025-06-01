@@ -4,25 +4,13 @@ import type { UUID } from 'crypto';
 import api from './api.ts';
 
 export const getAllCampaigns = async () => {
-	const response =
-		await api.get<DataResponse<CampaignResponse[]>>(`/campaigns`);
-
-	return response.data.data;
+	return await api.get<DataResponse<CampaignResponse[]>>(`/campaigns/break`);
 };
 
 export const getCampaign = async (id: UUID) => {
-	const response = await api.get<DataResponse<CampaignResponse>>(
-		`/campaigns/${id}`,
-	);
-
-	return response.data.data;
+	return await api.get<DataResponse<CampaignResponse>>(`/campaigns/${id}`);
 };
 
 export const insertCampaign = async (data: CampaignCreate) => {
-	const response = await api.post<DataResponse<CampaignResponse>>(
-		`/campaigns`,
-		data,
-	);
-
-	return response.data.data;
+	return await api.post<DataResponse<CampaignResponse>>(`/campaigns`, data);
 };

@@ -7,18 +7,14 @@ import type { UUID } from 'crypto';
 import api from './api.ts';
 
 export const getCampaignTemplate = async (id: UUID) => {
-	const response = await api.get<DataResponse<CampaignTemplateResponse>>(
+	return await api.get<DataResponse<CampaignTemplateResponse>>(
 		`/campaign-templates/${id}`,
 	);
-
-	return response.data.data;
 };
 
 export const insertCampaignTemplate = async (data: CampaignTemplateCreate) => {
-	const response = await api.post<DataResponse<CampaignTemplateResponse>>(
+	return await api.post<DataResponse<CampaignTemplateResponse>>(
 		`/campaign-templates`,
 		data,
 	);
-
-	return response.data.data;
 };
