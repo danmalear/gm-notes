@@ -2,10 +2,13 @@ import type { CampaignResponse as Campaign } from '#dtos/Campaign.ts';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
 import { ActionIcon } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { IconPlus } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import CampaignCard from '../components/CampaignCard.tsx';
+import CreateCampaignModal from '../components/CreateCampaignModal.tsx';
+import { getMessage } from '../helpers/error.ts';
 import { getAllCampaigns } from '../services/campaignService.ts';
 import classes from './CampaignsView.module.css';
 
@@ -16,31 +19,43 @@ export default function CampaignsView() {
 
 	useEffect(() => {
 		getAllCampaigns()
-			.then((responseData) => {
-				setCampaigns(responseData);
+			.then((response) => {
+				setCampaigns(response.data.data);
 			})
 			.catch((e) => {
 				console.error(e);
+				alert(`Error fetching campaigns: ${getMessage(e)}`);
 			});
 	}, []);
 
+	// @TODO Eventually this will need to provide IDs and such
+	const handleOpenCampaignClicked = () => {
+		navigate('/map');
+	};
+
+	// #region Create campaign stuff
+	const [
+		createCampaignOpened,
+		{ open: openCreateCampaign, close: closeCreateCampaign },
+	] = useDisclosure(false);
+
+	const handleAddCampaignClicked: React.MouseEventHandler<HTMLButtonElement> = (
+		e,
+	) => {
+		e.preventDefault();
+		openCreateCampaign();
+	};
+
+	// #endregion Create campaign stuff
+
+	// prevent highlighting text while dragging
 	const handleMouseDown: React.MouseEventHandler<HTMLDivElement> = (
 		e: React.MouseEvent,
 	) => {
 		e.preventDefault();
 	};
 
-	const handleAddCampaignClicked: React.MouseEventHandler<HTMLButtonElement> = (
-		e,
-	) => {
-		e.preventDefault();
-		alert('Add Campaign clicked');
-	};
-
-	const handleOpenCampaignClicked = () => {
-		navigate('/map');
-	};
-
+	// #region Slides
 	const slides = campaigns.map((campaign) => (
 		<Carousel.Slide key={campaign.name}>
 			<CampaignCard
@@ -68,24 +83,32 @@ export default function CampaignsView() {
 			</ActionIcon>
 		</Carousel.Slide>
 	);
+	// #endregion Slides
 
 	return (
-		<div id={classes.main} onMouseDown={handleMouseDown}>
-			<Carousel
-				slideSize="520px"
-				slideGap={20}
-				withControls={false}
-				height="500px"
-				emblaOptions={{
-					dragFree: true,
-				}}
-				className={classes.carousel}
-			>
-				{spacer}
-				{slides}
-				{addNew}
-				{spacer}
-			</Carousel>
-		</div>
+		<>
+			<CreateCampaignModal
+				opened={createCampaignOpened}
+				onClose={closeCreateCampaign}
+				onCreate={async () => {}}
+			/>
+			<div id={classes.main} onMouseDown={handleMouseDown}>
+				<Carousel
+					slideSize="520px"
+					slideGap={20}
+					withControls={false}
+					height="500px"
+					emblaOptions={{
+						dragFree: true,
+					}}
+					className={classes.carousel}
+				>
+					{spacer}
+					{slides}
+					{addNew}
+					{spacer}
+				</Carousel>
+			</div>
+		</>
 	);
 }
