@@ -3,7 +3,7 @@ import type {
 	CampaignTemplateResponse,
 } from '#dtos/CampaignTemplate.ts';
 import type { DataResponse } from '#dtos/DataResponse.ts';
-import type { ErrorResponse } from '#dtos/ErrorResponse.ts';
+import type { MessageResponse } from '#dtos/MessageResponse.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
 import type { CampaignTemplate } from '../entities/CampaignTemplate.ts';
@@ -41,14 +41,14 @@ export function campaignTemplateRoutes(app: Express) {
 		`/${apiNamespace}/:id`,
 		async (
 			req,
-			res: Response<ErrorResponse | DataResponse<CampaignTemplateResponse>>,
+			res: Response<MessageResponse | DataResponse<CampaignTemplateResponse>>,
 		) => {
 			console.log(
 				`Campaign Template GET request received. params: ${JSON.stringify(req.params)}`,
 			);
 
 			if (!isUUID(req.params.id)) {
-				res.status(400).send({ error: 'Invalid UUID format' });
+				res.status(400).send({ message: 'Invalid UUID format' });
 				return;
 			}
 
@@ -57,7 +57,7 @@ export function campaignTemplateRoutes(app: Express) {
 			);
 			if (!campaignTemplate) {
 				res.status(404).send({
-					error: `Campaign Template with ID ${req.params.id} not found`,
+					message: `Campaign Template with ID ${req.params.id} not found`,
 				});
 				return;
 			}
@@ -70,7 +70,7 @@ export function campaignTemplateRoutes(app: Express) {
 		`/${apiNamespace}`,
 		async (
 			req,
-			res: Response<ErrorResponse | DataResponse<CampaignTemplateResponse>>,
+			res: Response<MessageResponse | DataResponse<CampaignTemplateResponse>>,
 		) => {
 			console.log(
 				`Campaign Template POST request received. body: ${JSON.stringify(req.body)}`,
@@ -90,7 +90,7 @@ export function campaignTemplateRoutes(app: Express) {
 			try {
 				validateBody(req.body);
 			} catch (e) {
-				res.status(400).send({ error: getMessage(e) });
+				res.status(400).send({ message: getMessage(e) });
 				return;
 			}
 

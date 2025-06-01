@@ -1,6 +1,6 @@
 import type { CampaignCreate, CampaignResponse } from '#dtos/Campaign.ts';
 import type { DataResponse } from '#dtos/DataResponse.ts';
-import type { ErrorResponse } from '#dtos/ErrorResponse.ts';
+import type { MessageResponse } from '#dtos/MessageResponse.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
 import type { Campaign } from '../entities/Campaign.ts';
@@ -48,7 +48,7 @@ export const campaignRoutes = (app: Express) => {
 		`/${apiNamespace}`,
 		async (
 			_req,
-			res: Response<ErrorResponse | DataResponse<CampaignResponse[]>>,
+			res: Response<MessageResponse | DataResponse<CampaignResponse[]>>,
 		) => {
 			console.log(`Campaign GET all request received.`);
 
@@ -70,21 +70,21 @@ export const campaignRoutes = (app: Express) => {
 		`/${apiNamespace}/:id`,
 		async (
 			req,
-			res: Response<ErrorResponse | DataResponse<CampaignResponse>>,
+			res: Response<MessageResponse | DataResponse<CampaignResponse>>,
 		) => {
 			console.log(
 				`Campaign GET request received. params: ${JSON.stringify(req.params)}`,
 			);
 
 			if (!isUUID(req.params.id)) {
-				res.status(400).send({ error: 'Invalid UUID format' });
+				res.status(400).send({ message: 'Invalid UUID format' });
 				return;
 			}
 
 			const campaign = await campaignRepository.getById(req.params.id);
 			if (!campaign) {
 				res.status(404).send({
-					error: `Campaign with ID ${req.params.id} not found`,
+					message: `Campaign with ID ${req.params.id} not found`,
 				});
 				return;
 			}
@@ -97,7 +97,7 @@ export const campaignRoutes = (app: Express) => {
 		`/${apiNamespace}`,
 		async (
 			req,
-			res: Response<ErrorResponse | DataResponse<CampaignResponse>>,
+			res: Response<MessageResponse | DataResponse<CampaignResponse>>,
 		) => {
 			console.log(
 				`Campaign POST request received. body: ${JSON.stringify(req.body)}`,
@@ -111,7 +111,7 @@ export const campaignRoutes = (app: Express) => {
 			try {
 				validateBody(req.body);
 			} catch (e) {
-				res.status(400).send({ error: getMessage(e) });
+				res.status(400).send({ message: getMessage(e) });
 				return;
 			}
 
