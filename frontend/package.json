@@ -15,6 +15,7 @@
 	"dependencies": {
 		"@mantine/carousel": "^8.0.1",
 		"@mantine/core": "^8.0.1",
+		"@mantine/form": "^8.0.2",
 		"@mantine/hooks": "^8.0.1",
 		"@tabler/icons-react": "^3.33.0",
 		"axios": "^1.9.0",
