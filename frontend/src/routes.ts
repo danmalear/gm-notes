@@ -11,8 +11,14 @@ const router = createBrowserRouter([
 				Component: CampaignsView,
 			},
 			{
-				path: 'map',
-				Component: MapView,
+				path: ':campaignId',
+				// @TODO loader
+				children: [
+					{
+						path: 'map?',
+						Component: MapView,
+					},
+				],
 			},
 		],
 	},

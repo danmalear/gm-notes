@@ -7,6 +7,7 @@ import '@mantine/carousel/styles.css';
 import { ActionIcon } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconPlus } from '@tabler/icons-react';
+import type { UUID } from 'crypto';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import CampaignCard from '../components/CampaignCard.tsx';
@@ -34,9 +35,8 @@ export default function CampaignsView() {
 			});
 	}, []);
 
-	// @TODO Eventually this will need to provide IDs and such
-	const handleOpenCampaignClicked = () => {
-		navigate('/campaigns/map');
+	const handleOpenCampaignClicked = (campaignId: UUID) => {
+		navigate(`/campaigns/${campaignId}/map`);
 	};
 
 	// #region Create campaign stuff
