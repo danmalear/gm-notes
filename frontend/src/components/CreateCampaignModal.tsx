@@ -30,12 +30,7 @@ const CreateCampaignModal: React.FC<CreateCampaignModalProps> = ({
 	};
 
 	return (
-		<Modal
-			opened={opened}
-			onClose={onClose}
-			title="Create New Campaign"
-			centered
-		>
+		<Modal opened={opened} onClose={onClose} title="New Campaign" centered>
 			<form onSubmit={handleCreateClicked}>
 				<TextInput
 					label="Campaign Name"
