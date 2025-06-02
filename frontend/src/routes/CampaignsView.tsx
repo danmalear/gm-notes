@@ -30,7 +30,7 @@ export default function CampaignsView() {
 
 	// @TODO Eventually this will need to provide IDs and such
 	const handleOpenCampaignClicked = () => {
-		navigate('/map');
+		navigate('/campaigns/map');
 	};
 
 	// #region Create campaign stuff

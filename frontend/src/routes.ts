@@ -4,12 +4,17 @@ import MapView from './routes/MapView';
 
 const router = createBrowserRouter([
 	{
-		path: '/map?',
-		Component: MapView,
-	},
-	{
-		path: '/campaigns',
-		Component: CampaignsView,
+		path: '/campaigns?',
+		children: [
+			{
+				index: true,
+				Component: CampaignsView,
+			},
+			{
+				path: 'map',
+				Component: MapView,
+			},
+		],
 	},
 ]);
 
