@@ -1,5 +1,6 @@
-import type { CampaignResponse as Campaign } from '#dtos/Campaign.ts';
-import { Modal } from '@mantine/core';
+import type { CampaignCreate as Campaign } from '#dtos/Campaign.ts';
+import { Button, Modal, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import type React from 'react';
 
 export interface CreateCampaignModalProps extends React.PropsWithChildren {
@@ -10,9 +11,24 @@ export interface CreateCampaignModalProps extends React.PropsWithChildren {
 
 const CreateCampaignModal: React.FC<CreateCampaignModalProps> = ({
 	opened,
-	//onCreate,
+	onCreate,
 	onClose,
 }) => {
+	const campaign = useForm<Campaign>({
+		mode: 'uncontrolled',
+		initialValues: {
+			name: '',
+		},
+		validate: {
+			name: (name) => (!name ? 'Campaign Name is required' : null),
+		},
+	});
+
+	const handleCreateClicked: React.FormEventHandler<HTMLFormElement> = (e) => {
+		e.preventDefault();
+		onCreate(campaign.getValues());
+	};
+
 	return (
 		<Modal
 			opened={opened}
@@ -20,7 +36,17 @@ const CreateCampaignModal: React.FC<CreateCampaignModalProps> = ({
 			title="Create New Campaign"
 			centered
 		>
-			Placeholder text
+			<form onSubmit={handleCreateClicked}>
+				<TextInput
+					label="Campaign Name"
+					withAsterisk
+					key={campaign.key('name')}
+					{...campaign.getInputProps('name')}
+				/>
+				<Button type="submit" mt="sm">
+					Create
+				</Button>
+			</form>
 		</Modal>
 	);
 };

@@ -1,4 +1,7 @@
-import type { CampaignResponse as Campaign } from '#dtos/Campaign.ts';
+import type {
+	CampaignResponse as Campaign,
+	CampaignCreate,
+} from '#dtos/Campaign.ts';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
 import { ActionIcon } from '@mantine/core';
@@ -9,7 +12,10 @@ import { useNavigate } from 'react-router';
 import CampaignCard from '../components/CampaignCard.tsx';
 import CreateCampaignModal from '../components/CreateCampaignModal.tsx';
 import { getMessage } from '../helpers/error.ts';
-import { getAllCampaigns } from '../services/campaignService.ts';
+import {
+	getAllCampaigns,
+	insertCampaign,
+} from '../services/campaignService.ts';
 import classes from './CampaignsView.module.css';
 
 export default function CampaignsView() {
@@ -44,6 +50,17 @@ export default function CampaignsView() {
 	) => {
 		e.preventDefault();
 		openCreateCampaign();
+	};
+
+	const handleCampaignCreated = async (campaign: CampaignCreate) => {
+		try {
+			const response = await insertCampaign(campaign);
+			const newCampaign = response.data.data;
+			alert(`Campaign created: ${newCampaign.id}`);
+		} catch (e) {
+			console.error(e);
+			alert(`Error creating campaign: ${getMessage(e)}`);
+		}
 	};
 
 	// #endregion Create campaign stuff
@@ -90,7 +107,7 @@ export default function CampaignsView() {
 			<CreateCampaignModal
 				opened={createCampaignOpened}
 				onClose={closeCreateCampaign}
-				onCreate={async () => {}}
+				onCreate={handleCampaignCreated}
 			/>
 			<div id={classes.main} onMouseDown={handleMouseDown}>
 				<Carousel
