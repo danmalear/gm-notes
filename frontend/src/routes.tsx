@@ -1,10 +1,17 @@
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, redirect } from 'react-router';
 import CampaignsView from './routes/CampaignsView';
 import MapView from './routes/MapView';
 
 const router = createBrowserRouter([
 	{
-		path: '/campaigns?',
+		path: '/',
+		Component: () => <></>,
+		loader: () => {
+			return redirect('/campaigns');
+		},
+	},
+	{
+		path: '/campaigns',
 		children: [
 			{
 				index: true,
