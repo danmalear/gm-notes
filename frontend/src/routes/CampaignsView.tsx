@@ -56,7 +56,7 @@ export default function CampaignsView() {
 		try {
 			const response = await insertCampaign(campaign);
 			const newCampaign = response.data.data;
-			alert(`Campaign created: ${newCampaign.id}`);
+			navigate(`/campaigns/${newCampaign.id}/map`);
 		} catch (e) {
 			console.error(e);
 			alert(`Error creating campaign: ${getMessage(e)}`);

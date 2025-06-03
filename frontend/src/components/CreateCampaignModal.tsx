@@ -26,7 +26,9 @@ const CreateCampaignModal: React.FC<CreateCampaignModalProps> = ({
 
 	const handleCreateClicked: React.FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();
-		onCreate(campaign.getValues());
+		onCreate(campaign.getValues()).then(() => {
+			onClose();
+		});
 	};
 
 	return (
