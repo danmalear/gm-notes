@@ -2,7 +2,7 @@ import { MantineProvider } from '@mantine/core';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router';
-import router from './routes.ts';
+import router from './routes.tsx';
 
 import '@mantine/core/styles.css';
 import './index.css';
