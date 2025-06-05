@@ -1,12 +1,17 @@
-import { useRef, useState } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import type { Coords, MapImage } from '../data/MapData';
-import './Map.css';
 
-export type MapArea = {
+export interface MapArea {
 	shape: string;
 	coords: Coords;
 	regionKey: string;
-};
+}
+
+interface Area {
+	shape: string;
+	coords: string;
+	regionKey: string;
+}
 
 export interface MapProps extends React.PropsWithChildren {
 	mapImage: MapImage;
@@ -14,8 +19,11 @@ export interface MapProps extends React.PropsWithChildren {
 	onRegionClick?: (regionKey: string) => void;
 }
 
-const Map: React.FC<MapProps> = ({ mapImage, areas, onRegionClick }) => {
-	const imgRef = useRef<HTMLImageElement | null>(null);
+const Map: React.FC<MapProps> = ({
+	mapImage,
+	areas: areasProp,
+	onRegionClick,
+}) => {
 	const [imgLoaded, setImgLoaded] = useState(false);
 
 	const onImgLoad = () => {
@@ -32,37 +40,71 @@ const Map: React.FC<MapProps> = ({ mapImage, areas, onRegionClick }) => {
 		}
 	};
 
-	const relativeCoords = (coords: Coords) => {
-		if (imgRef?.current && imgLoaded) {
-			const imgWidth = imgRef.current.width;
-			const imgHeight = imgRef.current.height;
+	// #region relative coords
+	const imgRef = useRef<HTMLImageElement | null>(null);
+	const [areas, setAreas] = useState<Area[]>([]);
 
-			const isCircle = 'r' in coords;
-			if (isCircle) {
-				const { x, y, r } = coords;
+	const makeCoordsRelative = useCallback(
+		(coords: Coords) => {
+			if (imgRef?.current) {
+				const imgWidth = imgRef.current.width;
+				const imgHeight = imgRef.current.height;
 
-				const relativeX = (x / mapImage.sizeX) * imgWidth;
-				const relativeY = (y / mapImage.sizeY) * imgHeight;
-				const relativeR = (r / mapImage.sizeX) * imgWidth; // Assuming r is a radius in the same units as x and y
+				const isCircle = 'r' in coords;
+				if (isCircle) {
+					const { x, y, r } = coords;
 
-				return `${relativeX},${relativeY},${relativeR}`;
+					const relativeX = (x / mapImage.sizeX) * imgWidth;
+					const relativeY = (y / mapImage.sizeY) * imgHeight;
+					const relativeR = (r / mapImage.sizeX) * imgWidth;
+
+					return `${relativeX},${relativeY},${relativeR}`;
+				} else {
+					const { x1, y1, x2, y2 } = coords;
+
+					const relativeX1 = (x1 / mapImage.sizeX) * imgWidth;
+					const relativeY1 = (y1 / mapImage.sizeY) * imgHeight;
+					const relativeX2 = (x2 / mapImage.sizeX) * imgWidth;
+					const relativeY2 = (y2 / mapImage.sizeY) * imgHeight;
+					return `${relativeX1},${relativeY1},${relativeX2},${relativeY2}`;
+				}
 			} else {
-				const { x1, y1, x2, y2 } = coords;
-
-				const relativeX1 = (x1 / mapImage.sizeX) * imgWidth;
-				const relativeY1 = (y1 / mapImage.sizeY) * imgHeight;
-				const relativeX2 = (x2 / mapImage.sizeX) * imgWidth;
-				const relativeY2 = (y2 / mapImage.sizeY) * imgHeight;
-				return `${relativeX1},${relativeY1},${relativeX2},${relativeY2}`;
+				console.error('Image not found in the DOM');
+				return undefined;
 			}
-		} else {
-			console.error('Image not found in the DOM');
-			return undefined;
+		},
+		[mapImage.sizeX, mapImage.sizeY],
+	);
+
+	const makeAreasRelative = useCallback(
+		(areas: MapArea[]) => {
+			const newAreas: Area[] = areas.map((a) => ({
+				shape: a.shape,
+				coords: makeCoordsRelative(a.coords) || '',
+				regionKey: a.regionKey,
+			}));
+
+			return newAreas;
+		},
+		[makeCoordsRelative],
+	);
+
+	const updateAreas = useCallback(() => {
+		if (imgLoaded) {
+			setAreas(makeAreasRelative(areasProp));
 		}
-	};
+	}, [areasProp, makeAreasRelative, imgLoaded]);
+
+	useLayoutEffect(() => {
+		updateAreas();
+		window.addEventListener('resize', updateAreas);
+		return () => window.removeEventListener('resize', updateAreas);
+	}, [updateAreas]);
+
+	// #endregion relative coords
 
 	return (
-		<div id="map">
+		<div id="map-container">
 			<img
 				ref={imgRef}
 				src={mapImage.src}
@@ -72,12 +114,12 @@ const Map: React.FC<MapProps> = ({ mapImage, areas, onRegionClick }) => {
 				onLoad={onImgLoad}
 			/>
 			{imgLoaded ? (
-				<map name="map">
+				<map id="map" name="map">
 					{areas.map((area, index) => (
 						<area
 							key={`${area.regionKey}-${index}-area`}
 							shape={area.shape}
-							coords={relativeCoords(area.coords)}
+							coords={area.coords}
 							alt={area.regionKey}
 							className="map-area"
 							href="#"

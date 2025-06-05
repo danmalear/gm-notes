@@ -1,9 +1,9 @@
+import { AppShell, Box, ScrollArea } from '@mantine/core';
 import { useState } from 'react';
 import Map, { type MapArea } from '../components/Map.tsx';
 import RegionDetails from '../components/RegionDetails.tsx';
 import data from '../data/data.ts';
 import type { TimeOfDay, ValidPartySize } from '../data/MapData.ts';
-import classes from './MapView.module.css';
 
 export default function MapView() {
 	const [currentMap, setCurrentMap] = useState('deathHouse');
@@ -14,7 +14,7 @@ export default function MapView() {
 
 	if (!mapData) {
 		return (
-			<div id={classes.main} className="container">
+			<div id="main" className="container">
 				<div id="map-col" className="item">
 					<div className="pos-absolute l-1 t-1">
 						<select
@@ -48,12 +48,32 @@ export default function MapView() {
 	};
 
 	return (
-		<div
-			id={classes.main}
-			className={['container', classes.container].join(' ')}
+		<AppShell
+			id="app-shell"
+			header={{
+				height: 50,
+				collapsed: false,
+			}}
+			navbar={{
+				width: 200,
+				breakpoint: 'sm',
+				collapsed: {
+					desktop: false,
+					mobile: false,
+				},
+			}}
+			aside={{
+				width: 500,
+				breakpoint: 'md',
+				collapsed: {
+					desktop: false,
+					mobile: true,
+				},
+			}}
+			offsetScrollbars={true}
 		>
-			<div id={classes['map-col']} className="item">
-				<div className="pos-absolute l-1 t-1 w-10">
+			<AppShell.Header>
+				<div className="pos-absolute l-1 t-1 w-10 item">
 					<select
 						className="w-100"
 						value={currentMap}
@@ -74,22 +94,29 @@ export default function MapView() {
 						<option value="night">Night</option>
 					</select>
 				</div>
-				<Map
-					mapImage={mapData.image}
-					areas={areas}
-					onRegionClick={handleRegionClick}
-				/>
-			</div>
-			<div id={classes['detail-col']} className="item">
-				<div className={classes['region-data']}>
+			</AppShell.Header>
+			<AppShell.Navbar>
+				<Box h="100%" w="100%" />
+			</AppShell.Navbar>
+			<AppShell.Main h="100%">
+				<ScrollArea>
+					<Map
+						mapImage={mapData.image}
+						areas={areas}
+						onRegionClick={handleRegionClick}
+					/>
+				</ScrollArea>
+			</AppShell.Main>
+			<AppShell.Aside>
+				<AppShell.Section grow component={ScrollArea}>
 					<RegionDetails
 						regionKey={currentRegion}
 						data={mapData.regions[currentRegion]}
 						timeOfDay={timeOfDay}
 						partySize={partySize}
 					/>
-				</div>
-			</div>
-		</div>
+				</AppShell.Section>
+			</AppShell.Aside>
+		</AppShell>
 	);
 }

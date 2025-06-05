@@ -4,7 +4,7 @@ import type {
 } from '#dtos/Campaign.ts';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
-import { ActionIcon } from '@mantine/core';
+import { ActionIcon, Box, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconPlus } from '@tabler/icons-react';
 import type { UUID } from 'crypto';
@@ -84,7 +84,7 @@ export default function CampaignsView() {
 
 	const spacer = (
 		<Carousel.Slide style={{ flexShrink: 1 }}>
-			<div className={classes.spacer} />
+			<Box w={50} />
 		</Carousel.Slide>
 	);
 
@@ -94,6 +94,11 @@ export default function CampaignsView() {
 				id={classes['add-campaign']}
 				variant="outline"
 				color="gray"
+				h="100%"
+				w="100%"
+				style={{
+					borderStyle: 'dashed',
+				}}
 				onClick={handleAddCampaignClicked}
 			>
 				<IconPlus />
@@ -109,7 +114,14 @@ export default function CampaignsView() {
 				onClose={closeCreateCampaign}
 				onCreate={handleCampaignCreated}
 			/>
-			<div id={classes.main} onMouseDown={handleMouseDown}>
+			<Flex
+				h="100vh"
+				w="100vw"
+				px="20%"
+				direction={'column'}
+				justify={'center'}
+				onMouseDown={handleMouseDown}
+			>
 				<Carousel
 					slideSize="520px"
 					slideGap={20}
@@ -118,14 +130,14 @@ export default function CampaignsView() {
 					emblaOptions={{
 						dragFree: true,
 					}}
-					className={classes.carousel}
+					className={classes['gradient-mask']}
 				>
 					{spacer}
 					{slides}
 					{addNew}
 					{spacer}
 				</Carousel>
-			</div>
+			</Flex>
 		</>
 	);
 }

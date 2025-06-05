@@ -1,14 +1,4 @@
-#main {
-	height: 100%;
-	width: 100%;
-	padding-left: 20%;
-	padding-right: 20%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-}
-
-.carousel {
+.gradient-mask {
 	mask-image:
 		linear-gradient(to left, black, 97%, transparent),
 		linear-gradient(to right, black, 97%, transparent);
@@ -17,22 +7,4 @@
 		right center;
 	mask-size: 50% 100%;
 	mask-repeat: no-repeat;
-}
-
-.carousel .spacer {
-	flex-shrink: 1;
-}
-
-button#add-campaign {
-	border-style: dashed;
-	border-color: var(--ai-bd);
-	height: 100%;
-	width: 100%;
-	position: relative;
-	overflow: hidden;
-}
-
-button#add-campaign:active {
-	background: rgba(200, 200, 200, 0.1);
-	transform: none;
 }
