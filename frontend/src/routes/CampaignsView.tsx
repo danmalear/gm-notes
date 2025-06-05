@@ -74,7 +74,7 @@ export default function CampaignsView() {
 
 	// #region Slides
 	const slides = campaigns.map((campaign) => (
-		<Carousel.Slide key={campaign.name}>
+		<Carousel.Slide key={campaign.id}>
 			<CampaignCard
 				campaign={campaign}
 				onOpenCampaignClicked={handleOpenCampaignClicked}
