@@ -36,7 +36,7 @@ export default function CampaignsView() {
 	}, []);
 
 	const handleOpenCampaignClicked = (campaignId: UUID) => {
-		navigate(`/campaigns/${campaignId}/map`);
+		navigate(`${campaignId}/map`);
 	};
 
 	// #region Create campaign stuff
@@ -56,7 +56,7 @@ export default function CampaignsView() {
 		try {
 			const response = await insertCampaign(campaign);
 			const newCampaign = response.data.data;
-			navigate(`/campaigns/${newCampaign.id}/map`);
+			navigate(`${newCampaign.id}/map`);
 		} catch (e) {
 			console.error(e);
 			alert(`Error creating campaign: ${getMessage(e)}`);
