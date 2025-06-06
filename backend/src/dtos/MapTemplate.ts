@@ -13,6 +13,10 @@ export interface MapTemplateUpdate {
 	imagePath?: string;
 }
 
+export interface MapTemplateQueryParams {
+	campaignTemplateId?: UUID;
+}
+
 export interface MapTemplateResponse {
 	id: UUID;
 	name: string;
