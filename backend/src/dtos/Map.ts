@@ -15,6 +15,10 @@ export interface MapUpdate {
 	imagePath?: string;
 }
 
+export interface MapQueryParams {
+	campaignId?: UUID;
+}
+
 export interface MapResponse {
 	id: UUID;
 	name: string;
