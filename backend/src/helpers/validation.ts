@@ -14,11 +14,11 @@ export function validatePostBody(body: unknown): asserts body is object {
 	}
 }
 
-export function requiredFields(
-	body: object,
-	fields: string[],
+export function requiredFields<T extends object, K extends readonly string[]>(
+	body: T,
+	fields: K,
 	errorOverride?: string,
-) {
+): asserts body is T & { [P in K[number]]: unknown } {
 	const error = (field: string) =>
 		errorOverride ?? `Request body missing required field: ${field}`;
 
