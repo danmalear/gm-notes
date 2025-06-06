@@ -90,7 +90,7 @@ export const mapTemplateRoutes = (app: Express) => {
 			const mapTemplate = await mapTemplateRepository.getById(req.params.id);
 			if (!mapTemplate) {
 				res.status(404).send({
-					message: `MapTemplate with ID ${req.params.id} not found`,
+					message: `Map template with ID ${req.params.id} not found`,
 				});
 				return;
 			}
@@ -106,7 +106,7 @@ export const mapTemplateRoutes = (app: Express) => {
 			res: Response<MessageResponse | DataResponse<MapTemplateResponse>>,
 		) => {
 			console.log(
-				`MapTemplate POST request received. body: ${JSON.stringify(req.body)}`,
+				`Map template POST request received. body: ${JSON.stringify(req.body)}`,
 			);
 
 			function validateBody(body: unknown): asserts body is MapTemplateCreate {
