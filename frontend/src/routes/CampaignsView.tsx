@@ -36,7 +36,17 @@ export default function CampaignsView() {
 	}, []);
 
 	const handleOpenCampaignClicked = (campaignId: UUID) => {
-		navigate(`${campaignId}/map`);
+		const selectedCampaign = campaigns.find((c) => c.id === campaignId);
+
+		if (!selectedCampaign) {
+			throw Error('Selected campaign does not exist');
+		}
+
+		let destination = `${campaignId}/map`;
+		if (selectedCampaign.activeMapId) {
+			destination += `/${selectedCampaign.activeMapId}`;
+		}
+		navigate(destination);
 	};
 
 	// #region Create campaign stuff

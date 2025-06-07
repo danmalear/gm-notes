@@ -22,7 +22,7 @@ const router = createBrowserRouter([
 				// @TODO loader
 				children: [
 					{
-						path: 'map?',
+						path: 'map/:id?',
 						Component: MapView,
 					},
 				],
