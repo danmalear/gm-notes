@@ -7,11 +7,11 @@ const router = createBrowserRouter([
 		path: '/',
 		Component: () => <></>,
 		loader: () => {
-			return redirect('/campaigns');
+			return redirect('/campaign');
 		},
 	},
 	{
-		path: '/campaigns',
+		path: '/campaign',
 		children: [
 			{
 				index: true,
