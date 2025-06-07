@@ -25,6 +25,7 @@ async function buildResponse(campaign: Campaign) {
 	const campaignResponse: CampaignResponse = {
 		id: campaign.CampaignId,
 		name: campaign.Name,
+		activeMapId: campaign.ActiveMapId ?? undefined,
 		campaignTemplate: campaignTemplate
 			? {
 					id: campaignTemplate.CampaignTemplateId,
