@@ -1,11 +1,13 @@
 import { AppShell, Box, ScrollArea } from '@mantine/core';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Map, { type MapArea } from '../components/Map.tsx';
 import RegionDetails from '../components/RegionDetails.tsx';
+import { CampaignContext } from '../contexts/CampaignContext.ts';
 import data from '../data/data.ts';
 import type { TimeOfDay, ValidPartySize } from '../data/MapData.ts';
 
 export default function MapView() {
+	const campaign = useContext(CampaignContext);
 	const [currentMap, setCurrentMap] = useState('deathHouse');
 	const [currentRegion, setCurrentRegion] = useState('foyer');
 	const [timeOfDay, setTimeOfDay] = useState<TimeOfDay>('night');
