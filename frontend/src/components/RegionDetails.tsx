@@ -1,4 +1,8 @@
 import { useEffect, useReducer } from 'react';
+import {
+	RegionDetailsContext,
+	RegionDetailsDispatchContext,
+} from '../contexts/RegionDetailsContext.ts';
 import type { Region, TimeOfDay, ValidPartySize } from '../data/MapData.ts';
 import collapsiblesReducer from '../reducers/collapsibleReducer.ts';
 import AbilityCheck from './AbilityCheck.tsx';
@@ -6,10 +10,6 @@ import Collapsible from './Collapsible.tsx';
 import Creature from './Creature.tsx';
 import Item from './Item.tsx';
 import './RegionDetails.css';
-import {
-	RegionDetailsContext,
-	RegionDetailsDispatchContext,
-} from './RegionDetailsContext.ts';
 import Trait from './Trait.tsx';
 
 export interface RegionDetailsProps extends React.PropsWithChildren {

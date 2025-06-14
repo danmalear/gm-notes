@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import { useContext, useState } from 'react';
-import './Collapsible.css';
 import {
 	RegionDetailsContext,
 	RegionDetailsDispatchContext,
-} from './RegionDetailsContext';
+} from '../contexts/RegionDetailsContext';
+import './Collapsible.css';
 
 export interface CollapsibleProps extends React.PropsWithChildren {
 	title: string;
