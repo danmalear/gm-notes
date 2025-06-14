@@ -1,5 +1,6 @@
 import { AppShell, Box, ScrollArea } from '@mantine/core';
 import { useContext, useState } from 'react';
+import CampaignHeader from '../components/CampaignHeader.tsx';
 import Map, { type MapArea } from '../components/Map.tsx';
 import RegionDetails from '../components/RegionDetails.tsx';
 import { CampaignContext } from '../contexts/CampaignContext.ts';
@@ -74,7 +75,7 @@ const MapView: React.FC = () => {
 			}}
 			offsetScrollbars={true}
 		>
-			<AppShell.Header></AppShell.Header>
+			<CampaignHeader campaign={campaign} />
 			<AppShell.Navbar>
 				<Box h="100%" w="100%">
 					<select
