@@ -6,7 +6,7 @@ import { CampaignContext } from '../contexts/CampaignContext.ts';
 import data from '../data/data.ts';
 import type { TimeOfDay, ValidPartySize } from '../data/MapData.ts';
 
-export default function MapView() {
+const MapView: React.FC = () => {
 	const campaign = useContext(CampaignContext);
 	const [currentMap, setCurrentMap] = useState('deathHouse');
 	const [currentRegion, setCurrentRegion] = useState('foyer');
@@ -74,8 +74,9 @@ export default function MapView() {
 			}}
 			offsetScrollbars={true}
 		>
-			<AppShell.Header>
-				<div className="pos-absolute l-1 t-1 w-10 item">
+			<AppShell.Header></AppShell.Header>
+			<AppShell.Navbar>
+				<Box h="100%" w="100%">
 					<select
 						className="w-100"
 						value={currentMap}
@@ -84,8 +85,6 @@ export default function MapView() {
 						<option value="">--</option>
 						<option value="deathHouse">Death House</option>
 					</select>
-				</div>
-				<div className="pos-absolute l-15 t-1 w-10">
 					<select
 						className="w-100"
 						value={timeOfDay}
@@ -95,10 +94,7 @@ export default function MapView() {
 						<option value="between">Between</option>
 						<option value="night">Night</option>
 					</select>
-				</div>
-			</AppShell.Header>
-			<AppShell.Navbar>
-				<Box h="100%" w="100%" />
+				</Box>
 			</AppShell.Navbar>
 			<AppShell.Main h="100%">
 				<ScrollArea>
@@ -121,4 +117,6 @@ export default function MapView() {
 			</AppShell.Aside>
 		</AppShell>
 	);
-}
+};
+
+export default MapView;

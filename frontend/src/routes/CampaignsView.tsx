@@ -8,7 +8,7 @@ import { ActionIcon, Box, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconPlus } from '@tabler/icons-react';
 import type { UUID } from 'crypto';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import CampaignCard from '../components/CampaignCard.tsx';
 import CreateCampaignModal from '../components/CreateCampaignModal.tsx';
@@ -19,7 +19,7 @@ import {
 } from '../services/campaignService.ts';
 import classes from './CampaignsView.module.css';
 
-export default function CampaignsView() {
+const CampaignsView: React.FC = () => {
 	const navigate = useNavigate();
 
 	const [campaigns, setCampaigns] = useState<Campaign[]>([]);
@@ -150,4 +150,6 @@ export default function CampaignsView() {
 			</Flex>
 		</>
 	);
-}
+};
+
+export default CampaignsView;
