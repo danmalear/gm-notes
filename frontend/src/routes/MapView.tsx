@@ -1,50 +1,48 @@
 import { AppShell, Box, ScrollArea } from '@mantine/core';
-import { useContext, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
+import { useLoaderData } from 'react-router';
 import CampaignHeader from '../components/CampaignHeader.tsx';
 import Map, { type MapArea } from '../components/Map.tsx';
 import RegionDetails from '../components/RegionDetails.tsx';
 import { CampaignContext } from '../contexts/CampaignContext.ts';
 import data from '../data/data.ts';
 import type { TimeOfDay, ValidPartySize } from '../data/MapData.ts';
+import { filePath } from '../services/fileService.ts';
+import type { mapLoader } from './loaders/mapLoader.ts';
+
+// HC = hard-coded, to be deleted when data is properly loaded
 
 const MapView: React.FC = () => {
 	const campaign = useContext(CampaignContext);
-	const [currentMap, setCurrentMap] = useState('deathHouse');
+	const { map } = useLoaderData<typeof mapLoader>();
+	// @TODO remove this dependency
+	const [currentMapHC, setCurrentMapHC] = useState('deathHouse');
+	// @TODO eventually this should be nullable with a map default state
 	const [currentRegion, setCurrentRegion] = useState('foyer');
+	// @TODO this should eventually be a stored campaign state
 	const [timeOfDay, setTimeOfDay] = useState<TimeOfDay>('night');
+	// @TODO this should eventually be a stored campaign state
 	const [partySize] = useState<ValidPartySize>(3);
-	const mapData = currentMap ? data[currentMap] : null;
+	// @TODO remove this dependency
+	const mapDataHC = currentMapHC ? data[currentMapHC] : null;
 
-	if (!mapData) {
-		return (
-			<div id="main" className="container">
-				<div id="map-col" className="item">
-					<div className="pos-absolute l-1 t-1">
-						<select
-							className="w-10"
-							value={currentMap}
-							onChange={(e) => setCurrentMap(e.target.value)}
-						>
-							<option value="">--</option>
-							<option value="deathHouse">Death House</option>
-						</select>
-					</div>
-				</div>
-			</div>
-		);
-	}
+	const areasHC: MapArea[] = useMemo(() => {
+		if (!mapDataHC) return [];
 
-	const areas: MapArea[] = [];
+		const acc = [];
 
-	for (const region in mapData.regions) {
-		for (const area of mapData.regions[region].areas) {
-			areas.push({
-				shape: area.shape,
-				coords: area.coords,
-				regionKey: region,
-			});
+		for (const region in mapDataHC.regions) {
+			for (const area of mapDataHC.regions[region].areas) {
+				acc.push({
+					shape: area.shape,
+					coords: area.coords,
+					regionKey: region,
+				});
+			}
 		}
-	}
+
+		return acc;
+	}, [mapDataHC]);
 
 	const handleRegionClick = (regionKey: string) => {
 		setCurrentRegion(regionKey);
@@ -80,8 +78,8 @@ const MapView: React.FC = () => {
 				<Box h="100%" w="100%">
 					<select
 						className="w-100"
-						value={currentMap}
-						onChange={(e) => setCurrentMap(e.target.value)}
+						value={currentMapHC}
+						onChange={(e) => setCurrentMapHC(e.target.value)}
 					>
 						<option value="">--</option>
 						<option value="deathHouse">Death House</option>
@@ -98,23 +96,29 @@ const MapView: React.FC = () => {
 				</Box>
 			</AppShell.Navbar>
 			<AppShell.Main h="100%">
-				<ScrollArea>
+				{mapDataHC ? (
 					<Map
-						mapImage={mapData.image}
-						areas={areas}
+						mapImage={{
+							src: filePath(map.imagePath),
+							sizeX: mapDataHC.image.sizeX,
+							sizeY: mapDataHC.image.sizeY,
+						}}
+						areas={areasHC}
 						onRegionClick={handleRegionClick}
 					/>
-				</ScrollArea>
+				) : null}
 			</AppShell.Main>
 			<AppShell.Aside>
-				<AppShell.Section grow component={ScrollArea}>
-					<RegionDetails
-						regionKey={currentRegion}
-						data={mapData.regions[currentRegion]}
-						timeOfDay={timeOfDay}
-						partySize={partySize}
-					/>
-				</AppShell.Section>
+				{mapDataHC ? (
+					<AppShell.Section grow component={ScrollArea}>
+						<RegionDetails
+							regionKey={currentRegion}
+							data={mapDataHC.regions[currentRegion]}
+							timeOfDay={timeOfDay}
+							partySize={partySize}
+						/>
+					</AppShell.Section>
+				) : null}
 			</AppShell.Aside>
 		</AppShell>
 	);
