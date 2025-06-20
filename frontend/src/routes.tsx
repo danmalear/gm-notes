@@ -2,6 +2,7 @@ import { createBrowserRouter, redirect } from 'react-router';
 import CampaignsView from './routes/CampaignsView';
 import CampaignView from './routes/CampaignView';
 import { campaignLoader } from './routes/loaders/campaignLoader';
+import { mapLoader } from './routes/loaders/mapLoader';
 import MapView from './routes/MapView';
 
 const router = createBrowserRouter([
@@ -25,7 +26,8 @@ const router = createBrowserRouter([
 				Component: CampaignView,
 				children: [
 					{
-						path: 'map/:id?',
+						path: 'map/:mapId?',
+						loader: mapLoader,
 						Component: MapView,
 					},
 				],
