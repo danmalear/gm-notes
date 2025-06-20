@@ -7,7 +7,6 @@ import RegionDetails from '../components/RegionDetails.tsx';
 import { CampaignContext } from '../contexts/CampaignContext.ts';
 import data from '../data/data.ts';
 import type { TimeOfDay, ValidPartySize } from '../data/MapData.ts';
-import { filePath } from '../services/fileService.ts';
 import type { mapLoader } from './loaders/mapLoader.ts';
 
 // HC = hard-coded, to be deleted when data is properly loaded
@@ -103,11 +102,7 @@ const MapView: React.FC = () => {
 			<AppShell.Main h="100%">
 				{mapDataHC ? (
 					<Map
-						mapImage={{
-							src: filePath(map.imagePath),
-							sizeX: mapDataHC.image.sizeX,
-							sizeY: mapDataHC.image.sizeY,
-						}}
+						mapImagePath={map.imagePath}
 						areas={areasHC}
 						onRegionClick={handleRegionClick}
 					/>

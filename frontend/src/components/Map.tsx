@@ -1,5 +1,6 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
-import type { Coords, MapImage } from '../data/MapData';
+import type { Coords } from '../data/MapData';
+import { filePath } from '../services/fileService';
 
 export interface MapArea {
 	shape: string;
@@ -14,13 +15,13 @@ interface Area {
 }
 
 export interface MapProps extends React.PropsWithChildren {
-	mapImage: MapImage;
+	mapImagePath: string;
 	areas: MapArea[];
 	onRegionClick?: (regionKey: string) => void;
 }
 
 const Map: React.FC<MapProps> = ({
-	mapImage,
+	mapImagePath,
 	areas: areasProp,
 	onRegionClick,
 }) => {
@@ -44,37 +45,34 @@ const Map: React.FC<MapProps> = ({
 	const imgRef = useRef<HTMLImageElement | null>(null);
 	const [areas, setAreas] = useState<Area[]>([]);
 
-	const makeCoordsRelative = useCallback(
-		(coords: Coords) => {
-			if (imgRef?.current) {
-				const imgWidth = imgRef.current.width;
-				const imgHeight = imgRef.current.height;
+	const makeCoordsRelative = useCallback((coords: Coords) => {
+		if (imgRef?.current) {
+			const imgWidth = imgRef.current.width;
+			const imgHeight = imgRef.current.height;
 
-				const isCircle = 'r' in coords;
-				if (isCircle) {
-					const { x, y, r } = coords;
+			const isCircle = 'r' in coords;
+			if (isCircle) {
+				const { x, y, r } = coords;
 
-					const relativeX = (x / mapImage.sizeX) * imgWidth;
-					const relativeY = (y / mapImage.sizeY) * imgHeight;
-					const relativeR = (r / mapImage.sizeX) * imgWidth;
+				const relativeX = (x / imgRef.current.naturalWidth) * imgWidth;
+				const relativeY = (y / imgRef.current.naturalHeight) * imgHeight;
+				const relativeR = (r / imgRef.current.naturalWidth) * imgWidth;
 
-					return `${relativeX},${relativeY},${relativeR}`;
-				} else {
-					const { x1, y1, x2, y2 } = coords;
-
-					const relativeX1 = (x1 / mapImage.sizeX) * imgWidth;
-					const relativeY1 = (y1 / mapImage.sizeY) * imgHeight;
-					const relativeX2 = (x2 / mapImage.sizeX) * imgWidth;
-					const relativeY2 = (y2 / mapImage.sizeY) * imgHeight;
-					return `${relativeX1},${relativeY1},${relativeX2},${relativeY2}`;
-				}
+				return `${relativeX},${relativeY},${relativeR}`;
 			} else {
-				console.error('Image not found in the DOM');
-				return undefined;
+				const { x1, y1, x2, y2 } = coords;
+
+				const relativeX1 = (x1 / imgRef.current.naturalWidth) * imgWidth;
+				const relativeY1 = (y1 / imgRef.current.naturalHeight) * imgHeight;
+				const relativeX2 = (x2 / imgRef.current.naturalWidth) * imgWidth;
+				const relativeY2 = (y2 / imgRef.current.naturalHeight) * imgHeight;
+				return `${relativeX1},${relativeY1},${relativeX2},${relativeY2}`;
 			}
-		},
-		[mapImage.sizeX, mapImage.sizeY],
-	);
+		} else {
+			console.error('Image not found in the DOM');
+			return undefined;
+		}
+	}, []);
 
 	const makeAreasRelative = useCallback(
 		(areas: MapArea[]) => {
@@ -107,7 +105,7 @@ const Map: React.FC<MapProps> = ({
 		<div id="map-container">
 			<img
 				ref={imgRef}
-				src={mapImage.src}
+				src={filePath(mapImagePath)}
 				alt="Map"
 				useMap={imgLoaded ? '#map' : undefined}
 				className="w-100"
