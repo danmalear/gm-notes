@@ -15,14 +15,17 @@ import type { mapLoader } from './loaders/mapLoader.ts';
 const MapView: React.FC = () => {
 	const campaign = useContext(CampaignContext);
 	const { map } = useLoaderData<typeof mapLoader>();
-	// @TODO remove this dependency
-	const [currentMapHC, setCurrentMapHC] = useState('deathHouse');
 	// @TODO eventually this should be nullable with a map default state
 	const [currentRegion, setCurrentRegion] = useState('foyer');
 	// @TODO this should eventually be a stored campaign state
 	const [timeOfDay, setTimeOfDay] = useState<TimeOfDay>('night');
 	// @TODO this should eventually be a stored campaign state
 	const [partySize] = useState<ValidPartySize>(3);
+
+	// #region HC
+	// @TODO remove this dependency
+	const [currentMapHC, setCurrentMapHC] = useState('deathHouse');
+
 	// @TODO remove this dependency
 	const mapDataHC = currentMapHC ? data[currentMapHC] : null;
 
@@ -43,6 +46,8 @@ const MapView: React.FC = () => {
 
 		return acc;
 	}, [mapDataHC]);
+
+	// #endregion HC
 
 	const handleRegionClick = (regionKey: string) => {
 		setCurrentRegion(regionKey);
