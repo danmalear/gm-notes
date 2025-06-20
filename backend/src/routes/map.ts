@@ -13,7 +13,7 @@ import {
 	mapTemplateRepository,
 } from '../repositories/repositories.ts';
 
-const apiNamespace = 'map-templates';
+const apiNamespace = 'maps';
 
 async function buildResponse(map: Map) {
 	const campaign = await campaignRepository.getById(map.CampaignId);
