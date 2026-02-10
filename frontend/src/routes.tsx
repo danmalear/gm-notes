@@ -14,7 +14,7 @@ const router = createBrowserRouter([
 		},
 	},
 	{
-		path: '/campaign',
+		path: 'campaign',
 		children: [
 			{
 				index: true,
