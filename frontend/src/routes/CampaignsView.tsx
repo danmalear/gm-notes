@@ -11,7 +11,7 @@ import type { UUID } from 'crypto';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import CampaignCard from '../components/CampaignCard.tsx';
-import CreateCampaignModal from '../components/CreateCampaignModal.tsx';
+import CreateCampaignModal from '../components/modals/CreateCampaignModal.tsx';
 import { getMessage } from '../helpers/error.ts';
 import {
 	getAllCampaigns,

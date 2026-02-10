@@ -3,6 +3,7 @@ import CampaignsView from './routes/CampaignsView';
 import CampaignView from './routes/CampaignView';
 import { campaignLoader } from './routes/loaders/campaignLoader';
 import { mapLoader } from './routes/loaders/mapLoader';
+import MapsView from './routes/MapsView';
 import MapView from './routes/MapView';
 
 const router = createBrowserRouter([
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
 						path: 'map/:mapId?',
 						loader: mapLoader,
 						Component: MapView,
+					},
+					{
+						path: 'map/',
+						Component: MapsView,
 					},
 				],
 			},
