@@ -61,7 +61,9 @@ export const mapRoutes = (app: Express) => {
 			>,
 			res,
 		) => {
-			console.log(`Map GET many request received. query: ${req.query}`);
+			console.log(
+				`Map GET many request received. query: ${JSON.stringify(req.query)}`,
+			);
 
 			const maps = req.query.campaignId
 				? await mapRepository.getByCampaignId(req.query.campaignId)
