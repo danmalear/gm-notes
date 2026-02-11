@@ -6,6 +6,9 @@ export const uploadFile = async (data: FormData) => {
 };
 
 export const filePath = (fileName: string) => {
-	// @TODO Maybe eventually use app settings or something
-	return `http://localhost:3000/files/${fileName}`;
+	const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
+	if (!baseUrl) {
+		throw Error('Server base URL not defined.');
+	}
+	return `${baseUrl}/files/${fileName}`;
 };
