@@ -22,6 +22,37 @@ const MapView: React.FC = () => {
 	// @TODO this should eventually be a stored campaign state
 	const [partySize] = useState<ValidPartySize>(3);
 
+	const areas = useMemo(() => {
+		const acc: MapArea[] = [];
+
+		for (const region of map.regions) {
+			for (const circle of region.circles) {
+				acc.push({
+					shape: 'circle',
+					coords: circle,
+					regionId: region.id,
+				});
+			}
+			for (const rectangle of region.rectangles) {
+				acc.push({
+					shape: 'rect',
+					coords: rectangle,
+					regionId: region.id,
+				});
+			}
+			// @TODO support polygons
+			// for (const polygon of region.polygons) {
+			// acc.push({
+			// 	shape: 'poly',
+			// 	coords:
+			// 	regionId:
+			// });
+			// }
+		}
+
+		return acc;
+	}, [map]);
+
 	// #region HC
 	// @TODO remove this dependency
 	const [currentMapHC, setCurrentMapHC] = useState('deathHouse');
@@ -29,18 +60,27 @@ const MapView: React.FC = () => {
 	// @TODO remove this dependency
 	const mapDataHC = currentMapHC ? data[currentMapHC] : null;
 
-	const areasHC: MapArea[] = useMemo(() => {
+	const areasHC = useMemo(() => {
 		if (!mapDataHC) return [];
 
-		const acc = [];
+		const acc: MapArea[] = [];
 
 		for (const region in mapDataHC.regions) {
 			for (const area of mapDataHC.regions[region].areas) {
-				acc.push({
-					shape: area.shape,
-					coords: area.coords,
-					regionId: region,
-				});
+				// This is bizarre but makes TS happy and is deprecated anyway
+				if (area.shape === 'rect') {
+					acc.push({
+						shape: area.shape,
+						coords: area.coords,
+						regionId: region,
+					});
+				} else {
+					acc.push({
+						shape: area.shape,
+						coords: area.coords,
+						regionId: region,
+					});
+				}
 			}
 		}
 
@@ -109,7 +149,7 @@ const MapView: React.FC = () => {
 					{mapDataHC ? (
 						<Map
 							mapImagePath={map.imagePath}
-							areas={areasHC}
+							areas={areas.concat(areasHC)}
 							onRegionClick={handleRegionClick}
 						/>
 					) : null}

@@ -44,6 +44,8 @@ async function buildResponse(map: Map) {
 					campaignTemplateId: mapTemplate.CampaignTemplateId ?? undefined,
 				}
 			: undefined,
+		// @TODO
+		regions: [],
 	};
 
 	return mapResponse;

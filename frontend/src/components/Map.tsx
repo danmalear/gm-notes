@@ -1,12 +1,29 @@
+import type { Circle, Polygon, Rectangle, Shape } from '#dtos/Region.ts';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
-import type { Coords } from '../data/MapData';
-import { filePath } from '../services/fileService';
+import { filePath } from '../services/fileService.ts';
 
-export interface MapArea {
-	shape: string;
-	coords: Coords;
+export interface RectArea {
+	shape: 'rect';
+	coords: Rectangle;
+	// @TODO make this a UUID when HC is gone
 	regionId: string;
 }
+
+export interface CircleArea {
+	shape: 'circle';
+	coords: Circle;
+	// @TODO make this a UUID when HC is gone
+	regionId: string;
+}
+
+export interface PolyArea {
+	shape: 'poly';
+	coords: Polygon;
+	// @TODO make this a UUID when HC is gone
+	regionId: string;
+}
+
+export type MapArea = RectArea | CircleArea | PolyArea;
 
 interface Area {
 	shape: string;
@@ -48,22 +65,24 @@ const Map: React.FC<MapProps> = ({
 	const imgRef = useRef<HTMLImageElement | null>(null);
 	const [areas, setAreas] = useState<Area[]>([]);
 
-	const makeCoordsRelative = useCallback((coords: Coords) => {
+	const makeCoordsRelative = useCallback((shape: Shape) => {
 		if (imgRef?.current) {
 			const imgWidth = imgRef.current.width;
 			const imgHeight = imgRef.current.height;
 
-			const isCircle = 'r' in coords;
+			const isCircle = 'r' in shape;
+			const isRect = 'x1' in shape;
 			if (isCircle) {
-				const { x, y, r } = coords;
+				const { x, y, r } = shape;
 
 				const relativeX = (x / imgRef.current.naturalWidth) * imgWidth;
 				const relativeY = (y / imgRef.current.naturalHeight) * imgHeight;
 				const relativeR = (r / imgRef.current.naturalWidth) * imgWidth;
 
 				return `${relativeX},${relativeY},${relativeR}`;
-			} else {
-				const { x1, y1, x2, y2 } = coords;
+			}
+			if (isRect) {
+				const { x1, y1, x2, y2 } = shape;
 
 				const relativeX1 = (x1 / imgRef.current.naturalWidth) * imgWidth;
 				const relativeY1 = (y1 / imgRef.current.naturalHeight) * imgHeight;
@@ -71,6 +90,8 @@ const Map: React.FC<MapProps> = ({
 				const relativeY2 = (y2 / imgRef.current.naturalHeight) * imgHeight;
 				return `${relativeX1},${relativeY1},${relativeX2},${relativeY2}`;
 			}
+			// @TODO handle polygons
+			return '';
 		} else {
 			console.error('Image not found in the DOM');
 			return undefined;

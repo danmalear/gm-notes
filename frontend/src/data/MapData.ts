@@ -37,8 +37,6 @@ export interface CircleCoords {
 	r: number;
 }
 
-export type Coords = RectCoords | CircleCoords;
-
 export interface RectArea {
 	shape: 'rect';
 	coords: RectCoords;
