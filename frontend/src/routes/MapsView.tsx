@@ -123,7 +123,7 @@ const MapsView: React.FC = () => {
 				}}
 				offsetScrollbars={true}
 			>
-				<CampaignHeader campaign={campaign} />
+				<CampaignHeader campaign={campaign} subtitle="Maps" />
 				<AppShell.Main h="100%" w="100%">
 					<Flex
 						h="100%"

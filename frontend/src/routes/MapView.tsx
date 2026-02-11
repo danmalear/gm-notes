@@ -77,7 +77,7 @@ const MapView: React.FC = () => {
 			}}
 			offsetScrollbars={true}
 		>
-			<CampaignHeader campaign={campaign} />
+			<CampaignHeader campaign={campaign} subtitle={map.name} />
 			<AppShell.Navbar>
 				<Box h="100%" w="100%">
 					<select

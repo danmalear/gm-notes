@@ -5,9 +5,13 @@ import { NavLink } from 'react-router';
 
 export interface CampaignHeaderProps extends React.PropsWithChildren {
 	campaign: Campaign;
+	subtitle?: string;
 }
 
-const CampaignHeader: React.FC<CampaignHeaderProps> = ({ campaign }) => {
+const CampaignHeader: React.FC<CampaignHeaderProps> = ({
+	campaign,
+	subtitle,
+}) => {
 	return (
 		<AppShell.Header px="sm">
 			<Flex direction="row" justify="space-between" align="center" h="100%">
@@ -22,7 +26,10 @@ const CampaignHeader: React.FC<CampaignHeaderProps> = ({ campaign }) => {
 				>
 					<IconArrowLeft size={32} />
 				</NavLink>
-				<h2>{campaign.name}</h2>
+				<h2>
+					{campaign.name}
+					{subtitle ? ` - ${subtitle}` : ''}
+				</h2>
 				<div />
 			</Flex>
 		</AppShell.Header>

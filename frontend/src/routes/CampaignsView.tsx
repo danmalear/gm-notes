@@ -4,7 +4,7 @@ import type {
 } from '#dtos/Campaign.ts';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
-import { ActionIcon, Box, Flex } from '@mantine/core';
+import { ActionIcon, AppShell, Box, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconPlus } from '@tabler/icons-react';
 import type { UUID } from 'crypto';
@@ -124,30 +124,41 @@ const CampaignsView: React.FC = () => {
 				onClose={closeCreateCampaign}
 				onCreate={handleCampaignCreated}
 			/>
-			<Flex
+			<AppShell
+				id="app-shell"
 				h="100vh"
 				w="100vw"
-				px="20%"
-				direction={'column'}
-				justify={'center'}
-				onMouseDown={handleMouseDown}
+				header={{
+					height: 50,
+					collapsed: false,
+				}}
+				offsetScrollbars={true}
 			>
-				<Carousel
-					slideSize="520px"
-					slideGap={20}
-					withControls={false}
-					height="500px"
-					emblaOptions={{
-						dragFree: true,
-					}}
-					className={classes['gradient-mask']}
-				>
-					{spacer}
-					{slides}
-					{addNew}
-					{spacer}
-				</Carousel>
-			</Flex>
+				<AppShell.Header px="sm">
+					<Flex direction="row" justify="center" align="center" h="100%">
+						<h2>Campaigns</h2>
+					</Flex>
+				</AppShell.Header>
+				<AppShell.Main h="100%" w="100%" onMouseDown={handleMouseDown}>
+					<Flex h="100%" w="100%" px="20%" direction="column" justify="center">
+						<Carousel
+							slideSize="520px"
+							slideGap={20}
+							withControls={false}
+							height="500px"
+							emblaOptions={{
+								dragFree: true,
+							}}
+							className={classes['gradient-mask']}
+						>
+							{spacer}
+							{slides}
+							{addNew}
+							{spacer}
+						</Carousel>
+					</Flex>
+				</AppShell.Main>
+			</AppShell>
 		</>
 	);
 };
