@@ -1,5 +1,6 @@
 import { AppShell, Box, NavLink, ScrollArea } from '@mantine/core';
 import { useContext, useMemo, useState } from 'react';
+import { MapInteractionCSS } from 'react-map-interaction';
 import { Link, useLoaderData } from 'react-router';
 import CampaignHeader from '../components/CampaignHeader.tsx';
 import Map, { type MapArea } from '../components/Map.tsx';
@@ -76,6 +77,7 @@ const MapView: React.FC = () => {
 				},
 			}}
 			offsetScrollbars={true}
+			h="100vh"
 		>
 			<CampaignHeader campaign={campaign} subtitle={map.name} />
 			<AppShell.Navbar>
@@ -103,13 +105,15 @@ const MapView: React.FC = () => {
 				</Box>
 			</AppShell.Navbar>
 			<AppShell.Main h="100%">
-				{mapDataHC ? (
-					<Map
-						mapImagePath={map.imagePath}
-						areas={areasHC}
-						onRegionClick={handleRegionClick}
-					/>
-				) : null}
+				<MapInteractionCSS minScale={0.75} maxScale={6}>
+					{mapDataHC ? (
+						<Map
+							mapImagePath={map.imagePath}
+							areas={areasHC}
+							onRegionClick={handleRegionClick}
+						/>
+					) : null}
+				</MapInteractionCSS>
 			</AppShell.Main>
 			<AppShell.Aside>
 				{mapDataHC ? (
