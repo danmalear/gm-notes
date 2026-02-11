@@ -1,6 +1,7 @@
-import type { Creature, ValidPartySize } from '../data/MapData';
-import Collapsible from './Collapsible';
-import Trait from './Trait';
+import type { Creature, ValidPartySize } from '../data/MapData.ts';
+import Collapsible from './Collapsible.tsx';
+import CopyLink from './CopyLink.tsx';
+import Trait from './Trait.tsx';
 
 export interface CreatureProps extends React.PropsWithChildren {
 	creature: Creature;
@@ -36,9 +37,7 @@ const Creature: React.FC<CreatureProps> = ({
 			) : null}
 			{statBlock.url ? (
 				<Trait label="Stat Block">
-					<a href={statBlock.url} target="_blank">
-						{statBlock.text}
-					</a>
+					<CopyLink href={statBlock.url}>{statBlock.text}</CopyLink>
 				</Trait>
 			) : (
 				statBlock.text

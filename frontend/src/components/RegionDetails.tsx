@@ -7,6 +7,7 @@ import type { Region, TimeOfDay, ValidPartySize } from '../data/MapData.ts';
 import collapsiblesReducer from '../reducers/collapsibleReducer.ts';
 import AbilityCheck from './AbilityCheck.tsx';
 import Collapsible from './Collapsible.tsx';
+import CopyLink from './CopyLink.tsx';
 import Creature from './Creature.tsx';
 import Item from './Item.tsx';
 import './RegionDetails.css';
@@ -135,9 +136,7 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
 								{handouts.map((handout, index) => (
 									<li key={`handout-${index}`}>
 										{handout.url ? (
-											<a href={handout.url} target="_blank">
-												{handout.text}
-											</a>
+											<CopyLink href={handout.url}>{handout.text}</CopyLink>
 										) : (
 											handout.text
 										)}
