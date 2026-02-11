@@ -15,7 +15,7 @@ const MapCard: React.FC<MapCardProps> = ({
 }) => {
 	const { name } = map;
 
-	const imagePath = map?.imagePath ? filePath(map?.imagePath) : undefined;
+	const imagePath = filePath(map.imagePath);
 
 	// @TODO Eventually make this customizable?
 	const mapColor = 'black';
