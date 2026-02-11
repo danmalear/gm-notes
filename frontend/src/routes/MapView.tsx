@@ -83,7 +83,7 @@ const MapView: React.FC = () => {
 			<AppShell.Navbar>
 				<Box h="100%" w="100%">
 					<Link to={`/campaign/${campaign.id}/map`}>
-						<NavLink label="Change Map" />
+						<NavLink label="Change Map" component="div" />
 					</Link>
 					<select
 						className="w-100"
