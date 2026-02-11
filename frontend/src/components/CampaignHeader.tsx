@@ -1,6 +1,6 @@
 import { CampaignResponse as Campaign } from '#dtos/Campaign.js';
-import { AppShell, Flex } from '@mantine/core';
-import { IconArrowLeft } from '@tabler/icons-react';
+import { AppShell, Flex, Tooltip } from '@mantine/core';
+import { IconX } from '@tabler/icons-react';
 import { NavLink } from 'react-router';
 
 export interface CampaignHeaderProps extends React.PropsWithChildren {
@@ -24,7 +24,9 @@ const CampaignHeader: React.FC<CampaignHeaderProps> = ({
 						justifyItems: 'center',
 					}}
 				>
-					<IconArrowLeft size={32} />
+					<Tooltip label="Close Campaign" openDelay={500}>
+						<IconX size={32} />
+					</Tooltip>
 				</NavLink>
 				<h2>
 					{campaign.name}
