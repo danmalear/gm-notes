@@ -35,6 +35,9 @@ const Map: React.FC<MapProps> = ({
 		event: React.MouseEvent<HTMLElement>,
 		regionKey: string,
 	) => {
+		// This will prevent the click event from firing when it's part of a drag
+		if (event.defaultPrevented) return;
+
 		event.preventDefault();
 		if (onRegionClick) {
 			onRegionClick(regionKey);
@@ -102,13 +105,16 @@ const Map: React.FC<MapProps> = ({
 	// #endregion relative coords
 
 	return (
-		<div id="map-container">
+		<>
 			<img
 				ref={imgRef}
 				src={filePath(mapImagePath)}
 				alt="Map"
 				useMap={imgLoaded ? '#map' : undefined}
-				className="w-100"
+				style={{
+					maxHeight: 1500,
+					maxWidth: 1500,
+				}}
 				onLoad={onImgLoad}
 			/>
 			{imgLoaded ? (
@@ -126,7 +132,7 @@ const Map: React.FC<MapProps> = ({
 					))}
 				</map>
 			) : null}
-		</div>
+		</>
 	);
 };
 
