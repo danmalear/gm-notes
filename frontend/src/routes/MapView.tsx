@@ -1,6 +1,6 @@
-import { AppShell, Box, ScrollArea } from '@mantine/core';
+import { AppShell, Box, NavLink, ScrollArea } from '@mantine/core';
 import { useContext, useMemo, useState } from 'react';
-import { useLoaderData } from 'react-router';
+import { Link, useLoaderData } from 'react-router';
 import CampaignHeader from '../components/CampaignHeader.tsx';
 import Map, { type MapArea } from '../components/Map.tsx';
 import RegionDetails from '../components/RegionDetails.tsx';
@@ -80,6 +80,9 @@ const MapView: React.FC = () => {
 			<CampaignHeader campaign={campaign} subtitle={map.name} />
 			<AppShell.Navbar>
 				<Box h="100%" w="100%">
+					<Link to={`/campaign/${campaign.id}/map`}>
+						<NavLink label="Change Map" />
+					</Link>
 					<select
 						className="w-100"
 						value={currentMapHC}
