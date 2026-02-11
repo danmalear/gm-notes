@@ -38,7 +38,7 @@ const MapView: React.FC = () => {
 				acc.push({
 					shape: area.shape,
 					coords: area.coords,
-					regionKey: region,
+					regionId: region,
 				});
 			}
 		}

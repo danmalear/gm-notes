@@ -5,13 +5,13 @@ import { filePath } from '../services/fileService';
 export interface MapArea {
 	shape: string;
 	coords: Coords;
-	regionKey: string;
+	regionId: string;
 }
 
 interface Area {
 	shape: string;
 	coords: string;
-	regionKey: string;
+	regionId: string;
 }
 
 export interface MapProps extends React.PropsWithChildren {
@@ -79,7 +79,7 @@ const Map: React.FC<MapProps> = ({
 			const newAreas: Area[] = areas.map((a) => ({
 				shape: a.shape,
 				coords: makeCoordsRelative(a.coords) || '',
-				regionKey: a.regionKey,
+				regionId: a.regionId,
 			}));
 
 			return newAreas;
@@ -115,13 +115,13 @@ const Map: React.FC<MapProps> = ({
 				<map id="map" name="map">
 					{areas.map((area, index) => (
 						<area
-							key={`${area.regionKey}-${index}-area`}
+							key={`${area.regionId}-${index}-area`}
 							shape={area.shape}
 							coords={area.coords}
-							alt={area.regionKey}
+							alt={area.regionId}
 							className="map-area"
 							href="#"
-							onClick={(e) => handleRegionClick(e, area.regionKey)}
+							onClick={(e) => handleRegionClick(e, area.regionId)}
 						/>
 					))}
 				</map>
