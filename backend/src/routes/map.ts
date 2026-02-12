@@ -11,6 +11,7 @@ import {
 	campaignRepository,
 	mapRepository,
 	mapTemplateRepository,
+	regionRepository,
 } from '../repositories/repositories.ts';
 
 const apiNamespace = 'maps';
@@ -25,6 +26,8 @@ async function buildResponse(map: Map) {
 	const mapTemplate = map.MapTemplateId
 		? await mapTemplateRepository.getById(map.MapTemplateId)
 		: undefined;
+
+	const regions = await regionRepository.getByMapId(map.MapId);
 
 	const mapResponse: MapResponse = {
 		id: map.MapId,
@@ -44,8 +47,16 @@ async function buildResponse(map: Map) {
 					campaignTemplateId: mapTemplate.CampaignTemplateId ?? undefined,
 				}
 			: undefined,
-		// @TODO
-		regions: [],
+		regions: regions.map((region) => {
+			return {
+				id: region.RegionId,
+				name: region.Name,
+				// @TODO
+				rectangles: [],
+				circles: [],
+				polygons: [],
+			};
+		}),
 	};
 
 	return mapResponse;
