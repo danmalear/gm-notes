@@ -47,13 +47,4 @@ export interface RegionStub {
 	rectangles: Rectangle[];
 	circles: Circle[];
 	polygons: Polygon[];
-	// @TODO Some of these might be their own files
-	// lighting?: Lighting;
-	// descriptions: Description[];
-	// creatures?: Creature[];
-	// checks?: AbilityCheck[];
-	// items?: Item[];
-	// opportunities?: string[];
-	// handouts?: Handout[];
-	// notes?: string[];
 }
