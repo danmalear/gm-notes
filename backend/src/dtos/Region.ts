@@ -1,4 +1,5 @@
 import type { UUID } from 'crypto';
+import { MapStub } from './Map.ts';
 import type { RegionTemplateStub } from './RegionTemplate.ts';
 
 export interface Rectangle {
@@ -25,9 +26,14 @@ export interface Polygon {
 
 export type Shape = Rectangle | Circle | Polygon;
 
+export interface RegionQueryParams {
+	mapId?: UUID;
+}
+
 export interface RegionResponse {
 	id: UUID;
-	regionTemplate: RegionTemplateStub;
+	regionTemplate?: RegionTemplateStub;
+	map: MapStub;
 	name: string;
 	rectangles: Rectangle[];
 	circles: Circle[];
