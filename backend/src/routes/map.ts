@@ -44,6 +44,7 @@ async function buildResponse(map: Map) {
 		id: map.MapId,
 		name: map.Name,
 		imagePath: map.ImagePath,
+		defaultLighting: map.DefaultLighting,
 		campaign: {
 			id: campaign.CampaignId,
 			name: campaign.Name,
