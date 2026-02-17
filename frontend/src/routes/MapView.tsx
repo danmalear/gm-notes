@@ -1,9 +1,10 @@
-import { AppShell, Box, NavLink, ScrollArea } from '@mantine/core';
+import { AppShell, ScrollArea } from '@mantine/core';
 import { useContext, useMemo, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
-import { Link, useLoaderData } from 'react-router';
+import { useLoaderData } from 'react-router';
 import CampaignHeader from '../components/CampaignHeader.tsx';
 import Map, { type MapArea } from '../components/Map.tsx';
+import MapNavbar from '../components/MapNavbar.tsx';
 import RegionDetails from '../components/RegionDetails.tsx';
 import { CampaignContext } from '../contexts/CampaignContext.ts';
 import data from '../data/data.ts';
@@ -18,7 +19,7 @@ const MapView: React.FC = () => {
 	// @TODO eventually this should be nullable with a map default state
 	const [selectedRegionId, setCurrentRegion] = useState('foyer');
 	// @TODO this should eventually be a stored campaign state
-	const [timeOfDay, setTimeOfDay] = useState<TimeOfDay>('night');
+	const [timeOfDayHC, setTimeOfDayHC] = useState<TimeOfDay>('night');
 	// @TODO this should eventually be a stored campaign state
 	const [partySize] = useState<ValidPartySize>(3);
 
@@ -121,30 +122,12 @@ const MapView: React.FC = () => {
 			h="100vh"
 		>
 			<CampaignHeader campaign={campaign} subtitle={map.name} />
-			<AppShell.Navbar>
-				<Box h="100%" w="100%">
-					<Link to={`/campaign/${campaign.id}/map`}>
-						<NavLink label="Change Map" component="div" />
-					</Link>
-					<select
-						className="w-100"
-						value={currentMapHC}
-						onChange={(e) => setCurrentMapHC(e.target.value)}
-					>
-						<option value="">--</option>
-						<option value="deathHouse">Death House</option>
-					</select>
-					<select
-						className="w-100"
-						value={timeOfDay}
-						onChange={(e) => setTimeOfDay(e.target.value as TimeOfDay)}
-					>
-						<option value="day">Day</option>
-						<option value="between">Between</option>
-						<option value="night">Night</option>
-					</select>
-				</Box>
-			</AppShell.Navbar>
+			<MapNavbar
+				currentMapHC={currentMapHC}
+				onCurrentMapChangedHC={setCurrentMapHC}
+				timeOfDayHC={timeOfDayHC}
+				onTimeOfDayChangedHC={setTimeOfDayHC}
+			/>
 			<AppShell.Main h="100%">
 				<MapInteractionCSS minScale={0.75} maxScale={6}>
 					{mapDataHC ? (
@@ -162,7 +145,7 @@ const MapView: React.FC = () => {
 						<RegionDetails
 							regionId={selectedRegionId}
 							mapDataHC={mapDataHC}
-							timeOfDay={timeOfDay}
+							timeOfDay={timeOfDayHC}
 							partySize={partySize}
 						/>
 					</AppShell.Section>
