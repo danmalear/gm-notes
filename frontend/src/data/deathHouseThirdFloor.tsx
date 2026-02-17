@@ -314,10 +314,17 @@ const thirdFloorRegions: {
 		areas: [
 			{
 				shape: 'rect',
+				// actual coords
+				// coords: {
+				// 	x1: 908,
+				// 	y1: 3517,
+				// 	x2: 1060,
+				// 	y2: 3675,
+				// },
 				coords: {
-					x1: 908,
+					x1: 1395,
 					y1: 3517,
-					x2: 1060,
+					x2: 1547,
 					y2: 3675,
 				},
 			},
