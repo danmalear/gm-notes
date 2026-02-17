@@ -1,6 +1,7 @@
 import type { Lighting } from '#dtos/data-types.ts';
+import type { MapUpdate } from '#dtos/Map.ts';
 import { AppShell, ScrollArea } from '@mantine/core';
-import { useContext, useMemo, useState } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { useLoaderData } from 'react-router';
 import CampaignHeader from '../components/CampaignHeader.tsx';
@@ -10,21 +11,36 @@ import RegionDetails from '../components/RegionDetails.tsx';
 import { CampaignContext } from '../contexts/CampaignContext.ts';
 import data from '../data/data.ts';
 import type { TimeOfDay, ValidPartySize } from '../data/MapData.ts';
+import { getMessage } from '../helpers/error.ts';
+import { updateMap } from '../services/mapService.ts';
 import type { mapLoader } from './loaders/mapLoader.ts';
 
 // HC = hard-coded, to be deleted when data is properly loaded
 
 const MapView: React.FC = () => {
 	const campaign = useContext(CampaignContext);
-	const { map } = useLoaderData<typeof mapLoader>();
-	const [defaultLighting, setDefaultLighting] =
-		useState<Lighting>('Bright Light');
 	// @TODO eventually this should be nullable with a map default state
 	const [selectedRegionId, setCurrentRegion] = useState('foyer');
 	// @TODO this should eventually be a stored campaign state
 	const [timeOfDayHC, setTimeOfDayHC] = useState<TimeOfDay>('night');
 	// @TODO this should eventually be a stored campaign state
 	const [partySize] = useState<ValidPartySize>(3);
+
+	const [map, setMap] = useState(useLoaderData<typeof mapLoader>().map);
+
+	const update = useCallback((updatedValues: MapUpdate) => {
+		try {
+			updateMap(updatedValues).then((response) => {
+				if (!response?.data?.data) {
+					throw Error('Map not found');
+				}
+				setMap(response.data.data);
+			});
+		} catch (e) {
+			alert('Error reloading map');
+			console.error(getMessage(e));
+		}
+	}, []);
 
 	const areas = useMemo(() => {
 		const acc: MapArea[] = [];
@@ -98,6 +114,13 @@ const MapView: React.FC = () => {
 		setCurrentRegion(regionId);
 	};
 
+	const handleDefaultLightingChange = (lighting: Lighting) => {
+		update({
+			id: map.id,
+			defaultLighting: lighting,
+		});
+	};
+
 	return (
 		<AppShell
 			id="app-shell"
@@ -126,8 +149,8 @@ const MapView: React.FC = () => {
 		>
 			<CampaignHeader campaign={campaign} subtitle={map.name} />
 			<MapNavbar
-				defaultLighting={defaultLighting}
-				onDefaultLightingChanged={setDefaultLighting}
+				defaultLighting={map.defaultLighting}
+				onDefaultLightingChanged={handleDefaultLightingChange}
 				currentMapHC={currentMapHC}
 				onCurrentMapChangedHC={setCurrentMapHC}
 				timeOfDayHC={timeOfDayHC}
