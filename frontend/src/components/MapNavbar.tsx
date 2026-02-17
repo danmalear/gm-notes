@@ -1,4 +1,5 @@
-import { AppShell, Box, NavLink, Title } from '@mantine/core';
+import type { Lighting } from '#dtos/data-types.ts';
+import { AppShell, Box, NavLink, Select, Title } from '@mantine/core';
 import { useContext } from 'react';
 import { Link } from 'react-router';
 import { CampaignContext } from '../contexts/CampaignContext.ts';
@@ -7,6 +8,8 @@ import type { TimeOfDay } from '../data/MapData.ts';
 // HC = hard-coded, to be deleted when data is properly loaded
 
 export interface MapNavbarProps {
+	defaultLighting: Lighting;
+	onDefaultLightingChanged: (value: Lighting) => void;
 	// @TODO remove this dependency
 	timeOfDayHC: TimeOfDay;
 	onTimeOfDayChangedHC: (newValue: TimeOfDay) => void;
@@ -16,12 +19,31 @@ export interface MapNavbarProps {
 }
 
 const MapNavbar: React.FC<MapNavbarProps> = ({
+	defaultLighting,
+	onDefaultLightingChanged,
+	// @TODO remove this dependency
 	timeOfDayHC,
 	onTimeOfDayChangedHC,
+	// @TODO remove this dependency
 	currentMapHC,
 	onCurrentMapChangedHC,
 }) => {
 	const campaign = useContext(CampaignContext);
+
+	const lightingOptions: Lighting[] = ['Bright Light', 'Dim Light', 'Darkness'];
+
+	const isLighting = (value: string): value is Lighting => {
+		return (lightingOptions as string[]).includes(value);
+	};
+
+	const handleLightingChange = (value: string | null) => {
+		if (value && isLighting(value)) {
+			onDefaultLightingChanged(value);
+		} else {
+			console.error('Invalid lighting value selected');
+			onDefaultLightingChanged('Bright Light');
+		}
+	};
 
 	return (
 		<AppShell.Navbar>
@@ -29,6 +51,7 @@ const MapNavbar: React.FC<MapNavbarProps> = ({
 				<Link to={`/campaign/${campaign.id}/map`}>
 					<NavLink label="Change Map" component="div" />
 				</Link>
+				<Title order={3}>Legacy Settings</Title>
 				<select
 					className="w-100"
 					value={currentMapHC}
@@ -46,7 +69,14 @@ const MapNavbar: React.FC<MapNavbarProps> = ({
 					<option value="between">Between</option>
 					<option value="night">Night</option>
 				</select>
-				<Title order={2}>Title</Title>
+				<Title order={3}>Features</Title>
+				<Select
+					label="Default Lighting"
+					data={lightingOptions}
+					value={defaultLighting}
+					allowDeselect={false}
+					onChange={handleLightingChange}
+				/>
 			</Box>
 		</AppShell.Navbar>
 	);

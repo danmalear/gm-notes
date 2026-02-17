@@ -1,3 +1,4 @@
+import type { Lighting } from '#dtos/data-types.ts';
 import { AppShell, ScrollArea } from '@mantine/core';
 import { useContext, useMemo, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
@@ -16,6 +17,8 @@ import type { mapLoader } from './loaders/mapLoader.ts';
 const MapView: React.FC = () => {
 	const campaign = useContext(CampaignContext);
 	const { map } = useLoaderData<typeof mapLoader>();
+	const [defaultLighting, setDefaultLighting] =
+		useState<Lighting>('Bright Light');
 	// @TODO eventually this should be nullable with a map default state
 	const [selectedRegionId, setCurrentRegion] = useState('foyer');
 	// @TODO this should eventually be a stored campaign state
@@ -123,6 +126,8 @@ const MapView: React.FC = () => {
 		>
 			<CampaignHeader campaign={campaign} subtitle={map.name} />
 			<MapNavbar
+				defaultLighting={defaultLighting}
+				onDefaultLightingChanged={setDefaultLighting}
 				currentMapHC={currentMapHC}
 				onCurrentMapChangedHC={setCurrentMapHC}
 				timeOfDayHC={timeOfDayHC}
