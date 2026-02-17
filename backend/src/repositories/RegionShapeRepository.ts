@@ -1,6 +1,10 @@
 import type { UUID } from 'crypto';
 import { db } from '../db.ts';
-import { RegionShape, pkColumn, tableName } from '../entities/RegionShape.ts';
+import {
+	type RegionShape,
+	pkColumn,
+	tableName,
+} from '../entities/RegionShape.ts';
 import { getMessage } from '../helpers/error.ts';
 import { Repository } from './Repository.ts';
 

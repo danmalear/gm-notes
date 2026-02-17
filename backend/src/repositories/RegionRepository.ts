@@ -2,7 +2,7 @@ import type { UUID } from 'crypto';
 import { db } from '../db.ts';
 import {
 	type Region,
-	RegionWithShapes,
+	type RegionWithShapes,
 	pkColumn,
 	tableName,
 } from '../entities/Region.ts';
