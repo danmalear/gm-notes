@@ -28,14 +28,15 @@ const MapView: React.FC = () => {
 
 	const [map, setMap] = useState(useLoaderData<typeof mapLoader>().map);
 
-	const update = useCallback((updatedValues: MapUpdate) => {
+	const update = useCallback(async (updatedValues: MapUpdate) => {
 		try {
-			updateMap(updatedValues).then((response) => {
-				if (!response?.data?.data) {
-					throw Error('Map not found');
-				}
-				setMap(response.data.data);
-			});
+			const response = await updateMap(updatedValues);
+
+			if (!response?.data?.data) {
+				throw Error('Map not found');
+			}
+
+			setMap(response.data.data);
 		} catch (e) {
 			alert('Error reloading map');
 			console.error(getMessage(e));
@@ -114,10 +115,14 @@ const MapView: React.FC = () => {
 		setCurrentRegion(regionId);
 	};
 
+	const [defaultLightingLoading, setDefaultLightingLoading] = useState(false);
 	const handleDefaultLightingChange = (lighting: Lighting) => {
+		setDefaultLightingLoading(true);
 		update({
 			id: map.id,
 			defaultLighting: lighting,
+		}).then(() => {
+			setDefaultLightingLoading(false);
 		});
 	};
 
@@ -151,6 +156,7 @@ const MapView: React.FC = () => {
 			<MapNavbar
 				defaultLighting={map.defaultLighting}
 				onDefaultLightingChanged={handleDefaultLightingChange}
+				defaultLightingLoading={defaultLightingLoading}
 				currentMapHC={currentMapHC}
 				onCurrentMapChangedHC={setCurrentMapHC}
 				timeOfDayHC={timeOfDayHC}

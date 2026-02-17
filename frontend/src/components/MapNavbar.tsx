@@ -10,6 +10,7 @@ import type { TimeOfDay } from '../data/MapData.ts';
 export interface MapNavbarProps {
 	defaultLighting: Lighting;
 	onDefaultLightingChanged: (value: Lighting) => void;
+	defaultLightingLoading: boolean;
 	// @TODO remove this dependency
 	timeOfDayHC: TimeOfDay;
 	onTimeOfDayChangedHC: (newValue: TimeOfDay) => void;
@@ -21,6 +22,7 @@ export interface MapNavbarProps {
 const MapNavbar: React.FC<MapNavbarProps> = ({
 	defaultLighting,
 	onDefaultLightingChanged,
+	defaultLightingLoading: lightingLoading,
 	// @TODO remove this dependency
 	timeOfDayHC,
 	onTimeOfDayChangedHC,
@@ -75,6 +77,7 @@ const MapNavbar: React.FC<MapNavbarProps> = ({
 					data={lightingOptions}
 					value={defaultLighting}
 					allowDeselect={false}
+					disabled={lightingLoading}
 					onChange={handleLightingChange}
 				/>
 			</Box>
