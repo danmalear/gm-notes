@@ -10,7 +10,10 @@ import type { Express, Request, Response } from 'express';
 import type { MapTemplate } from '../entities/MapTemplate.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';
-import { requiredFields, validatePostBody } from '../helpers/validation.ts';
+import {
+	requiredFields,
+	validatePostBody,
+} from '../helpers/validation/http.ts';
 import {
 	campaignTemplateRepository,
 	mapTemplateRepository,

@@ -1,3 +1,6 @@
+import type { UUID } from 'crypto';
+import { isUUID } from '../uuid.ts';
+
 function validateBody(
 	body: unknown,
 	requestType: 'PUT' | 'POST',
@@ -21,13 +24,17 @@ export function validatePostBody(body: unknown): asserts body is object {
 	}
 }
 
-export function validatePutBody(body: unknown): asserts body is object {
+export function validatePutBody(body: unknown): asserts body is { id: UUID } {
 	validateBody(body, 'PUT');
 
 	if (!('id' in body) || !body.id) {
 		throw Error(
 			'PUT request received without ID - either add it if it should exist, or use POST to create a new record',
 		);
+	}
+
+	if (!body.id || typeof body.id !== 'string' || !isUUID(body.id)) {
+		throw Error('Object with invalid ID supplied to PUT request');
 	}
 }
 

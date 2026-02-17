@@ -7,7 +7,12 @@ import type { Map } from '../entities/Map.ts';
 import { getMessage } from '../helpers/error.ts';
 import { buildShapes } from '../helpers/region-shapes.ts';
 import { isUUID } from '../helpers/uuid.ts';
-import { requiredFields, validatePostBody } from '../helpers/validation.ts';
+import { isLighting } from '../helpers/validation/data-types.ts';
+import {
+	requiredFields,
+	validatePostBody,
+	validatePutBody,
+} from '../helpers/validation/http.ts';
 import {
 	campaignRepository,
 	mapRepository,
