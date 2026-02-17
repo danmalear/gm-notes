@@ -1,8 +1,15 @@
 import type { DataResponse } from '#dtos/DataResponse.ts';
 import type { MessageResponse } from '#dtos/MessageResponse.ts';
-import type { RegionQueryParams, RegionResponse } from '#dtos/Region.ts';
+import type {
+	Circle,
+	Polygon,
+	Rectangle,
+	RegionQueryParams,
+	RegionResponse,
+} from '#dtos/Region.ts';
 import type { Express, Request, Response } from 'express';
-import type { Region } from '../entities/Region.ts';
+import type { RegionWithShapes } from '../entities/Region.ts';
+import type { RegionShape } from '../entities/RegionShape.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';
 import {
@@ -12,12 +19,59 @@ import {
 
 const apiNamespace = 'regions';
 
-async function buildResponse(region: Region) {
+function validateRectangle(rectangle: unknown): asserts rectangle is Rectangle {
+	if (
+		!rectangle ||
+		typeof rectangle !== 'object' ||
+		!('x1' in rectangle) ||
+		typeof rectangle.x1 !== 'number' ||
+		!('x2' in rectangle) ||
+		typeof rectangle.x2 !== 'number' ||
+		!('y1' in rectangle) ||
+		typeof rectangle.y1 !== 'number' ||
+		!('y2' in rectangle) ||
+		typeof rectangle.y2 !== 'number'
+	) {
+		throw Error('Corrupt rectangle record');
+	}
+}
+
+function buildShapes(shapes: RegionShape[]) {
+	const dtoShapes = {
+		rectangles: [] as Rectangle[],
+		circles: [] as Circle[],
+		polygons: [] as Polygon[],
+	};
+
+	for (const shape of shapes) {
+		const coords = JSON.parse(shape.Coords);
+		switch (shape.ShapeType) {
+			case 'Rectangle':
+				validateRectangle(coords);
+				dtoShapes.rectangles.push(coords);
+				break;
+			case 'Circle':
+				//@TODO
+				break;
+			case 'Polygon':
+				//@TODO
+				break;
+			default:
+				throw Error('Invalid shape stored on region');
+		}
+	}
+
+	return dtoShapes;
+}
+
+async function buildResponse(region: RegionWithShapes) {
 	const map = await mapRepository.getById(region.MapId);
 
 	if (!map) {
 		throw Error('Map for region not found.');
 	}
+
+	const shapes = buildShapes(region.RegionShapes);
 
 	const regionResponse: RegionResponse = {
 		id: region.RegionId,
@@ -31,10 +85,7 @@ async function buildResponse(region: Region) {
 		},
 		// @TODO Region Templates
 		regionTemplate: undefined,
-		// @TODO
-		rectangles: [],
-		circles: [],
-		polygons: [],
+		...shapes,
 	};
 
 	return regionResponse;
