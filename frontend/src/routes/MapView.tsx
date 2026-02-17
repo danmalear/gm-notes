@@ -16,7 +16,7 @@ const MapView: React.FC = () => {
 	const campaign = useContext(CampaignContext);
 	const { map } = useLoaderData<typeof mapLoader>();
 	// @TODO eventually this should be nullable with a map default state
-	const [currentRegion, setCurrentRegion] = useState('foyer');
+	const [selectedRegionId, setCurrentRegion] = useState('foyer');
 	// @TODO this should eventually be a stored campaign state
 	const [timeOfDay, setTimeOfDay] = useState<TimeOfDay>('night');
 	// @TODO this should eventually be a stored campaign state
@@ -60,13 +60,14 @@ const MapView: React.FC = () => {
 	// @TODO remove this dependency
 	const mapDataHC = currentMapHC ? data[currentMapHC] : null;
 
+	// @TODO remove this dependency
 	const areasHC = useMemo(() => {
 		if (!mapDataHC) return [];
 
 		const acc: MapArea[] = [];
 
 		for (const region in mapDataHC.regions) {
-			for (const area of mapDataHC.regions[region].areas) {
+			for (const area of mapDataHC.regions[region]!.areas) {
 				// This is bizarre but makes TS happy and is deprecated anyway
 				if (area.shape === 'rect') {
 					acc.push({
@@ -89,8 +90,8 @@ const MapView: React.FC = () => {
 
 	// #endregion HC
 
-	const handleRegionClick = (regionKey: string) => {
-		setCurrentRegion(regionKey);
+	const handleRegionClick = (regionId: string) => {
+		setCurrentRegion(regionId);
 	};
 
 	return (
@@ -159,8 +160,8 @@ const MapView: React.FC = () => {
 				{mapDataHC ? (
 					<AppShell.Section grow component={ScrollArea}>
 						<RegionDetails
-							regionKey={currentRegion}
-							data={mapDataHC.regions[currentRegion]}
+							regionId={selectedRegionId}
+							mapDataHC={mapDataHC}
 							timeOfDay={timeOfDay}
 							partySize={partySize}
 						/>

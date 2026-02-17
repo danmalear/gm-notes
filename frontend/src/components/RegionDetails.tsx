@@ -1,10 +1,19 @@
-import { useEffect, useReducer } from 'react';
+import type { RegionResponse } from '#dtos/Region.js';
+import { useEffect, useReducer, useState } from 'react';
 import {
 	RegionDetailsContext,
 	RegionDetailsDispatchContext,
 } from '../contexts/RegionDetailsContext.ts';
-import type { Region, TimeOfDay, ValidPartySize } from '../data/MapData.ts';
+import type {
+	Map,
+	Region,
+	TimeOfDay,
+	ValidPartySize,
+} from '../data/MapData.ts';
+import { getMessage } from '../helpers/error.ts';
+import { isUUID } from '../helpers/uuid.ts';
 import collapsiblesReducer from '../reducers/collapsibleReducer.ts';
+import { getRegion } from '../services/regionService.ts';
 import AbilityCheck from './AbilityCheck.tsx';
 import Collapsible from './Collapsible.tsx';
 import CopyLink from './CopyLink.tsx';
@@ -14,30 +23,21 @@ import './RegionDetails.css';
 import Trait from './Trait.tsx';
 
 export interface RegionDetailsProps extends React.PropsWithChildren {
-	regionKey: string;
-	data: Region;
+	regionId: string;
+	mapDataHC: Map;
 	timeOfDay: TimeOfDay;
 	partySize: ValidPartySize;
 }
 
 const RegionDetails: React.FC<RegionDetailsProps> = ({
-	regionKey,
-	data,
+	regionId,
+	// @TODO remove this dependency
+	mapDataHC,
 	timeOfDay,
 	partySize,
 }) => {
-	const {
-		code,
-		name,
-		lighting,
-		descriptions,
-		creatures,
-		checks,
-		items,
-		opportunities,
-		handouts,
-		notes,
-	} = data;
+	const [regionLoading, setRegionLoading] = useState(true);
+	const [region, setRegion] = useState<RegionResponse | Region | null>(null);
 
 	const [collapsibles, dispatch] = useReducer(collapsiblesReducer, {
 		openCollapsibles: {},
@@ -51,111 +51,144 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
 
 	useEffect(() => {
 		handleResetCollapsibles();
-	}, [regionKey]);
+
+		// @TODO Remove dependency
+		if (isUUID(regionId)) {
+			setRegionLoading(true);
+			getRegion(regionId)
+				.then((region) => {
+					setRegion(region.data.data);
+				})
+				.catch((err) => {
+					console.error(getMessage(err));
+					throw err;
+				})
+				.finally(() => {
+					setRegionLoading(false);
+				});
+		} else {
+			setRegion(mapDataHC.regions[regionId] ?? null);
+		}
+	}, [regionId, mapDataHC.regions]);
 
 	return (
 		<RegionDetailsContext.Provider value={collapsibles}>
 			<RegionDetailsDispatchContext.Provider value={dispatch}>
-				<div id={regionKey + '-details'} className="region-details p-2">
-					<h1>
-						{code ? code + '. ' : ''}
-						{name}
-					</h1>
+				{regionLoading ? (
+					<div />
+				) : region ? (
+					<div id={regionId + '-details'} className="region-details p-2">
+						<h1>
+							{/* @TODO remove this dependency */}
+							{'code' in region && region.code ? region.code + '. ' : ''}
+							{region.name}
+						</h1>
 
-					{lighting ? (
-						<Trait label="Lighting">{lighting[timeOfDay]}</Trait>
-					) : null}
+						{/* @TODO */}
+						{'lighting' in region && region.lighting ? (
+							<Trait label="Lighting">{region.lighting[timeOfDay]}</Trait>
+						) : null}
 
-					{descriptions?.length ? (
-						<Collapsible headingElement="h2" title="Descriptions">
-							{descriptions.map((desc, index) => (
-								<div key={`description-${index}`}>
-									<Collapsible headingElement="h3" title={desc.prompt}>
-										{desc.text}
-									</Collapsible>
-								</div>
-							))}
-						</Collapsible>
-					) : null}
+						{/* @TODO */}
+						{'descriptions' in region && region.descriptions?.length ? (
+							<Collapsible headingElement="h2" title="Descriptions">
+								{region.descriptions.map((desc, index) => (
+									<div key={`description-${index}`}>
+										<Collapsible headingElement="h3" title={desc.prompt}>
+											{desc.text}
+										</Collapsible>
+									</div>
+								))}
+							</Collapsible>
+						) : null}
 
-					{creatures?.length ? (
-						<Collapsible headingElement="h2" title="Creatures">
-							{creatures.map((creature, index) => (
-								<div key={`creature-${index}`}>
-									<Creature
-										creature={creature}
-										partySize={partySize}
+						{/* @TODO */}
+						{'creatures' in region && region.creatures?.length ? (
+							<Collapsible headingElement="h2" title="Creatures">
+								{region.creatures.map((creature, index) => (
+									<div key={`creature-${index}`}>
+										<Creature
+											creature={creature}
+											partySize={partySize}
+											headingElement="h3"
+											rolesHeadingElement="h4"
+										/>
+									</div>
+								))}
+							</Collapsible>
+						) : null}
+
+						{/* @TODO */}
+						{'checks' in region && region.checks?.length ? (
+							<Collapsible headingElement="h2" title="Ability Checks">
+								{region.checks.map((check, index) => (
+									<div key={`check-${index}`}>
+										<AbilityCheck
+											check={check}
+											headingElement="h3"
+											prereqsHeadingElement="h4"
+										/>
+									</div>
+								))}
+							</Collapsible>
+						) : null}
+
+						{/* @TODO */}
+						{'items' in region && region.items?.length ? (
+							<Collapsible headingElement="h2" title="Items">
+								{region.items.map((item, index) => (
+									<Item
+										key={`item-${index}`}
+										item={item}
 										headingElement="h3"
-										rolesHeadingElement="h4"
+										subHeadingElement="h4"
 									/>
-								</div>
-							))}
-						</Collapsible>
-					) : null}
-
-					{checks?.length ? (
-						<Collapsible headingElement="h2" title="Ability Checks">
-							{checks.map((check, index) => (
-								<div key={`check-${index}`}>
-									<AbilityCheck
-										check={check}
-										headingElement="h3"
-										prereqsHeadingElement="h4"
-									/>
-								</div>
-							))}
-						</Collapsible>
-					) : null}
-
-					{items?.length ? (
-						<Collapsible headingElement="h2" title="Items">
-							{items.map((item, index) => (
-								<Item
-									key={`item-${index}`}
-									item={item}
-									headingElement="h3"
-									subHeadingElement="h4"
-								/>
-							))}
-						</Collapsible>
-					) : null}
-
-					{opportunities?.length ? (
-						<Collapsible headingElement="h2" title="Opportunities">
-							<ul>
-								{opportunities.map((opportunity, index) => (
-									<li key={`opportunity-${index}`}>{opportunity}</li>
 								))}
-							</ul>
-						</Collapsible>
-					) : null}
+							</Collapsible>
+						) : null}
 
-					{handouts?.length ? (
-						<Collapsible headingElement="h2" title="Handouts">
-							<ul>
-								{handouts.map((handout, index) => (
-									<li key={`handout-${index}`}>
-										{handout.url ? (
-											<CopyLink href={handout.url}>{handout.text}</CopyLink>
-										) : (
-											handout.text
-										)}
-									</li>
-								))}
-							</ul>
-						</Collapsible>
-					) : null}
+						{/* @TODO */}
+						{'opportunities' in region && region.opportunities?.length ? (
+							<Collapsible headingElement="h2" title="Opportunities">
+								<ul>
+									{region.opportunities.map((opportunity, index) => (
+										<li key={`opportunity-${index}`}>{opportunity}</li>
+									))}
+								</ul>
+							</Collapsible>
+						) : null}
 
-					{notes?.length ? (
-						<Collapsible headingElement="h2" title="Other Notes">
-							<ul>
-								{notes.map((note, index) => (
-									<li key={`region-note-${index}`}>{note}</li>
-								))}
-							</ul>
-						</Collapsible>
-					) : null}
-				</div>
+						{/* @TODO */}
+						{'handouts' in region && region.handouts?.length ? (
+							<Collapsible headingElement="h2" title="Handouts">
+								<ul>
+									{region.handouts.map((handout, index) => (
+										<li key={`handout-${index}`}>
+											{handout.url ? (
+												<CopyLink href={handout.url}>{handout.text}</CopyLink>
+											) : (
+												handout.text
+											)}
+										</li>
+									))}
+								</ul>
+							</Collapsible>
+						) : null}
+
+						{/* @TODO */}
+						{'notes' in region && region.notes?.length ? (
+							<Collapsible headingElement="h2" title="Other Notes">
+								<ul>
+									{region.notes.map((note, index) => (
+										<li key={`region-note-${index}`}>{note}</li>
+									))}
+								</ul>
+							</Collapsible>
+						) : null}
+					</div>
+				) : (
+					'Error loading region'
+				)}
 			</RegionDetailsDispatchContext.Provider>
 		</RegionDetailsContext.Provider>
 	);
