@@ -129,6 +129,6 @@ export interface MapImage {
 export interface Map {
 	image: MapImage;
 	regions: {
-		[key: string]: Region;
+		[key: string]: Region | undefined;
 	};
 }
