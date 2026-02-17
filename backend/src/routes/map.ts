@@ -1,5 +1,10 @@
 import type { DataResponse } from '#dtos/DataResponse.ts';
-import type { MapCreate, MapQueryParams, MapResponse } from '#dtos/Map.ts';
+import type {
+	MapCreate,
+	MapQueryParams,
+	MapResponse,
+	MapUpdate,
+} from '#dtos/Map.ts';
 import type { MessageResponse } from '#dtos/MessageResponse.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
@@ -175,6 +180,59 @@ export const mapRoutes = (app: Express) => {
 			map = await mapRepository.insert(map);
 
 			res.send({ data: await buildResponse(map) });
+		},
+	);
+
+	app.put(
+		`/${apiNamespace}`,
+		async (req, res: Response<MessageResponse | DataResponse<MapResponse>>) => {
+			console.log(
+				`Map PUT request received. body: ${JSON.stringify(req.body)}`,
+			);
+
+			function validateBody(body: unknown): asserts body is MapUpdate {
+				validatePutBody(body);
+				if (
+					'name' in body &&
+					body.name !== undefined &&
+					typeof body.name !== 'string'
+				) {
+					throw Error('Map name is in an invalid format');
+				}
+				if (
+					'mapTemplateId' in body &&
+					body.mapTemplateId !== undefined &&
+					(typeof body.mapTemplateId !== 'string' ||
+						!isUUID(body.mapTemplateId))
+				) {
+					throw Error('Map template ID is in an invalid format');
+				}
+				if (
+					'defaultLighting' in body &&
+					body.defaultLighting !== undefined &&
+					(typeof body.defaultLighting !== 'string' ||
+						!isLighting(body.defaultLighting))
+				) {
+					throw Error('Map default lighting is an invalid value');
+				}
+			}
+
+			try {
+				validateBody(req.body);
+			} catch (e) {
+				res.status(400).send({ message: getMessage(e) });
+				return;
+			}
+
+			const map: Partial<Map> = {
+				Name: req.body.name,
+				ImagePath: req.body.imagePath,
+				DefaultLighting: req.body.defaultLighting,
+			};
+
+			const updatedMap = await mapRepository.update(req.body.id, map);
+
+			res.send({ data: await buildResponse(updatedMap) });
 		},
 	);
 };
