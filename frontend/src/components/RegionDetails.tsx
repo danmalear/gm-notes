@@ -36,7 +36,7 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
 	timeOfDay,
 	partySize,
 }) => {
-	const [regionLoading, setRegionLoading] = useState(true);
+	const [regionLoading, setRegionLoading] = useState(false);
 	const [region, setRegion] = useState<RegionResponse | Region | null>(null);
 
 	const [collapsibles, dispatch] = useReducer(collapsiblesReducer, {
@@ -186,9 +186,7 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
 							</Collapsible>
 						) : null}
 					</div>
-				) : (
-					'Error loading region'
-				)}
+				) : null}
 			</RegionDetailsDispatchContext.Provider>
 		</RegionDetailsContext.Provider>
 	);
