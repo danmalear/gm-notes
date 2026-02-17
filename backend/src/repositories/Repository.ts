@@ -62,7 +62,7 @@ export class Repository<T> {
 	 * @param data New data to update the record with
 	 * @returns The updated record
 	 */
-	async update(id: UUID, data: T) {
+	async update(id: UUID, data: Partial<T>) {
 		try {
 			return (await db(this.tableName)
 				.where(this.pkColumn as string, id)
