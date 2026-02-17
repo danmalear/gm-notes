@@ -71,8 +71,6 @@ async function buildResponse(region: RegionWithShapes) {
 		throw Error('Map for region not found.');
 	}
 
-	const shapes = buildShapes(region.RegionShapes);
-
 	const regionResponse: RegionResponse = {
 		id: region.RegionId,
 		name: region.Name,
@@ -85,7 +83,7 @@ async function buildResponse(region: RegionWithShapes) {
 		},
 		// @TODO Region Templates
 		regionTemplate: undefined,
-		...shapes,
+		...buildShapes(region.RegionShapes),
 	};
 
 	return regionResponse;
