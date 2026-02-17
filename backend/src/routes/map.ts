@@ -62,6 +62,8 @@ async function buildResponse(map: Map) {
 		regions: regions.map((region) => {
 			return {
 				id: region.RegionId,
+				regionTemplateId: region.RegionTemplateId ?? undefined,
+				mapId: region.MapId,
 				name: region.Name,
 				...buildShapes(region.RegionShapes),
 			};

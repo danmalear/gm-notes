@@ -32,9 +32,9 @@ export interface RegionQueryParams {
 
 export interface RegionResponse {
 	id: UUID;
+	name: string;
 	regionTemplate?: RegionTemplateStub;
 	map: MapStub;
-	name: string;
 	rectangles: Rectangle[];
 	circles: Circle[];
 	polygons: Polygon[];
@@ -51,6 +51,8 @@ export interface RegionResponse {
 
 export interface RegionStub {
 	id: UUID;
+	regionTemplateId?: UUID;
+	mapId: UUID;
 	name: string;
 	rectangles: Rectangle[];
 	circles: Circle[];
