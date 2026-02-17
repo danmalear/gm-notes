@@ -164,6 +164,7 @@ export const mapRoutes = (app: Express) => {
 				Name: req.body.name,
 				ImagePath: req.body.imagePath,
 				MapTemplateId: req.body.mapTemplateId ?? null,
+				DefaultLighting: 'Bright Light',
 			};
 
 			map = await mapRepository.insert(map);

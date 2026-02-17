@@ -1,4 +1,5 @@
 import type { UUID } from 'crypto';
+import type { Lighting } from './data-types.ts';
 
 export const tableName = 'Map';
 export const pkColumn = 'MapId';
@@ -10,4 +11,5 @@ export interface Map {
 	MapTemplateId: UUID | null;
 	Name: string;
 	ImagePath: string;
+	DefaultLighting: Lighting;
 }
