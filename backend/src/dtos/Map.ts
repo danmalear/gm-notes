@@ -27,7 +27,7 @@ export interface MapResponse {
 	id: UUID;
 	name: string;
 	imagePath: string;
-	defaultLighting?: Lighting;
+	defaultLighting: Lighting;
 	campaign: CampaignStub;
 	mapTemplate?: MapTemplateStub;
 	regions: RegionStub[];
