@@ -1,15 +1,32 @@
-export function validatePostBody(body: unknown): asserts body is object {
+function validateBody(
+	body: unknown,
+	requestType: 'PUT' | 'POST',
+): asserts body is object {
 	if (!body) {
-		throw Error('No request body supplied to POST request');
+		throw Error(`No request body supplied to ${requestType} request`);
 	}
 
 	if (typeof body !== 'object' || Array.isArray(body)) {
 		throw Error('Request body is of an unsupported format');
 	}
+}
+
+export function validatePostBody(body: unknown): asserts body is object {
+	validateBody(body, 'POST');
 
 	if ('id' in body && body.id) {
 		throw Error(
 			'POST request received with ID - either remove it if it should be a new record, or use PUT to update existing record',
+		);
+	}
+}
+
+export function validatePutBody(body: unknown): asserts body is object {
+	validateBody(body, 'PUT');
+
+	if (!('id' in body) || !body.id) {
+		throw Error(
+			'PUT request received without ID - either add it if it should exist, or use POST to create a new record',
 		);
 	}
 }
