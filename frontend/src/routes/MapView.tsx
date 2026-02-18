@@ -9,6 +9,7 @@ import Map, { type MapArea } from '../components/Map.tsx';
 import MapNavbar from '../components/MapNavbar.tsx';
 import { CampaignContext } from '../contexts/CampaignContext.ts';
 import { LegacyContext } from '../contexts/LegacyContext.ts';
+import { MapContext } from '../contexts/MapContext.ts';
 import data from '../data/data.ts';
 import type { TimeOfDay } from '../data/MapData.ts';
 import { getMessage } from '../helpers/error.ts';
@@ -125,62 +126,64 @@ const MapView: React.FC = () => {
 	};
 
 	return (
-		<LegacyContext value={{ timeOfDay: timeOfDayHC }}>
-			<AppShell
-				id="app-shell"
-				header={{
-					height: 50,
-					collapsed: false,
-				}}
-				navbar={{
-					width: 200,
-					breakpoint: 'sm',
-					collapsed: {
-						desktop: false,
-						mobile: false,
-					},
-				}}
-				aside={{
-					width: 500,
-					breakpoint: 'md',
-					collapsed: {
-						desktop: false,
-						mobile: true,
-					},
-				}}
-				offsetScrollbars={true}
-				h="100vh"
-			>
-				<CampaignHeader campaign={campaign} subtitle={map.name} />
-				<MapNavbar
-					defaultLighting={map.defaultLighting}
-					onDefaultLightingChanged={handleDefaultLightingChange}
-					defaultLightingLoading={defaultLightingLoading}
-					currentMapHC={currentMapHC}
-					onCurrentMapChangedHC={setCurrentMapHC}
-					timeOfDayHC={timeOfDayHC}
-					onTimeOfDayChangedHC={setTimeOfDayHC}
-				/>
-				<AppShell.Main h="100%">
-					<MapInteractionCSS minScale={0.75} maxScale={6}>
+		<MapContext value={map}>
+			<LegacyContext value={{ timeOfDay: timeOfDayHC }}>
+				<AppShell
+					id="app-shell"
+					header={{
+						height: 50,
+						collapsed: false,
+					}}
+					navbar={{
+						width: 200,
+						breakpoint: 'sm',
+						collapsed: {
+							desktop: false,
+							mobile: false,
+						},
+					}}
+					aside={{
+						width: 500,
+						breakpoint: 'md',
+						collapsed: {
+							desktop: false,
+							mobile: true,
+						},
+					}}
+					offsetScrollbars={true}
+					h="100vh"
+				>
+					<CampaignHeader campaign={campaign} subtitle={map.name} />
+					<MapNavbar
+						defaultLighting={map.defaultLighting}
+						onDefaultLightingChanged={handleDefaultLightingChange}
+						defaultLightingLoading={defaultLightingLoading}
+						currentMapHC={currentMapHC}
+						onCurrentMapChangedHC={setCurrentMapHC}
+						timeOfDayHC={timeOfDayHC}
+						onTimeOfDayChangedHC={setTimeOfDayHC}
+					/>
+					<AppShell.Main h="100%">
+						<MapInteractionCSS minScale={0.75} maxScale={6}>
+							{mapDataHC ? (
+								<Map
+									mapImagePath={map.imagePath}
+									areas={areas.concat(areasHC)}
+									onRegionClick={handleRegionClick}
+								/>
+							) : null}
+						</MapInteractionCSS>
+					</AppShell.Main>
+					<AppShell.Aside>
 						{mapDataHC ? (
-							<Map
-								mapImagePath={map.imagePath}
-								areas={areas.concat(areasHC)}
-								onRegionClick={handleRegionClick}
-							/>
+							<AppShell.Section grow component={ScrollArea}>
+								<Outlet />
+							</AppShell.Section>
 						) : null}
-					</MapInteractionCSS>
-				</AppShell.Main>
-				<AppShell.Aside>
-					{mapDataHC ? (
-						<AppShell.Section grow component={ScrollArea}>
-							<Outlet />
-						</AppShell.Section>
-					) : null}
-				</AppShell.Aside>
-			</AppShell>
-		</LegacyContext>
+					</AppShell.Aside>
+				</AppShell>
+			</LegacyContext>
+		</MapContext>
 	);
 };
 

@@ -1,4 +1,4 @@
-import type { RegionResponse } from '#dtos/Region.js';
+import type { RegionResponse } from '#dtos/Region.ts';
 import type { UUID } from 'crypto';
 import { useContext, useEffect, useReducer, useState } from 'react';
 import { useLoaderData } from 'react-router';
@@ -9,6 +9,7 @@ import Creature from '../components/Creature.tsx';
 import Item from '../components/Item.tsx';
 import Trait from '../components/Trait.tsx';
 import { LegacyContext } from '../contexts/LegacyContext.ts';
+import { MapContext } from '../contexts/MapContext.ts';
 import {
 	RegionDetailsContext,
 	RegionDetailsDispatchContext,
@@ -35,11 +36,12 @@ const RegionView: React.FC = () => {
 		setRegion(loadedRegion);
 	}, [loadedRegion]);
 
+	const map = useContext(MapContext);
+
+	// #region collapsibles
 	const [collapsibles, dispatch] = useReducer(collapsiblesReducer, {
 		openCollapsibles: {},
 	});
-
-	const timeOfDay = useContext(LegacyContext).timeOfDay;
 
 	const handleResetCollapsibles = () => {
 		dispatch({
@@ -50,6 +52,9 @@ const RegionView: React.FC = () => {
 	useEffect(() => {
 		handleResetCollapsibles();
 	}, []);
+	// #endregion
+
+	const timeOfDay = useContext(LegacyContext).timeOfDay;
 
 	return (
 		<RegionDetailsContext.Provider value={collapsibles}>
@@ -63,6 +68,7 @@ const RegionView: React.FC = () => {
 						</h1>
 
 						{/* @TODO */}
+						<p>Map Default Lighting (test): {map.defaultLighting}</p>
 						{'lighting' in region && region.lighting ? (
 							<Trait label="Lighting">{region.lighting[timeOfDay]}</Trait>
 						) : null}
