@@ -8,7 +8,6 @@ import { getRegion } from '../../services/regionService.ts';
 const mapDataHC = data.deathHouse;
 
 export async function regionLoader({ params }: LoaderFunctionArgs) {
-	console.log('regionLoader called. regionId:', params.regionId);
 	try {
 		if (!params.campaignId || !isUUID(params.campaignId)) {
 			throw Error('Campaign ID malformed');
