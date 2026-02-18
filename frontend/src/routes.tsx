@@ -1,10 +1,12 @@
 import { createBrowserRouter, redirect } from 'react-router';
-import CampaignsView from './routes/CampaignsView';
-import CampaignView from './routes/CampaignView';
-import { campaignLoader } from './routes/loaders/campaignLoader';
-import { mapLoader } from './routes/loaders/mapLoader';
-import MapsView from './routes/MapsView';
-import MapView from './routes/MapView';
+import CampaignsView from './routes/CampaignsView.tsx';
+import CampaignView from './routes/CampaignView.tsx';
+import { campaignLoader } from './routes/loaders/campaignLoader.ts';
+import { mapLoader } from './routes/loaders/mapLoader.ts';
+import { regionLoader } from './routes/loaders/regionLoader.ts';
+import MapsView from './routes/MapsView.tsx';
+import MapView from './routes/MapView.tsx';
+import RegionView from './routes/RegionView.tsx';
 
 const router = createBrowserRouter([
 	{
@@ -27,9 +29,16 @@ const router = createBrowserRouter([
 				Component: CampaignView,
 				children: [
 					{
-						path: 'map/:mapId?',
+						path: 'map/:mapId',
 						loader: mapLoader,
 						Component: MapView,
+						children: [
+							{
+								path: 'region/:regionId',
+								loader: regionLoader,
+								Component: RegionView,
+							},
+						],
 					},
 					{
 						path: 'map/',

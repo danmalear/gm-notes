@@ -1,47 +1,45 @@
 import type { RegionResponse } from '#dtos/Region.js';
-import { useEffect, useReducer, useState } from 'react';
+import type { UUID } from 'crypto';
+import { useContext, useEffect, useReducer, useState } from 'react';
+import { useLoaderData } from 'react-router';
+import AbilityCheck from '../components/AbilityCheck.tsx';
+import Collapsible from '../components/Collapsible.tsx';
+import CopyLink from '../components/CopyLink.tsx';
+import Creature from '../components/Creature.tsx';
+import Item from '../components/Item.tsx';
+import Trait from '../components/Trait.tsx';
+import { LegacyContext } from '../contexts/LegacyContext.ts';
 import {
 	RegionDetailsContext,
 	RegionDetailsDispatchContext,
 } from '../contexts/RegionDetailsContext.ts';
-import type {
-	Map,
-	Region,
-	TimeOfDay,
-	ValidPartySize,
-} from '../data/MapData.ts';
-import { getMessage } from '../helpers/error.ts';
-import { isUUID } from '../helpers/uuid.ts';
+import type { Region, ValidPartySize } from '../data/MapData.ts';
 import collapsiblesReducer from '../reducers/collapsibleReducer.ts';
-import { getRegion } from '../services/regionService.ts';
-import AbilityCheck from './AbilityCheck.tsx';
-import Collapsible from './Collapsible.tsx';
-import CopyLink from './CopyLink.tsx';
-import Creature from './Creature.tsx';
-import Item from './Item.tsx';
-import './RegionDetails.css';
-import Trait from './Trait.tsx';
+import { regionLoader } from './loaders/regionLoader.ts';
+import './RegionView.css';
 
-export interface RegionDetailsProps extends React.PropsWithChildren {
-	regionId: string;
-	mapDataHC: Map;
-	timeOfDay: TimeOfDay;
-	partySize: ValidPartySize;
-}
+// @TODO remove this dependency
+const partySize: ValidPartySize = 3;
 
-const RegionDetails: React.FC<RegionDetailsProps> = ({
-	regionId,
-	// @TODO remove this dependency
-	mapDataHC,
-	timeOfDay,
-	partySize,
-}) => {
-	const [regionLoading, setRegionLoading] = useState(false);
-	const [region, setRegion] = useState<RegionResponse | Region | null>(null);
+const RegionView: React.FC = () => {
+	const loadedRegion = useLoaderData<typeof regionLoader>().region;
+	const [region, setRegion] = useState<Region | RegionResponse | undefined>(
+		undefined,
+	);
+	const [regionId] = useState<UUID | string>(
+		useLoaderData<typeof regionLoader>().regionId,
+	);
+
+	// @TODO this might be better solved with a websocket so the loaded data is always good
+	useEffect(() => {
+		setRegion(loadedRegion);
+	}, [loadedRegion]);
 
 	const [collapsibles, dispatch] = useReducer(collapsiblesReducer, {
 		openCollapsibles: {},
 	});
+
+	const timeOfDay = useContext(LegacyContext).timeOfDay;
 
 	const handleResetCollapsibles = () => {
 		dispatch({
@@ -51,33 +49,13 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
 
 	useEffect(() => {
 		handleResetCollapsibles();
-
-		// @TODO Remove dependency
-		if (isUUID(regionId)) {
-			setRegionLoading(true);
-			getRegion(regionId)
-				.then((region) => {
-					setRegion(region.data.data);
-				})
-				.catch((err) => {
-					console.error(getMessage(err));
-					throw err;
-				})
-				.finally(() => {
-					setRegionLoading(false);
-				});
-		} else {
-			setRegion(mapDataHC.regions[regionId] ?? null);
-		}
-	}, [regionId, mapDataHC.regions]);
+	}, []);
 
 	return (
 		<RegionDetailsContext.Provider value={collapsibles}>
 			<RegionDetailsDispatchContext.Provider value={dispatch}>
-				{regionLoading ? (
-					<div />
-				) : region ? (
-					<div id={regionId + '-details'} className="region-details p-2">
+				{region ? (
+					<div id={regionId + '-details'} className="region-view p-2">
 						<h1>
 							{/* @TODO remove this dependency */}
 							{'code' in region && region.code ? region.code + '. ' : ''}
@@ -192,4 +170,4 @@ const RegionDetails: React.FC<RegionDetailsProps> = ({
 	);
 };
 
-export default RegionDetails;
+export default RegionView;

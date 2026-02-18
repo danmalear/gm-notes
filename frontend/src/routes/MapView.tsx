@@ -3,14 +3,14 @@ import type { MapUpdate } from '#dtos/Map.ts';
 import { AppShell, ScrollArea } from '@mantine/core';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
-import { useLoaderData } from 'react-router';
+import { href, Outlet, useLoaderData, useNavigate } from 'react-router';
 import CampaignHeader from '../components/CampaignHeader.tsx';
 import Map, { type MapArea } from '../components/Map.tsx';
 import MapNavbar from '../components/MapNavbar.tsx';
-import RegionDetails from '../components/RegionDetails.tsx';
 import { CampaignContext } from '../contexts/CampaignContext.ts';
+import { LegacyContext } from '../contexts/LegacyContext.ts';
 import data from '../data/data.ts';
-import type { TimeOfDay, ValidPartySize } from '../data/MapData.ts';
+import type { TimeOfDay } from '../data/MapData.ts';
 import { getMessage } from '../helpers/error.ts';
 import { updateMap } from '../services/mapService.ts';
 import type { mapLoader } from './loaders/mapLoader.ts';
@@ -18,13 +18,11 @@ import type { mapLoader } from './loaders/mapLoader.ts';
 // HC = hard-coded, to be deleted when data is properly loaded
 
 const MapView: React.FC = () => {
+	const navigate = useNavigate();
+
 	const campaign = useContext(CampaignContext);
-	// @TODO eventually this should be nullable with a map default state
-	const [selectedRegionId, setCurrentRegion] = useState('foyer');
 	// @TODO this should eventually be a stored campaign state
 	const [timeOfDayHC, setTimeOfDayHC] = useState<TimeOfDay>('night');
-	// @TODO this should eventually be a stored campaign state
-	const [partySize] = useState<ValidPartySize>(3);
 
 	const [map, setMap] = useState(useLoaderData<typeof mapLoader>().map);
 
@@ -112,7 +110,7 @@ const MapView: React.FC = () => {
 	// #endregion HC
 
 	const handleRegionClick = (regionId: string) => {
-		setCurrentRegion(regionId);
+		navigate(href('region/:regionId', { regionId }));
 	};
 
 	const [defaultLightingLoading, setDefaultLightingLoading] = useState(false);
@@ -127,65 +125,62 @@ const MapView: React.FC = () => {
 	};
 
 	return (
-		<AppShell
-			id="app-shell"
-			header={{
-				height: 50,
-				collapsed: false,
-			}}
-			navbar={{
-				width: 200,
-				breakpoint: 'sm',
-				collapsed: {
-					desktop: false,
-					mobile: false,
-				},
-			}}
-			aside={{
-				width: 500,
-				breakpoint: 'md',
-				collapsed: {
-					desktop: false,
-					mobile: true,
-				},
-			}}
-			offsetScrollbars={true}
-			h="100vh"
-		>
-			<CampaignHeader campaign={campaign} subtitle={map.name} />
-			<MapNavbar
-				defaultLighting={map.defaultLighting}
-				onDefaultLightingChanged={handleDefaultLightingChange}
-				defaultLightingLoading={defaultLightingLoading}
-				currentMapHC={currentMapHC}
-				onCurrentMapChangedHC={setCurrentMapHC}
-				timeOfDayHC={timeOfDayHC}
-				onTimeOfDayChangedHC={setTimeOfDayHC}
-			/>
-			<AppShell.Main h="100%">
-				<MapInteractionCSS minScale={0.75} maxScale={6}>
+		<LegacyContext value={{ timeOfDay: timeOfDayHC }}>
+			<AppShell
+				id="app-shell"
+				header={{
+					height: 50,
+					collapsed: false,
+				}}
+				navbar={{
+					width: 200,
+					breakpoint: 'sm',
+					collapsed: {
+						desktop: false,
+						mobile: false,
+					},
+				}}
+				aside={{
+					width: 500,
+					breakpoint: 'md',
+					collapsed: {
+						desktop: false,
+						mobile: true,
+					},
+				}}
+				offsetScrollbars={true}
+				h="100vh"
+			>
+				<CampaignHeader campaign={campaign} subtitle={map.name} />
+				<MapNavbar
+					defaultLighting={map.defaultLighting}
+					onDefaultLightingChanged={handleDefaultLightingChange}
+					defaultLightingLoading={defaultLightingLoading}
+					currentMapHC={currentMapHC}
+					onCurrentMapChangedHC={setCurrentMapHC}
+					timeOfDayHC={timeOfDayHC}
+					onTimeOfDayChangedHC={setTimeOfDayHC}
+				/>
+				<AppShell.Main h="100%">
+					<MapInteractionCSS minScale={0.75} maxScale={6}>
+						{mapDataHC ? (
+							<Map
+								mapImagePath={map.imagePath}
+								areas={areas.concat(areasHC)}
+								onRegionClick={handleRegionClick}
+							/>
+						) : null}
+					</MapInteractionCSS>
+				</AppShell.Main>
+				<AppShell.Aside>
 					{mapDataHC ? (
-						<Map
-							mapImagePath={map.imagePath}
-							areas={areas.concat(areasHC)}
-							onRegionClick={handleRegionClick}
-						/>
+						<AppShell.Section grow component={ScrollArea}>
+							<Outlet />
+						</AppShell.Section>
 					) : null}
-				</MapInteractionCSS>
-			</AppShell.Main>
-			<AppShell.Aside>
-				{mapDataHC ? (
-					<AppShell.Section grow component={ScrollArea}>
-						<RegionDetails
-							regionId={selectedRegionId}
-							mapDataHC={mapDataHC}
-							timeOfDay={timeOfDayHC}
-							partySize={partySize}
-						/>
-					</AppShell.Section>
-				) : null}
-			</AppShell.Aside>
-		</AppShell>
+				</AppShell.Aside>
+			</AppShell>
+		</LegacyContext>
 	);
 };
 
