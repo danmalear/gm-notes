@@ -1,4 +1,3 @@
-import type { Lighting, RelativeLighting } from '#dtos/data-types.ts';
 import type { RegionResponse } from '#dtos/Region.ts';
 import type { UUID } from 'crypto';
 import { useContext, useEffect, useReducer, useState } from 'react';
@@ -8,6 +7,7 @@ import Collapsible from '../components/Collapsible.tsx';
 import CopyLink from '../components/CopyLink.tsx';
 import Creature from '../components/Creature.tsx';
 import Item from '../components/Item.tsx';
+import Lighting from '../components/Lighting.tsx';
 import Trait from '../components/Trait.tsx';
 import { LegacyContext } from '../contexts/LegacyContext.ts';
 import { MapContext } from '../contexts/MapContext.ts';
@@ -55,44 +55,7 @@ const RegionView: React.FC = () => {
 	}, []);
 	// #endregion
 
-	// #region lighting
 	const timeOfDay = useContext(LegacyContext).timeOfDay;
-
-	const brighten = (lighting: Lighting): Lighting => {
-		switch (lighting) {
-			case 'Darkness':
-				return 'Dim Light';
-			case 'Dim Light':
-				return 'Bright Light';
-			default:
-				return lighting;
-		}
-	};
-
-	const darken = (lighting: Lighting): Lighting => {
-		switch (lighting) {
-			case 'Bright Light':
-				return 'Dim Light';
-			case 'Dim Light':
-				return 'Darkness';
-			default:
-				return lighting;
-		}
-	};
-
-	const displayLighting = (lighting: RelativeLighting): Lighting => {
-		switch (lighting) {
-			case 'Default':
-				return map.defaultLighting;
-			case 'Default+':
-				return brighten(map.defaultLighting);
-			case 'Default-':
-				return darken(map.defaultLighting);
-			default:
-				return lighting;
-		}
-	};
-	// #endregion
 
 	return (
 		<RegionDetailsContext.Provider value={collapsibles}>
@@ -107,9 +70,10 @@ const RegionView: React.FC = () => {
 
 						{'lighting' in region && region.lighting ? (
 							typeof region.lighting === 'string' ? (
-								<Trait label="Lighting">
-									{displayLighting(region.lighting)}
-								</Trait>
+								<Lighting
+									defaultLighting={map.defaultLighting}
+									lighting={region.lighting}
+								/>
 							) : (
 								// @TODO Remove this dependency
 								<Trait label="Lighting">{region.lighting[timeOfDay]}</Trait>
