@@ -105,7 +105,6 @@ const RegionView: React.FC = () => {
 							{region.name}
 						</h1>
 
-						<p>Map Default Lighting (test): {map.defaultLighting}</p>
 						{'lighting' in region && region.lighting ? (
 							typeof region.lighting === 'string' ? (
 								<Trait label="Lighting">
