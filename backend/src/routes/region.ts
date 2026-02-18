@@ -33,6 +33,7 @@ async function buildResponse(region: RegionWithShapes) {
 		// @TODO Region Templates
 		regionTemplate: undefined,
 		...buildShapes(region.RegionShapes),
+		lighting: region.Lighting,
 	};
 
 	return regionResponse;
