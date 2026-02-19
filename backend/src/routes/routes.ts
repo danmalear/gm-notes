@@ -4,6 +4,7 @@ import { campaignTemplateRoutes } from './campaignTemplate.ts';
 import { fileRoutes } from './file.ts';
 import { mapRoutes } from './map.ts';
 import { mapTemplateRoutes } from './mapTemplate.ts';
+import { narrationRoutes } from './narration.ts';
 import { regionRoutes } from './region.ts';
 
 export function routes(app: Express) {
@@ -13,4 +14,5 @@ export function routes(app: Express) {
 	mapTemplateRoutes(app);
 	mapRoutes(app);
 	regionRoutes(app);
+	narrationRoutes(app);
 }
