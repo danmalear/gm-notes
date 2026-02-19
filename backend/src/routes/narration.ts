@@ -8,7 +8,7 @@ import type {
 import type { Narration } from '../entities/Narration.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';
-import { narrationRepository } from '../repositories/repositories.ts';
+import { narrationRepository } from '../repositories.ts';
 
 const apiNamespace = 'narrations';
 

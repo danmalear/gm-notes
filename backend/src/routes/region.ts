@@ -6,10 +6,7 @@ import type { RegionWithShapes } from '../entities/Region.ts';
 import { getMessage } from '../helpers/error.ts';
 import { buildShapes } from '../helpers/region-shapes.ts';
 import { isUUID } from '../helpers/uuid.ts';
-import {
-	mapRepository,
-	regionRepository,
-} from '../repositories/repositories.ts';
+import { mapRepository, regionRepository } from '../repositories.ts';
 
 const apiNamespace = 'regions';
 

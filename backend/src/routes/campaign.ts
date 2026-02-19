@@ -14,7 +14,7 @@ import {
 	campaignRepository,
 	campaignTemplateRepository,
 	mapRepository,
-} from '../repositories/repositories.ts';
+} from '../repositories.ts';
 
 const apiNamespace = 'campaigns';
 

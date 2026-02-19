@@ -23,7 +23,7 @@ import {
 	mapRepository,
 	mapTemplateRepository,
 	regionRepository,
-} from '../repositories/repositories.ts';
+} from '../repositories.ts';
 
 const apiNamespace = 'maps';
 
