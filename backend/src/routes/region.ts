@@ -6,7 +6,11 @@ import type { RegionWithShapes } from '../entities/Region.ts';
 import { getMessage } from '../helpers/error.ts';
 import { buildShapes } from '../helpers/region-shapes.ts';
 import { isUUID } from '../helpers/uuid.ts';
-import { mapRepository, regionRepository } from '../repositories.ts';
+import {
+	mapRepository,
+	narrationRepository,
+	regionRepository,
+} from '../repositories.ts';
 
 const apiNamespace = 'regions';
 
@@ -16,6 +20,8 @@ async function buildResponse(region: RegionWithShapes) {
 	if (!map) {
 		throw Error('Map for region not found.');
 	}
+
+	const narrations = await narrationRepository.getByRegionId(region.RegionId);
 
 	const regionResponse: RegionResponse = {
 		id: region.RegionId,
@@ -31,6 +37,13 @@ async function buildResponse(region: RegionWithShapes) {
 		regionTemplate: undefined,
 		...buildShapes(region.RegionShapes),
 		lighting: region.Lighting,
+		narrations: narrations.map((entity) => ({
+			id: entity.NarrationId,
+			descriptionTemplateId: entity.NarrationTemplateId ?? undefined,
+			name: entity.Name,
+			description: entity.Description,
+			isRead: entity.IsRead,
+		})),
 	};
 
 	return regionResponse;
