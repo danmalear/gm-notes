@@ -39,7 +39,7 @@ async function buildResponse(region: RegionWithShapes) {
 		lighting: region.Lighting,
 		narrations: narrations.map((entity) => ({
 			id: entity.NarrationId,
-			descriptionTemplateId: entity.NarrationTemplateId ?? undefined,
+			narrationTemplateId: entity.NarrationTemplateId ?? undefined,
 			name: entity.Name,
 			description: entity.Description,
 			isRead: entity.IsRead,
