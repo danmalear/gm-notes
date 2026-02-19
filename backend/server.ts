@@ -6,7 +6,7 @@ import express, {
 	type Response,
 } from 'express';
 import { getMessage } from './src/helpers/error.ts';
-import { routes } from './src/routes/routes.ts';
+import { routes } from './src/routes.ts';
 
 const app = express();
 const port = 3000;
