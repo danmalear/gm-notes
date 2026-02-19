@@ -80,13 +80,25 @@ const RegionView: React.FC = () => {
 							)
 						) : null}
 
-						{/* @TODO */}
+						{/* @TODO Remove this dependency */}
 						{'descriptions' in region && region.descriptions?.length ? (
 							<Collapsible headingElement="h2" title="Descriptions">
 								{region.descriptions.map((desc, index) => (
 									<div key={`description-${index}`}>
 										<Collapsible headingElement="h3" title={desc.prompt}>
 											{desc.text}
+										</Collapsible>
+									</div>
+								))}
+							</Collapsible>
+						) : null}
+
+						{'narrations' in region && region.narrations?.length ? (
+							<Collapsible headingElement="h2" title="Narrations">
+								{region.narrations.map((narration, index) => (
+									<div key={`narration-${index}`}>
+										<Collapsible headingElement="h3" title={narration.name}>
+											{narration.description}
 										</Collapsible>
 									</div>
 								))}
