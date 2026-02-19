@@ -40,7 +40,7 @@ const Creature: React.FC<CreatureProps> = ({
 					<CopyLink href={statBlock.url}>{statBlock.text}</CopyLink>
 				</Trait>
 			) : (
-				statBlock.text
+				<Trait label="Stat Block">{statBlock.text}</Trait>
 			)}
 			{creature.trigger ? (
 				<Trait label="Trigger">{creature.trigger}</Trait>
