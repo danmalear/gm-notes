@@ -1,7 +1,8 @@
 import type { UUID } from 'crypto';
-import type { MapStub } from './Map.ts';
-import type { RegionTemplateStub } from './RegionTemplate.ts';
 import type { RelativeLighting } from './data-types.ts';
+import type { MapStub } from './Map.ts';
+import type { NarrationStub } from './Narration.ts';
+import type { RegionTemplateStub } from './RegionTemplate.ts';
 
 export interface Rectangle {
 	x1: number;
@@ -40,8 +41,8 @@ export interface RegionResponse {
 	circles: Circle[];
 	polygons: Polygon[];
 	lighting: RelativeLighting;
+	narrations: NarrationStub[];
 	// @TODO Some of these might be their own files
-	// descriptions: Description[];
 	// creatures?: Creature[];
 	// checks?: AbilityCheck[];
 	// items?: Item[];

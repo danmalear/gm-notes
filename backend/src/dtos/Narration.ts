@@ -17,5 +17,6 @@ export interface NarrationStub {
 	id: UUID;
 	descriptionTemplateId?: UUID;
 	name: string;
+	description: string;
 	isRead: boolean;
 }
