@@ -53,7 +53,7 @@ const RegionView: React.FC = () => {
 
 	useEffect(() => {
 		handleResetCollapsibles();
-	}, []);
+	}, [region]);
 	// #endregion
 
 	const timeOfDay = useContext(LegacyContext).timeOfDay;
