@@ -72,10 +72,16 @@ const firstFloorRegions: {
 		areas: [
 			{
 				shape: 'rect',
+				// coords: {
+				// 	x1: 413,
+				// 	y1: 6808,
+				// 	x2: 737,
+				// 	y2: 6973,
+				// },
 				coords: {
-					x1: 413,
+					x1: 74,
 					y1: 6808,
-					x2: 737,
+					x2: 398,
 					y2: 6973,
 				},
 			},
