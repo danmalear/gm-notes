@@ -1,13 +1,12 @@
 import type { Lighting } from '#dtos/data-types.ts';
 import type { MapUpdate } from '#dtos/Map.ts';
 import { AppShell, ScrollArea } from '@mantine/core';
-import { useCallback, useContext, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { href, Outlet, useLoaderData, useNavigate } from 'react-router';
 import CampaignHeader from '../components/CampaignHeader.tsx';
 import Map, { type MapArea } from '../components/Map.tsx';
 import MapNavbar from '../components/MapNavbar.tsx';
-import { CampaignContext } from '../contexts/CampaignContext.ts';
 import { LegacyContext } from '../contexts/LegacyContext.ts';
 import { MapContext } from '../contexts/MapContext.ts';
 import data from '../data/data.ts';
@@ -21,7 +20,6 @@ import type { mapLoader } from './loaders/mapLoader.ts';
 const MapView: React.FC = () => {
 	const navigate = useNavigate();
 
-	const campaign = useContext(CampaignContext);
 	// @TODO this should eventually be a stored campaign state
 	const [timeOfDayHC, setTimeOfDayHC] = useState<TimeOfDay>('night');
 
@@ -153,7 +151,7 @@ const MapView: React.FC = () => {
 					offsetScrollbars={true}
 					h="100vh"
 				>
-					<CampaignHeader campaign={campaign} subtitle={map.name} />
+					<CampaignHeader title={map.name} />
 					<MapNavbar
 						defaultLighting={map.defaultLighting}
 						onDefaultLightingChanged={handleDefaultLightingChange}
