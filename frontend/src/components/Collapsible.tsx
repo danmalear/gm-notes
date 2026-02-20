@@ -16,7 +16,7 @@ const Collapsible: React.FC<CollapsibleProps> = ({
 	title,
 	...props
 }) => {
-	const [stateId] = useState(self.crypto.randomUUID());
+	const [stateId] = useState(crypto.randomUUID());
 
 	const collapsibles = useContext(RegionDetailsContext);
 	const dispatch = useContext(RegionDetailsDispatchContext);
