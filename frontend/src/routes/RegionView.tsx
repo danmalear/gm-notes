@@ -109,14 +109,13 @@ const RegionView: React.FC = () => {
 						{'creatures' in region && region.creatures?.length ? (
 							<Collapsible headingElement="h2" title="Creatures">
 								{region.creatures.map((creature, index) => (
-									<div key={`creature-${index}`}>
-										<Creature
-											creature={creature}
-											partySize={partySize}
-											headingElement="h3"
-											rolesHeadingElement="h4"
-										/>
-									</div>
+									<Creature
+										key={`creature-${index}`}
+										creature={creature}
+										partySize={partySize}
+										headingElement="h3"
+										rolesHeadingElement="h4"
+									/>
 								))}
 							</Collapsible>
 						) : null}
@@ -125,13 +124,12 @@ const RegionView: React.FC = () => {
 						{'checks' in region && region.checks?.length ? (
 							<Collapsible headingElement="h2" title="Ability Checks">
 								{region.checks.map((check, index) => (
-									<div key={`check-${index}`}>
-										<AbilityCheck
-											check={check}
-											headingElement="h3"
-											prereqsHeadingElement="h4"
-										/>
-									</div>
+									<AbilityCheck
+										key={`check-${index}`}
+										check={check}
+										headingElement="h3"
+										prereqsHeadingElement="h4"
+									/>
 								))}
 							</Collapsible>
 						) : null}
