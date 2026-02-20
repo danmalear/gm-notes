@@ -8,6 +8,7 @@ import CopyLink from '../components/CopyLink.tsx';
 import Creature from '../components/Creature.tsx';
 import Item from '../components/Item.tsx';
 import Lighting from '../components/Lighting.tsx';
+import Narration from '../components/Narration.tsx';
 import Trait from '../components/Trait.tsx';
 import { LegacyContext } from '../contexts/LegacyContext.ts';
 import { MapContext } from '../contexts/MapContext.ts';
@@ -96,11 +97,11 @@ const RegionView: React.FC = () => {
 						{'narrations' in region && region.narrations?.length ? (
 							<Collapsible headingElement="h2" title="Narrations">
 								{region.narrations.map((narration, index) => (
-									<div key={`narration-${index}`}>
-										<Collapsible headingElement="h3" title={narration.name}>
-											{narration.description}
-										</Collapsible>
-									</div>
+									<Narration
+										key={`narration-${index}`}
+										narration={narration}
+										headingElement="h3"
+									/>
 								))}
 							</Collapsible>
 						) : null}
