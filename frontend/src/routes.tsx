@@ -29,6 +29,12 @@ const router = createBrowserRouter([
 				Component: CampaignView,
 				children: [
 					{
+						index: true,
+						loader: () => {
+							return redirect('map');
+						},
+					},
+					{
 						path: 'map/:mapId',
 						loader: mapLoader,
 						Component: MapView,
