@@ -9,7 +9,7 @@ export interface Item {
 	CampaignId: UUID | null;
 	Name: string;
 	IsContainer: boolean;
-	Value: number;
-	ValueUnit: CurrencyUnit;
-	DetailsLink: string;
+	Value: number | null;
+	ValueUnit: CurrencyUnit | null;
+	DetailsLink: string | null;
 }
