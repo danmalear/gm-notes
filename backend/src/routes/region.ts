@@ -12,6 +12,7 @@ import {
 	itemRepository,
 	mapRepository,
 	narrationRepository,
+	noteRepository,
 	regionRepository,
 } from '../repositories.ts';
 
@@ -21,6 +22,7 @@ async function buildItems(locationId: UUID) {
 	const items = await itemRepository.getByLocationId(locationId);
 	const dtoItems: LocationItemStub[] = [];
 	for (const item of items) {
+		const notes = await noteRepository.getByEntityId(item.LocationItemId);
 		if (item.IsContainer) {
 			const dtoContainedItems = await buildItems(item.LocationItemId);
 			dtoItems.push({
@@ -34,8 +36,7 @@ async function buildItems(locationId: UUID) {
 						: undefined,
 				detailsLink: item.DetailsLink ?? undefined,
 				quantity: item.Quantity,
-				// @TODO
-				notes: [],
+				notes: notes.map((note) => note.Description),
 				isContainer: true,
 				containedItems: dtoContainedItems,
 			});
@@ -51,8 +52,7 @@ async function buildItems(locationId: UUID) {
 						: undefined,
 				detailsLink: item.DetailsLink ?? undefined,
 				quantity: item.Quantity,
-				// @TODO
-				notes: [],
+				notes: notes.map((note) => note.Description),
 				isContainer: false,
 			});
 		}
