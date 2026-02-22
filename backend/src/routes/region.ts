@@ -2,6 +2,7 @@ import type { DataResponse } from '#dtos/DataResponse.ts';
 import type { LocationItemStub } from '#dtos/item.ts';
 import type { MessageResponse } from '#dtos/MessageResponse.ts';
 import type { RegionQueryParams, RegionResponse } from '#dtos/region.js';
+import type { UUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
 import type { RegionWithShapes } from '../entities/Region.ts';
 import { getMessage } from '../helpers/error.ts';
@@ -16,23 +17,12 @@ import {
 
 const apiNamespace = 'regions';
 
-async function buildResponse(region: RegionWithShapes) {
-	const map = await mapRepository.getById(region.MapId);
-
-	if (!map) {
-		throw Error('Map for region not found.');
-	}
-
-	const narrations = await narrationRepository.getByRegionId(region.RegionId);
-	const items = await itemRepository.getByLocationId(region.RegionId);
-
+async function buildItems(locationId: UUID) {
+	const items = await itemRepository.getByLocationId(locationId);
 	const dtoItems: LocationItemStub[] = [];
-	// @TODO recursion?
 	for (const item of items) {
 		if (item.IsContainer) {
-			const containedItems = await itemRepository.getByLocationId(
-				item.LocationItemId,
-			);
+			const dtoContainedItems = await buildItems(item.LocationItemId);
 			dtoItems.push({
 				id: item.LocationItemId,
 				locationId: item.LocationId,
@@ -47,22 +37,7 @@ async function buildResponse(region: RegionWithShapes) {
 				// @TODO
 				notes: [],
 				isContainer: true,
-				containedItems: containedItems.map((containedItem) => ({
-					id: containedItem.ItemId,
-					locationId: containedItem.LocationId,
-					itemId: containedItem.ItemId,
-					name: containedItem.Name,
-					value:
-						containedItem.Value !== null
-							? `${containedItem.Value} ${containedItem.ValueUnit ?? 'GP'}`
-							: undefined,
-					detailsLink: containedItem.DetailsLink ?? undefined,
-					quantity: containedItem.Quantity,
-					// @TODO
-					notes: [],
-					// @TODO recursion?
-					isContainer: false,
-				})),
+				containedItems: dtoContainedItems,
 			});
 		} else {
 			dtoItems.push({
@@ -82,6 +57,18 @@ async function buildResponse(region: RegionWithShapes) {
 			});
 		}
 	}
+	return dtoItems;
+}
+
+async function buildResponse(region: RegionWithShapes) {
+	const map = await mapRepository.getById(region.MapId);
+
+	if (!map) {
+		throw Error('Map for region not found.');
+	}
+
+	const narrations = await narrationRepository.getByRegionId(region.RegionId);
+	const dtoItems: LocationItemStub[] = await buildItems(region.RegionId);
 
 	const regionResponse: RegionResponse = {
 		id: region.RegionId,
