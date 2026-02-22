@@ -1,5 +1,6 @@
 import { CampaignRepository } from './repositories/CampaignRepository.ts';
 import { CampaignTemplateRepository } from './repositories/CampaignTemplateRepository.ts';
+import { ItemRepository } from './repositories/ItemRepository.ts';
 import { MapRepository } from './repositories/MapRepository.ts';
 import { MapTemplateRepository } from './repositories/MapTemplateRepository.ts';
 import { NarrationRepository } from './repositories/NarrationRepository.ts';
@@ -14,3 +15,4 @@ export const mapRepository = new MapRepository();
 export const regionRepository = new RegionRepository();
 
 export const narrationRepository = new NarrationRepository();
+export const itemRepository = new ItemRepository();
