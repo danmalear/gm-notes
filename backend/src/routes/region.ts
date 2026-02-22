@@ -22,7 +22,11 @@ async function buildItems(locationId: UUID) {
 	const items = await itemRepository.getByLocationId(locationId);
 	const dtoItems: LocationItemStub[] = [];
 	for (const item of items) {
-		const notes = await noteRepository.getByEntityId(item.LocationItemId);
+		const itemNotes = await noteRepository.getByEntityId(item.ItemId);
+		const locationItemNotes = await noteRepository.getByEntityId(
+			item.LocationItemId,
+		);
+		const notes = [...itemNotes, ...locationItemNotes];
 		if (item.IsContainer) {
 			const dtoContainedItems = await buildItems(item.LocationItemId);
 			dtoItems.push({
