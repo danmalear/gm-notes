@@ -1,4 +1,4 @@
-import type { CampaignResponse } from '#dtos/Campaign.ts';
+import type { CampaignResponse } from 'backend/src/dtos/campaign.js';
 import { createContext } from 'react';
 
 export const CampaignContext = createContext<CampaignResponse>(null!);

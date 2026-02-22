@@ -1,9 +1,9 @@
+import type { DataResponse } from '#dtos/DataResponse.ts';
+import type { MessageResponse } from '#dtos/MessageResponse.ts';
 import type {
 	CampaignTemplateCreate,
 	CampaignTemplateResponse,
-} from '#dtos/CampaignTemplate.ts';
-import type { DataResponse } from '#dtos/DataResponse.ts';
-import type { MessageResponse } from '#dtos/MessageResponse.ts';
+} from '#dtos/src/dtos/campaign-template.js';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
 import type { CampaignTemplate } from '../entities/CampaignTemplate.ts';

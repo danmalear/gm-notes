@@ -1,4 +1,4 @@
-import type { RegionResponse } from '#dtos/Region.ts';
+import type { RegionResponse } from 'backend/src/dtos/region.js';
 import type { UUID } from 'crypto';
 import { useContext, useEffect, useReducer, useState } from 'react';
 import { useLoaderData } from 'react-router';

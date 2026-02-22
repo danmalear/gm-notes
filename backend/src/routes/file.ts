@@ -1,5 +1,5 @@
-import type { FileUploadResponse } from '#dtos/File.ts';
 import type { MessageResponse } from '#dtos/MessageResponse.ts';
+import type { FileUploadResponse } from '#dtos/src/dtos/file.js';
 import express, { type Express, type Request, type Response } from 'express';
 import multer from 'multer';
 import path from 'path';

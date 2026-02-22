@@ -1,5 +1,5 @@
 import type { UUID } from 'crypto';
-import type { MapTemplateStub } from './MapTemplate.ts';
+import type { MapTemplateStub } from './map-template.ts';
 
 export interface CampaignTemplateCreate {
 	name: string;

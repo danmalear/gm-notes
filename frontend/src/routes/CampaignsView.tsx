@@ -1,12 +1,12 @@
-import type {
-	CampaignResponse as Campaign,
-	CampaignCreate,
-} from '#dtos/Campaign.ts';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
 import { ActionIcon, AppShell, Box, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconPlus } from '@tabler/icons-react';
+import type {
+	CampaignResponse as Campaign,
+	CampaignCreate,
+} from 'backend/src/dtos/campaign.js';
 import type { UUID } from 'crypto';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';

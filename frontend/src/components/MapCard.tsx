@@ -1,5 +1,5 @@
-import type { MapResponse } from '#dtos/Map.ts';
 import { Card, Title } from '@mantine/core';
+import type { MapResponse } from 'backend/src/dtos/map.js';
 import type { UUID } from 'crypto';
 import { filePath } from '../services/fileService';
 import classes from './CampaignCard.module.css';

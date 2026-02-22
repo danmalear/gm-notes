@@ -1,10 +1,10 @@
 import type { DataResponse } from '#dtos/DataResponse.ts';
+import type { MessageResponse } from '#dtos/MessageResponse.ts';
 import type {
 	MapTemplateCreate,
 	MapTemplateQueryParams,
 	MapTemplateResponse,
-} from '#dtos/MapTemplate.ts';
-import type { MessageResponse } from '#dtos/MessageResponse.ts';
+} from '#dtos/src/dtos/map-template.js';
 import { randomUUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
 import type { MapTemplate } from '../entities/MapTemplate.ts';

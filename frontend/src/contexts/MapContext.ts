@@ -1,4 +1,4 @@
-import type { MapResponse } from '#dtos/Map.ts';
+import type { MapResponse } from 'backend/src/dtos/map.js';
 import { createContext } from 'react';
 
 export const MapContext = createContext<MapResponse>(null!);

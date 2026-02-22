@@ -4,7 +4,7 @@ import type { Express, Request, Response } from 'express';
 import type {
 	NarrationQueryParams,
 	NarrationResponse,
-} from '../dtos/Narration.ts';
+} from '../dtos/narration.ts';
 import type { Narration } from '../entities/Narration.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';

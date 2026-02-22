@@ -1,11 +1,11 @@
 import type { DataResponse } from '#dtos/DataResponse.ts';
+import type { MessageResponse } from '#dtos/MessageResponse.ts';
 import type {
 	MapCreate,
 	MapQueryParams,
 	MapResponse,
 	MapUpdate,
-} from '#dtos/Map.ts';
-import type { MessageResponse } from '#dtos/MessageResponse.ts';
+} from '#dtos/src/dtos/map.js';
 import { randomUUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
 import type { Map } from '../entities/Map.ts';

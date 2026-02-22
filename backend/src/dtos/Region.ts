@@ -1,8 +1,8 @@
 import type { UUID } from 'crypto';
 import type { RelativeLighting } from './data-types.ts';
-import type { MapStub } from './Map.ts';
-import type { NarrationStub } from './Narration.ts';
-import type { RegionTemplateStub } from './RegionTemplate.ts';
+import type { MapStub } from './map.ts';
+import type { NarrationStub } from './narration.ts';
+import type { RegionTemplateStub } from './region-template.ts';
 
 export interface Rectangle {
 	x1: number;

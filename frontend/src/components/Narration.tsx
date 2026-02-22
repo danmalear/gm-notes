@@ -1,4 +1,4 @@
-import { NarrationResponse } from '#dtos/Narration.ts';
+import { NarrationResponse } from 'backend/src/dtos/narration.js';
 import React from 'react';
 import Collapsible from './Collapsible.tsx';
 
