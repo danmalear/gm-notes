@@ -295,42 +295,6 @@ const thirdFloorRegions: {
 		],
 	},
 
-	masterCloset: {
-		code: '12B',
-		name: 'Master Suite - Closet',
-		lighting: {
-			day: 'Darkness',
-			between: 'Darkness',
-			night: 'Darkness',
-		},
-
-		descriptions: [
-			{
-				prompt: 'Entry',
-				text: <p>Inside the closet, you see nothing but darkness.</p>,
-			},
-		],
-
-		areas: [
-			{
-				shape: 'rect',
-				// actual coords
-				// coords: {
-				// 	x1: 908,
-				// 	y1: 3517,
-				// 	x2: 1060,
-				// 	y2: 3675,
-				// },
-				coords: {
-					x1: 1395,
-					y1: 3517,
-					x2: 1547,
-					y2: 3675,
-				},
-			},
-		],
-	},
-
 	masterBalcony: {
 		code: '12C',
 		name: 'Master Suite - Balcony',
