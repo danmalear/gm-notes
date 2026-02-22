@@ -1,4 +1,5 @@
 import type { DataResponse } from '#dtos/DataResponse.ts';
+import type { LocationItemStub } from '#dtos/item.ts';
 import type { MessageResponse } from '#dtos/MessageResponse.ts';
 import type { RegionQueryParams, RegionResponse } from '#dtos/region.js';
 import type { Express, Request, Response } from 'express';
@@ -25,6 +26,63 @@ async function buildResponse(region: RegionWithShapes) {
 	const narrations = await narrationRepository.getByRegionId(region.RegionId);
 	const items = await itemRepository.getByLocationId(region.RegionId);
 
+	const dtoItems: LocationItemStub[] = [];
+	// @TODO recursion?
+	for (const item of items) {
+		if (item.IsContainer) {
+			const containedItems = await itemRepository.getByLocationId(
+				item.LocationItemId,
+			);
+			dtoItems.push({
+				id: item.LocationItemId,
+				locationId: item.LocationId,
+				itemId: item.ItemId,
+				name: item.Name,
+				value:
+					item.Value !== null
+						? `${item.Value} ${item.ValueUnit ?? 'GP'}`
+						: undefined,
+				detailsLink: item.DetailsLink ?? undefined,
+				quantity: item.Quantity,
+				// @TODO
+				notes: [],
+				isContainer: true,
+				containedItems: containedItems.map((containedItem) => ({
+					id: containedItem.ItemId,
+					locationId: containedItem.LocationId,
+					itemId: containedItem.ItemId,
+					name: containedItem.Name,
+					value:
+						containedItem.Value !== null
+							? `${containedItem.Value} ${containedItem.ValueUnit ?? 'GP'}`
+							: undefined,
+					detailsLink: containedItem.DetailsLink ?? undefined,
+					quantity: containedItem.Quantity,
+					// @TODO
+					notes: [],
+					// @TODO recursion?
+					isContainer: false,
+				})),
+			});
+		} else {
+			dtoItems.push({
+				id: item.LocationItemId,
+				locationId: item.LocationId,
+				itemId: item.ItemId,
+				name: item.Name,
+				value:
+					item.Value !== null
+						? `${item.Value} ${item.ValueUnit ?? 'GP'}`
+						: undefined,
+				detailsLink: item.DetailsLink ?? undefined,
+				quantity: item.Quantity,
+				// @TODO
+				notes: [],
+				isContainer: false,
+			});
+		}
+	}
+
 	const regionResponse: RegionResponse = {
 		id: region.RegionId,
 		name: region.Name,
@@ -46,22 +104,7 @@ async function buildResponse(region: RegionWithShapes) {
 			description: entity.Description,
 			isRead: entity.IsRead,
 		})),
-		items: items.map((item) => ({
-			id: item.LocationItemId,
-			locationId: item.LocationId,
-			itemId: item.ItemId,
-			name: item.Name,
-			// @TODO
-			isContainer: false,
-			value:
-				item.Value !== null
-					? `${item.Value} ${item.ValueUnit ?? 'GP'}`
-					: undefined,
-			detailsLink: item.DetailsLink ?? undefined,
-			quantity: item.Quantity,
-			// @TODO
-			notes: [],
-		})),
+		items: dtoItems,
 	};
 
 	return regionResponse;
