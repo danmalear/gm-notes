@@ -7,6 +7,7 @@ import { getMessage } from '../helpers/error.ts';
 import { buildShapes } from '../helpers/region-shapes.ts';
 import { isUUID } from '../helpers/uuid.ts';
 import {
+	itemRepository,
 	mapRepository,
 	narrationRepository,
 	regionRepository,
@@ -22,6 +23,7 @@ async function buildResponse(region: RegionWithShapes) {
 	}
 
 	const narrations = await narrationRepository.getByRegionId(region.RegionId);
+	const items = await itemRepository.getByLocationId(region.RegionId);
 
 	const regionResponse: RegionResponse = {
 		id: region.RegionId,
@@ -43,6 +45,19 @@ async function buildResponse(region: RegionWithShapes) {
 			name: entity.Name,
 			description: entity.Description,
 			isRead: entity.IsRead,
+		})),
+		items: items.map((item) => ({
+			id: item.LocationItemId,
+			locationId: item.LocationId,
+			itemId: item.ItemId,
+			name: item.Name,
+			isContainer: item.IsContainer,
+			value:
+				item.Value !== null
+					? `${item.Value} ${item.ValueUnit ?? 'GP'}`
+					: undefined,
+			detailsLink: item.DetailsLink ?? undefined,
+			quantity: item.Quantity,
 		})),
 	};
 

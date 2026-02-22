@@ -1,5 +1,6 @@
 import type { UUID } from 'crypto';
 import type { RelativeLighting } from './data-types.ts';
+import type { LocationItemStub } from './item.ts';
 import type { MapStub } from './map.ts';
 import type { NarrationStub } from './narration.ts';
 import type { RegionTemplateStub } from './region-template.ts';
@@ -45,7 +46,7 @@ export interface RegionResponse {
 	// @TODO Some of these might be their own files
 	// creatures?: Creature[];
 	// checks?: AbilityCheck[];
-	// items?: Item[];
+	items: LocationItemStub[];
 	// opportunities?: string[];
 	// handouts?: Handout[];
 	// notes?: string[];
