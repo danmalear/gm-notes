@@ -4,7 +4,7 @@ import { AppShell, ScrollArea } from '@mantine/core';
 import { useCallback, useMemo, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { href, Outlet, useLoaderData, useNavigate } from 'react-router';
-import CampaignHeader from '../components/CampaignHeader.tsx';
+import AppHeader from '../components/AppHeader.tsx';
 import Map, { type MapArea } from '../components/Map.tsx';
 import MapNavbar from '../components/MapNavbar.tsx';
 import { LegacyContext } from '../contexts/LegacyContext.ts';
@@ -151,7 +151,7 @@ const MapView: React.FC = () => {
 					offsetScrollbars={true}
 					h="100vh"
 				>
-					<CampaignHeader title={map.name} />
+					<AppHeader title={map.name} />
 					<MapNavbar
 						defaultLighting={map.defaultLighting}
 						onDefaultLightingChanged={handleDefaultLightingChange}

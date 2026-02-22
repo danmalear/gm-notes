@@ -7,7 +7,7 @@ import { IconPlus } from '@tabler/icons-react';
 import type { UUID } from 'crypto';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import CampaignHeader from '../components/CampaignHeader.tsx';
+import AppHeader from '../components/AppHeader.tsx';
 import MapCard from '../components/MapCard.tsx';
 import CreateMapModal from '../components/modals/CreateMapModal.tsx';
 import { CampaignContext } from '../contexts/CampaignContext.ts';
@@ -123,7 +123,7 @@ const MapsView: React.FC = () => {
 				}}
 				offsetScrollbars={true}
 			>
-				<CampaignHeader title="Maps" />
+				<AppHeader title="Maps" />
 				<AppShell.Main h="100%" w="100%">
 					<Flex
 						h="100%"

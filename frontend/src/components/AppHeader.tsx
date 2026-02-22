@@ -8,11 +8,11 @@ import {
 	useParams,
 } from 'react-router';
 
-export interface CampaignHeaderProps extends React.PropsWithChildren {
+export interface AppHeaderProps extends React.PropsWithChildren {
 	title: string;
 }
 
-const CampaignHeader: React.FC<CampaignHeaderProps> = ({ title }) => {
+const AppHeader: React.FC<AppHeaderProps> = ({ title }) => {
 	const params = useParams();
 	const path = useLocation().pathname;
 	const matches = useMatches();
@@ -149,4 +149,4 @@ const CampaignHeader: React.FC<CampaignHeaderProps> = ({ title }) => {
 	);
 };
 
-export default CampaignHeader;
+export default AppHeader;
