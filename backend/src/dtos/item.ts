@@ -7,7 +7,7 @@ export interface LocationItemStub {
 	itemId: UUID;
 	name: string;
 	isContainer: boolean;
-	value: Value;
-	detailsLink: string;
+	value?: Value;
+	detailsLink?: string;
 	quantity: number;
 }
