@@ -1,9 +1,6 @@
 import type { DataResponse } from '#dtos/DataResponse.ts';
 import type { MessageResponse } from '#dtos/MessageResponse.ts';
-import type {
-	RegionQueryParams,
-	RegionResponse,
-} from '#dtos/src/dtos/region.js';
+import type { RegionQueryParams, RegionResponse } from '#dtos/region.js';
 import type { Express, Request, Response } from 'express';
 import type { RegionWithShapes } from '../entities/Region.ts';
 import { getMessage } from '../helpers/error.ts';
