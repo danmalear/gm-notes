@@ -1,13 +1,24 @@
 import type { UUID } from 'crypto';
 import type { Value } from './data-types.ts';
 
-export interface LocationItemStub {
+interface LocationItemStubBase {
 	id: UUID;
 	locationId: UUID;
 	itemId: UUID;
 	name: string;
-	isContainer: boolean;
 	value?: Value;
 	detailsLink?: string;
 	quantity: number;
+	notes: string[];
 }
+
+interface ContainerStub extends LocationItemStubBase {
+	isContainer: true;
+	containedItems: LocationItemStub[];
+}
+
+interface NonContainerStub extends LocationItemStubBase {
+	isContainer: false;
+}
+
+export type LocationItemStub = ContainerStub | NonContainerStub;

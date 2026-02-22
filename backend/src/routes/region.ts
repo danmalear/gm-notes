@@ -51,13 +51,16 @@ async function buildResponse(region: RegionWithShapes) {
 			locationId: item.LocationId,
 			itemId: item.ItemId,
 			name: item.Name,
-			isContainer: item.IsContainer,
+			// @TODO
+			isContainer: false,
 			value:
 				item.Value !== null
 					? `${item.Value} ${item.ValueUnit ?? 'GP'}`
 					: undefined,
 			detailsLink: item.DetailsLink ?? undefined,
 			quantity: item.Quantity,
+			// @TODO
+			notes: [],
 		})),
 	};
 
