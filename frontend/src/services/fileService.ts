@@ -1,4 +1,4 @@
-import type { FileUploadResponse } from 'backend/src/dtos/file.js';
+import type { FileUploadResponse } from '#dtos/file.ts';
 import api from './api.ts';
 
 export const uploadFile = async (data: FormData) => {

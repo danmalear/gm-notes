@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import {
 	RegionDetailsContext,
 	RegionDetailsDispatchContext,
-} from '../contexts/RegionDetailsContext';
+} from '../contexts/RegionDetailsContext.ts';
 import './Collapsible.css';
 
 export interface CollapsibleProps extends React.PropsWithChildren {

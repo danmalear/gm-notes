@@ -1,5 +1,5 @@
 import type { DataResponse } from '#dtos/DataResponse.ts';
-import type { RegionResponse } from 'backend/src/dtos/region.js';
+import type { RegionResponse } from '#dtos/region.ts';
 import type { UUID } from 'crypto';
 import api from './api.ts';
 

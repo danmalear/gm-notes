@@ -1,6 +1,6 @@
+import type { MapCreate as Map } from '#dtos/map.ts';
 import { Button, Modal, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import type { MapCreate as Map } from 'backend/src/dtos/map.js';
 import type { UUID } from 'crypto';
 
 export interface CreateMapModalProps extends React.PropsWithChildren {

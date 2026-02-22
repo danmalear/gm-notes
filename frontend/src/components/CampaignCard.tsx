@@ -1,8 +1,8 @@
+import type { CampaignResponse as Campaign } from '#dtos/campaign.ts';
 import { Card, Title } from '@mantine/core';
-import type { CampaignResponse as Campaign } from 'backend/src/dtos/campaign.js';
 import type { UUID } from 'crypto';
 import { useMemo } from 'react';
-import { filePath } from '../services/fileService';
+import { filePath } from '../services/fileService.ts';
 import classes from './CampaignCard.module.css';
 
 export interface CampaignCardProps extends React.PropsWithChildren {

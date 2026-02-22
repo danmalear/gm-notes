@@ -1,7 +1,7 @@
+import type { MapResponse } from '#dtos/map.ts';
 import { Card, Title } from '@mantine/core';
-import type { MapResponse } from 'backend/src/dtos/map.js';
 import type { UUID } from 'crypto';
-import { filePath } from '../services/fileService';
+import { filePath } from '../services/fileService.ts';
 import classes from './CampaignCard.module.css';
 
 export interface MapCardProps extends React.PropsWithChildren {

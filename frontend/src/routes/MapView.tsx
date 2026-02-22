@@ -1,6 +1,6 @@
 import type { Lighting } from '#dtos/data-types.ts';
+import type { MapUpdate } from '#dtos/map.js';
 import { AppShell, ScrollArea } from '@mantine/core';
-import type { MapUpdate } from 'backend/src/dtos/map.js';
 import { useCallback, useMemo, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { href, Outlet, useLoaderData, useNavigate } from 'react-router';

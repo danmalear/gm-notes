@@ -1,9 +1,4 @@
-import type {
-	Circle,
-	Polygon,
-	Rectangle,
-	Shape,
-} from 'backend/src/dtos/region.js';
+import type { Circle, Polygon, Rectangle, Shape } from '#dtos/region.ts';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { filePath } from '../services/fileService.ts';
 

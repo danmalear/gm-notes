@@ -1,8 +1,5 @@
 import type { DataResponse } from '#dtos/DataResponse.ts';
-import type {
-	CampaignCreate,
-	CampaignResponse,
-} from 'backend/src/dtos/campaign.js';
+import type { CampaignCreate, CampaignResponse } from '#dtos/campaign.ts';
 import type { UUID } from 'crypto';
 import api from './api.ts';
 

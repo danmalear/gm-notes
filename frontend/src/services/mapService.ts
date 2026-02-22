@@ -1,9 +1,5 @@
 import type { DataResponse } from '#dtos/DataResponse.ts';
-import type {
-	MapCreate,
-	MapResponse,
-	MapUpdate,
-} from 'backend/src/dtos/map.js';
+import type { MapCreate, MapResponse, MapUpdate } from '#dtos/map.ts';
 import type { UUID } from 'crypto';
 import api from './api.ts';
 

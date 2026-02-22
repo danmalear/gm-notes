@@ -1,5 +1,5 @@
 import type { DataResponse } from '#dtos/DataResponse.ts';
-import type { NarrationResponse } from 'backend/src/dtos/narration.js';
+import type { NarrationResponse } from '#dtos/narration.ts';
 import type { UUID } from 'crypto';
 import api from './api.ts';
 

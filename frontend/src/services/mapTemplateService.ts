@@ -2,7 +2,7 @@ import type { DataResponse } from '#dtos/DataResponse.ts';
 import type {
 	MapTemplateCreate,
 	MapTemplateResponse,
-} from '#dtos/MapTemplate.ts';
+} from '#dtos/map-template.ts';
 import type { UUID } from 'crypto';
 import api from './api.ts';
 
