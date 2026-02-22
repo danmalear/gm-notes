@@ -2,7 +2,7 @@ import type { UUID } from 'crypto';
 import type { Value } from './data-types.ts';
 
 export interface LocationItemStub {
-	locationItemId: UUID;
+	id: UUID;
 	locationId: UUID;
 	itemId: UUID;
 	name: string;
