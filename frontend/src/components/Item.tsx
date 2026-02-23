@@ -18,16 +18,20 @@ export interface ItemProps extends React.PropsWithChildren {
 
 const Item: React.FC<ItemProps> = ({ item, ...props }) => {
 	const headingText = (item: ItemHC | LocationItemStub) => {
-		const quantityText = (item.quantity ?? 1 > 1) ? ` x${item.quantity}` : '';
+		const quantityText = (item.quantity ?? 1) > 1 ? ` x${item.quantity}` : '';
 		return `${item.name}${quantityText}`;
 	};
 
 	const H1 = h[props.topLevelHeading];
 	const H2 = h[getValidHeadingIndex(props.topLevelHeading + 1)];
 
-	return item.value ||
+	const hasDetails =
+		item.value ||
 		item.notes?.length ||
-		('items' in item && item.items?.length) ? (
+		('items' in item && item.items?.length) ||
+		('actions' in item && item.actions?.length);
+
+	return hasDetails ? (
 		<Collapsible headingElement={H1} title={headingText(item)}>
 			{item.value ? <Trait label="Value">{item.value}</Trait> : null}
 			{item.notes ? (
