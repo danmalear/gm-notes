@@ -1,0 +1,26 @@
+import type { UUID } from 'crypto';
+import { db } from '../db.ts';
+import { pkColumn, tableName, type Action } from '../entities/Action.ts';
+import { getMessage } from '../helpers/error.ts';
+import { Repository } from './Repository.ts';
+
+export class ActionRepository extends Repository<Action> {
+	constructor() {
+		super(tableName, pkColumn);
+	}
+
+	/**
+	 * Retrieves action records from the database for a given target ID
+	 * @param id UUID of the target to get actions for
+	 * @returns The list of actions (empty array if none found)
+	 */
+	async getByTargetId(targetId: UUID) {
+		try {
+			await db(tableName).where('TargetId', targetId);
+		} catch (e) {
+			throw Error(
+				`Error getting ${this.tableName} records for target ID ${targetId}: ${getMessage(e)}`,
+			);
+		}
+	}
+}

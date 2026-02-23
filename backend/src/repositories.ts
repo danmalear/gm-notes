@@ -1,3 +1,4 @@
+import { ActionRepository } from './repositories/ActionRepository.ts';
 import { CampaignRepository } from './repositories/CampaignRepository.ts';
 import { CampaignTemplateRepository } from './repositories/CampaignTemplateRepository.ts';
 import { ItemRepository } from './repositories/ItemRepository.ts';
@@ -17,5 +18,6 @@ export const regionRepository = new RegionRepository();
 
 export const narrationRepository = new NarrationRepository();
 export const itemRepository = new ItemRepository();
+export const actionRepository = new ActionRepository();
 
 export const noteRepository = new NoteRepository();
