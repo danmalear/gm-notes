@@ -8,6 +8,6 @@ export interface Action {
 	ActionId: UUID;
 	TargetId: UUID;
 	Name: string;
-	Type: ActionType;
+	Type: ActionType | null;
 	NarrationId: UUID | null;
 }
