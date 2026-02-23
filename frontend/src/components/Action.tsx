@@ -8,13 +8,18 @@ export interface ActionProps extends React.PropsWithChildren {
 	topLevelHeading: ValidHeadingIndex;
 }
 
-const Action: React.FC<ActionProps> = ({ action, ...props }) => {
-	const H1 = h[props.topLevelHeading];
+const Action: React.FC<ActionProps> = ({ action, topLevelHeading }) => {
+	const H1 = h[topLevelHeading];
 
 	return (
 		<Collapsible headingElement={H1} title={action.name}>
 			{action.type ? <Trait label="Type">{action.type}</Trait> : null}
 			{action.narration ? <p>{action.narration}</p> : null}
+			{action.abilityChecks?.length
+				? action.abilityChecks.map((check) => (
+						<Trait label="Ability check">{JSON.stringify(check)}</Trait>
+					))
+				: null}
 		</Collapsible>
 	);
 };
