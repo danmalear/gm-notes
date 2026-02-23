@@ -1,3 +1,4 @@
+import type { AbilityCheckStub } from '#dtos/ability-check.ts';
 import type { AbilityCheck } from '../data/MapData.ts';
 import {
 	getValidHeadingIndex,
@@ -8,7 +9,7 @@ import Collapsible from './Collapsible.tsx';
 import Trait from './Trait.tsx';
 
 export interface AbilityCheckProps extends React.PropsWithChildren {
-	check: AbilityCheck;
+	check: AbilityCheck | AbilityCheckStub;
 	topLevelHeading: ValidHeadingIndex;
 }
 
@@ -19,7 +20,7 @@ const AbilityCheck: React.FC<AbilityCheckProps> = ({
 	const H1 = h[topLevelHeading];
 	const H2 = h[getValidHeadingIndex(topLevelHeading + 1)];
 
-	return (
+	return 'skills' in check ? (
 		<Collapsible
 			headingElement={H1}
 			title={`${check.skills.join('/')} (DC ${check.dc}) on ${check.target}`}
@@ -47,7 +48,8 @@ const AbilityCheck: React.FC<AbilityCheckProps> = ({
 				</>
 			) : null}
 		</Collapsible>
-	);
+	) : // @TODO handle DTO
+	null;
 };
 
 export default AbilityCheck;
