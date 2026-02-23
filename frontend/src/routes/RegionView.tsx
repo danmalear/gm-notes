@@ -128,8 +128,7 @@ const RegionView: React.FC = () => {
 									<AbilityCheck
 										key={`check-${index}`}
 										check={check}
-										headingElement="h3"
-										prereqsHeadingElement="h4"
+										topLevelHeading={3}
 									/>
 								))}
 							</Collapsible>
