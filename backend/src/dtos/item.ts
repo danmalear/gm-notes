@@ -1,4 +1,5 @@
 import type { UUID } from 'crypto';
+import type { ActionStub } from './action.ts';
 import type { Value } from './data-types.ts';
 
 interface LocationItemStubBase {
@@ -9,6 +10,7 @@ interface LocationItemStubBase {
 	value?: Value;
 	detailsLink?: string;
 	quantity: number;
+	actions: ActionStub[];
 	notes: string[];
 }
 

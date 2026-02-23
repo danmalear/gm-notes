@@ -27,6 +27,10 @@ async function buildItems(locationId: UUID) {
 	const items = await itemRepository.getByLocationId(locationId);
 	const dtoItems: LocationItemStub[] = [];
 	for (const item of items) {
+		const itemActions = await buildActions(item.ItemId);
+		const locationItemActions = await buildActions(item.LocationItemId);
+		const actions = [...itemActions, ...locationItemActions];
+
 		const itemNotes = await noteRepository.getByEntityId(item.ItemId);
 		const locationItemNotes = await noteRepository.getByEntityId(
 			item.LocationItemId,
@@ -45,6 +49,7 @@ async function buildItems(locationId: UUID) {
 						: undefined,
 				detailsLink: item.DetailsLink ?? undefined,
 				quantity: item.Quantity,
+				actions,
 				notes: notes.map((note) => note.Description),
 				isContainer: true,
 				containedItems: dtoContainedItems,
@@ -61,6 +66,7 @@ async function buildItems(locationId: UUID) {
 						: undefined,
 				detailsLink: item.DetailsLink ?? undefined,
 				quantity: item.Quantity,
+				actions,
 				notes: notes.map((note) => note.Description),
 				isContainer: false,
 			});
