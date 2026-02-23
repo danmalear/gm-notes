@@ -48,8 +48,33 @@ const AbilityCheck: React.FC<AbilityCheckProps> = ({
 				</>
 			) : null}
 		</Collapsible>
-	) : // @TODO handle DTO
-	null;
+	) : (
+		<Collapsible headingElement={H1} title={`${check.skill} (DC ${check.dc})`}>
+			{/* TODO conditions
+			check.prerequisites ? (
+				<>
+					<H2>Prerequisites</H2>
+					<ul>
+						{check.prerequisites.map((prerequisite, prerequisiteIndex) => (
+							<li key={`prerequisite-${prerequisiteIndex}`}>{prerequisite}</li>
+						))}
+					</ul>
+				</>
+			) : null*/}
+			{check.successNarration ? (
+				<Trait label="Success">{check.successNarration}</Trait>
+			) : null}
+			{check.criticalSuccessNarration ? (
+				<Trait label="Critical Success">{check.criticalSuccessNarration}</Trait>
+			) : null}
+			{check.failureNarration ? (
+				<Trait label="Failure">{check.failureNarration}</Trait>
+			) : null}
+			{check.criticalFailureNarration ? (
+				<Trait label="Critical Failure">{check.criticalFailureNarration}</Trait>
+			) : null}
+		</Collapsible>
+	);
 };
 
 export default AbilityCheck;
