@@ -1,6 +1,11 @@
 import type { LocationItemStub } from '#dtos/item.ts';
 import type { Item as ItemHC } from '../data/MapData.ts';
-import { h, type ValidHeadingIndex } from '../helpers/headings.ts';
+import {
+	getValidHeadingIndex,
+	h,
+	ValidHeadingIndex,
+} from '../helpers/headings.ts';
+import Action from './Action.tsx';
 import Collapsible from './Collapsible.tsx';
 import Trait from './Trait.tsx';
 
@@ -17,11 +22,8 @@ const Item: React.FC<ItemProps> = ({ item, ...props }) => {
 		return `${item.name}${quantityText}`;
 	};
 
-	const H1 = h[props.topLevelHeading] ?? 'h1';
-	const H2 =
-		(props.topLevelHeading >= 6 ? h[6] : h[props.topLevelHeading + 1]) ?? 'h2';
-	const H3 =
-		(props.topLevelHeading >= 5 ? h[6] : h[props.topLevelHeading + 2]) ?? 'h3';
+	const H1 = h[props.topLevelHeading];
+	const H2 = h[getValidHeadingIndex(props.topLevelHeading + 1)];
 
 	return item.value ||
 		item.notes?.length ||
@@ -38,10 +40,10 @@ const Item: React.FC<ItemProps> = ({ item, ...props }) => {
 			{'actions' in item ? (
 				<Collapsible headingElement={H2} title="Actions">
 					{item.actions.map((action) => (
-						<Collapsible headingElement={H3} title={action.name}>
-							{action.type ? <Trait label="Type">{action.type}</Trait> : null}
-							{action.narration ? <p>{action.narration}</p> : null}
-						</Collapsible>
+						<Action
+							action={action}
+							topLevelHeading={getValidHeadingIndex(props.topLevelHeading + 2)}
+						/>
 					))}
 				</Collapsible>
 			) : null}
