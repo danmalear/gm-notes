@@ -35,6 +35,16 @@ const Item: React.FC<ItemProps> = ({ item, ...props }) => {
 					))}
 				</ul>
 			) : null}
+			{'actions' in item ? (
+				<Collapsible headingElement={H2} title="Actions">
+					{item.actions.map((action) => (
+						<Collapsible headingElement={H3} title={action.name}>
+							{action.type ? <Trait label="Type">{action.type}</Trait> : null}
+							{action.narration ? <p>{action.narration}</p> : null}
+						</Collapsible>
+					))}
+				</Collapsible>
+			) : null}
 			{'items' in item
 				? item.items?.map((subItem, subIndex) =>
 						subItem.value || subItem.notes?.length ? (
