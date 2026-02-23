@@ -16,7 +16,7 @@ export class ActionRepository extends Repository<Action> {
 	 */
 	async getByTargetId(targetId: UUID) {
 		try {
-			await db(tableName).where('TargetId', targetId);
+			return await db<Action>(tableName).where('TargetId', targetId);
 		} catch (e) {
 			throw Error(
 				`Error getting ${this.tableName} records for target ID ${targetId}: ${getMessage(e)}`,
