@@ -41,7 +41,7 @@ const Item: React.FC<ItemProps> = ({ item, ...props }) => {
 					))}
 				</ul>
 			) : null}
-			{'actions' in item ? (
+			{'actions' in item && item.actions.length ? (
 				<Collapsible headingElement={H2} title="Actions">
 					{item.actions.map((action) => (
 						<Action
