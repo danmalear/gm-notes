@@ -1,3 +1,4 @@
+import type { ActionStub } from '#dtos/action.ts';
 import type { DataResponse } from '#dtos/DataResponse.ts';
 import type { LocationItemStub } from '#dtos/item.ts';
 import type { MessageResponse } from '#dtos/MessageResponse.ts';
@@ -9,6 +10,7 @@ import { getMessage } from '../helpers/error.ts';
 import { buildShapes } from '../helpers/region-shapes.ts';
 import { isUUID } from '../helpers/uuid.ts';
 import {
+	actionRepository,
 	itemRepository,
 	mapRepository,
 	narrationRepository,
@@ -17,6 +19,9 @@ import {
 } from '../repositories.ts';
 
 const apiNamespace = 'regions';
+
+// #region Response building
+// @TODO this should really not all live in the region file
 
 async function buildItems(locationId: UUID) {
 	const items = await itemRepository.getByLocationId(locationId);
@@ -64,6 +69,29 @@ async function buildItems(locationId: UUID) {
 	return dtoItems;
 }
 
+async function buildActions(targetId: UUID) {
+	const actions = await actionRepository.getByTargetId(targetId);
+	const dtoActions: ActionStub[] = [];
+	for (const action of actions) {
+		// const notes = await noteRepository.getByEntityId(action.ActionId);
+		const narration = action.NarrationId
+			? await narrationRepository.getById(action.NarrationId)
+			: undefined;
+		dtoActions.push({
+			id: action.ActionId,
+			targetId: action.TargetId,
+			name: action.Name,
+			type: action.Type ?? undefined,
+			narration: narration?.Description,
+			// @TODO
+			abilityChecks: [],
+			// @TODO
+			// notes: [],
+		});
+	}
+	return dtoActions;
+}
+
 async function buildResponse(region: RegionWithShapes) {
 	const map = await mapRepository.getById(region.MapId);
 
@@ -72,7 +100,8 @@ async function buildResponse(region: RegionWithShapes) {
 	}
 
 	const narrations = await narrationRepository.getByRegionId(region.RegionId);
-	const dtoItems: LocationItemStub[] = await buildItems(region.RegionId);
+	const items = await buildItems(region.RegionId);
+	const actions = await buildActions(region.RegionId);
 
 	const regionResponse: RegionResponse = {
 		id: region.RegionId,
@@ -84,7 +113,7 @@ async function buildResponse(region: RegionWithShapes) {
 			name: map.Name,
 			imagePath: map.ImagePath,
 		},
-		// @TODO Region Templates
+		// @TODO Templates
 		regionTemplate: undefined,
 		...buildShapes(region.RegionShapes),
 		lighting: region.Lighting,
@@ -95,11 +124,13 @@ async function buildResponse(region: RegionWithShapes) {
 			description: entity.Description,
 			isRead: entity.IsRead,
 		})),
-		items: dtoItems,
+		actions,
+		items,
 	};
 
 	return regionResponse;
 }
+// #endregion
 
 export const regionRoutes = (app: Express) => {
 	app.get(

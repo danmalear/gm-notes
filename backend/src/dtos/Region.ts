@@ -1,4 +1,5 @@
 import type { UUID } from 'crypto';
+import type { ActionStub } from './action.ts';
 import type { RelativeLighting } from './data-types.ts';
 import type { LocationItemStub } from './item.ts';
 import type { MapStub } from './map.ts';
@@ -45,7 +46,7 @@ export interface RegionResponse {
 	narrations: NarrationStub[];
 	// @TODO Some of these might be their own files
 	// creatures?: Creature[];
-	// checks?: AbilityCheck[];
+	actions: ActionStub[];
 	items: LocationItemStub[];
 	// opportunities?: string[];
 	// handouts?: Handout[];
