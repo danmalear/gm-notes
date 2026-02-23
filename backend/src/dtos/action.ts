@@ -1,5 +1,6 @@
 import type { UUID } from 'crypto';
-import type { ActionType } from './data-types';
+import type { AbilityCheckStub } from './ability-check.ts';
+import type { ActionType } from './data-types.ts';
 
 export interface ActionStub {
 	id: UUID;
@@ -7,6 +8,5 @@ export interface ActionStub {
 	name: string;
 	type?: ActionType;
 	narration?: string;
-	// @TODO
-	abilityChecks?: unknown[];
+	abilityChecks: AbilityCheckStub[];
 }

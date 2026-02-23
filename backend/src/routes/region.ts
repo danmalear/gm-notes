@@ -1,3 +1,4 @@
+import type { AbilityCheckStub } from '#dtos/ability-check.ts';
 import type { ActionStub } from '#dtos/action.ts';
 import type { DataResponse } from '#dtos/DataResponse.ts';
 import type { LocationItemStub } from '#dtos/item.ts';
@@ -10,6 +11,7 @@ import { getMessage } from '../helpers/error.ts';
 import { buildShapes } from '../helpers/region-shapes.ts';
 import { isUUID } from '../helpers/uuid.ts';
 import {
+	abilityCheckRepository,
 	actionRepository,
 	itemRepository,
 	mapRepository,
@@ -79,6 +81,7 @@ async function buildActions(targetId: UUID) {
 	const actions = await actionRepository.getByTargetId(targetId);
 	const dtoActions: ActionStub[] = [];
 	for (const action of actions) {
+		const abilityChecks = await buildAbilityChecks(action.ActionId);
 		// const notes = await noteRepository.getByEntityId(action.ActionId);
 		const narration = action.NarrationId
 			? await narrationRepository.getById(action.NarrationId)
@@ -89,13 +92,42 @@ async function buildActions(targetId: UUID) {
 			name: action.Name,
 			type: action.Type ?? undefined,
 			narration: narration?.Description,
-			// @TODO
-			abilityChecks: [],
+			abilityChecks,
 			// @TODO
 			// notes: [],
 		});
 	}
 	return dtoActions;
+}
+
+async function buildAbilityChecks(actionId: UUID) {
+	const abilityChecks = await abilityCheckRepository.getByActionId(actionId);
+	const dtoChecks: AbilityCheckStub[] = [];
+	for (const check of abilityChecks) {
+		const successNarration = check.SuccessNarrationId
+			? await narrationRepository.getById(check.SuccessNarrationId)
+			: undefined;
+		const critSuccessNarration = check.CriticalSuccessNarrationId
+			? await narrationRepository.getById(check.CriticalSuccessNarrationId)
+			: undefined;
+		const failureNarration = check.FailureNarrationId
+			? await narrationRepository.getById(check.FailureNarrationId)
+			: undefined;
+		const critFailureNarration = check.CriticalFailureNarrationId
+			? await narrationRepository.getById(check.CriticalFailureNarrationId)
+			: undefined;
+		dtoChecks.push({
+			id: check.AbilityCheckId,
+			actionId: check.ActionId,
+			skill: check.Skill,
+			dc: check.DC,
+			successNarration: successNarration?.Description,
+			criticalSuccessNarration: critSuccessNarration?.Description,
+			failureNarration: failureNarration?.Description,
+			criticalFailureNarration: critFailureNarration?.Description,
+		});
+	}
+	return dtoChecks;
 }
 
 async function buildResponse(region: RegionWithShapes) {
