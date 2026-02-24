@@ -1,4 +1,4 @@
-import type { Circle, Polygon, Rectangle } from '#dtos/region.ts';
+import type { Circle, Coords, Polygon, Rectangle } from '#dtos/region.ts';
 import type { UUID } from 'crypto';
 import { regionShapeRepository } from '../repositories.ts';
 
@@ -24,20 +24,34 @@ function validateRectangle(rectangle: unknown): asserts rectangle is Rectangle {
 	}
 }
 
-function validatePolygon(polygon: unknown): asserts polygon is Polygon {
-	if (!polygon || !Array.isArray(polygon) || !polygon.length) {
-		throw Error('Corrupt polygon record');
-	}
-	for (const coords of polygon) {
+function validateCoords(
+	coordsArray: unknown[],
+): asserts coordsArray is Coords[] {
+	for (const coords of coordsArray) {
 		if (
+			!coords ||
+			typeof coords !== 'object' ||
 			!('x' in coords) ||
 			typeof coords.x !== 'number' ||
 			!('y' in coords) ||
 			typeof coords.y !== 'number'
 		) {
-			throw Error('Corrupt polygon record');
+			throw Error('Corrupt coords record');
 		}
 	}
+}
+
+function validatePolygon(polygon: unknown): asserts polygon is Polygon {
+	if (
+		!polygon ||
+		typeof polygon !== 'object' ||
+		!('coords' in polygon) ||
+		!Array.isArray(polygon.coords) ||
+		!polygon.coords.length
+	) {
+		throw Error('Corrupt polygon record');
+	}
+	validateCoords(polygon.coords);
 }
 
 export async function buildShapes(regionId: UUID) {
