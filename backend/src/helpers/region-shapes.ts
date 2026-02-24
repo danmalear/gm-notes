@@ -3,8 +3,18 @@ import type { UUID } from 'crypto';
 import { regionShapeRepository } from '../repositories.ts';
 
 function validateCircle(circle: unknown): asserts circle is Circle {
-	// @TODO
-	throw Error('Circle shapes not implemented');
+	if (
+		!circle ||
+		typeof circle !== 'object' ||
+		!('x' in circle) ||
+		typeof circle.x !== 'number' ||
+		!('y' in circle) ||
+		typeof circle.y !== 'number' ||
+		!('r' in circle) ||
+		typeof circle.r !== 'number'
+	) {
+		throw Error('Corrupt circle record');
+	}
 }
 
 function validateRectangle(rectangle: unknown): asserts rectangle is Rectangle {
