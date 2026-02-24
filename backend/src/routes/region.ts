@@ -3,7 +3,7 @@ import type { ActionStub } from '#dtos/action.ts';
 import type { DataResponse } from '#dtos/DataResponse.ts';
 import type { LocationItemStub } from '#dtos/item.ts';
 import type { MessageResponse } from '#dtos/MessageResponse.ts';
-import type { RegionQueryParams, RegionResponse } from '#dtos/region.js';
+import type { RegionQueryParams, RegionResponse } from '#dtos/region.ts';
 import type { UUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
 import type { RegionWithShapes } from '../entities/Region.ts';

@@ -4,7 +4,7 @@ import type {
 	MapTemplateCreate,
 	MapTemplateQueryParams,
 	MapTemplateResponse,
-} from '#dtos/src/dtos/map-template.js';
+} from '#dtos/map-template.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
 import type { MapTemplate } from '../entities/MapTemplate.ts';

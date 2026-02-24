@@ -3,7 +3,7 @@ import type { MessageResponse } from '#dtos/MessageResponse.ts';
 import type {
 	CampaignTemplateCreate,
 	CampaignTemplateResponse,
-} from '#dtos/src/dtos/campaign-template.js';
+} from '#dtos/campaign-template.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
 import type { CampaignTemplate } from '../entities/CampaignTemplate.ts';

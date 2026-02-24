@@ -5,7 +5,7 @@ import type {
 	MapQueryParams,
 	MapResponse,
 	MapUpdate,
-} from '#dtos/src/dtos/map.js';
+} from '#dtos/map.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
 import type { Map } from '../entities/Map.ts';
