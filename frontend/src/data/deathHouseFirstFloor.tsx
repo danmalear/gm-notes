@@ -13,6 +13,7 @@ const firstFloorRegions: {
 		},
 
 		descriptions: [
+			// @TODO DB
 			{
 				prompt: 'Entry',
 				text: (
@@ -39,6 +40,7 @@ const firstFloorRegions: {
 		],
 
 		checks: [
+			// @TODO DB
 			{
 				skills: ['Insight'],
 				target: 'Portrait',
@@ -46,8 +48,10 @@ const firstFloorRegions: {
 				success:
 					'The mother in the portrait is regarding the baby with a hint of scorn.',
 			},
+			// @TODO DB
 			{
 				skills: ['Perception'],
+				// @TODO Support region actions
 				target: 'Walls',
 				dc: 12,
 				success:
@@ -56,20 +60,24 @@ const firstFloorRegions: {
 		],
 
 		items: [
+			// @TODO DB
 			{
 				name: 'Family portrait',
 				notes: ['Portrays the Durst family'],
 			},
+			// @TODO DB
 			{
 				name: 'Wooden panels',
 				notes: ['Portray vines, flowers, nymphs, and satyrs'],
 			},
+			// @TODO DB
 			{
 				name: 'Grandfather clock',
 				notes: ['Sits in the center of the stairwell (not on map)'],
 			},
 		],
 
+		// @TODO Support handouts
 		handouts: [
 			{
 				text: 'Durst family portrait',
