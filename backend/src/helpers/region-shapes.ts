@@ -1,5 +1,6 @@
-import type { Circle, Polygon, Rectangle } from '../dtos/region.ts';
-import type { RegionShape } from '../entities/RegionShape.ts';
+import type { Circle, Polygon, Rectangle } from '#dtos/region.ts';
+import type { UUID } from 'crypto';
+import { regionShapeRepository } from '../repositories.ts';
 
 function validateCircle(circle: unknown): asserts circle is Circle {
 	// @TODO
@@ -26,7 +27,9 @@ function validatePolygon(polygon: unknown): asserts polygon is Polygon {
 	// @TODO
 }
 
-export function buildShapes(shapes: RegionShape[]) {
+export async function buildShapes(regionId: UUID) {
+	const shapes = await regionShapeRepository.getByRegionId(regionId);
+
 	const dtoShapes = {
 		rectangles: [] as Rectangle[],
 		circles: [] as Circle[],

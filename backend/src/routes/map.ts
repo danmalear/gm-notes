@@ -6,7 +6,8 @@ import type {
 	MapResponse,
 	MapUpdate,
 } from '#dtos/map.ts';
-import { randomUUID } from 'crypto';
+import type { RegionStub } from '#dtos/region.ts';
+import { randomUUID, type UUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
 import type { Map } from '../entities/Map.ts';
 import { getMessage } from '../helpers/error.ts';
@@ -27,6 +28,27 @@ import {
 
 const apiNamespace = 'maps';
 
+// @TODO the "build" functions ought to be extracted somewhere like buildShapes
+
+async function buildRegions(mapId: UUID) {
+	const regions = await regionRepository.getByMapId(mapId);
+	const dtoRegions: RegionStub[] = [];
+
+	for (const region of regions) {
+		const shapes = await buildShapes(region.RegionId);
+
+		dtoRegions.push({
+			id: region.RegionId,
+			regionTemplateId: region.RegionTemplateId ?? undefined,
+			mapId: region.MapId,
+			name: region.Name,
+			...shapes,
+		});
+	}
+
+	return dtoRegions;
+}
+
 async function buildResponse(map: Map) {
 	const campaign = await campaignRepository.getById(map.CampaignId);
 
@@ -38,7 +60,7 @@ async function buildResponse(map: Map) {
 		? await mapTemplateRepository.getById(map.MapTemplateId)
 		: undefined;
 
-	const regions = await regionRepository.getByMapId(map.MapId);
+	const regions = await buildRegions(map.MapId);
 
 	const mapResponse: MapResponse = {
 		id: map.MapId,
@@ -59,15 +81,7 @@ async function buildResponse(map: Map) {
 					campaignTemplateId: mapTemplate.CampaignTemplateId ?? undefined,
 				}
 			: undefined,
-		regions: regions.map((region) => {
-			return {
-				id: region.RegionId,
-				regionTemplateId: region.RegionTemplateId ?? undefined,
-				mapId: region.MapId,
-				name: region.Name,
-				...buildShapes(region.RegionShapes),
-			};
-		}),
+		regions,
 	};
 
 	return mapResponse;

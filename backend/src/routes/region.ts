@@ -137,6 +137,7 @@ async function buildResponse(region: RegionWithShapes) {
 		throw Error('Map for region not found.');
 	}
 
+	const shapes = await buildShapes(region.RegionId);
 	const narrations = await narrationRepository.getByRegionId(region.RegionId);
 	const items = await buildItems(region.RegionId);
 	const actions = await buildActions(region.RegionId);
@@ -153,7 +154,7 @@ async function buildResponse(region: RegionWithShapes) {
 		},
 		// @TODO Templates
 		regionTemplate: undefined,
-		...buildShapes(region.RegionShapes),
+		...shapes,
 		lighting: region.Lighting,
 		narrations: narrations.map((entity) => ({
 			id: entity.NarrationId,
