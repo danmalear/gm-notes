@@ -4,6 +4,7 @@ import { regionShapeRepository } from '../repositories.ts';
 
 function validateCircle(circle: unknown): asserts circle is Circle {
 	// @TODO
+	throw Error('Circle shapes not implemented');
 }
 
 function validateRectangle(rectangle: unknown): asserts rectangle is Rectangle {
