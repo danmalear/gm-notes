@@ -6,7 +6,7 @@ export interface NarrationQueryParams {
 
 export interface NarrationResponse {
 	id: UUID;
-	// @TODO
+	// @TODO Templates
 	narrationTemplate?: undefined;
 	name: string;
 	description: string;

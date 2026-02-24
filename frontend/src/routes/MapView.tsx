@@ -20,7 +20,7 @@ import type { mapLoader } from './loaders/mapLoader.ts';
 const MapView: React.FC = () => {
 	const navigate = useNavigate();
 
-	// @TODO this should eventually be a stored campaign state
+	// @TODO remove this dependency
 	const [timeOfDayHC, setTimeOfDayHC] = useState<TimeOfDay>('night');
 
 	const [map, setMap] = useState(useLoaderData<typeof mapLoader>().map);

@@ -15,7 +15,7 @@ const apiNamespace = 'narrations';
 async function buildResponse(narration: Narration) {
 	const regionResponse: NarrationResponse = {
 		id: narration.NarrationId,
-		// @TODO
+		// @TODO Templates
 		narrationTemplate: undefined,
 		name: narration.Name,
 		description: narration.Description,
