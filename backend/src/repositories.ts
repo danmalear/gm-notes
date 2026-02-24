@@ -8,6 +8,7 @@ import { MapTemplateRepository } from './repositories/MapTemplateRepository.ts';
 import { NarrationRepository } from './repositories/NarrationRepository.ts';
 import { NoteRepository } from './repositories/NoteRepository.ts';
 import { RegionRepository } from './repositories/RegionRepository.ts';
+import { RegionShapeRepository } from './repositories/RegionShapeRepository.ts';
 
 export const campaignTemplateRepository = new CampaignTemplateRepository();
 export const campaignRepository = new CampaignRepository();
@@ -16,6 +17,7 @@ export const mapTemplateRepository = new MapTemplateRepository();
 export const mapRepository = new MapRepository();
 
 export const regionRepository = new RegionRepository();
+export const regionShapeRepository = new RegionShapeRepository();
 
 export const narrationRepository = new NarrationRepository();
 export const itemRepository = new ItemRepository();
