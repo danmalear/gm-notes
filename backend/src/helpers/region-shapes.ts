@@ -24,7 +24,19 @@ function validateRectangle(rectangle: unknown): asserts rectangle is Rectangle {
 }
 
 function validatePolygon(polygon: unknown): asserts polygon is Polygon {
-	// @TODO
+	if (!polygon || !Array.isArray(polygon) || !polygon.length) {
+		throw Error('Corrupt polygon record');
+	}
+	for (const coords of polygon) {
+		if (
+			!('x' in coords) ||
+			typeof coords.x !== 'number' ||
+			!('y' in coords) ||
+			typeof coords.y !== 'number'
+		) {
+			throw Error('Corrupt polygon record');
+		}
+	}
 }
 
 export async function buildShapes(regionId: UUID) {
