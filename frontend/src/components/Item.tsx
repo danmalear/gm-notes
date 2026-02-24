@@ -7,6 +7,7 @@ import {
 } from '../helpers/headings.ts';
 import Action from './Action.tsx';
 import Collapsible from './Collapsible.tsx';
+import CopyLink from './CopyLink.tsx';
 import Trait from './Trait.tsx';
 
 // @TODO accommodate contained items loaded from data
@@ -27,6 +28,7 @@ const Item: React.FC<ItemProps> = ({ item, ...props }) => {
 
 	const hasDetails =
 		item.value ||
+		('detailsLink' in item && item.detailsLink) ||
 		item.notes?.length ||
 		('items' in item && item.items?.length) ||
 		('actions' in item && item.actions?.length);
@@ -34,6 +36,9 @@ const Item: React.FC<ItemProps> = ({ item, ...props }) => {
 	return hasDetails ? (
 		<Collapsible headingElement={H1} title={headingText(item)}>
 			{item.value ? <Trait label="Value">{item.value}</Trait> : null}
+			{'detailsLink' in item && item.detailsLink ? (
+				<CopyLink href={item.detailsLink}>Details</CopyLink>
+			) : null}
 			{item.notes ? (
 				<ul>
 					{item.notes.map((note, noteIndex) => (
