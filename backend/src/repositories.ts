@@ -2,6 +2,7 @@ import { AbilityCheckRepository } from './repositories/AbilityCheckRepository.ts
 import { ActionRepository } from './repositories/ActionRepository.ts';
 import { CampaignRepository } from './repositories/CampaignRepository.ts';
 import { CampaignTemplateRepository } from './repositories/CampaignTemplateRepository.ts';
+import { ConditionRepository } from './repositories/ConditionRepository.ts';
 import { ItemRepository } from './repositories/ItemRepository.ts';
 import { MapRepository } from './repositories/MapRepository.ts';
 import { MapTemplateRepository } from './repositories/MapTemplateRepository.ts';
@@ -24,4 +25,5 @@ export const itemRepository = new ItemRepository();
 export const actionRepository = new ActionRepository();
 export const abilityCheckRepository = new AbilityCheckRepository();
 
+export const conditionRepository = new ConditionRepository();
 export const noteRepository = new NoteRepository();
