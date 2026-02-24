@@ -50,17 +50,6 @@ const AbilityCheck: React.FC<AbilityCheckProps> = ({
 		</Collapsible>
 	) : (
 		<Collapsible headingElement={H1} title={`${check.skill} (DC ${check.dc})`}>
-			{/* TODO conditions
-			check.prerequisites ? (
-				<>
-					<H2>Prerequisites</H2>
-					<ul>
-						{check.prerequisites.map((prerequisite, prerequisiteIndex) => (
-							<li key={`prerequisite-${prerequisiteIndex}`}>{prerequisite}</li>
-						))}
-					</ul>
-				</>
-			) : null*/}
 			{check.successNarration ? (
 				<Trait label="Success">{check.successNarration}</Trait>
 			) : null}
