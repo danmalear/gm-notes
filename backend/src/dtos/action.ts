@@ -8,5 +8,6 @@ export interface ActionStub {
 	name: string;
 	type?: ActionType;
 	narration?: string;
+	conditions: string[];
 	abilityChecks: AbilityCheckStub[];
 }

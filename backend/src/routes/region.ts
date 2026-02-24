@@ -13,6 +13,7 @@ import { isUUID } from '../helpers/uuid.ts';
 import {
 	abilityCheckRepository,
 	actionRepository,
+	conditionRepository,
 	itemRepository,
 	mapRepository,
 	narrationRepository,
@@ -82,6 +83,7 @@ async function buildActions(targetId: UUID) {
 	const dtoActions: ActionStub[] = [];
 	for (const action of actions) {
 		const abilityChecks = await buildAbilityChecks(action.ActionId);
+		const conditions = await conditionRepository.getByActionId(action.ActionId);
 		// const notes = await noteRepository.getByEntityId(action.ActionId);
 		const narration = action.NarrationId
 			? await narrationRepository.getById(action.NarrationId)
@@ -92,6 +94,7 @@ async function buildActions(targetId: UUID) {
 			name: action.Name,
 			type: action.Type ?? undefined,
 			narration: narration?.Description,
+			conditions: conditions.map((condition) => condition.Description),
 			abilityChecks,
 			// @TODO
 			// notes: [],
