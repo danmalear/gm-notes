@@ -10,6 +10,7 @@ import { IconPlus } from '@tabler/icons-react';
 import type { UUID } from 'crypto';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import AppHeader from '../components/AppHeader.tsx';
 import CampaignCard from '../components/CampaignCard.tsx';
 import CreateCampaignModal from '../components/modals/CreateCampaignModal.tsx';
 import { getMessage } from '../helpers/error.ts';
@@ -134,11 +135,7 @@ const CampaignsView: React.FC = () => {
 				}}
 				offsetScrollbars={true}
 			>
-				<AppShell.Header px="sm">
-					<Flex direction="row" justify="center" align="center" h="100%">
-						<h2>Campaigns</h2>
-					</Flex>
-				</AppShell.Header>
+				<AppHeader title="Campaigns" />
 				<AppShell.Main h="100%" w="100%" onMouseDown={handleMouseDown}>
 					<Flex h="100%" w="100%" px="20%" direction="column" justify="center">
 						<Carousel
