@@ -15,10 +15,23 @@ export interface ActionProps extends React.PropsWithChildren {
 
 const Action: React.FC<ActionProps> = ({ action, topLevelHeading }) => {
 	const H1 = h[topLevelHeading];
+	const H2 = h[getValidHeadingIndex(topLevelHeading + 1)];
 
 	return (
 		<Collapsible headingElement={H1} title={action.name}>
 			{action.type ? <Trait label="Type">{action.type}</Trait> : null}
+			{action.conditions.length ? (
+				<>
+					<H2>Conditions</H2>
+					<ul>
+						{action.conditions.map((condition, index) => (
+							<li key={`action-${action.id}-condition-${condition}-${index}`}>
+								{condition}
+							</li>
+						))}
+					</ul>
+				</>
+			) : null}
 			{action.narration ? <p>{action.narration}</p> : null}
 			{action.abilityChecks?.length
 				? action.abilityChecks.map((check) => (
