@@ -6,7 +6,7 @@ import type { MessageResponse } from '#dtos/MessageResponse.ts';
 import type { RegionQueryParams, RegionResponse } from '#dtos/region.ts';
 import type { UUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
-import type { RegionWithShapes } from '../entities/Region.ts';
+import type { Region } from '../entities/Region.ts';
 import { getMessage } from '../helpers/error.ts';
 import { buildShapes } from '../helpers/region-shapes.ts';
 import { isUUID } from '../helpers/uuid.ts';
@@ -130,7 +130,7 @@ async function buildAbilityChecks(actionId: UUID) {
 	return dtoChecks;
 }
 
-async function buildResponse(region: RegionWithShapes) {
+async function buildResponse(region: Region) {
 	const map = await mapRepository.getById(region.MapId);
 
 	if (!map) {
