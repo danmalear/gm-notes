@@ -72,6 +72,7 @@ const Map: React.FC<MapProps> = ({
 
 			const isCircle = 'r' in shape;
 			const isRect = 'x1' in shape;
+			const isPoly = 'coords' in shape;
 			if (isCircle) {
 				const { x, y, r } = shape;
 
@@ -90,7 +91,18 @@ const Map: React.FC<MapProps> = ({
 				const relativeY2 = (y2 / imgRef.current.naturalHeight) * imgHeight;
 				return `${relativeX1},${relativeY1},${relativeX2},${relativeY2}`;
 			}
-			// @TODO handle polygons
+			if (isPoly) {
+				const { coords } = shape;
+
+				const coordsStrings: string[] = [];
+				for (const pair of coords) {
+					const { x, y } = pair;
+					const relativeX = (x / imgRef.current.naturalWidth) * imgWidth;
+					const relativeY = (y / imgRef.current.naturalHeight) * imgHeight;
+					coordsStrings.push(`${relativeX},${relativeY}`);
+				}
+				return coordsStrings.join(',');
+			}
 			return '';
 		} else {
 			console.error('Image not found in the DOM');

@@ -58,14 +58,13 @@ const MapView: React.FC = () => {
 					regionId: region.id,
 				});
 			}
-			// @TODO support polygons
-			// for (const polygon of region.polygons) {
-			// acc.push({
-			// 	shape: 'poly',
-			// 	coords:
-			// 	regionId:
-			// });
-			// }
+			for (const polygon of region.polygons) {
+				acc.push({
+					shape: 'poly',
+					coords: polygon,
+					regionId: region.id,
+				});
+			}
 		}
 
 		return acc;
