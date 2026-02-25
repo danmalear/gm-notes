@@ -1,4 +1,5 @@
 import { createBrowserRouter, redirect } from 'react-router';
+import App from './App.tsx';
 import CampaignsView from './routes/CampaignsView.tsx';
 import CampaignView from './routes/CampaignView.tsx';
 import { campaignLoader } from './routes/loaders/campaignLoader.ts';
@@ -11,44 +12,43 @@ import RegionView from './routes/RegionView.tsx';
 const router = createBrowserRouter([
 	{
 		path: '/',
-		Component: () => null,
-		loader: () => {
-			return redirect('/campaign');
-		},
-	},
-	{
-		path: 'campaign',
+		Component: App,
 		children: [
 			{
-				index: true,
-				Component: CampaignsView,
-			},
-			{
-				path: ':campaignId',
-				loader: campaignLoader,
-				Component: CampaignView,
+				path: 'campaign',
 				children: [
 					{
 						index: true,
-						loader: () => {
-							return redirect('map');
-						},
+						Component: CampaignsView,
 					},
 					{
-						path: 'map/:mapId',
-						loader: mapLoader,
-						Component: MapView,
+						path: ':campaignId',
+						loader: campaignLoader,
+						Component: CampaignView,
 						children: [
 							{
-								path: 'region/:regionId',
-								loader: regionLoader,
-								Component: RegionView,
+								index: true,
+								loader: () => {
+									return redirect('map');
+								},
+							},
+							{
+								path: 'map/:mapId',
+								loader: mapLoader,
+								Component: MapView,
+								children: [
+									{
+										path: 'region/:regionId',
+										loader: regionLoader,
+										Component: RegionView,
+									},
+								],
+							},
+							{
+								path: 'map/',
+								Component: MapsView,
 							},
 						],
-					},
-					{
-						path: 'map/',
-						Component: MapsView,
 					},
 				],
 			},
