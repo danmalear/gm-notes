@@ -5,7 +5,6 @@ export const tableName = 'Map';
 export const pkColumn = 'MapId';
 
 export interface Map {
-	// Properties
 	MapId: UUID;
 	CampaignId: UUID;
 	MapTemplateId: UUID | null;
