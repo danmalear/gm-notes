@@ -15,8 +15,15 @@ const AppHeaderMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 		e.preventDefault();
 		if (file) {
 			const data = new FormData(e.currentTarget);
-			uploadFile(data);
-			console.log(`${file.name} uploaded`);
+			uploadFile(data)
+				.then((res) => {
+					alert(`${file.name} uploaded: ID ${res.data.fileName}`);
+					setUploadModalOpened(false);
+				})
+				.catch((e) => {
+					alert(`Error uploading ${file.name}. See console for details.`);
+					console.error(`Error uploading ${file.name}. Details: ${e.message}`);
+				});
 		}
 	};
 
