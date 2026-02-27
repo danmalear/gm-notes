@@ -4,8 +4,8 @@ import { useContext, useEffect, useReducer, useState } from 'react';
 import { useLoaderData } from 'react-router';
 import AbilityCheck from '../components/AbilityCheck.tsx';
 import Collapsible from '../components/Collapsible.tsx';
-import CopyLink from '../components/CopyLink.tsx';
 import Creature from '../components/Creature.tsx';
+import { Handout } from '../components/Handout.tsx';
 import Item from '../components/Item.tsx';
 import Lighting from '../components/Lighting.tsx';
 import Narration from '../components/Narration.tsx';
@@ -158,13 +158,10 @@ const RegionView: React.FC = () => {
 							<Collapsible headingElement="h2" title="Handouts">
 								<ul>
 									{region.handouts.map((handout, index) => (
-										<li key={`handout-${index}`}>
-											{handout.url ? (
-												<CopyLink href={handout.url}>{handout.text}</CopyLink>
-											) : (
-												handout.text
-											)}
-										</li>
+										<Handout
+											key={`region-${regionId}-handout-${index}`}
+											handout={handout}
+										/>
 									))}
 								</ul>
 							</Collapsible>
