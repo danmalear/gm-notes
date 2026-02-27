@@ -10,7 +10,7 @@ import {
 import { getMessage } from '../helpers/error.ts';
 import { Repository } from './Repository.ts';
 
-export default class HandoutRepository extends Repository<Handout> {
+export class HandoutRepository extends Repository<Handout> {
 	constructor() {
 		super(tableName, pkColumn);
 	}
