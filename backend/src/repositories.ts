@@ -3,6 +3,7 @@ import { ActionRepository } from './repositories/ActionRepository.ts';
 import { CampaignRepository } from './repositories/CampaignRepository.ts';
 import { CampaignTemplateRepository } from './repositories/CampaignTemplateRepository.ts';
 import { ConditionRepository } from './repositories/ConditionRepository.ts';
+import { HandoutRepository } from './repositories/HandoutRepository.ts';
 import { ItemRepository } from './repositories/ItemRepository.ts';
 import { MapRepository } from './repositories/MapRepository.ts';
 import { MapTemplateRepository } from './repositories/MapTemplateRepository.ts';
@@ -24,6 +25,7 @@ export const narrationRepository = new NarrationRepository();
 export const itemRepository = new ItemRepository();
 export const actionRepository = new ActionRepository();
 export const abilityCheckRepository = new AbilityCheckRepository();
+export const handoutRepository = new HandoutRepository();
 
 export const conditionRepository = new ConditionRepository();
 export const noteRepository = new NoteRepository();
