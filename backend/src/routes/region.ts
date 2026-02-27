@@ -14,6 +14,7 @@ import {
 	abilityCheckRepository,
 	actionRepository,
 	conditionRepository,
+	handoutRepository,
 	itemRepository,
 	mapRepository,
 	narrationRepository,
@@ -144,6 +145,7 @@ async function buildResponse(region: Region) {
 	const narrations = await narrationRepository.getByRegionId(region.RegionId);
 	const items = await buildItems(region.RegionId);
 	const actions = await buildActions(region.RegionId);
+	const handouts = await handoutRepository.getByRegionId(region.RegionId);
 
 	const regionResponse: RegionResponse = {
 		id: region.RegionId,
@@ -168,6 +170,13 @@ async function buildResponse(region: Region) {
 		})),
 		actions,
 		items,
+		handouts: handouts.map((handout) => ({
+			id: handout.HandoutId,
+			campaignId: handout.CampaignId,
+			name: handout.Name,
+			type: handout.Type,
+			source: handout.Source,
+		})),
 	};
 
 	return regionResponse;
