@@ -3,10 +3,10 @@ import { Outlet, useMatch, useNavigate } from 'react-router';
 
 const App: React.FC = () => {
 	const navigate = useNavigate();
-	const campaignMatch = useMatch('/campaign');
+	const topLevelMatch = useMatch('/');
 
 	useEffect(() => {
-		if (!campaignMatch) {
+		if (topLevelMatch) {
 			navigate('/campaign');
 		}
 	});
