@@ -29,6 +29,7 @@ const AppHeaderMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 			>
 				<form onSubmit={handleSubmit} encType="multipart/formdata">
 					<FileInput
+						name="file"
 						label="File"
 						placeholder="Upload file"
 						value={file}
