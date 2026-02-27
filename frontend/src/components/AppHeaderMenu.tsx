@@ -1,7 +1,7 @@
 import { Button, FileInput, Menu, Modal } from '@mantine/core';
 import { IconDotsVertical, IconUpload } from '@tabler/icons-react';
 import React, { type FormEvent, useState } from 'react';
-import { uploadFile } from '../services/fileService';
+import { uploadFile } from '../services/fileService.ts';
 
 const AppHeaderMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 	const [uploadModalOpened, setUploadModalOpened] = useState(false);
