@@ -12,7 +12,7 @@ export interface HandoutProps {
 export const Handout: React.FC<HandoutProps> = ({ handout }) => {
 	const [imageModalOpened, setImageModalOpened] = useState(false);
 
-	const handleOpenModalClick = (e: MouseEvent<HTMLAnchorElement>) => {
+	const handleOpenImageModalClick = (e: MouseEvent<HTMLAnchorElement>) => {
 		e.preventDefault();
 		setImageModalOpened(true);
 	};
