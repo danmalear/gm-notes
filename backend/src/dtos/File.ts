@@ -1,4 +1,4 @@
-export interface FileUploadResponse {
+export interface FileStub {
+	fileId: string;
 	fileName: string;
-	originalFileName: string;
 }

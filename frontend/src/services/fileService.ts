@@ -1,8 +1,8 @@
-import type { FileUploadResponse } from '#dtos/file.ts';
+import type { FileStub } from '#dtos/file.ts';
 import api from './api.ts';
 
 export const uploadFile = async (data: FormData) => {
-	return await api.post<FileUploadResponse>(`/files`, data);
+	return await api.post<FileStub>(`/files`, data);
 };
 
 export const filePath = (fileName: string) => {

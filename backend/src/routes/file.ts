@@ -1,8 +1,9 @@
 import type { MessageResponse } from '#dtos/MessageResponse.ts';
-import type { FileUploadResponse } from '#dtos/file.ts';
+import type { FileStub } from '#dtos/file.ts';
 import express, { type Express, type Request, type Response } from 'express';
 import multer from 'multer';
 import path from 'path';
+import { fileRepository } from '../repositories.ts';
 
 const apiNamespace = 'files';
 
@@ -16,7 +17,7 @@ export const fileRoutes = (app: Express) => {
 		upload.single('file'),
 		async (
 			req: Request<object, undefined>,
-			res: Response<MessageResponse | FileUploadResponse>,
+			res: Response<MessageResponse | FileStub>,
 		) => {
 			console.log(
 				`File POST request received. file: ${JSON.stringify(req.file)}`,
@@ -29,9 +30,14 @@ export const fileRoutes = (app: Express) => {
 				return;
 			}
 
+			const file = await fileRepository.insert({
+				FileId: req.file.filename,
+				FileName: req.file.originalname,
+			});
+
 			res.send({
-				fileName: req.file.filename,
-				originalFileName: req.file.originalname,
+				fileId: file.FileId,
+				fileName: file.FileName,
 			});
 		},
 	);
