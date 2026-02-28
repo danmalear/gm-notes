@@ -1,4 +1,4 @@
-import { pkColumn, tableName, type File } from '../entities/File';
+import { pkColumn, tableName, type File } from '../entities/File.ts';
 import { Repository } from './Repository.ts';
 
 export class FileRepository extends Repository<File> {
