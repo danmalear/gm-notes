@@ -41,7 +41,7 @@ export const Handout: React.FC<HandoutProps> = ({ handout }) => {
 					{handout.type === 'Text' ? (
 						handout.source
 					) : handout.type === 'Image' ? (
-						<a href="#" onClick={handleOpenModalClick}>
+						<a href="#" onClick={handleOpenImageModalClick}>
 							{handout.name}
 						</a>
 					) : handout.type === 'File' ? (
