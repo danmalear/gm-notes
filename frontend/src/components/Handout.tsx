@@ -1,5 +1,5 @@
 import type { HandoutStub } from '#dtos/handout.ts';
-import { Center, Modal } from '@mantine/core';
+import { Center, Modal, Stack } from '@mantine/core';
 import { type MouseEvent, useState } from 'react';
 import type { Handout as HandoutData } from '../data/MapData.ts';
 import { filePath } from '../services/fileService.ts';
@@ -31,13 +31,14 @@ export const Handout: React.FC<HandoutProps> = ({ handout }) => {
 						opened={imageModalOpened}
 						onClose={() => setImageModalOpened(false)}
 						title={handout.name}
+						size="lg"
 					>
 						<Center>
 							<img
 								src={filePath(handout.source)}
 								style={{
-									maxHeight: 500,
-									maxWidth: 500,
+									maxHeight: 'var(--modal-size)',
+									maxWidth: 'var(--modal-size)',
 								}}
 							/>
 						</Center>
@@ -47,13 +48,11 @@ export const Handout: React.FC<HandoutProps> = ({ handout }) => {
 						onClose={() => setTextModalOpened(false)}
 						title={handout.name}
 					>
-						<div style={{ width: '100%' }}>
+						<Stack align="start" gap="sm">
 							{handout.source.split('\n').map((line) => (
-								<Center w="100%" inline>
-									<p>{line.trim()}</p>
-								</Center>
+								<div>{line.trim()}</div>
 							))}
-						</div>
+						</Stack>
 					</Modal>
 				</>
 			) : null}
