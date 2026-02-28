@@ -10,19 +10,19 @@ export interface HandoutProps {
 }
 
 export const Handout: React.FC<HandoutProps> = ({ handout }) => {
-	const [handoutModalOpened, setHandoutModalOpened] = useState(false);
+	const [imageModalOpened, setImageModalOpened] = useState(false);
 
 	const handleOpenModalClick = (e: MouseEvent<HTMLAnchorElement>) => {
 		e.preventDefault();
-		setHandoutModalOpened(true);
+		setImageModalOpened(true);
 	};
 
 	return (
 		<>
 			{'source' in handout ? (
 				<Modal
-					opened={handoutModalOpened}
-					onClose={() => setHandoutModalOpened(false)}
+					opened={imageModalOpened}
+					onClose={() => setImageModalOpened(false)}
 					title={handout.name}
 				>
 					<Center>
