@@ -13,7 +13,6 @@ const firstFloorRegions: {
 		},
 
 		descriptions: [
-			// @TODO DB
 			{
 				prompt: 'Entry',
 				text: (
@@ -64,7 +63,6 @@ const firstFloorRegions: {
 				name: 'Family portrait',
 				notes: ['Portrays the Durst family'],
 			},
-			// @TODO DB
 			{
 				name: 'Wooden panels',
 				notes: ['Portray vines, flowers, nymphs, and satyrs'],
