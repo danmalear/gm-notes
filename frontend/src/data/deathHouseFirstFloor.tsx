@@ -39,7 +39,6 @@ const firstFloorRegions: {
 		],
 
 		checks: [
-			// @TODO DB
 			{
 				skills: ['Insight'],
 				target: 'Portrait',
