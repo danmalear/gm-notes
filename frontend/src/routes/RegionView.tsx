@@ -134,6 +134,7 @@ const RegionView: React.FC = () => {
 							</Collapsible>
 						) : null}
 
+						{/* @TODO Remove this dependency */}
 						{'checks' in region && region.checks?.length ? (
 							<Collapsible headingElement="h2" title="Ability Checks">
 								{region.checks.map((check, index) => (
