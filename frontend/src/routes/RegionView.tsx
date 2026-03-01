@@ -3,6 +3,7 @@ import type { UUID } from 'crypto';
 import { useContext, useEffect, useReducer, useState } from 'react';
 import { useLoaderData } from 'react-router';
 import AbilityCheck from '../components/AbilityCheck.tsx';
+import Action from '../components/Action.tsx';
 import Collapsible from '../components/Collapsible.tsx';
 import Creature from '../components/Creature.tsx';
 import { Handout } from '../components/Handout.tsx';
@@ -121,7 +122,18 @@ const RegionView: React.FC = () => {
 							</Collapsible>
 						) : null}
 
-						{/* @TODO */}
+						{'actions' in region && region.actions.length ? (
+							<Collapsible headingElement="h2" title="Actions">
+								{region.actions.map((action, index) => (
+									<Action
+										key={`region-${region.id}-action-${action.id}`}
+										action={action}
+										topLevelHeading={3}
+									/>
+								))}
+							</Collapsible>
+						) : null}
+
 						{'checks' in region && region.checks?.length ? (
 							<Collapsible headingElement="h2" title="Ability Checks">
 								{region.checks.map((check, index) => (
@@ -153,7 +165,6 @@ const RegionView: React.FC = () => {
 							</Collapsible>
 						) : null}
 
-						{/* @TODO */}
 						{'handouts' in region && region.handouts?.length ? (
 							<Collapsible headingElement="h2" title="Handouts">
 								<ul>
