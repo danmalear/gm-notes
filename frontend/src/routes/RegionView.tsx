@@ -124,7 +124,7 @@ const RegionView: React.FC = () => {
 
 						{'actions' in region && region.actions.length ? (
 							<Collapsible headingElement="h2" title="Actions">
-								{region.actions.map((action, index) => (
+								{region.actions.map((action) => (
 									<Action
 										key={`region-${region.id}-action-${action.id}`}
 										action={action}
