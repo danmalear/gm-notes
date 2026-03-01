@@ -1,9 +1,10 @@
 import type { HandoutStub } from '#dtos/handout.ts';
-import { Center, Modal, Stack } from '@mantine/core';
+import { Modal, Stack } from '@mantine/core';
 import { type MouseEvent, useState } from 'react';
 import type { Handout as HandoutData } from '../data/MapData.ts';
 import { filePath } from '../services/fileService.ts';
 import CopyLink from './CopyLink.tsx';
+import ImageModal from './modals/ImageModal.tsx';
 
 export interface HandoutProps {
 	handout: HandoutData | HandoutStub;
@@ -27,22 +28,12 @@ export const Handout: React.FC<HandoutProps> = ({ handout }) => {
 		<>
 			{'source' in handout ? (
 				<>
-					<Modal
+					<ImageModal
+						imagePath={filePath(handout.source)}
 						opened={imageModalOpened}
 						onClose={() => setImageModalOpened(false)}
 						title={handout.name}
-						size="lg"
-					>
-						<Center>
-							<img
-								src={filePath(handout.source)}
-								style={{
-									maxHeight: 'var(--modal-size)',
-									maxWidth: 'var(--modal-size)',
-								}}
-							/>
-						</Center>
-					</Modal>
+					/>
 					<Modal
 						opened={textModalOpened}
 						onClose={() => setTextModalOpened(false)}
