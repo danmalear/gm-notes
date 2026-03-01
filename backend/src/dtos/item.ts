@@ -9,6 +9,7 @@ interface LocationItemStubBase {
 	name: string;
 	value?: Value;
 	detailsLink?: string;
+	imageFileId?: string;
 	quantity: number;
 	actions: ActionStub[];
 	notes: string[];

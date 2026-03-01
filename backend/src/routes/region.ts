@@ -52,6 +52,7 @@ async function buildItems(locationId: UUID) {
 						? `${item.Value} ${item.ValueUnit ?? 'GP'}`
 						: undefined,
 				detailsLink: item.DetailsLink ?? undefined,
+				imageFileId: item.ImageFileId ?? undefined,
 				quantity: item.Quantity,
 				actions,
 				notes: notes.map((note) => note.Description),
@@ -69,6 +70,7 @@ async function buildItems(locationId: UUID) {
 						? `${item.Value} ${item.ValueUnit ?? 'GP'}`
 						: undefined,
 				detailsLink: item.DetailsLink ?? undefined,
+				imageFileId: item.ImageFileId ?? undefined,
 				quantity: item.Quantity,
 				actions,
 				notes: notes.map((note) => note.Description),

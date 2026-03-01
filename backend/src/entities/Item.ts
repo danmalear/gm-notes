@@ -12,4 +12,5 @@ export interface Item {
 	Value: number | null;
 	ValueUnit: CurrencyUnit | null;
 	DetailsLink: string | null;
+	ImageFileId: string | null;
 }
