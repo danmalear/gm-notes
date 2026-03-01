@@ -51,7 +51,6 @@ const firstFloorRegions: {
 			// @TODO DB
 			{
 				skills: ['Perception'],
-				// @TODO Support region actions
 				target: 'Walls',
 				dc: 12,
 				success:
