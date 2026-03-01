@@ -49,8 +49,10 @@ export const Handout: React.FC<HandoutProps> = ({ handout }) => {
 						title={handout.name}
 					>
 						<Stack align="start" gap="sm">
-							{handout.source.split('\n').map((line) => (
-								<div>{line.trim()}</div>
+							{handout.source.split('\n').map((line, index) => (
+								<div key={`handout-${handout.id}-line-${index}`}>
+									{line.trim()}
+								</div>
 							))}
 						</Stack>
 					</Modal>
