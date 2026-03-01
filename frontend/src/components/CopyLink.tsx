@@ -1,6 +1,6 @@
 import { Popover, Text } from '@mantine/core';
 import { IconCopy } from '@tabler/icons-react';
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 
 export type CopyLinkProps = React.DetailedHTMLProps<
 	React.AnchorHTMLAttributes<HTMLAnchorElement>,
@@ -10,7 +10,8 @@ export type CopyLinkProps = React.DetailedHTMLProps<
 const CopyLink: React.FC<CopyLinkProps> = (props) => {
 	const [popoverOpened, setPopoverOpened] = useState(false);
 
-	const handleClick = () => {
+	const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+		e.preventDefault();
 		if (props.href) {
 			navigator.clipboard.writeText(props.href);
 			setPopoverOpened(true);
