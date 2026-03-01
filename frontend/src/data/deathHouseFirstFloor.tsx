@@ -4,14 +4,18 @@ const firstFloorRegions: {
 	[key: string]: Region;
 } = {
 	cloakroom: {
+		// @TODO DB
 		code: '2B',
+		// @TODO DB
 		name: 'Cloakroom',
+		// @TODO DB
 		lighting: {
 			day: 'Darkness',
 			between: 'Darkness',
 			night: 'Darkness',
 		},
 
+		// @TODO DB
 		descriptions: [
 			{
 				prompt: 'Entry',
@@ -25,20 +29,25 @@ const firstFloorRegions: {
 			},
 		],
 
+		// @TODO DB
 		items: [
 			{
 				name: 'Envelope',
+				// @TODO Container
 				notes: ['Contains the Invitation handout'],
 			},
+			// @TODO DB
 			{
 				name: 'Cloaks',
 				quantity: 4,
 			},
+			// @TODO DB
 			{
 				name: 'Top hat',
 			},
 		],
 
+		// @TODO DB as item
 		handouts: [
 			{
 				text: 'Invitation',
@@ -46,6 +55,7 @@ const firstFloorRegions: {
 			},
 		],
 
+		// @TODO DB
 		areas: [
 			{
 				shape: 'rect',
