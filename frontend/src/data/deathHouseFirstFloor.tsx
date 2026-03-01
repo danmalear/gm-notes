@@ -58,7 +58,6 @@ const firstFloorRegions: {
 		],
 
 		items: [
-			// @TODO DB
 			{
 				name: 'Family portrait',
 				notes: ['Portrays the Durst family'],
