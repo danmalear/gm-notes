@@ -101,7 +101,7 @@ const RegionView: React.FC = () => {
 									<Narration
 										key={`narration-${index}`}
 										narration={narration}
-										headingElement="h3"
+										topLevelHeading={3}
 									/>
 								))}
 							</Collapsible>
