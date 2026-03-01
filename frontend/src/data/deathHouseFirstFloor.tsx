@@ -66,7 +66,6 @@ const firstFloorRegions: {
 				name: 'Wooden panels',
 				notes: ['Portray vines, flowers, nymphs, and satyrs'],
 			},
-			// @TODO DB
 			{
 				name: 'Grandfather clock',
 				notes: ['Sits in the center of the stairwell (not on map)'],
