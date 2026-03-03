@@ -1,8 +1,8 @@
 import type { Lighting } from '#dtos/data-types.ts';
 import type { MapUpdate } from '#dtos/map.js';
-import type { RegionCreate } from '#dtos/region.ts';
-import { ActionIcon, AppShell, ScrollArea } from '@mantine/core';
-import { IconCheck, IconPlus } from '@tabler/icons-react';
+import type { RegionCreate, Shape } from '#dtos/region.ts';
+import { ActionIcon, AppShell, Group, ScrollArea } from '@mantine/core';
+import { IconCheck, IconPlus, IconSquarePlus2 } from '@tabler/icons-react';
 import { useCallback, useMemo, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { href, Outlet, useLoaderData, useNavigate } from 'react-router';
@@ -28,6 +28,7 @@ const MapView: React.FC = () => {
 	const [map, setMap] = useState(useLoaderData<typeof mapLoader>().map);
 
 	const [newRegion, setNewRegion] = useState<RegionCreate | null>(null);
+	const [isAddingNewShape, setIsAddingNewShape] = useState(false);
 
 	// @TODO Add full functionality
 	const handleAddRegionClick = () => {
@@ -41,6 +42,18 @@ const MapView: React.FC = () => {
 			});
 		}
 	};
+
+	// #region shapes
+	const handleAddRectangleClick = () => {
+		setIsAddingNewShape(true);
+	};
+
+	const handleNewShapeAdded = (shape: Shape) => {
+		setIsAddingNewShape(false);
+		// @TODO implement adding shapes to active region
+		console.log('[DEV] New shape added:', JSON.stringify(shape));
+	};
+	// #endregion shapes
 
 	const update = useCallback(async (updatedValues: MapUpdate) => {
 		try {
@@ -178,28 +191,48 @@ const MapView: React.FC = () => {
 						onTimeOfDayChangedHC={setTimeOfDayHC}
 					/>
 					<AppShell.Main h="100%">
-						<MapInteractionCSS minScale={0.75} maxScale={6}>
+						<MapInteractionCSS
+							minScale={0.75}
+							maxScale={6}
+							disablePan={!!isAddingNewShape}
+						>
 							{mapDataHC ? (
 								<Map
 									isEditing={!!newRegion}
+									isAddingNewShape={isAddingNewShape}
 									mapImagePath={map.imagePath}
 									areas={areas.concat(areasHC)}
 									onRegionClick={handleRegionClick}
+									onNewShapeAdded={handleNewShapeAdded}
 								/>
 							) : null}
 						</MapInteractionCSS>
-						<ActionIcon
-							variant="filled"
-							radius="xl"
+						<Group
 							pos="absolute"
 							bottom={0}
 							right="var(--app-shell-aside-offset)"
 							m="sm"
-							size="xl"
-							onClick={handleAddRegionClick}
 						>
-							{newRegion ? <IconCheck /> : <IconPlus />}
-						</ActionIcon>
+							{newRegion ? (
+								// @TODO extract into controls component
+								<ActionIcon
+									variant="filled"
+									radius="xl"
+									size="xl"
+									onClick={handleAddRectangleClick}
+								>
+									<IconSquarePlus2 />
+								</ActionIcon>
+							) : null}
+							<ActionIcon
+								variant="filled"
+								radius="xl"
+								size="xl"
+								onClick={handleAddRegionClick}
+							>
+								{newRegion ? <IconCheck /> : <IconPlus />}
+							</ActionIcon>
+						</Group>
 					</AppShell.Main>
 					<AppShell.Aside>
 						{mapDataHC ? (

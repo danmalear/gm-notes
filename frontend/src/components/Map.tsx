@@ -1,6 +1,14 @@
 import type { Circle, Polygon, Rectangle, Shape } from '#dtos/region.ts';
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import {
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from 'react';
 import { filePath } from '../services/fileService.ts';
+
+// @TODO Clean up the canvas stuff
 
 export interface RectArea {
 	shape: 'rect';
@@ -8,6 +16,22 @@ export interface RectArea {
 	// @TODO make this a UUID when HC is gone
 	regionId: string;
 }
+
+// @TODO consider extracting this
+const drawRectangle = (
+	context: CanvasRenderingContext2D,
+	rectangle: Rectangle,
+) => {
+	const x1 = Math.min(rectangle.x1, rectangle.x2);
+	const x2 = Math.max(rectangle.x1, rectangle.x2);
+	const width = x2 - x1;
+
+	const y1 = Math.min(rectangle.y1, rectangle.y2);
+	const y2 = Math.max(rectangle.y1, rectangle.y2);
+	const height = y2 - y1;
+
+	context.strokeRect(x1, y1, width, height);
+};
 
 export interface CircleArea {
 	shape: 'circle';
@@ -34,15 +58,19 @@ interface Area {
 export interface MapProps extends React.PropsWithChildren {
 	mapImagePath: string;
 	isEditing: boolean;
+	isAddingNewShape: boolean;
 	areas: MapArea[];
 	onRegionClick?: (regionKey: string) => void;
+	onNewShapeAdded: (shape: Shape) => void;
 }
 
 const Map: React.FC<MapProps> = ({
 	mapImagePath,
 	isEditing,
+	isAddingNewShape,
 	areas: areasProp,
 	onRegionClick,
+	onNewShapeAdded,
 }) => {
 	const [imgLoaded, setImgLoaded] = useState(false);
 	const imgRef = useRef<HTMLImageElement | null>(null);
@@ -64,14 +92,65 @@ const Map: React.FC<MapProps> = ({
 		}
 	};
 
-	const offsetStyle: React.CSSProperties = useMemo(
-		() => ({
-			position: 'absolute',
-			top: imgRef.current?.offsetTop,
-			left: imgRef.current?.offsetLeft,
-		}),
-		[imgRef],
-	);
+	const offsetStyle: React.CSSProperties = {
+		position: 'absolute',
+		top: imgRef.current?.offsetTop,
+		left: imgRef.current?.offsetLeft,
+	};
+
+	const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
+	const [newShape, setNewShape] = useState<Shape | null>(null);
+
+	const resetContext = useCallback(() => {
+		let newContext = null;
+		if (context) {
+			newContext = context;
+		} else {
+			const canvas =
+				document.querySelector<HTMLCanvasElement>('#region-canvas');
+			if (!canvas) {
+				console.error('ERROR: Region canvas not found');
+				return;
+			}
+			newContext = canvas.getContext('2d');
+		}
+		newContext?.reset();
+		if (newContext) {
+			newContext.strokeStyle = 'green';
+			newContext.lineWidth = 15;
+		}
+		setContext(newContext);
+	}, [context]);
+
+	useEffect(() => {
+		if (imgLoaded && isEditing) {
+			resetContext();
+		}
+	}, [imgLoaded, isEditing, resetContext]);
+
+	useEffect(() => {
+		if (isAddingNewShape) {
+			// @TODO this is just for testing
+			setNewShape({
+				x1: 500,
+				y1: 500,
+				x2: 700,
+				y2: 700,
+			});
+		}
+	}, [isAddingNewShape]);
+
+	useEffect(() => {
+		// @TODO this is for testing
+		if (context && newShape && 'x1' in newShape) {
+			drawRectangle(context, newShape);
+			setTimeout(() => {
+				resetContext();
+				onNewShapeAdded(newShape);
+				setNewShape(null);
+			}, 2000);
+		}
+	}, [newShape, context, onNewShapeAdded, resetContext]);
 
 	// #region relative coords
 	const [areas, setAreas] = useState<Area[]>([]);
@@ -179,6 +258,7 @@ const Map: React.FC<MapProps> = ({
 			{imgLoaded && isEditing ? (
 				<>
 					<canvas
+						id="region-canvas"
 						style={{
 							zIndex: 1,
 							...offsetStyle,
