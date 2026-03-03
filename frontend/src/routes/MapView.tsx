@@ -27,23 +27,29 @@ const MapView: React.FC = () => {
 
 	const [map, setMap] = useState(useLoaderData<typeof mapLoader>().map);
 
+	// #region editing
 	const [newRegion, setNewRegion] = useState<RegionCreate | null>(null);
 	const [isAddingNewShape, setIsAddingNewShape] = useState(false);
 
 	// @TODO Add full functionality
 	const handleAddRegionClick = () => {
-		if (newRegion) {
-			setNewRegion(null);
-		} else {
-			setNewRegion({
-				mapId: map.id,
-				name: '',
-				rectangles: [],
-			});
-		}
+		setNewRegion({
+			mapId: map.id,
+			name: '',
+			rectangles: [],
+		});
 	};
 
-	// #region shapes
+	const handleFinishRegionClick = () => {
+		if (!newRegion) {
+			console.error(
+				'ERROR: Finish region clicked outside the context of editing a region',
+			);
+			return;
+		}
+		setNewRegion(null);
+	};
+
 	const handleAddRectangleClick = () => {
 		setIsAddingNewShape(true);
 	};
@@ -53,7 +59,7 @@ const MapView: React.FC = () => {
 		// @TODO implement adding shapes to active region
 		console.log('[DEV] New shape added:', JSON.stringify(shape));
 	};
-	// #endregion shapes
+	// #endregion editing
 
 	const update = useCallback(async (updatedValues: MapUpdate) => {
 		try {
@@ -215,23 +221,34 @@ const MapView: React.FC = () => {
 						>
 							{newRegion ? (
 								// @TODO extract into controls component
+								<>
+									<ActionIcon
+										variant="filled"
+										radius="xl"
+										size="xl"
+										onClick={handleAddRectangleClick}
+									>
+										<IconSquarePlus2 />
+									</ActionIcon>
+									<ActionIcon
+										variant="filled"
+										radius="xl"
+										size="xl"
+										onClick={handleFinishRegionClick}
+									>
+										<IconCheck />
+									</ActionIcon>
+								</>
+							) : (
 								<ActionIcon
 									variant="filled"
 									radius="xl"
 									size="xl"
-									onClick={handleAddRectangleClick}
+									onClick={handleAddRegionClick}
 								>
-									<IconSquarePlus2 />
+									<IconPlus />
 								</ActionIcon>
-							) : null}
-							<ActionIcon
-								variant="filled"
-								radius="xl"
-								size="xl"
-								onClick={handleAddRegionClick}
-							>
-								{newRegion ? <IconCheck /> : <IconPlus />}
-							</ActionIcon>
+							)}
 						</Group>
 					</AppShell.Main>
 					<AppShell.Aside>
