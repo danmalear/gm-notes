@@ -1,15 +1,7 @@
 import type { Circle, Polygon, Rectangle, Shape } from '#dtos/region.ts';
-import {
-	useCallback,
-	useEffect,
-	useLayoutEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { filePath } from '../services/fileService.ts';
-
-// @TODO Clean up the canvas stuff
+import DrawRegions from './DrawRegions.tsx';
 
 export interface RectArea {
 	shape: 'rect';
@@ -17,22 +9,6 @@ export interface RectArea {
 	// @TODO make this a UUID when HC is gone
 	regionId: string;
 }
-
-// @TODO consider extracting this
-const drawRectangle = (
-	context: CanvasRenderingContext2D,
-	rectangle: Rectangle,
-) => {
-	const x1 = Math.min(rectangle.x1, rectangle.x2);
-	const x2 = Math.max(rectangle.x1, rectangle.x2);
-	const width = x2 - x1;
-
-	const y1 = Math.min(rectangle.y1, rectangle.y2);
-	const y2 = Math.max(rectangle.y1, rectangle.y2);
-	const height = y2 - y1;
-
-	context.strokeRect(x1, y1, width, height);
-};
 
 export interface CircleArea {
 	shape: 'circle';
@@ -92,71 +68,6 @@ const Map: React.FC<MapProps> = ({
 			onRegionClick(regionKey);
 		}
 	};
-
-	const offsetStyle: React.CSSProperties = {
-		position: 'absolute',
-		top: imgRef.current?.offsetTop,
-		left: imgRef.current?.offsetLeft,
-	};
-
-	const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
-	const [newShape, setNewShape] = useState<Shape | null>(null);
-
-	const isAddingNewShape = useMemo(
-		// @TODO add other shapes
-		() => isAddingNewRectangle,
-		[isAddingNewRectangle],
-	);
-
-	const clearCanvas = useCallback(() => {
-		if (!context || !imgRef.current) {
-			console.error('ERROR: clearCanvas called in an invalid UI state.');
-			return;
-		}
-		context?.clearRect(0, 0, imgRef.current.width, imgRef.current.height);
-	}, [context]);
-
-	useEffect(() => {
-		if (imgLoaded && isEditing) {
-			const canvas =
-				document.querySelector<HTMLCanvasElement>('#region-canvas');
-			if (!canvas) {
-				console.error('ERROR: Region canvas not found');
-				return;
-			}
-
-			const newContext = canvas.getContext('2d');
-			if (newContext) {
-				newContext.strokeStyle = 'green';
-				newContext.lineWidth = 15;
-			}
-			setContext(newContext);
-		}
-	}, [imgLoaded, isEditing]);
-
-	useEffect(() => {
-		if (isAddingNewShape) {
-			// @TODO this is just for testing
-			setNewShape({
-				x1: 500,
-				y1: 500,
-				x2: 700,
-				y2: 700,
-			});
-		}
-	}, [isAddingNewShape]);
-
-	useEffect(() => {
-		// @TODO this is for testing
-		if (context && newShape && 'x1' in newShape) {
-			drawRectangle(context, newShape);
-			setTimeout(() => {
-				clearCanvas();
-				onNewShapeAdded(newShape);
-				setNewShape(null);
-			}, 2000);
-		}
-	}, [newShape, context, onNewShapeAdded, clearCanvas]);
 
 	// #region relative coords
 	const [areas, setAreas] = useState<Area[]>([]);
@@ -262,17 +173,14 @@ const Map: React.FC<MapProps> = ({
 				</map>
 			) : null}
 			{imgLoaded && isEditing ? (
-				<>
-					<canvas
-						id="region-canvas"
-						style={{
-							zIndex: 1,
-							...offsetStyle,
-						}}
-						height={imgRef.current?.height}
-						width={imgRef.current?.width}
-					/>
-				</>
+				<DrawRegions
+					x={imgRef.current?.offsetLeft}
+					y={imgRef.current?.offsetTop}
+					w={imgRef.current?.width}
+					h={imgRef.current?.height}
+					isAddingNewRectangle={isAddingNewRectangle}
+					onRectangleDrawn={onNewShapeAdded}
+				/>
 			) : null}
 		</>
 	);
