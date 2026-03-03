@@ -1,5 +1,6 @@
 import type { Lighting } from '#dtos/data-types.ts';
 import type { MapUpdate } from '#dtos/map.js';
+import type { RegionCreate } from '#dtos/region.ts';
 import { ActionIcon, AppShell, ScrollArea } from '@mantine/core';
 import { IconCheck, IconPlus } from '@tabler/icons-react';
 import { useCallback, useMemo, useState } from 'react';
@@ -26,11 +27,19 @@ const MapView: React.FC = () => {
 
 	const [map, setMap] = useState(useLoaderData<typeof mapLoader>().map);
 
-	const [isEditingRegion, setIsEditingRegion] = useState(true);
+	const [newRegion, setNewRegion] = useState<RegionCreate | null>(null);
 
 	// @TODO Add full functionality
 	const handleAddRegionClick = () => {
-		setIsEditingRegion(!isEditingRegion);
+		if (newRegion) {
+			setNewRegion(null);
+		} else {
+			setNewRegion({
+				mapId: map.id,
+				name: '',
+				rectangles: [],
+			});
+		}
 	};
 
 	const update = useCallback(async (updatedValues: MapUpdate) => {
@@ -172,7 +181,7 @@ const MapView: React.FC = () => {
 						<MapInteractionCSS minScale={0.75} maxScale={6}>
 							{mapDataHC ? (
 								<Map
-									isEditing={isEditingRegion}
+									isEditing={!!newRegion}
 									mapImagePath={map.imagePath}
 									areas={areas.concat(areasHC)}
 									onRegionClick={handleRegionClick}
@@ -189,7 +198,7 @@ const MapView: React.FC = () => {
 							size="xl"
 							onClick={handleAddRegionClick}
 						>
-							{isEditingRegion ? <IconCheck /> : <IconPlus />}
+							{newRegion ? <IconCheck /> : <IconPlus />}
 						</ActionIcon>
 					</AppShell.Main>
 					<AppShell.Aside>
