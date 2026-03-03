@@ -236,6 +236,7 @@ const MapView: React.FC = () => {
 										radius="xl"
 										size="xl"
 										onClick={handleFinishRegionClick}
+										disabled={newRegion.rectangles.length === 0}
 									>
 										<IconCheck />
 									</ActionIcon>
