@@ -4,11 +4,8 @@ const firstFloorRegions: {
 	[key: string]: Region;
 } = {
 	cloakroom: {
-		// @TODO DB
 		code: '2B',
-		// @TODO DB
 		name: 'Cloakroom',
-		// @TODO DB
 		lighting: {
 			day: 'Darkness',
 			between: 'Darkness',
