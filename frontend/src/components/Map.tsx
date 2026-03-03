@@ -174,8 +174,6 @@ const Map: React.FC<MapProps> = ({
 			) : null}
 			{imgLoaded && isEditing ? (
 				<DrawRegions
-					x={imgRef.current?.offsetLeft}
-					y={imgRef.current?.offsetTop}
 					w={imgRef.current?.width}
 					h={imgRef.current?.height}
 					isAddingNewRectangle={isAddingNewRectangle}
