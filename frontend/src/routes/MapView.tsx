@@ -240,6 +240,7 @@ const MapView: React.FC = () => {
 									<ActionIcon
 										title="Add Rectangle"
 										variant="filled"
+										color="cyan"
 										radius="xl"
 										size="xl"
 										onClick={handleAddRectangleClick}
