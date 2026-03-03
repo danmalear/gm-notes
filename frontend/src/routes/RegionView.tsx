@@ -39,7 +39,7 @@ const RegionView: React.FC = () => {
 		setRegion(loadedRegion);
 	}, [loadedRegion]);
 
-	const map = useContext(MapContext);
+	const map = useContext(MapContext).map;
 
 	// #region collapsibles
 	const [collapsibles, dispatch] = useReducer(collapsiblesReducer, {

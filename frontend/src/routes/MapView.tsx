@@ -15,7 +15,7 @@ import AppHeader from '../components/AppHeader.tsx';
 import Map, { type MapArea } from '../components/Map.tsx';
 import MapNavbar from '../components/MapNavbar.tsx';
 import { LegacyContext } from '../contexts/LegacyContext.ts';
-import { MapContext } from '../contexts/MapContext.ts';
+import { MapContext, type Transform } from '../contexts/MapContext.ts';
 import data from '../data/data.ts';
 import type { TimeOfDay } from '../data/MapData.ts';
 import { getMessage } from '../helpers/error.ts';
@@ -31,6 +31,11 @@ const MapView: React.FC = () => {
 	const [timeOfDayHC, setTimeOfDayHC] = useState<TimeOfDay>('night');
 
 	const [map, setMap] = useState(useLoaderData<typeof mapLoader>().map);
+
+	const [transform, setTransform] = useState<Transform>({
+		scale: 1,
+		translation: { x: 0, y: 0 },
+	});
 
 	// #region editing
 	const [newRegion, setNewRegion] = useState<RegionCreate | null>(null);
@@ -174,7 +179,7 @@ const MapView: React.FC = () => {
 	};
 
 	return (
-		<MapContext value={map}>
+		<MapContext value={{ map, transform }}>
 			<LegacyContext value={{ timeOfDay: timeOfDayHC }}>
 				<AppShell
 					id="app-shell"
@@ -216,6 +221,10 @@ const MapView: React.FC = () => {
 							minScale={0.75}
 							maxScale={6}
 							disablePan={!!isAddingNewRectangle}
+							value={transform}
+							onChange={(value) => {
+								setTransform(value);
+							}}
 						>
 							{mapDataHC ? (
 								<Map

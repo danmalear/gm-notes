@@ -1,4 +1,10 @@
-import type { Circle, Polygon, Rectangle, Shape } from '#dtos/region.ts';
+import type {
+	Circle,
+	Coords,
+	Polygon,
+	Rectangle,
+	Shape,
+} from '#dtos/region.ts';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { filePath } from '../services/fileService.ts';
 import DrawRegions from './DrawRegions.tsx';
@@ -117,6 +123,52 @@ const Map: React.FC<MapProps> = ({
 		}
 	}, []);
 
+	const makeCoordsStatic = useCallback((shape: Shape): Shape => {
+		if (imgRef?.current) {
+			const imgWidth = imgRef.current.width;
+			const imgHeight = imgRef.current.height;
+
+			const isCircle = 'r' in shape;
+			const isRect = 'x1' in shape;
+			const isPoly = 'coords' in shape;
+			if (isCircle) {
+				const { x, y, r } = shape;
+
+				return {
+					x: (x / imgWidth) * imgRef.current.naturalWidth,
+					y: (y / imgHeight) * imgRef.current.naturalHeight,
+					r: (r / imgWidth) * imgRef.current.naturalWidth,
+				};
+			}
+			if (isRect) {
+				const { x1, y1, x2, y2 } = shape;
+
+				return {
+					x1: (x1 / imgWidth) * imgRef.current.naturalWidth,
+					y1: (y1 / imgHeight) * imgRef.current.naturalHeight,
+					x2: (x2 / imgWidth) * imgRef.current.naturalWidth,
+					y2: (y2 / imgHeight) * imgRef.current.naturalHeight,
+				};
+			}
+			if (isPoly) {
+				const { coords } = shape;
+
+				const coordsStrings: Coords[] = [];
+				for (const pair of coords) {
+					const { x, y } = pair;
+					coordsStrings.push({
+						x: (x / imgWidth) * imgRef.current.naturalWidth,
+						y: (y / imgHeight) * imgRef.current.naturalHeight,
+					});
+				}
+				return { coords };
+			}
+			throw Error('Invalid shape specified');
+		} else {
+			throw Error('Image not found in the DOM');
+		}
+	}, []);
+
 	const makeAreasRelative = useCallback(
 		(areas: MapArea[]) => {
 			const newAreas: Area[] = areas.map((a) => ({
@@ -176,8 +228,8 @@ const Map: React.FC<MapProps> = ({
 				<DrawRegions
 					w={imgRef.current?.width}
 					h={imgRef.current?.height}
-					isAddingNewRectangle={isAddingNewRectangle}
-					onRectangleDrawn={onNewShapeAdded}
+					isAddingRectangle={isAddingNewRectangle}
+					onRectangleAdded={onNewShapeAdded}
 				/>
 			) : null}
 		</>
