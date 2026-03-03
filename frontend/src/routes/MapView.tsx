@@ -1,6 +1,7 @@
 import type { Lighting } from '#dtos/data-types.ts';
 import type { MapUpdate } from '#dtos/map.js';
-import { AppShell, ScrollArea } from '@mantine/core';
+import { ActionIcon, AppShell, ScrollArea } from '@mantine/core';
+import { IconCheck, IconPlus } from '@tabler/icons-react';
 import { useCallback, useMemo, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { href, Outlet, useLoaderData, useNavigate } from 'react-router';
@@ -24,6 +25,13 @@ const MapView: React.FC = () => {
 	const [timeOfDayHC, setTimeOfDayHC] = useState<TimeOfDay>('night');
 
 	const [map, setMap] = useState(useLoaderData<typeof mapLoader>().map);
+
+	const [isEditingRegion, setIsEditingRegion] = useState(true);
+
+	// @TODO Add full functionality
+	const handleAddRegionClick = () => {
+		setIsEditingRegion(!isEditingRegion);
+	};
 
 	const update = useCallback(async (updatedValues: MapUpdate) => {
 		try {
@@ -164,12 +172,25 @@ const MapView: React.FC = () => {
 						<MapInteractionCSS minScale={0.75} maxScale={6}>
 							{mapDataHC ? (
 								<Map
+									isEditing={isEditingRegion}
 									mapImagePath={map.imagePath}
 									areas={areas.concat(areasHC)}
 									onRegionClick={handleRegionClick}
 								/>
 							) : null}
 						</MapInteractionCSS>
+						<ActionIcon
+							variant="filled"
+							radius="xl"
+							pos="absolute"
+							bottom={0}
+							right="var(--app-shell-aside-offset)"
+							m="sm"
+							size="xl"
+							onClick={handleAddRegionClick}
+						>
+							{isEditingRegion ? <IconCheck /> : <IconPlus />}
+						</ActionIcon>
 					</AppShell.Main>
 					<AppShell.Aside>
 						{mapDataHC ? (

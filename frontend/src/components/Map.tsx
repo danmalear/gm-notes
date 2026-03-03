@@ -1,5 +1,5 @@
 import type { Circle, Polygon, Rectangle, Shape } from '#dtos/region.ts';
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { filePath } from '../services/fileService.ts';
 
 export interface RectArea {
@@ -33,16 +33,19 @@ interface Area {
 
 export interface MapProps extends React.PropsWithChildren {
 	mapImagePath: string;
+	isEditing: boolean;
 	areas: MapArea[];
 	onRegionClick?: (regionKey: string) => void;
 }
 
 const Map: React.FC<MapProps> = ({
 	mapImagePath,
+	isEditing,
 	areas: areasProp,
 	onRegionClick,
 }) => {
 	const [imgLoaded, setImgLoaded] = useState(false);
+	const imgRef = useRef<HTMLImageElement | null>(null);
 
 	const onImgLoad = () => {
 		setImgLoaded(true);
@@ -61,8 +64,16 @@ const Map: React.FC<MapProps> = ({
 		}
 	};
 
+	const offsetStyle: React.CSSProperties = useMemo(
+		() => ({
+			position: 'absolute',
+			top: imgRef.current?.offsetTop,
+			left: imgRef.current?.offsetLeft,
+		}),
+		[imgRef],
+	);
+
 	// #region relative coords
-	const imgRef = useRef<HTMLImageElement | null>(null);
 	const [areas, setAreas] = useState<Area[]>([]);
 
 	const makeCoordsRelative = useCallback((shape: Shape) => {
@@ -150,7 +161,7 @@ const Map: React.FC<MapProps> = ({
 				}}
 				onLoad={onImgLoad}
 			/>
-			{imgLoaded ? (
+			{imgLoaded && !isEditing ? (
 				<map id="map" name="map">
 					{areas.map((area, index) => (
 						<area
@@ -164,6 +175,18 @@ const Map: React.FC<MapProps> = ({
 						/>
 					))}
 				</map>
+			) : null}
+			{imgLoaded && isEditing ? (
+				<>
+					<canvas
+						style={{
+							zIndex: 1,
+							...offsetStyle,
+						}}
+						height={imgRef.current?.height}
+						width={imgRef.current?.width}
+					/>
+				</>
 			) : null}
 		</>
 	);
