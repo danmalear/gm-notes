@@ -223,6 +223,7 @@ const MapView: React.FC = () => {
 								// @TODO extract into controls component
 								<>
 									<ActionIcon
+										title="Add Rectangle"
 										variant="filled"
 										radius="xl"
 										size="xl"
@@ -241,6 +242,7 @@ const MapView: React.FC = () => {
 								</>
 							) : (
 								<ActionIcon
+									title="Add New Region"
 									variant="filled"
 									radius="xl"
 									size="xl"
