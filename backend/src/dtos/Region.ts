@@ -31,6 +31,23 @@ export interface Polygon {
 
 export type Shape = Rectangle | Circle | Polygon;
 
+export interface RegionCreate {
+	name: string;
+	mapId: UUID;
+	rectangles: Rectangle[];
+	// @TODO Some of these might be their own files
+	// circles: Circle[];
+	// polygons: Polygon[];
+	// lighting: RelativeLighting;
+	// narrations: NarrationStub[];
+	// creatures: Creature[];
+	// actions: ActionStub[];
+	// items: LocationItemStub[];
+	// opportunities: string[];
+	// handouts: HandoutStub[];
+	// notes: string[];
+}
+
 export interface RegionQueryParams {
 	mapId?: UUID;
 }
