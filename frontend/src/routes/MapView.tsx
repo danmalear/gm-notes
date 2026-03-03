@@ -34,7 +34,7 @@ const MapView: React.FC = () => {
 
 	// #region editing
 	const [newRegion, setNewRegion] = useState<RegionCreate | null>(null);
-	const [isAddingNewShape, setIsAddingNewShape] = useState(false);
+	const [isAddingNewRectangle, setIsAddingNewRectangle] = useState(false);
 
 	// @TODO Add full functionality
 	const handleAddRegionClick = () => {
@@ -66,11 +66,11 @@ const MapView: React.FC = () => {
 	};
 
 	const handleAddRectangleClick = () => {
-		setIsAddingNewShape(true);
+		setIsAddingNewRectangle(true);
 	};
 
 	const handleNewShapeAdded = (shape: Shape) => {
-		setIsAddingNewShape(false);
+		setIsAddingNewRectangle(false);
 		// @TODO implement adding shapes to active region
 		console.log('[DEV] New shape added:', JSON.stringify(shape));
 	};
@@ -215,12 +215,12 @@ const MapView: React.FC = () => {
 						<MapInteractionCSS
 							minScale={0.75}
 							maxScale={6}
-							disablePan={!!isAddingNewShape}
+							disablePan={!!isAddingNewRectangle}
 						>
 							{mapDataHC ? (
 								<Map
 									isEditing={!!newRegion}
-									isAddingNewShape={isAddingNewShape}
+									isAddingNewRectangle={isAddingNewRectangle}
 									mapImagePath={map.imagePath}
 									areas={areas.concat(areasHC)}
 									onRegionClick={handleRegionClick}

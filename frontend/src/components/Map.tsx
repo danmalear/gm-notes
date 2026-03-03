@@ -3,6 +3,7 @@ import {
 	useCallback,
 	useEffect,
 	useLayoutEffect,
+	useMemo,
 	useRef,
 	useState,
 } from 'react';
@@ -58,7 +59,7 @@ interface Area {
 export interface MapProps extends React.PropsWithChildren {
 	mapImagePath: string;
 	isEditing: boolean;
-	isAddingNewShape: boolean;
+	isAddingNewRectangle: boolean;
 	areas: MapArea[];
 	onRegionClick?: (regionKey: string) => void;
 	onNewShapeAdded: (shape: Shape) => void;
@@ -67,7 +68,7 @@ export interface MapProps extends React.PropsWithChildren {
 const Map: React.FC<MapProps> = ({
 	mapImagePath,
 	isEditing,
-	isAddingNewShape,
+	isAddingNewRectangle,
 	areas: areasProp,
 	onRegionClick,
 	onNewShapeAdded,
@@ -101,32 +102,37 @@ const Map: React.FC<MapProps> = ({
 	const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 	const [newShape, setNewShape] = useState<Shape | null>(null);
 
-	const resetContext = useCallback(() => {
-		let newContext = null;
-		if (context) {
-			newContext = context;
-		} else {
+	const isAddingNewShape = useMemo(
+		// @TODO add other shapes
+		() => isAddingNewRectangle,
+		[isAddingNewRectangle],
+	);
+
+	const clearCanvas = useCallback(() => {
+		if (!context || !imgRef.current) {
+			console.error('ERROR: clearCanvas called in an invalid UI state.');
+			return;
+		}
+		context?.clearRect(0, 0, imgRef.current.width, imgRef.current.height);
+	}, [context]);
+
+	useEffect(() => {
+		if (imgLoaded && isEditing) {
 			const canvas =
 				document.querySelector<HTMLCanvasElement>('#region-canvas');
 			if (!canvas) {
 				console.error('ERROR: Region canvas not found');
 				return;
 			}
-			newContext = canvas.getContext('2d');
-		}
-		newContext?.reset();
-		if (newContext) {
-			newContext.strokeStyle = 'green';
-			newContext.lineWidth = 15;
-		}
-		setContext(newContext);
-	}, [context]);
 
-	useEffect(() => {
-		if (imgLoaded && isEditing) {
-			resetContext();
+			const newContext = canvas.getContext('2d');
+			if (newContext) {
+				newContext.strokeStyle = 'green';
+				newContext.lineWidth = 15;
+			}
+			setContext(newContext);
 		}
-	}, [imgLoaded, isEditing, resetContext]);
+	}, [imgLoaded, isEditing]);
 
 	useEffect(() => {
 		if (isAddingNewShape) {
@@ -145,12 +151,12 @@ const Map: React.FC<MapProps> = ({
 		if (context && newShape && 'x1' in newShape) {
 			drawRectangle(context, newShape);
 			setTimeout(() => {
-				resetContext();
+				clearCanvas();
 				onNewShapeAdded(newShape);
 				setNewShape(null);
 			}, 2000);
 		}
-	}, [newShape, context, onNewShapeAdded, resetContext]);
+	}, [newShape, context, onNewShapeAdded, clearCanvas]);
 
 	// #region relative coords
 	const [areas, setAreas] = useState<Area[]>([]);
