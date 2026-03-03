@@ -2,7 +2,12 @@ import type { Lighting } from '#dtos/data-types.ts';
 import type { MapUpdate } from '#dtos/map.js';
 import type { RegionCreate, Shape } from '#dtos/region.ts';
 import { ActionIcon, AppShell, Group, ScrollArea } from '@mantine/core';
-import { IconCheck, IconPlus, IconSquarePlus2 } from '@tabler/icons-react';
+import {
+	IconCheck,
+	IconPlus,
+	IconSquarePlus2,
+	IconX,
+} from '@tabler/icons-react';
 import { useCallback, useMemo, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { href, Outlet, useLoaderData, useNavigate } from 'react-router';
@@ -38,6 +43,16 @@ const MapView: React.FC = () => {
 			name: '',
 			rectangles: [],
 		});
+	};
+
+	const handleCancelRegionClick = () => {
+		if (!newRegion) {
+			console.error(
+				'ERROR: Cancel region clicked outside the context of editing a region',
+			);
+			return;
+		}
+		setNewRegion(null);
 	};
 
 	const handleFinishRegionClick = () => {
@@ -232,6 +247,17 @@ const MapView: React.FC = () => {
 										<IconSquarePlus2 />
 									</ActionIcon>
 									<ActionIcon
+										title="Cancel Changes"
+										variant="filled"
+										color="red"
+										radius="xl"
+										size="xl"
+										onClick={handleCancelRegionClick}
+									>
+										<IconX />
+									</ActionIcon>
+									<ActionIcon
+										title="Finish Region"
 										variant="filled"
 										radius="xl"
 										size="xl"
