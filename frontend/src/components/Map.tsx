@@ -1,6 +1,6 @@
 import type { Circle, Polygon, Rectangle, Shape } from '#dtos/region.ts';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
-import { makeCoordsRelative } from '../helpers/draw-shapes.ts';
+import { makeCoordsRelative, stringifyCoords } from '../helpers/shapes.ts';
 import { filePath } from '../services/fileService.ts';
 import DrawRegions from './DrawRegions.tsx';
 
@@ -72,33 +72,6 @@ const Map: React.FC<MapProps> = ({
 
 	// #region coords
 	const [areas, setAreas] = useState<Area[]>([]);
-
-	const stringifyCoords = (shape: Shape) => {
-		const isCircle = 'r' in shape;
-		const isRect = 'x1' in shape;
-		const isPoly = 'coords' in shape;
-		if (isCircle) {
-			const { x, y, r } = shape;
-			return `${x},${y},${r}`;
-		}
-		if (isRect) {
-			const { x1, y1, x2, y2 } = shape;
-
-			return `${x1},${y1},${x2},${y2}`;
-		}
-		if (isPoly) {
-			const { coords } = shape;
-
-			const coordsStrings: string[] = [];
-			for (const pair of coords) {
-				const { x, y } = pair;
-				coordsStrings.push(`${x},${y}`);
-			}
-			return coordsStrings.join(',');
-		} else {
-			throw Error('Image not found in the DOM');
-		}
-	};
 
 	const updateAreas = useCallback(() => {
 		if (imgRef?.current) {

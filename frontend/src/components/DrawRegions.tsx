@@ -1,7 +1,7 @@
 import type { Rectangle } from '#dtos/region.ts';
 import { MouseEvent, useCallback, useContext, useRef, useState } from 'react';
-import { MapContext } from '../contexts/MapContext';
-import { drawRectangle } from '../helpers/draw-shapes';
+import { MapContext } from '../contexts/MapContext.ts';
+import { drawRectangle } from '../helpers/shapes.ts';
 
 export interface MapCanvasProps extends React.PropsWithChildren {
 	offsetX?: number;
