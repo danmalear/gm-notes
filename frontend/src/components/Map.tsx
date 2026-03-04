@@ -1,11 +1,6 @@
-import type {
-	Circle,
-	Coords,
-	Polygon,
-	Rectangle,
-	Shape,
-} from '#dtos/region.ts';
+import type { Circle, Polygon, Rectangle, Shape } from '#dtos/region.ts';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { makeCoordsRelative } from '../helpers/draw-shapes.ts';
 import { filePath } from '../services/fileService.ts';
 import DrawRegions from './DrawRegions.tsx';
 
@@ -75,118 +70,51 @@ const Map: React.FC<MapProps> = ({
 		}
 	};
 
-	// #region relative coords
+	// #region coords
 	const [areas, setAreas] = useState<Area[]>([]);
 
-	const makeCoordsRelative = useCallback((shape: Shape) => {
-		if (imgRef?.current) {
-			const imgWidth = imgRef.current.width;
-			const imgHeight = imgRef.current.height;
-
-			const isCircle = 'r' in shape;
-			const isRect = 'x1' in shape;
-			const isPoly = 'coords' in shape;
-			if (isCircle) {
-				const { x, y, r } = shape;
-
-				const relativeX = (x / imgRef.current.naturalWidth) * imgWidth;
-				const relativeY = (y / imgRef.current.naturalHeight) * imgHeight;
-				const relativeR = (r / imgRef.current.naturalWidth) * imgWidth;
-
-				return `${relativeX},${relativeY},${relativeR}`;
-			}
-			if (isRect) {
-				const { x1, y1, x2, y2 } = shape;
-
-				const relativeX1 = (x1 / imgRef.current.naturalWidth) * imgWidth;
-				const relativeY1 = (y1 / imgRef.current.naturalHeight) * imgHeight;
-				const relativeX2 = (x2 / imgRef.current.naturalWidth) * imgWidth;
-				const relativeY2 = (y2 / imgRef.current.naturalHeight) * imgHeight;
-				return `${relativeX1},${relativeY1},${relativeX2},${relativeY2}`;
-			}
-			if (isPoly) {
-				const { coords } = shape;
-
-				const coordsStrings: string[] = [];
-				for (const pair of coords) {
-					const { x, y } = pair;
-					const relativeX = (x / imgRef.current.naturalWidth) * imgWidth;
-					const relativeY = (y / imgRef.current.naturalHeight) * imgHeight;
-					coordsStrings.push(`${relativeX},${relativeY}`);
-				}
-				return coordsStrings.join(',');
-			}
-			return '';
-		} else {
-			console.error('Image not found in the DOM');
-			return undefined;
+	const stringifyCoords = (shape: Shape) => {
+		const isCircle = 'r' in shape;
+		const isRect = 'x1' in shape;
+		const isPoly = 'coords' in shape;
+		if (isCircle) {
+			const { x, y, r } = shape;
+			return `${x},${y},${r}`;
 		}
-	}, []);
+		if (isRect) {
+			const { x1, y1, x2, y2 } = shape;
 
-	const makeCoordsStatic = useCallback((shape: Shape): Shape => {
-		if (imgRef?.current) {
-			const imgWidth = imgRef.current.width;
-			const imgHeight = imgRef.current.height;
+			return `${x1},${y1},${x2},${y2}`;
+		}
+		if (isPoly) {
+			const { coords } = shape;
 
-			const isCircle = 'r' in shape;
-			const isRect = 'x1' in shape;
-			const isPoly = 'coords' in shape;
-			if (isCircle) {
-				const { x, y, r } = shape;
-
-				return {
-					x: (x / imgWidth) * imgRef.current.naturalWidth,
-					y: (y / imgHeight) * imgRef.current.naturalHeight,
-					r: (r / imgWidth) * imgRef.current.naturalWidth,
-				};
+			const coordsStrings: string[] = [];
+			for (const pair of coords) {
+				const { x, y } = pair;
+				coordsStrings.push(`${x},${y}`);
 			}
-			if (isRect) {
-				const { x1, y1, x2, y2 } = shape;
-
-				return {
-					x1: (x1 / imgWidth) * imgRef.current.naturalWidth,
-					y1: (y1 / imgHeight) * imgRef.current.naturalHeight,
-					x2: (x2 / imgWidth) * imgRef.current.naturalWidth,
-					y2: (y2 / imgHeight) * imgRef.current.naturalHeight,
-				};
-			}
-			if (isPoly) {
-				const { coords } = shape;
-
-				const coordsStrings: Coords[] = [];
-				for (const pair of coords) {
-					const { x, y } = pair;
-					coordsStrings.push({
-						x: (x / imgWidth) * imgRef.current.naturalWidth,
-						y: (y / imgHeight) * imgRef.current.naturalHeight,
-					});
-				}
-				return { coords };
-			}
-			throw Error('Invalid shape specified');
+			return coordsStrings.join(',');
 		} else {
 			throw Error('Image not found in the DOM');
 		}
-	}, []);
-
-	const makeAreasRelative = useCallback(
-		(areas: MapArea[]) => {
-			const newAreas: Area[] = areas.map((a) => ({
-				shape: a.shape,
-				coords: makeCoordsRelative(a.coords) || '',
-				regionId: a.regionId,
-			}));
-
-			return newAreas;
-		},
-		[makeCoordsRelative],
-	);
+	};
 
 	const updateAreas = useCallback(() => {
-		if (imgLoaded) {
-			setAreas(makeAreasRelative(areasProp));
+		if (imgRef?.current) {
+			const img = imgRef?.current;
+			const newAreas: Area[] = areasProp.map((a) => {
+				const relativeCoords = makeCoordsRelative(img, a.coords);
+				return {
+					shape: a.shape,
+					coords: stringifyCoords(relativeCoords),
+					regionId: a.regionId,
+				};
+			});
+
+			return setAreas(newAreas);
 		}
-	}, [areasProp, makeAreasRelative, imgLoaded]);
+	}, [areasProp]);
 
 	useLayoutEffect(() => {
 		updateAreas();
@@ -194,7 +122,7 @@ const Map: React.FC<MapProps> = ({
 		return () => window.removeEventListener('resize', updateAreas);
 	}, [updateAreas]);
 
-	// #endregion relative coords
+	// #endregion coords
 
 	return (
 		<>
