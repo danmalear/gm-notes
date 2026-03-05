@@ -43,6 +43,22 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 		[w, h],
 	);
 
+	function validateCanvas(
+		canvas: HTMLCanvasElement | undefined | null,
+	): asserts canvas is HTMLCanvasElement {
+		if (!canvas) {
+			throw Error('ERROR: Canvas not loaded');
+		}
+	}
+
+	function validateContext(
+		context: CanvasRenderingContext2D | null | undefined,
+	): asserts context is CanvasRenderingContext2D {
+		if (!context) {
+			throw Error('ERROR: Canvas context not loaded');
+		}
+	}
+
 	const offsetStyle: React.CSSProperties = {
 		position: 'absolute',
 		left: offsetX,
@@ -66,9 +82,7 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	}
 
 	const getDrawingCoords = (x: number, y: number) => {
-		if (!existingCanvas.current?.getBoundingClientRect()) {
-			throw Error("ERROR: couldn't get bounding rectangle for canvas");
-		}
+		validateCanvas(existingCanvas.current);
 
 		const canvasX = existingCanvas.current.getBoundingClientRect().x;
 		const canvasY = existingCanvas.current.getBoundingClientRect().y;
@@ -131,9 +145,7 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 		if (isAddingNewShape || activeShape) {
 			return;
 		}
-		if (!existingCanvas.current) {
-			throw Error("ERROR: couldn't find canvas");
-		}
+		validateCanvas(existingCanvas.current);
 
 		const relativeCoords = getDrawingCoords(e.clientX, e.clientY);
 		existingCanvas.current.style.cursor = '';
@@ -144,9 +156,6 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 
 	const handleExistingClick = (e: MouseEvent<HTMLCanvasElement>) => {
 		e.preventDefault();
-		if (!existingCanvas.current) {
-			throw Error("ERROR: couldn't find canvas");
-		}
 
 		const relativeCoords = getDrawingCoords(e.clientX, e.clientY);
 		const existingShape = findExistingShape(relativeCoords);
@@ -188,8 +197,9 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	};
 
 	const handleEditMouseMove = (e: MouseEvent<HTMLCanvasElement>) => {
+		validateContext(editContext);
+		const relativeCoords = getDrawingCoords(e.clientX, e.clientY);
 		if (isDrawing) {
-			const relativeCoords = getDrawingCoords(e.clientX, e.clientY);
 			if (isAddingRectangle) {
 				adjustRectangle(relativeCoords.x, relativeCoords.y);
 			}
@@ -216,7 +226,8 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	};
 
 	const adjustRectangle = (x: number, y: number) => {
-		if (!editContext || !rectangle) {
+		validateContext(editContext);
+		if (!rectangle) {
 			throw Error('Invalid UI state');
 		}
 		rectangle.x2 = x;
@@ -226,7 +237,8 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	};
 
 	const finishDrawingRectangle = () => {
-		if (!editContext || !rectangle) {
+		validateContext(editContext);
+		if (!rectangle) {
 			throw Error('Rectangle not defined');
 		}
 		setIsDrawing(false);
