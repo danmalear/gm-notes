@@ -1,19 +1,21 @@
-import type { Rectangle } from '#dtos/region.ts';
+import type { Rectangle, Shape } from '#dtos/region.ts';
 import {
 	useCallback,
 	useContext,
+	useEffect,
 	useRef,
 	useState,
 	type MouseEvent,
 } from 'react';
 import { MapContext } from '../contexts/MapContext.ts';
-import { drawRectangle } from '../helpers/shapes.ts';
+import { drawRectangle, isRectangle } from '../helpers/shapes.ts';
 
 export interface MapCanvasProps extends React.PropsWithChildren {
 	offsetX?: number;
 	offsetY?: number;
 	w?: number;
 	h?: number;
+	existingShapes: Shape[];
 	isAddingRectangle: boolean;
 	onRectangleAdded: (rectangle: Rectangle) => void;
 }
@@ -23,18 +25,16 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	offsetY = 0,
 	w = 0,
 	h = 0,
+	existingShapes,
 	isAddingRectangle,
 	onRectangleAdded,
 }) => {
-	const canvas = useRef<HTMLCanvasElement | null>(null);
-	if (!canvas) {
-		throw Error('ERROR: Region canvas not found');
-	}
-	const context = canvas.current?.getContext('2d');
-	if (context) {
-		context.strokeStyle = 'green';
-		context.lineWidth = 15;
-	}
+	const clearCanvas = useCallback(
+		(context: CanvasRenderingContext2D) => {
+			context.clearRect(0, 0, w, h);
+		},
+		[w, h],
+	);
 
 	const offsetStyle: React.CSSProperties = {
 		position: 'absolute',
@@ -44,24 +44,47 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 
 	const transform = useContext(MapContext).transform;
 
+	// #region existing
+	const existingCanvas = useRef<HTMLCanvasElement | null>(null);
+
+	const existingContext = existingCanvas.current?.getContext('2d');
+	if (existingContext) {
+		existingContext.strokeStyle = 'red';
+		existingContext.lineWidth = 5;
+	}
+
+	useEffect(() => {
+		console.log('existingContext', !!existingContext);
+		console.log('existingShapes.length', existingShapes.length);
+		if (existingContext && existingShapes.length) {
+			console.log('existingContext drawing');
+			existingShapes.forEach((shape) => {
+				if (isRectangle(shape)) {
+					drawRectangle(existingContext, shape);
+				}
+			});
+		}
+	}, [existingContext, existingShapes]);
+	// #endregion existing
+
+	// #region editing
+	const editCanvas = useRef<HTMLCanvasElement | null>(null);
+
+	const editContext = editCanvas.current?.getContext('2d');
+	if (editContext) {
+		editContext.strokeStyle = 'green';
+		editContext.lineWidth = 5;
+	}
 	const [rectangle, setRectangle] = useState<Rectangle | null>(null);
 	const [isDrawing, setIsDrawing] = useState(false);
 
-	const clearCanvas = useCallback(() => {
-		if (!context) {
-			console.error('ERROR: clearCanvas called in an invalid UI state.');
-			return;
-		}
-		context?.clearRect(0, 0, w, h);
-	}, [context, w, h]);
-
 	const getDrawingCoords = (x: number, y: number) => {
-		if (!canvas.current?.getBoundingClientRect()) {
+		if (!editCanvas.current?.getBoundingClientRect()) {
 			throw Error("ERROR: couldn't get bounding rectangle for canvas");
 		}
 
-		const canvasX = canvas.current.getBoundingClientRect().x;
-		const canvasY = canvas.current.getBoundingClientRect().y;
+		const canvasX = editCanvas.current.getBoundingClientRect().x;
+		const canvasY = editCanvas.current.getBoundingClientRect().y;
 
 		return {
 			x: Math.round(x - canvasX) / transform.scale,
@@ -104,36 +127,49 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	};
 
 	const adjustRectangle = (x: number, y: number) => {
-		if (!context || !rectangle) {
+		if (!editContext || !rectangle) {
 			throw Error('Invalid UI state');
 		}
 		rectangle.x2 = x;
 		rectangle.y2 = y;
-		clearCanvas();
-		drawRectangle(context, rectangle);
+		clearCanvas(editContext);
+		drawRectangle(editContext, rectangle);
 	};
 
 	const finishDrawingRectangle = () => {
-		if (!rectangle) {
+		if (!editContext || !rectangle) {
 			throw Error('Rectangle not defined');
 		}
 		setIsDrawing(false);
 		onRectangleAdded(rectangle);
+		clearCanvas(editContext);
 	};
+	// #endregion editing
 
 	return (
-		<canvas
-			ref={canvas}
-			style={{
-				zIndex: 1,
-				...offsetStyle,
-			}}
-			height={h}
-			width={w}
-			onMouseDown={handleMouseDown}
-			onMouseUp={handleMouseUp}
-			onMouseMove={handleMouseMove}
-		/>
+		<>
+			<canvas
+				ref={editCanvas}
+				style={{
+					zIndex: 2,
+					...offsetStyle,
+				}}
+				height={h}
+				width={w}
+				onMouseDown={handleMouseDown}
+				onMouseUp={handleMouseUp}
+				onMouseMove={handleMouseMove}
+			/>
+			<canvas
+				ref={existingCanvas}
+				style={{
+					zIndex: 1,
+					...offsetStyle,
+				}}
+				height={h}
+				width={w}
+			/>
+		</>
 	);
 };
 

@@ -1,4 +1,11 @@
-import type { Circle, Polygon, Rectangle, Shape } from '#dtos/region.ts';
+import type {
+	Circle,
+	Polygon,
+	Rectangle,
+	RegionCreate,
+	RegionStub,
+	Shape,
+} from '#dtos/region.ts';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { makeCoordsRelative, stringifyCoords } from '../helpers/shapes.ts';
 import { filePath } from '../services/fileService.ts';
@@ -34,6 +41,7 @@ interface Area {
 }
 
 export interface MapProps extends React.PropsWithChildren {
+	region: RegionStub | RegionCreate | null;
 	mapImagePath: string;
 	isEditing: boolean;
 	isAddingNewRectangle: boolean;
@@ -43,6 +51,7 @@ export interface MapProps extends React.PropsWithChildren {
 }
 
 const Map: React.FC<MapProps> = ({
+	region,
 	mapImagePath,
 	isEditing,
 	isAddingNewRectangle,
@@ -129,6 +138,7 @@ const Map: React.FC<MapProps> = ({
 				<DrawRegion
 					w={imgRef.current?.width}
 					h={imgRef.current?.height}
+					existingShapes={region?.rectangles ?? []}
 					isAddingRectangle={isAddingNewRectangle}
 					onRectangleAdded={onNewShapeAdded}
 				/>

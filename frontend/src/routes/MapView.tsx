@@ -80,7 +80,7 @@ const MapView: React.FC = () => {
 		setIsAddingNewRectangle(false);
 		console.log('New shape added:', JSON.stringify(shape));
 		if (isRectangle(shape)) {
-			newRegion.rectangles.push(shape);
+			newRegion.rectangles = [...newRegion.rectangles, shape];
 		}
 	};
 	// #endregion editing
@@ -232,6 +232,7 @@ const MapView: React.FC = () => {
 						>
 							{mapDataHC ? (
 								<Map
+									region={newRegion}
 									isEditing={!!newRegion}
 									isAddingNewRectangle={isAddingNewRectangle}
 									mapImagePath={map.imagePath}
