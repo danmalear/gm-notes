@@ -98,7 +98,7 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 		}
 	}, [clearCanvas, existingContext, existingShapes]);
 
-	const isWithinExistingShapes = (coords: Coords) => {
+	const findExistingShape = (coords: Coords) => {
 		// this if statement is just to protect against constant iteration
 		if (
 			isWithinRectangle(coords, {
@@ -110,7 +110,7 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 		) {
 			for (const shape of existingShapes) {
 				if (isRectangle(shape) && isWithinRectangle(coords, shape)) {
-					return true;
+					return shape;
 				}
 				// @TODO other shapes
 			}
@@ -125,7 +125,7 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 
 		const relativeCoords = getDrawingCoords(e.clientX, e.clientY);
 		existingCanvas.current.style.cursor = '';
-		if (isWithinExistingShapes(relativeCoords)) {
+		if (findExistingShape(relativeCoords)) {
 			existingCanvas.current.style.cursor = 'pointer';
 		}
 	};
