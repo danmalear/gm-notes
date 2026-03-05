@@ -3,7 +3,7 @@ import type {
 	Polygon,
 	Rectangle,
 	RegionCreate,
-	RegionStub,
+	RegionResponse,
 	Shape,
 } from '#dtos/region.ts';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
@@ -41,7 +41,7 @@ interface Area {
 }
 
 export interface MapProps extends React.PropsWithChildren {
-	region: RegionStub | RegionCreate | null;
+	region: RegionResponse | RegionCreate | null;
 	activeShape?: Shape;
 	mapImagePath: string;
 	isEditing: boolean;
