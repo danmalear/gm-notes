@@ -2,7 +2,7 @@ import type { Circle, Polygon, Rectangle, Shape } from '#dtos/region.ts';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { makeCoordsRelative, stringifyCoords } from '../helpers/shapes.ts';
 import { filePath } from '../services/fileService.ts';
-import DrawRegions from './DrawRegions.tsx';
+import DrawRegion from './DrawRegion.tsx';
 
 export interface RectArea {
 	shape: 'rect';
@@ -126,7 +126,7 @@ const Map: React.FC<MapProps> = ({
 				</map>
 			) : null}
 			{imgLoaded && isEditing ? (
-				<DrawRegions
+				<DrawRegion
 					w={imgRef.current?.width}
 					h={imgRef.current?.height}
 					isAddingRectangle={isAddingNewRectangle}
