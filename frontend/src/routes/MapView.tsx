@@ -1,6 +1,6 @@
 import type { Lighting } from '#dtos/data-types.ts';
 import type { MapUpdate } from '#dtos/map.js';
-import type { RegionCreate, Shape } from '#dtos/region.ts';
+import type { RegionCreate, RegionResponse, Shape } from '#dtos/region.ts';
 import { ActionIcon, AppShell, Group, ScrollArea } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import { useCallback, useMemo, useState } from 'react';
@@ -35,13 +35,15 @@ const MapView: React.FC = () => {
 	});
 
 	// #region editing
-	const [newRegion, setNewRegion] = useState<RegionCreate | null>(null);
+	const [activeRegion, setActiveRegion] = useState<
+		RegionResponse | RegionCreate | null
+	>(null);
 	const [isAddingNewRectangle, setIsAddingNewRectangle] = useState(false);
 	const [activeShape, setActiveShape] = useState<Shape | null>(null);
 
 	// @TODO Add full functionality
 	const handleAddRegionClick = () => {
-		setNewRegion({
+		setActiveRegion({
 			mapId: map.id,
 			name: '',
 			rectangles: [],
@@ -49,23 +51,23 @@ const MapView: React.FC = () => {
 	};
 
 	const handleCancelRegionClick = () => {
-		if (!newRegion) {
+		if (!activeRegion) {
 			console.error(
 				'ERROR: Cancel region clicked outside the context of editing a region',
 			);
 			return;
 		}
-		setNewRegion(null);
+		setActiveRegion(null);
 	};
 
 	const handleFinishRegionClick = () => {
-		if (!newRegion) {
+		if (!activeRegion) {
 			console.error(
 				'ERROR: Finish region clicked outside the context of editing a region',
 			);
 			return;
 		}
-		setNewRegion(null);
+		setActiveRegion(null);
 	};
 
 	const handleAddRectangleClick = () => {
@@ -73,18 +75,18 @@ const MapView: React.FC = () => {
 	};
 
 	const handleNewShapeAdded = (shape: Shape) => {
-		if (!newRegion) throw Error('handleNewShapeAdded called out of context');
+		if (!activeRegion) throw Error('handleNewShapeAdded called out of context');
 		setIsAddingNewRectangle(false);
 		if (isRectangle(shape)) {
-			newRegion.rectangles = [...newRegion.rectangles, shape];
+			activeRegion.rectangles = [...activeRegion.rectangles, shape];
 		}
 	};
 
 	const handleShapeSelected = (shape: Shape) => {
-		if (!newRegion) throw Error('handleShapeSelected called out of context');
+		if (!activeRegion) throw Error('handleShapeSelected called out of context');
 		setActiveShape(shape);
 		if (isRectangle(shape)) {
-			newRegion.rectangles = newRegion.rectangles.filter(
+			activeRegion.rectangles = activeRegion.rectangles.filter(
 				(rect) => rect !== shape,
 			);
 		}
@@ -239,9 +241,9 @@ const MapView: React.FC = () => {
 						>
 							{mapDataHC ? (
 								<Map
-									region={newRegion}
+									region={activeRegion}
 									activeShape={activeShape ?? undefined}
-									isEditing={!!newRegion}
+									isEditing={!!activeRegion}
 									isAddingNewRectangle={isAddingNewRectangle}
 									mapImagePath={map.imagePath}
 									areas={areas.concat(areasHC)}
@@ -257,9 +259,9 @@ const MapView: React.FC = () => {
 							right="var(--app-shell-aside-offset)"
 							m="sm"
 						>
-							{newRegion ? (
+							{activeRegion ? (
 								<MapRegionControls
-									submitDisabled={newRegion.rectangles.length === 0}
+									submitDisabled={activeRegion.rectangles.length === 0}
 									onAddNewRectangleClick={handleAddRectangleClick}
 									onCancelRegionClick={handleCancelRegionClick}
 									onFinishRegionClick={handleFinishRegionClick}
