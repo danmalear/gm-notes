@@ -2,18 +2,14 @@ import type { Lighting } from '#dtos/data-types.ts';
 import type { MapUpdate } from '#dtos/map.js';
 import type { RegionCreate, Shape } from '#dtos/region.ts';
 import { ActionIcon, AppShell, Group, ScrollArea } from '@mantine/core';
-import {
-	IconCheck,
-	IconPlus,
-	IconSquarePlus2,
-	IconX,
-} from '@tabler/icons-react';
+import { IconPlus } from '@tabler/icons-react';
 import { useCallback, useMemo, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { href, Outlet, useLoaderData, useNavigate } from 'react-router';
 import AppHeader from '../components/AppHeader.tsx';
 import Map, { type MapArea } from '../components/Map.tsx';
 import MapNavbar from '../components/MapNavbar.tsx';
+import MapRegionControls from '../components/MapRegionControls.tsx';
 import { LegacyContext } from '../contexts/LegacyContext.ts';
 import { MapContext, type Transform } from '../contexts/MapContext.ts';
 import data from '../data/data.ts';
@@ -262,39 +258,12 @@ const MapView: React.FC = () => {
 							m="sm"
 						>
 							{newRegion ? (
-								// @TODO extract into controls component
-								<>
-									<ActionIcon
-										title="Add Rectangle"
-										variant="filled"
-										color="cyan"
-										radius="xl"
-										size="xl"
-										onClick={handleAddRectangleClick}
-									>
-										<IconSquarePlus2 />
-									</ActionIcon>
-									<ActionIcon
-										title="Cancel Changes"
-										variant="filled"
-										color="red"
-										radius="xl"
-										size="xl"
-										onClick={handleCancelRegionClick}
-									>
-										<IconX />
-									</ActionIcon>
-									<ActionIcon
-										title="Finish Region"
-										variant="filled"
-										radius="xl"
-										size="xl"
-										onClick={handleFinishRegionClick}
-										disabled={newRegion.rectangles.length === 0}
-									>
-										<IconCheck />
-									</ActionIcon>
-								</>
+								<MapRegionControls
+									submitDisabled={newRegion.rectangles.length === 0}
+									onAddNewRectangleClick={handleAddRectangleClick}
+									onCancelRegionClick={handleCancelRegionClick}
+									onFinishRegionClick={handleFinishRegionClick}
+								/>
 							) : (
 								<ActionIcon
 									title="Add New Region"
