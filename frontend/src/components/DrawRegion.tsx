@@ -118,6 +118,7 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	};
 
 	const handleExistingMouseMove = (e: MouseEvent<HTMLCanvasElement>) => {
+		e.preventDefault();
 		if (!existingCanvas.current) {
 			throw Error("ERROR: couldn't find canvas");
 		}
@@ -141,7 +142,8 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	const [rectangle, setRectangle] = useState<Rectangle | null>(null);
 	const [isDrawing, setIsDrawing] = useState(false);
 
-	const handleMouseDown = (e: MouseEvent<HTMLCanvasElement>) => {
+	const handleEditMouseDown = (e: MouseEvent<HTMLCanvasElement>) => {
+		e.preventDefault();
 		const relativeCoords = getDrawingCoords(e.clientX, e.clientY);
 		if (isAddingRectangle) {
 			startDrawingRectangle(relativeCoords.x, relativeCoords.y);
@@ -157,7 +159,8 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 		}
 	};
 
-	const handleMouseUp = () => {
+	const handleEditMouseUp = (e: MouseEvent<HTMLCanvasElement>) => {
+		e.preventDefault();
 		if (isDrawing) {
 			if (isAddingRectangle) {
 				finishDrawingRectangle();
@@ -206,8 +209,8 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 					}}
 					height={h}
 					width={w}
-					onMouseDown={handleMouseDown}
-					onMouseUp={handleMouseUp}
+					onMouseDown={handleEditMouseDown}
+					onMouseUp={handleEditMouseUp}
 					onMouseMove={handleEditMouseMove}
 				/>
 			) : null}
