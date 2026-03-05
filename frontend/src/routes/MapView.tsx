@@ -41,6 +41,7 @@ const MapView: React.FC = () => {
 	// #region editing
 	const [newRegion, setNewRegion] = useState<RegionCreate | null>(null);
 	const [isAddingNewRectangle, setIsAddingNewRectangle] = useState(false);
+	const [activeShape, setActiveShape] = useState<Shape | null>(null);
 
 	// @TODO Add full functionality
 	const handleAddRegionClick = () => {
@@ -78,10 +79,20 @@ const MapView: React.FC = () => {
 	const handleNewShapeAdded = (shape: Shape) => {
 		if (!newRegion) throw Error('handleNewShapeAdded called out of context');
 		setIsAddingNewRectangle(false);
-		console.log('New shape added:', JSON.stringify(shape));
 		if (isRectangle(shape)) {
 			newRegion.rectangles = [...newRegion.rectangles, shape];
 		}
+	};
+
+	const handleShapeSelected = (shape: Shape) => {
+		if (!newRegion) throw Error('handleShapeSelected called out of context');
+		setActiveShape(shape);
+		if (isRectangle(shape)) {
+			newRegion.rectangles = newRegion.rectangles.filter(
+				(rect) => rect !== shape,
+			);
+		}
+		// alert(`Shape selected: ${JSON.stringify(shape)}`);
 	};
 	// #endregion editing
 
@@ -233,12 +244,14 @@ const MapView: React.FC = () => {
 							{mapDataHC ? (
 								<Map
 									region={newRegion}
+									activeShape={activeShape ?? undefined}
 									isEditing={!!newRegion}
 									isAddingNewRectangle={isAddingNewRectangle}
 									mapImagePath={map.imagePath}
 									areas={areas.concat(areasHC)}
 									onRegionClick={handleRegionClick}
 									onNewShapeAdded={handleNewShapeAdded}
+									onShapeSelected={handleShapeSelected}
 								/>
 							) : null}
 						</MapInteractionCSS>

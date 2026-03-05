@@ -20,7 +20,9 @@ export interface MapCanvasProps extends React.PropsWithChildren {
 	w?: number;
 	h?: number;
 	existingShapes: Shape[];
+	activeShape?: Shape;
 	isAddingRectangle: boolean;
+	onShapeSelected: (shape: Shape) => void;
 	onShapeAdded: (shape: Shape) => void;
 }
 
@@ -30,7 +32,9 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	w = 0,
 	h = 0,
 	existingShapes,
+	activeShape,
 	isAddingRectangle,
+	onShapeSelected,
 	onShapeAdded,
 }) => {
 	const clearCanvas = useCallback(
@@ -88,13 +92,15 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	}
 
 	useEffect(() => {
-		if (existingContext && existingShapes.length) {
+		if (existingContext) {
 			clearCanvas(existingContext);
-			existingShapes.forEach((shape) => {
-				if (isRectangle(shape)) {
-					drawRectangle(existingContext, shape, true);
-				}
-			});
+			if (existingShapes.length) {
+				existingShapes.forEach((shape) => {
+					if (isRectangle(shape)) {
+						drawRectangle(existingContext, shape, true);
+					}
+				});
+			}
 		}
 	}, [clearCanvas, existingContext, existingShapes]);
 
@@ -139,7 +145,7 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 		const relativeCoords = getDrawingCoords(e.clientX, e.clientY);
 		const existingShape = findExistingShape(relativeCoords);
 		if (existingShape) {
-			alert(`Selected shape ${JSON.stringify(existingShape)}`);
+			onShapeSelected(existingShape);
 		}
 	};
 	// #endregion existing
@@ -154,6 +160,18 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	}
 	const [rectangle, setRectangle] = useState<Rectangle | null>(null);
 	const [isDrawing, setIsDrawing] = useState(false);
+
+	useEffect(() => {
+		if (activeShape) {
+			if (!editContext) {
+				return;
+			}
+			if (isRectangle(activeShape)) {
+				setRectangle(activeShape);
+				drawRectangle(editContext, activeShape);
+			}
+		}
+	}, [editContext, activeShape]);
 
 	const handleEditMouseDown = (e: MouseEvent<HTMLCanvasElement>) => {
 		e.preventDefault();
@@ -213,7 +231,7 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 
 	return (
 		<>
-			{isAddingRectangle ? (
+			{isAddingRectangle || activeShape ? (
 				<canvas
 					ref={editCanvas}
 					style={{
