@@ -54,10 +54,7 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	}
 
 	useEffect(() => {
-		console.log('existingContext', !!existingContext);
-		console.log('existingShapes.length', existingShapes.length);
 		if (existingContext && existingShapes.length) {
-			console.log('existingContext drawing');
 			existingShapes.forEach((shape) => {
 				if (isRectangle(shape)) {
 					drawRectangle(existingContext, shape);
