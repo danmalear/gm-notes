@@ -17,7 +17,7 @@ export interface MapCanvasProps extends React.PropsWithChildren {
 	h?: number;
 	existingShapes: Shape[];
 	isAddingRectangle: boolean;
-	onRectangleAdded: (rectangle: Rectangle) => void;
+	onShapeAdded: (shape: Shape) => void;
 }
 
 const MapCanvas: React.FC<MapCanvasProps> = ({
@@ -27,7 +27,7 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	h = 0,
 	existingShapes,
 	isAddingRectangle,
-	onRectangleAdded,
+	onShapeAdded,
 }) => {
 	const clearCanvas = useCallback(
 		(context: CanvasRenderingContext2D) => {
@@ -138,7 +138,7 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 			throw Error('Rectangle not defined');
 		}
 		setIsDrawing(false);
-		onRectangleAdded(rectangle);
+		onShapeAdded(rectangle);
 		clearCanvas(editContext);
 	};
 	// #endregion editing

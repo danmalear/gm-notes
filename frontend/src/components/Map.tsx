@@ -140,7 +140,7 @@ const Map: React.FC<MapProps> = ({
 					h={imgRef.current?.height}
 					existingShapes={region?.rectangles ?? []}
 					isAddingRectangle={isAddingNewRectangle}
-					onRectangleAdded={onNewShapeAdded}
+					onShapeAdded={onNewShapeAdded}
 				/>
 			) : null}
 		</>
