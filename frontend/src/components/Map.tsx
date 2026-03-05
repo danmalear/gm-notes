@@ -47,7 +47,6 @@ export interface MapProps extends React.PropsWithChildren {
 	isAddingNewRectangle: boolean;
 	areas: MapArea[];
 	onRegionClick?: (regionKey: string) => void;
-	onNewShapeAdded: (shape: Shape) => void;
 	onShapeSelected: (shape: Shape) => void;
 }
 
@@ -58,7 +57,6 @@ const Map: React.FC<MapProps> = ({
 	isAddingNewRectangle,
 	areas: areasProp,
 	onRegionClick,
-	onNewShapeAdded,
 	onShapeSelected,
 }) => {
 	const [imgLoaded, setImgLoaded] = useState(false);
@@ -143,7 +141,6 @@ const Map: React.FC<MapProps> = ({
 					existingShapes={activeRegion?.rectangles ?? []}
 					activeShape={activeShape}
 					isAddingRectangle={isAddingNewRectangle}
-					onShapeAdded={onNewShapeAdded}
 					onShapeSelected={onShapeSelected}
 				/>
 			) : null}

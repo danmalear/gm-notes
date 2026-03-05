@@ -86,6 +86,7 @@ const MapView: React.FC = () => {
 		if (revertShape && isRectangle(revertShape)) {
 			activeRegion.rectangles = [...activeRegion.rectangles, revertShape];
 		}
+		setRevertShape(null);
 		setActiveShape(null);
 	};
 
@@ -99,20 +100,17 @@ const MapView: React.FC = () => {
 		if (isRectangle(activeShape)) {
 			activeRegion.rectangles = [...activeRegion.rectangles, activeShape];
 		}
+		setRevertShape(null);
 		setActiveShape(null);
-	};
-
-	const handleNewShapeAdded = (shape: Shape) => {
-		if (!activeRegion) throw Error('handleNewShapeAdded called out of context');
-		setIsAddingNewRectangle(false);
-		if (isRectangle(shape)) {
-			activeRegion.rectangles = [...activeRegion.rectangles, shape];
-		}
 	};
 
 	const handleShapeSelected = (shape: Shape) => {
 		if (!activeRegion) throw Error('handleShapeSelected called out of context');
-		setRevertShape({ ...shape });
+		setIsAddingNewRectangle(false);
+		const existingShape = activeRegion.rectangles.find(
+			(rect) => rect === shape,
+		);
+		setRevertShape(existingShape ? { ...existingShape } : null);
 		setActiveShape(shape);
 		if (isRectangle(shape)) {
 			activeRegion.rectangles = activeRegion.rectangles.filter(
@@ -275,7 +273,6 @@ const MapView: React.FC = () => {
 									mapImagePath={map.imagePath}
 									areas={areas.concat(areasHC)}
 									onRegionClick={handleRegionClick}
-									onNewShapeAdded={handleNewShapeAdded}
 									onShapeSelected={handleShapeSelected}
 								/>
 							) : null}
@@ -287,9 +284,9 @@ const MapView: React.FC = () => {
 							m="sm"
 						>
 							{activeRegion ? (
-								activeShape ? (
+								activeShape || isAddingNewRectangle ? (
 									<MapShapeControls
-										submitDisabled={false}
+										submitDisabled={isAddingNewRectangle}
 										onCancelShapeClick={handleCancelShapeClick}
 										onFinishShapeClick={handleFinishShapeClick}
 									/>
