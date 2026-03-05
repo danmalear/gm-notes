@@ -11,6 +11,7 @@ import {
 import { MapContext } from '../contexts/MapContext.ts';
 import {
 	drawRectangle,
+	getRectanglePaths,
 	isRectangle,
 	isWithinRectangle,
 } from '../helpers/shapes.ts';
@@ -197,11 +198,29 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	};
 
 	const handleEditMouseMove = (e: MouseEvent<HTMLCanvasElement>) => {
+		validateCanvas(editCanvas.current);
 		validateContext(editContext);
 		const relativeCoords = getDrawingCoords(e.clientX, e.clientY);
+		const { x, y } = relativeCoords;
+		editCanvas.current.style.cursor = '';
 		if (isDrawing) {
 			if (isAddingRectangle) {
-				adjustRectangle(relativeCoords.x, relativeCoords.y);
+				adjustRectangle(x, y);
+			}
+		} else if (activeShape) {
+			if (isRectangle(activeShape)) {
+				const paths = getRectanglePaths(activeShape);
+				if (
+					editContext.isPointInStroke(paths.topLine, x, y) ||
+					editContext.isPointInStroke(paths.bottomLine, x, y)
+				) {
+					editCanvas.current.style.cursor = 'ns-resize';
+				} else if (
+					editContext.isPointInStroke(paths.leftLine, x, y) ||
+					editContext.isPointInStroke(paths.rightLine, x, y)
+				) {
+					editCanvas.current.style.cursor = 'ew-resize';
+				}
 			}
 		}
 	};

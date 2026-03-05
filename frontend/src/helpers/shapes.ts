@@ -123,6 +123,33 @@ export const isWithinRectangle = (coords: Coords, rectangle: Rectangle) => {
 	return x >= minX && x <= maxX && y >= minY && y <= maxY;
 };
 
+export const getRectanglePaths = (rectangle: Rectangle) => {
+	const x1 = Math.min(rectangle.x1, rectangle.x2);
+	const x2 = Math.max(rectangle.x1, rectangle.x2);
+
+	const y1 = Math.min(rectangle.y1, rectangle.y2);
+	const y2 = Math.max(rectangle.y1, rectangle.y2);
+
+	const topLine = new Path2D();
+	topLine.moveTo(x1, y1);
+	topLine.lineTo(x2, y1);
+	const bottomLine = new Path2D();
+	bottomLine.moveTo(x1, y2);
+	bottomLine.lineTo(x2, y2);
+	const leftLine = new Path2D();
+	leftLine.moveTo(x1, y1);
+	leftLine.lineTo(x1, y2);
+	const rightLine = new Path2D();
+	rightLine.moveTo(x2, y1);
+	rightLine.lineTo(x2, y2);
+	return {
+		topLine,
+		bottomLine,
+		leftLine,
+		rightLine,
+	};
+};
+
 export const drawRectangle = (
 	context: CanvasRenderingContext2D,
 	rectangle: Rectangle,
