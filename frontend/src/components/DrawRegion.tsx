@@ -1,4 +1,4 @@
-import type { Rectangle, Shape } from '#dtos/region.ts';
+import type { Coords, Rectangle, Shape } from '#dtos/region.ts';
 import {
 	useCallback,
 	useContext,
@@ -8,7 +8,11 @@ import {
 	type MouseEvent,
 } from 'react';
 import { MapContext } from '../contexts/MapContext.ts';
-import { drawRectangle, isRectangle } from '../helpers/shapes.ts';
+import {
+	drawRectangle,
+	isRectangle,
+	isWithinRectangle,
+} from '../helpers/shapes.ts';
 
 export interface MapCanvasProps extends React.PropsWithChildren {
 	offsetX?: number;
@@ -50,18 +54,80 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	const existingContext = existingCanvas.current?.getContext('2d');
 	if (existingContext) {
 		existingContext.strokeStyle = 'red';
+		existingContext.fillStyle = '#ff000080';
 		existingContext.lineWidth = 5;
+	}
+
+	const getDrawingCoords = (x: number, y: number) => {
+		if (!existingCanvas.current?.getBoundingClientRect()) {
+			throw Error("ERROR: couldn't get bounding rectangle for canvas");
+		}
+
+		const canvasX = existingCanvas.current.getBoundingClientRect().x;
+		const canvasY = existingCanvas.current.getBoundingClientRect().y;
+
+		return {
+			x: Math.round(x - canvasX) / transform.scale,
+			y: Math.round(y - canvasY) / transform.scale,
+		};
+	};
+
+	let minX = 1000000;
+	let maxX = -1000000;
+	let minY = 1000000;
+	let maxY = -1000000;
+
+	for (const shape of existingShapes) {
+		if (isRectangle(shape)) {
+			minX = Math.min(minX, shape.x1, shape.x2);
+			maxX = Math.max(maxX, shape.x1, shape.x2);
+			minY = Math.min(minY, shape.y1, shape.y2);
+			maxY = Math.max(maxY, shape.y1, shape.y2);
+		}
+		// @TODO other shapes
 	}
 
 	useEffect(() => {
 		if (existingContext && existingShapes.length) {
+			clearCanvas(existingContext);
 			existingShapes.forEach((shape) => {
 				if (isRectangle(shape)) {
-					drawRectangle(existingContext, shape);
+					drawRectangle(existingContext, shape, true);
 				}
 			});
 		}
-	}, [existingContext, existingShapes]);
+	}, [clearCanvas, existingContext, existingShapes]);
+
+	const isWithinExistingShapes = (coords: Coords) => {
+		// this if statement is just to protect against constant iteration
+		if (
+			isWithinRectangle(coords, {
+				x1: minX,
+				x2: maxX,
+				y1: minY,
+				y2: maxY,
+			})
+		) {
+			for (const shape of existingShapes) {
+				if (isRectangle(shape) && isWithinRectangle(coords, shape)) {
+					return true;
+				}
+				// @TODO other shapes
+			}
+		}
+	};
+
+	const handleExistingMouseMove = (e: MouseEvent<HTMLCanvasElement>) => {
+		if (!existingCanvas.current) {
+			throw Error("ERROR: couldn't find canvas");
+		}
+
+		const relativeCoords = getDrawingCoords(e.clientX, e.clientY);
+		existingCanvas.current.style.cursor = '';
+		if (isWithinExistingShapes(relativeCoords)) {
+			existingCanvas.current.style.cursor = 'pointer';
+		}
+	};
 	// #endregion existing
 
 	// #region editing
@@ -75,20 +141,6 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	const [rectangle, setRectangle] = useState<Rectangle | null>(null);
 	const [isDrawing, setIsDrawing] = useState(false);
 
-	const getDrawingCoords = (x: number, y: number) => {
-		if (!editCanvas.current?.getBoundingClientRect()) {
-			throw Error("ERROR: couldn't get bounding rectangle for canvas");
-		}
-
-		const canvasX = editCanvas.current.getBoundingClientRect().x;
-		const canvasY = editCanvas.current.getBoundingClientRect().y;
-
-		return {
-			x: Math.round(x - canvasX) / transform.scale,
-			y: Math.round(y - canvasY) / transform.scale,
-		};
-	};
-
 	const handleMouseDown = (e: MouseEvent<HTMLCanvasElement>) => {
 		const relativeCoords = getDrawingCoords(e.clientX, e.clientY);
 		if (isAddingRectangle) {
@@ -96,7 +148,7 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 		}
 	};
 
-	const handleMouseMove = (e: MouseEvent<HTMLCanvasElement>) => {
+	const handleEditMouseMove = (e: MouseEvent<HTMLCanvasElement>) => {
 		if (isDrawing) {
 			const relativeCoords = getDrawingCoords(e.clientX, e.clientY);
 			if (isAddingRectangle) {
@@ -145,18 +197,20 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 
 	return (
 		<>
-			<canvas
-				ref={editCanvas}
-				style={{
-					zIndex: 2,
-					...offsetStyle,
-				}}
-				height={h}
-				width={w}
-				onMouseDown={handleMouseDown}
-				onMouseUp={handleMouseUp}
-				onMouseMove={handleMouseMove}
-			/>
+			{isAddingRectangle ? (
+				<canvas
+					ref={editCanvas}
+					style={{
+						zIndex: 2,
+						...offsetStyle,
+					}}
+					height={h}
+					width={w}
+					onMouseDown={handleMouseDown}
+					onMouseUp={handleMouseUp}
+					onMouseMove={handleEditMouseMove}
+				/>
+			) : null}
 			<canvas
 				ref={existingCanvas}
 				style={{
@@ -165,6 +219,7 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 				}}
 				height={h}
 				width={w}
+				onMouseMove={handleExistingMouseMove}
 			/>
 		</>
 	);
