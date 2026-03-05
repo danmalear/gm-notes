@@ -1,8 +1,8 @@
 import type { Circle, Polygon, Rectangle, Shape } from '#dtos/region.ts';
 
-const isCircle = (shape: Shape) => 'r' in shape;
-const isRect = (shape: Shape) => 'x1' in shape;
-const isPoly = (shape: Shape) => 'coords' in shape;
+export const isCircle = (shape: Shape) => 'r' in shape;
+export const isRectangle = (shape: Shape) => 'x1' in shape;
+export const isPolygon = (shape: Shape) => 'coords' in shape;
 
 // This is to ensure the makeCoords... functions return the correct types
 type ShapeIdentity<T> = T extends Circle
@@ -26,7 +26,7 @@ export const makeCoordsRelative = <T extends Shape, R = ShapeIdentity<T>>(
 			r: (r / img.naturalWidth) * img.width,
 		} as R;
 	}
-	if (isRect(shape)) {
+	if (isRectangle(shape)) {
 		const { x1, y1, x2, y2 } = shape;
 
 		return {
@@ -36,7 +36,7 @@ export const makeCoordsRelative = <T extends Shape, R = ShapeIdentity<T>>(
 			y2: (y2 / img.naturalHeight) * img.height,
 		} as R;
 	}
-	if (isPoly(shape)) {
+	if (isPolygon(shape)) {
 		const { coords } = shape;
 
 		return {
@@ -53,10 +53,7 @@ export const makeCoordsStatic = <T extends Shape, R = ShapeIdentity<T>>(
 	img: HTMLImageElement,
 	shape: T,
 ): R => {
-	const isCircle = 'r' in shape;
-	const isRect = 'x1' in shape;
-	const isPoly = 'coords' in shape;
-	if (isCircle) {
+	if (isCircle(shape)) {
 		const { x, y, r } = shape;
 
 		return {
@@ -65,7 +62,7 @@ export const makeCoordsStatic = <T extends Shape, R = ShapeIdentity<T>>(
 			r: (r / img.width) * img.naturalWidth,
 		} as R;
 	}
-	if (isRect) {
+	if (isRectangle(shape)) {
 		const { x1, y1, x2, y2 } = shape;
 
 		return {
@@ -75,7 +72,7 @@ export const makeCoordsStatic = <T extends Shape, R = ShapeIdentity<T>>(
 			y2: (y2 / img.height) * img.naturalHeight,
 		} as R;
 	}
-	if (isPoly) {
+	if (isPolygon(shape)) {
 		const { coords } = shape;
 		return {
 			coords: coords.map((pair) => ({
@@ -88,19 +85,16 @@ export const makeCoordsStatic = <T extends Shape, R = ShapeIdentity<T>>(
 };
 
 export const stringifyCoords = (shape: Shape) => {
-	const isCircle = 'r' in shape;
-	const isRect = 'x1' in shape;
-	const isPoly = 'coords' in shape;
-	if (isCircle) {
+	if (isCircle(shape)) {
 		const { x, y, r } = shape;
 		return `${x},${y},${r}`;
 	}
-	if (isRect) {
+	if (isRectangle(shape)) {
 		const { x1, y1, x2, y2 } = shape;
 
 		return `${x1},${y1},${x2},${y2}`;
 	}
-	if (isPoly) {
+	if (isPolygon(shape)) {
 		const { coords } = shape;
 
 		const coordsStrings: string[] = [];
