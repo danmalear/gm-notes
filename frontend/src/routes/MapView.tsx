@@ -10,6 +10,7 @@ import AppHeader from '../components/AppHeader.tsx';
 import Map, { type MapArea } from '../components/Map.tsx';
 import MapNavbar from '../components/MapNavbar.tsx';
 import MapRegionControls from '../components/MapRegionControls.tsx';
+import MapShapeControls from '../components/MapShapeControls.tsx';
 import { LegacyContext } from '../contexts/LegacyContext.ts';
 import { MapContext, type Transform } from '../contexts/MapContext.ts';
 import data from '../data/data.ts';
@@ -40,6 +41,7 @@ const MapView: React.FC = () => {
 	>(null);
 	const [isAddingNewRectangle, setIsAddingNewRectangle] = useState(false);
 	const [activeShape, setActiveShape] = useState<Shape | null>(null);
+	const [revertShape, setRevertShape] = useState<Shape | null>(null);
 
 	// @TODO Add full functionality
 	const handleAddRegionClick = () => {
@@ -74,6 +76,32 @@ const MapView: React.FC = () => {
 		setIsAddingNewRectangle(true);
 	};
 
+	const handleCancelShapeClick = () => {
+		if (!activeRegion || !activeShape) {
+			console.error(
+				'ERROR: Cancel shape clicked outside the context of editing a shape',
+			);
+			return;
+		}
+		if (revertShape && isRectangle(revertShape)) {
+			activeRegion.rectangles = [...activeRegion.rectangles, revertShape];
+		}
+		setActiveShape(null);
+	};
+
+	const handleFinishShapeClick = () => {
+		if (!activeRegion || !activeShape) {
+			console.error(
+				'ERROR: Finish shape clicked outside the context of editing a shape',
+			);
+			return;
+		}
+		if (isRectangle(activeShape)) {
+			activeRegion.rectangles = [...activeRegion.rectangles, activeShape];
+		}
+		setActiveShape(null);
+	};
+
 	const handleNewShapeAdded = (shape: Shape) => {
 		if (!activeRegion) throw Error('handleNewShapeAdded called out of context');
 		setIsAddingNewRectangle(false);
@@ -84,6 +112,7 @@ const MapView: React.FC = () => {
 
 	const handleShapeSelected = (shape: Shape) => {
 		if (!activeRegion) throw Error('handleShapeSelected called out of context');
+		setRevertShape({ ...shape });
 		setActiveShape(shape);
 		if (isRectangle(shape)) {
 			activeRegion.rectangles = activeRegion.rectangles.filter(
@@ -259,12 +288,20 @@ const MapView: React.FC = () => {
 							m="sm"
 						>
 							{activeRegion ? (
-								<MapRegionControls
-									submitDisabled={activeRegion.rectangles.length === 0}
-									onAddNewRectangleClick={handleAddRectangleClick}
-									onCancelRegionClick={handleCancelRegionClick}
-									onFinishRegionClick={handleFinishRegionClick}
-								/>
+								activeShape ? (
+									<MapShapeControls
+										submitDisabled={false}
+										onCancelShapeClick={handleCancelShapeClick}
+										onFinishShapeClick={handleFinishShapeClick}
+									/>
+								) : (
+									<MapRegionControls
+										submitDisabled={activeRegion.rectangles.length === 0}
+										onAddNewRectangleClick={handleAddRectangleClick}
+										onCancelRegionClick={handleCancelRegionClick}
+										onFinishRegionClick={handleFinishRegionClick}
+									/>
+								)
 							) : (
 								<ActionIcon
 									title="Add New Region"
