@@ -131,6 +131,9 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 
 	const handleExistingMouseMove = (e: MouseEvent<HTMLCanvasElement>) => {
 		e.preventDefault();
+		if (isAddingNewShape || activeShape) {
+			return;
+		}
 		if (!existingCanvas.current) {
 			throw Error("ERROR: couldn't find canvas");
 		}
