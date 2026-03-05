@@ -1,5 +1,11 @@
 import type { Rectangle } from '#dtos/region.ts';
-import { MouseEvent, useCallback, useContext, useRef, useState } from 'react';
+import {
+	useCallback,
+	useContext,
+	useRef,
+	useState,
+	type MouseEvent,
+} from 'react';
 import { MapContext } from '../contexts/MapContext.ts';
 import { drawRectangle } from '../helpers/shapes.ts';
 
