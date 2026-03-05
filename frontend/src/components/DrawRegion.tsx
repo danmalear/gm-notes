@@ -129,6 +129,19 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 			existingCanvas.current.style.cursor = 'pointer';
 		}
 	};
+
+	const handleExistingClick = (e: MouseEvent<HTMLCanvasElement>) => {
+		e.preventDefault();
+		if (!existingCanvas.current) {
+			throw Error("ERROR: couldn't find canvas");
+		}
+
+		const relativeCoords = getDrawingCoords(e.clientX, e.clientY);
+		const existingShape = findExistingShape(relativeCoords);
+		if (existingShape) {
+			alert(`Selected shape ${JSON.stringify(existingShape)}`);
+		}
+	};
 	// #endregion existing
 
 	// #region editing
@@ -222,6 +235,7 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 				}}
 				height={h}
 				width={w}
+				onClick={handleExistingClick}
 				onMouseMove={handleExistingMouseMove}
 			/>
 		</>
