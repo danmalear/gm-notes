@@ -1,4 +1,10 @@
-import type { Circle, Polygon, Rectangle, Shape } from '#dtos/region.ts';
+import type {
+	Circle,
+	Coords,
+	Polygon,
+	Rectangle,
+	Shape,
+} from '#dtos/region.ts';
 
 export const isCircle = (shape: Shape) => 'r' in shape;
 export const isRectangle = (shape: Shape) => 'x1' in shape;
@@ -106,6 +112,15 @@ export const stringifyCoords = (shape: Shape) => {
 	} else {
 		throw Error('Image not found in the DOM');
 	}
+};
+
+export const isWithinRectangle = (coords: Coords, rectangle: Rectangle) => {
+	const { x, y } = coords;
+	const minX = Math.min(rectangle.x1, rectangle.x2);
+	const maxX = Math.max(rectangle.x1, rectangle.x2);
+	const minY = Math.min(rectangle.y1, rectangle.y2);
+	const maxY = Math.max(rectangle.y1, rectangle.y2);
+	return x >= minX && x <= maxX && y >= minY && y <= maxY;
 };
 
 export const drawRectangle = (
