@@ -119,7 +119,6 @@ const MapView: React.FC = () => {
 				(rect) => rect !== shape,
 			);
 		}
-		// alert(`Shape selected: ${JSON.stringify(shape)}`);
 	};
 	// #endregion editing
 
