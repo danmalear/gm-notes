@@ -61,7 +61,6 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 
 	const existingContext = existingCanvas.current?.getContext('2d');
 	if (existingContext) {
-		existingContext.strokeStyle = 'red';
 		existingContext.fillStyle = '#ff000080';
 		existingContext.lineWidth = 5;
 	}
@@ -162,7 +161,7 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 
 	const editContext = editCanvas.current?.getContext('2d');
 	if (editContext) {
-		editContext.strokeStyle = 'green';
+		editContext.strokeStyle = '#00ff0080';
 		editContext.lineWidth = 5;
 	}
 	const [rectangle, setRectangle] = useState<Rectangle | null>(null);
