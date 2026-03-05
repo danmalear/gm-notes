@@ -41,10 +41,9 @@ interface Area {
 }
 
 export interface MapProps extends React.PropsWithChildren {
-	region: RegionResponse | RegionCreate | null;
+	activeRegion: RegionResponse | RegionCreate | null;
 	activeShape?: Shape;
 	mapImagePath: string;
-	isEditing: boolean;
 	isAddingNewRectangle: boolean;
 	areas: MapArea[];
 	onRegionClick?: (regionKey: string) => void;
@@ -53,10 +52,9 @@ export interface MapProps extends React.PropsWithChildren {
 }
 
 const Map: React.FC<MapProps> = ({
-	region,
+	activeRegion,
 	activeShape,
 	mapImagePath,
-	isEditing,
 	isAddingNewRectangle,
 	areas: areasProp,
 	onRegionClick,
@@ -123,7 +121,7 @@ const Map: React.FC<MapProps> = ({
 				}}
 				onLoad={onImgLoad}
 			/>
-			{imgLoaded && !isEditing ? (
+			{imgLoaded && !activeRegion ? (
 				<map id="map" name="map">
 					{areas.map((area, index) => (
 						<area
@@ -138,11 +136,11 @@ const Map: React.FC<MapProps> = ({
 					))}
 				</map>
 			) : null}
-			{imgLoaded && isEditing ? (
+			{imgLoaded && activeRegion ? (
 				<DrawRegion
 					w={imgRef.current?.width}
 					h={imgRef.current?.height}
-					existingShapes={region?.rectangles ?? []}
+					existingShapes={activeRegion?.rectangles ?? []}
 					activeShape={activeShape}
 					isAddingRectangle={isAddingNewRectangle}
 					onShapeAdded={onNewShapeAdded}

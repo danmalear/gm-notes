@@ -241,9 +241,8 @@ const MapView: React.FC = () => {
 						>
 							{mapDataHC ? (
 								<Map
-									region={activeRegion}
+									activeRegion={activeRegion}
 									activeShape={activeShape ?? undefined}
-									isEditing={!!activeRegion}
 									isAddingNewRectangle={isAddingNewRectangle}
 									mapImagePath={map.imagePath}
 									areas={areas.concat(areasHC)}
