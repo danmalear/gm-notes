@@ -19,6 +19,7 @@ import { MapContext, type Transform } from '../contexts/MapContext.ts';
 import data from '../data/data.ts';
 import type { TimeOfDay } from '../data/MapData.ts';
 import { getMessage } from '../helpers/error.ts';
+import { isRectangle } from '../helpers/shapes.ts';
 import { updateMap } from '../services/mapService.ts';
 import type { mapLoader } from './loaders/mapLoader.ts';
 
@@ -75,9 +76,12 @@ const MapView: React.FC = () => {
 	};
 
 	const handleNewShapeAdded = (shape: Shape) => {
+		if (!newRegion) throw Error('handleNewShapeAdded called out of context');
 		setIsAddingNewRectangle(false);
-		// @TODO implement adding shapes to active region
-		console.log('[DEV] New shape added:', JSON.stringify(shape));
+		console.log('New shape added:', JSON.stringify(shape));
+		if (isRectangle(shape)) {
+			newRegion.rectangles.push(shape);
+		}
 	};
 	// #endregion editing
 
