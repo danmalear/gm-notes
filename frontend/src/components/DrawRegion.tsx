@@ -3,6 +3,7 @@ import {
 	useCallback,
 	useContext,
 	useEffect,
+	useMemo,
 	useRef,
 	useState,
 	type MouseEvent,
@@ -51,6 +52,11 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	};
 
 	const transform = useContext(MapContext).transform;
+
+	const isAddingNewShape = useMemo(
+		() => isAddingRectangle,
+		[isAddingRectangle],
+	);
 
 	// #region existing
 	const existingCanvas = useRef<HTMLCanvasElement | null>(null);
@@ -231,7 +237,7 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 
 	return (
 		<>
-			{isAddingRectangle || activeShape ? (
+			{isAddingNewShape || activeShape ? (
 				<canvas
 					ref={editCanvas}
 					style={{
