@@ -156,6 +156,7 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	};
 
 	const handleExistingClick = (e: MouseEvent<HTMLCanvasElement>) => {
+		if (e.defaultPrevented) return;
 		e.preventDefault();
 
 		const relativeCoords = getDrawingCoords(e.clientX, e.clientY);
