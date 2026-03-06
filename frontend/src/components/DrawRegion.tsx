@@ -305,9 +305,23 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 			throw Error('Invalid UI state');
 		}
 		switch (drawType) {
+			case 'rectNW':
+				changeShape({
+					...activeShape,
+					x1: x,
+					y1: y,
+				});
+				break;
 			case 'rectN':
 				changeShape({
 					...activeShape,
+					y1: y,
+				});
+				break;
+			case 'rectNE':
+				changeShape({
+					...activeShape,
+					x2: x,
 					y1: y,
 				});
 				break;
@@ -327,6 +341,13 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 			case 'rectS':
 				changeShape({
 					...activeShape,
+					y2: y,
+				});
+				break;
+			case 'rectSW':
+				changeShape({
+					...activeShape,
+					x1: x,
 					y2: y,
 				});
 				break;
