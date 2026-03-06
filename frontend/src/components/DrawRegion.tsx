@@ -16,7 +16,7 @@ import {
 	isWithinRectangle,
 } from '../helpers/shapes.ts';
 
-export interface MapCanvasProps extends React.PropsWithChildren {
+export interface DrawRegionProps extends React.PropsWithChildren {
 	offsetX?: number;
 	offsetY?: number;
 	w?: number;
@@ -28,7 +28,7 @@ export interface MapCanvasProps extends React.PropsWithChildren {
 	onShapeChange: (shape: Shape) => void;
 }
 
-const MapCanvas: React.FC<MapCanvasProps> = ({
+const DrawRegion: React.FC<DrawRegionProps> = ({
 	offsetX = 0,
 	offsetY = 0,
 	w = 0,
@@ -437,4 +437,4 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 	);
 };
 
-export default MapCanvas;
+export default DrawRegion;
