@@ -259,7 +259,7 @@ const MapView: React.FC = () => {
 						<MapInteractionCSS
 							minScale={0.75}
 							maxScale={6}
-							disablePan={!!isAddingNewRectangle}
+							disablePan={!!isAddingNewRectangle || !!activeShape}
 							value={transform}
 							onChange={(value) => {
 								setTransform(value);

@@ -174,8 +174,34 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 		editContext.strokeStyle = '#00ff0080';
 		editContext.lineWidth = 5;
 	}
-	const [rectangle, setRectangle] = useState<Rectangle | null>(null);
-	const [isDrawing, setIsDrawing] = useState(false);
+	const [rectangle, setRectangleRaw] = useState<Rectangle | null>(null);
+	// Safely sets rectangle so x1 and y1 are always the smaller value
+	const setRectangle = (rect: Rectangle) => {
+		let temp = 0;
+		if (rect.x2 < rect.x1) {
+			temp = rect.x2;
+			rect.x2 = rect.x1;
+			rect.x1 = temp;
+		}
+		if (rect.y2 < rect.y1) {
+			temp = rect.y2;
+			rect.y2 = rect.y1;
+			rect.y1 = temp;
+		}
+		setRectangleRaw(rect);
+	};
+
+	type RectDrawType =
+		| 'rectNW'
+		| 'rectN'
+		| 'rectNE'
+		| 'rectE'
+		| 'rectSE'
+		| 'rectS'
+		| 'rectSW'
+		| 'rectW';
+	type DrawType = RectDrawType;
+	const [drawType, setDrawType] = useState<DrawType | null>(null);
 
 	useEffect(() => {
 		if (activeShape) {
@@ -184,30 +210,45 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 			}
 			if (isRectangle(activeShape)) {
 				setRectangle(activeShape);
+				clearCanvas(editContext);
 				drawRectangle(editContext, activeShape);
 			}
 		}
-	}, [editContext, activeShape]);
+	}, [editContext, activeShape, clearCanvas]);
 
 	const handleEditMouseDown = (e: MouseEvent<HTMLCanvasElement>) => {
 		e.preventDefault();
 		const relativeCoords = getDrawingCoords(e.clientX, e.clientY);
+		const { x, y } = relativeCoords;
 		if (isAddingRectangle) {
-			startDrawingRectangle(relativeCoords.x, relativeCoords.y);
+			startNewRectangle(x, y);
+		} else if (activeShape) {
+			validateCanvas(editCanvas.current);
+			validateContext(editContext);
+			if (isRectangle(activeShape)) {
+				const paths = getRectanglePaths(activeShape);
+				if (editContext.isPointInStroke(paths.topLine, x, y)) {
+					setDrawType('rectN');
+				} else if (editContext.isPointInStroke(paths.bottomLine, x, y)) {
+					setDrawType('rectS');
+				} else if (editContext.isPointInStroke(paths.leftLine, x, y)) {
+					setDrawType('rectW');
+				} else if (editContext.isPointInStroke(paths.rightLine, x, y)) {
+					setDrawType('rectE');
+				}
+			}
 		}
 	};
 
 	const handleEditMouseMove = (e: MouseEvent<HTMLCanvasElement>) => {
-		validateCanvas(editCanvas.current);
-		validateContext(editContext);
 		const relativeCoords = getDrawingCoords(e.clientX, e.clientY);
 		const { x, y } = relativeCoords;
-		editCanvas.current.style.cursor = '';
-		if (isDrawing) {
-			if (isAddingRectangle) {
-				adjustRectangle(x, y);
-			}
+		if (drawType) {
+			adjustRectangle(drawType, x, y);
 		} else if (activeShape) {
+			validateCanvas(editCanvas.current);
+			validateContext(editContext);
+			editCanvas.current.style.cursor = '';
 			if (isRectangle(activeShape)) {
 				const paths = getRectanglePaths(activeShape);
 				if (
@@ -227,30 +268,46 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 
 	const handleEditMouseUp = (e: MouseEvent<HTMLCanvasElement>) => {
 		e.preventDefault();
-		if (isDrawing) {
-			if (isAddingRectangle) {
+		if (drawType) {
+			if (isAddingRectangle || (activeShape && isRectangle(activeShape))) {
 				finishDrawingRectangle();
 			}
 		}
 	};
 
-	const startDrawingRectangle = (x: number, y: number) => {
+	const startNewRectangle = (x: number, y: number) => {
 		setRectangle({
 			x1: x,
 			y1: y,
 			x2: x,
 			y2: y,
 		});
-		setIsDrawing(true);
+		setDrawType('rectSE');
 	};
 
-	const adjustRectangle = (x: number, y: number) => {
+	const adjustRectangle = (drawType: RectDrawType, x: number, y: number) => {
 		validateContext(editContext);
 		if (!rectangle) {
 			throw Error('Invalid UI state');
 		}
-		rectangle.x2 = x;
-		rectangle.y2 = y;
+		switch (drawType) {
+			case 'rectN':
+				rectangle.y1 = y;
+				break;
+			case 'rectE':
+				rectangle.x2 = x;
+				break;
+			case 'rectSE':
+				rectangle.x2 = x;
+				rectangle.y2 = y;
+				break;
+			case 'rectS':
+				rectangle.y2 = y;
+				break;
+			case 'rectW':
+				rectangle.x1 = x;
+				break;
+		}
 		clearCanvas(editContext);
 		drawRectangle(editContext, rectangle);
 	};
@@ -260,9 +317,8 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 		if (!rectangle) {
 			throw Error('Rectangle not defined');
 		}
-		setIsDrawing(false);
 		onShapeSelected(rectangle);
-		clearCanvas(editContext);
+		setDrawType(null);
 	};
 	// #endregion editing
 
