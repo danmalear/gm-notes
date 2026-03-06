@@ -90,6 +90,17 @@ const MapView: React.FC = () => {
 		setActiveShape(null);
 	};
 
+	const handleDeleteShapeClick = () => {
+		if (!activeRegion || !activeShape) {
+			console.error(
+				'ERROR: Delete shape clicked outside the context of editing a shape',
+			);
+			return;
+		}
+		setRevertShape(null);
+		setActiveShape(null);
+	};
+
 	const handleFinishShapeClick = () => {
 		if (!activeRegion || !activeShape) {
 			console.error(
@@ -288,7 +299,9 @@ const MapView: React.FC = () => {
 								activeShape || isAddingNewRectangle ? (
 									<MapShapeControls
 										submitDisabled={isAddingNewRectangle}
+										deleteDisabled={!revertShape}
 										onCancelShapeClick={handleCancelShapeClick}
+										onDeleteShapeClick={handleDeleteShapeClick}
 										onFinishShapeClick={handleFinishShapeClick}
 									/>
 								) : (
