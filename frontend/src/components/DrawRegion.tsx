@@ -235,14 +235,30 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 			setPreDrawShape(activeShape);
 			if (isRectangle(activeShape)) {
 				const paths = getRectanglePaths(activeShape);
-				if (editContext.isPointInStroke(paths.topLine, x, y)) {
-					setDrawType('rectN');
-				} else if (editContext.isPointInStroke(paths.bottomLine, x, y)) {
-					setDrawType('rectS');
-				} else if (editContext.isPointInStroke(paths.leftLine, x, y)) {
-					setDrawType('rectW');
-				} else if (editContext.isPointInStroke(paths.rightLine, x, y)) {
+				const isN = editContext.isPointInStroke(paths.topLine, x, y);
+				const isE = editContext.isPointInStroke(paths.rightLine, x, y);
+				const isS = editContext.isPointInStroke(paths.bottomLine, x, y);
+				const isW = editContext.isPointInStroke(paths.leftLine, x, y);
+				if (isN) {
+					if (isE) {
+						setDrawType('rectNE');
+					} else if (isW) {
+						setDrawType('rectNW');
+					} else {
+						setDrawType('rectN');
+					}
+				} else if (isS) {
+					if (isE) {
+						setDrawType('rectSE');
+					} else if (isW) {
+						setDrawType('rectSW');
+					} else {
+						setDrawType('rectS');
+					}
+				} else if (isE) {
 					setDrawType('rectE');
+				} else if (isW) {
+					setDrawType('rectW');
 				} else if (isWithinRectangle({ x, y }, activeShape)) {
 					setDrawType('rectMove');
 				}
@@ -261,15 +277,27 @@ const MapCanvas: React.FC<MapCanvasProps> = ({
 			editCanvas.current.style.cursor = 'default';
 			if (isRectangle(activeShape)) {
 				const paths = getRectanglePaths(activeShape);
-				if (
-					editContext.isPointInStroke(paths.topLine, x, y) ||
-					editContext.isPointInStroke(paths.bottomLine, x, y)
-				) {
-					editCanvas.current.style.cursor = 'ns-resize';
-				} else if (
-					editContext.isPointInStroke(paths.leftLine, x, y) ||
-					editContext.isPointInStroke(paths.rightLine, x, y)
-				) {
+				const isN = editContext.isPointInStroke(paths.topLine, x, y);
+				const isE = editContext.isPointInStroke(paths.rightLine, x, y);
+				const isS = editContext.isPointInStroke(paths.bottomLine, x, y);
+				const isW = editContext.isPointInStroke(paths.leftLine, x, y);
+				if (isN) {
+					if (isE) {
+						editCanvas.current.style.cursor = 'nesw-resize';
+					} else if (isW) {
+						editCanvas.current.style.cursor = 'nwse-resize';
+					} else {
+						editCanvas.current.style.cursor = 'ns-resize';
+					}
+				} else if (isS) {
+					if (isE) {
+						editCanvas.current.style.cursor = 'nwse-resize';
+					} else if (isW) {
+						editCanvas.current.style.cursor = 'nesw-resize';
+					} else {
+						editCanvas.current.style.cursor = 'ns-resize';
+					}
+				} else if (isE || isW) {
 					editCanvas.current.style.cursor = 'ew-resize';
 				} else if (isWithinRectangle({ x, y }, activeShape)) {
 					editCanvas.current.style.cursor = 'all-scroll';
