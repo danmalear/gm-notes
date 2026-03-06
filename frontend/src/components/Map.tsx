@@ -48,6 +48,7 @@ export interface MapProps extends React.PropsWithChildren {
 	areas: MapArea[];
 	onRegionClick?: (regionKey: string) => void;
 	onShapeSelected: (shape: Shape) => void;
+	onShapeChange: (shape: Shape) => void;
 }
 
 const Map: React.FC<MapProps> = ({
@@ -58,6 +59,7 @@ const Map: React.FC<MapProps> = ({
 	areas: areasProp,
 	onRegionClick,
 	onShapeSelected,
+	onShapeChange,
 }) => {
 	const [imgLoaded, setImgLoaded] = useState(false);
 	const imgRef = useRef<HTMLImageElement | null>(null);
@@ -142,6 +144,7 @@ const Map: React.FC<MapProps> = ({
 					activeShape={activeShape}
 					isAddingRectangle={isAddingNewRectangle}
 					onShapeSelected={onShapeSelected}
+					onShapeChange={onShapeChange}
 				/>
 			) : null}
 		</>

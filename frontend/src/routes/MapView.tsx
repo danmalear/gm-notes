@@ -274,6 +274,7 @@ const MapView: React.FC = () => {
 									areas={areas.concat(areasHC)}
 									onRegionClick={handleRegionClick}
 									onShapeSelected={handleShapeSelected}
+									onShapeChange={setActiveShape}
 								/>
 							) : null}
 						</MapInteractionCSS>
