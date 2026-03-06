@@ -77,9 +77,9 @@ const MapView: React.FC = () => {
 	};
 
 	const handleCancelShapeClick = () => {
-		if (!activeRegion || !activeShape) {
+		if (!activeRegion) {
 			console.error(
-				'ERROR: Cancel shape clicked outside the context of editing a shape',
+				'ERROR: Cancel shape clicked outside the context of editing a region',
 			);
 			return;
 		}
