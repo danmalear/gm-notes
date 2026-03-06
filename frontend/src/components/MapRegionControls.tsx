@@ -30,7 +30,7 @@ const MapRegionControls: React.FC<MapRegionControlsProps> = ({
 			<ActionIcon
 				title="Cancel Changes"
 				variant="filled"
-				color="red"
+				color="gray"
 				radius="xl"
 				size="xl"
 				onClick={onCancelRegionClick}
