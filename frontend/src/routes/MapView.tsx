@@ -16,7 +16,7 @@ import { MapContext, type Transform } from '../contexts/MapContext.ts';
 import data from '../data/data.ts';
 import type { TimeOfDay } from '../data/MapData.ts';
 import { getMessage } from '../helpers/error.ts';
-import { isRectangle } from '../helpers/shapes.ts';
+import { isRectangle, type ShapeType } from '../helpers/shapes.ts';
 import { updateMap } from '../services/mapService.ts';
 import type { mapLoader } from './loaders/mapLoader.ts';
 
@@ -39,7 +39,7 @@ const MapView: React.FC = () => {
 	const [activeRegion, setActiveRegion] = useState<
 		RegionResponse | RegionCreate | null
 	>(null);
-	const [isAddingNewRectangle, setIsAddingNewRectangle] = useState(false);
+	const [newShapeType, setNewShapeType] = useState<ShapeType | null>(null);
 	const [activeShape, setActiveShape] = useState<Shape | null>(null);
 	const [revertShape, setRevertShape] = useState<Shape | null>(null);
 
@@ -73,7 +73,7 @@ const MapView: React.FC = () => {
 	};
 
 	const handleAddRectangleClick = () => {
-		setIsAddingNewRectangle(true);
+		setNewShapeType('Rectangle');
 	};
 
 	const handleCancelShapeClick = () => {
@@ -86,7 +86,7 @@ const MapView: React.FC = () => {
 		if (revertShape && isRectangle(revertShape)) {
 			activeRegion.rectangles = [...activeRegion.rectangles, revertShape];
 		}
-		setIsAddingNewRectangle(false);
+		setNewShapeType(null);
 		setRevertShape(null);
 		setActiveShape(null);
 	};
@@ -98,7 +98,7 @@ const MapView: React.FC = () => {
 			);
 			return;
 		}
-		setIsAddingNewRectangle(false);
+		setNewShapeType(null);
 		setRevertShape(null);
 		setActiveShape(null);
 	};
@@ -119,7 +119,7 @@ const MapView: React.FC = () => {
 
 	const handleShapeSelected = (shape: Shape) => {
 		if (!activeRegion) throw Error('handleShapeSelected called out of context');
-		setIsAddingNewRectangle(false);
+		setNewShapeType(null);
 		const existingShape = activeRegion.rectangles.find(
 			(rect) => rect === shape,
 		);
@@ -272,7 +272,7 @@ const MapView: React.FC = () => {
 						<MapInteractionCSS
 							minScale={0.75}
 							maxScale={6}
-							disablePan={!!isAddingNewRectangle || !!activeShape}
+							disablePan={!!newShapeType || !!activeShape}
 							value={transform}
 							onChange={(value) => {
 								setTransform(value);
@@ -282,7 +282,7 @@ const MapView: React.FC = () => {
 								<Map
 									activeRegion={activeRegion}
 									activeShape={activeShape ?? undefined}
-									isAddingNewRectangle={isAddingNewRectangle}
+									newShapeType={newShapeType}
 									mapImagePath={map.imagePath}
 									areas={areas.concat(areasHC)}
 									onRegionClick={handleRegionClick}
@@ -298,9 +298,9 @@ const MapView: React.FC = () => {
 							m="sm"
 						>
 							{activeRegion ? (
-								activeShape || isAddingNewRectangle ? (
+								activeShape || newShapeType ? (
 									<MapShapeControls
-										submitDisabled={isAddingNewRectangle}
+										submitDisabled={!!newShapeType}
 										deleteDisabled={!revertShape}
 										onCancelShapeClick={handleCancelShapeClick}
 										onDeleteShapeClick={handleDeleteShapeClick}

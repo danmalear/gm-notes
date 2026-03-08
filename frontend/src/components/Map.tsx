@@ -7,7 +7,11 @@ import type {
 	Shape,
 } from '#dtos/region.ts';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
-import { makeCoordsRelative, stringifyCoords } from '../helpers/shapes.ts';
+import {
+	makeCoordsRelative,
+	stringifyCoords,
+	type ShapeType,
+} from '../helpers/shapes.ts';
 import { filePath } from '../services/fileService.ts';
 import DrawRegion from './DrawRegion.tsx';
 
@@ -44,7 +48,7 @@ export interface MapProps extends React.PropsWithChildren {
 	activeRegion: RegionResponse | RegionCreate | null;
 	activeShape?: Shape;
 	mapImagePath: string;
-	isAddingNewRectangle: boolean;
+	newShapeType: ShapeType | null;
 	areas: MapArea[];
 	onRegionClick?: (regionKey: string) => void;
 	onShapeSelected: (shape: Shape) => void;
@@ -55,7 +59,7 @@ const Map: React.FC<MapProps> = ({
 	activeRegion,
 	activeShape,
 	mapImagePath,
-	isAddingNewRectangle,
+	newShapeType,
 	areas: areasProp,
 	onRegionClick,
 	onShapeSelected,
@@ -142,7 +146,7 @@ const Map: React.FC<MapProps> = ({
 					h={imgRef.current?.height}
 					existingShapes={activeRegion?.rectangles ?? []}
 					activeShape={activeShape}
-					isAddingRectangle={isAddingNewRectangle}
+					newShapeType={newShapeType}
 					onShapeSelected={onShapeSelected}
 					onShapeChange={onShapeChange}
 				/>

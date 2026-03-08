@@ -12,6 +12,7 @@ import {
 	drawRectangle,
 	isRectangle,
 	isWithinRectangle,
+	type ShapeType,
 } from '../helpers/shapes.ts';
 import DrawRectangle from './DrawRectangle.tsx';
 
@@ -22,7 +23,7 @@ export interface DrawRegionProps extends React.PropsWithChildren {
 	h?: number;
 	existingShapes: Shape[];
 	activeShape?: Shape;
-	isAddingRectangle: boolean;
+	newShapeType: ShapeType | null;
 	onShapeSelected: (shape: Shape) => void;
 	onShapeChange: (shape: Shape) => void;
 }
@@ -34,7 +35,7 @@ const DrawRegion: React.FC<DrawRegionProps> = ({
 	h = 0,
 	existingShapes,
 	activeShape,
-	isAddingRectangle,
+	newShapeType,
 	onShapeSelected,
 	onShapeChange,
 }) => {
@@ -61,7 +62,7 @@ const DrawRegion: React.FC<DrawRegionProps> = ({
 
 	const transform = useContext(MapContext).transform;
 
-	const isAddingShape = useMemo(() => isAddingRectangle, [isAddingRectangle]);
+	const isAddingShape = useMemo(() => newShapeType, [newShapeType]);
 
 	// #region existing
 	const existingCanvas = useRef<HTMLCanvasElement | null>(null);
@@ -164,7 +165,7 @@ const DrawRegion: React.FC<DrawRegionProps> = ({
 
 	return (
 		<>
-			{isAddingRectangle || activeRectangle ? (
+			{newShapeType === 'Rectangle' || activeRectangle ? (
 				<DrawRectangle
 					activeRect={activeRectangle}
 					offsetX={offsetX}
