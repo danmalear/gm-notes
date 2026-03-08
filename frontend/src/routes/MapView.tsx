@@ -49,6 +49,8 @@ const MapView: React.FC = () => {
 			mapId: map.id,
 			name: '',
 			rectangles: [],
+			circles: [],
+			polygons: [],
 		});
 	};
 
