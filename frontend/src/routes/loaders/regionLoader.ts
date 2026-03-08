@@ -1,11 +1,7 @@
 import { redirect, type LoaderFunctionArgs } from 'react-router';
-import data from '../../data/data.ts';
 import { getMessage } from '../../helpers/error.ts';
 import { isUUID } from '../../helpers/uuid.ts';
 import { getRegion } from '../../services/regionService.ts';
-
-// @TODO remove this dependency
-const mapDataHC = data.deathHouse;
 
 export async function regionLoader({ params }: LoaderFunctionArgs) {
 	try {
@@ -22,22 +18,24 @@ export async function regionLoader({ params }: LoaderFunctionArgs) {
 			throw Error('Region ID malformed');
 		}
 
-		if (isUUID(params.regionId)) {
-			const response = await getRegion(params.regionId);
+		const region = await getRegion(params.regionId);
 
-			if (!response?.data?.data) {
+		if (isUUID(params.regionId)) {
+			// @TODO this is mostly for TS's benefit (getRegion handles it already)
+			// and shouldn't be necessary after HC is gone
+			if (!region || !('id' in region)) {
 				// @TODO probably make this a 404 page
 				throw Error('Region not found');
 			}
 
 			return {
-				regionId: response.data.data.id,
-				region: response.data.data,
+				regionId: region.id,
+				region: region,
 			};
 		} else {
 			return {
 				regionId: params.regionId,
-				region: mapDataHC.regions[params.regionId],
+				region: region,
 			};
 		}
 	} catch (e) {
