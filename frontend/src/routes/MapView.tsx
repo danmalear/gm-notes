@@ -55,12 +55,6 @@ const MapView: React.FC = () => {
 	};
 
 	const handleCancelRegionClick = () => {
-		if (!activeRegion) {
-			console.error(
-				'ERROR: Cancel region clicked outside the context of editing a region',
-			);
-			return;
-		}
 		setActiveRegion(null);
 	};
 
