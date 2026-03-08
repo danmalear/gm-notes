@@ -6,6 +6,8 @@ import type {
 	Shape,
 } from '#dtos/region.ts';
 
+export type ShapeType = 'Rectangle' | 'Circle' | 'Polygon';
+
 export const isCircle = (shape: Shape) => 'r' in shape;
 export const isRectangle = (shape: Shape) => 'x1' in shape;
 export const isPolygon = (shape: Shape) => 'coords' in shape;
