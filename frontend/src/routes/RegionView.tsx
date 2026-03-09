@@ -1,6 +1,4 @@
-import type { RegionResponse } from '#dtos/region.js';
-import type { UUID } from 'crypto';
-import { useContext, useEffect, useReducer, useState } from 'react';
+import { useContext, useEffect, useReducer } from 'react';
 import { useLoaderData } from 'react-router';
 import AbilityCheck from '../components/AbilityCheck.tsx';
 import Action from '../components/Action.tsx';
@@ -17,8 +15,9 @@ import {
 	RegionDetailsContext,
 	RegionDetailsDispatchContext,
 } from '../contexts/RegionDetailsContext.ts';
-import type { Region, ValidPartySize } from '../data/MapData.ts';
+import type { ValidPartySize } from '../data/MapData.ts';
 import collapsiblesReducer from '../reducers/collapsibleReducer.ts';
+import regionReducer from '../reducers/regionReducer.ts';
 import { regionLoader } from './loaders/regionLoader.ts';
 import './RegionView.css';
 
@@ -27,26 +26,31 @@ const partySize: ValidPartySize = 3;
 
 const RegionView: React.FC = () => {
 	const loadedData = useLoaderData<typeof regionLoader>();
-	const [region, setRegion] = useState<Region | RegionResponse | undefined>(
-		undefined,
-	);
-	const [regionId, setRegionId] = useState<UUID | string>('');
+
+	const [regionState, regionDispatch] = useReducer(regionReducer, {});
 
 	// @TODO this might be better solved with a websocket so the loaded data is always good
 	useEffect(() => {
-		setRegion(loadedData.region);
-		setRegionId(loadedData.regionId);
+		if (loadedData.region && loadedData.regionId) {
+			regionDispatch({
+				type: 'loaded_region',
+				region: loadedData.region,
+				regionId: loadedData.regionId,
+			});
+		}
 	}, [loadedData]);
+
+	const { region, regionId } = regionState;
 
 	const map = useContext(MapContext).map;
 
 	// #region collapsibles
-	const [collapsibles, dispatch] = useReducer(collapsiblesReducer, {
+	const [collapsibles, collapsiblesDispatch] = useReducer(collapsiblesReducer, {
 		openCollapsibles: {},
 	});
 
 	const handleResetCollapsibles = () => {
-		dispatch({
+		collapsiblesDispatch({
 			type: 'collapsiblesReset',
 		});
 	};
@@ -60,7 +64,7 @@ const RegionView: React.FC = () => {
 
 	return (
 		<RegionDetailsContext.Provider value={collapsibles}>
-			<RegionDetailsDispatchContext.Provider value={dispatch}>
+			<RegionDetailsDispatchContext.Provider value={collapsiblesDispatch}>
 				{region ? (
 					<div id={regionId + '-details'} className="region-view p-2">
 						<h1>
@@ -69,7 +73,7 @@ const RegionView: React.FC = () => {
 							{region.name}
 						</h1>
 
-						{region.lighting ? (
+						{'lighting' in region && region.lighting ? (
 							typeof region.lighting === 'string' ? (
 								<Lighting
 									defaultLighting={map.defaultLighting}
