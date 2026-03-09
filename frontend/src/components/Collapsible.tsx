@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import { useContext, useState } from 'react';
 import {
-	RegionDetailsContext,
-	RegionDetailsDispatchContext,
-} from '../contexts/RegionDetailsContext.ts';
+	CollapsiblesContext,
+	CollapsiblesDispatchContext,
+} from '../contexts/CollapsiblesContext.ts';
 import './Collapsible.css';
 
 export interface CollapsibleProps extends React.PropsWithChildren {
@@ -18,8 +18,8 @@ const Collapsible: React.FC<CollapsibleProps> = ({
 }) => {
 	const [stateId] = useState(crypto.randomUUID());
 
-	const collapsibles = useContext(RegionDetailsContext);
-	const dispatch = useContext(RegionDetailsDispatchContext);
+	const collapsibles = useContext(CollapsiblesContext);
+	const dispatch = useContext(CollapsiblesDispatchContext);
 
 	const handleToggleOpen = (isOpen: boolean) => {
 		dispatch({

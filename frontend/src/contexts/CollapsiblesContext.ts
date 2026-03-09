@@ -4,7 +4,7 @@ import {
 	CollapsiblesAction,
 } from '../reducers/collapsibleReducer.ts';
 
-export const RegionDetailsContext = createContext<Collapsibles>(null!);
-export const RegionDetailsDispatchContext = createContext<
+export const CollapsiblesContext = createContext<Collapsibles>(null!);
+export const CollapsiblesDispatchContext = createContext<
 	Dispatch<CollapsiblesAction>
 >(null!);

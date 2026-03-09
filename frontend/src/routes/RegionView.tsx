@@ -9,12 +9,12 @@ import Item from '../components/Item.tsx';
 import Lighting from '../components/Lighting.tsx';
 import Narration from '../components/Narration.tsx';
 import Trait from '../components/Trait.tsx';
+import {
+	CollapsiblesContext,
+	CollapsiblesDispatchContext,
+} from '../contexts/CollapsiblesContext.ts';
 import { LegacyContext } from '../contexts/LegacyContext.ts';
 import { MapContext } from '../contexts/MapContext.ts';
-import {
-	RegionDetailsContext,
-	RegionDetailsDispatchContext,
-} from '../contexts/RegionDetailsContext.ts';
 import type { ValidPartySize } from '../data/MapData.ts';
 import collapsiblesReducer from '../reducers/collapsibleReducer.ts';
 import regionReducer from '../reducers/regionReducer.ts';
@@ -63,8 +63,8 @@ const RegionView: React.FC = () => {
 	const timeOfDay = useContext(LegacyContext).timeOfDay;
 
 	return (
-		<RegionDetailsContext.Provider value={collapsibles}>
-			<RegionDetailsDispatchContext.Provider value={collapsiblesDispatch}>
+		<CollapsiblesContext.Provider value={collapsibles}>
+			<CollapsiblesDispatchContext.Provider value={collapsiblesDispatch}>
 				{region ? (
 					<div id={regionId + '-details'} className="region-view p-2">
 						<h1>
@@ -194,8 +194,8 @@ const RegionView: React.FC = () => {
 						) : null}
 					</div>
 				) : null}
-			</RegionDetailsDispatchContext.Provider>
-		</RegionDetailsContext.Provider>
+			</CollapsiblesDispatchContext.Provider>
+		</CollapsiblesContext.Provider>
 	);
 };
 
