@@ -73,7 +73,6 @@ const DrawRectangle: React.FC<DrawRectangleProps> = ({
 
 	const transform = useContext(MapContext).transform;
 
-	// #region existing
 	const getDrawingCoords = (x: number, y: number) => {
 		validateCanvas(canvas.current);
 
@@ -85,9 +84,7 @@ const DrawRectangle: React.FC<DrawRectangleProps> = ({
 			y: Math.round(y - canvasY) / transform.scale,
 		};
 	};
-	// #endregion existing
 
-	// #region editing
 	const canvas = useRef<HTMLCanvasElement | null>(null);
 
 	const context = canvas.current?.getContext('2d');
@@ -318,7 +315,6 @@ const DrawRectangle: React.FC<DrawRectangleProps> = ({
 		setPreDrawRect(undefined);
 		setDrawType(undefined);
 	};
-	// #endregion editing
 
 	return (
 		<canvas
