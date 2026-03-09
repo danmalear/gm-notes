@@ -3,7 +3,7 @@ import type { MapUpdate } from '#dtos/map.js';
 import type { RegionCreate, RegionResponse, Shape } from '#dtos/region.ts';
 import { ActionIcon, AppShell, Group, ScrollArea } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useReducer, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { href, Outlet, useLoaderData, useNavigate } from 'react-router';
 import AppHeader from '../components/AppHeader.tsx';
@@ -13,10 +13,15 @@ import MapRegionControls from '../components/MapRegionControls.tsx';
 import MapShapeControls from '../components/MapShapeControls.tsx';
 import { LegacyContext } from '../contexts/LegacyContext.ts';
 import { MapContext, type Transform } from '../contexts/MapContext.ts';
+import {
+	RegionContext,
+	RegionDispatchContext,
+} from '../contexts/RegionContext.ts';
 import data from '../data/data.ts';
 import type { TimeOfDay } from '../data/MapData.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isRectangle, type ShapeType } from '../helpers/shapes.ts';
+import regionReducer from '../reducers/regionReducer.ts';
 import { updateMap } from '../services/mapService.ts';
 import type { mapLoader } from './loaders/mapLoader.ts';
 
@@ -39,6 +44,7 @@ const MapView: React.FC = () => {
 	const [activeRegion, setActiveRegion] = useState<
 		RegionResponse | RegionCreate | null
 	>(null);
+	const [regionState, regionDispatch] = useReducer(regionReducer, {});
 	const [newShapeType, setNewShapeType] = useState<ShapeType | null>(null);
 	const [activeShape, setActiveShape] = useState<Shape | null>(null);
 	const [revertShape, setRevertShape] = useState<Shape | null>(null);
@@ -228,110 +234,114 @@ const MapView: React.FC = () => {
 
 	return (
 		<MapContext value={{ map, transform }}>
-			<LegacyContext value={{ timeOfDay: timeOfDayHC }}>
-				<AppShell
-					id="app-shell"
-					header={{
-						height: 50,
-						collapsed: false,
-					}}
-					navbar={{
-						width: 200,
-						breakpoint: 'sm',
-						collapsed: {
-							desktop: false,
-							mobile: false,
-						},
-					}}
-					aside={{
-						width: 500,
-						breakpoint: 'md',
-						collapsed: {
-							desktop: false,
-							mobile: true,
-						},
-					}}
-					offsetScrollbars={true}
-					h="100vh"
-				>
-					<AppHeader title={map.name} />
-					<MapNavbar
-						defaultLighting={map.defaultLighting}
-						onDefaultLightingChanged={handleDefaultLightingChange}
-						defaultLightingLoading={defaultLightingLoading}
-						currentMapHC={currentMapHC}
-						onCurrentMapChangedHC={setCurrentMapHC}
-						timeOfDayHC={timeOfDayHC}
-						onTimeOfDayChangedHC={setTimeOfDayHC}
-					/>
-					<AppShell.Main h="100%">
-						<MapInteractionCSS
-							minScale={0.75}
-							maxScale={6}
-							disablePan={!!newShapeType || !!activeShape}
-							value={transform}
-							onChange={(value) => {
-								setTransform(value);
+			<RegionContext value={regionState}>
+				<RegionDispatchContext value={regionDispatch}>
+					<LegacyContext value={{ timeOfDay: timeOfDayHC }}>
+						<AppShell
+							id="app-shell"
+							header={{
+								height: 50,
+								collapsed: false,
 							}}
+							navbar={{
+								width: 200,
+								breakpoint: 'sm',
+								collapsed: {
+									desktop: false,
+									mobile: false,
+								},
+							}}
+							aside={{
+								width: 500,
+								breakpoint: 'md',
+								collapsed: {
+									desktop: false,
+									mobile: true,
+								},
+							}}
+							offsetScrollbars={true}
+							h="100vh"
 						>
-							{mapDataHC ? (
-								<Map
-									activeRegion={activeRegion}
-									activeShape={activeShape ?? undefined}
-									newShapeType={newShapeType}
-									mapImagePath={map.imagePath}
-									areas={areas.concat(areasHC)}
-									onRegionClick={handleRegionClick}
-									onShapeSelected={handleShapeSelected}
-									onShapeChange={setActiveShape}
-								/>
-							) : null}
-						</MapInteractionCSS>
-						<Group
-							pos="absolute"
-							bottom={0}
-							right="var(--app-shell-aside-offset)"
-							m="sm"
-						>
-							{activeRegion ? (
-								activeShape || newShapeType ? (
-									<MapShapeControls
-										submitDisabled={!!newShapeType}
-										deleteDisabled={!revertShape}
-										onCancelShapeClick={handleCancelShapeClick}
-										onDeleteShapeClick={handleDeleteShapeClick}
-										onFinishShapeClick={handleFinishShapeClick}
-									/>
-								) : (
-									<MapRegionControls
-										submitDisabled={activeRegion.rectangles.length === 0}
-										onAddNewRectangleClick={handleAddRectangleClick}
-										onCancelRegionClick={handleCancelRegionClick}
-										onFinishRegionClick={handleFinishRegionClick}
-									/>
-								)
-							) : (
-								<ActionIcon
-									title="Add New Region"
-									variant="filled"
-									radius="xl"
-									size="xl"
-									onClick={handleAddRegionClick}
+							<AppHeader title={map.name} />
+							<MapNavbar
+								defaultLighting={map.defaultLighting}
+								onDefaultLightingChanged={handleDefaultLightingChange}
+								defaultLightingLoading={defaultLightingLoading}
+								currentMapHC={currentMapHC}
+								onCurrentMapChangedHC={setCurrentMapHC}
+								timeOfDayHC={timeOfDayHC}
+								onTimeOfDayChangedHC={setTimeOfDayHC}
+							/>
+							<AppShell.Main h="100%">
+								<MapInteractionCSS
+									minScale={0.75}
+									maxScale={6}
+									disablePan={!!newShapeType || !!activeShape}
+									value={transform}
+									onChange={(value) => {
+										setTransform(value);
+									}}
 								>
-									<IconPlus />
-								</ActionIcon>
-							)}
-						</Group>
-					</AppShell.Main>
-					<AppShell.Aside>
-						{mapDataHC ? (
-							<AppShell.Section grow component={ScrollArea}>
-								<Outlet />
-							</AppShell.Section>
-						) : null}
-					</AppShell.Aside>
-				</AppShell>
-			</LegacyContext>
+									{mapDataHC ? (
+										<Map
+											activeRegion={activeRegion}
+											activeShape={activeShape ?? undefined}
+											newShapeType={newShapeType}
+											mapImagePath={map.imagePath}
+											areas={areas.concat(areasHC)}
+											onRegionClick={handleRegionClick}
+											onShapeSelected={handleShapeSelected}
+											onShapeChange={setActiveShape}
+										/>
+									) : null}
+								</MapInteractionCSS>
+								<Group
+									pos="absolute"
+									bottom={0}
+									right="var(--app-shell-aside-offset)"
+									m="sm"
+								>
+									{activeRegion ? (
+										activeShape || newShapeType ? (
+											<MapShapeControls
+												submitDisabled={!!newShapeType}
+												deleteDisabled={!revertShape}
+												onCancelShapeClick={handleCancelShapeClick}
+												onDeleteShapeClick={handleDeleteShapeClick}
+												onFinishShapeClick={handleFinishShapeClick}
+											/>
+										) : (
+											<MapRegionControls
+												submitDisabled={activeRegion.rectangles.length === 0}
+												onAddNewRectangleClick={handleAddRectangleClick}
+												onCancelRegionClick={handleCancelRegionClick}
+												onFinishRegionClick={handleFinishRegionClick}
+											/>
+										)
+									) : (
+										<ActionIcon
+											title="Add New Region"
+											variant="filled"
+											radius="xl"
+											size="xl"
+											onClick={handleAddRegionClick}
+										>
+											<IconPlus />
+										</ActionIcon>
+									)}
+								</Group>
+							</AppShell.Main>
+							<AppShell.Aside>
+								{mapDataHC ? (
+									<AppShell.Section grow component={ScrollArea}>
+										<Outlet />
+									</AppShell.Section>
+								) : null}
+							</AppShell.Aside>
+						</AppShell>
+					</LegacyContext>
+				</RegionDispatchContext>
+			</RegionContext>
 		</MapContext>
 	);
 };

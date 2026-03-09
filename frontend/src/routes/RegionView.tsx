@@ -15,9 +15,12 @@ import {
 } from '../contexts/CollapsiblesContext.ts';
 import { LegacyContext } from '../contexts/LegacyContext.ts';
 import { MapContext } from '../contexts/MapContext.ts';
+import {
+	RegionContext,
+	RegionDispatchContext,
+} from '../contexts/RegionContext.ts';
 import type { ValidPartySize } from '../data/MapData.ts';
 import collapsiblesReducer from '../reducers/collapsibleReducer.ts';
-import regionReducer from '../reducers/regionReducer.ts';
 import { regionLoader } from './loaders/regionLoader.ts';
 import './RegionView.css';
 
@@ -27,7 +30,8 @@ const partySize: ValidPartySize = 3;
 const RegionView: React.FC = () => {
 	const loadedData = useLoaderData<typeof regionLoader>();
 
-	const [regionState, regionDispatch] = useReducer(regionReducer, {});
+	const regionState = useContext(RegionContext);
+	const regionDispatch = useContext(RegionDispatchContext);
 
 	// @TODO this might be better solved with a websocket so the loaded data is always good
 	useEffect(() => {
@@ -38,7 +42,7 @@ const RegionView: React.FC = () => {
 				regionId: loadedData.regionId,
 			});
 		}
-	}, [loadedData]);
+	}, [loadedData, regionDispatch]);
 
 	const { region, regionId } = regionState;
 
