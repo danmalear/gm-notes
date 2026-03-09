@@ -26,18 +26,17 @@ import './RegionView.css';
 const partySize: ValidPartySize = 3;
 
 const RegionView: React.FC = () => {
-	const loadedRegion = useLoaderData<typeof regionLoader>().region;
+	const loadedData = useLoaderData<typeof regionLoader>();
 	const [region, setRegion] = useState<Region | RegionResponse | undefined>(
 		undefined,
 	);
-	const [regionId] = useState<UUID | string>(
-		useLoaderData<typeof regionLoader>().regionId,
-	);
+	const [regionId, setRegionId] = useState<UUID | string>('');
 
 	// @TODO this might be better solved with a websocket so the loaded data is always good
 	useEffect(() => {
-		setRegion(loadedRegion);
-	}, [loadedRegion]);
+		setRegion(loadedData.region);
+		setRegionId(loadedData.regionId);
+	}, [loadedData]);
 
 	const map = useContext(MapContext).map;
 
