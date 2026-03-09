@@ -7,7 +7,7 @@ export interface RegionState {
 }
 
 interface LoadedRegionAction {
-	type: 'loaded_region';
+	type: 'changed_region';
 	region: RegionResponse | RegionCreate | Region;
 	regionId: string; // @TODO make this UUID
 }
@@ -21,7 +21,7 @@ type RegionReducer = (
 
 const regionReducer: RegionReducer = (_regionState, action) => {
 	switch (action.type) {
-		case 'loaded_region':
+		case 'changed_region':
 			return {
 				region: action.region,
 				regionId: action.regionId,

@@ -33,7 +33,7 @@ const RegionView: React.FC = () => {
 	useEffect(() => {
 		if (loadedData.region && loadedData.regionId) {
 			regionDispatch({
-				type: 'loaded_region',
+				type: 'changed_region',
 				region: loadedData.region,
 				regionId: loadedData.regionId,
 			});
