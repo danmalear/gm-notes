@@ -1,16 +1,22 @@
-import type { Coords, Rectangle, Shape } from '#dtos/region.ts';
+import type { Coords, Rectangle } from '#dtos/region.ts';
 import {
 	useCallback,
 	useContext,
 	useEffect,
+	useMemo,
 	useRef,
 	useState,
 	type MouseEvent,
 } from 'react';
 import { MapContext } from '../contexts/MapContext.ts';
 import {
+	RegionContext,
+	RegionDispatchContext,
+} from '../contexts/RegionContext.ts';
+import {
 	drawRectangle,
 	getRectanglePaths,
+	isRectangle,
 	isWithinRectangle,
 } from '../helpers/shapes.ts';
 
@@ -19,9 +25,6 @@ export interface DrawRectangleProps extends React.PropsWithChildren {
 	offsetY?: number;
 	w?: number;
 	h?: number;
-	activeRect: Rectangle | null;
-	onSelect: (shape: Shape) => void;
-	onChange: (shape: Shape) => void;
 }
 
 const DrawRectangle: React.FC<DrawRectangleProps> = ({
@@ -29,9 +32,6 @@ const DrawRectangle: React.FC<DrawRectangleProps> = ({
 	offsetY = 0,
 	w = 0,
 	h = 0,
-	activeRect,
-	onSelect,
-	onChange,
 }) => {
 	const clearCanvas = useCallback(
 		(context: CanvasRenderingContext2D) => {
@@ -55,6 +55,15 @@ const DrawRectangle: React.FC<DrawRectangleProps> = ({
 			throw Error('ERROR: Canvas context not loaded');
 		}
 	}
+
+	const regionState = useContext(RegionContext);
+	const regionDispatch = useContext(RegionDispatchContext);
+
+	const rectangle = useMemo(() => {
+		if (regionState.regionShape && isRectangle(regionState.regionShape)) {
+			return regionState.regionShape;
+		}
+	}, [regionState.regionShape]);
 
 	const offsetStyle: React.CSSProperties = {
 		position: 'absolute',
@@ -87,42 +96,37 @@ const DrawRectangle: React.FC<DrawRectangleProps> = ({
 		context.lineWidth = 5;
 	}
 
-	const [preDrawCoords, setPreDrawCoords] = useState<Coords | null>(null);
-	const [preDrawRect, setPreDrawRect] = useState<Rectangle | null>(null);
+	const [preDrawCoords, setPreDrawCoords] = useState<Coords | undefined>(
+		undefined,
+	);
+	const [preDrawRect, setPreDrawRect] = useState<Rectangle | undefined>(
+		undefined,
+	);
 
-	// Safely sets rectangle so x1 and y1 are always the smaller value
 	const change = (rect: Rectangle) => {
-		let temp = 0;
-		if (rect.x2 < rect.x1) {
-			temp = rect.x2;
-			rect.x2 = rect.x1;
-			rect.x1 = temp;
-		}
-		if (rect.y2 < rect.y1) {
-			temp = rect.y2;
-			rect.y2 = rect.y1;
-			rect.y1 = temp;
-		}
-		onChange(rect);
+		regionDispatch({
+			type: 'updated_region_shape',
+			shape: rect,
+		});
 	};
 
 	type DrawType = 'move' | 'nw' | 'n' | 'ne' | 'e' | 'se' | 's' | 'sw' | 'w';
-	const [drawType, setDrawType] = useState<DrawType | null>(null);
+	const [drawType, setDrawType] = useState<DrawType | undefined>(undefined);
 
 	useEffect(() => {
-		if (!activeRect || !context) {
+		if (!rectangle || !context) {
 			return;
 		}
 		clearCanvas(context);
-		drawRectangle(context, activeRect);
-	}, [context, activeRect, clearCanvas]);
+		drawRectangle(context, rectangle);
+	}, [context, rectangle, clearCanvas]);
 
 	const handleEditMouseDown = (e: MouseEvent<HTMLCanvasElement>) => {
 		e.preventDefault();
 		const relativeCoords = getDrawingCoords(e.clientX, e.clientY);
 		const { x, y } = relativeCoords;
-		if (activeRect) {
-			startDrawing(x, y, activeRect);
+		if (rectangle) {
+			startDrawing(x, y, rectangle);
 		} else {
 			startNew(x, y);
 		}
@@ -133,8 +137,8 @@ const DrawRectangle: React.FC<DrawRectangleProps> = ({
 		const { x, y } = relativeCoords;
 		if (drawType) {
 			adjust(drawType, x, y);
-		} else if (activeRect) {
-			setCursor(x, y, activeRect);
+		} else if (rectangle) {
+			setCursor(x, y, rectangle);
 		}
 	};
 
@@ -178,11 +182,9 @@ const DrawRectangle: React.FC<DrawRectangleProps> = ({
 	};
 
 	const startNew = (x: number, y: number) => {
-		onSelect({
-			x1: x,
-			y1: y,
-			x2: x,
-			y2: y,
+		regionDispatch({
+			type: 'selected_region_shape',
+			shape: { x1: x, y1: y, x2: x, y2: y },
 		});
 		setDrawType('se');
 	};
@@ -191,7 +193,7 @@ const DrawRectangle: React.FC<DrawRectangleProps> = ({
 		validateCanvas(canvas.current);
 		validateContext(context);
 		setPreDrawCoords({ x, y });
-		setPreDrawRect(activeRect);
+		setPreDrawRect(rectangle);
 		const paths = getRectanglePaths(rect);
 		const isN = context.isPointInStroke(paths.topLine, x, y);
 		const isE = context.isPointInStroke(paths.rightLine, x, y);
@@ -223,59 +225,59 @@ const DrawRectangle: React.FC<DrawRectangleProps> = ({
 	};
 
 	const adjust = (drawType: DrawType, x: number, y: number) => {
-		if (!activeRect) {
+		if (!rectangle) {
 			throw Error('Invalid UI state');
 		}
 		switch (drawType) {
 			case 'nw':
 				change({
-					...activeRect,
+					...rectangle,
 					x1: x,
 					y1: y,
 				});
 				break;
 			case 'n':
 				change({
-					...activeRect,
+					...rectangle,
 					y1: y,
 				});
 				break;
 			case 'ne':
 				change({
-					...activeRect,
+					...rectangle,
 					x2: x,
 					y1: y,
 				});
 				break;
 			case 'e':
 				change({
-					...activeRect,
+					...rectangle,
 					x2: x,
 				});
 				break;
 			case 'se':
 				change({
-					...activeRect,
+					...rectangle,
 					x2: x,
 					y2: y,
 				});
 				break;
 			case 's':
 				change({
-					...activeRect,
+					...rectangle,
 					y2: y,
 				});
 				break;
 			case 'sw':
 				change({
-					...activeRect,
+					...rectangle,
 					x1: x,
 					y2: y,
 				});
 				break;
 			case 'w':
 				change({
-					...activeRect,
+					...rectangle,
 					x1: x,
 				});
 				break;
@@ -295,10 +297,26 @@ const DrawRectangle: React.FC<DrawRectangleProps> = ({
 		}
 	};
 
+	// Safely sets rectangle so x1 and y1 are always the smaller value
 	const finishDrawing = () => {
-		setPreDrawCoords(null);
-		setPreDrawRect(null);
-		setDrawType(null);
+		if (!rectangle) {
+			throw Error('Invalid UI state');
+		}
+		const newRect = {
+			...rectangle,
+		};
+		if (rectangle.x2 < rectangle.x1) {
+			newRect.x2 = rectangle.x1;
+			newRect.x1 = rectangle.x2;
+		}
+		if (rectangle.y2 < rectangle.y1) {
+			newRect.y2 = rectangle.y1;
+			newRect.y1 = rectangle.y2;
+		}
+		change(newRect);
+		setPreDrawCoords(undefined);
+		setPreDrawRect(undefined);
+		setDrawType(undefined);
 	};
 	// #endregion editing
 

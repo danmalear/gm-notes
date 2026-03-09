@@ -1,6 +1,5 @@
 import type { Lighting } from '#dtos/data-types.ts';
 import type { MapUpdate } from '#dtos/map.js';
-import type { RegionCreate, RegionResponse, Shape } from '#dtos/region.ts';
 import { ActionIcon, AppShell, Group, ScrollArea } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import { useCallback, useMemo, useReducer, useState } from 'react';
@@ -20,8 +19,7 @@ import {
 import data from '../data/data.ts';
 import type { TimeOfDay } from '../data/MapData.ts';
 import { getMessage } from '../helpers/error.ts';
-import { isRectangle, type ShapeType } from '../helpers/shapes.ts';
-import regionReducer from '../reducers/regionReducer.ts';
+import regionReducer, { isHardCoded } from '../reducers/regionReducer.ts';
 import { updateMap } from '../services/mapService.ts';
 import type { mapLoader } from './loaders/mapLoader.ts';
 
@@ -41,97 +39,53 @@ const MapView: React.FC = () => {
 	});
 
 	// #region editing
-	const [activeRegion, setActiveRegion] = useState<
-		RegionResponse | RegionCreate | null
-	>(null);
-	const [regionState, regionDispatch] = useReducer(regionReducer, {});
-	const [newShapeType, setNewShapeType] = useState<ShapeType | null>(null);
-	const [activeShape, setActiveShape] = useState<Shape | null>(null);
-	const [revertShape, setRevertShape] = useState<Shape | null>(null);
+	const [regionState, regionDispatch] = useReducer(regionReducer, {
+		isEditingRegion: false,
+	});
 
 	// @TODO Add full functionality
 	const handleAddRegionClick = () => {
-		setActiveRegion({
+		regionDispatch({
+			type: 'added_region',
 			mapId: map.id,
-			name: '',
-			rectangles: [],
-			circles: [],
-			polygons: [],
 		});
 	};
 
 	const handleCancelRegionClick = () => {
-		setActiveRegion(null);
+		regionDispatch({
+			type: 'canceled_region',
+		});
 	};
 
 	const handleFinishRegionClick = () => {
-		if (!activeRegion) {
-			console.error(
-				'ERROR: Finish region clicked outside the context of editing a region',
-			);
-			return;
-		}
-		setActiveRegion(null);
+		regionDispatch({
+			type: 'finished_editing_region_shapes',
+		});
 	};
 
 	const handleAddRectangleClick = () => {
-		setNewShapeType('Rectangle');
+		regionDispatch({
+			type: 'added_region_shape',
+			shapeType: 'Rectangle',
+		});
 	};
 
 	const handleCancelShapeClick = () => {
-		if (!activeRegion) {
-			console.error(
-				'ERROR: Cancel shape clicked outside the context of editing a region',
-			);
-			return;
-		}
-		if (revertShape && isRectangle(revertShape)) {
-			activeRegion.rectangles = [...activeRegion.rectangles, revertShape];
-		}
-		setNewShapeType(null);
-		setRevertShape(null);
-		setActiveShape(null);
+		regionDispatch({
+			type: 'canceled_region_shape',
+		});
 	};
 
 	const handleDeleteShapeClick = () => {
-		if (!activeRegion) {
-			console.error(
-				'ERROR: Delete shape clicked outside the context of editing a shape',
-			);
-			return;
-		}
-		setNewShapeType(null);
-		setRevertShape(null);
-		setActiveShape(null);
+		regionDispatch({
+			type: 'deleted_region_shape',
+		});
 	};
 
 	const handleFinishShapeClick = () => {
-		if (!activeRegion || !activeShape) {
-			console.error(
-				'ERROR: Finish shape clicked outside the context of editing a shape',
-			);
-			return;
-		}
-		if (isRectangle(activeShape)) {
-			activeRegion.rectangles = [...activeRegion.rectangles, activeShape];
-		}
-		setRevertShape(null);
-		setActiveShape(null);
-	};
-
-	const handleShapeSelected = (shape: Shape) => {
-		if (!activeRegion) throw Error('handleShapeSelected called out of context');
-		setNewShapeType(null);
-		const existingShape = activeRegion.rectangles.find(
-			(rect) => rect === shape,
-		);
-		setRevertShape(existingShape ? { ...existingShape } : null);
-		setActiveShape(shape);
-		if (isRectangle(shape)) {
-			activeRegion.rectangles = activeRegion.rectangles.filter(
-				(rect) => rect !== shape,
-			);
-		}
+		regionDispatch({
+			type: 'finished_editing_region_shape',
+		});
 	};
 	// #endregion editing
 
@@ -276,7 +230,9 @@ const MapView: React.FC = () => {
 								<MapInteractionCSS
 									minScale={0.75}
 									maxScale={6}
-									disablePan={!!newShapeType || !!activeShape}
+									disablePan={
+										!!regionState.newShapeType || !!regionState.regionShape
+									}
 									value={transform}
 									onChange={(value) => {
 										setTransform(value);
@@ -284,14 +240,9 @@ const MapView: React.FC = () => {
 								>
 									{mapDataHC ? (
 										<Map
-											activeRegion={activeRegion}
-											activeShape={activeShape ?? undefined}
-											newShapeType={newShapeType}
 											mapImagePath={map.imagePath}
 											areas={areas.concat(areasHC)}
 											onRegionClick={handleRegionClick}
-											onShapeSelected={handleShapeSelected}
-											onShapeChange={setActiveShape}
 										/>
 									) : null}
 								</MapInteractionCSS>
@@ -301,18 +252,22 @@ const MapView: React.FC = () => {
 									right="var(--app-shell-aside-offset)"
 									m="sm"
 								>
-									{activeRegion ? (
-										activeShape || newShapeType ? (
+									{regionState.isEditingRegion &&
+									regionState.region &&
+									!isHardCoded(regionState.region) ? (
+										regionState.regionShape || regionState.newShapeType ? (
 											<MapShapeControls
-												submitDisabled={!!newShapeType}
-												deleteDisabled={!revertShape}
+												submitDisabled={!!regionState.newShapeType}
+												deleteDisabled={!regionState.revertShape}
 												onCancelShapeClick={handleCancelShapeClick}
 												onDeleteShapeClick={handleDeleteShapeClick}
 												onFinishShapeClick={handleFinishShapeClick}
 											/>
 										) : (
 											<MapRegionControls
-												submitDisabled={activeRegion.rectangles.length === 0}
+												submitDisabled={
+													regionState.region.rectangles.length === 0
+												}
 												onAddNewRectangleClick={handleAddRectangleClick}
 												onCancelRegionClick={handleCancelRegionClick}
 												onFinishRegionClick={handleFinishRegionClick}

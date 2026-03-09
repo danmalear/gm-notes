@@ -116,6 +116,15 @@ export const stringifyCoords = (shape: Shape) => {
 	}
 };
 
+export const isRectangleEqual = (rect1: Rectangle, rect2: Rectangle) => {
+	return (
+		rect1.x1 === rect2.x1 &&
+		rect1.x2 === rect2.x2 &&
+		rect1.y1 === rect2.y1 &&
+		rect1.y2 === rect2.y2
+	);
+};
+
 export const isWithinRectangle = (coords: Coords, rectangle: Rectangle) => {
 	const { x, y } = coords;
 	const minX = Math.min(rectangle.x1, rectangle.x2);

@@ -1,4 +1,4 @@
-import type { Coords, Shape } from '#dtos/region.ts';
+import type { Coords } from '#dtos/region.ts';
 import {
 	useCallback,
 	useContext,
@@ -9,11 +9,15 @@ import {
 } from 'react';
 import { MapContext } from '../contexts/MapContext.ts';
 import {
+	RegionContext,
+	RegionDispatchContext,
+} from '../contexts/RegionContext.ts';
+import {
 	drawRectangle,
 	isRectangle,
 	isWithinRectangle,
-	type ShapeType,
 } from '../helpers/shapes.ts';
+import { isHardCoded } from '../reducers/regionReducer.ts';
 import DrawRectangle from './DrawRectangle.tsx';
 
 export interface DrawRegionProps extends React.PropsWithChildren {
@@ -21,11 +25,6 @@ export interface DrawRegionProps extends React.PropsWithChildren {
 	offsetY?: number;
 	w?: number;
 	h?: number;
-	existingShapes: Shape[];
-	activeShape?: Shape;
-	newShapeType: ShapeType | null;
-	onShapeSelected: (shape: Shape) => void;
-	onShapeChange: (shape: Shape) => void;
 }
 
 const DrawRegion: React.FC<DrawRegionProps> = ({
@@ -33,11 +32,6 @@ const DrawRegion: React.FC<DrawRegionProps> = ({
 	offsetY = 0,
 	w = 0,
 	h = 0,
-	existingShapes,
-	activeShape,
-	newShapeType,
-	onShapeSelected,
-	onShapeChange,
 }) => {
 	const clearCanvas = useCallback(
 		(context: CanvasRenderingContext2D) => {
@@ -61,8 +55,12 @@ const DrawRegion: React.FC<DrawRegionProps> = ({
 	};
 
 	const transform = useContext(MapContext).transform;
+	const regionState = useContext(RegionContext);
+	const regionDispatch = useContext(RegionDispatchContext);
 
-	const isAddingShape = useMemo(() => newShapeType, [newShapeType]);
+	if (!regionState.region || isHardCoded(regionState.region)) {
+		throw Error('Invalid region state for drawing shapes');
+	}
 
 	// #region existing
 	const existingCanvas = useRef<HTMLCanvasElement | null>(null);
@@ -90,28 +88,28 @@ const DrawRegion: React.FC<DrawRegionProps> = ({
 	let minY = 1000000;
 	let maxY = -1000000;
 
-	for (const shape of existingShapes) {
-		if (isRectangle(shape)) {
-			minX = Math.min(minX, shape.x1, shape.x2);
-			maxX = Math.max(maxX, shape.x1, shape.x2);
-			minY = Math.min(minY, shape.y1, shape.y2);
-			maxY = Math.max(maxY, shape.y1, shape.y2);
-		}
-		// @TODO other shapes
+	for (const shape of regionState.region.rectangles) {
+		minX = Math.min(minX, shape.x1, shape.x2);
+		maxX = Math.max(maxX, shape.x1, shape.x2);
+		minY = Math.min(minY, shape.y1, shape.y2);
+		maxY = Math.max(maxY, shape.y1, shape.y2);
 	}
 
 	useEffect(() => {
 		if (existingContext) {
 			clearCanvas(existingContext);
-			if (existingShapes.length) {
-				existingShapes.forEach((shape) => {
+			if (!regionState.region || isHardCoded(regionState.region)) {
+				throw Error('Invalid region state for drawing shapes');
+			}
+			if (regionState.region.rectangles.length) {
+				regionState.region.rectangles.forEach((shape) => {
 					if (isRectangle(shape)) {
 						drawRectangle(existingContext, shape, true);
 					}
 				});
 			}
 		}
-	}, [clearCanvas, existingContext, existingShapes]);
+	}, [clearCanvas, existingContext, regionState.region]);
 
 	const findExistingShape = (coords: Coords) => {
 		// this if statement is just to protect against constant iteration
@@ -123,7 +121,10 @@ const DrawRegion: React.FC<DrawRegionProps> = ({
 				y2: maxY,
 			})
 		) {
-			for (const shape of existingShapes) {
+			if (!regionState.region || isHardCoded(regionState.region)) {
+				throw Error('Invalid region state for drawing shapes');
+			}
+			for (const shape of regionState.region.rectangles) {
 				if (isRectangle(shape) && isWithinRectangle(coords, shape)) {
 					return shape;
 				}
@@ -134,7 +135,7 @@ const DrawRegion: React.FC<DrawRegionProps> = ({
 
 	const handleExistingMouseMove = (e: MouseEvent<HTMLCanvasElement>) => {
 		e.preventDefault();
-		if (isAddingShape || activeShape) {
+		if (!!regionState.newShapeType || !!regionState.regionShape) {
 			return;
 		}
 		validateCanvas(existingCanvas.current);
@@ -153,28 +154,25 @@ const DrawRegion: React.FC<DrawRegionProps> = ({
 		const relativeCoords = getDrawingCoords(e.clientX, e.clientY);
 		const existingShape = findExistingShape(relativeCoords);
 		if (existingShape) {
-			onShapeSelected(existingShape);
+			regionDispatch({
+				type: 'selected_region_shape',
+				shape: existingShape,
+			});
 		}
 	};
 	// #endregion existing
 
-	const activeRectangle = useMemo(
-		() => (activeShape && isRectangle(activeShape) ? activeShape : null),
-		[activeShape],
+	const isDrawingRectangle = useMemo(
+		() =>
+			regionState.newShapeType === 'Rectangle' ||
+			(regionState.regionShape && isRectangle(regionState.regionShape)),
+		[regionState.newShapeType, regionState.regionShape],
 	);
 
 	return (
 		<>
-			{newShapeType === 'Rectangle' || activeRectangle ? (
-				<DrawRectangle
-					activeRect={activeRectangle}
-					offsetX={offsetX}
-					offsetY={offsetY}
-					h={h}
-					w={w}
-					onChange={onShapeChange}
-					onSelect={onShapeSelected}
-				/>
+			{isDrawingRectangle ? (
+				<DrawRectangle offsetX={offsetX} offsetY={offsetY} h={h} w={w} />
 			) : null}
 			<canvas
 				ref={existingCanvas}

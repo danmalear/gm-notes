@@ -1,17 +1,13 @@
-import type {
-	Circle,
-	Polygon,
-	Rectangle,
-	RegionCreate,
-	RegionResponse,
-	Shape,
-} from '#dtos/region.ts';
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import type { Circle, Polygon, Rectangle } from '#dtos/region.ts';
 import {
-	makeCoordsRelative,
-	stringifyCoords,
-	type ShapeType,
-} from '../helpers/shapes.ts';
+	useCallback,
+	useContext,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from 'react';
+import { RegionContext } from '../contexts/RegionContext.ts';
+import { makeCoordsRelative, stringifyCoords } from '../helpers/shapes.ts';
 import { filePath } from '../services/fileService.ts';
 import DrawRegion from './DrawRegion.tsx';
 
@@ -45,25 +41,15 @@ interface Area {
 }
 
 export interface MapProps extends React.PropsWithChildren {
-	activeRegion: RegionResponse | RegionCreate | null;
-	activeShape?: Shape;
 	mapImagePath: string;
-	newShapeType: ShapeType | null;
 	areas: MapArea[];
 	onRegionClick?: (regionKey: string) => void;
-	onShapeSelected: (shape: Shape) => void;
-	onShapeChange: (shape: Shape) => void;
 }
 
 const Map: React.FC<MapProps> = ({
-	activeRegion,
-	activeShape,
 	mapImagePath,
-	newShapeType,
 	areas: areasProp,
 	onRegionClick,
-	onShapeSelected,
-	onShapeChange,
 }) => {
 	const [imgLoaded, setImgLoaded] = useState(false);
 	const imgRef = useRef<HTMLImageElement | null>(null);
@@ -71,6 +57,8 @@ const Map: React.FC<MapProps> = ({
 	const onImgLoad = () => {
 		setImgLoaded(true);
 	};
+
+	const regionState = useContext(RegionContext);
 
 	const handleRegionClick = (
 		event: React.MouseEvent<HTMLElement>,
@@ -125,7 +113,7 @@ const Map: React.FC<MapProps> = ({
 				}}
 				onLoad={onImgLoad}
 			/>
-			{imgLoaded && !activeRegion ? (
+			{imgLoaded && !regionState.isEditingRegion ? (
 				<map id="map" name="map">
 					{areas.map((area, index) => (
 						<area
@@ -140,16 +128,8 @@ const Map: React.FC<MapProps> = ({
 					))}
 				</map>
 			) : null}
-			{imgLoaded && activeRegion ? (
-				<DrawRegion
-					w={imgRef.current?.width}
-					h={imgRef.current?.height}
-					existingShapes={activeRegion?.rectangles ?? []}
-					activeShape={activeShape}
-					newShapeType={newShapeType}
-					onShapeSelected={onShapeSelected}
-					onShapeChange={onShapeChange}
-				/>
+			{imgLoaded && regionState.isEditingRegion ? (
+				<DrawRegion w={imgRef.current?.width} h={imgRef.current?.height} />
 			) : null}
 		</>
 	);
