@@ -19,12 +19,13 @@ type RegionReducer = (
 	action: RegionAction,
 ) => RegionState;
 
-const regionReducer: RegionReducer = (regionState, action) => {
+const regionReducer: RegionReducer = (_regionState, action) => {
 	switch (action.type) {
 		case 'loaded_region':
-			regionState.region = action.region;
-			regionState.regionId = action.regionId;
-			return regionState;
+			return {
+				region: action.region,
+				regionId: action.regionId,
+			};
 	}
 };
 
