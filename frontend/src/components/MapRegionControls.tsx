@@ -2,15 +2,20 @@ import { ActionIcon } from '@mantine/core';
 import { IconCheck, IconSquarePlus2, IconX } from '@tabler/icons-react';
 import { useContext, useMemo } from 'react';
 import { useNavigate } from 'react-router';
+import { MapContext } from '../contexts/MapContext.ts';
 import {
 	RegionContext,
 	RegionDispatchContext,
 } from '../contexts/RegionContext.ts';
+import { scaleShape } from '../helpers/shapes.ts';
 import { isHardCoded } from '../reducers/regionReducer.ts';
+import { createRegion } from '../services/regionService.ts';
 
 const MapRegionControls: React.FC = () => {
 	const regionState = useContext(RegionContext);
 	const regionDispatch = useContext(RegionDispatchContext);
+
+	const mapState = useContext(MapContext);
 
 	const navigate = useNavigate();
 
@@ -44,6 +49,37 @@ const MapRegionControls: React.FC = () => {
 		regionDispatch({
 			type: 'finished_editing_region_shapes',
 		});
+		const scaledShapes = region.shapes.map((shape) =>
+			scaleShape(shape, {
+				from: {
+					width: mapState.imgWidth ?? mapState.map.width,
+					height: mapState.imgHeight ?? mapState.map.height,
+				},
+				to: {
+					width: mapState.map.width,
+					height: mapState.map.height,
+				},
+			}),
+		);
+		const scaledRegion: typeof region = {
+			...region,
+			shapes: scaledShapes,
+		};
+		if ('id' in scaledRegion) {
+			// @TODO handle existing update
+		} else {
+			createRegion(scaledRegion)
+				.then((response) => {
+					const newRegion = response.data.data;
+					navigate(`region/${newRegion.id}`, {
+						relative: 'path',
+					});
+				})
+				.catch((e) => {
+					console.error('ERROR: ', e);
+					alert('Error creating new region (see console for details)');
+				});
+		}
 	};
 
 	return (
