@@ -1,5 +1,5 @@
 import type { DataResponse } from '#dtos/DataResponse.ts';
-import type { RegionResponse } from '#dtos/region.ts';
+import type { RegionCreate, RegionResponse } from '#dtos/region.ts';
 import type { UUID } from 'crypto';
 import data from '../data/data.ts';
 import { isUUID } from '../helpers/uuid.ts';
@@ -33,4 +33,8 @@ export const getRegion = async (id: string) => {
 	} else {
 		return mapDataHC.regions[id];
 	}
+};
+
+export const createRegion = async (newRegion: RegionCreate) => {
+	return await api.post<DataResponse<RegionResponse>>('/regions', newRegion);
 };
