@@ -22,11 +22,15 @@ const CreateMapModal: React.FC<CreateMapModalProps> = ({
 			name: '',
 			campaignId,
 			imagePath: '',
+			width: 0,
+			height: 0,
 		},
 		validate: {
 			name: (name) => (!name ? 'Map Name is required' : null),
 			campaignId: (campaignId) => (!campaignId ? 'Campaign is required' : null),
 			imagePath: (imagePath) => (!imagePath ? 'Map Image is required' : null),
+			width: (width) => (!width ? 'Map Width is required' : null),
+			height: (height) => (!height ? 'Map Height is required' : null),
 		},
 	});
 

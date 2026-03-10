@@ -67,6 +67,8 @@ async function buildResponse(map: Map) {
 		name: map.Name,
 		imagePath: map.ImagePath,
 		defaultLighting: map.DefaultLighting,
+		width: map.Width,
+		height: map.Height,
 		campaign: {
 			id: campaign.CampaignId,
 			name: campaign.Name,
@@ -164,7 +166,13 @@ export const mapRoutes = (app: Express) => {
 
 			function validateBody(body: unknown): asserts body is MapCreate {
 				validatePostBody(body);
-				requiredFields(body, ['campaignId', 'name', 'imagePath']);
+				requiredFields(body, [
+					'campaignId',
+					'name',
+					'imagePath',
+					'width',
+					'height',
+				]);
 				if (typeof body.campaignId !== 'string' || !isUUID(body.campaignId)) {
 					throw Error('Campaign ID is in an invalid format');
 				}
@@ -175,6 +183,12 @@ export const mapRoutes = (app: Express) => {
 						!isUUID(body.mapTemplateId))
 				) {
 					throw Error('Map template ID is in an invalid format');
+				}
+				if (typeof body.width !== 'number') {
+					throw Error('Map width is in an invalid format');
+				}
+				if (typeof body.height !== 'number') {
+					throw Error('Map height is in an invalid format');
 				}
 			}
 
@@ -192,6 +206,8 @@ export const mapRoutes = (app: Express) => {
 				ImagePath: req.body.imagePath,
 				MapTemplateId: req.body.mapTemplateId ?? null,
 				DefaultLighting: req.body.defaultLighting ?? 'Bright Light',
+				Width: req.body.width,
+				Height: req.body.height,
 			};
 
 			map = await mapRepository.insert(map);

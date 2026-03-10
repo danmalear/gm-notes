@@ -11,4 +11,6 @@ export interface Map {
 	Name: string;
 	ImagePath: string;
 	DefaultLighting: Lighting;
+	Width: number;
+	Height: number;
 }

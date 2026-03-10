@@ -10,6 +10,8 @@ export interface MapCreate {
 	name: string;
 	imagePath: string;
 	defaultLighting?: Lighting;
+	width: number;
+	height: number;
 }
 
 export interface MapUpdate {
@@ -28,6 +30,8 @@ export interface MapResponse {
 	name: string;
 	imagePath: string;
 	defaultLighting: Lighting;
+	width: number;
+	height: number;
 	campaign: CampaignStub;
 	mapTemplate?: MapTemplateStub;
 	regions: RegionStub[];
