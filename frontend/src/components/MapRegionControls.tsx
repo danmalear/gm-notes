@@ -23,6 +23,7 @@ const MapRegionControls: React.FC = () => {
 	};
 
 	const handleCancelRegionClick = () => {
+		history.back();
 		regionDispatch({
 			type: 'canceled_region',
 		});

@@ -4,7 +4,7 @@ import { ActionIcon, AppShell, Group, ScrollArea } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import { useCallback, useMemo, useReducer, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
-import { Outlet, useLoaderData } from 'react-router';
+import { Outlet, useLoaderData, useNavigate } from 'react-router';
 import AppHeader from '../components/AppHeader.tsx';
 import Map, { type MapArea } from '../components/Map.tsx';
 import MapNavbar from '../components/MapNavbar.tsx';
@@ -32,6 +32,8 @@ const MapView: React.FC = () => {
 
 	const [map, setMap] = useState(useLoaderData<typeof mapLoader>().map);
 
+	const navigate = useNavigate();
+
 	const [transform, setTransform] = useState<Transform>({
 		scale: 1,
 		translation: { x: 0, y: 0 },
@@ -44,10 +46,7 @@ const MapView: React.FC = () => {
 
 	// @TODO Add full functionality
 	const handleAddRegionClick = () => {
-		regionDispatch({
-			type: 'added_region',
-			mapId: map.id,
-		});
+		navigate('region/new');
 	};
 	// #endregion editing
 

@@ -7,6 +7,7 @@ import { mapLoader } from './routes/loaders/mapLoader.ts';
 import { regionLoader } from './routes/loaders/regionLoader.ts';
 import MapsView from './routes/MapsView.tsx';
 import MapView from './routes/MapView.tsx';
+import NewRegionView from './routes/NewRegionView.tsx';
 import RegionView from './routes/RegionView.tsx';
 
 const router = createBrowserRouter([
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
 								loader: mapLoader,
 								Component: MapView,
 								children: [
+									{
+										path: 'region/new',
+										Component: NewRegionView,
+									},
 									{
 										path: 'region/:regionId',
 										loader: regionLoader,
