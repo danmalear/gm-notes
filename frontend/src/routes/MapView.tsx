@@ -4,7 +4,7 @@ import { ActionIcon, AppShell, Group, ScrollArea } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import { useCallback, useMemo, useReducer, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
-import { href, Outlet, useLoaderData, useNavigate } from 'react-router';
+import { Outlet, useLoaderData } from 'react-router';
 import AppHeader from '../components/AppHeader.tsx';
 import Map, { type MapArea } from '../components/Map.tsx';
 import MapNavbar from '../components/MapNavbar.tsx';
@@ -27,8 +27,6 @@ import type { mapLoader } from './loaders/mapLoader.ts';
 // HC = hard-coded, to be deleted when data is properly loaded
 
 const MapView: React.FC = () => {
-	const navigate = useNavigate();
-
 	// @TODO remove this dependency
 	const [timeOfDayHC, setTimeOfDayHC] = useState<TimeOfDay>('night');
 
@@ -135,10 +133,6 @@ const MapView: React.FC = () => {
 
 	// #endregion HC
 
-	const handleRegionClick = (regionId: string) => {
-		navigate(href('region/:regionId', { regionId }));
-	};
-
 	const [defaultLightingLoading, setDefaultLightingLoading] = useState(false);
 	const handleDefaultLightingChange = (lighting: Lighting) => {
 		setDefaultLightingLoading(true);
@@ -206,7 +200,6 @@ const MapView: React.FC = () => {
 										<Map
 											mapImagePath={map.imagePath}
 											areas={areas.concat(areasHC)}
-											onRegionClick={handleRegionClick}
 										/>
 									) : null}
 								</MapInteractionCSS>

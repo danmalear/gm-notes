@@ -6,6 +6,7 @@ import {
 	useRef,
 	useState,
 } from 'react';
+import { href, useNavigate } from 'react-router';
 import { RegionContext } from '../contexts/RegionContext.ts';
 import { makeCoordsRelative, stringifyCoords } from '../helpers/shapes.ts';
 import { filePath } from '../services/fileService.ts';
@@ -43,14 +44,9 @@ interface Area {
 export interface MapProps extends React.PropsWithChildren {
 	mapImagePath: string;
 	areas: MapArea[];
-	onRegionClick?: (regionKey: string) => void;
 }
 
-const Map: React.FC<MapProps> = ({
-	mapImagePath,
-	areas: areasProp,
-	onRegionClick,
-}) => {
+const Map: React.FC<MapProps> = ({ mapImagePath, areas: areasProp }) => {
 	const [imgLoaded, setImgLoaded] = useState(false);
 	const imgRef = useRef<HTMLImageElement | null>(null);
 
@@ -60,17 +56,17 @@ const Map: React.FC<MapProps> = ({
 
 	const regionState = useContext(RegionContext);
 
+	const navigate = useNavigate();
+
 	const handleRegionClick = (
 		event: React.MouseEvent<HTMLElement>,
-		regionKey: string,
+		regionId: string,
 	) => {
 		// This will prevent the click event from firing when it's part of a drag
 		if (event.defaultPrevented) return;
 
 		event.preventDefault();
-		if (onRegionClick) {
-			onRegionClick(regionKey);
-		}
+		navigate(href('region/:regionId', { regionId }));
 	};
 
 	// #region coords
