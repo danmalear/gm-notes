@@ -145,14 +145,18 @@ const regionReducer: RegionReducer = (regionState, action) => {
 				regionShape: action.shape,
 			};
 		case 'canceled_region_shape':
-			if (
-				!regionState.region ||
-				isHardCoded(regionState.region) ||
-				!regionState.regionShape
-			) {
+			if (!regionState.region || isHardCoded(regionState.region)) {
 				throw Error(
 					'Attempt to cancel region shape outside the context of editing a region shape',
 				);
+			}
+			if (!regionState.regionShape) {
+				return {
+					...regionState,
+					regionShape: undefined,
+					revertShape: undefined,
+					newShapeType: undefined,
+				};
 			}
 			if (isRectangle(regionState.regionShape)) {
 				if (regionState.revertShape && !isRectangle(regionState.revertShape)) {
