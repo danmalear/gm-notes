@@ -12,7 +12,7 @@ import { randomUUID, type UUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
 import type { Region } from '../entities/Region.ts';
 import { getMessage } from '../helpers/error.ts';
-import { buildShapes } from '../helpers/region-shapes.ts';
+import { buildShapes, getShapeType } from '../helpers/region-shapes.ts';
 import { isUUID } from '../helpers/uuid.ts';
 import {
 	requiredFields,
@@ -33,6 +33,7 @@ import {
 	narrationRepository,
 	noteRepository,
 	regionRepository,
+	regionShapeRepository,
 } from '../repositories.ts';
 
 const apiNamespace = 'regions';
@@ -318,16 +319,23 @@ export const regionRoutes = (app: Express) => {
 				return;
 			}
 
-			let region: Region = {
+			const region = await regionRepository.insert({
 				RegionId: randomUUID(),
 				//@ TODO templates
 				RegionTemplateId: null,
 				MapId: req.body.mapId,
 				Name: req.body.name,
 				Lighting: 'Default',
-			};
+			});
 
-			region = await regionRepository.insert(region);
+			for (const shape of req.body.shapes) {
+				await regionShapeRepository.insert({
+					RegionShapeId: randomUUID(),
+					RegionId: region.RegionId,
+					ShapeType: getShapeType(shape),
+					Coords: JSON.stringify(shape),
+				});
+			}
 
 			try {
 				res.send({ data: await buildResponse(region) });
