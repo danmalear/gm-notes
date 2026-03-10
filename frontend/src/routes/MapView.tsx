@@ -2,9 +2,9 @@ import type { Lighting } from '#dtos/data-types.ts';
 import type { MapUpdate } from '#dtos/map.js';
 import { ActionIcon, AppShell, Group, ScrollArea } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
-import { useCallback, useMemo, useReducer, useState } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
-import { Outlet, useLoaderData, useNavigate } from 'react-router';
+import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router';
 import AppHeader from '../components/AppHeader.tsx';
 import Map, { type MapArea } from '../components/Map.tsx';
 import MapNavbar from '../components/MapNavbar.tsx';
@@ -33,6 +33,13 @@ const MapView: React.FC = () => {
 	const [map, setMap] = useState(useLoaderData<typeof mapLoader>().map);
 
 	const navigate = useNavigate();
+	const location = useLocation();
+
+	useEffect(() => {
+		if (!location.pathname.includes('region')) {
+			regionDispatch({ type: 'deselected_region' });
+		}
+	}, [location]);
 
 	const [transform, setTransform] = useState<Transform>({
 		scale: 1,

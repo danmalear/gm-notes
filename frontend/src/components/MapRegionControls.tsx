@@ -1,6 +1,7 @@
 import { ActionIcon } from '@mantine/core';
 import { IconCheck, IconSquarePlus2, IconX } from '@tabler/icons-react';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
+import { useNavigate } from 'react-router';
 import {
 	RegionContext,
 	RegionDispatchContext,
@@ -11,9 +12,16 @@ const MapRegionControls: React.FC = () => {
 	const regionState = useContext(RegionContext);
 	const regionDispatch = useContext(RegionDispatchContext);
 
-	if (!regionState.region || isHardCoded(regionState.region)) {
-		throw Error('Region controls accessed outside of the context of a region');
-	}
+	const navigate = useNavigate();
+
+	const region = useMemo(() => {
+		if (!regionState.region || isHardCoded(regionState.region)) {
+			throw Error(
+				'Region controls accessed outside of the context of a region',
+			);
+		}
+		return regionState.region;
+	}, [regionState.region]);
 
 	const handleAddRectangleClick = () => {
 		regionDispatch({
@@ -22,11 +30,14 @@ const MapRegionControls: React.FC = () => {
 		});
 	};
 
-	const handleCancelRegionClick = () => {
-		history.back();
-		regionDispatch({
-			type: 'canceled_region',
+	const navigateToLastRegion = () => {
+		navigate(`region/${regionState.revertRegionId ?? '..'}`, {
+			relative: 'path',
 		});
+	};
+
+	const handleCancelRegionClick = () => {
+		navigateToLastRegion();
 	};
 
 	const handleFinishRegionClick = () => {
@@ -63,7 +74,7 @@ const MapRegionControls: React.FC = () => {
 				radius="xl"
 				size="xl"
 				onClick={handleFinishRegionClick}
-				disabled={regionState.region.shapes.length === 0}
+				disabled={region.shapes.length === 0}
 			>
 				<IconCheck />
 			</ActionIcon>

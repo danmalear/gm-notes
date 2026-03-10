@@ -24,13 +24,13 @@ interface ChangedRegionAction {
 	regionId: string; // @TODO make this UUID
 }
 
+interface DeselectedRegionAction {
+	type: 'deselected_region';
+}
+
 interface AddedRegionAction {
 	type: 'added_region';
 	mapId: UUID;
-}
-
-interface CanceledRegionAction {
-	type: 'canceled_region';
 }
 
 interface FinishedEditingRegionShapesAction {
@@ -66,8 +66,8 @@ interface FinishedEditingRegionShapeAction {
 
 export type RegionAction =
 	| ChangedRegionAction
+	| DeselectedRegionAction
 	| AddedRegionAction
-	| CanceledRegionAction
 	| FinishedEditingRegionShapesAction
 	| AddedRegionShapeAction
 	| SelectedRegionShapeAction
@@ -97,6 +97,7 @@ export const isExisting = (
 const regionReducer: RegionReducer = (regionState, action) => {
 	switch (action.type) {
 		case 'changed_region':
+			console.log('changed_region called');
 			return {
 				region: action.region,
 				isEditingRegion: false,
@@ -104,20 +105,22 @@ const regionReducer: RegionReducer = (regionState, action) => {
 				regionId: action.regionId,
 				revertRegionId: action.regionId,
 			};
+		case 'deselected_region':
+			console.log('deselected_region called');
+			return {
+				isEditingRegion: false,
+			};
 		case 'added_region':
+			console.log('added_region called');
 			return {
 				region: {
 					mapId: action.mapId,
-					name: '',
+					name: 'New Region',
 					shapes: [],
 				},
 				isEditingRegion: true,
-			};
-		case 'canceled_region':
-			return {
-				region: regionState.revertRegion,
-				isEditingRegion: false,
-				regionId: regionState.revertRegionId,
+				revertRegion: regionState.revertRegion,
+				revertRegionId: regionState.revertRegionId,
 			};
 		case 'finished_editing_region_shapes':
 			if (!regionState.region) {

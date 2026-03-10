@@ -27,7 +27,11 @@ const NewRegionView: React.FC = () => {
 
 	return (
 		<div id={'new-region-data'} className="region-view p-2">
-			<h1>New Region</h1>
+			{regionState.region ? (
+				<h1>{regionState.region.name}</h1>
+			) : (
+				<h1>New Region</h1>
+			)}
 		</div>
 	);
 };
