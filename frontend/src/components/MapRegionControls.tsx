@@ -1,20 +1,39 @@
 import { ActionIcon } from '@mantine/core';
 import { IconCheck, IconSquarePlus2, IconX } from '@tabler/icons-react';
-import { type MouseEvent } from 'react';
+import { useContext } from 'react';
+import {
+	RegionContext,
+	RegionDispatchContext,
+} from '../contexts/RegionContext.ts';
+import { isHardCoded } from '../reducers/regionReducer.ts';
 
-export interface MapRegionControlsProps {
-	submitDisabled?: boolean;
-	onAddNewRectangleClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-	onCancelRegionClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-	onFinishRegionClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-}
+const MapRegionControls: React.FC = () => {
+	const regionState = useContext(RegionContext);
+	const regionDispatch = useContext(RegionDispatchContext);
 
-const MapRegionControls: React.FC<MapRegionControlsProps> = ({
-	submitDisabled = false,
-	onAddNewRectangleClick,
-	onCancelRegionClick,
-	onFinishRegionClick,
-}) => {
+	if (!regionState.region || isHardCoded(regionState.region)) {
+		throw Error('Region controls accessed outside of the context of a region');
+	}
+
+	const handleAddRectangleClick = () => {
+		regionDispatch({
+			type: 'added_region_shape',
+			shapeType: 'Rectangle',
+		});
+	};
+
+	const handleCancelRegionClick = () => {
+		regionDispatch({
+			type: 'canceled_region',
+		});
+	};
+
+	const handleFinishRegionClick = () => {
+		regionDispatch({
+			type: 'finished_editing_region_shapes',
+		});
+	};
+
 	return (
 		<>
 			<ActionIcon
@@ -23,7 +42,7 @@ const MapRegionControls: React.FC<MapRegionControlsProps> = ({
 				color="cyan"
 				radius="xl"
 				size="xl"
-				onClick={onAddNewRectangleClick}
+				onClick={handleAddRectangleClick}
 			>
 				<IconSquarePlus2 />
 			</ActionIcon>
@@ -33,7 +52,7 @@ const MapRegionControls: React.FC<MapRegionControlsProps> = ({
 				color="gray"
 				radius="xl"
 				size="xl"
-				onClick={onCancelRegionClick}
+				onClick={handleCancelRegionClick}
 			>
 				<IconX />
 			</ActionIcon>
@@ -42,8 +61,8 @@ const MapRegionControls: React.FC<MapRegionControlsProps> = ({
 				variant="filled"
 				radius="xl"
 				size="xl"
-				onClick={onFinishRegionClick}
-				disabled={submitDisabled}
+				onClick={handleFinishRegionClick}
+				disabled={regionState.region.rectangles.length === 0}
 			>
 				<IconCheck />
 			</ActionIcon>

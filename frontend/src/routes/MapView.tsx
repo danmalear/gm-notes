@@ -50,43 +50,6 @@ const MapView: React.FC = () => {
 			mapId: map.id,
 		});
 	};
-
-	const handleCancelRegionClick = () => {
-		regionDispatch({
-			type: 'canceled_region',
-		});
-	};
-
-	const handleFinishRegionClick = () => {
-		regionDispatch({
-			type: 'finished_editing_region_shapes',
-		});
-	};
-
-	const handleAddRectangleClick = () => {
-		regionDispatch({
-			type: 'added_region_shape',
-			shapeType: 'Rectangle',
-		});
-	};
-
-	const handleCancelShapeClick = () => {
-		regionDispatch({
-			type: 'canceled_region_shape',
-		});
-	};
-
-	const handleDeleteShapeClick = () => {
-		regionDispatch({
-			type: 'deleted_region_shape',
-		});
-	};
-
-	const handleFinishShapeClick = () => {
-		regionDispatch({
-			type: 'finished_editing_region_shape',
-		});
-	};
 	// #endregion editing
 
 	const update = useCallback(async (updatedValues: MapUpdate) => {
@@ -256,22 +219,9 @@ const MapView: React.FC = () => {
 									regionState.region &&
 									!isHardCoded(regionState.region) ? (
 										regionState.regionShape || regionState.newShapeType ? (
-											<MapShapeControls
-												submitDisabled={!!regionState.newShapeType}
-												deleteDisabled={!regionState.revertShape}
-												onCancelShapeClick={handleCancelShapeClick}
-												onDeleteShapeClick={handleDeleteShapeClick}
-												onFinishShapeClick={handleFinishShapeClick}
-											/>
+											<MapShapeControls />
 										) : (
-											<MapRegionControls
-												submitDisabled={
-													regionState.region.rectangles.length === 0
-												}
-												onAddNewRectangleClick={handleAddRectangleClick}
-												onCancelRegionClick={handleCancelRegionClick}
-												onFinishRegionClick={handleFinishRegionClick}
-											/>
+											<MapRegionControls />
 										)
 									) : (
 										<ActionIcon

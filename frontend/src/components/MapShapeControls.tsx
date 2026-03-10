@@ -1,22 +1,33 @@
 import { ActionIcon } from '@mantine/core';
 import { IconCheck, IconTrash, IconX } from '@tabler/icons-react';
-import { type MouseEvent } from 'react';
+import { useContext } from 'react';
+import {
+	RegionContext,
+	RegionDispatchContext,
+} from '../contexts/RegionContext.ts';
 
-export interface MapShapeControlsProps {
-	submitDisabled?: boolean;
-	deleteDisabled?: boolean;
-	onCancelShapeClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-	onDeleteShapeClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-	onFinishShapeClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-}
+const MapShapeControls: React.FC = () => {
+	const regionState = useContext(RegionContext);
+	const regionDispatch = useContext(RegionDispatchContext);
 
-const MapShapeControls: React.FC<MapShapeControlsProps> = ({
-	submitDisabled = false,
-	deleteDisabled = false,
-	onCancelShapeClick,
-	onDeleteShapeClick,
-	onFinishShapeClick,
-}) => {
+	const handleCancelShapeClick = () => {
+		regionDispatch({
+			type: 'canceled_region_shape',
+		});
+	};
+
+	const handleDeleteShapeClick = () => {
+		regionDispatch({
+			type: 'deleted_region_shape',
+		});
+	};
+
+	const handleFinishShapeClick = () => {
+		regionDispatch({
+			type: 'finished_editing_region_shape',
+		});
+	};
+
 	return (
 		<>
 			<ActionIcon
@@ -25,7 +36,7 @@ const MapShapeControls: React.FC<MapShapeControlsProps> = ({
 				color="gray"
 				radius="xl"
 				size="xl"
-				onClick={onCancelShapeClick}
+				onClick={handleCancelShapeClick}
 			>
 				<IconX />
 			</ActionIcon>
@@ -35,8 +46,8 @@ const MapShapeControls: React.FC<MapShapeControlsProps> = ({
 				color="red"
 				radius="xl"
 				size="xl"
-				disabled={deleteDisabled}
-				onClick={onDeleteShapeClick}
+				disabled={!regionState.revertShape}
+				onClick={handleDeleteShapeClick}
 			>
 				<IconTrash />
 			</ActionIcon>
@@ -45,8 +56,8 @@ const MapShapeControls: React.FC<MapShapeControlsProps> = ({
 				variant="filled"
 				radius="xl"
 				size="xl"
-				disabled={submitDisabled}
-				onClick={onFinishShapeClick}
+				disabled={!!regionState.newShapeType}
+				onClick={handleFinishShapeClick}
 			>
 				<IconCheck />
 			</ActionIcon>
