@@ -11,7 +11,7 @@ import MapNavbar from '../components/MapNavbar.tsx';
 import MapRegionControls from '../components/MapRegionControls.tsx';
 import MapShapeControls from '../components/MapShapeControls.tsx';
 import { LegacyContext } from '../contexts/LegacyContext.ts';
-import { MapContext, type Transform } from '../contexts/MapContext.ts';
+import { MapContext, MapDispatchContext } from '../contexts/MapContext.ts';
 import {
 	RegionContext,
 	RegionDispatchContext,
@@ -20,6 +20,7 @@ import data from '../data/data.ts';
 import type { TimeOfDay } from '../data/MapData.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isCircle, isPolygon, isRectangle } from '../helpers/shapes.ts';
+import mapReducer from '../reducers/mapReducer.ts';
 import regionReducer, { isHardCoded } from '../reducers/regionReducer.ts';
 import { updateMap } from '../services/mapService.ts';
 import type { mapLoader } from './loaders/mapLoader.ts';
@@ -30,7 +31,15 @@ const MapView: React.FC = () => {
 	// @TODO remove this dependency
 	const [timeOfDayHC, setTimeOfDayHC] = useState<TimeOfDay>('night');
 
-	const [map, setMap] = useState(useLoaderData<typeof mapLoader>().map);
+	const [mapState, mapDispatch] = useReducer(mapReducer, {
+		map: useLoaderData<typeof mapLoader>().map,
+		transform: {
+			scale: 1,
+			translation: { x: 0, y: 0 },
+		},
+	});
+
+	const { map } = mapState;
 
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -40,11 +49,6 @@ const MapView: React.FC = () => {
 			regionDispatch({ type: 'deselected_region' });
 		}
 	}, [location]);
-
-	const [transform, setTransform] = useState<Transform>({
-		scale: 1,
-		translation: { x: 0, y: 0 },
-	});
 
 	// #region editing
 	const [regionState, regionDispatch] = useReducer(regionReducer, {
@@ -65,7 +69,10 @@ const MapView: React.FC = () => {
 				throw Error('Map not found');
 			}
 
-			setMap(response.data.data);
+			mapDispatch({
+				type: 'updated_map',
+				map: response.data.data,
+			});
 		} catch (e) {
 			alert('Error reloading map');
 			console.error(getMessage(e));
@@ -151,102 +158,107 @@ const MapView: React.FC = () => {
 	};
 
 	return (
-		<MapContext value={{ map, transform }}>
-			<RegionContext value={regionState}>
-				<RegionDispatchContext value={regionDispatch}>
-					<LegacyContext value={{ timeOfDay: timeOfDayHC }}>
-						<AppShell
-							id="app-shell"
-							header={{
-								height: 50,
-								collapsed: false,
-							}}
-							navbar={{
-								width: 200,
-								breakpoint: 'sm',
-								collapsed: {
-									desktop: false,
-									mobile: false,
-								},
-							}}
-							aside={{
-								width: 500,
-								breakpoint: 'md',
-								collapsed: {
-									desktop: false,
-									mobile: true,
-								},
-							}}
-							offsetScrollbars={true}
-							h="100vh"
-						>
-							<AppHeader title={map.name} />
-							<MapNavbar
-								defaultLighting={map.defaultLighting}
-								onDefaultLightingChanged={handleDefaultLightingChange}
-								defaultLightingLoading={defaultLightingLoading}
-								currentMapHC={currentMapHC}
-								onCurrentMapChangedHC={setCurrentMapHC}
-								timeOfDayHC={timeOfDayHC}
-								onTimeOfDayChangedHC={setTimeOfDayHC}
-							/>
-							<AppShell.Main h="100%">
-								<MapInteractionCSS
-									minScale={0.75}
-									maxScale={6}
-									disablePan={
-										!!regionState.newShapeType || !!regionState.regionShape
-									}
-									value={transform}
-									onChange={(value) => {
-										setTransform(value);
-									}}
-								>
-									{mapDataHC ? (
-										<Map
-											mapImagePath={map.imagePath}
-											areas={areas.concat(areasHC)}
-										/>
-									) : null}
-								</MapInteractionCSS>
-								<Group
-									pos="absolute"
-									bottom={0}
-									right="var(--app-shell-aside-offset)"
-									m="sm"
-								>
-									{regionState.isEditingRegion &&
-									regionState.region &&
-									!isHardCoded(regionState.region) ? (
-										regionState.regionShape || regionState.newShapeType ? (
-											<MapShapeControls />
+		<MapContext value={mapState}>
+			<MapDispatchContext value={mapDispatch}>
+				<RegionContext value={regionState}>
+					<RegionDispatchContext value={regionDispatch}>
+						<LegacyContext value={{ timeOfDay: timeOfDayHC }}>
+							<AppShell
+								id="app-shell"
+								header={{
+									height: 50,
+									collapsed: false,
+								}}
+								navbar={{
+									width: 200,
+									breakpoint: 'sm',
+									collapsed: {
+										desktop: false,
+										mobile: false,
+									},
+								}}
+								aside={{
+									width: 500,
+									breakpoint: 'md',
+									collapsed: {
+										desktop: false,
+										mobile: true,
+									},
+								}}
+								offsetScrollbars={true}
+								h="100vh"
+							>
+								<AppHeader title={map.name} />
+								<MapNavbar
+									defaultLighting={map.defaultLighting}
+									onDefaultLightingChanged={handleDefaultLightingChange}
+									defaultLightingLoading={defaultLightingLoading}
+									currentMapHC={currentMapHC}
+									onCurrentMapChangedHC={setCurrentMapHC}
+									timeOfDayHC={timeOfDayHC}
+									onTimeOfDayChangedHC={setTimeOfDayHC}
+								/>
+								<AppShell.Main h="100%">
+									<MapInteractionCSS
+										minScale={0.75}
+										maxScale={6}
+										disablePan={
+											!!regionState.newShapeType || !!regionState.regionShape
+										}
+										value={mapState.transform}
+										onChange={(value) => {
+											mapDispatch({
+												type: 'updated_transform',
+												transform: value,
+											});
+										}}
+									>
+										{mapDataHC ? (
+											<Map
+												mapImagePath={map.imagePath}
+												areas={areas.concat(areasHC)}
+											/>
+										) : null}
+									</MapInteractionCSS>
+									<Group
+										pos="absolute"
+										bottom={0}
+										right="var(--app-shell-aside-offset)"
+										m="sm"
+									>
+										{regionState.isEditingRegion &&
+										regionState.region &&
+										!isHardCoded(regionState.region) ? (
+											regionState.regionShape || regionState.newShapeType ? (
+												<MapShapeControls />
+											) : (
+												<MapRegionControls />
+											)
 										) : (
-											<MapRegionControls />
-										)
-									) : (
-										<ActionIcon
-											title="Add New Region"
-											variant="filled"
-											radius="xl"
-											size="xl"
-											onClick={handleAddRegionClick}
-										>
-											<IconPlus />
-										</ActionIcon>
-									)}
-								</Group>
-							</AppShell.Main>
-							<AppShell.Aside>
-								{mapDataHC ? (
-									<AppShell.Section grow component={ScrollArea}>
-										<Outlet />
-									</AppShell.Section>
-								) : null}
-							</AppShell.Aside>
-						</AppShell>
-					</LegacyContext>
-				</RegionDispatchContext>
-			</RegionContext>
+											<ActionIcon
+												title="Add New Region"
+												variant="filled"
+												radius="xl"
+												size="xl"
+												onClick={handleAddRegionClick}
+											>
+												<IconPlus />
+											</ActionIcon>
+										)}
+									</Group>
+								</AppShell.Main>
+								<AppShell.Aside>
+									{mapDataHC ? (
+										<AppShell.Section grow component={ScrollArea}>
+											<Outlet />
+										</AppShell.Section>
+									) : null}
+								</AppShell.Aside>
+							</AppShell>
+						</LegacyContext>
+					</RegionDispatchContext>
+				</RegionContext>
+			</MapDispatchContext>
 		</MapContext>
 	);
 };

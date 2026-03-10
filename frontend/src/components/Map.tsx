@@ -7,8 +7,9 @@ import {
 	useState,
 } from 'react';
 import { href, useNavigate } from 'react-router';
+import { MapContext, MapDispatchContext } from '../contexts/MapContext.ts';
 import { RegionContext } from '../contexts/RegionContext.ts';
-import { makeCoordsRelative, stringifyCoords } from '../helpers/shapes.ts';
+import { scaleShape, stringifyCoords } from '../helpers/shapes.ts';
 import { filePath } from '../services/fileService.ts';
 import DrawRegion from './DrawRegion.tsx';
 
@@ -50,11 +51,21 @@ const Map: React.FC<MapProps> = ({ mapImagePath, areas: areasProp }) => {
 	const [imgLoaded, setImgLoaded] = useState(false);
 	const imgRef = useRef<HTMLImageElement | null>(null);
 
+	const mapDispatch = useContext(MapDispatchContext);
+	const map = useContext(MapContext).map;
+	const regionState = useContext(RegionContext);
+
 	const onImgLoad = () => {
 		setImgLoaded(true);
+		if (imgRef?.current) {
+			const img = imgRef?.current;
+			mapDispatch({
+				type: 'loaded_image',
+				width: img.width,
+				height: img.height,
+			});
+		}
 	};
-
-	const regionState = useContext(RegionContext);
 
 	const navigate = useNavigate();
 
@@ -74,9 +85,18 @@ const Map: React.FC<MapProps> = ({ mapImagePath, areas: areasProp }) => {
 
 	const updateAreas = useCallback(() => {
 		if (imgRef?.current) {
-			const img = imgRef?.current;
+			const img = imgRef.current;
 			const newAreas: Area[] = areasProp.map((a) => {
-				const relativeCoords = makeCoordsRelative(img, a.coords);
+				const relativeCoords = scaleShape(a.coords, {
+					from: {
+						width: map.width,
+						height: map.height,
+					},
+					to: {
+						width: img.width,
+						height: img.height,
+					},
+				});
 				return {
 					shape: a.shape,
 					coords: stringifyCoords(relativeCoords),
@@ -86,7 +106,7 @@ const Map: React.FC<MapProps> = ({ mapImagePath, areas: areasProp }) => {
 
 			return setAreas(newAreas);
 		}
-	}, [areasProp]);
+	}, [areasProp, map.width, map.height]);
 
 	useLayoutEffect(() => {
 		updateAreas();

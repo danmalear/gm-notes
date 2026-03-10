@@ -1,17 +1,5 @@
-import type { MapResponse } from '#dtos/map.ts';
-import { createContext } from 'react';
+import { createContext, Dispatch } from 'react';
+import { MapAction, MapState } from '../reducers/mapReducer.ts';
 
-export interface Transform {
-	scale: number;
-	translation: {
-		x: number;
-		y: number;
-	};
-}
-
-export interface MapContextData {
-	map: MapResponse;
-	transform: Transform;
-}
-
-export const MapContext = createContext<MapContextData>(null!);
+export const MapContext = createContext<MapState>(null!);
+export const MapDispatchContext = createContext<Dispatch<MapAction>>(null!);

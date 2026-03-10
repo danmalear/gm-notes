@@ -21,27 +21,36 @@ type ShapeIdentity<T> = T extends Circle
 			? Polygon
 			: never;
 
-export const makeCoordsRelative = <T extends Shape, R = ShapeIdentity<T>>(
-	img: HTMLImageElement,
+interface Dimensions {
+	width: number;
+	height: number;
+}
+
+export const scaleShape = <T extends Shape, R = ShapeIdentity<T>>(
 	shape: T,
+	scale: {
+		from: Dimensions;
+		to: Dimensions;
+	},
 ): R => {
+	const { from, to } = scale;
 	if (isCircle(shape)) {
 		const { x, y, r } = shape;
 
 		return {
-			x: (x / img.naturalWidth) * img.width,
-			y: (y / img.naturalHeight) * img.height,
-			r: (r / img.naturalWidth) * img.width,
+			x: (x / from.width) * to.width,
+			y: (y / from.height) * to.height,
+			r: (r / from.width) * to.width,
 		} as R;
 	}
 	if (isRectangle(shape)) {
 		const { x1, y1, x2, y2 } = shape;
 
 		return {
-			x1: (x1 / img.naturalWidth) * img.width,
-			y1: (y1 / img.naturalHeight) * img.height,
-			x2: (x2 / img.naturalWidth) * img.width,
-			y2: (y2 / img.naturalHeight) * img.height,
+			x1: (x1 / from.width) * to.width,
+			y1: (y1 / from.height) * to.height,
+			x2: (x2 / from.width) * to.width,
+			y2: (y2 / from.height) * to.height,
 		} as R;
 	}
 	if (isPolygon(shape)) {
@@ -49,43 +58,8 @@ export const makeCoordsRelative = <T extends Shape, R = ShapeIdentity<T>>(
 
 		return {
 			coords: coords.map((pair) => ({
-				x: (pair.x / img.naturalWidth) * img.width,
-				y: (pair.y / img.naturalHeight) * img.height,
-			})),
-		} as R;
-	}
-	throw Error('Invalid shape specified');
-};
-
-export const makeCoordsStatic = <T extends Shape, R = ShapeIdentity<T>>(
-	img: HTMLImageElement,
-	shape: T,
-): R => {
-	if (isCircle(shape)) {
-		const { x, y, r } = shape;
-
-		return {
-			x: (x / img.width) * img.naturalWidth,
-			y: (y / img.height) * img.naturalHeight,
-			r: (r / img.width) * img.naturalWidth,
-		} as R;
-	}
-	if (isRectangle(shape)) {
-		const { x1, y1, x2, y2 } = shape;
-
-		return {
-			x1: (x1 / img.width) * img.naturalWidth,
-			y1: (y1 / img.height) * img.naturalHeight,
-			x2: (x2 / img.width) * img.naturalWidth,
-			y2: (y2 / img.height) * img.naturalHeight,
-		} as R;
-	}
-	if (isPolygon(shape)) {
-		const { coords } = shape;
-		return {
-			coords: coords.map((pair) => ({
-				x: (pair.x / img.width) * img.naturalWidth,
-				y: (pair.y / img.height) * img.naturalHeight,
+				x: (pair.x / from.width) * to.width,
+				y: (pair.y / from.height) * to.height,
 			})),
 		} as R;
 	}

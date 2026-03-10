@@ -20,8 +20,13 @@ interface ChangedMapAction {
 	map: MapResponse;
 }
 
+interface UpdatedMapAction {
+	type: 'updated_map';
+	map: MapResponse;
+}
+
 interface ChangedTransformAction {
-	type: 'changed_transform';
+	type: 'updated_transform';
 	transform: Transform;
 }
 
@@ -33,6 +38,7 @@ interface LoadedImageAction {
 
 export type MapAction =
 	| ChangedMapAction
+	| UpdatedMapAction
 	| ChangedTransformAction
 	| LoadedImageAction;
 
@@ -48,7 +54,12 @@ const mapReducer: MapReducer = (mapState, action) => {
 					translation: { x: 0, y: 0 },
 				},
 			};
-		case 'changed_transform':
+		case 'updated_map':
+			return {
+				...mapState,
+				map: action.map,
+			};
+		case 'updated_transform':
 			return {
 				...mapState,
 				transform: action.transform,
