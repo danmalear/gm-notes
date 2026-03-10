@@ -11,8 +11,6 @@ export interface Transform {
 export interface MapState {
 	map: MapResponse;
 	transform: Transform;
-	mapWidth?: number;
-	mapHeight?: number;
 	imgWidth?: number;
 	imgHeight?: number;
 }
@@ -20,8 +18,6 @@ export interface MapState {
 interface ChangedMapAction {
 	type: 'changed_map';
 	map: MapResponse;
-	width: number;
-	height: number;
 }
 
 interface ChangedTransformAction {
@@ -51,8 +47,6 @@ const mapReducer: MapReducer = (mapState, action) => {
 					scale: 1,
 					translation: { x: 0, y: 0 },
 				},
-				mapWidth: action.width,
-				mapHeight: action.height,
 			};
 		case 'changed_transform':
 			return {
