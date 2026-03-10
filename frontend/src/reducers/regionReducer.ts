@@ -97,7 +97,6 @@ export const isExisting = (
 const regionReducer: RegionReducer = (regionState, action) => {
 	switch (action.type) {
 		case 'changed_region':
-			console.log('changed_region called');
 			return {
 				region: action.region,
 				isEditingRegion: false,
@@ -106,12 +105,10 @@ const regionReducer: RegionReducer = (regionState, action) => {
 				revertRegionId: action.regionId,
 			};
 		case 'deselected_region':
-			console.log('deselected_region called');
 			return {
 				isEditingRegion: false,
 			};
 		case 'added_region':
-			console.log('added_region called');
 			return {
 				region: {
 					mapId: action.mapId,
