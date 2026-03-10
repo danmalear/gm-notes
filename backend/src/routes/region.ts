@@ -161,7 +161,7 @@ async function buildResponse(region: Region) {
 		},
 		// @TODO Templates
 		regionTemplate: undefined,
-		...shapes,
+		shapes,
 		lighting: region.Lighting,
 		narrations: narrations.map((entity) => ({
 			id: entity.NarrationId,

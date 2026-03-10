@@ -42,7 +42,7 @@ async function buildRegions(mapId: UUID) {
 			regionTemplateId: region.RegionTemplateId ?? undefined,
 			mapId: region.MapId,
 			name: region.Name,
-			...shapes,
+			shapes,
 		});
 	}
 

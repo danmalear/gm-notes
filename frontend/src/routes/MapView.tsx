@@ -19,6 +19,7 @@ import {
 import data from '../data/data.ts';
 import type { TimeOfDay } from '../data/MapData.ts';
 import { getMessage } from '../helpers/error.ts';
+import { isCircle, isPolygon, isRectangle } from '../helpers/shapes.ts';
 import regionReducer, { isHardCoded } from '../reducers/regionReducer.ts';
 import { updateMap } from '../services/mapService.ts';
 import type { mapLoader } from './loaders/mapLoader.ts';
@@ -71,26 +72,26 @@ const MapView: React.FC = () => {
 		const acc: MapArea[] = [];
 
 		for (const region of map.regions) {
-			for (const circle of region.circles) {
-				acc.push({
-					shape: 'circle',
-					coords: circle,
-					regionId: region.id,
-				});
-			}
-			for (const rectangle of region.rectangles) {
-				acc.push({
-					shape: 'rect',
-					coords: rectangle,
-					regionId: region.id,
-				});
-			}
-			for (const polygon of region.polygons) {
-				acc.push({
-					shape: 'poly',
-					coords: polygon,
-					regionId: region.id,
-				});
+			for (const shape of region.shapes) {
+				if (isRectangle(shape)) {
+					acc.push({
+						shape: 'rect',
+						coords: shape,
+						regionId: region.id,
+					});
+				} else if (isCircle(shape)) {
+					acc.push({
+						shape: 'circle',
+						coords: shape,
+						regionId: region.id,
+					});
+				} else if (isPolygon(shape)) {
+					acc.push({
+						shape: 'poly',
+						coords: shape,
+						regionId: region.id,
+					});
+				}
 			}
 		}
 

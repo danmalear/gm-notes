@@ -109,9 +109,7 @@ const regionReducer: RegionReducer = (regionState, action) => {
 				region: {
 					mapId: action.mapId,
 					name: '',
-					rectangles: [],
-					circles: [],
-					polygons: [],
+					shapes: [],
 				},
 				isEditingRegion: true,
 			};
@@ -164,9 +162,9 @@ const regionReducer: RegionReducer = (regionState, action) => {
 					...regionState,
 					region: {
 						...regionState.region,
-						rectangles: regionState.revertShape
-							? [...regionState.region.rectangles, regionState.revertShape]
-							: regionState.region.rectangles,
+						shapes: regionState.revertShape
+							? [...regionState.region.shapes, regionState.revertShape]
+							: regionState.region.shapes,
 					},
 					regionShape: undefined,
 					revertShape: undefined,
@@ -196,10 +194,7 @@ const regionReducer: RegionReducer = (regionState, action) => {
 					...regionState,
 					region: {
 						...regionState.region,
-						rectangles: [
-							...regionState.region.rectangles,
-							regionState.regionShape,
-						],
+						shapes: [...regionState.region.shapes, regionState.regionShape],
 					},
 					regionShape: undefined,
 					revertShape: undefined,
@@ -214,15 +209,16 @@ const regionReducer: RegionReducer = (regionState, action) => {
 				);
 			if (isRectangle(action.shape)) {
 				const actionRect = action.shape;
-				const existingShape = regionState.region.rectangles.find((rect) =>
-					isRectangleEqual(rect, actionRect),
+				const existingShape = regionState.region.shapes.find(
+					(rect) => isRectangle(rect) && isRectangleEqual(rect, actionRect),
 				);
 				return {
 					...regionState,
 					region: {
 						...regionState.region,
-						rectangles: regionState.region.rectangles.filter(
-							(rect) => !isRectangleEqual(rect, actionRect),
+						shapes: regionState.region.shapes.filter(
+							(rect) =>
+								!isRectangle(rect) || !isRectangleEqual(rect, actionRect),
 						),
 					},
 					newShapeType: undefined,

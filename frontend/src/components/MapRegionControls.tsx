@@ -62,7 +62,7 @@ const MapRegionControls: React.FC = () => {
 				radius="xl"
 				size="xl"
 				onClick={handleFinishRegionClick}
-				disabled={regionState.region.rectangles.length === 0}
+				disabled={regionState.region.shapes.length === 0}
 			>
 				<IconCheck />
 			</ActionIcon>

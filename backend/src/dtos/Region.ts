@@ -34,10 +34,8 @@ export type Shape = Rectangle | Circle | Polygon;
 export interface RegionCreate {
 	name: string;
 	mapId: UUID;
-	rectangles: Rectangle[];
+	shapes: Shape[];
 	// @TODO Some of these might be their own files
-	// circles: Circle[];
-	// polygons: Polygon[];
 	// lighting: RelativeLighting;
 	// narrations: NarrationStub[];
 	// creatures: Creature[];
@@ -57,9 +55,7 @@ export interface RegionResponse {
 	name: string;
 	regionTemplate?: RegionTemplateStub;
 	map: MapStub;
-	rectangles: Rectangle[];
-	circles: Circle[];
-	polygons: Polygon[];
+	shapes: Shape[];
 	lighting: RelativeLighting;
 	narrations: NarrationStub[];
 	// @TODO Some of these might be their own files
@@ -76,7 +72,5 @@ export interface RegionStub {
 	regionTemplateId?: UUID;
 	mapId: UUID;
 	name: string;
-	rectangles: Rectangle[];
-	circles: Circle[];
-	polygons: Polygon[];
+	shapes: Shape[];
 }

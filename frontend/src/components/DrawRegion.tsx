@@ -88,11 +88,13 @@ const DrawRegion: React.FC<DrawRegionProps> = ({
 	let minY = 1000000;
 	let maxY = -1000000;
 
-	for (const shape of regionState.region.rectangles) {
-		minX = Math.min(minX, shape.x1, shape.x2);
-		maxX = Math.max(maxX, shape.x1, shape.x2);
-		minY = Math.min(minY, shape.y1, shape.y2);
-		maxY = Math.max(maxY, shape.y1, shape.y2);
+	for (const shape of regionState.region.shapes) {
+		if (isRectangle(shape)) {
+			minX = Math.min(minX, shape.x1, shape.x2);
+			maxX = Math.max(maxX, shape.x1, shape.x2);
+			minY = Math.min(minY, shape.y1, shape.y2);
+			maxY = Math.max(maxY, shape.y1, shape.y2);
+		}
 	}
 
 	useEffect(() => {
@@ -101,8 +103,8 @@ const DrawRegion: React.FC<DrawRegionProps> = ({
 			if (!regionState.region || isHardCoded(regionState.region)) {
 				throw Error('Invalid region state for drawing shapes');
 			}
-			if (regionState.region.rectangles.length) {
-				regionState.region.rectangles.forEach((shape) => {
+			if (regionState.region.shapes.length) {
+				regionState.region.shapes.forEach((shape) => {
 					if (isRectangle(shape)) {
 						drawRectangle(existingContext, shape, true);
 					}
@@ -124,7 +126,7 @@ const DrawRegion: React.FC<DrawRegionProps> = ({
 			if (!regionState.region || isHardCoded(regionState.region)) {
 				throw Error('Invalid region state for drawing shapes');
 			}
-			for (const shape of regionState.region.rectangles) {
+			for (const shape of regionState.region.shapes) {
 				if (isRectangle(shape) && isWithinRectangle(coords, shape)) {
 					return shape;
 				}
