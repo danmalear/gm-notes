@@ -3,13 +3,26 @@ import type { ActionStub } from '#dtos/action.ts';
 import type { DataResponse } from '#dtos/DataResponse.ts';
 import type { LocationItemStub } from '#dtos/item.ts';
 import type { MessageResponse } from '#dtos/MessageResponse.ts';
-import type { RegionQueryParams, RegionResponse } from '#dtos/region.ts';
-import type { UUID } from 'crypto';
+import type {
+	RegionCreate,
+	RegionQueryParams,
+	RegionResponse,
+} from '#dtos/region.ts';
+import { randomUUID, type UUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
 import type { Region } from '../entities/Region.ts';
 import { getMessage } from '../helpers/error.ts';
 import { buildShapes } from '../helpers/region-shapes.ts';
 import { isUUID } from '../helpers/uuid.ts';
+import {
+	requiredFields,
+	validatePostBody,
+} from '../helpers/validation/http.ts';
+import {
+	validateCircle,
+	validatePolygon,
+	validateRectangle,
+} from '../helpers/validation/shapes.ts';
 import {
 	abilityCheckRepository,
 	actionRepository,
@@ -245,6 +258,76 @@ export const regionRoutes = (app: Express) => {
 				});
 				return;
 			}
+
+			try {
+				res.send({ data: await buildResponse(region) });
+			} catch (e) {
+				res.status(500).send({
+					message: getMessage(e),
+				});
+			}
+		},
+	);
+
+	app.post(
+		`/${apiNamespace}`,
+		async (
+			req,
+			res: Response<MessageResponse | DataResponse<RegionResponse>>,
+		) => {
+			console.log(
+				`Region POST request received. body: ${JSON.stringify(req.body)}`,
+			);
+
+			function validateBody(body: unknown): asserts body is RegionCreate {
+				validatePostBody(body);
+				requiredFields(body, ['name', 'mapId', 'shapes']);
+
+				// @TODO require length
+				if (typeof body.name !== 'string' /* || body.name.length <= 0 */) {
+					throw Error('Region name is in an invalid format');
+				}
+
+				if (typeof body.mapId !== 'string' || !isUUID(body.mapId)) {
+					throw Error('Map ID is in an invalid format');
+				}
+
+				if (!Array.isArray(body.shapes)) {
+					throw Error('Shape array is in an invalid format');
+				}
+
+				for (const shape of body.shapes) {
+					if ('x1' in shape) {
+						validateRectangle(shape);
+					} else if ('r' in shape) {
+						validateCircle(shape);
+					} else if ('coords' in shape) {
+						validatePolygon(shape);
+					} else {
+						throw Error('Invalid shape provided');
+					}
+				}
+
+				// @TODO the other properties as they're implemented
+			}
+
+			try {
+				validateBody(req.body);
+			} catch (e) {
+				res.status(400).send({ message: getMessage(e) });
+				return;
+			}
+
+			let region: Region = {
+				RegionId: randomUUID(),
+				//@ TODO templates
+				RegionTemplateId: null,
+				MapId: req.body.mapId,
+				Name: req.body.name,
+				Lighting: 'Default',
+			};
+
+			region = await regionRepository.insert(region);
 
 			try {
 				res.send({ data: await buildResponse(region) });
