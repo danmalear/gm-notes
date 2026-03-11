@@ -1,4 +1,5 @@
 import type { MapResponse } from '#dtos/map.ts';
+import type { RegionResponse } from '#dtos/region.ts';
 
 export interface Transform {
 	scale: number;
@@ -25,6 +26,11 @@ interface UpdatedMapAction {
 	map: MapResponse;
 }
 
+interface CreatedRegionAction {
+	type: 'created_region';
+	region: RegionResponse;
+}
+
 interface ChangedTransformAction {
 	type: 'updated_transform';
 	transform: Transform;
@@ -39,6 +45,7 @@ interface LoadedImageAction {
 export type MapAction =
 	| ChangedMapAction
 	| UpdatedMapAction
+	| CreatedRegionAction
 	| ChangedTransformAction
 	| LoadedImageAction;
 
@@ -58,6 +65,23 @@ const mapReducer: MapReducer = (mapState, action) => {
 			return {
 				...mapState,
 				map: action.map,
+			};
+		case 'created_region':
+			return {
+				...mapState,
+				map: {
+					...mapState.map,
+					regions: [
+						...mapState.map.regions,
+						{
+							id: action.region.id,
+							mapId: mapState.map.id,
+							name: action.region.name,
+							shapes: action.region.shapes,
+							regionTemplateId: action.region.regionTemplate?.id,
+						},
+					],
+				},
 			};
 		case 'updated_transform':
 			return {

@@ -2,7 +2,7 @@ import { ActionIcon } from '@mantine/core';
 import { IconCheck, IconSquarePlus2, IconX } from '@tabler/icons-react';
 import { useContext, useMemo } from 'react';
 import { useNavigate } from 'react-router';
-import { MapContext } from '../contexts/MapContext.ts';
+import { MapContext, MapDispatchContext } from '../contexts/MapContext.ts';
 import {
 	RegionContext,
 	RegionDispatchContext,
@@ -16,6 +16,7 @@ const MapRegionControls: React.FC = () => {
 	const regionDispatch = useContext(RegionDispatchContext);
 
 	const mapState = useContext(MapContext);
+	const mapDispatch = useContext(MapDispatchContext);
 
 	const navigate = useNavigate();
 
@@ -77,6 +78,10 @@ const MapRegionControls: React.FC = () => {
 			createRegion(scaledRegion)
 				.then((response) => {
 					const newRegion = response.data.data;
+					mapDispatch({
+						type: 'created_region',
+						region: newRegion,
+					});
 					navigate(`region/${newRegion.id}`, {
 						relative: 'path',
 					});
