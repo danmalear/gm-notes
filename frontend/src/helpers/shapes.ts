@@ -26,31 +26,39 @@ interface Dimensions {
 	height: number;
 }
 
+interface ScaleShapeOpts {
+	round?: boolean;
+}
+
 export const scaleShape = <T extends Shape, R = ShapeIdentity<T>>(
 	shape: T,
 	scale: {
 		from: Dimensions;
 		to: Dimensions;
 	},
+	opts: ScaleShapeOpts = {
+		round: false,
+	},
 ): R => {
 	const { from, to } = scale;
+	const maybeRound = opts.round ? Math.round : (x: number) => x;
 	if (isCircle(shape)) {
 		const { x, y, r } = shape;
 
 		return {
-			x: (x / from.width) * to.width,
-			y: (y / from.height) * to.height,
-			r: (r / from.width) * to.width,
+			x: maybeRound((x / from.width) * to.width),
+			y: maybeRound((y / from.height) * to.height),
+			r: maybeRound((r / from.width) * to.width),
 		} as R;
 	}
 	if (isRectangle(shape)) {
 		const { x1, y1, x2, y2 } = shape;
 
 		return {
-			x1: (x1 / from.width) * to.width,
-			y1: (y1 / from.height) * to.height,
-			x2: (x2 / from.width) * to.width,
-			y2: (y2 / from.height) * to.height,
+			x1: maybeRound((x1 / from.width) * to.width),
+			y1: maybeRound((y1 / from.height) * to.height),
+			x2: maybeRound((x2 / from.width) * to.width),
+			y2: maybeRound((y2 / from.height) * to.height),
 		} as R;
 	}
 	if (isPolygon(shape)) {
@@ -58,8 +66,8 @@ export const scaleShape = <T extends Shape, R = ShapeIdentity<T>>(
 
 		return {
 			coords: coords.map((pair) => ({
-				x: (pair.x / from.width) * to.width,
-				y: (pair.y / from.height) * to.height,
+				x: maybeRound((pair.x / from.width) * to.width),
+				y: maybeRound((pair.y / from.height) * to.height),
 			})),
 		} as R;
 	}

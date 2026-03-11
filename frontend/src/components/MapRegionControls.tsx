@@ -50,16 +50,22 @@ const MapRegionControls: React.FC = () => {
 			type: 'finished_editing_region_shapes',
 		});
 		const scaledShapes = region.shapes.map((shape) =>
-			scaleShape(shape, {
-				from: {
-					width: mapState.imgWidth ?? mapState.map.width,
-					height: mapState.imgHeight ?? mapState.map.height,
+			scaleShape(
+				shape,
+				{
+					from: {
+						width: mapState.imgWidth ?? mapState.map.width,
+						height: mapState.imgHeight ?? mapState.map.height,
+					},
+					to: {
+						width: mapState.map.width,
+						height: mapState.map.height,
+					},
 				},
-				to: {
-					width: mapState.map.width,
-					height: mapState.map.height,
+				{
+					round: true,
 				},
-			}),
+			),
 		);
 		const scaledRegion: typeof region = {
 			...region,
