@@ -52,7 +52,6 @@ const firstFloorRegions: {
 			},
 		],
 
-		// @TODO DB
 		areas: [
 			{
 				shape: 'rect',
