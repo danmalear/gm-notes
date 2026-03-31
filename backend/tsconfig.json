@@ -6,9 +6,6 @@
 		"lib": ["ES2020", "DOM", "DOM.Iterable"],
 		"module": "ESNext",
 		"skipLibCheck": true,
-		"paths": {
-			"#dtos/*": ["./src/dtos/*"]
-		},
 
 		/* Bundler mode */
 		"moduleResolution": "bundler",
