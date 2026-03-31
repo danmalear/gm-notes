@@ -47,7 +47,7 @@ export function requiredFields<T extends object, K extends readonly string[]>(
 		errorOverride ?? `Request body missing required field: ${field}`;
 
 	for (const field of fields) {
-		if (!(field in body) || !(body as { [field]: unknown })[field]) {
+		if (!(field in body) || !(body as { [key: string]: unknown })[field]) {
 			throw Error(error(field));
 		}
 	}
