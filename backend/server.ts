@@ -16,10 +16,6 @@ app.use(express.json());
 
 routes(app);
 
-app.get('/', (req, res) => {
-	res.send('Hello World!');
-});
-
 app.use((req: Request, res: Response<MessageResponse>) => {
 	console.error('Unhandled request received');
 	res.status(404).send({ message: `Unknown route: ${req.path}` });
