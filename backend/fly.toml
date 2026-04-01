@@ -8,10 +8,6 @@ primary_region = 'sjc'
 
 [build]
 
-[env]
-  NODE_ENV=preview
-  APP_PORT=3000
-
 [http_service]
   internal_port = 3000
   force_https = true
@@ -19,6 +15,10 @@ primary_region = 'sjc'
   auto_start_machines = true
   min_machines_running = 0
   processes = ['app']
+
+[env]
+  NODE_ENV=preview
+  APP_PORT=3000
 
 [[vm]]
   memory = '1gb'
