@@ -13,7 +13,7 @@ const config: { [key: string]: Knex.Config } = {
 		},
 	},
 
-	testing: {
+	preview: {
 		client: 'sqlite3',
 		connection: {
 			filename: ':memory:',
