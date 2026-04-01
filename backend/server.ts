@@ -5,7 +5,7 @@ import express, {
 	type Request,
 	type Response,
 } from 'express';
-import { getMessage } from './src/helpers/error.ts';
+import { getMessage } from './src/helpers/error';
 import { routes } from './src/routes.ts';
 
 const app = express();
