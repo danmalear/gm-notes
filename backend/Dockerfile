@@ -14,6 +14,10 @@ RUN npm install
 # Copy the rest of the application source code
 COPY . .
 
+RUN npm install knex -g
+
+RUN knex migrate:latest
+
 # Expose the port your app runs on
 ENV PORT=3000
 EXPOSE $PORT
