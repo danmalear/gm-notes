@@ -1,12 +1,12 @@
-import { randomUUID } from 'crypto';
-import type { Express, Request, Response } from 'express';
-import type { DataResponse } from '../dtos/DataResponse.ts';
-import type { MessageResponse } from '../dtos/MessageResponse.ts';
+import type { DataResponse } from '#dtos/DataResponse.ts';
+import type { MessageResponse } from '#dtos/MessageResponse.ts';
 import type {
 	MapTemplateCreate,
 	MapTemplateQueryParams,
 	MapTemplateResponse,
-} from '../dtos/map-template.ts';
+} from '#dtos/map-template.ts';
+import { randomUUID } from 'crypto';
+import type { Express, Request, Response } from 'express';
 import type { MapTemplate } from '../entities/MapTemplate.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';

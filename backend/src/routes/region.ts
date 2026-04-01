@@ -1,15 +1,15 @@
-import { randomUUID, type UUID } from 'crypto';
-import type { Express, Request, Response } from 'express';
-import type { AbilityCheckStub } from '../dtos/ability-check.ts';
-import type { ActionStub } from '../dtos/action.ts';
-import type { DataResponse } from '../dtos/DataResponse.ts';
-import type { LocationItemStub } from '../dtos/item.ts';
-import type { MessageResponse } from '../dtos/MessageResponse.ts';
+import type { AbilityCheckStub } from '#dtos/ability-check.ts';
+import type { ActionStub } from '#dtos/action.ts';
+import type { DataResponse } from '#dtos/DataResponse.ts';
+import type { LocationItemStub } from '#dtos/item.ts';
+import type { MessageResponse } from '#dtos/MessageResponse.ts';
 import type {
 	RegionCreate,
 	RegionQueryParams,
 	RegionResponse,
-} from '../dtos/region.ts';
+} from '#dtos/region.ts';
+import { randomUUID, type UUID } from 'crypto';
+import type { Express, Request, Response } from 'express';
 import type { Region } from '../entities/Region.ts';
 import { getMessage } from '../helpers/error.ts';
 import { buildShapes, getShapeType } from '../helpers/region-shapes.ts';

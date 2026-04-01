@@ -1,10 +1,10 @@
-import type { Express, Request, Response } from 'express';
-import type { DataResponse } from '../dtos/DataResponse.ts';
-import type { MessageResponse } from '../dtos/MessageResponse.ts';
+import type { DataResponse } from '#dtos/DataResponse.ts';
+import type { MessageResponse } from '#dtos/MessageResponse.ts';
 import type {
 	NarrationQueryParams,
 	NarrationResponse,
-} from '../dtos/narration.ts';
+} from '#dtos/narration.ts';
+import type { Express, Request, Response } from 'express';
 import type { Narration } from '../entities/Narration.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';

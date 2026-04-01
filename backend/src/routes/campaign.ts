@@ -1,8 +1,8 @@
+import type { DataResponse } from '#dtos/DataResponse.ts';
+import type { MessageResponse } from '#dtos/MessageResponse.ts';
+import type { CampaignCreate, CampaignResponse } from '#dtos/campaign.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
-import type { DataResponse } from '../dtos/DataResponse.ts';
-import type { MessageResponse } from '../dtos/MessageResponse.ts';
-import type { CampaignCreate, CampaignResponse } from '../dtos/campaign.ts';
 import type { Campaign } from '../entities/Campaign.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';

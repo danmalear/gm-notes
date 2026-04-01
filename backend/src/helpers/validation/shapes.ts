@@ -1,4 +1,4 @@
-import type { Circle, Coords, Polygon, Rectangle } from '../../dtos/region.ts';
+import type { Circle, Coords, Polygon, Rectangle } from '#dtos/region.ts';
 
 export function validateCircle(circle: unknown): asserts circle is Circle {
 	if (

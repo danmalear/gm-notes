@@ -1,11 +1,11 @@
-import { randomUUID } from 'crypto';
-import type { Express, Response } from 'express';
-import type { DataResponse } from '../dtos/DataResponse.ts';
-import type { MessageResponse } from '../dtos/MessageResponse.ts';
+import type { DataResponse } from '#dtos/DataResponse.ts';
+import type { MessageResponse } from '#dtos/MessageResponse.ts';
 import type {
 	CampaignTemplateCreate,
 	CampaignTemplateResponse,
-} from '../dtos/campaign-template.ts';
+} from '#dtos/campaign-template.ts';
+import { randomUUID } from 'crypto';
+import type { Express, Response } from 'express';
 import type { CampaignTemplate } from '../entities/CampaignTemplate.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';
