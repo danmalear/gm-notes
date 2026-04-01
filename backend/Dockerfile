@@ -1,4 +1,3 @@
-# Stage 1: Build the Application
 # We use node:22 as the base for building and installing dependencies.
 FROM node:22 AS build
 
@@ -8,7 +7,6 @@ WORKDIR /usr/src/app
 # Copy package.json and package-lock.json first to leverage Docker caching.
 # If these files don't change, subsequent builds can skip 'npm install'.
 COPY package*.json ./
-COPY tsconfig.json ./
 
 # Install dependencies including TypeScript
 RUN npm install
@@ -16,19 +14,8 @@ RUN npm install
 # Copy the rest of the application source code
 COPY . .
 
-# Stage 2: Create the Final Production Image
-# We use node:22-slim as a minimal runtime image.
-FROM node:22-slim
-
-# Set the working directory
-WORKDIR /usr/src/app
-
-# Copy only production dependencies
-COPY --from=build /usr/src/app/package*.json ./
-RUN npm install --only=production
-
 # Expose the port your app runs on
-ENV PORT=8080
+ENV PORT=3000
 EXPOSE $PORT
 
 # Run the application using the non-root user (recommended for security)
