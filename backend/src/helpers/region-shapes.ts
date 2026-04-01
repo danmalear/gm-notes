@@ -1,5 +1,5 @@
-import type { Shape } from '#dtos/region.ts';
 import type { UUID } from 'crypto';
+import type { Shape } from '../dtos/region.ts';
 import type { ShapeType } from '../entities/RegionShape.ts';
 import { regionShapeRepository } from '../repositories.ts';
 import {

@@ -1,14 +1,14 @@
-import type { DataResponse } from '#dtos/DataResponse.ts';
-import type { MessageResponse } from '#dtos/MessageResponse.ts';
+import { randomUUID, type UUID } from 'crypto';
+import type { Express, Request, Response } from 'express';
+import type { DataResponse } from '../dtos/DataResponse.ts';
+import type { MessageResponse } from '../dtos/MessageResponse.ts';
 import type {
 	MapCreate,
 	MapQueryParams,
 	MapResponse,
 	MapUpdate,
-} from '#dtos/map.ts';
-import type { RegionStub } from '#dtos/region.ts';
-import { randomUUID, type UUID } from 'crypto';
-import type { Express, Request, Response } from 'express';
+} from '../dtos/map.ts';
+import type { RegionStub } from '../dtos/region.ts';
 import type { Map } from '../entities/Map.ts';
 import { getMessage } from '../helpers/error.ts';
 import { buildShapes } from '../helpers/region-shapes.ts';

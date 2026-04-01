@@ -7,9 +7,6 @@
 		"lint": "eslint .",
 		"type-check": "tsc -p tsconfig.json"
 	},
-	"imports": {
-		"#dtos/": "./src/dtos/"
-	},
 	"dependencies": {
 		"cors": "^2.8.5",
 		"express": "^5.1.0",

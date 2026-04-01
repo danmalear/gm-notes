@@ -1,10 +1,10 @@
-import type { MessageResponse } from '#dtos/MessageResponse.ts';
 import cors from 'cors';
 import express, {
 	type NextFunction,
 	type Request,
 	type Response,
 } from 'express';
+import type { MessageResponse } from './src/dtos/MessageResponse.ts';
 import { getMessage } from './src/helpers/error.ts';
 import { routes } from './src/routes.ts';
 
