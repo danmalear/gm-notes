@@ -10,7 +10,7 @@
 		"preview": "vite preview"
 	},
 	"imports": {
-		"#dtos/": "../backend/src/dtos/"
+		"#dtos/": "./src/dtos/"
 	},
 	"dependencies": {
 		"@mantine/carousel": "^8.0.1",
