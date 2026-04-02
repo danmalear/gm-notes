@@ -9,6 +9,7 @@
 		"paths": {
 			"#dtos/*": ["../backend/src/dtos/*"]
 		},
+		"types": ["node"],
 
 		/* Bundler mode */
 		"moduleResolution": "bundler",
