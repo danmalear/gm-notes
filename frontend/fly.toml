@@ -25,4 +25,4 @@ primary_region = 'sjc'
 
 [[files]]
   guest_path = "/.env"
-  secret_name = "VITE_SERVER_BASE_URL"
+  secret_name = "ENV"
