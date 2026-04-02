@@ -8,8 +8,6 @@ primary_region = 'sjc'
 
 [env]
   NODE_ENV = "preview"
-  VITE_APP_PORT = 8080
-  VITE_SERVER_BASE_URL = "https://gm-notes-server.fly.dev"
 
 [http_service]
   internal_port = 8080
@@ -24,3 +22,7 @@ primary_region = 'sjc'
   cpu_kind = 'shared'
   cpus = 1
   memory_mb = 256
+
+[[files]]
+  guest_path = "/.env"
+  secret_name = VITE_SERVER_BASE_URL
