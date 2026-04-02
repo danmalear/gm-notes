@@ -16,9 +16,9 @@ primary_region = 'sjc'
   min_machines_running = 0
   processes = ['app']
 
-# [env]
-#   NODE_ENV=preview
-#   APP_PORT=3000
+ [env]
+   NODE_ENV = "preview"
+   APP_PORT = 3000
 
 [[vm]]
   memory = '1gb'
