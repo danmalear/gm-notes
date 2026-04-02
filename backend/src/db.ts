@@ -1,8 +1,8 @@
 import knex from 'knex';
+import configs from '../knexfile.ts';
 
-export const db = knex({
-	client: 'sqlite3',
-	connection: {
-		filename: './dev.sqlite3',
-	},
-});
+const env = process.env.NODE_ENV ?? 'development';
+
+const config = configs[env];
+
+export const db = knex(config);
