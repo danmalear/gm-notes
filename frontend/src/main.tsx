@@ -18,3 +18,5 @@ createRoot(document.getElementById('root')!).render(
 		</MantineProvider>
 	</StrictMode>,
 );
+
+console.log('env vars:', JSON.stringify(import.meta.env));
