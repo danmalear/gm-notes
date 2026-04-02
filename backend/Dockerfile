@@ -4,8 +4,7 @@ FROM node:22 AS build
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# RUN --mount=type=secret,id=NODE_ENV \
-#     NODE_ENV="$(cat /run/secrets/NODE_ENV)"
+ENV NODE_OPTIONS="--dns-result-order=ipv4first"
 
 # Copy package.json and package-lock.json first to leverage Docker caching.
 # If these files don't change, subsequent builds can skip 'npm install'.
