@@ -1,9 +1,12 @@
-app = 'gm-notes-client'
+# fly.toml app configuration file generated for map-notes on 2026-04-02T20:26:43Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'map-notes'
 primary_region = 'sjc'
 
-[env]
-  NODE_ENV = "preview"
-  APP_PORT = 5173
+[build]
 
 [http_service]
   internal_port = 5173
