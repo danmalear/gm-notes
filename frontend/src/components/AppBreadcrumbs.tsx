@@ -2,7 +2,6 @@ import { Breadcrumbs } from '@mantine/core';
 import {
 	href,
 	NavLink,
-	UIMatch,
 	useLocation,
 	useMatches,
 	useParams,
@@ -14,22 +13,19 @@ const AppBreadcrumbs: React.FC = () => {
 	const matches = useMatches();
 	const navLinks: React.ReactNode[] = [];
 
-	type CampaignMatch = UIMatch<{ campaign: { name: string } }, unknown>;
+	type CampaignData = { campaign: { name: string } };
 	function validateCampaignRoute(
-		campaignMatch: UIMatch<unknown, unknown> | undefined,
-	): asserts campaignMatch is CampaignMatch {
+		campaignData: unknown,
+	): asserts campaignData is CampaignData {
 		if (
-			!campaignMatch ||
-			typeof campaignMatch !== 'object' ||
-			!('data' in campaignMatch) ||
-			!campaignMatch.data ||
-			typeof campaignMatch.data !== 'object' ||
-			!('campaign' in campaignMatch.data) ||
-			!campaignMatch.data.campaign ||
-			typeof campaignMatch.data.campaign !== 'object' ||
-			!('name' in campaignMatch.data.campaign) ||
-			!campaignMatch.data.campaign.name ||
-			typeof campaignMatch.data.campaign.name !== 'string'
+			!campaignData ||
+			typeof campaignData !== 'object' ||
+			!('campaign' in campaignData) ||
+			!campaignData.campaign ||
+			typeof campaignData.campaign !== 'object' ||
+			!('name' in campaignData.campaign) ||
+			!campaignData.campaign.name ||
+			typeof campaignData.campaign.name !== 'string'
 		) {
 			throw Error('Campaign routing malfunctioned - try refreshing');
 		}
@@ -46,8 +42,9 @@ const AppBreadcrumbs: React.FC = () => {
 			const campaignMatch = matches.find((match) =>
 				match.pathname.endsWith(campaignId),
 			);
-			validateCampaignRoute(campaignMatch);
-			const campaignName = campaignMatch.data.campaign.name;
+			const campaignData = campaignMatch?.loaderData;
+			validateCampaignRoute(campaignData);
+			const campaignName = campaignData.campaign.name;
 			if (path.endsWith(campaignId)) {
 				navLinks.push(campaignName);
 			} else {
@@ -69,22 +66,17 @@ const AppBreadcrumbs: React.FC = () => {
 		}
 	};
 
-	type MapMatch = UIMatch<{ map: { name: string } }, unknown>;
-	function validateMapRoute(
-		mapMatch: UIMatch<unknown, unknown> | undefined,
-	): asserts mapMatch is MapMatch {
+	type MapData = { map: { name: string } };
+	function validateMapRoute(mapData: unknown): asserts mapData is MapData {
 		if (
-			!mapMatch ||
-			typeof mapMatch !== 'object' ||
-			!('data' in mapMatch) ||
-			!mapMatch.data ||
-			typeof mapMatch.data !== 'object' ||
-			!('map' in mapMatch.data) ||
-			!mapMatch.data.map ||
-			typeof mapMatch.data.map !== 'object' ||
-			!('name' in mapMatch.data.map) ||
-			!mapMatch.data.map.name ||
-			typeof mapMatch.data.map.name !== 'string'
+			!mapData ||
+			typeof mapData !== 'object' ||
+			!('map' in mapData) ||
+			!mapData.map ||
+			typeof mapData.map !== 'object' ||
+			!('name' in mapData.map) ||
+			!mapData.map.name ||
+			typeof mapData.map.name !== 'string'
 		) {
 			throw Error('Map routing malfunctioned - try refreshing');
 		}
@@ -104,8 +96,9 @@ const AppBreadcrumbs: React.FC = () => {
 		);
 		if (mapId) {
 			const mapMatch = matches.find((match) => match.pathname.endsWith(mapId));
-			validateMapRoute(mapMatch);
-			const mapName = mapMatch.data.map.name;
+			const mapData = mapMatch?.loaderData;
+			validateMapRoute(mapData);
+			const mapName = mapData.map.name;
 			navLinks.push(
 				<NavLink
 					to={href('/campaign/:campaignId/map/:mapId', {
