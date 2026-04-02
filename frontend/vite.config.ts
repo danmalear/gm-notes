@@ -5,6 +5,6 @@ import { defineConfig } from 'vite';
 export default defineConfig({
 	plugins: [react()],
 	server: {
-		port: parseInt(process.env.APP_PORT ?? '5173'),
+		port: parseInt(process.env.APP_PORT ?? '8080'),
 	},
 });

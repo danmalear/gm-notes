@@ -3,10 +3,10 @@ services:
     build:
       dockerfile: Dockerfile
     ports:
-      - '5173:5173'
+      - '8080:8080'
     volumes:
       - ./:/srv/http/
       - /srv/http/node_modules
     environment:
       NODE_ENV: development
-      APP_PORT: 5173
+      APP_PORT: 8080
