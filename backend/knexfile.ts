@@ -14,14 +14,8 @@ const config: { [key: string]: Knex.Config } = {
 	},
 
 	preview: {
-		client: 'sqlite3',
-		connection: {
-			filename: ':memory:',
-		},
-		pool: {
-			min: 2,
-			max: 10,
-		},
+		client: 'pg',
+		connection: process.env.DATABASE_URL,
 		migrations: {
 			tableName: 'knex_migrations',
 		},
