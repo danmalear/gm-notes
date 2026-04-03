@@ -30,7 +30,7 @@ export async function buildShapes(regionId: UUID) {
 	const dtoShapes: Shape[] = [];
 
 	for (const shape of shapes) {
-		const coords = JSON.parse(shape.Coords);
+		const coords = shape.Coords;
 		switch (shape.ShapeType) {
 			case 'Circle':
 				validateCircle(coords);
