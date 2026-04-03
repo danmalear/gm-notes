@@ -6,17 +6,18 @@ WORKDIR /usr/src/app
 
 ENV NODE_OPTIONS="--dns-result-order=ipv4first"
 
+RUN npm install -g pnpm
+RUN npm install -g knex
+
 # Copy package.json and package-lock.json first to leverage Docker caching.
 # If these files don't change, subsequent builds can skip 'npm install'.
 COPY package*.json ./
 
-# Install dependencies including TypeScript
-RUN npm install
+RUN pnpm install
+RUN pnpm approve-builds --all
 
 # Copy the rest of the application source code
 COPY . .
-
-RUN npm install knex -g
 
 # Expose the port your app runs on
 ENV PORT=3000
