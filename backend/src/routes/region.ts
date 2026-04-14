@@ -328,7 +328,7 @@ export const regionRoutes = (app: Express) => {
 					RegionShapeId: randomUUID(),
 					RegionId: region.RegionId,
 					ShapeType: getShapeType(shape),
-					Coords: JSON.stringify(shape),
+					Coords: shape,
 				});
 			}
 

@@ -9,5 +9,5 @@ export interface RegionShape {
 	RegionShapeId: UUID;
 	RegionId: UUID;
 	ShapeType: ShapeType;
-	Coords: string;
+	Coords: object;
 }
