@@ -1,6 +1,6 @@
 import type { CampaignStub } from '#campaign/campaign-queries.ts';
 import type { Lighting } from '#dtos/data-types.ts';
-import type { RegionStub } from '#dtos/region.ts';
+import type { RegionStub } from '#region/region-dtos.ts';
 import type { UUID } from 'crypto';
 
 export interface MapCreate {

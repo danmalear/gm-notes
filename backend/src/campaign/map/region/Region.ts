@@ -1,5 +1,5 @@
+import type { RelativeLighting } from '#dtos/data-types.ts';
 import type { UUID } from 'crypto';
-import type { RelativeLighting } from './data-types.ts';
 
 export const tableName = 'Region';
 export const pkColumn = 'RegionId';

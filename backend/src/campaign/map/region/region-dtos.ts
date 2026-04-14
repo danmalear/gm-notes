@@ -1,10 +1,10 @@
+import type { ActionStub } from '#dtos/action.ts';
+import type { RelativeLighting } from '#dtos/data-types.ts';
+import type { HandoutStub } from '#dtos/handout.ts';
+import type { LocationItemStub } from '#dtos/item.ts';
+import type { NarrationStub } from '#dtos/narration.ts';
 import type { MapStub } from '#map/map-dtos.ts';
 import type { UUID } from 'crypto';
-import type { ActionStub } from './action.ts';
-import type { RelativeLighting } from './data-types.ts';
-import type { HandoutStub } from './handout.ts';
-import type { LocationItemStub } from './item.ts';
-import type { NarrationStub } from './narration.ts';
 
 export interface Rectangle {
 	x1: number;

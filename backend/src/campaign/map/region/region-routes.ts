@@ -1,28 +1,27 @@
+import type {
+	RegionCreate,
+	RegionQueryParams,
+	RegionResponse,
+} from '#campaign/map/region/region-dtos.ts';
 import type { AbilityCheckStub } from '#dtos/ability-check.ts';
 import type { ActionStub } from '#dtos/action.ts';
 import type { DataResponse } from '#dtos/DataResponse.ts';
 import type { LocationItemStub } from '#dtos/item.ts';
 import type { MessageResponse } from '#dtos/MessageResponse.ts';
-import type {
-	RegionCreate,
-	RegionQueryParams,
-	RegionResponse,
-} from '#dtos/region.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
-import type { Region } from '../entities/Region.ts';
-import { getMessage } from '../helpers/error.ts';
-import { buildShapes, getShapeType } from '../helpers/region-shapes.ts';
-import { isUUID } from '../helpers/uuid.ts';
+import { getMessage } from '../../../helpers/error.ts';
+import { buildShapes, getShapeType } from '../../../helpers/region-shapes.ts';
+import { isUUID } from '../../../helpers/uuid.ts';
 import {
 	requiredFields,
 	validatePostBody,
-} from '../helpers/validation/http.ts';
+} from '../../../helpers/validation/http.ts';
 import {
 	validateCircle,
 	validatePolygon,
 	validateRectangle,
-} from '../helpers/validation/shapes.ts';
+} from '../../../helpers/validation/shapes.ts';
 import {
 	abilityCheckRepository,
 	actionRepository,
@@ -34,7 +33,8 @@ import {
 	noteRepository,
 	regionRepository,
 	regionShapeRepository,
-} from '../repositories.ts';
+} from '../../../repositories.ts';
+import type { Region } from './Region.ts';
 
 const apiNamespace = 'regions';
 

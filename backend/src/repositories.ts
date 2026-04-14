@@ -1,5 +1,7 @@
 import { CampaignRepository } from '#campaign/CampaignRepository.ts';
 import { MapRepository } from '#map/MapRepository.ts';
+import { RegionRepository } from '#region/RegionRepository.ts';
+import { RegionShapeRepository } from '#region/RegionShapeRepository.ts';
 import { AbilityCheckRepository } from './repositories/AbilityCheckRepository.ts';
 import { ActionRepository } from './repositories/ActionRepository.ts';
 import { ConditionRepository } from './repositories/ConditionRepository.ts';
@@ -8,8 +10,6 @@ import { HandoutRepository } from './repositories/HandoutRepository.ts';
 import { ItemRepository } from './repositories/ItemRepository.ts';
 import { NarrationRepository } from './repositories/NarrationRepository.ts';
 import { NoteRepository } from './repositories/NoteRepository.ts';
-import { RegionRepository } from './repositories/RegionRepository.ts';
-import { RegionShapeRepository } from './repositories/RegionShapeRepository.ts';
 
 export const campaignRepository = new CampaignRepository();
 

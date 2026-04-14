@@ -1,6 +1,6 @@
-import type { Shape } from '#dtos/region.ts';
+import type { Shape } from '#region/region-dtos.ts';
+import type { ShapeType } from '#region/RegionShape.ts';
 import type { UUID } from 'crypto';
-import type { ShapeType } from '../entities/RegionShape.ts';
 import { regionShapeRepository } from '../repositories.ts';
 import {
 	validateCircle,

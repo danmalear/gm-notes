@@ -1,12 +1,12 @@
-import type { UUID } from 'crypto';
-import { db } from '../db.ts';
-import { pkColumn, tableName, type Narration } from '../entities/Narration.ts';
 import {
 	narrationIdColName,
 	regionIdColName,
 	tableName as regionJoinTableName,
 	type RegionNarration,
-} from '../entities/RegionNarration.ts';
+} from '#region/RegionNarration.ts';
+import type { UUID } from 'crypto';
+import { db } from '../db.ts';
+import { pkColumn, tableName, type Narration } from '../entities/Narration.ts';
 import { getMessage } from '../helpers/error.ts';
 import { Repository } from './Repository.ts';
 

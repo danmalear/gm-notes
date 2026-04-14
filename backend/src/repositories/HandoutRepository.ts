@@ -1,12 +1,12 @@
-import type { UUID } from 'crypto';
-import { db } from '../db.ts';
-import { pkColumn, tableName, type Handout } from '../entities/Handout.ts';
 import {
 	handoutIdColName,
 	regionIdColName,
 	tableName as regionJoinTableName,
 	type RegionHandout,
-} from '../entities/RegionHandout.ts';
+} from '#region/RegionHandout.ts';
+import type { UUID } from 'crypto';
+import { db } from '../db.ts';
+import { pkColumn, tableName, type Handout } from '../entities/Handout.ts';
 import { getMessage } from '../helpers/error.ts';
 import { Repository } from './Repository.ts';
 

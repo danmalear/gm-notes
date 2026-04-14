@@ -1,12 +1,8 @@
 import type { UUID } from 'crypto';
-import { db } from '../db.ts';
-import {
-	type RegionShape,
-	pkColumn,
-	tableName,
-} from '../entities/RegionShape.ts';
-import { getMessage } from '../helpers/error.ts';
-import { Repository } from './Repository.ts';
+import { db } from '../../../db.ts';
+import { getMessage } from '../../../helpers/error.ts';
+import { Repository } from '../../../repositories/Repository.ts';
+import { type RegionShape, pkColumn, tableName } from './RegionShape.ts';
 
 export class RegionShapeRepository extends Repository<RegionShape> {
 	constructor() {

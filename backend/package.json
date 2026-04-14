@@ -11,7 +11,8 @@
 		"#campaign/*": "./src/campaign/*",
 		"#command/*": "./src/event-sourcing/command/*",
 		"#dtos/*": "./src/dtos/*",
-		"#map/*": "./src/campaign/map/*"
+		"#map/*": "./src/campaign/map/*",
+		"#region/*": "./src/campaign/map/region/*"
 	},
 	"dependencies": {
 		"cors": "2.8.6",
