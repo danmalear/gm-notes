@@ -1,5 +1,4 @@
-import type { DataResponse } from '#dtos/DataResponse.ts';
-import type { MessageResponse } from '#dtos/MessageResponse.ts';
+import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
 import { getMessage } from '../helpers/error.ts';
