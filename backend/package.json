@@ -14,6 +14,7 @@
 		"#command/*": "./src/event-sourcing/command/*",
 		"#dtos/*": "./src/dtos/*",
 		"#file/*": "./src/file/*",
+		"#handout/*": "./src/campaign/handout/*",
 		"#map/*": "./src/campaign/map/*",
 		"#region/*": "./src/campaign/map/region/*",
 		"#shared/*": "./src/shared/*"

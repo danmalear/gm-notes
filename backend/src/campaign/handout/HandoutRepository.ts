@@ -5,10 +5,10 @@ import {
 	type RegionHandout,
 } from '#region/RegionHandout.ts';
 import type { UUID } from 'crypto';
-import { db } from '../db.ts';
-import { pkColumn, tableName, type Handout } from '../entities/Handout.ts';
-import { getMessage } from '../helpers/error.ts';
-import { Repository } from './Repository.ts';
+import { db } from '../../db.ts';
+import { getMessage } from '../../helpers/error.ts';
+import { Repository } from '../../repositories/Repository.ts';
+import { pkColumn, tableName, type Handout } from './Handout.ts';
 
 export class HandoutRepository extends Repository<Handout> {
 	constructor() {

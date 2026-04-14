@@ -2,11 +2,11 @@ import { AbilityCheckRepository } from '#ability-check/AbilityCheckRepository.ts
 import { ActionRepository } from '#action/ActionRepository.ts';
 import { CampaignRepository } from '#campaign/CampaignRepository.ts';
 import { FileRepository } from '#file/FileRepository.ts';
+import { HandoutRepository } from '#handout/HandoutRepository.ts';
 import { MapRepository } from '#map/MapRepository.ts';
 import { RegionRepository } from '#region/RegionRepository.ts';
 import { RegionShapeRepository } from '#region/RegionShapeRepository.ts';
 import { ConditionRepository } from './repositories/ConditionRepository.ts';
-import { HandoutRepository } from './repositories/HandoutRepository.ts';
 import { ItemRepository } from './repositories/ItemRepository.ts';
 import { NarrationRepository } from './repositories/NarrationRepository.ts';
 import { NoteRepository } from './repositories/NoteRepository.ts';
