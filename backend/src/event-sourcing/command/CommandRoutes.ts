@@ -75,7 +75,7 @@ export class CommandRoutes {
 
 			// @TODO command handler
 
-			res.send({ id });
+			res.send({ data: { id } });
 		});
 	}
 }
