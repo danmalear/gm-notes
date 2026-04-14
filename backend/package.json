@@ -10,7 +10,8 @@
 	"imports": {
 		"#campaign/*": "./src/campaign/*",
 		"#command/*": "./src/event-sourcing/command/*",
-		"#dtos/*": "./src/dtos/*"
+		"#dtos/*": "./src/dtos/*",
+		"#map/*": "./src/campaign/map/*"
 	},
 	"dependencies": {
 		"cors": "2.8.6",

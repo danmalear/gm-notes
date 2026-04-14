@@ -1,11 +1,11 @@
 import { CampaignRepository } from '#campaign/CampaignRepository.ts';
+import { MapRepository } from '#map/MapRepository.ts';
 import { AbilityCheckRepository } from './repositories/AbilityCheckRepository.ts';
 import { ActionRepository } from './repositories/ActionRepository.ts';
 import { ConditionRepository } from './repositories/ConditionRepository.ts';
 import { FileRepository } from './repositories/FileRepository.ts';
 import { HandoutRepository } from './repositories/HandoutRepository.ts';
 import { ItemRepository } from './repositories/ItemRepository.ts';
-import { MapRepository } from './repositories/MapRepository.ts';
 import { NarrationRepository } from './repositories/NarrationRepository.ts';
 import { NoteRepository } from './repositories/NoteRepository.ts';
 import { RegionRepository } from './repositories/RegionRepository.ts';

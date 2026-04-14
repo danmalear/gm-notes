@@ -1,5 +1,5 @@
+import type { Lighting } from '#dtos/data-types.ts';
 import type { UUID } from 'crypto';
-import type { Lighting } from './data-types.ts';
 
 export const tableName = 'Map';
 export const pkColumn = 'MapId';

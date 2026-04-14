@@ -1,29 +1,29 @@
 import type { DataResponse } from '#dtos/DataResponse.ts';
 import type { MessageResponse } from '#dtos/MessageResponse.ts';
+import type { RegionStub } from '#dtos/region.ts';
+import { randomUUID, type UUID } from 'crypto';
+import type { Express, Request, Response } from 'express';
+import { getMessage } from '../../helpers/error.ts';
+import { buildShapes } from '../../helpers/region-shapes.ts';
+import { isUUID } from '../../helpers/uuid.ts';
+import { isLighting } from '../../helpers/validation/data-types.ts';
+import {
+	requiredFields,
+	validatePostBody,
+	validatePutBody,
+} from '../../helpers/validation/http.ts';
+import {
+	campaignRepository,
+	mapRepository,
+	regionRepository,
+} from '../../repositories.ts';
 import type {
 	MapCreate,
 	MapQueryParams,
 	MapResponse,
 	MapUpdate,
-} from '#dtos/map.ts';
-import type { RegionStub } from '#dtos/region.ts';
-import { randomUUID, type UUID } from 'crypto';
-import type { Express, Request, Response } from 'express';
-import type { Map } from '../entities/Map.ts';
-import { getMessage } from '../helpers/error.ts';
-import { buildShapes } from '../helpers/region-shapes.ts';
-import { isUUID } from '../helpers/uuid.ts';
-import { isLighting } from '../helpers/validation/data-types.ts';
-import {
-	requiredFields,
-	validatePostBody,
-	validatePutBody,
-} from '../helpers/validation/http.ts';
-import {
-	campaignRepository,
-	mapRepository,
-	regionRepository,
-} from '../repositories.ts';
+} from './map-dtos.ts';
+import type { Map } from './Map.ts';
 
 const apiNamespace = 'maps';
 

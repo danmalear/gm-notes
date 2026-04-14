@@ -1,8 +1,8 @@
 import type { UUID } from 'crypto';
-import { db } from '../db.ts';
-import { type Map, pkColumn, tableName } from '../entities/Map.ts';
-import { getMessage } from '../helpers/error.ts';
-import { Repository } from './Repository.ts';
+import { db } from '../../db.ts';
+import { getMessage } from '../../helpers/error.ts';
+import { Repository } from '../../repositories/Repository.ts';
+import { type Map, pkColumn, tableName } from './Map.ts';
 
 export class MapRepository extends Repository<Map> {
 	constructor() {
