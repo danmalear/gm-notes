@@ -1,4 +1,4 @@
-import { CampaignRoutes } from '#campaign/campaign-routes.ts';
+import { CampaignRoutes } from '#campaign/CampaignRoutes.ts';
 import type { Express } from 'express';
 import { fileRoutes } from './routes/file.ts';
 import { mapRoutes } from './routes/map.ts';
