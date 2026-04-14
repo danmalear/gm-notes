@@ -1,4 +1,4 @@
-import type { Lighting } from '#dtos/data-types.ts';
+import type { Lighting } from '#shared/data-types.ts';
 
 const lightingValues: Lighting[] = ['Bright Light', 'Dim Light', 'Darkness'];
 

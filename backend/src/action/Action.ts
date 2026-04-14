@@ -1,5 +1,5 @@
+import type { ActionType } from '#shared/data-types.ts';
 import type { UUID } from 'crypto';
-import type { ActionType } from '../entities/data-types.ts';
 
 export const tableName = 'Action';
 export const pkColumn = 'ActionId';

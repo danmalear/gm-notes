@@ -1,5 +1,5 @@
+import type { CurrencyUnit } from '#shared/data-types.ts';
 import type { UUID } from 'crypto';
-import type { CurrencyUnit } from './data-types.ts';
 
 export const tableName = 'Item';
 export const pkColumn = 'ItemId';

@@ -1,4 +1,4 @@
-import type { RelativeLighting } from '#dtos/data-types.ts';
+import type { RelativeLighting } from '#shared/data-types.ts';
 import type { UUID } from 'crypto';
 
 export const tableName = 'Region';
