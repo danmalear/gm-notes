@@ -1,5 +1,5 @@
+import type { CampaignStub } from '#campaign/campaign-queries.ts';
 import type { UUID } from 'crypto';
-import type { CampaignStub } from './campaign.ts';
 import type { Lighting } from './data-types.ts';
 import type { MapTemplateStub } from './map-template.ts';
 import type { RegionStub } from './region.ts';

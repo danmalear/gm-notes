@@ -1,17 +1,6 @@
+import type { CampaignTemplateStub } from '#dtos/campaign-template.ts';
+import type { MapStub } from '#dtos/map.ts';
 import type { UUID } from 'crypto';
-import type { CampaignTemplateStub } from './campaign-template.ts';
-import type { MapStub } from './map.ts';
-
-export interface CampaignCreate {
-	campaignTemplateId?: UUID;
-	name: string;
-}
-
-export interface CampaignUpdate {
-	id: UUID;
-	name?: string;
-	activeMapId?: UUID;
-}
 
 export interface CampaignResponse {
 	id: UUID;

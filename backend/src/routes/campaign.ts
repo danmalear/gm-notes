@@ -1,6 +1,7 @@
+import type { CreateCampaign } from '#campaign/campaign-commands.ts';
+import type { CampaignResponse } from '#campaign/campaign-queries.ts';
 import type { DataResponse } from '#dtos/DataResponse.ts';
 import type { MessageResponse } from '#dtos/MessageResponse.ts';
-import type { CampaignCreate, CampaignResponse } from '#dtos/campaign.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
 import type { Campaign } from '../entities/Campaign.ts';
@@ -107,7 +108,7 @@ export const campaignRoutes = (app: Express) => {
 				`Campaign POST request received. body: ${JSON.stringify(req.body)}`,
 			);
 
-			function validateBody(body: unknown): asserts body is CampaignCreate {
+			function validateBody(body: unknown): asserts body is CreateCampaign {
 				validatePostBody(body);
 				requiredFields(body, ['name'], 'Campaigns must have a name specified');
 			}

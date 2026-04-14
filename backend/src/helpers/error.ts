@@ -1,3 +1,17 @@
+export class HttpError extends Error {
+	statusCode: number;
+	constructor(statusCode: number, message?: string) {
+		super(message);
+		this.statusCode = statusCode;
+	}
+}
+
+export class BadRequestError extends HttpError {
+	constructor(message: string = 'Bad Request') {
+		super(400, message);
+	}
+}
+
 export const getMessage = (e: unknown): string => {
 	if (e instanceof Error) {
 		return e.message;
