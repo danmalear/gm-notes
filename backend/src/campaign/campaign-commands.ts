@@ -12,9 +12,6 @@ export interface CreateCampaign {
 export interface CreateCampaignRequest extends CommandRequestBase {
 	commandType: 'Campaign/Create';
 	command: CreateCampaign;
-	response: {
-		id: UUID;
-	};
 }
 
 export interface UpdateCampaign {
@@ -26,7 +23,6 @@ export interface UpdateCampaign {
 export interface UpdateCampaignRequest extends CommandRequestBase {
 	commandType: 'Campaign/Update';
 	command: UpdateCampaign;
-	response: Record<string, never>;
 }
 
 export type CampaignCommandRequest =

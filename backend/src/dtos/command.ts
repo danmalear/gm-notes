@@ -2,7 +2,6 @@
 export interface CommandRequestBase {
 	commandType: string;
 	command: object;
-	response: object;
 }
 
 export type CommandFunction<T extends object> = (command: T) => void;
@@ -10,5 +9,5 @@ export type CommandFunction<T extends object> = (command: T) => void;
 export type CommandClass<CommandRequests extends CommandRequestBase> = {
 	[C in CommandRequests as C['commandType']]: (
 		command: C['command'],
-	) => Promise<C['response']>;
+	) => Promise<object>;
 };
