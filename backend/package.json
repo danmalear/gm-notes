@@ -8,6 +8,7 @@
 		"type-check": "tsc -p tsconfig.json"
 	},
 	"imports": {
+		"#ability-check/*": "./src/action/ability-check/*",
 		"#action/*": "./src/action/*",
 		"#campaign/*": "./src/campaign/*",
 		"#command/*": "./src/event-sourcing/command/*",

@@ -1,5 +1,5 @@
+import type { Skill } from '#dtos/data-types.ts';
 import type { UUID } from 'crypto';
-import type { Skill } from './data-types.ts';
 
 export interface AbilityCheckStub {
 	id: UUID;

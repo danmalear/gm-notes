@@ -1,12 +1,8 @@
 import type { UUID } from 'crypto';
-import { db } from '../db.ts';
-import {
-	pkColumn,
-	tableName,
-	type AbilityCheck,
-} from '../entities/AbilityCheck.ts';
-import { getMessage } from '../helpers/error.ts';
-import { Repository } from './Repository.ts';
+import { db } from '../../db.ts';
+import { getMessage } from '../../helpers/error.ts';
+import { Repository } from '../../repositories/Repository.ts';
+import { pkColumn, tableName, type AbilityCheck } from './AbilityCheck.ts';
 
 export class AbilityCheckRepository extends Repository<AbilityCheck> {
 	constructor() {
