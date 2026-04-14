@@ -1,11 +1,11 @@
-import type { UUID } from 'crypto';
-import { db } from '../db.ts';
 import {
 	actionIdColName,
 	tableName as actionJoinTableName,
 	conditionIdColName,
 	type ActionCondition,
-} from '../entities/ActionCondition.ts';
+} from '#action/ActionCondition.ts';
+import type { UUID } from 'crypto';
+import { db } from '../db.ts';
 import { pkColumn, tableName, type Condition } from '../entities/Condition.ts';
 import { getMessage } from '../helpers/error.ts';
 import { Repository } from './Repository.ts';

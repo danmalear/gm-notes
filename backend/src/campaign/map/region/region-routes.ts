@@ -1,10 +1,10 @@
+import type { ActionStub } from '#action/action-dtos.ts';
 import type {
 	RegionCreate,
 	RegionQueryParams,
 	RegionResponse,
 } from '#campaign/map/region/region-dtos.ts';
 import type { AbilityCheckStub } from '#dtos/ability-check.ts';
-import type { ActionStub } from '#dtos/action.ts';
 import type { DataResponse } from '#dtos/DataResponse.ts';
 import type { LocationItemStub } from '#dtos/item.ts';
 import type { MessageResponse } from '#dtos/MessageResponse.ts';

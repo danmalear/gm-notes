@@ -1,4 +1,4 @@
-import type { ActionStub } from '#dtos/action.ts';
+import type { ActionStub } from '#action/action-dtos.ts';
 import type { RelativeLighting } from '#dtos/data-types.ts';
 import type { HandoutStub } from '#dtos/handout.ts';
 import type { LocationItemStub } from '#dtos/item.ts';
