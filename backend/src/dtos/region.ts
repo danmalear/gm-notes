@@ -5,7 +5,6 @@ import type { HandoutStub } from './handout.ts';
 import type { LocationItemStub } from './item.ts';
 import type { MapStub } from './map.ts';
 import type { NarrationStub } from './narration.ts';
-import type { RegionTemplateStub } from './region-template.ts';
 
 export interface Rectangle {
 	x1: number;
@@ -53,7 +52,6 @@ export interface RegionQueryParams {
 export interface RegionResponse {
 	id: UUID;
 	name: string;
-	regionTemplate?: RegionTemplateStub;
 	map: MapStub;
 	shapes: Shape[];
 	lighting: RelativeLighting;
@@ -69,7 +67,6 @@ export interface RegionResponse {
 
 export interface RegionStub {
 	id: UUID;
-	regionTemplateId?: UUID;
 	mapId: UUID;
 	name: string;
 	shapes: Shape[];

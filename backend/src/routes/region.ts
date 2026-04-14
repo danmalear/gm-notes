@@ -168,18 +168,14 @@ async function buildResponse(region: Region) {
 		name: region.Name,
 		map: {
 			id: map.MapId,
-			mapTemplateId: map.MapTemplateId ?? undefined,
 			campaignId: map.CampaignId,
 			name: map.Name,
 			imagePath: map.ImagePath,
 		},
-		// @TODO Templates
-		regionTemplate: undefined,
 		shapes,
 		lighting: region.Lighting,
 		narrations: narrations.map((entity) => ({
 			id: entity.NarrationId,
-			narrationTemplateId: entity.NarrationTemplateId ?? undefined,
 			name: entity.Name,
 			description: entity.Description,
 			isRead: entity.IsRead,
@@ -321,7 +317,6 @@ export const regionRoutes = (app: Express) => {
 
 			const region = await regionRepository.insert({
 				RegionId: randomUUID(),
-				//@ TODO templates
 				RegionTemplateId: null,
 				MapId: req.body.mapId,
 				Name: req.body.name,

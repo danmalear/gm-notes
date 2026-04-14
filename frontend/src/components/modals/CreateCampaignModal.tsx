@@ -1,4 +1,4 @@
-import type { CampaignCreate as Campaign } from '#dtos/campaign.ts';
+import type { CreateCampaign as Campaign } from '#dtos/campaign.ts';
 import { Button, Modal, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 

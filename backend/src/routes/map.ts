@@ -22,7 +22,6 @@ import {
 import {
 	campaignRepository,
 	mapRepository,
-	mapTemplateRepository,
 	regionRepository,
 } from '../repositories.ts';
 
@@ -39,7 +38,6 @@ async function buildRegions(mapId: UUID) {
 
 		dtoRegions.push({
 			id: region.RegionId,
-			regionTemplateId: region.RegionTemplateId ?? undefined,
 			mapId: region.MapId,
 			name: region.Name,
 			shapes,
@@ -56,10 +54,6 @@ async function buildResponse(map: Map) {
 		throw Error('Campaign for map not found.');
 	}
 
-	const mapTemplate = map.MapTemplateId
-		? await mapTemplateRepository.getById(map.MapTemplateId)
-		: undefined;
-
 	const regions = await buildRegions(map.MapId);
 
 	const mapResponse: MapResponse = {
@@ -73,16 +67,7 @@ async function buildResponse(map: Map) {
 			id: campaign.CampaignId,
 			name: campaign.Name,
 			activeMapId: campaign.ActiveMapId ?? undefined,
-			campaignTemplateId: campaign.CampaignTemplateId ?? undefined,
 		},
-		mapTemplate: mapTemplate
-			? {
-					id: mapTemplate.MapTemplateId,
-					name: mapTemplate.Name,
-					imagePath: mapTemplate.ImagePath,
-					campaignTemplateId: mapTemplate.CampaignTemplateId ?? undefined,
-				}
-			: undefined,
 		regions,
 	};
 
@@ -176,14 +161,6 @@ export const mapRoutes = (app: Express) => {
 				if (typeof body.campaignId !== 'string' || !isUUID(body.campaignId)) {
 					throw Error('Campaign ID is in an invalid format');
 				}
-				if (
-					'mapTemplateId' in body &&
-					body.mapTemplateId &&
-					(typeof body.mapTemplateId !== 'string' ||
-						!isUUID(body.mapTemplateId))
-				) {
-					throw Error('Map template ID is in an invalid format');
-				}
 				if (typeof body.width !== 'number') {
 					throw Error('Map width is in an invalid format');
 				}
@@ -204,7 +181,7 @@ export const mapRoutes = (app: Express) => {
 				CampaignId: req.body.campaignId,
 				Name: req.body.name,
 				ImagePath: req.body.imagePath,
-				MapTemplateId: req.body.mapTemplateId ?? null,
+				MapTemplateId: null,
 				DefaultLighting: req.body.defaultLighting ?? 'Bright Light',
 				Width: req.body.width,
 				Height: req.body.height,
@@ -231,14 +208,6 @@ export const mapRoutes = (app: Express) => {
 					typeof body.name !== 'string'
 				) {
 					throw Error('Map name is in an invalid format');
-				}
-				if (
-					'mapTemplateId' in body &&
-					body.mapTemplateId !== undefined &&
-					(typeof body.mapTemplateId !== 'string' ||
-						!isUUID(body.mapTemplateId))
-				) {
-					throw Error('Map template ID is in an invalid format');
 				}
 				if (
 					'defaultLighting' in body &&

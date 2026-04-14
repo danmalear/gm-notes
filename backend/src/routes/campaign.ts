@@ -11,35 +11,20 @@ import {
 	requiredFields,
 	validatePostBody,
 } from '../helpers/validation/http.ts';
-import {
-	campaignRepository,
-	campaignTemplateRepository,
-	mapRepository,
-} from '../repositories.ts';
+import { campaignRepository, mapRepository } from '../repositories.ts';
 
 const apiNamespace = 'campaigns';
 
 async function buildResponse(campaign: Campaign) {
-	const campaignTemplate = campaign.CampaignTemplateId
-		? await campaignTemplateRepository.getById(campaign.CampaignTemplateId)
-		: undefined;
-
 	const maps = await mapRepository.getByCampaignId(campaign.CampaignId);
 
 	const campaignResponse: CampaignResponse = {
 		id: campaign.CampaignId,
 		name: campaign.Name,
 		activeMapId: campaign.ActiveMapId ?? undefined,
-		campaignTemplate: campaignTemplate
-			? {
-					id: campaignTemplate.CampaignTemplateId,
-					name: campaignTemplate.Name,
-				}
-			: undefined,
 		maps: maps.map((map) => ({
 			id: map.MapId,
 			campaignId: map.CampaignId,
-			mapTemplateId: map.MapTemplateId ?? undefined,
 			name: map.Name,
 			imagePath: map.ImagePath,
 		})),
@@ -122,7 +107,7 @@ export const campaignRoutes = (app: Express) => {
 
 			let campaign: Campaign = {
 				CampaignId: randomUUID(),
-				CampaignTemplateId: req.body.campaignTemplateId ?? null,
+				CampaignTemplateId: null,
 				Name: req.body.name,
 				ActiveMapId: null,
 			};

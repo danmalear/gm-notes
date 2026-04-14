@@ -78,7 +78,6 @@ const mapReducer: MapReducer = (mapState, action) => {
 							mapId: mapState.map.id,
 							name: action.region.name,
 							shapes: action.region.shapes,
-							regionTemplateId: action.region.regionTemplate?.id,
 						},
 					],
 				},

@@ -6,8 +6,6 @@ export interface NarrationQueryParams {
 
 export interface NarrationResponse {
 	id: UUID;
-	// @TODO Templates
-	narrationTemplate?: undefined;
 	name: string;
 	description: string;
 	isRead: boolean;
@@ -15,7 +13,6 @@ export interface NarrationResponse {
 
 export interface NarrationStub {
 	id: UUID;
-	narrationTemplateId?: UUID;
 	name: string;
 	description: string;
 	isRead: boolean;

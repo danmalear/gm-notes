@@ -6,7 +6,6 @@ import { isUUID } from '../helpers/uuid.ts';
 import { campaignRepository } from '../repositories.ts';
 
 export interface CreateCampaign {
-	campaignTemplateId?: UUID;
 	name: string;
 }
 
@@ -49,7 +48,7 @@ export class CampaignCommands implements CommandClass<CampaignCommandRequest> {
 
 		const campaign: Campaign = {
 			CampaignId: id,
-			CampaignTemplateId: command.campaignTemplateId ?? null,
+			CampaignTemplateId: null,
 			Name: command.name,
 			ActiveMapId: null,
 		};

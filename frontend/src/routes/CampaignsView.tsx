@@ -1,6 +1,6 @@
 import type {
 	CampaignResponse as Campaign,
-	CampaignCreate,
+	CreateCampaign,
 } from '#dtos/campaign.ts';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
@@ -63,7 +63,7 @@ const CampaignsView: React.FC = () => {
 		openCreateCampaign();
 	};
 
-	const handleCampaignCreated = async (campaign: CampaignCreate) => {
+	const handleCampaignCreated = async (campaign: CreateCampaign) => {
 		try {
 			const response = await insertCampaign(campaign);
 			const newCampaign = response.data.data;
