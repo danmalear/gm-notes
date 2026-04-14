@@ -1,9 +1,9 @@
 import { randomUUID, type UUID } from 'crypto';
 import type { CommandClass, CommandRequestBase } from '../dtos/command.ts';
-import type { Campaign } from '../entities/Campaign.ts';
 import { BadRequestError } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';
 import { campaignRepository } from '../repositories.ts';
+import type { Campaign } from './Campaign.ts';
 
 export interface CreateCampaign {
 	name: string;

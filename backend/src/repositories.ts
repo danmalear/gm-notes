@@ -1,6 +1,6 @@
+import { CampaignRepository } from '#campaign/CampaignRepository.ts';
 import { AbilityCheckRepository } from './repositories/AbilityCheckRepository.ts';
 import { ActionRepository } from './repositories/ActionRepository.ts';
-import { CampaignRepository } from './repositories/CampaignRepository.ts';
 import { ConditionRepository } from './repositories/ConditionRepository.ts';
 import { FileRepository } from './repositories/FileRepository.ts';
 import { HandoutRepository } from './repositories/HandoutRepository.ts';

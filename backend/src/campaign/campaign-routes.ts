@@ -1,10 +1,7 @@
-import type { CreateCampaign } from '#campaign/campaign-commands.ts';
-import type { CampaignResponse } from '#campaign/campaign-queries.ts';
 import type { DataResponse } from '#dtos/DataResponse.ts';
 import type { MessageResponse } from '#dtos/MessageResponse.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
-import type { Campaign } from '../entities/Campaign.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';
 import {
@@ -12,6 +9,9 @@ import {
 	validatePostBody,
 } from '../helpers/validation/http.ts';
 import { campaignRepository, mapRepository } from '../repositories.ts';
+import type { CreateCampaign } from './campaign-commands.ts';
+import type { CampaignResponse } from './campaign-queries.ts';
+import type { Campaign } from './Campaign.ts';
 
 const apiNamespace = 'campaigns';
 
