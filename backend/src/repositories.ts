@@ -5,11 +5,11 @@ import { FileRepository } from '#file/FileRepository.ts';
 import { HandoutRepository } from '#handout/HandoutRepository.ts';
 import { ItemRepository } from '#item/ItemRepository.ts';
 import { MapRepository } from '#map/MapRepository.ts';
+import { NoteRepository } from '#note/NoteRepository.ts';
 import { RegionRepository } from '#region/RegionRepository.ts';
 import { RegionShapeRepository } from '#region/RegionShapeRepository.ts';
 import { ConditionRepository } from './repositories/ConditionRepository.ts';
 import { NarrationRepository } from './repositories/NarrationRepository.ts';
-import { NoteRepository } from './repositories/NoteRepository.ts';
 
 export const campaignRepository = new CampaignRepository();
 

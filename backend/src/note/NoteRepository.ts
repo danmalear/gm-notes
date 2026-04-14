@@ -1,8 +1,8 @@
 import type { UUID } from 'crypto';
 import { db } from '../db.ts';
-import { pkColumn, tableName, type Note } from '../entities/Note.ts';
 import { getMessage } from '../helpers/error.ts';
-import { Repository } from './Repository.ts';
+import { Repository } from '../repositories/Repository.ts';
+import { pkColumn, tableName, type Note } from './Note.ts';
 
 export class NoteRepository extends Repository<Note> {
 	constructor() {
