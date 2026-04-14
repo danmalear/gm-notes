@@ -15,6 +15,7 @@
 		"#dtos/*": "./src/dtos/*",
 		"#file/*": "./src/file/*",
 		"#handout/*": "./src/campaign/handout/*",
+		"#item/*": "./src/campaign/item/*",
 		"#map/*": "./src/campaign/map/*",
 		"#region/*": "./src/campaign/map/region/*",
 		"#shared/*": "./src/shared/*"

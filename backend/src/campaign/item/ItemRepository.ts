@@ -1,14 +1,14 @@
 import type { UUID } from 'crypto';
-import { db } from '../db.ts';
-import { pkColumn, tableName, type Item } from '../entities/Item.ts';
+import { db } from '../../db.ts';
+import { getMessage } from '../../helpers/error.ts';
+import { Repository } from '../../repositories/Repository.ts';
+import { pkColumn, tableName, type Item } from './Item.ts';
 import {
 	itemIdColName,
 	locationIdColName,
 	tableName as locationJoinTableName,
 	type LocationItem,
-} from '../entities/LocationItem.ts';
-import { getMessage } from '../helpers/error.ts';
-import { Repository } from './Repository.ts';
+} from './LocationItem.ts';
 
 export class ItemRepository extends Repository<Item> {
 	constructor() {
