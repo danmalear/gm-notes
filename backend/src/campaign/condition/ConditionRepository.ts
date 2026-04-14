@@ -5,9 +5,9 @@ import {
 	type ActionCondition,
 } from '#action/ActionCondition.ts';
 import type { UUID } from 'crypto';
-import { db } from '../db.ts';
-import { getMessage } from '../helpers/error.ts';
-import { Repository } from '../repositories/Repository.ts';
+import { db } from '../../db.ts';
+import { getMessage } from '../../helpers/error.ts';
+import { Repository } from '../../repositories/Repository.ts';
 import { pkColumn, tableName, type Condition } from './Condition.ts';
 
 export class ConditionRepository extends Repository<Condition> {
