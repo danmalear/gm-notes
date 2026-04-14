@@ -12,6 +12,14 @@ export class BadRequestError extends HttpError {
 	}
 }
 
+export const getStatusCode = (e: unknown): number => {
+	if (e instanceof HttpError) {
+		return e.statusCode;
+	}
+
+	return 500;
+};
+
 export const getMessage = (e: unknown): string => {
 	if (e instanceof Error) {
 		return e.message;
