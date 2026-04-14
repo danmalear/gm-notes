@@ -9,6 +9,7 @@
 	},
 	"imports": {
 		"#campaign/*": "./src/campaign/*",
+		"#command/*": "./src/event-sourcing/command/*",
 		"#dtos/*": "./src/dtos/*"
 	},
 	"dependencies": {

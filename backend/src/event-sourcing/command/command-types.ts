@@ -1,6 +1,8 @@
+export type CommandType = `${string}/${string}`;
+
 // Should be overridden with specific implementation before use
 export interface CommandRequestBase {
-	commandType: string;
+	commandType: CommandType;
 	command: object;
 }
 
