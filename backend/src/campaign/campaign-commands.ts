@@ -2,8 +2,8 @@ import { randomUUID, type UUID } from 'crypto';
 import type { CommandClass, CommandRequestBase } from '../dtos/command.ts';
 import { BadRequestError } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';
-import { campaignRepository } from '../repositories.ts';
 import type { Campaign } from './Campaign.ts';
+import { CampaignRepository } from './CampaignRepository.ts';
 
 export interface CreateCampaign {
 	name: string;
@@ -34,6 +34,12 @@ export type CampaignCommandRequest =
 	| UpdateCampaignRequest;
 
 export class CampaignCommands implements CommandClass<CampaignCommandRequest> {
+	campaignRepository: CampaignRepository;
+
+	constructor() {
+		this.campaignRepository = new CampaignRepository();
+	}
+
 	async 'Campaign/Create'(command: CreateCampaign) {
 		if (!command.name) {
 			throw new BadRequestError('Campaigns must have a name specified');
@@ -54,7 +60,7 @@ export class CampaignCommands implements CommandClass<CampaignCommandRequest> {
 		};
 
 		// @TODO apply event
-		await campaignRepository.insert(campaign);
+		await this.campaignRepository.insert(campaign);
 
 		return {
 			id,

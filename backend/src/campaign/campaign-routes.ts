@@ -8,113 +8,136 @@ import {
 	requiredFields,
 	validatePostBody,
 } from '../helpers/validation/http.ts';
-import { campaignRepository, mapRepository } from '../repositories.ts';
+import { mapRepository } from '../repositories.ts';
 import type { CreateCampaign } from './campaign-commands.ts';
-import type { CampaignResponse } from './campaign-queries.ts';
+import type { CampaignResponse, CampaignStub } from './campaign-queries.ts';
 import type { Campaign } from './Campaign.ts';
+import { CampaignRepository } from './CampaignRepository.ts';
 
-const apiNamespace = 'campaigns';
+export class CampaignRoutes {
+	static readonly apiNamespace = 'campaigns';
 
-async function buildResponse(campaign: Campaign) {
-	const maps = await mapRepository.getByCampaignId(campaign.CampaignId);
+	campaignRepository: CampaignRepository;
 
-	const campaignResponse: CampaignResponse = {
-		id: campaign.CampaignId,
-		name: campaign.Name,
-		activeMapId: campaign.ActiveMapId ?? undefined,
-		maps: maps.map((map) => ({
-			id: map.MapId,
-			campaignId: map.CampaignId,
-			name: map.Name,
-			imagePath: map.ImagePath,
-		})),
-	};
+	constructor() {
+		this.campaignRepository = new CampaignRepository();
+	}
 
-	return campaignResponse;
-}
+	static async buildResponse(campaign: Campaign) {
+		const maps = await mapRepository.getByCampaignId(campaign.CampaignId);
 
-export const campaignRoutes = (app: Express) => {
-	app.get(
-		`/${apiNamespace}`,
-		async (
-			_req,
-			res: Response<MessageResponse | DataResponse<CampaignResponse[]>>,
-		) => {
-			console.log(`Campaign GET all request received.`);
+		const campaignResponse: CampaignResponse = {
+			id: campaign.CampaignId,
+			name: campaign.Name,
+			activeMapId: campaign.ActiveMapId ?? undefined,
+			maps: maps.map((map) => ({
+				id: map.MapId,
+				campaignId: map.CampaignId,
+				name: map.Name,
+				imagePath: map.ImagePath,
+			})),
+		};
 
-			const campaigns = await campaignRepository.getAll();
+		return campaignResponse;
+	}
 
-			const data: CampaignResponse[] = [];
+	static async buildStub(campaign: Campaign) {
+		const campaignStub: CampaignStub = {
+			id: campaign.CampaignId,
+			name: campaign.Name,
+			activeMapId: campaign.ActiveMapId ?? undefined,
+		};
 
-			for (const campaign of campaigns) {
-				data.push(await buildResponse(campaign));
-			}
+		return campaignStub;
+	}
 
-			res.send({
-				data,
-			});
-		},
-	);
+	init(app: Express) {
+		app.get(
+			`/${CampaignRoutes.apiNamespace}`,
+			async (
+				_req,
+				res: Response<MessageResponse | DataResponse<CampaignResponse[]>>,
+			) => {
+				console.log(`Campaign GET all request received.`);
 
-	app.get(
-		`/${apiNamespace}/:id`,
-		async (
-			req,
-			res: Response<MessageResponse | DataResponse<CampaignResponse>>,
-		) => {
-			console.log(
-				`Campaign GET request received. params: ${JSON.stringify(req.params)}`,
-			);
+				const campaigns = await this.campaignRepository.getAll();
 
-			if (!isUUID(req.params.id)) {
-				res.status(400).send({ message: 'Invalid UUID format' });
-				return;
-			}
+				const data: CampaignResponse[] = [];
 
-			const campaign = await campaignRepository.getById(req.params.id);
-			if (!campaign) {
-				res.status(404).send({
-					message: `Campaign with ID ${req.params.id} not found`,
+				for (const campaign of campaigns) {
+					data.push(await CampaignRoutes.buildResponse(campaign));
+				}
+
+				res.send({
+					data,
 				});
-				return;
-			}
+			},
+		);
 
-			res.send({ data: await buildResponse(campaign) });
-		},
-	);
+		app.get(
+			`/${CampaignRoutes.apiNamespace}/:id`,
+			async (
+				req,
+				res: Response<MessageResponse | DataResponse<CampaignResponse>>,
+			) => {
+				console.log(
+					`Campaign GET request received. params: ${JSON.stringify(req.params)}`,
+				);
 
-	app.post(
-		`/${apiNamespace}`,
-		async (
-			req,
-			res: Response<MessageResponse | DataResponse<CampaignResponse>>,
-		) => {
-			console.log(
-				`Campaign POST request received. body: ${JSON.stringify(req.body)}`,
-			);
+				if (!isUUID(req.params.id)) {
+					res.status(400).send({ message: 'Invalid UUID format' });
+					return;
+				}
 
-			function validateBody(body: unknown): asserts body is CreateCampaign {
-				validatePostBody(body);
-				requiredFields(body, ['name'], 'Campaigns must have a name specified');
-			}
+				const campaign = await this.campaignRepository.getById(req.params.id);
+				if (!campaign) {
+					res.status(404).send({
+						message: `Campaign with ID ${req.params.id} not found`,
+					});
+					return;
+				}
 
-			try {
-				validateBody(req.body);
-			} catch (e) {
-				res.status(400).send({ message: getMessage(e) });
-				return;
-			}
+				res.send({ data: await CampaignRoutes.buildResponse(campaign) });
+			},
+		);
 
-			let campaign: Campaign = {
-				CampaignId: randomUUID(),
-				CampaignTemplateId: null,
-				Name: req.body.name,
-				ActiveMapId: null,
-			};
+		app.post(
+			`/${CampaignRoutes.apiNamespace}`,
+			async (
+				req,
+				res: Response<MessageResponse | DataResponse<CampaignResponse>>,
+			) => {
+				console.log(
+					`Campaign POST request received. body: ${JSON.stringify(req.body)}`,
+				);
 
-			campaign = await campaignRepository.insert(campaign);
+				function validateBody(body: unknown): asserts body is CreateCampaign {
+					validatePostBody(body);
+					requiredFields(
+						body,
+						['name'],
+						'Campaigns must have a name specified',
+					);
+				}
 
-			res.send({ data: await buildResponse(campaign) });
-		},
-	);
-};
+				try {
+					validateBody(req.body);
+				} catch (e) {
+					res.status(400).send({ message: getMessage(e) });
+					return;
+				}
+
+				let campaign: Campaign = {
+					CampaignId: randomUUID(),
+					CampaignTemplateId: null,
+					Name: req.body.name,
+					ActiveMapId: null,
+				};
+
+				campaign = await this.campaignRepository.insert(campaign);
+
+				res.send({ data: await CampaignRoutes.buildResponse(campaign) });
+			},
+		);
+	}
+}
