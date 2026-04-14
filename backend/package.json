@@ -8,8 +8,8 @@
 		"type-check": "tsc -p tsconfig.json"
 	},
 	"imports": {
-		"#dtos/": "./src/dtos/",
-		"#campaign/": "./src/campaign/"
+		"#campaign/*": "./src/campaign/*",
+		"#dtos/*": "./src/dtos/*"
 	},
 	"dependencies": {
 		"cors": "2.8.6",
