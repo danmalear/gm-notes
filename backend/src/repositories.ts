@@ -1,6 +1,7 @@
 import { AbilityCheckRepository } from '#ability-check/AbilityCheckRepository.ts';
 import { ActionRepository } from '#action/ActionRepository.ts';
 import { CampaignRepository } from '#campaign/CampaignRepository.ts';
+import { ConditionRepository } from '#condition/ConditionRepository.ts';
 import { FileRepository } from '#file/FileRepository.ts';
 import { HandoutRepository } from '#handout/HandoutRepository.ts';
 import { ItemRepository } from '#item/ItemRepository.ts';
@@ -8,7 +9,6 @@ import { MapRepository } from '#map/MapRepository.ts';
 import { NoteRepository } from '#note/NoteRepository.ts';
 import { RegionRepository } from '#region/RegionRepository.ts';
 import { RegionShapeRepository } from '#region/RegionShapeRepository.ts';
-import { ConditionRepository } from './repositories/ConditionRepository.ts';
 import { NarrationRepository } from './repositories/NarrationRepository.ts';
 
 export const campaignRepository = new CampaignRepository();

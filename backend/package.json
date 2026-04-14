@@ -12,6 +12,7 @@
 		"#action/*": "./src/action/*",
 		"#campaign/*": "./src/campaign/*",
 		"#command/*": "./src/event-sourcing/command/*",
+		"#condition/*": "./src/condition/*",
 		"#dtos/*": "./src/dtos/*",
 		"#file/*": "./src/file/*",
 		"#handout/*": "./src/campaign/handout/*",
