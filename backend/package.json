@@ -13,6 +13,7 @@
 		"#campaign/*": "./src/campaign/*",
 		"#command/*": "./src/event-sourcing/command/*",
 		"#dtos/*": "./src/dtos/*",
+		"#file/*": "./src/file/*",
 		"#map/*": "./src/campaign/map/*",
 		"#region/*": "./src/campaign/map/region/*",
 		"#shared/*": "./src/shared/*"

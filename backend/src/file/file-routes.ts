@@ -1,9 +1,9 @@
-import type { MessageResponse } from '#dtos/MessageResponse.ts';
-import type { FileStub } from '#dtos/file.ts';
+import type { MessageResponse } from '#shared/dtos.ts';
 import { type Express, type Request, type Response } from 'express';
 import multer from 'multer';
 import path from 'path';
 import { fileRepository } from '../repositories.ts';
+import type { FileStub } from './file-dtos.ts';
 
 const apiNamespace = 'files';
 

@@ -1,5 +1,5 @@
-import { pkColumn, tableName, type File } from '../entities/File.ts';
-import { Repository } from './Repository.ts';
+import { Repository } from '../repositories/Repository.ts';
+import { pkColumn, tableName, type File } from './File.ts';
 
 export class FileRepository extends Repository<File> {
 	constructor() {
