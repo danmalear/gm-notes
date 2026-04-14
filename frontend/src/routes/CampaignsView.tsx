@@ -15,8 +15,8 @@ import CampaignCard from '../components/CampaignCard.tsx';
 import CreateCampaignModal from '../components/modals/CreateCampaignModal.tsx';
 import { getMessage } from '../helpers/error.ts';
 import {
+	createCampaign,
 	getAllCampaigns,
-	insertCampaign,
 } from '../services/campaignService.ts';
 import classes from './CampaignsView.module.css';
 
@@ -65,7 +65,7 @@ const CampaignsView: React.FC = () => {
 
 	const handleCampaignCreated = async (campaign: CreateCampaign) => {
 		try {
-			const response = await insertCampaign(campaign);
+			const response = await createCampaign(campaign);
 			const newCampaign = response.data.data;
 			navigate(`${newCampaign.id}/map`);
 		} catch (e) {

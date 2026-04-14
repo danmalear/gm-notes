@@ -7,10 +7,20 @@ export interface CreateCampaign {
 	name: string;
 }
 
-export interface CampaignUpdate {
+export interface CreateCampaignRequest {
+	commandType: 'Campaign/Create';
+	command: CreateCampaign;
+}
+
+export interface UpdateCampaign {
 	id: UUID;
 	name?: string;
 	activeMapId?: UUID;
+}
+
+export interface UpdateCampaignRequest {
+	commandType: 'Campaign/Update';
+	command: CreateCampaign;
 }
 
 // Queries
