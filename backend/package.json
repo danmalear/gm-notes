@@ -18,6 +18,7 @@
 		"#handout/*": "./src/campaign/handout/*",
 		"#item/*": "./src/campaign/item/*",
 		"#map/*": "./src/campaign/map/*",
+		"#narration/*": "./src/narration/*",
 		"#note/*": "./src/note/*",
 		"#region/*": "./src/campaign/map/region/*",
 		"#shared/*": "./src/shared/*"

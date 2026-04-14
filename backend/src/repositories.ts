@@ -6,10 +6,10 @@ import { FileRepository } from '#file/FileRepository.ts';
 import { HandoutRepository } from '#handout/HandoutRepository.ts';
 import { ItemRepository } from '#item/ItemRepository.ts';
 import { MapRepository } from '#map/MapRepository.ts';
+import { NarrationRepository } from '#narration/NarrationRepository.ts';
 import { NoteRepository } from '#note/NoteRepository.ts';
 import { RegionRepository } from '#region/RegionRepository.ts';
 import { RegionShapeRepository } from '#region/RegionShapeRepository.ts';
-import { NarrationRepository } from './repositories/NarrationRepository.ts';
 
 export const campaignRepository = new CampaignRepository();
 

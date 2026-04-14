@@ -1,13 +1,13 @@
-import type {
-	NarrationQueryParams,
-	NarrationResponse,
-} from '#dtos/narration.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import type { Express, Request, Response } from 'express';
-import type { Narration } from '../entities/Narration.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';
 import { narrationRepository } from '../repositories.ts';
+import type {
+	NarrationQueryParams,
+	NarrationResponse,
+} from './narration-dtos.ts';
+import type { Narration } from './Narration.ts';
 
 const apiNamespace = 'narrations';
 

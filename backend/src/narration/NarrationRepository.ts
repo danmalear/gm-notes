@@ -6,9 +6,9 @@ import {
 } from '#region/RegionNarration.ts';
 import type { UUID } from 'crypto';
 import { db } from '../db.ts';
-import { pkColumn, tableName, type Narration } from '../entities/Narration.ts';
 import { getMessage } from '../helpers/error.ts';
-import { Repository } from './Repository.ts';
+import { Repository } from '../repositories/Repository.ts';
+import { pkColumn, tableName, type Narration } from './Narration.ts';
 
 export class NarrationRepository extends Repository<Narration> {
 	constructor() {
