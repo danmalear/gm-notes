@@ -1,4 +1,5 @@
 import type { MessageResponse } from '#shared/dtos.ts';
+import { getMessage } from '#shared/error.ts';
 import cors from 'cors';
 import 'dotenv/config';
 import express, {
@@ -7,7 +8,6 @@ import express, {
 	type Response,
 } from 'express';
 import { routes } from './src/routes.ts';
-import { getMessage } from './src/shared/error.ts';
 
 const app = express();
 const port = process.env.PORT;
