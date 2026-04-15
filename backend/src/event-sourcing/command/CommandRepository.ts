@@ -1,4 +1,4 @@
-import { Repository } from '../../repositories/Repository.ts';
+import { Repository } from '#shared/Repository.ts';
 import { type Command, pkColumn, tableName } from './Command.ts';
 
 export class CommandRepository extends Repository<Command> {

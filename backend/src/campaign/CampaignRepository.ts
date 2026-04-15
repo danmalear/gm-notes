@@ -1,4 +1,4 @@
-import { Repository } from '../repositories/Repository.ts';
+import { Repository } from '#shared/Repository.ts';
 import { type Campaign, pkColumn, tableName } from './Campaign.ts';
 
 export class CampaignRepository extends Repository<Campaign> {
