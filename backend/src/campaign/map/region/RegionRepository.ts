@@ -1,7 +1,7 @@
+import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import { db } from '../../../db.ts';
 import { type Region, pkColumn, tableName } from './Region.ts';
 
 export class RegionRepository extends Repository<Region> {

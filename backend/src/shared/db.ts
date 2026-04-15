@@ -1,5 +1,5 @@
 import knex from 'knex';
-import configs from '../knexfile.ts';
+import configs from '../../knexfile.ts';
 
 const env = process.env.NODE_ENV ?? 'development';
 

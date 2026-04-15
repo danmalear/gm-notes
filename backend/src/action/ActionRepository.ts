@@ -1,7 +1,7 @@
+import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import { db } from '../db.ts';
 import { pkColumn, tableName, type Action } from './Action.ts';
 
 export class ActionRepository extends Repository<Action> {
