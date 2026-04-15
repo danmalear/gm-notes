@@ -17,7 +17,6 @@ import {
 } from '#shared/validation/shapes.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
-import { buildShapes, getShapeType } from '../../../helpers/region-shapes.ts';
 import {
 	abilityCheckRepository,
 	actionRepository,
@@ -30,6 +29,7 @@ import {
 	regionRepository,
 	regionShapeRepository,
 } from '../../../repositories.ts';
+import { buildShapes, getShapeType } from './region-shape-utils.ts';
 import type { Region } from './Region.ts';
 
 const apiNamespace = 'regions';

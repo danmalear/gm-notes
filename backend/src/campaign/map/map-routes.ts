@@ -1,4 +1,5 @@
 import type { RegionStub } from '#region/region-dtos.ts';
+import { buildShapes } from '#region/region-shape-utils.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
@@ -10,7 +11,6 @@ import {
 } from '#shared/validation/http.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
-import { buildShapes } from '../../helpers/region-shapes.ts';
 import {
 	campaignRepository,
 	mapRepository,
