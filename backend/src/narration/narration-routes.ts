@@ -1,7 +1,7 @@
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
+import { getMessage } from '#shared/error.ts';
+import { isUUID } from '#shared/uuid.ts';
 import type { Express, Request, Response } from 'express';
-import { getMessage } from '../helpers/error.ts';
-import { isUUID } from '../helpers/uuid.ts';
 import { narrationRepository } from '../repositories.ts';
 import type {
 	NarrationQueryParams,

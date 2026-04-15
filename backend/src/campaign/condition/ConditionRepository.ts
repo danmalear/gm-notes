@@ -4,10 +4,10 @@ import {
 	conditionIdColName,
 	type ActionCondition,
 } from '#action/ActionCondition.ts';
+import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
 import { db } from '../../db.ts';
-import { getMessage } from '../../helpers/error.ts';
 import { pkColumn, tableName, type Condition } from './Condition.ts';
 
 export class ConditionRepository extends Repository<Condition> {

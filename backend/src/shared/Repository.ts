@@ -1,6 +1,6 @@
+import { getMessage } from '#shared/error.ts';
 import { type UUID } from 'crypto';
 import { db } from '../db.ts';
-import { getMessage } from '../helpers/error.ts';
 
 export class Repository<T> {
 	tableName: string;

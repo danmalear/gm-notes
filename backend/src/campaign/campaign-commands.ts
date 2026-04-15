@@ -2,9 +2,9 @@ import type {
 	CommandClass,
 	CommandRequestBase,
 } from '#command/command-types.ts';
+import { BadRequestError } from '#shared/error.ts';
+import { isUUID } from '#shared/uuid.ts';
 import { randomUUID, type UUID } from 'crypto';
-import { BadRequestError } from '../helpers/error.ts';
-import { isUUID } from '../helpers/uuid.ts';
 import type { Campaign } from './Campaign.ts';
 import { CampaignRepository } from './CampaignRepository.ts';
 

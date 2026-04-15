@@ -4,10 +4,10 @@ import {
 	tableName as regionJoinTableName,
 	type RegionHandout,
 } from '#region/RegionHandout.ts';
+import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
 import { db } from '../../db.ts';
-import { getMessage } from '../../helpers/error.ts';
 import { pkColumn, tableName, type Handout } from './Handout.ts';
 
 export class HandoutRepository extends Repository<Handout> {

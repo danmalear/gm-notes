@@ -1,7 +1,7 @@
+import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
 import { db } from '../../../db.ts';
-import { getMessage } from '../../../helpers/error.ts';
 import { type RegionShape, pkColumn, tableName } from './RegionShape.ts';
 
 export class RegionShapeRepository extends Repository<RegionShape> {

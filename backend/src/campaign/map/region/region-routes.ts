@@ -7,6 +7,8 @@ import type {
 } from '#campaign/map/region/region-dtos.ts';
 import type { LocationItemStub } from '#item/item-dtos.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
+import { getMessage } from '#shared/error.ts';
+import { isUUID } from '#shared/uuid.ts';
 import { requiredFields, validatePostBody } from '#shared/validation/http.ts';
 import {
 	validateCircle,
@@ -15,9 +17,7 @@ import {
 } from '#shared/validation/shapes.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
-import { getMessage } from '../../../helpers/error.ts';
 import { buildShapes, getShapeType } from '../../../helpers/region-shapes.ts';
-import { isUUID } from '../../../helpers/uuid.ts';
 import {
 	abilityCheckRepository,
 	actionRepository,

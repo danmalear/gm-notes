@@ -4,10 +4,10 @@ import {
 	tableName as regionJoinTableName,
 	type RegionNarration,
 } from '#region/RegionNarration.ts';
+import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
 import { db } from '../db.ts';
-import { getMessage } from '../helpers/error.ts';
 import { pkColumn, tableName, type Narration } from './Narration.ts';
 
 export class NarrationRepository extends Repository<Narration> {

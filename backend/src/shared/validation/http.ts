@@ -1,5 +1,5 @@
+import { isUUID } from '#shared/uuid.ts';
 import type { UUID } from 'crypto';
-import { isUUID } from '../../helpers/uuid.ts';
 
 function validateBody(
 	body: unknown,

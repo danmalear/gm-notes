@@ -1,10 +1,6 @@
+import { BadRequestError, getMessage, getStatusCode } from '#shared/error.ts';
 import { randomUUID } from 'crypto';
 import type { Express } from 'express';
-import {
-	BadRequestError,
-	getMessage,
-	getStatusCode,
-} from '../../helpers/error.ts';
 import type { CommandRequestBase } from './command-types.ts';
 import type { Command } from './Command.ts';
 import { CommandRepository } from './CommandRepository.ts';
