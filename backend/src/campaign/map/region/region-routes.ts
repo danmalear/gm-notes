@@ -7,20 +7,17 @@ import type {
 } from '#campaign/map/region/region-dtos.ts';
 import type { LocationItemStub } from '#item/item-dtos.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
+import { requiredFields, validatePostBody } from '#shared/validation/http.ts';
+import {
+	validateCircle,
+	validatePolygon,
+	validateRectangle,
+} from '#shared/validation/shapes.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
 import { getMessage } from '../../../helpers/error.ts';
 import { buildShapes, getShapeType } from '../../../helpers/region-shapes.ts';
 import { isUUID } from '../../../helpers/uuid.ts';
-import {
-	requiredFields,
-	validatePostBody,
-} from '../../../helpers/validation/http.ts';
-import {
-	validateCircle,
-	validatePolygon,
-	validateRectangle,
-} from '../../../helpers/validation/shapes.ts';
 import {
 	abilityCheckRepository,
 	actionRepository,

@@ -1,12 +1,12 @@
 import type { Shape } from '#region/region-dtos.ts';
 import type { ShapeType } from '#region/RegionShape.ts';
-import type { UUID } from 'crypto';
-import { regionShapeRepository } from '../repositories.ts';
 import {
 	validateCircle,
 	validatePolygon,
 	validateRectangle,
-} from './validation/shapes.ts';
+} from '#shared/validation/shapes.ts';
+import type { UUID } from 'crypto';
+import { regionShapeRepository } from '../repositories.ts';
 
 export const isCircle = (shape: Shape) => 'r' in shape;
 export const isRectangle = (shape: Shape) => 'x1' in shape;

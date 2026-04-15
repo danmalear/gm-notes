@@ -1,12 +1,9 @@
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
+import { requiredFields, validatePostBody } from '#shared/validation/http.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
 import { getMessage } from '../helpers/error.ts';
 import { isUUID } from '../helpers/uuid.ts';
-import {
-	requiredFields,
-	validatePostBody,
-} from '../helpers/validation/http.ts';
 import { mapRepository } from '../repositories.ts';
 import type { CreateCampaign } from './campaign-commands.ts';
 import type { CampaignResponse, CampaignStub } from './campaign-queries.ts';
