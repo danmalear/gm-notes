@@ -7,13 +7,13 @@ export interface CommandRequestBase {
 
 export type CommandFunction<T extends object> = (command: T) => void;
 
-export type RequestCommands<DomainRequest extends CommandRequestBase> = {
+export type Commands<DomainRequest extends CommandRequestBase> = {
 	[C in DomainRequest as C['commandType']]: (
 		command: C['command'],
 	) => Promise<object>;
 };
 
-export type DomainCommands<DomainRequest extends CommandRequestBase> =
-	RequestCommands<DomainRequest> & {
-		domain: DomainRequest['domain'];
-	};
+export interface IDomainCommands<DomainRequest extends CommandRequestBase> {
+	domain: DomainRequest['domain'];
+	commands: Commands<DomainRequest>;
+}

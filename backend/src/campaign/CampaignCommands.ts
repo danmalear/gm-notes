@@ -1,19 +1,18 @@
-import type {
-	CommandRequestBase,
-	DomainCommands,
-} from '#command/command-types.ts';
+import type { CommandRequestBase } from '#command/command-types.ts';
+import { CommandHandler } from '#command/CommandHandler.ts';
+import { DomainCommands } from '#command/DomainCommands.ts';
 import { BadRequestError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { Campaign } from './Campaign.ts';
 import { CampaignRepository } from './CampaignRepository.ts';
 
-export interface CreateCampaign {
-	name: string;
-}
-
 interface CampaignRequest extends CommandRequestBase {
 	domain: 'Campaign';
+}
+
+export interface CreateCampaign {
+	name: string;
 }
 
 export interface CreateCampaignRequest extends CampaignRequest {
@@ -36,15 +35,20 @@ export type CampaignCommandRequest =
 	| CreateCampaignRequest
 	| UpdateCampaignRequest;
 
-export class CampaignCommands
-	implements DomainCommands<CampaignCommandRequest>
-{
+export class CampaignCommands extends DomainCommands<
+	'Campaign',
+	CampaignCommandRequest
+> {
 	campaignRepository: CampaignRepository;
-	domain: 'Campaign';
 
-	constructor() {
+	commands = {
+		Create: this.Create,
+		Update: this.Update,
+	};
+
+	constructor(commandHandler: CommandHandler) {
+		super('Campaign', commandHandler);
 		this.campaignRepository = new CampaignRepository();
-		this.domain = 'Campaign';
 	}
 
 	async Create(command: CreateCampaign) {
