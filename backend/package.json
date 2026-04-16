@@ -11,7 +11,7 @@
 		"#ability-check/*": "./src/action/ability-check/*",
 		"#action/*": "./src/action/*",
 		"#campaign/*": "./src/campaign/*",
-		"#command/*": "./src/event-sourcing/command/*",
+		"#command/*": "./src/framework/command/*",
 		"#condition/*": "./src/campaign/condition/*",
 		"#dtos/*": "./src/dtos/*",
 		"#file/*": "./src/file/*",
