@@ -4,23 +4,25 @@ import { isUUID } from '#shared/uuid.ts';
 import { requiredFields, validatePostBody } from '#shared/validation/http.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
-import { mapRepository } from '../repositories.ts';
 import type { CreateCampaign } from './campaign-commands.ts';
 import type { CampaignResponse, CampaignStub } from './campaign-dtos.ts';
 import type { Campaign } from './Campaign.ts';
 import { CampaignRepository } from './CampaignRepository.ts';
+import { MapRepository } from './map/MapRepository.ts';
 
 export class CampaignRoutes {
 	static readonly apiNamespace = 'campaigns';
 
 	campaignRepository: CampaignRepository;
+	mapRepository: MapRepository;
 
 	constructor() {
 		this.campaignRepository = new CampaignRepository();
+		this.mapRepository = new MapRepository();
 	}
 
-	static async buildResponse(campaign: Campaign) {
-		const maps = await mapRepository.getByCampaignId(campaign.CampaignId);
+	async buildResponse(campaign: Campaign) {
+		const maps = await this.mapRepository.getByCampaignId(campaign.CampaignId);
 
 		const campaignResponse: CampaignResponse = {
 			id: campaign.CampaignId,
@@ -37,7 +39,7 @@ export class CampaignRoutes {
 		return campaignResponse;
 	}
 
-	static async buildStub(campaign: Campaign) {
+	async buildStub(campaign: Campaign) {
 		const campaignStub: CampaignStub = {
 			id: campaign.CampaignId,
 			name: campaign.Name,
@@ -61,7 +63,7 @@ export class CampaignRoutes {
 				const data: CampaignResponse[] = [];
 
 				for (const campaign of campaigns) {
-					data.push(await CampaignRoutes.buildResponse(campaign));
+					data.push(await this.buildResponse(campaign));
 				}
 
 				res.send({
@@ -93,7 +95,7 @@ export class CampaignRoutes {
 					return;
 				}
 
-				res.send({ data: await CampaignRoutes.buildResponse(campaign) });
+				res.send({ data: await this.buildResponse(campaign) });
 			},
 		);
 
@@ -132,7 +134,7 @@ export class CampaignRoutes {
 
 				campaign = await this.campaignRepository.insert(campaign);
 
-				res.send({ data: await CampaignRoutes.buildResponse(campaign) });
+				res.send({ data: await this.buildResponse(campaign) });
 			},
 		);
 	}
