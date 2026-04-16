@@ -2,6 +2,7 @@ import { CampaignRepository } from '#campaign/CampaignRepository.ts';
 import type { RegionStub } from '#region/region-dtos.ts';
 import { buildShapes } from '#region/region-shape-utils.ts';
 import { RegionRepository } from '#region/RegionRepository.ts';
+import { RegionShapeRepository } from '#region/RegionShapeRepository.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
@@ -30,11 +31,13 @@ export class MapRoutes {
 	campaignRepository: CampaignRepository;
 	mapRepository: MapRepository;
 	regionRepository: RegionRepository;
+	regionShapeRepository: RegionShapeRepository;
 
 	constructor() {
 		this.campaignRepository = new CampaignRepository();
 		this.mapRepository = new MapRepository();
 		this.regionRepository = new RegionRepository();
+		this.regionShapeRepository = new RegionShapeRepository();
 	}
 
 	async buildRegions(mapId: UUID) {
@@ -42,7 +45,10 @@ export class MapRoutes {
 		const dtoRegions: RegionStub[] = [];
 
 		for (const region of regions) {
-			const shapes = await buildShapes(region.RegionId);
+			const regionShapes = await this.regionShapeRepository.getByRegionId(
+				region.RegionId,
+			);
+			const shapes = await buildShapes(regionShapes);
 
 			dtoRegions.push({
 				id: region.RegionId,

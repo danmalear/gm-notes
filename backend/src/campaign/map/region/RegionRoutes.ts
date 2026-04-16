@@ -183,7 +183,10 @@ export class RegionRoutes {
 			throw Error('Map for region not found.');
 		}
 
-		const shapes = await buildShapes(region.RegionId);
+		const regionShapes = await this.regionShapeRepository.getByRegionId(
+			region.RegionId,
+		);
+		const shapes = await buildShapes(regionShapes);
 		const narrations = await this.narrationRepository.getByRegionId(
 			region.RegionId,
 		);
