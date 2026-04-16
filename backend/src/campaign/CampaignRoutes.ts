@@ -6,7 +6,7 @@ import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
 import { mapRepository } from '../repositories.ts';
 import type { CreateCampaign } from './campaign-commands.ts';
-import type { CampaignResponse, CampaignStub } from './campaign-queries.ts';
+import type { CampaignResponse, CampaignStub } from './campaign-dtos.ts';
 import type { Campaign } from './Campaign.ts';
 import { CampaignRepository } from './CampaignRepository.ts';
 
