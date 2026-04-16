@@ -13,7 +13,7 @@ export type RequestCommands<DomainRequest extends CommandRequestBase> = {
 	) => Promise<object>;
 };
 
-export type CommandClass<DomainRequest extends CommandRequestBase> =
+export type DomainCommands<DomainRequest extends CommandRequestBase> =
 	RequestCommands<DomainRequest> & {
 		domain: DomainRequest['domain'];
 	};

@@ -1,6 +1,6 @@
 import type {
-	CommandClass,
 	CommandRequestBase,
+	DomainCommands,
 } from '#command/command-types.ts';
 import { BadRequestError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
@@ -36,7 +36,9 @@ export type CampaignCommandRequest =
 	| CreateCampaignRequest
 	| UpdateCampaignRequest;
 
-export class CampaignCommands implements CommandClass<CampaignCommandRequest> {
+export class CampaignCommands
+	implements DomainCommands<CampaignCommandRequest>
+{
 	campaignRepository: CampaignRepository;
 	domain: 'Campaign';
 
