@@ -1,15 +1,19 @@
-export type CommandType = `${string}/${string}`;
-
 // Should be overridden with specific implementation before use
 export interface CommandRequestBase {
-	commandType: CommandType;
+	domain: string;
+	commandType: string;
 	command: object;
 }
 
 export type CommandFunction<T extends object> = (command: T) => void;
 
-export type CommandClass<CommandRequests extends CommandRequestBase> = {
-	[C in CommandRequests as C['commandType']]: (
+export type RequestCommands<DomainRequest extends CommandRequestBase> = {
+	[C in DomainRequest as C['commandType']]: (
 		command: C['command'],
 	) => Promise<object>;
 };
+
+export type CommandClass<DomainRequest extends CommandRequestBase> =
+	RequestCommands<DomainRequest> & {
+		domain: DomainRequest['domain'];
+	};

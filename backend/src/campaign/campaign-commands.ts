@@ -12,8 +12,12 @@ export interface CreateCampaign {
 	name: string;
 }
 
-export interface CreateCampaignRequest extends CommandRequestBase {
-	commandType: 'Campaign/Create';
+interface CampaignRequest extends CommandRequestBase {
+	domain: 'Campaign';
+}
+
+export interface CreateCampaignRequest extends CampaignRequest {
+	commandType: 'Create';
 	command: CreateCampaign;
 }
 
@@ -23,8 +27,8 @@ export interface UpdateCampaign {
 	activeMapId?: UUID;
 }
 
-export interface UpdateCampaignRequest extends CommandRequestBase {
-	commandType: 'Campaign/Update';
+export interface UpdateCampaignRequest extends CampaignRequest {
+	commandType: 'Update';
 	command: UpdateCampaign;
 }
 
@@ -34,12 +38,14 @@ export type CampaignCommandRequest =
 
 export class CampaignCommands implements CommandClass<CampaignCommandRequest> {
 	campaignRepository: CampaignRepository;
+	domain: 'Campaign';
 
 	constructor() {
 		this.campaignRepository = new CampaignRepository();
+		this.domain = 'Campaign';
 	}
 
-	async 'Campaign/Create'(command: CreateCampaign) {
+	async Create(command: CreateCampaign) {
 		if (!command.name) {
 			throw new BadRequestError('Campaigns must have a name specified');
 		}
@@ -66,7 +72,7 @@ export class CampaignCommands implements CommandClass<CampaignCommandRequest> {
 		};
 	}
 
-	async 'Campaign/Update'(command: UpdateCampaign) {
+	async Update(command: UpdateCampaign) {
 		if (
 			typeof command.name !== 'undefined' &&
 			typeof command.name !== 'string'
