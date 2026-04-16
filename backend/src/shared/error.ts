@@ -12,6 +12,12 @@ export class BadRequestError extends HttpError {
 	}
 }
 
+export class InternalError extends HttpError {
+	constructor(message: string = 'Internal Server Error') {
+		super(500, message);
+	}
+}
+
 export const getStatusCode = (e: unknown): number => {
 	if (e instanceof HttpError) {
 		return e.statusCode;
