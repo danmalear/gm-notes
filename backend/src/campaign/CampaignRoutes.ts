@@ -4,9 +4,9 @@ import { isUUID } from '#shared/uuid.ts';
 import { requiredFields, validatePostBody } from '#shared/validation/http.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
-import type { CreateCampaign } from './campaign-commands.ts';
 import type { CampaignResponse, CampaignStub } from './campaign-dtos.ts';
 import type { Campaign } from './Campaign.ts';
+import type { CreateCampaign } from './CampaignCommands.ts';
 import { CampaignRepository } from './CampaignRepository.ts';
 import { MapRepository } from './map/MapRepository.ts';
 
