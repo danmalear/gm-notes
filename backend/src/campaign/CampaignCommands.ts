@@ -1,5 +1,5 @@
 import type { CommandRequestBase } from '#command/command-types.ts';
-import { CommandHandler } from '#command/CommandHandler.ts';
+import { CommandRouter } from '#command/CommandRouter.ts';
 import { DomainCommands } from '#command/DomainCommands.ts';
 import { BadRequestError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
@@ -46,7 +46,7 @@ export class CampaignCommands extends DomainCommands<
 		Update: this.Update,
 	};
 
-	constructor(commandHandler: CommandHandler) {
+	constructor(commandHandler: CommandRouter) {
 		super('Campaign', commandHandler);
 		this.campaignRepository = new CampaignRepository();
 	}

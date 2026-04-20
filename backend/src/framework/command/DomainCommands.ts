@@ -1,5 +1,5 @@
 import type { CommandRequestBase, Commands } from './command-types.ts';
-import type { CommandHandler } from './CommandHandler.ts';
+import type { CommandRouter } from './CommandRouter.ts';
 
 export abstract class DomainCommands<
 	Domain extends string,
@@ -9,12 +9,12 @@ export abstract class DomainCommands<
 	domain: Domain;
 	abstract commands: Commands<DomainRequest>;
 
-	constructor(domain: Domain, commandHandler: CommandHandler) {
+	constructor(domain: Domain, commandHandler: CommandRouter) {
 		this.domain = domain;
 		this.register(commandHandler);
 	}
 
-	register(commandHandler: CommandHandler) {
+	register(commandHandler: CommandRouter) {
 		commandHandler.registerCommands(this.domain, this.commands);
 	}
 }

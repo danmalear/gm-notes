@@ -1,6 +1,6 @@
 import { CommandRequestBase, Commands } from './command-types.ts';
 
-export class CommandHandler {
+export class CommandRouter {
 	commands: Record<
 		string,
 		Record<string, (command: object) => Promise<object>>
