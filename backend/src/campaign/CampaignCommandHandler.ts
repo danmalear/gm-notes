@@ -1,23 +1,14 @@
-import type { CommandRequestBase } from '#command/command-types.ts';
-import { CommandRouter } from '#command/CommandRouter.ts';
-import { DomainCommands } from '#command/DomainCommands.ts';
+import { CommandRequest } from '#command/command-dtos.ts';
+import { CommandFunction } from '#command/command-types.ts';
+import { ICommandHandler } from '#command/ICommandHandler.ts';
 import { BadRequestError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { Campaign } from './Campaign.ts';
 import { CampaignRepository } from './CampaignRepository.ts';
 
-interface CampaignRequest extends CommandRequestBase {
-	domain: 'Campaign';
-}
-
 export interface CreateCampaign {
 	name: string;
-}
-
-export interface CreateCampaignRequest extends CampaignRequest {
-	commandType: 'Create';
-	command: CreateCampaign;
 }
 
 export interface UpdateCampaign {
@@ -26,32 +17,47 @@ export interface UpdateCampaign {
 	activeMapId?: UUID;
 }
 
-export interface UpdateCampaignRequest extends CampaignRequest {
+interface CampaignRequest extends CommandRequest {
+	domain: 'Campaign';
+}
+
+interface CreateCampaignRequest extends CampaignRequest {
+	commandType: 'Create';
+	command: CreateCampaign;
+}
+
+interface UpdateCampaignRequest extends CampaignRequest {
 	commandType: 'Update';
 	command: UpdateCampaign;
 }
 
-export type CampaignCommandRequest =
-	| CreateCampaignRequest
-	| UpdateCampaignRequest;
+type CampaignCommandRequest = CreateCampaignRequest | UpdateCampaignRequest;
 
-export class CampaignCommandHandler extends DomainCommands<
-	'Campaign',
-	CampaignCommandRequest
-> {
+export class CampaignCommandHandler
+	implements ICommandHandler<CampaignCommandRequest>
+{
 	campaignRepository: CampaignRepository;
 
-	commands = {
-		Create: this.Create,
-		Update: this.Update,
-	};
-
-	constructor(commandHandler: CommandRouter) {
-		super('Campaign', commandHandler);
-		this.campaignRepository = new CampaignRepository();
+	constructor(campaignRepository: CampaignRepository) {
+		this.campaignRepository = campaignRepository;
 	}
 
-	async Create(command: CreateCampaign) {
+	async handle(commandRequest: CampaignCommandRequest) {
+		switch (commandRequest.commandType) {
+			case 'Create':
+				await this.Create(commandRequest.command);
+				break;
+			case 'Update':
+				await this.Update(commandRequest.command);
+				break;
+			default:
+				throw new BadRequestError(
+					`Invalid campaign command: ${(commandRequest as CommandRequest).commandType}`,
+				);
+		}
+	}
+
+	Create: CommandFunction<CreateCampaign> = async (command) => {
 		if (!command.name) {
 			throw new BadRequestError('Campaigns must have a name specified');
 		}
@@ -76,9 +82,10 @@ export class CampaignCommandHandler extends DomainCommands<
 		return {
 			id,
 		};
-	}
+	};
 
-	async Update(command: UpdateCampaign) {
+	// @TODO
+	Update: CommandFunction<UpdateCampaign> = async (command) => {
 		if (
 			typeof command.name !== 'undefined' &&
 			typeof command.name !== 'string'
@@ -98,6 +105,8 @@ export class CampaignCommandHandler extends DomainCommands<
 
 		// @TODO apply event
 
-		return {};
-	}
+		return {
+			id: randomUUID(), // @TODO this is just a placeholder -  should return existing aggregate ID
+		};
+	};
 }

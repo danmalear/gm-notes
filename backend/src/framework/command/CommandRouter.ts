@@ -1,19 +1,33 @@
-import { CommandRequestBase, Commands } from './command-types.ts';
+import { CommandRequest } from './command-dtos.ts';
 
-export class CommandRouter {
+export interface ICommandRouter {
+	register: (
+		domain: string,
+		handler: (commandType: string, command: object) => Promise<unknown>,
+	) => void;
+
+	send: (command: CommandRequest) => Promise<unknown>;
+}
+
+export class CommandRouter implements ICommandRouter {
 	commands: Record<
 		string,
-		Record<string, (command: object) => Promise<object>>
+		(commandType: string, command: object) => Promise<unknown>
 	>;
 
 	constructor() {
 		this.commands = {};
 	}
 
-	registerCommands<DomainRequest extends CommandRequestBase>(
+	register(
 		domain: string,
-		commands: Commands<DomainRequest>,
+		handler: (commandType: string, command: object) => Promise<unknown>,
 	) {
-		this.commands[domain] = commands;
+		this.commands[domain] = handler;
+	}
+
+	async send(commandRequest: CommandRequest) {
+		const { domain, commandType, command } = commandRequest;
+		await this.commands[domain](commandType, command);
 	}
 }

@@ -1,3 +1,5 @@
+import { commandRoutes } from '#command/command-routes.ts';
+import { CommandRouter } from '#command/CommandRouter.ts';
 import type { MessageResponse } from '#shared/dtos.ts';
 import { getMessage } from '#shared/error.ts';
 import cors from 'cors';
@@ -14,6 +16,10 @@ function createApp() {
 
 	app.use(cors());
 	app.use(express.json());
+
+	const commandRouter = new CommandRouter();
+
+	commandRoutes(app, commandRouter);
 
 	routes(app);
 
