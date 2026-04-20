@@ -35,7 +35,7 @@ export type CampaignCommandRequest =
 	| CreateCampaignRequest
 	| UpdateCampaignRequest;
 
-export class CampaignCommands extends DomainCommands<
+export class CampaignCommandHandler extends DomainCommands<
 	'Campaign',
 	CampaignCommandRequest
 > {
