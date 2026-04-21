@@ -5,7 +5,7 @@ import { requiredFields, validatePostBody } from '#shared/validation/http.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
 import type { CampaignResponse, CampaignStub } from './campaign-dtos.ts';
-import type { Campaign } from './Campaign.ts';
+import type { CampaignRaw } from './Campaign.ts';
 import type { CreateCampaign } from './CampaignCommandHandler.ts';
 import { CampaignRepository } from './CampaignRepository.ts';
 import { MapRepository } from './map/MapRepository.ts';
@@ -21,7 +21,7 @@ export class CampaignRoutes {
 		this.mapRepository = new MapRepository();
 	}
 
-	async buildResponse(campaign: Campaign) {
+	async buildResponse(campaign: CampaignRaw) {
 		const maps = await this.mapRepository.getByCampaignId(campaign.CampaignId);
 
 		const campaignResponse: CampaignResponse = {
@@ -39,7 +39,7 @@ export class CampaignRoutes {
 		return campaignResponse;
 	}
 
-	async buildStub(campaign: Campaign) {
+	async buildStub(campaign: CampaignRaw) {
 		const campaignStub: CampaignStub = {
 			id: campaign.CampaignId,
 			name: campaign.Name,
@@ -125,12 +125,12 @@ export class CampaignRoutes {
 					return;
 				}
 
-				let campaign: Campaign = {
-					CampaignId: randomUUID(),
-					CampaignTemplateId: null,
-					Name: req.body.name,
-					ActiveMapId: null,
-				};
+			let campaign: CampaignRaw = {
+				CampaignId: randomUUID(),
+				CampaignTemplateId: null,
+				Name: req.body.name,
+				ActiveMapId: null,
+			};
 
 				campaign = await this.campaignRepository.insert(campaign);
 

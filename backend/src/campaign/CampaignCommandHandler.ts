@@ -4,7 +4,7 @@ import { ICommandHandler } from '#command/ICommandHandler.ts';
 import { BadRequestError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
 import { randomUUID, type UUID } from 'crypto';
-import type { Campaign } from './Campaign.ts';
+import type { CampaignRaw } from './Campaign.ts';
 import { CampaignRepository } from './CampaignRepository.ts';
 
 export interface CreateCampaign {
@@ -69,7 +69,7 @@ export class CampaignCommandHandler
 
 		const id = randomUUID();
 
-		const campaign: Campaign = {
+		const campaign: CampaignRaw = {
 			CampaignId: id,
 			CampaignTemplateId: null,
 			Name: command.name,

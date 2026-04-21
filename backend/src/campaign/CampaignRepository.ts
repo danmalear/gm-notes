@@ -1,7 +1,7 @@
 import { Repository } from '#shared/Repository.ts';
-import { type Campaign, pkColumn, tableName } from './Campaign.ts';
+import { type CampaignRaw, pkColumn, tableName } from './Campaign.ts';
 
-export class CampaignRepository extends Repository<Campaign> {
+export class CampaignRepository extends Repository<CampaignRaw> {
 	constructor() {
 		super(tableName, pkColumn);
 	}
