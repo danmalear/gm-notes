@@ -1,3 +1,4 @@
+import type { Map } from '#map/Map.ts';
 import type { UUID } from 'crypto';
 
 export const tableName = 'Campaign';
@@ -8,4 +9,8 @@ export interface CampaignRaw {
 	CampaignTemplateId: UUID | null;
 	Name: string;
 	ActiveMapId: UUID | null;
+}
+
+export interface Campaign extends CampaignRaw {
+	Maps: Map[];
 }
