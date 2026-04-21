@@ -8,7 +8,8 @@ export interface CreateCampaign {
 }
 
 export interface CreateCampaignRequest {
-	commandType: 'Campaign/Create';
+	domain: 'Campaign';
+	commandType: 'Create';
 	command: CreateCampaign;
 }
 
@@ -19,8 +20,9 @@ export interface UpdateCampaign {
 }
 
 export interface UpdateCampaignRequest {
-	commandType: 'Campaign/Update';
-	command: CreateCampaign;
+	domain: 'Campaign';
+	commandType: 'Update';
+	command: UpdateCampaign;
 }
 
 // Queries
