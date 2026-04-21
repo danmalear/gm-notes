@@ -1,4 +1,4 @@
-import { CommandRequest } from './command-dtos.ts';
+import type { CommandRequest } from './command-dtos.ts';
 
 export interface ICommandRouter {
 	register: (
