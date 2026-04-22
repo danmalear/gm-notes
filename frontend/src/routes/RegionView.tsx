@@ -107,7 +107,7 @@ const RegionView: React.FC = () => {
 								{region.narrations.map((narration, index) => (
 									<Narration
 										key={`narration-${index}`}
-										narration={narration}
+										narrationStub={narration}
 										topLevelHeading={3}
 									/>
 								))}

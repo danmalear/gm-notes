@@ -1,29 +1,56 @@
-import React from 'react';
+import { useCallback, useState, type FC } from 'react';
 import Collapsible from '../components/Collapsible.tsx';
+import { getMessage } from '../helpers/error.ts';
 import { h, type ValidHeadingIndex } from '../helpers/headings.ts';
-import type { NarrationResponse } from './narration-dtos.ts';
+import SkeletonP from '../shared/components/SkeletonP.tsx';
+import type { NarrationResponse, NarrationStub } from './narration-dtos.ts';
+import { getNarration } from './narrationService.ts';
 
 export interface NarrationProps {
-	narration: NarrationResponse;
+	narrationStub: NarrationStub;
 	topLevelHeading: ValidHeadingIndex;
 }
 
-const Narration: React.FC<NarrationProps> = ({
-	narration,
-	topLevelHeading,
-}) => {
+const Narration: FC<NarrationProps> = ({ narrationStub, topLevelHeading }) => {
 	const H1 = h[topLevelHeading];
 
-	const sections = narration.description
+	const [narration, setNarration] = useState<NarrationResponse | undefined>(
+		undefined,
+	);
+
+	const loadNarration = useCallback(() => {
+		getNarration(narrationStub.id)
+			.then((res) => {
+				setNarration(res.data.data);
+			})
+			.catch((e) => {
+				console.error(e);
+				alert(getMessage(e));
+			});
+	}, [narrationStub.id]);
+
+	const handleExpanded = () => {
+		if (!narration) {
+			loadNarration();
+		}
+	};
+
+	const sections = narration?.description
 		.split('\n')
 		.filter((section) => !!section.trim())
 		.map((section, index) => (
-			<p key={`narration-${narration.id}-section-${index}`}>{section.trim()}</p>
+			<p key={`narration-${narrationStub.id}-section-${index}`}>
+				{section.trim()}
+			</p>
 		));
 
 	return (
-		<Collapsible headingElement={H1} title={narration.name}>
-			{sections}
+		<Collapsible
+			headingElement={H1}
+			title={narrationStub.name}
+			onExpanded={handleExpanded}
+		>
+			{sections ?? <SkeletonP />}
 		</Collapsible>
 	);
 };
