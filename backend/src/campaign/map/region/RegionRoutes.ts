@@ -50,11 +50,14 @@ export class RegionRoutes {
 		this.conditionRepository = new ConditionRepository();
 		this.handoutRepository = new HandoutRepository();
 		this.itemRepository = new ItemRepository();
-		this.mapRepository = new MapRepository();
-		this.narrationRepository = new NarrationRepository();
-		this.noteRepository = new NoteRepository();
 		this.regionRepository = new RegionRepository();
 		this.regionShapeRepository = new RegionShapeRepository();
+		this.mapRepository = new MapRepository(
+			this.regionRepository,
+			this.regionShapeRepository,
+		);
+		this.narrationRepository = new NarrationRepository();
+		this.noteRepository = new NoteRepository();
 	}
 
 	// #region Response building
