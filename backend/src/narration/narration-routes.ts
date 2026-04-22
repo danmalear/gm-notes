@@ -6,6 +6,7 @@ import type { Express, Request, Response } from 'express';
 import type {
 	NarrationQueryParams,
 	NarrationResponse,
+	NarrationStub,
 } from './narration-dtos.ts';
 import { toDto, toStub } from './narration-mapper.ts';
 import type { NarrationRepository } from './NarrationRepository.ts';
@@ -22,7 +23,7 @@ export function narrationRoutes(
 		async (
 			req: Request<
 				Record<string, never>,
-				MessageResponse | DataResponse<NarrationResponse[]>,
+				MessageResponse | DataResponse<NarrationStub[]>,
 				Record<string, never>,
 				NarrationQueryParams
 			>,
@@ -36,7 +37,7 @@ export function narrationRoutes(
 				? await narrationRepository.getByRegionId(req.query.regionId)
 				: await narrationRepository.getAll();
 
-			const data: NarrationResponse[] = [];
+			const data: NarrationStub[] = [];
 
 			try {
 				for (const narration of narrations) {
