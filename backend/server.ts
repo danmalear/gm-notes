@@ -1,11 +1,11 @@
 import { campaignRoutes } from '#campaign/campaign-routes.ts';
 import { CampaignRepository } from '#campaign/CampaignRepository.ts';
-import { MapRepository } from '#campaign/map/MapRepository.ts';
-import { RegionRepository } from '#campaign/map/region/RegionRepository.ts';
-import { RegionShapeRepository } from '#campaign/map/region/RegionShapeRepository.ts';
 import { commandRoutes } from '#command/command-routes.ts';
 import { CommandRouter } from '#command/CommandRouter.ts';
 import { mapRoutes } from '#map/map-routes.ts';
+import { MapRepository } from '#map/MapRepository.ts';
+import { RegionRepository } from '#region/RegionRepository.ts';
+import { RegionShapeRepository } from '#region/RegionShapeRepository.ts';
 import type { MessageResponse } from '#shared/dtos.ts';
 import { getMessage } from '#shared/error.ts';
 import cors from 'cors';
