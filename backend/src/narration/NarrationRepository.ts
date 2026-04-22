@@ -15,9 +15,13 @@ import {
 	type Narration,
 } from './Narration.ts';
 
-export class NarrationRepository extends Repository<Narration> {
+export class NarrationRepository extends Repository<Narration, Narration> {
 	constructor() {
 		super(tableName, pkColumn);
+	}
+
+	override async getById(id: UUID): Promise<Narration | undefined> {
+		return await this.getByIdRaw(id);
 	}
 
 	/**

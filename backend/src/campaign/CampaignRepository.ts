@@ -8,7 +8,7 @@ import {
 	tableName,
 } from './Campaign.ts';
 
-export class CampaignRepository extends Repository<CampaignRaw> {
+export class CampaignRepository extends Repository<CampaignRaw, Campaign> {
 	mapRepository: MapRepository;
 
 	constructor(mapRepository: MapRepository) {
@@ -17,7 +17,7 @@ export class CampaignRepository extends Repository<CampaignRaw> {
 	}
 
 	override async getById(id: UUID): Promise<Campaign | undefined> {
-		const campaign = await super.getById(id);
+		const campaign = await this.getByIdRaw(id);
 		if (!campaign) return undefined;
 		const maps = await this.mapRepository.getByCampaignId(id);
 		return {

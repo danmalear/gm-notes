@@ -2,11 +2,15 @@ import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import { type RegionRaw, pkColumn, tableName } from './Region.ts';
+import { pkColumn, tableName, type RegionRaw } from './Region.ts';
 
-export class RegionRepository extends Repository<RegionRaw> {
+export class RegionRepository extends Repository<RegionRaw, RegionRaw> {
 	constructor() {
 		super(tableName, pkColumn);
+	}
+
+	override async getById(id: UUID): Promise<RegionRaw | undefined> {
+		return await this.getByIdRaw(id);
 	}
 
 	/**

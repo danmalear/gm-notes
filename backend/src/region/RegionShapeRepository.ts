@@ -4,9 +4,16 @@ import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
 import { type RegionShape, pkColumn, tableName } from './RegionShape.ts';
 
-export class RegionShapeRepository extends Repository<RegionShape> {
+export class RegionShapeRepository extends Repository<
+	RegionShape,
+	RegionShape
+> {
 	constructor() {
 		super(tableName, pkColumn);
+	}
+
+	override async getById(id: UUID): Promise<RegionShape | undefined> {
+		return await this.getByIdRaw(id);
 	}
 
 	/**

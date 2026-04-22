@@ -12,7 +12,7 @@ import {
 	type TempRegion,
 } from './Map.ts';
 
-export class MapRepository extends Repository<MapRaw> {
+export class MapRepository extends Repository<MapRaw, Map> {
 	regionRepository: RegionRepository;
 	regionShapeRepository: RegionShapeRepository;
 
@@ -26,7 +26,7 @@ export class MapRepository extends Repository<MapRaw> {
 	}
 
 	override async getById(id: UUID): Promise<Map | undefined> {
-		const map = await super.getById(id);
+		const map = await this.getByIdRaw(id);
 		if (!map) return undefined;
 		const regions = await this.regionRepository.getByMapId(id);
 		const regionsWithShapes: TempRegion[] = [];

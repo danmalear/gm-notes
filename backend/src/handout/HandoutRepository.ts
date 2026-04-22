@@ -10,9 +10,13 @@ import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
 import { pkColumn, tableName, type Handout } from './Handout.ts';
 
-export class HandoutRepository extends Repository<Handout> {
+export class HandoutRepository extends Repository<Handout, Handout> {
 	constructor() {
 		super(tableName, pkColumn);
+	}
+
+	override async getById(id: UUID): Promise<Handout | undefined> {
+		return await this.getByIdRaw(id);
 	}
 
 	/**

@@ -4,9 +4,13 @@ import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
 import { pkColumn, tableName, type Action } from './Action.ts';
 
-export class ActionRepository extends Repository<Action> {
+export class ActionRepository extends Repository<Action, Action> {
 	constructor() {
 		super(tableName, pkColumn);
+	}
+
+	override async getById(id: UUID): Promise<Action | undefined> {
+		return await this.getByIdRaw(id);
 	}
 
 	/**

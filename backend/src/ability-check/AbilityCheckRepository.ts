@@ -4,9 +4,16 @@ import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
 import { pkColumn, tableName, type AbilityCheckRaw } from './AbilityCheck.ts';
 
-export class AbilityCheckRepository extends Repository<AbilityCheckRaw> {
+export class AbilityCheckRepository extends Repository<
+	AbilityCheckRaw,
+	AbilityCheckRaw
+> {
 	constructor() {
 		super(tableName, pkColumn);
+	}
+
+	override async getById(id: UUID): Promise<AbilityCheckRaw | undefined> {
+		return await this.getByIdRaw(id);
 	}
 
 	/**
