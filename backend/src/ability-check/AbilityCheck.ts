@@ -16,11 +16,7 @@ export interface AbilityCheckRaw {
 	CriticalFailureNarrationId: UUID | null;
 }
 
-export interface AbilityCheck {
-	AbilityCheckId: UUID;
-	ActionId: UUID;
-	Skill: Skill;
-	DC: number;
+export interface AbilityCheck extends AbilityCheckRaw {
 	SuccessNarration: Narration | null;
 	FailureNarration: Narration | null;
 	CriticalSuccessNarration: Narration | null;

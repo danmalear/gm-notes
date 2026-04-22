@@ -1,3 +1,5 @@
+import { abilityCheckRoutes } from '#ability-check/ability-check-routes.ts';
+import { AbilityCheckRepository } from '#ability-check/AbilityCheckRepository.ts';
 import { campaignRoutes } from '#campaign/campaign-routes.ts';
 import { CampaignRepository } from '#campaign/CampaignRepository.ts';
 import { commandRoutes } from '#command/command-routes.ts';
@@ -30,6 +32,9 @@ function createApp() {
 	commandRoutes(app, commandRouter);
 
 	const narrationRepository = new NarrationRepository();
+	const abilityCheckRepository = new AbilityCheckRepository(
+		narrationRepository,
+	);
 	const regionShapeRepository = new RegionShapeRepository();
 	const regionRepository = new RegionRepository();
 	const mapRepository = new MapRepository(
@@ -40,6 +45,7 @@ function createApp() {
 
 	campaignRoutes(app, commandRouter, campaignRepository);
 	mapRoutes(app, commandRouter, mapRepository);
+	abilityCheckRoutes(app, commandRouter, abilityCheckRepository);
 	narrationRoutes(app, commandRouter, narrationRepository);
 
 	routes(app);
