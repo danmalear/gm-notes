@@ -1,8 +1,11 @@
-import type { CampaignResponse as Campaign } from '#dtos/campaign.ts';
+import type { CampaignStub as Campaign } from '#dtos/campaign.ts';
+import type { MapResponse as Map } from '#dtos/map.ts';
 import { Card, Title } from '@mantine/core';
 import type { UUID } from 'crypto';
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
+import { getMessage } from '../helpers/error.ts';
 import { filePath } from '../services/fileService.ts';
+import { getMap } from '../services/mapService.ts';
 import classes from './CampaignCard.module.css';
 
 export interface CampaignCardProps extends React.PropsWithChildren {
@@ -15,17 +18,18 @@ const CampaignCard: React.FC<CampaignCardProps> = ({
 	onOpenCampaignClicked,
 }) => {
 	const { name } = campaign;
+	const [map, setMap] = useState<Map | undefined>(undefined);
 
-	const map = useMemo(
-		() =>
-			campaign.maps.length
-				? campaign.activeMapId
-					? (campaign.maps.find((map) => map.id === campaign.activeMapId) ??
-						campaign.maps[0])
-					: campaign.maps[0]
-				: undefined,
-		[campaign.maps, campaign.activeMapId],
-	);
+	useEffect(() => {
+		if (campaign.activeMapId) {
+			getMap(campaign.activeMapId)
+				.then((res) => setMap(res.data.data))
+				.catch((e) => {
+					alert(`Error fetching active map: ${getMessage(e)}`);
+					console.error(e);
+				});
+		}
+	}, [campaign.activeMapId]);
 
 	const imagePath = map?.imagePath ? filePath(map?.imagePath) : undefined;
 

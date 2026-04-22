@@ -1,6 +1,7 @@
 import type { DataResponse } from '#dtos/DataResponse.ts';
 import type {
 	CampaignResponse,
+	CampaignStub,
 	CreateCampaign,
 	CreateCampaignRequest,
 } from '#dtos/campaign.ts';
@@ -8,7 +9,7 @@ import type { UUID } from 'crypto';
 import api from './api.ts';
 
 export const getAllCampaigns = async () => {
-	return await api.get<DataResponse<CampaignResponse[]>>(`/campaigns`);
+	return await api.get<DataResponse<CampaignStub[]>>(`/campaigns`);
 };
 
 export const getCampaign = async (id: UUID) => {

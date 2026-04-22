@@ -1,7 +1,4 @@
-import type {
-	CampaignResponse as Campaign,
-	CreateCampaign,
-} from '#dtos/campaign.ts';
+import type { CampaignStub, CreateCampaign } from '#dtos/campaign.ts';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
 import { ActionIcon, AppShell, Box, Flex } from '@mantine/core';
@@ -23,7 +20,7 @@ import classes from './CampaignsView.module.css';
 const CampaignsView: React.FC = () => {
 	const navigate = useNavigate();
 
-	const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+	const [campaigns, setCampaigns] = useState<CampaignStub[]>([]);
 
 	useEffect(() => {
 		getAllCampaigns()
