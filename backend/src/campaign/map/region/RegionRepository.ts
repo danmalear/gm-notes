@@ -2,9 +2,9 @@ import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import { type Region, pkColumn, tableName } from './Region.ts';
+import { type RegionRaw, pkColumn, tableName } from './Region.ts';
 
-export class RegionRepository extends Repository<Region> {
+export class RegionRepository extends Repository<RegionRaw> {
 	constructor() {
 		super(tableName, pkColumn);
 	}
@@ -16,7 +16,7 @@ export class RegionRepository extends Repository<Region> {
 	 */
 	async getByMapId(mapId: UUID) {
 		try {
-			return await db<Region>(this.tableName).where('MapId', mapId);
+			return await db<RegionRaw>(this.tableName).where('MapId', mapId);
 		} catch (e) {
 			throw Error(
 				`Error getting ${this.tableName} records for map ID ${mapId}: ${getMessage(e)}`,

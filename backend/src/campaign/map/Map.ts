@@ -1,4 +1,4 @@
-import type { Region } from '#region/Region.ts';
+import type { RegionRaw } from '#region/Region.ts';
 import type { RegionShape } from '#region/RegionShape.ts';
 import type { Lighting } from '#shared/data-types.ts';
 import type { UUID } from 'crypto';
@@ -18,7 +18,7 @@ export interface MapRaw {
 }
 
 // @TODO implement in region module
-export type TempRegion = Region & { Shapes: RegionShape[] };
+export type TempRegion = RegionRaw & { Shapes: RegionShape[] };
 
 export interface Map extends MapRaw {
 	Regions: TempRegion[];

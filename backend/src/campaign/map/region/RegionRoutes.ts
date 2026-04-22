@@ -26,7 +26,7 @@ import {
 import { randomUUID, type UUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
 import { buildShapes, getShapeType } from './region-shape-utils.ts';
-import type { Region } from './Region.ts';
+import type { RegionRaw } from './Region.ts';
 import { RegionRepository } from './RegionRepository.ts';
 import { RegionShapeRepository } from './RegionShapeRepository.ts';
 
@@ -179,7 +179,7 @@ export class RegionRoutes {
 		return dtoChecks;
 	}
 
-	async buildResponse(region: Region) {
+	async buildResponse(region: RegionRaw) {
 		const map = await this.mapRepository.getById(region.MapId);
 
 		if (!map) {
