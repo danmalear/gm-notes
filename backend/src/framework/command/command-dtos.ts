@@ -1,4 +1,5 @@
 import { BadRequestError } from '#shared/error.ts';
+import type { UUID } from 'crypto';
 
 export interface CommandRequest {
 	domain: string;
@@ -30,4 +31,8 @@ export function validateCommandRequest(
 	if (!('command' in obj) || !obj.command || typeof obj.command !== 'object') {
 		throw new BadRequestError('Invalid command supplied to command request');
 	}
+}
+
+export interface CommandResponse {
+	id: UUID;
 }
