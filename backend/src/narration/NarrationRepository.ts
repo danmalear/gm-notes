@@ -9,8 +9,8 @@ import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
 import {
-	columnNames,
 	pkColumn,
+	tableColumnNames,
 	tableName,
 	type Narration,
 } from './Narration.ts';
@@ -34,7 +34,7 @@ export class NarrationRepository extends Repository<Narration> {
 					`${this.tableName}.${this.pkColumn}`,
 				)
 				.where(`${regionJoinTableName}.${regionIdColName}`, regionId)
-				.select<Narration[]>(...columnNames);
+				.select<Narration[]>(...tableColumnNames);
 		} catch (e) {
 			throw Error(
 				`Error getting ${this.tableName} records for region ID ${regionId}: ${getMessage(e)}`,
