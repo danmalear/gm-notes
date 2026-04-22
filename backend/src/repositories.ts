@@ -11,9 +11,9 @@ import { NoteRepository } from '#note/NoteRepository.ts';
 import { RegionRepository } from '#region/RegionRepository.ts';
 import { RegionShapeRepository } from '#region/RegionShapeRepository.ts';
 
-export const campaignRepository = new CampaignRepository();
-
 export const mapRepository = new MapRepository();
+
+export const campaignRepository = new CampaignRepository(mapRepository);
 
 export const regionRepository = new RegionRepository();
 export const regionShapeRepository = new RegionShapeRepository();

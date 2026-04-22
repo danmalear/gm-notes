@@ -34,10 +34,10 @@ export class MapRoutes {
 	regionShapeRepository: RegionShapeRepository;
 
 	constructor() {
-		this.campaignRepository = new CampaignRepository();
 		this.mapRepository = new MapRepository();
 		this.regionRepository = new RegionRepository();
 		this.regionShapeRepository = new RegionShapeRepository();
+		this.campaignRepository = new CampaignRepository(this.mapRepository);
 	}
 
 	async buildRegions(mapId: UUID) {
