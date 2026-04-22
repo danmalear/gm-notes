@@ -5,6 +5,7 @@ import type {
 	CreateCampaign,
 	CreateCampaignRequest,
 } from '#dtos/campaign.ts';
+import type { CommandResponse } from '#dtos/commands.ts';
 import type { UUID } from 'crypto';
 import api from './api.ts';
 
@@ -22,7 +23,7 @@ export const createCampaign = async (data: CreateCampaign) => {
 		commandType: 'Create',
 		command: data,
 	};
-	return await api.post<DataResponse<{ id: UUID }>>(
+	return await api.post<DataResponse<CommandResponse>>(
 		`/commands`,
 		commandRequest,
 	);
