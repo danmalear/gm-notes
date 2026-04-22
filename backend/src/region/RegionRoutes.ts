@@ -7,6 +7,7 @@ import { HandoutRepository } from '#handout/HandoutRepository.ts';
 import type { LocationItemStub } from '#item/item-dtos.ts';
 import { ItemRepository } from '#item/ItemRepository.ts';
 import { MapRepository } from '#map/MapRepository.ts';
+import { toStub as narrationToStub } from '#narration/narration-mapper.ts';
 import { NarrationRepository } from '#narration/NarrationRepository.ts';
 import { NoteRepository } from '#note/NoteRepository.ts';
 import type {
@@ -210,12 +211,7 @@ export class RegionRoutes {
 			},
 			shapes,
 			lighting: region.Lighting,
-			narrations: narrations.map((entity) => ({
-				id: entity.NarrationId,
-				name: entity.Name,
-				description: entity.Description,
-				isRead: entity.IsRead,
-			})),
+			narrations: narrations.map(narrationToStub),
 			actions,
 			items,
 			handouts: handouts.map((handout) => ({
