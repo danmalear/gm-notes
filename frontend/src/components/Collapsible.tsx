@@ -9,11 +9,17 @@ import './Collapsible.css';
 export interface CollapsibleProps extends React.PropsWithChildren {
 	title: string;
 	headingElement: React.ElementType<React.HTMLProps<HTMLHeadingElement>>;
+	onToggled?: (isOpen: boolean) => void;
+	onExpanded?: () => void;
+	onCollapsed?: () => void;
 }
 
 const Collapsible: React.FC<CollapsibleProps> = ({
 	children,
 	title,
+	onToggled,
+	onExpanded,
+	onCollapsed,
 	...props
 }) => {
 	const [stateId] = useState(crypto.randomUUID());
@@ -27,6 +33,20 @@ const Collapsible: React.FC<CollapsibleProps> = ({
 			collapsibleId: stateId,
 			isOpen,
 		});
+
+		if (onToggled) {
+			onToggled(isOpen);
+		}
+
+		if (isOpen) {
+			if (onExpanded) {
+				onExpanded();
+			}
+		} else {
+			if (onCollapsed) {
+				onCollapsed();
+			}
+		}
 	};
 
 	const isOpen = () => {
