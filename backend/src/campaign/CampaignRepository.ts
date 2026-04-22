@@ -1,3 +1,4 @@
+import { MapRepository } from '#map/MapRepository.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
 import {
@@ -6,7 +7,6 @@ import {
 	pkColumn,
 	tableName,
 } from './Campaign.ts';
-import { MapRepository } from './map/MapRepository.ts';
 
 export class CampaignRepository extends Repository<CampaignRaw> {
 	mapRepository: MapRepository;
