@@ -1,7 +1,7 @@
 import type { CommandRequest } from '#command/command-dtos.ts';
 import type { CommandFunction } from '#command/command-types.ts';
 import type { ICommandHandler } from '#command/ICommandHandler.ts';
-import { BadRequestError, UnhandledError } from '#shared/error.ts';
+import { BadRequestError, NotImplementedError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { CampaignRaw } from './Campaign.ts';
@@ -113,6 +113,6 @@ export class CampaignCommandHandler implements ICommandHandler {
 
 	// @TODO
 	Update: CommandFunction<UpdateCampaign> = async (_command) => {
-		throw new UnhandledError();
+		throw new NotImplementedError();
 	};
 }

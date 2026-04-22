@@ -18,7 +18,7 @@ export class InternalError extends HttpError {
 	}
 }
 
-export class UnhandledError extends InternalError {
+export class NotImplementedError extends InternalError {
 	constructor(message: string = 'Operation is not implemented') {
 		super(message);
 	}
