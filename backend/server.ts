@@ -4,6 +4,8 @@ import { commandRoutes } from '#command/command-routes.ts';
 import { CommandRouter } from '#command/CommandRouter.ts';
 import { mapRoutes } from '#map/map-routes.ts';
 import { MapRepository } from '#map/MapRepository.ts';
+import { narrationRoutes } from '#narration/narration-routes.ts';
+import { NarrationRepository } from '#narration/NarrationRepository.ts';
 import { RegionRepository } from '#region/RegionRepository.ts';
 import { RegionShapeRepository } from '#region/RegionShapeRepository.ts';
 import type { MessageResponse } from '#shared/dtos.ts';
@@ -27,6 +29,7 @@ function createApp() {
 
 	commandRoutes(app, commandRouter);
 
+	const narrationRepository = new NarrationRepository();
 	const regionShapeRepository = new RegionShapeRepository();
 	const regionRepository = new RegionRepository();
 	const mapRepository = new MapRepository(
@@ -37,6 +40,7 @@ function createApp() {
 
 	campaignRoutes(app, commandRouter, campaignRepository);
 	mapRoutes(app, commandRouter, mapRepository);
+	narrationRoutes(app, commandRouter, narrationRepository);
 
 	routes(app);
 
