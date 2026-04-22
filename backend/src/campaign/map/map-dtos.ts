@@ -1,4 +1,3 @@
-import type { CampaignStub } from '#campaign/campaign-dtos.ts';
 import type { RegionStub } from '#region/region-dtos.ts';
 import type { Lighting } from '#shared/data-types.ts';
 import type { UUID } from 'crypto';
@@ -30,7 +29,6 @@ export interface MapResponse {
 	defaultLighting: Lighting;
 	width: number;
 	height: number;
-	campaign: CampaignStub;
 	regions: RegionStub[];
 }
 

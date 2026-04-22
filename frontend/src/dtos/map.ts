@@ -1,5 +1,4 @@
 import type { UUID } from 'crypto';
-import type { CampaignStub } from './campaign.ts';
 import type { Lighting } from './data-types.ts';
 import type { RegionStub } from './region.ts';
 
@@ -30,7 +29,6 @@ export interface MapResponse {
 	defaultLighting: Lighting;
 	width: number;
 	height: number;
-	campaign: CampaignStub;
 	regions: RegionStub[];
 }
 

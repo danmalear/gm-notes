@@ -2,11 +2,47 @@ import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import { type MapRaw, pkColumn, tableName } from './Map.ts';
+import {
+	pkColumn,
+	tableName,
+	type Map,
+	type MapRaw,
+	type TempRegion,
+} from './Map.ts';
+import { RegionRepository } from './region/RegionRepository.ts';
+import { RegionShapeRepository } from './region/RegionShapeRepository.ts';
 
 export class MapRepository extends Repository<MapRaw> {
-	constructor() {
+	regionRepository: RegionRepository;
+	regionShapeRepository: RegionShapeRepository;
+
+	constructor(
+		regionRepository: RegionRepository,
+		regionShapeRepository: RegionShapeRepository,
+	) {
 		super(tableName, pkColumn);
+		this.regionRepository = regionRepository;
+		this.regionShapeRepository = regionShapeRepository;
+	}
+
+	override async getById(id: UUID): Promise<Map | undefined> {
+		const map = await super.getById(id);
+		if (!map) return undefined;
+		const regions = await this.regionRepository.getByMapId(id);
+		const regionsWithShapes: TempRegion[] = [];
+		for (const region of regions) {
+			const shapes = await this.regionShapeRepository.getByRegionId(
+				region.RegionId,
+			);
+			regionsWithShapes.push({
+				...region,
+				Shapes: shapes,
+			});
+		}
+		return {
+			...map,
+			Regions: regionsWithShapes,
+		};
 	}
 
 	/**

@@ -1,7 +1,11 @@
 import { campaignRoutes } from '#campaign/campaign-routes.ts';
+import { CampaignRepository } from '#campaign/CampaignRepository.ts';
 import { MapRepository } from '#campaign/map/MapRepository.ts';
+import { RegionRepository } from '#campaign/map/region/RegionRepository.ts';
+import { RegionShapeRepository } from '#campaign/map/region/RegionShapeRepository.ts';
 import { commandRoutes } from '#command/command-routes.ts';
 import { CommandRouter } from '#command/CommandRouter.ts';
+import { mapRoutes } from '#map/map-routes.ts';
 import type { MessageResponse } from '#shared/dtos.ts';
 import { getMessage } from '#shared/error.ts';
 import cors from 'cors';
@@ -23,9 +27,16 @@ function createApp() {
 
 	commandRoutes(app, commandRouter);
 
-	// @TODO initialize in mapRoutes
-	const mapRepository = new MapRepository();
-	campaignRoutes(app, commandRouter, mapRepository);
+	const regionShapeRepository = new RegionShapeRepository();
+	const regionRepository = new RegionRepository();
+	const mapRepository = new MapRepository(
+		regionRepository,
+		regionShapeRepository,
+	);
+	const campaignRepository = new CampaignRepository(mapRepository);
+
+	campaignRoutes(app, commandRouter, campaignRepository);
+	mapRoutes(app, commandRouter, mapRepository);
 
 	routes(app);
 
