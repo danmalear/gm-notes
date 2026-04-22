@@ -11,7 +11,8 @@
 		"type-check": "tsc -p tsconfig.json"
 	},
 	"imports": {
-		"#dtos/": "./src/dtos/"
+		"#dtos/*": "./src/dtos/*",
+		"#narration/*": "./src/narration/*"
 	},
 	"dependencies": {
 		"@mantine/carousel": "^8.0.1",

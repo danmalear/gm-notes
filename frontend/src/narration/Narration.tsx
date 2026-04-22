@@ -1,7 +1,7 @@
-import type { NarrationResponse } from '#dtos/narration.ts';
 import React from 'react';
+import Collapsible from '../components/Collapsible.tsx';
 import { h, type ValidHeadingIndex } from '../helpers/headings.ts';
-import Collapsible from './Collapsible.tsx';
+import type { NarrationResponse } from './narration-dtos.ts';
 
 export interface NarrationProps {
 	narration: NarrationResponse;

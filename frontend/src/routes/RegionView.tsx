@@ -1,3 +1,4 @@
+import Narration from '#narration/Narration.tsx';
 import { useContext, useEffect, useReducer } from 'react';
 import { useLoaderData } from 'react-router';
 import AbilityCheck from '../components/AbilityCheck.tsx';
@@ -7,7 +8,6 @@ import Creature from '../components/Creature.tsx';
 import { Handout } from '../components/Handout.tsx';
 import Item from '../components/Item.tsx';
 import Lighting from '../components/Lighting.tsx';
-import Narration from '../components/Narration.tsx';
 import Trait from '../components/Trait.tsx';
 import {
 	CollapsiblesContext,
