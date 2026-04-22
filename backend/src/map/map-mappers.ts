@@ -5,6 +5,7 @@ import type { Map, MapRaw } from './Map.ts';
 export function toDto(map: Map) {
 	const mapResponse: MapResponse = {
 		id: map.MapId,
+		campaignId: map.CampaignId,
 		name: map.Name,
 		imagePath: map.ImagePath,
 		defaultLighting: map.DefaultLighting,

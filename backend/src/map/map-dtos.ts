@@ -24,6 +24,7 @@ export interface MapQueryParams {
 
 export interface MapResponse {
 	id: UUID;
+	campaignId: UUID;
 	name: string;
 	imagePath: string;
 	defaultLighting: Lighting;
