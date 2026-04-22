@@ -65,7 +65,7 @@ export function campaignRoutes(
 				return;
 			}
 
-			res.send({ data: await toDto(campaign) });
+			res.send({ data: toDto(campaign) });
 		},
 	);
 
