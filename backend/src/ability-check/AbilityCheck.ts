@@ -1,3 +1,4 @@
+import type { Narration } from '#narration/Narration.ts';
 import type { Skill } from '#shared/data-types.ts';
 import type { UUID } from 'crypto';
 
@@ -13,4 +14,15 @@ export interface AbilityCheckRaw {
 	FailureNarrationId: UUID | null;
 	CriticalSuccessNarrationId: UUID | null;
 	CriticalFailureNarrationId: UUID | null;
+}
+
+export interface AbilityCheck {
+	AbilityCheckId: UUID;
+	ActionId: UUID;
+	Skill: Skill;
+	DC: number;
+	SuccessNarration: Narration | null;
+	FailureNarration: Narration | null;
+	CriticalSuccessNarration: Narration | null;
+	CriticalFailureNarration: Narration | null;
 }
