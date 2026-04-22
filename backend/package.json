@@ -13,7 +13,6 @@
 		"#campaign/*": "./src/campaign/*",
 		"#command/*": "./src/framework/command/*",
 		"#condition/*": "./src/condition/*",
-		"#dtos/*": "./src/dtos/*",
 		"#file/*": "./src/file/*",
 		"#handout/*": "./src/handout/*",
 		"#item/*": "./src/item/*",
