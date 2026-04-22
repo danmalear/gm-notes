@@ -108,9 +108,7 @@ export class CampaignCommandHandler implements ICommandHandler {
 		// @TODO apply event
 		await this.campaignRepository.insert(campaign);
 
-		return {
-			id,
-		};
+		return id;
 	};
 
 	// @TODO

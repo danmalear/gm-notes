@@ -1,3 +1,4 @@
+import type { UUID } from 'crypto';
 import type { CommandRequest } from './command-dtos.ts';
 import type { ICommandHandler } from './ICommandHandler.ts';
 
@@ -6,7 +7,7 @@ export interface ICommandRouter {
 
 	send: <TCommandRequest extends CommandRequest>(
 		command: TCommandRequest,
-	) => Promise<unknown>;
+	) => Promise<UUID>;
 }
 
 export class CommandRouter implements ICommandRouter {
@@ -24,6 +25,6 @@ export class CommandRouter implements ICommandRouter {
 		commandRequest: TCommandRequest,
 	) {
 		const { domain } = commandRequest;
-		await this.commands[domain].handle(commandRequest);
+		return await this.commands[domain].handle(commandRequest);
 	}
 }
