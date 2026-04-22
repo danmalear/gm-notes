@@ -22,7 +22,7 @@ export function getShapeType(shape: Shape): ShapeType {
 	}
 }
 
-export async function buildShapes(shapes: RegionShape[]) {
+export function buildShapes(shapes: RegionShape[]) {
 	const dtoShapes: Shape[] = [];
 
 	for (const shape of shapes) {
