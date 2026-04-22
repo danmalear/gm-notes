@@ -16,7 +16,6 @@ export function toStub(narration: Narration) {
 	const narrationStub: NarrationStub = {
 		id: narration.NarrationId,
 		name: narration.Name,
-		description: narration.Description,
 		isRead: narration.IsRead,
 	};
 
