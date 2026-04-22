@@ -4,7 +4,7 @@ import type { UUID } from 'crypto';
 export const tableName = 'Map';
 export const pkColumn = 'MapId';
 
-export interface Map {
+export interface MapRaw {
 	MapId: UUID;
 	CampaignId: UUID;
 	MapTemplateId: UUID | null;

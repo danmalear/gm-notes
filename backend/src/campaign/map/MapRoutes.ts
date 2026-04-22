@@ -20,7 +20,7 @@ import type {
 	MapResponse,
 	MapUpdate,
 } from './map-dtos.ts';
-import type { Map } from './Map.ts';
+import type { MapRaw } from './Map.ts';
 import { MapRepository } from './MapRepository.ts';
 
 // @TODO the "build" functions ought to be extracted somewhere like buildShapes
@@ -61,7 +61,7 @@ export class MapRoutes {
 		return dtoRegions;
 	}
 
-	async buildResponse(map: Map) {
+	async buildResponse(map: MapRaw) {
 		const campaign = await this.campaignRepository.getById(map.CampaignId);
 
 		if (!campaign) {
@@ -196,7 +196,7 @@ export class MapRoutes {
 					return;
 				}
 
-				let map: Map = {
+				let map: MapRaw = {
 					MapId: randomUUID(),
 					CampaignId: req.body.campaignId,
 					Name: req.body.name,
@@ -249,7 +249,7 @@ export class MapRoutes {
 					return;
 				}
 
-				const map: Partial<Map> = {
+				const map: Partial<MapRaw> = {
 					Name: req.body.name,
 					ImagePath: req.body.imagePath,
 					DefaultLighting: req.body.defaultLighting,
