@@ -12,7 +12,8 @@
 	},
 	"imports": {
 		"#dtos/*": "./src/dtos/*",
-		"#narration/*": "./src/narration/*"
+		"#narration/*": "./src/narration/*",
+		"#shared/*": "./src/shared/*"
 	},
 	"dependencies": {
 		"@mantine/carousel": "^8.0.1",
