@@ -5,7 +5,7 @@ import type {
 	CreateCampaign,
 	CreateCampaignRequest,
 } from '#dtos/campaign.ts';
-import type { CommandResponse } from '#dtos/commands.ts';
+import type { CommandResponse } from '#dtos/command.ts';
 import type { UUID } from 'crypto';
 import api from './api.ts';
 
