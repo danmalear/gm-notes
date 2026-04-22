@@ -4,7 +4,7 @@ import type { UUID } from 'crypto';
 export const tableName = 'AbilityCheck';
 export const pkColumn = 'AbilityCheckId';
 
-export interface AbilityCheck {
+export interface AbilityCheckRaw {
 	AbilityCheckId: UUID;
 	ActionId: UUID;
 	Skill: Skill;

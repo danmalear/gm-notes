@@ -2,9 +2,9 @@ import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import { pkColumn, tableName, type AbilityCheck } from './AbilityCheck.ts';
+import { pkColumn, tableName, type AbilityCheckRaw } from './AbilityCheck.ts';
 
-export class AbilityCheckRepository extends Repository<AbilityCheck> {
+export class AbilityCheckRepository extends Repository<AbilityCheckRaw> {
 	constructor() {
 		super(tableName, pkColumn);
 	}
@@ -16,7 +16,7 @@ export class AbilityCheckRepository extends Repository<AbilityCheck> {
 	 */
 	async getByActionId(actionId: UUID) {
 		try {
-			return await db<AbilityCheck>(tableName).where('ActionId', actionId);
+			return await db<AbilityCheckRaw>(tableName).where('ActionId', actionId);
 		} catch (e) {
 			throw Error(
 				`Error getting ${this.tableName} records for action ID ${actionId}: ${getMessage(e)}`,
