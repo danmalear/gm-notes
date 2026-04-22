@@ -36,7 +36,7 @@ export function commandRoutes(app: Express, commandRouter: CommandRouter) {
 
 		await commandRepository.insert(command);
 
-		const aggregateId = commandRouter.send(commandRequest);
+		const aggregateId = await commandRouter.send(commandRequest);
 
 		res.send({ data: { id: aggregateId } });
 	});
