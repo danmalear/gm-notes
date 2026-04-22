@@ -8,19 +8,19 @@
 		"type-check": "tsc -p tsconfig.json"
 	},
 	"imports": {
-		"#ability-check/*": "./src/action/ability-check/*",
+		"#ability-check/*": "./src/ability-check/*",
 		"#action/*": "./src/action/*",
 		"#campaign/*": "./src/campaign/*",
 		"#command/*": "./src/framework/command/*",
-		"#condition/*": "./src/campaign/condition/*",
+		"#condition/*": "./src/condition/*",
 		"#dtos/*": "./src/dtos/*",
 		"#file/*": "./src/file/*",
-		"#handout/*": "./src/campaign/handout/*",
-		"#item/*": "./src/campaign/item/*",
-		"#map/*": "./src/campaign/map/*",
+		"#handout/*": "./src/handout/*",
+		"#item/*": "./src/item/*",
+		"#map/*": "./src/map/*",
 		"#narration/*": "./src/narration/*",
 		"#note/*": "./src/note/*",
-		"#region/*": "./src/campaign/map/region/*",
+		"#region/*": "./src/region/*",
 		"#shared/*": "./src/shared/*"
 	},
 	"dependencies": {
