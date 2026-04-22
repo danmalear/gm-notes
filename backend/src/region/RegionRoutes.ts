@@ -7,7 +7,7 @@ import { HandoutRepository } from '#handout/HandoutRepository.ts';
 import type { LocationItemStub } from '#item/item-dtos.ts';
 import { ItemRepository } from '#item/ItemRepository.ts';
 import { MapRepository } from '#map/MapRepository.ts';
-import { toStub as narrationToStub } from '#narration/narration-mapper.ts';
+import { toStub as narrationToStub } from '#narration/narration-mappers.ts';
 import { NarrationRepository } from '#narration/NarrationRepository.ts';
 import { NoteRepository } from '#note/NoteRepository.ts';
 import type {

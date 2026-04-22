@@ -8,7 +8,7 @@ import type {
 	NarrationResponse,
 	NarrationStub,
 } from './narration-dtos.ts';
-import { toDto, toStub } from './narration-mapper.ts';
+import { toDto, toStub } from './narration-mappers.ts';
 import type { NarrationRepository } from './NarrationRepository.ts';
 
 export function narrationRoutes(
