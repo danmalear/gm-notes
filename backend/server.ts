@@ -1,3 +1,5 @@
+import { campaignRoutes } from '#campaign/campaign-routes.ts';
+import { MapRepository } from '#campaign/map/MapRepository.ts';
 import { commandRoutes } from '#command/command-routes.ts';
 import { CommandRouter } from '#command/CommandRouter.ts';
 import type { MessageResponse } from '#shared/dtos.ts';
@@ -20,6 +22,10 @@ function createApp() {
 	const commandRouter = new CommandRouter();
 
 	commandRoutes(app, commandRouter);
+
+	// @TODO initialize in mapRoutes
+	const mapRepository = new MapRepository();
+	campaignRoutes(app, commandRouter, mapRepository);
 
 	routes(app);
 

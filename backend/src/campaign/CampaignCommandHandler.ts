@@ -1,6 +1,6 @@
-import { CommandRequest } from '#command/command-dtos.ts';
-import { CommandFunction } from '#command/command-types.ts';
-import { ICommandHandler } from '#command/ICommandHandler.ts';
+import type { CommandRequest } from '#command/command-dtos.ts';
+import type { CommandFunction } from '#command/command-types.ts';
+import type { ICommandHandler } from '#command/ICommandHandler.ts';
 import { BadRequestError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
 import { randomUUID, type UUID } from 'crypto';
@@ -17,7 +17,7 @@ export interface UpdateCampaign {
 	activeMapId?: UUID;
 }
 
-interface CampaignRequest extends CommandRequest {
+export interface CampaignRequest extends CommandRequest {
 	domain: 'Campaign';
 }
 
@@ -31,7 +31,52 @@ interface UpdateCampaignRequest extends CampaignRequest {
 	command: UpdateCampaign;
 }
 
-type CampaignCommandRequest = CreateCampaignRequest | UpdateCampaignRequest;
+export type CampaignCommandRequest =
+	| CreateCampaignRequest
+	| UpdateCampaignRequest;
+
+function validateCampaignCommandRequest(
+	commandRequest: CommandRequest,
+): asserts commandRequest is CampaignCommandRequest {
+	const { commandType, command } = commandRequest;
+	switch (commandType) {
+		case 'Create':
+			if (!('name' in command) || !command.name) {
+				throw new BadRequestError('Campaigns must have a name specified');
+			}
+			if (typeof command.name !== 'string') {
+				throw new BadRequestError(
+					`Invalid name specified for campaign: ${command.name}`,
+				);
+			}
+			break;
+		case 'Update':
+			if (
+				'name' in command &&
+				typeof command.name !== 'undefined' &&
+				typeof command.name !== 'string'
+			) {
+				throw new BadRequestError(
+					`Invalid name specified for campaign: ${command.name}`,
+				);
+			}
+			if (
+				'activeMapId' in command &&
+				typeof command.activeMapId !== 'undefined' &&
+				(typeof command.activeMapId !== 'string' ||
+					!isUUID(command.activeMapId))
+			) {
+				throw new BadRequestError(
+					`Invalid ID specified for campaign active map: ${command.activeMapId}`,
+				);
+			}
+			break;
+		default:
+			throw new BadRequestError(
+				`Invalid campaign command: ${(commandRequest as CommandRequest).commandType}`,
+			);
+	}
+}
 
 export class CampaignCommandHandler
 	implements ICommandHandler<CampaignCommandRequest>
@@ -42,31 +87,17 @@ export class CampaignCommandHandler
 		this.campaignRepository = campaignRepository;
 	}
 
-	async handle(commandRequest: CampaignCommandRequest) {
+	async handle(commandRequest: CommandRequest) {
+		validateCampaignCommandRequest(commandRequest);
 		switch (commandRequest.commandType) {
 			case 'Create':
-				await this.Create(commandRequest.command);
-				break;
+				return await this.Create(commandRequest.command);
 			case 'Update':
-				await this.Update(commandRequest.command);
-				break;
-			default:
-				throw new BadRequestError(
-					`Invalid campaign command: ${(commandRequest as CommandRequest).commandType}`,
-				);
+				return await this.Update(commandRequest.command);
 		}
 	}
 
 	Create: CommandFunction<CreateCampaign> = async (command) => {
-		if (!command.name) {
-			throw new BadRequestError('Campaigns must have a name specified');
-		}
-		if (typeof command.name !== 'string') {
-			throw new BadRequestError(
-				`Invalid name specified for campaign: ${command.name}`,
-			);
-		}
-
 		const id = randomUUID();
 
 		const campaign: CampaignRaw = {
@@ -85,26 +116,8 @@ export class CampaignCommandHandler
 	};
 
 	// @TODO
-	Update: CommandFunction<UpdateCampaign> = async (command) => {
-		if (
-			typeof command.name !== 'undefined' &&
-			typeof command.name !== 'string'
-		) {
-			throw new BadRequestError(
-				`Invalid name specified for campaign: ${command.name}`,
-			);
-		}
-		if (
-			typeof command.activeMapId !== 'undefined' &&
-			(typeof command.activeMapId !== 'string' || !isUUID(command.activeMapId))
-		) {
-			throw new BadRequestError(
-				`Invalid ID specified for campaign active map: ${command.activeMapId}`,
-			);
-		}
-
+	Update: CommandFunction<UpdateCampaign> = async (_command) => {
 		// @TODO apply event
-
 		return {
 			id: randomUUID(), // @TODO this is just a placeholder -  should return existing aggregate ID
 		};
