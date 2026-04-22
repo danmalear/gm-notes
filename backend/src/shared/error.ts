@@ -18,6 +18,12 @@ export class InternalError extends HttpError {
 	}
 }
 
+export class UnhandledError extends InternalError {
+	constructor(message: string = 'Operation is not implemented') {
+		super(message);
+	}
+}
+
 export const getStatusCode = (e: unknown): number => {
 	if (e instanceof HttpError) {
 		return e.statusCode;
