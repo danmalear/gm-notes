@@ -78,9 +78,7 @@ function validateCampaignCommandRequest(
 	}
 }
 
-export class CampaignCommandHandler
-	implements ICommandHandler<CampaignCommandRequest>
-{
+export class CampaignCommandHandler implements ICommandHandler {
 	campaignRepository: CampaignRepository;
 
 	constructor(campaignRepository: CampaignRepository) {

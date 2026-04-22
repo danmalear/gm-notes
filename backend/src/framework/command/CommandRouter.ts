@@ -1,8 +1,8 @@
 import type { CommandRequest } from './command-dtos.ts';
-import type { CommandFunction } from './command-types.ts';
+import type { ICommandHandler } from './ICommandHandler.ts';
 
 export interface ICommandRouter {
-	register: (domain: string, handler: CommandFunction<CommandRequest>) => void;
+	register: (domain: string, handler: ICommandHandler) => void;
 
 	send: <TCommandRequest extends CommandRequest>(
 		command: TCommandRequest,
@@ -10,13 +10,13 @@ export interface ICommandRouter {
 }
 
 export class CommandRouter implements ICommandRouter {
-	commands: Record<string, CommandFunction<CommandRequest>>;
+	commands: Record<string, ICommandHandler>;
 
 	constructor() {
 		this.commands = {};
 	}
 
-	register(domain: string, handler: CommandFunction<CommandRequest>) {
+	register(domain: string, handler: ICommandHandler) {
 		this.commands[domain] = handler;
 	}
 
@@ -24,6 +24,6 @@ export class CommandRouter implements ICommandRouter {
 		commandRequest: TCommandRequest,
 	) {
 		const { domain } = commandRequest;
-		await this.commands[domain](commandRequest);
+		await this.commands[domain].handle(commandRequest);
 	}
 }

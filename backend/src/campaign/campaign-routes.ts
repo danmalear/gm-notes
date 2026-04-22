@@ -18,7 +18,7 @@ export function campaignRoutes(
 	const campaignRepository = new CampaignRepository(mapRepository);
 	const campaignCommandHandler = new CampaignCommandHandler(campaignRepository);
 
-	commandRouter.register('Campaign', campaignCommandHandler.handle);
+	commandRouter.register('Campaign', campaignCommandHandler);
 
 	app.get(
 		`/${apiNamespace}`,
