@@ -14,6 +14,5 @@ export interface NarrationResponse {
 export interface NarrationStub {
 	id: UUID;
 	name: string;
-	description: string;
 	isRead: boolean;
 }
