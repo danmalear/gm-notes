@@ -39,7 +39,7 @@ export function getById<TEntityRaw, TEntity extends TEntityRaw, TDto>(
 			const entity = await repository.getById(req.params.id);
 			if (!entity) {
 				res.status(404).send({
-					message: `Ability Check with ID ${req.params.id} not found`,
+					message: `${objectDescriptor} with ID ${req.params.id} not found`,
 				});
 				return;
 			}
