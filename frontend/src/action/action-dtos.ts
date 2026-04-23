@@ -1,6 +1,6 @@
 import type { AbilityCheckStub } from '#ability-check/ability-check-dtos.ts';
 import type { UUID } from 'crypto';
-import type { ActionType } from './data-types.ts';
+import type { ActionType } from '../dtos/data-types.ts';
 
 export interface ActionStub {
 	id: UUID;

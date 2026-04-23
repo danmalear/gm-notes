@@ -1,12 +1,12 @@
 import AbilityCheck from '#ability-check/AbilityCheck.tsx';
-import type { ActionStub } from '#dtos/action-dtos.ts';
+import Collapsible from '../components/Collapsible.tsx';
+import Trait from '../components/Trait.tsx';
 import {
 	getValidHeadingIndex,
 	h,
 	ValidHeadingIndex,
 } from '../helpers/headings.ts';
-import Collapsible from './Collapsible.tsx';
-import Trait from './Trait.tsx';
+import type { ActionStub } from './action-dtos.ts';
 
 export interface ActionProps extends React.PropsWithChildren {
 	action: ActionStub;

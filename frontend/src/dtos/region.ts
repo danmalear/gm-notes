@@ -1,6 +1,6 @@
+import type { ActionStub } from '#action/action-dtos.ts';
 import type { NarrationStub } from '#narration/narration-dtos.ts';
 import type { UUID } from 'crypto';
-import type { ActionStub } from './action-dtos.ts';
 import type { RelativeLighting } from './data-types.ts';
 import type { HandoutStub } from './handout.ts';
 import type { LocationItemStub } from './item.ts';

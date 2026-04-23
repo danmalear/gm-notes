@@ -1,8 +1,8 @@
 import AbilityCheck from '#ability-check/AbilityCheck.tsx';
+import Action from '#action/Action.tsx';
 import Narration from '#narration/Narration.tsx';
 import { useContext, useEffect, useReducer } from 'react';
 import { useLoaderData } from 'react-router';
-import Action from '../components/Action.tsx';
 import Collapsible from '../components/Collapsible.tsx';
 import Creature from '../components/Creature.tsx';
 import { Handout } from '../components/Handout.tsx';
