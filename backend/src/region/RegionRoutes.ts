@@ -1,6 +1,6 @@
 import { toStub as abilityCheckToStub } from '#ability-check/ability-check-mappers.ts';
 import { AbilityCheckRepository } from '#ability-check/AbilityCheckRepository.ts';
-import type { ActionStub } from '#action/action-dtos.ts';
+import type { ActionResponse } from '#action/action-dtos.ts';
 import { ActionRepository } from '#action/ActionRepository.ts';
 import { ConditionRepository } from '#condition/ConditionRepository.ts';
 import { HandoutRepository } from '#handout/HandoutRepository.ts';
@@ -126,7 +126,7 @@ export class RegionRoutes {
 
 	async buildActions(targetId: UUID) {
 		const actions = await this.actionRepository.getByTargetId(targetId);
-		const dtoActions: ActionStub[] = [];
+		const dtoActions: ActionResponse[] = [];
 		for (const action of actions) {
 			const abilityChecks = await this.abilityCheckRepository.getByActionId(
 				action.ActionId,

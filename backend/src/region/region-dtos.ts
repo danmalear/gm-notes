@@ -1,4 +1,4 @@
-import type { ActionStub } from '#action/action-dtos.ts';
+import type { ActionResponse } from '#action/action-dtos.ts';
 import type { HandoutStub } from '#handout/handout-dtos.ts';
 import type { LocationItemStub } from '#item/item-dtos.ts';
 import type { MapStub } from '#map/map-dtos.ts';
@@ -58,7 +58,7 @@ export interface RegionResponse {
 	narrations: NarrationStub[];
 	// @TODO Some of these might be their own files
 	// creatures?: Creature[];
-	actions: ActionStub[];
+	actions: ActionResponse[];
 	items: LocationItemStub[];
 	// opportunities?: string[];
 	handouts: HandoutStub[];
