@@ -1,3 +1,6 @@
+import type { ActionRaw } from '#action/Action.ts';
+import type { File } from '#file/File.ts';
+import type { Note } from '#note/Note.ts';
 import type { CurrencyUnit } from '#shared/data-types.ts';
 import type { UUID } from 'crypto';
 
@@ -13,4 +16,10 @@ export interface ItemRaw {
 	ValueUnit: CurrencyUnit | null;
 	DetailsLink: string | null;
 	ImageFileId: string | null;
+}
+
+export interface Item extends ItemRaw {
+	ImageFile: File | null;
+	Actions: ActionRaw[];
+	Notes: Note[];
 }
