@@ -12,6 +12,7 @@
 	},
 	"imports": {
 		"#ability-check/*": "./src/ability-check/*",
+		"#action/*": "./src/action/*",
 		"#dtos/*": "./src/dtos/*",
 		"#narration/*": "./src/narration/*",
 		"#shared/*": "./src/shared/*"
