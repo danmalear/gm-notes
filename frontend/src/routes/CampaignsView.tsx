@@ -15,7 +15,6 @@ import {
 	createCampaign,
 	getAllCampaigns,
 } from '../services/campaignService.ts';
-import classes from './CampaignsView.module.css';
 
 const CampaignsView: React.FC = () => {
 	const navigate = useNavigate();
@@ -99,7 +98,7 @@ const CampaignsView: React.FC = () => {
 	const addNew = (
 		<Carousel.Slide>
 			<ActionIcon
-				id={classes['add-campaign']}
+				id="add-campaign"
 				variant="outline"
 				color="gray"
 				h="100%"
@@ -143,7 +142,7 @@ const CampaignsView: React.FC = () => {
 							emblaOptions={{
 								dragFree: true,
 							}}
-							className={classes['gradient-mask']}
+							className="gradient-mask"
 						>
 							{spacer}
 							{slides}

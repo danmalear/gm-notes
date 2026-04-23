@@ -117,3 +117,38 @@ button:active {
 .fw-bolder {
 	font-weight: 900;
 }
+
+.gradient-mask {
+	mask-image:
+		linear-gradient(to left, black, 97%, transparent),
+		linear-gradient(to right, black, 97%, transparent);
+	mask-position:
+		left center,
+		right center;
+	mask-size: 50% 100%;
+	mask-repeat: no-repeat;
+}
+
+.card {
+	height: 100%;
+	background-size: cover;
+	background-position: top;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	cursor: pointer;
+	transition: filter 0.1s;
+}
+
+.card:hover {
+	filter: brightness(0.7);
+}
+
+.card .title {
+	font-family: Outfit, sans-serif;
+	font-weight: 600;
+	color: var(--mantine-color-white);
+	line-height: 1.2;
+	font-size: 32px;
+	margin-top: var(--mantine-spacing-xs);
+}

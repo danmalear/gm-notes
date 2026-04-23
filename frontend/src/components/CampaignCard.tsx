@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import { getMessage } from '../helpers/error.ts';
 import { filePath } from '../services/fileService.ts';
 import { getMap } from '../services/mapService.ts';
-import classes from './CampaignCard.module.css';
 
 export interface CampaignCardProps extends React.PropsWithChildren {
 	campaign: Campaign;
@@ -46,7 +45,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({
 					? `linear-gradient(to bottom, ${campaignColor} 15%, 30%, transparent 40%), url(${imagePath})`
 					: undefined,
 			}}
-			className={classes.card}
+			className="card"
 			onClick={() => onOpenCampaignClicked(campaign.id)}
 		>
 			<Title order={2} className="title" ff="heading">

@@ -13,7 +13,6 @@ import CreateMapModal from '../components/modals/CreateMapModal.tsx';
 import { CampaignContext } from '../contexts/CampaignContext.ts';
 import { getMessage } from '../helpers/error.ts';
 import { getMapsByCampaignId, insertMap } from '../services/mapService.ts';
-import classes from './CampaignsView.module.css';
 
 const MapsView: React.FC = () => {
 	const navigate = useNavigate();
@@ -89,7 +88,7 @@ const MapsView: React.FC = () => {
 	const addNew = (
 		<Carousel.Slide>
 			<ActionIcon
-				id={classes['add-campaign']}
+				id="add-map"
 				variant="outline"
 				color="gray"
 				h="100%"
@@ -141,7 +140,7 @@ const MapsView: React.FC = () => {
 							emblaOptions={{
 								dragFree: true,
 							}}
-							className={classes['gradient-mask']}
+							className="gradient-mask"
 						>
 							{spacer}
 							{slides}

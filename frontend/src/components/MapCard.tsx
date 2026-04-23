@@ -2,7 +2,6 @@ import type { MapResponse } from '#dtos/map.ts';
 import { Card, Title } from '@mantine/core';
 import type { UUID } from 'crypto';
 import { filePath } from '../services/fileService.ts';
-import classes from './CampaignCard.module.css';
 
 export interface MapCardProps extends React.PropsWithChildren {
 	map: MapResponse;
@@ -30,7 +29,7 @@ const MapCard: React.FC<MapCardProps> = ({
 					? `linear-gradient(to bottom, ${mapColor} 15%, 30%, transparent 40%), url(${imagePath})`
 					: undefined,
 			}}
-			className={classes.card}
+			className="card"
 			onClick={() => onOpenMapClicked(map.id)}
 		>
 			<Title order={2} className="title" ff="heading">
