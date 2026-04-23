@@ -3,7 +3,7 @@ import type { Lighting } from '#dtos/data-types.ts';
 import { AppShell, Box, NavLink, Select, Title } from '@mantine/core';
 import { useContext } from 'react';
 import { Link } from 'react-router';
-import type { TimeOfDay } from '../data/MapData.ts';
+import type { TimeOfDay } from '../legacy/MapData.ts';
 
 // HC = hard-coded, to be deleted when data is properly loaded
 

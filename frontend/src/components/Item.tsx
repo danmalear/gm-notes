@@ -1,12 +1,12 @@
 import Action from '#action/Action.tsx';
 import type { LocationItemStub } from '#dtos/item.ts';
 import { MouseEvent, useState } from 'react';
-import type { Item as ItemHC } from '../data/MapData.ts';
 import {
 	getValidHeadingIndex,
 	h,
 	ValidHeadingIndex,
 } from '../helpers/headings.ts';
+import type { Item as ItemHC } from '../legacy/MapData.ts';
 import { filePath } from '../services/fileService.ts';
 import Collapsible from './Collapsible.tsx';
 import CopyLink from './CopyLink.tsx';

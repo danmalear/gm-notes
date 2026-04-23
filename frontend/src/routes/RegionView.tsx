@@ -19,7 +19,7 @@ import {
 	RegionContext,
 	RegionDispatchContext,
 } from '../contexts/RegionContext.ts';
-import type { ValidPartySize } from '../data/MapData.ts';
+import type { ValidPartySize } from '../legacy/MapData.ts';
 import collapsiblesReducer from '../reducers/collapsibleReducer.ts';
 import type { regionLoader } from './loaders/regionLoader.ts';
 import './RegionView.css';

@@ -10,10 +10,10 @@ import {
 	RegionContext,
 	RegionDispatchContext,
 } from '../contexts/RegionContext.ts';
-import data from '../data/data.ts';
-import type { TimeOfDay } from '../data/MapData.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isCircle, isPolygon, isRectangle } from '../helpers/shapes.ts';
+import data from '../legacy/data.ts';
+import type { TimeOfDay } from '../legacy/MapData.ts';
 import regionReducer, { isHardCoded } from '../reducers/regionReducer.ts';
 import type { MapUpdate } from './map-dtos.ts';
 import Map, { type MapArea } from './Map.tsx';

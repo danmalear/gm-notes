@@ -2,13 +2,13 @@ import SkeletonP from '#shared/components/SkeletonP.tsx';
 import { useCallback, useState, type FC, type PropsWithChildren } from 'react';
 import Collapsible from '../components/Collapsible.tsx';
 import Trait from '../components/Trait.tsx';
-import type { AbilityCheck } from '../data/MapData.ts';
 import { getMessage } from '../helpers/error.ts';
 import {
 	getValidHeadingIndex,
 	h,
 	type ValidHeadingIndex,
 } from '../helpers/headings.ts';
+import type { AbilityCheck } from '../legacy/MapData.ts';
 import type {
 	AbilityCheckResponse,
 	AbilityCheckStub,

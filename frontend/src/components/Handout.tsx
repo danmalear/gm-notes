@@ -1,7 +1,7 @@
 import type { HandoutStub } from '#dtos/handout.ts';
 import { Modal, Stack } from '@mantine/core';
 import { type MouseEvent, useState } from 'react';
-import type { Handout as HandoutData } from '../data/MapData.ts';
+import type { Handout as HandoutData } from '../legacy/MapData.ts';
 import { filePath } from '../services/fileService.ts';
 import CopyLink from './CopyLink.tsx';
 import ImageModal from './modals/ImageModal.tsx';

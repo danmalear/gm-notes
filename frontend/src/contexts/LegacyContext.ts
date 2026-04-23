@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import type { TimeOfDay } from '../data/MapData.ts';
+import type { TimeOfDay } from '../legacy/MapData.ts';
 
 interface LegacyData {
 	timeOfDay: TimeOfDay;
