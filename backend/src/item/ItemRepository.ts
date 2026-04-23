@@ -2,20 +2,20 @@ import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import { pkColumn, tableName, type Item } from './Item.ts';
+import { pkColumn, tableName, type ItemRaw } from './Item.ts';
 import {
 	itemIdColName,
 	locationIdColName,
 	tableName as locationJoinTableName,
-	type LocationItem,
+	type LocationItemRaw,
 } from './LocationItem.ts';
 
-export class ItemRepository extends Repository<Item, Item> {
+export class ItemRepository extends Repository<ItemRaw, ItemRaw> {
 	constructor() {
 		super(tableName, pkColumn);
 	}
 
-	override async getById(id: UUID): Promise<Item | undefined> {
+	override async getById(id: UUID): Promise<ItemRaw | undefined> {
 		return await this.getByIdRaw(id);
 	}
 
@@ -26,8 +26,8 @@ export class ItemRepository extends Repository<Item, Item> {
 	 */
 	async getByLocationId(locationId: UUID) {
 		try {
-			return await db<Item>(this.tableName)
-				.innerJoin<LocationItem>(
+			return await db<ItemRaw>(this.tableName)
+				.innerJoin<LocationItemRaw>(
 					locationJoinTableName,
 					`${locationJoinTableName}.${itemIdColName}`,
 					`${this.tableName}.${this.pkColumn}`,

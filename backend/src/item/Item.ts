@@ -4,7 +4,7 @@ import type { UUID } from 'crypto';
 export const tableName = 'Item';
 export const pkColumn = 'ItemId';
 
-export interface Item {
+export interface ItemRaw {
 	ItemId: UUID;
 	CampaignId: UUID | null;
 	Name: string;

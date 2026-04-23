@@ -5,7 +5,7 @@ export const pkColumn = 'LocationItemId';
 export const locationIdColName = 'LocationId';
 export const itemIdColName = 'ItemId';
 
-export interface LocationItem {
+export interface LocationItemRaw {
 	LocationItemId: UUID;
 	LocationId: UUID;
 	ItemId: UUID;
