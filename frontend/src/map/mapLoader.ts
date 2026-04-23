@@ -1,6 +1,6 @@
+import { getMessage } from '#shared/error.ts';
+import { isUUID } from '#shared/uuid.ts';
 import { redirect, type LoaderFunctionArgs } from 'react-router';
-import { getMessage } from '../helpers/error.ts';
-import { isUUID } from '../helpers/uuid.ts';
 import { getMap } from './mapService.ts';
 
 export async function mapLoader({ params }: LoaderFunctionArgs) {
