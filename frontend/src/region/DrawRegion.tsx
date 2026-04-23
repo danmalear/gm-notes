@@ -7,10 +7,10 @@ import {
 	useRef,
 	type MouseEvent,
 } from 'react';
-import type { Coords } from './region-dtos.ts';
 import { RegionContext, RegionDispatchContext } from './RegionContext.ts';
 import { isHardCoded } from './regionReducer.ts';
 import DrawRectangle from './shape/DrawRectangle.tsx';
+import type { Coords } from './shape/shape-types.ts';
 import {
 	drawRectangle,
 	isRectangle,

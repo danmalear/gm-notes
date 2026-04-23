@@ -1,7 +1,7 @@
 import { filePath } from '#file/fileService.ts';
 import DrawRegion from '#region/DrawRegion.tsx';
-import type { Circle, Polygon, Rectangle } from '#region/region-dtos.ts';
 import { RegionContext } from '#region/RegionContext.ts';
+import type { Circle, Polygon, Rectangle } from '#region/shape/shape-types.ts';
 import { scaleShape, stringifyCoords } from '#region/shape/shape-utils.ts';
 import {
 	useCallback,

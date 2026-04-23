@@ -1,6 +1,7 @@
 import type { UUID } from 'crypto';
 import type { Region } from '../legacy/MapData.ts';
-import type { RegionCreate, RegionResponse, Shape } from './region-dtos.ts';
+import type { RegionCreate, RegionResponse } from './region-dtos.ts';
+import type { Shape } from './shape/shape-types.ts';
 import {
 	isRectangle,
 	isRectangleEqual,
