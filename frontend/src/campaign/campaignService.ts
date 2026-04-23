@@ -1,6 +1,6 @@
 import type { CommandResponse } from '#dtos/command.ts';
-import type { DataResponse } from '#dtos/DataResponse.ts';
 import api from '#shared/api.ts';
+import type { DataResponse } from '#shared/dtos.ts';
 import type { UUID } from 'crypto';
 import type {
 	CampaignResponse,

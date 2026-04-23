@@ -1,5 +1,5 @@
-import type { DataResponse } from '#dtos/DataResponse.ts';
 import api from '#shared/api.ts';
+import type { DataResponse } from '#shared/dtos.ts';
 import { isUUID } from '#shared/uuid.ts';
 import type { UUID } from 'crypto';
 import data from '../legacy/data.ts';
