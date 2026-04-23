@@ -1,8 +1,8 @@
 import type { DataResponse } from '#dtos/DataResponse.ts';
+import api from '#shared/api.ts';
 import { isUUID } from '#shared/uuid.ts';
 import type { UUID } from 'crypto';
 import data from '../legacy/data.ts';
-import api from '../services/api.ts';
 import type { RegionCreate, RegionResponse } from './region-dtos.ts';
 
 // @TODO remove this dependency

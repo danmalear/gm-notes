@@ -1,6 +1,6 @@
 import type { DataResponse } from '#dtos/DataResponse.ts';
+import api from '#shared/api.ts';
 import type { UUID } from 'crypto';
-import api from '../services/api.ts';
 import type { NarrationResponse, NarrationStub } from './narration-dtos.ts';
 
 export const getNarrationsByRegionId = async (regionId: UUID) => {

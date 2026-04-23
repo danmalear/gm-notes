@@ -1,6 +1,6 @@
 import type { DataResponse } from '#dtos/DataResponse.ts';
+import api from '#shared/api.ts';
 import type { UUID } from 'crypto';
-import api from '../services/api.ts';
 import type { MapCreate, MapResponse, MapUpdate } from './map-dtos.ts';
 
 export const getAllMaps = async () => {

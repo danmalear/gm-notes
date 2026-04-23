@@ -1,4 +1,4 @@
-import api from '../services/api.ts';
+import api from '#shared/api.ts';
 import type { FileStub } from './file-dtos.ts';
 
 export const uploadFile = async (data: FormData) => {
