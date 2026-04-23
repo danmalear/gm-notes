@@ -14,11 +14,11 @@ import {
 	CollapsiblesContext,
 	CollapsiblesDispatchContext,
 } from '../contexts/CollapsiblesContext.ts';
-import { LegacyContext } from '../contexts/LegacyContext.ts';
 import {
 	RegionContext,
 	RegionDispatchContext,
 } from '../contexts/RegionContext.ts';
+import { LegacyContext } from '../legacy/LegacyContext.ts';
 import type { ValidPartySize } from '../legacy/MapData.ts';
 import collapsiblesReducer from '../reducers/collapsibleReducer.ts';
 import type { regionLoader } from './loaders/regionLoader.ts';

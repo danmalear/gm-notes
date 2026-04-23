@@ -5,7 +5,6 @@ import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router';
 import AppHeader from '../components/AppHeader.tsx';
-import { LegacyContext } from '../contexts/LegacyContext.ts';
 import {
 	RegionContext,
 	RegionDispatchContext,
@@ -13,6 +12,7 @@ import {
 import { getMessage } from '../helpers/error.ts';
 import { isCircle, isPolygon, isRectangle } from '../helpers/shapes.ts';
 import data from '../legacy/data.ts';
+import { LegacyContext } from '../legacy/LegacyContext.ts';
 import type { TimeOfDay } from '../legacy/MapData.ts';
 import regionReducer, { isHardCoded } from '../reducers/regionReducer.ts';
 import type { MapUpdate } from './map-dtos.ts';
