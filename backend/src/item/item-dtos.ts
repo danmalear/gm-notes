@@ -17,7 +17,7 @@ interface LocationItemResponseBase {
 
 interface ContainerResponse extends LocationItemResponseBase {
 	isContainer: true;
-	containedItems: LocationItemResponse[];
+	containedItems: LocationItemStub[];
 }
 
 interface NonContainerResponse extends LocationItemResponseBase {
