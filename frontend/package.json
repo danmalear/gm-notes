@@ -15,6 +15,7 @@
 		"#action/*": "./src/action/*",
 		"#campaign/*": "./src/campaign/*",
 		"#dtos/*": "./src/dtos/*",
+		"#file/*": "./src/file/*",
 		"#map/*": "./src/map/*",
 		"#narration/*": "./src/narration/*",
 		"#shared/*": "./src/shared/*"
