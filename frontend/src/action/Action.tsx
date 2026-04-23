@@ -1,51 +1,84 @@
 import AbilityCheck from '#ability-check/AbilityCheck.tsx';
+import SkeletonP from '#shared/components/SkeletonP.tsx';
+import { useCallback, useState, type FC, type PropsWithChildren } from 'react';
 import Collapsible from '../components/Collapsible.tsx';
 import Trait from '../components/Trait.tsx';
+import { getMessage } from '../helpers/error.ts';
 import {
 	getValidHeadingIndex,
 	h,
-	ValidHeadingIndex,
+	type ValidHeadingIndex,
 } from '../helpers/headings.ts';
-import type { ActionStub } from './action-dtos.ts';
+import type { ActionResponse, ActionStub } from './action-dtos.ts';
+import { getAction } from './actionService.ts';
 
-export interface ActionProps extends React.PropsWithChildren {
+export interface ActionProps extends PropsWithChildren {
 	actionStub: ActionStub;
 	topLevelHeading: ValidHeadingIndex;
 }
 
-const Action: React.FC<ActionProps> = ({ actionStub, topLevelHeading }) => {
+const Action: FC<ActionProps> = ({ actionStub, topLevelHeading }) => {
 	const H1 = h[topLevelHeading];
 	const H2 = h[getValidHeadingIndex(topLevelHeading + 1)];
 
+	const [action, setAction] = useState<ActionResponse | undefined>(undefined);
+
+	const loadAction = useCallback(() => {
+		getAction(actionStub.id)
+			.then((res) => {
+				setAction(res.data.data);
+			})
+			.catch((e) => {
+				console.error(e);
+				alert(getMessage(e));
+			});
+	}, [actionStub.id]);
+
+	const handleExpanded = () => {
+		if (!action) {
+			loadAction();
+		}
+	};
+
 	return (
-		<Collapsible headingElement={H1} title={actionStub.name}>
-			{actionStub.type ? <Trait label="Type">{actionStub.type}</Trait> : null}
-			{actionStub.conditions.length ? (
+		<Collapsible
+			headingElement={H1}
+			title={actionStub.name}
+			onExpanded={handleExpanded}
+		>
+			{action ? (
 				<>
-					<H2>Conditions</H2>
-					<ul>
-						{actionStub.conditions.map((condition, index) => (
-							<li
-								key={`action-${actionStub.id}-condition-${condition}-${index}`}
-							>
-								{condition}
-							</li>
-						))}
-					</ul>
+					{action.type ? <Trait label="Type">{action.type}</Trait> : null}
+					{action.conditions.length ? (
+						<>
+							<H2>Conditions</H2>
+							<ul>
+								{action.conditions.map((condition, index) => (
+									<li
+										key={`action-${action.id}-condition-${condition}-${index}`}
+									>
+										{condition}
+									</li>
+								))}
+							</ul>
+						</>
+					) : null}
+					{action.narration ? <p>{action.narration}</p> : null}
+					{action.abilityChecks?.length
+						? action.abilityChecks.map((check) => (
+								<AbilityCheck
+									key={`action-${action.id}-check-${check.id}`}
+									checkStub={check}
+									topLevelHeading={getValidHeadingIndex(topLevelHeading + 1)}
+								>
+									{JSON.stringify(check)}
+								</AbilityCheck>
+							))
+						: null}
 				</>
-			) : null}
-			{actionStub.narration ? <p>{actionStub.narration}</p> : null}
-			{actionStub.abilityChecks?.length
-				? actionStub.abilityChecks.map((check) => (
-						<AbilityCheck
-							key={`action-${actionStub.id}-check-${check.id}`}
-							checkStub={check}
-							topLevelHeading={getValidHeadingIndex(topLevelHeading + 1)}
-						>
-							{JSON.stringify(check)}
-						</AbilityCheck>
-					))
-				: null}
+			) : (
+				<SkeletonP />
+			)}
 		</Collapsible>
 	);
 };
