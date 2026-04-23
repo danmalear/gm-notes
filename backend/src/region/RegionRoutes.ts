@@ -2,8 +2,10 @@ import { AbilityCheckRepository } from '#ability-check/AbilityCheckRepository.ts
 import { toStub as actionToStub } from '#action/action-mappers.ts';
 import { ActionRepository } from '#action/ActionRepository.ts';
 import { ConditionRepository } from '#condition/ConditionRepository.ts';
+import { FileRepository } from '#file/FileRepository.ts';
 import { HandoutRepository } from '#handout/HandoutRepository.ts';
 import type { LocationItemResponse } from '#item/item-dtos.ts';
+import { ItemRepository } from '#item/ItemRepository.ts';
 import { LocationItemRepository } from '#item/LocationItemRepository.ts';
 import { MapRepository } from '#map/MapRepository.ts';
 import { toStub as narrationToStub } from '#narration/narration-mappers.ts';
@@ -36,8 +38,10 @@ export class RegionRoutes {
 	abilityCheckRepository: AbilityCheckRepository;
 	actionRepository: ActionRepository;
 	conditionRepository: ConditionRepository;
+	fileRepository: FileRepository;
 	handoutRepository: HandoutRepository;
-	itemRepository: LocationItemRepository;
+	itemRepository: ItemRepository;
+	locationItemRepository: LocationItemRepository;
 	mapRepository: MapRepository;
 	narrationRepository: NarrationRepository;
 	noteRepository: NoteRepository;
@@ -45,9 +49,9 @@ export class RegionRoutes {
 	regionShapeRepository: RegionShapeRepository;
 
 	constructor() {
+		this.fileRepository = new FileRepository();
 		this.conditionRepository = new ConditionRepository();
 		this.handoutRepository = new HandoutRepository();
-		this.itemRepository = new LocationItemRepository();
 		this.regionRepository = new RegionRepository();
 		this.regionShapeRepository = new RegionShapeRepository();
 		this.mapRepository = new MapRepository(
@@ -64,13 +68,23 @@ export class RegionRoutes {
 			this.narrationRepository,
 		);
 		this.noteRepository = new NoteRepository();
+		this.itemRepository = new ItemRepository(
+			this.actionRepository,
+			this.fileRepository,
+			this.noteRepository,
+		);
+		this.locationItemRepository = new LocationItemRepository(
+			this.actionRepository,
+			this.itemRepository,
+			this.noteRepository,
+		);
 	}
 
 	// #region Response building
 	// @TODO this should really not all live in the region file
 
 	async buildItems(locationId: UUID) {
-		const items = await this.itemRepository.getByLocationId(locationId);
+		const items = await this.locationItemRepository.getByLocationId(locationId);
 		const dtoItems: LocationItemResponse[] = [];
 		for (const item of items) {
 			const itemActions = await this.actionRepository.getByTargetId(

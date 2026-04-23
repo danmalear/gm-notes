@@ -1,5 +1,5 @@
 import type { UUID } from 'crypto';
-import type { Item } from './Item.ts';
+import type { Item, ItemRaw } from './Item.ts';
 
 export const tableName = 'LocationItem';
 export const pkColumn = 'LocationItemId';
@@ -14,5 +14,5 @@ export interface LocationItemRaw {
 }
 
 export interface LocationItem extends Item, LocationItemRaw {
-	ContainedItems: LocationItemRaw[];
+	ContainedItems: (ItemRaw & LocationItemRaw)[];
 }
