@@ -2,7 +2,7 @@ import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import type { UUID } from 'crypto';
 
-export abstract class Repository<TRaw, TEntity extends TRaw> {
+export abstract class Repository<TRaw, TEntity extends TRaw = TRaw> {
 	tableName: string;
 	pkColumn: keyof TRaw;
 

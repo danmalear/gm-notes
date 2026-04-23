@@ -10,7 +10,7 @@ import {
 } from './ActionCondition.ts';
 import { pkColumn, tableName, type Condition } from './Condition.ts';
 
-export class ConditionRepository extends Repository<Condition, Condition> {
+export class ConditionRepository extends Repository<Condition> {
 	constructor() {
 		super(tableName, pkColumn);
 	}
