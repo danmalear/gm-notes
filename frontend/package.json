@@ -15,7 +15,6 @@
 		"#action/*": "./src/action/*",
 		"#campaign/*": "./src/campaign/*",
 		"#creature/*": "./src/creature/*",
-		"#dtos/*": "./src/dtos/*",
 		"#file/*": "./src/file/*",
 		"#handout/*": "./src/handout/*",
 		"#item/*": "./src/item/*",
