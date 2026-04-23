@@ -1,11 +1,11 @@
-import { campaignLoader } from '#campaign/campaignLoader.ts';
+import { campaignLoader } from '#campaign/campaign-loader.ts';
 import CampaignsView from '#campaign/CampaignsView.tsx';
 import CampaignView from '#campaign/CampaignView.tsx';
-import { mapLoader } from '#map/mapLoader.ts';
+import { mapLoader } from '#map/map-loader.ts';
 import MapsView from '#map/MapsView.tsx';
 import MapView from '#map/MapView.tsx';
 import NewRegionView from '#region/NewRegionView.tsx';
-import { regionLoader } from '#region/regionLoader.ts';
+import { regionLoader } from '#region/region-loader.ts';
 import RegionView from '#region/RegionView.tsx';
 import { createBrowserRouter, redirect } from 'react-router';
 import App from './App.tsx';

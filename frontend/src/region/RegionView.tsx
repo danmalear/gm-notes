@@ -5,8 +5,8 @@ import { Handout } from '#handout/Handout.tsx';
 import Item from '#item/Item.tsx';
 import { MapContext } from '#map/MapContext.ts';
 import Narration from '#narration/Narration.tsx';
+import collapsiblesReducer from '#shared/collapsible/collapsible-reducer.ts';
 import Collapsible from '#shared/collapsible/Collapsible.tsx';
-import collapsiblesReducer from '#shared/collapsible/collapsibleReducer.ts';
 import {
 	CollapsiblesContext,
 	CollapsiblesDispatchContext,
@@ -17,8 +17,8 @@ import Lighting from '../components/Lighting.tsx';
 import Trait from '../components/Trait.tsx';
 import { LegacyContext } from '../legacy/LegacyContext.ts';
 import type { ValidPartySize } from '../legacy/MapData.ts';
+import type { regionLoader } from './region-loader.ts';
 import { RegionContext, RegionDispatchContext } from './RegionContext.ts';
-import type { regionLoader } from './regionLoader.ts';
 import './RegionView.css';
 
 // @TODO remove this dependency

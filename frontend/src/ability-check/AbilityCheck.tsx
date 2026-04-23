@@ -13,7 +13,7 @@ import type {
 	AbilityCheckResponse,
 	AbilityCheckStub,
 } from './ability-check-dtos.ts';
-import { getAbilityCheck } from './abilityCheckService.ts';
+import { getAbilityCheck } from './ability-check-service.ts';
 
 export interface AbilityCheckProps extends PropsWithChildren {
 	checkStub: AbilityCheck | AbilityCheckStub;

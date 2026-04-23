@@ -1,7 +1,7 @@
 import { getMessage } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
 import { redirect, type LoaderFunctionArgs } from 'react-router';
-import { getRegion } from './regionService.ts';
+import { getRegion } from './region-service.ts';
 
 export async function regionLoader({ params }: LoaderFunctionArgs) {
 	try {

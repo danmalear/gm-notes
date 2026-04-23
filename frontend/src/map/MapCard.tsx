@@ -1,4 +1,4 @@
-import { filePath } from '#file/fileService.ts';
+import { filePath } from '#file/file-service.ts';
 import type { MapResponse } from '#map/map-dtos.ts';
 import { Card, Title } from '@mantine/core';
 import type { UUID } from 'crypto';

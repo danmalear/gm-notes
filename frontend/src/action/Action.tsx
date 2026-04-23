@@ -10,7 +10,7 @@ import SkeletonP from '#shared/skeleton/SkeletonP.tsx';
 import { useCallback, useState, type FC, type PropsWithChildren } from 'react';
 import Trait from '../components/Trait.tsx';
 import type { ActionResponse, ActionStub } from './action-dtos.ts';
-import { getAction } from './actionService.ts';
+import { getAction } from './action-service.ts';
 
 export interface ActionProps extends PropsWithChildren {
 	actionStub: ActionStub;

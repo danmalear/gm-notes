@@ -1,4 +1,4 @@
-import { uploadFile } from '#file/fileService.ts';
+import { uploadFile } from '#file/file-service.ts';
 import { Button, FileInput, Menu, Modal } from '@mantine/core';
 import { IconDotsVertical, IconUpload } from '@tabler/icons-react';
 import React, { type FormEvent, useState } from 'react';

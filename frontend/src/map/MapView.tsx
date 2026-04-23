@@ -1,6 +1,6 @@
 import type { Lighting } from '#dtos/data-types.ts';
+import regionReducer, { isHardCoded } from '#region/region-reducer.ts';
 import { RegionContext, RegionDispatchContext } from '#region/RegionContext.ts';
-import regionReducer, { isHardCoded } from '#region/regionReducer.ts';
 import { isCircle, isPolygon, isRectangle } from '#region/shape/shape-utils.ts';
 import { getMessage } from '#shared/error.ts';
 import { ActionIcon, AppShell, Group, ScrollArea } from '@mantine/core';
@@ -13,13 +13,13 @@ import data from '../legacy/data.ts';
 import { LegacyContext } from '../legacy/LegacyContext.ts';
 import type { TimeOfDay } from '../legacy/MapData.ts';
 import type { MapUpdate } from './map-dtos.ts';
+import type { mapLoader } from './map-loader.ts';
+import mapReducer from './map-reducer.ts';
+import { updateMap } from './map-service.ts';
 import Map, { type MapArea } from './Map.tsx';
 import { MapContext, MapDispatchContext } from './MapContext.ts';
-import type { mapLoader } from './mapLoader.ts';
 import MapNavbar from './MapNavbar.tsx';
-import mapReducer from './mapReducer.ts';
 import MapRegionControls from './MapRegionControls.tsx';
-import { updateMap } from './mapService.ts';
 import MapShapeControls from './MapShapeControls.tsx';
 
 // HC = hard-coded, to be deleted when data is properly loaded

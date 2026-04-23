@@ -1,4 +1,4 @@
-import { filePath } from '#file/fileService.ts';
+import { filePath } from '#file/file-service.ts';
 import DrawRegion from '#region/DrawRegion.tsx';
 import { RegionContext } from '#region/RegionContext.ts';
 import type { Circle, Polygon, Rectangle } from '#region/shape/shape-types.ts';

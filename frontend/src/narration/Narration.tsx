@@ -4,7 +4,7 @@ import { h, type ValidHeadingIndex } from '#shared/headings.ts';
 import SkeletonP from '#shared/skeleton/SkeletonP.tsx';
 import { useCallback, useState, type FC } from 'react';
 import type { NarrationResponse, NarrationStub } from './narration-dtos.ts';
-import { getNarration } from './narrationService.ts';
+import { getNarration } from './narration-service.ts';
 
 export interface NarrationProps {
 	narrationStub: NarrationStub;

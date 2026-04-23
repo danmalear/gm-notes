@@ -1,4 +1,4 @@
-import { filePath } from '#file/fileService.ts';
+import { filePath } from '#file/file-service.ts';
 import { Modal, Stack } from '@mantine/core';
 import { type MouseEvent, useState } from 'react';
 import CopyLink from '../components/CopyLink.tsx';

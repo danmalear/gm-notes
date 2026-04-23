@@ -11,8 +11,8 @@ import { useNavigate } from 'react-router';
 import AppHeader from '../components/AppHeader.tsx';
 import CreateMapModal from './CreateMapModal.tsx';
 import type { MapCreate, MapResponse } from './map-dtos.ts';
+import { getMapsByCampaignId, insertMap } from './map-service.ts';
 import MapCard from './MapCard.tsx';
-import { getMapsByCampaignId, insertMap } from './mapService.ts';
 
 const MapsView: React.FC = () => {
 	const navigate = useNavigate();

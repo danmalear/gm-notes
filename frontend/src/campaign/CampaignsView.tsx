@@ -9,8 +9,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import AppHeader from '../components/AppHeader.tsx';
 import type { CampaignStub, CreateCampaign } from './campaign-dtos.ts';
+import { createCampaign, getAllCampaigns } from './campaign-service.ts';
 import CampaignCard from './CampaignCard.tsx';
-import { createCampaign, getAllCampaigns } from './campaignService.ts';
 import CreateCampaignModal from './CreateCampaignModal.tsx';
 
 const CampaignsView: React.FC = () => {

@@ -1,6 +1,6 @@
 import Action from '#action/Action.tsx';
 import type { LocationItemStub } from '#dtos/item.ts';
-import { filePath } from '#file/fileService.ts';
+import { filePath } from '#file/file-service.ts';
 import Collapsible from '#shared/collapsible/Collapsible.tsx';
 import {
 	getValidHeadingIndex,

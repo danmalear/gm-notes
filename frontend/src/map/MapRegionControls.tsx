@@ -1,6 +1,6 @@
 import { RegionContext, RegionDispatchContext } from '#region/RegionContext.ts';
-import { isHardCoded } from '#region/regionReducer.ts';
-import { createRegion } from '#region/regionService.ts';
+import { isHardCoded } from '#region/region-reducer.ts';
+import { createRegion } from '#region/region-service.ts';
 import { scaleShape } from '#region/shape/shape-utils.ts';
 import { ActionIcon } from '@mantine/core';
 import { IconCheck, IconSquarePlus2, IconX } from '@tabler/icons-react';
