@@ -18,6 +18,7 @@
 		"#dtos/*": "./src/dtos/*",
 		"#file/*": "./src/file/*",
 		"#handout/*": "./src/handout/*",
+		"#item/*": "./src/item/*",
 		"#map/*": "./src/map/*",
 		"#narration/*": "./src/narration/*",
 		"#region/*": "./src/region/*",
