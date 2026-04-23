@@ -25,3 +25,11 @@ interface NonContainerResponse extends LocationItemResponseBase {
 }
 
 export type LocationItemResponse = ContainerResponse | NonContainerResponse;
+
+export interface LocationItemStub {
+	id: UUID;
+	locationId: UUID;
+	itemId: UUID;
+	name: string;
+	quantity: number;
+}
