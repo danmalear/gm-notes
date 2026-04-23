@@ -1,13 +1,13 @@
+import { db } from '#shared/db.ts';
+import { getMessage } from '#shared/error.ts';
+import { Repository } from '#shared/Repository.ts';
+import type { UUID } from 'crypto';
 import {
 	actionIdColName,
 	tableName as actionJoinTableName,
 	conditionIdColName,
 	type ActionCondition,
-} from '#action/ActionCondition.ts';
-import { db } from '#shared/db.ts';
-import { getMessage } from '#shared/error.ts';
-import { Repository } from '#shared/Repository.ts';
-import type { UUID } from 'crypto';
+} from './ActionCondition.ts';
 import { pkColumn, tableName, type Condition } from './Condition.ts';
 
 export class ConditionRepository extends Repository<Condition, Condition> {
