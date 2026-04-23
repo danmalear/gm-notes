@@ -46,7 +46,6 @@ export class RegionRoutes {
 	regionShapeRepository: RegionShapeRepository;
 
 	constructor() {
-		this.actionRepository = new ActionRepository();
 		this.conditionRepository = new ConditionRepository();
 		this.handoutRepository = new HandoutRepository();
 		this.itemRepository = new ItemRepository();
@@ -58,6 +57,11 @@ export class RegionRoutes {
 		);
 		this.narrationRepository = new NarrationRepository();
 		this.abilityCheckRepository = new AbilityCheckRepository(
+			this.narrationRepository,
+		);
+		this.actionRepository = new ActionRepository(
+			this.abilityCheckRepository,
+			this.conditionRepository,
 			this.narrationRepository,
 		);
 		this.noteRepository = new NoteRepository();
