@@ -3,7 +3,7 @@ import { toStub as actionToStub } from '#action/action-mappers.ts';
 import { ActionRepository } from '#action/ActionRepository.ts';
 import { ConditionRepository } from '#condition/ConditionRepository.ts';
 import { HandoutRepository } from '#handout/HandoutRepository.ts';
-import type { LocationItemStub } from '#item/item-dtos.ts';
+import type { LocationItemResponse } from '#item/item-dtos.ts';
 import { ItemRepository } from '#item/ItemRepository.ts';
 import { MapRepository } from '#map/MapRepository.ts';
 import { toStub as narrationToStub } from '#narration/narration-mappers.ts';
@@ -71,7 +71,7 @@ export class RegionRoutes {
 
 	async buildItems(locationId: UUID) {
 		const items = await this.itemRepository.getByLocationId(locationId);
-		const dtoItems: LocationItemStub[] = [];
+		const dtoItems: LocationItemResponse[] = [];
 		for (const item of items) {
 			const itemActions = await this.actionRepository.getByTargetId(
 				item.ItemId,
