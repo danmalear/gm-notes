@@ -1,3 +1,4 @@
+import AppHeader from '#app-header/AppHeader.tsx';
 import regionReducer, { isHardCoded } from '#region/region-reducer.ts';
 import { RegionContext, RegionDispatchContext } from '#region/RegionContext.ts';
 import { isCircle, isPolygon, isRectangle } from '#region/shape/shape-utils.ts';
@@ -8,7 +9,6 @@ import { IconPlus } from '@tabler/icons-react';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router';
-import AppHeader from '../components/AppHeader.tsx';
 import data from '../legacy/data.ts';
 import { LegacyContext } from '../legacy/LegacyContext.ts';
 import type { TimeOfDay } from '../legacy/MapData.ts';

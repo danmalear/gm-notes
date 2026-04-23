@@ -13,6 +13,7 @@
 	"imports": {
 		"#ability-check/*": "./src/ability-check/*",
 		"#action/*": "./src/action/*",
+		"#app-header/*": "./src/app-header/*",
 		"#campaign/*": "./src/campaign/*",
 		"#creature/*": "./src/creature/*",
 		"#file/*": "./src/file/*",

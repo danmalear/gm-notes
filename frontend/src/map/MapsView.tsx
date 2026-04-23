@@ -1,3 +1,4 @@
+import AppHeader from '#app-header/AppHeader.tsx';
 import { CampaignContext } from '#campaign/CampaignContext.ts';
 import { getMessage } from '#shared/error.ts';
 import { Carousel } from '@mantine/carousel';
@@ -8,7 +9,6 @@ import { IconPlus } from '@tabler/icons-react';
 import type { UUID } from 'crypto';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import AppHeader from '../components/AppHeader.tsx';
 import CreateMapModal from './CreateMapModal.tsx';
 import type { MapCreate, MapResponse } from './map-dtos.ts';
 import { getMapsByCampaignId, insertMap } from './map-service.ts';

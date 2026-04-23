@@ -1,3 +1,4 @@
+import AppHeader from '#app-header/AppHeader.tsx';
 import { getMessage } from '#shared/error.ts';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
@@ -7,7 +8,6 @@ import { IconPlus } from '@tabler/icons-react';
 import type { UUID } from 'crypto';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import AppHeader from '../components/AppHeader.tsx';
 import type { CampaignStub, CreateCampaign } from './campaign-dtos.ts';
 import { createCampaign, getAllCampaigns } from './campaign-service.ts';
 import CampaignCard from './CampaignCard.tsx';
