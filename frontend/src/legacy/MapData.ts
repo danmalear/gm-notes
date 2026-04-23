@@ -1,4 +1,4 @@
-import { JSX } from 'react';
+import type { JSX } from 'react';
 
 export type TimeOfDay = 'day' | 'night' | 'between';
 export type LightLevel = 'Darkness' | 'Dim light' | 'Bright light';
@@ -127,7 +127,6 @@ export interface MapImage {
 }
 
 export interface Map {
-	image: MapImage;
 	regions: {
 		[key: string]: Region | undefined;
 	};

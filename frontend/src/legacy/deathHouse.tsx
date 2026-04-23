@@ -7,11 +7,6 @@ import thirdFloorRegions from './deathHouseThirdFloor.tsx';
 import type { Map } from './MapData.ts';
 
 const deathHouseData: Map = {
-	image: {
-		src: '/src/assets/death-house.jpg',
-		sizeX: 5455,
-		sizeY: 7500,
-	},
 	regions: {
 		...firstFloorRegions,
 		...secondFloorRegions,
