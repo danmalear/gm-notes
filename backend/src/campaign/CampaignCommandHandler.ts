@@ -5,7 +5,7 @@ import { BadRequestError, NotImplementedError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { CampaignRaw } from './Campaign.ts';
-import { CampaignRepository } from './CampaignRepository.ts';
+import type { CampaignRepository } from './CampaignRepository.ts';
 
 export interface CreateCampaign {
 	name: string;

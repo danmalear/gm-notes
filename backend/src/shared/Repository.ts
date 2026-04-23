@@ -1,6 +1,6 @@
 import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
-import { type UUID } from 'crypto';
+import type { UUID } from 'crypto';
 
 export abstract class Repository<TRaw, TEntity extends TRaw> {
 	tableName: string;

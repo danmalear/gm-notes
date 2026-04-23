@@ -2,7 +2,7 @@ import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import { type RegionShape, pkColumn, tableName } from './RegionShape.ts';
+import { pkColumn, tableName, type RegionShape } from './RegionShape.ts';
 
 export class RegionShapeRepository extends Repository<
 	RegionShape,

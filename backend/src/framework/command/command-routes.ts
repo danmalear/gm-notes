@@ -8,7 +8,7 @@ import {
 } from './command-dtos.ts';
 import type { Command } from './Command.ts';
 import { CommandRepository } from './CommandRepository.ts';
-import { CommandRouter } from './CommandRouter.ts';
+import type { CommandRouter } from './CommandRouter.ts';
 
 export function commandRoutes(app: Express, commandRouter: CommandRouter) {
 	const apiNamespace = 'commands';

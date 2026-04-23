@@ -1,11 +1,11 @@
-import { CommandRouter } from '#command/CommandRouter.ts';
+import type { CommandRouter } from '#command/CommandRouter.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { isUUID } from '#shared/uuid.ts';
 import type { Express, Response } from 'express';
 import type { CampaignResponse, CampaignStub } from './campaign-dtos.ts';
 import { toDto, toStub } from './campaign-mappers.ts';
 import { CampaignCommandHandler } from './CampaignCommandHandler.ts';
-import { CampaignRepository } from './CampaignRepository.ts';
+import type { CampaignRepository } from './CampaignRepository.ts';
 
 export function campaignRoutes(
 	app: Express,

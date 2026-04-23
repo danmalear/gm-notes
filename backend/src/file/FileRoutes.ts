@@ -1,5 +1,5 @@
 import type { MessageResponse } from '#shared/dtos.ts';
-import { type Express, type Request, type Response } from 'express';
+import type { Express, Request, Response } from 'express';
 import multer from 'multer';
 import path from 'path';
 import type { FileStub } from './file-dtos.ts';

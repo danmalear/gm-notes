@@ -1,4 +1,4 @@
-import { CommandRouter } from '#command/CommandRouter.ts';
+import type { CommandRouter } from '#command/CommandRouter.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, InternalError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
@@ -19,7 +19,7 @@ import type {
 } from './map-dtos.ts';
 import { toDto, toStub } from './map-mappers.ts';
 import type { MapRaw } from './Map.ts';
-import { MapRepository } from './MapRepository.ts';
+import type { MapRepository } from './MapRepository.ts';
 
 export function mapRoutes(
 	app: Express,

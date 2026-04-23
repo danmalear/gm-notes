@@ -1,5 +1,5 @@
-import { RegionRepository } from '#region/RegionRepository.ts';
-import { RegionShapeRepository } from '#region/RegionShapeRepository.ts';
+import type { RegionRepository } from '#region/RegionRepository.ts';
+import type { RegionShapeRepository } from '#region/RegionShapeRepository.ts';
 import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
