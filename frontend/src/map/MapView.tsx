@@ -1,17 +1,11 @@
 import type { Lighting } from '#dtos/data-types.ts';
-import type { MapUpdate } from '#dtos/map.ts';
 import { ActionIcon, AppShell, Group, ScrollArea } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router';
 import AppHeader from '../components/AppHeader.tsx';
-import Map, { type MapArea } from '../components/Map.tsx';
-import MapNavbar from '../components/MapNavbar.tsx';
-import MapRegionControls from '../components/MapRegionControls.tsx';
-import MapShapeControls from '../components/MapShapeControls.tsx';
 import { LegacyContext } from '../contexts/LegacyContext.ts';
-import { MapContext, MapDispatchContext } from '../contexts/MapContext.ts';
 import {
 	RegionContext,
 	RegionDispatchContext,
@@ -20,10 +14,16 @@ import data from '../data/data.ts';
 import type { TimeOfDay } from '../data/MapData.ts';
 import { getMessage } from '../helpers/error.ts';
 import { isCircle, isPolygon, isRectangle } from '../helpers/shapes.ts';
-import mapReducer from '../reducers/mapReducer.ts';
 import regionReducer, { isHardCoded } from '../reducers/regionReducer.ts';
-import { updateMap } from '../services/mapService.ts';
-import type { mapLoader } from './loaders/mapLoader.ts';
+import type { MapUpdate } from './map-dtos.ts';
+import Map, { type MapArea } from './Map.tsx';
+import { MapContext, MapDispatchContext } from './MapContext.ts';
+import type { mapLoader } from './mapLoader.ts';
+import MapNavbar from './MapNavbar.tsx';
+import mapReducer from './mapReducer.ts';
+import MapRegionControls from './MapRegionControls.tsx';
+import { updateMap } from './mapService.ts';
+import MapShapeControls from './MapShapeControls.tsx';
 
 // HC = hard-coded, to be deleted when data is properly loaded
 

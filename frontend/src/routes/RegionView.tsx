@@ -1,5 +1,6 @@
 import AbilityCheck from '#ability-check/AbilityCheck.tsx';
 import Action from '#action/Action.tsx';
+import { MapContext } from '#map/MapContext.ts';
 import Narration from '#narration/Narration.tsx';
 import { useContext, useEffect, useReducer } from 'react';
 import { useLoaderData } from 'react-router';
@@ -14,14 +15,13 @@ import {
 	CollapsiblesDispatchContext,
 } from '../contexts/CollapsiblesContext.ts';
 import { LegacyContext } from '../contexts/LegacyContext.ts';
-import { MapContext } from '../contexts/MapContext.ts';
 import {
 	RegionContext,
 	RegionDispatchContext,
 } from '../contexts/RegionContext.ts';
 import type { ValidPartySize } from '../data/MapData.ts';
 import collapsiblesReducer from '../reducers/collapsibleReducer.ts';
-import { regionLoader } from './loaders/regionLoader.ts';
+import type { regionLoader } from './loaders/regionLoader.ts';
 import './RegionView.css';
 
 // @TODO remove this dependency

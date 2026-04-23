@@ -1,5 +1,5 @@
+import { MapContext } from '#map/MapContext.ts';
 import { useContext, useEffect } from 'react';
-import { MapContext } from '../contexts/MapContext.ts';
 import {
 	RegionContext,
 	RegionDispatchContext,

@@ -1,5 +1,5 @@
-import type { MapResponse } from '#dtos/map.ts';
 import type { RegionResponse } from '#dtos/region.ts';
+import type { MapResponse } from './map-dtos.ts';
 
 export interface Transform {
 	scale: number;

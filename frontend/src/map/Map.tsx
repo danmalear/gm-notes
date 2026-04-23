@@ -7,11 +7,11 @@ import {
 	useState,
 } from 'react';
 import { href, useNavigate } from 'react-router';
-import { MapContext, MapDispatchContext } from '../contexts/MapContext.ts';
+import DrawRegion from '../components/DrawRegion.tsx';
 import { RegionContext } from '../contexts/RegionContext.ts';
 import { scaleShape, stringifyCoords } from '../helpers/shapes.ts';
 import { filePath } from '../services/fileService.ts';
-import DrawRegion from './DrawRegion.tsx';
+import { MapContext, MapDispatchContext } from './MapContext.ts';
 
 export interface RectArea {
 	shape: 'rect';

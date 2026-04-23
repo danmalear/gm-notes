@@ -1,4 +1,4 @@
-import type { MapStub } from '#dtos/map.ts';
+import type { MapStub } from '#map/map-dtos.ts';
 import type { UUID } from 'crypto';
 
 // Commands

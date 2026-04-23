@@ -1,5 +1,4 @@
 import { CampaignContext } from '#campaign/CampaignContext.ts';
-import type { MapCreate, MapResponse } from '#dtos/map.ts';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
 import { ActionIcon, AppShell, Box, Flex } from '@mantine/core';
@@ -9,10 +8,11 @@ import type { UUID } from 'crypto';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import AppHeader from '../components/AppHeader.tsx';
-import MapCard from '../components/MapCard.tsx';
 import CreateMapModal from '../components/modals/CreateMapModal.tsx';
 import { getMessage } from '../helpers/error.ts';
-import { getMapsByCampaignId, insertMap } from '../services/mapService.ts';
+import type { MapCreate, MapResponse } from './map-dtos.ts';
+import MapCard from './MapCard.tsx';
+import { getMapsByCampaignId, insertMap } from './mapService.ts';
 
 const MapsView: React.FC = () => {
 	const navigate = useNavigate();

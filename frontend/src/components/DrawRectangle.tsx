@@ -1,4 +1,5 @@
 import type { Coords, Rectangle } from '#dtos/region.ts';
+import { MapContext } from '#map/MapContext.ts';
 import {
 	useCallback,
 	useContext,
@@ -8,7 +9,6 @@ import {
 	useState,
 	type MouseEvent,
 } from 'react';
-import { MapContext } from '../contexts/MapContext.ts';
 import {
 	RegionContext,
 	RegionDispatchContext,
