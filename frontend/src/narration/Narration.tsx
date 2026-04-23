@@ -1,8 +1,8 @@
+import Collapsible from '#shared/collapsible/Collapsible.tsx';
+import SkeletonP from '#shared/components/SkeletonP.tsx';
 import { getMessage } from '#shared/error.ts';
 import { h, type ValidHeadingIndex } from '#shared/headings.ts';
 import { useCallback, useState, type FC } from 'react';
-import Collapsible from '../components/Collapsible.tsx';
-import SkeletonP from '../shared/components/SkeletonP.tsx';
 import type { NarrationResponse, NarrationStub } from './narration-dtos.ts';
 import { getNarration } from './narrationService.ts';
 

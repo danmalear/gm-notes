@@ -5,18 +5,18 @@ import { Handout } from '#handout/Handout.tsx';
 import Item from '#item/Item.tsx';
 import { MapContext } from '#map/MapContext.ts';
 import Narration from '#narration/Narration.tsx';
-import { useContext, useEffect, useReducer } from 'react';
-import { useLoaderData } from 'react-router';
-import Collapsible from '../components/Collapsible.tsx';
-import Lighting from '../components/Lighting.tsx';
-import Trait from '../components/Trait.tsx';
+import Collapsible from '#shared/collapsible/Collapsible.tsx';
+import collapsiblesReducer from '#shared/collapsible/collapsibleReducer.ts';
 import {
 	CollapsiblesContext,
 	CollapsiblesDispatchContext,
-} from '../contexts/CollapsiblesContext.ts';
+} from '#shared/collapsible/CollapsiblesContext.ts';
+import { useContext, useEffect, useReducer } from 'react';
+import { useLoaderData } from 'react-router';
+import Lighting from '../components/Lighting.tsx';
+import Trait from '../components/Trait.tsx';
 import { LegacyContext } from '../legacy/LegacyContext.ts';
 import type { ValidPartySize } from '../legacy/MapData.ts';
-import collapsiblesReducer from '../reducers/collapsibleReducer.ts';
 import { RegionContext, RegionDispatchContext } from './RegionContext.ts';
 import type { regionLoader } from './regionLoader.ts';
 import './RegionView.css';

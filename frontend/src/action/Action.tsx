@@ -1,4 +1,5 @@
 import AbilityCheck from '#ability-check/AbilityCheck.tsx';
+import Collapsible from '#shared/collapsible/Collapsible.tsx';
 import SkeletonP from '#shared/components/SkeletonP.tsx';
 import { getMessage } from '#shared/error.ts';
 import {
@@ -7,7 +8,6 @@ import {
 	type ValidHeadingIndex,
 } from '#shared/headings.ts';
 import { useCallback, useState, type FC, type PropsWithChildren } from 'react';
-import Collapsible from '../components/Collapsible.tsx';
 import Trait from '../components/Trait.tsx';
 import type { ActionResponse, ActionStub } from './action-dtos.ts';
 import { getAction } from './actionService.ts';

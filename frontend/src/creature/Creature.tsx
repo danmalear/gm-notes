@@ -1,4 +1,4 @@
-import Collapsible from '../components/Collapsible.tsx';
+import Collapsible from '#shared/collapsible/Collapsible.tsx';
 import CopyLink from '../components/CopyLink.tsx';
 import Trait from '../components/Trait.tsx';
 import type { Creature, ValidPartySize } from '../legacy/MapData.ts';
