@@ -1,7 +1,7 @@
-import type { Lighting } from '#dtos/data-types.ts';
 import regionReducer, { isHardCoded } from '#region/region-reducer.ts';
 import { RegionContext, RegionDispatchContext } from '#region/RegionContext.ts';
 import { isCircle, isPolygon, isRectangle } from '#region/shape/shape-utils.ts';
+import type { Lighting } from '#shared/data-types.ts';
 import { getMessage } from '#shared/error.ts';
 import { ActionIcon, AppShell, Group, ScrollArea } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';

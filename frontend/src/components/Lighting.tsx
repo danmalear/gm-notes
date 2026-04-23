@@ -1,7 +1,7 @@
 import type {
 	Lighting as LightingType,
 	RelativeLighting,
-} from '#dtos/data-types.ts';
+} from '#shared/data-types.ts';
 import Trait from './Trait.tsx';
 
 export interface LightingProps {
