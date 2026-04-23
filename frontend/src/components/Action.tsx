@@ -1,10 +1,10 @@
+import AbilityCheck from '#ability-check/AbilityCheck.tsx';
 import type { ActionStub } from '#dtos/action.ts';
 import {
 	getValidHeadingIndex,
 	h,
 	ValidHeadingIndex,
 } from '../helpers/headings.ts';
-import AbilityCheck from './AbilityCheck.tsx';
 import Collapsible from './Collapsible.tsx';
 import Trait from './Trait.tsx';
 
@@ -37,7 +37,7 @@ const Action: React.FC<ActionProps> = ({ action, topLevelHeading }) => {
 				? action.abilityChecks.map((check) => (
 						<AbilityCheck
 							key={`action-${action.id}-check-${check.id}`}
-							check={check}
+							checkStub={check}
 							topLevelHeading={getValidHeadingIndex(topLevelHeading + 1)}
 						>
 							{JSON.stringify(check)}

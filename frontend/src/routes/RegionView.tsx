@@ -1,7 +1,7 @@
+import AbilityCheck from '#ability-check/AbilityCheck.tsx';
 import Narration from '#narration/Narration.tsx';
 import { useContext, useEffect, useReducer } from 'react';
 import { useLoaderData } from 'react-router';
-import AbilityCheck from '../components/AbilityCheck.tsx';
 import Action from '../components/Action.tsx';
 import Collapsible from '../components/Collapsible.tsx';
 import Creature from '../components/Creature.tsx';
@@ -147,7 +147,7 @@ const RegionView: React.FC = () => {
 								{region.checks.map((check, index) => (
 									<AbilityCheck
 										key={`check-${index}`}
-										check={check}
+										checkStub={check}
 										topLevelHeading={3}
 									/>
 								))}
