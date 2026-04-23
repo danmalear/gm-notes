@@ -8,7 +8,12 @@ import {
 	conditionIdColName,
 	type ActionCondition,
 } from './ActionCondition.ts';
-import { pkColumn, tableName, type Condition } from './Condition.ts';
+import {
+	pkColumn,
+	tableColumnNames,
+	tableName,
+	type Condition,
+} from './Condition.ts';
 
 export class ConditionRepository extends Repository<Condition> {
 	constructor() {
@@ -32,7 +37,8 @@ export class ConditionRepository extends Repository<Condition> {
 					`${actionJoinTableName}.${conditionIdColName}`,
 					`${this.tableName}.${this.pkColumn}`,
 				)
-				.where(`${actionJoinTableName}.${actionIdColName}`, actionId);
+				.where(`${actionJoinTableName}.${actionIdColName}`, actionId)
+				.select<Condition[]>(tableColumnNames);
 		} catch (e) {
 			throw Error(
 				`Error getting ${this.tableName} records for action ID ${actionId}: ${getMessage(e)}`,
