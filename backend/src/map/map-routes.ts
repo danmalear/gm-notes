@@ -1,6 +1,7 @@
 import type { CommandRouter } from '#command/CommandRouter.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, InternalError } from '#shared/error.ts';
+import { getById } from '#shared/route-utils.ts';
 import { isUUID } from '#shared/uuid.ts';
 import { isLighting } from '#shared/validation/data-types.ts';
 import {
@@ -64,6 +65,13 @@ export function mapRoutes(
 			});
 		},
 	);
+
+	getById(app, {
+		apiNamespace,
+		objectDescriptor: 'Map',
+		repository: mapRepository,
+		toDto,
+	});
 
 	app.get(
 		`/${apiNamespace}/:id`,

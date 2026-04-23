@@ -1,8 +1,8 @@
 import type { CommandRouter } from '#command/CommandRouter.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
-import { isUUID } from '#shared/uuid.ts';
+import { getById } from '#shared/route-utils.ts';
 import type { Express, Response } from 'express';
-import type { CampaignResponse, CampaignStub } from './campaign-dtos.ts';
+import type { CampaignStub } from './campaign-dtos.ts';
 import { toDto, toStub } from './campaign-mappers.ts';
 import { CampaignCommandHandler } from './CampaignCommandHandler.ts';
 import type { CampaignRepository } from './CampaignRepository.ts';
@@ -40,32 +40,12 @@ export function campaignRoutes(
 		},
 	);
 
-	app.get(
-		`/${apiNamespace}/:id`,
-		async (
-			req,
-			res: Response<MessageResponse | DataResponse<CampaignResponse>>,
-		) => {
-			console.log(
-				`Campaign GET request received. params: ${JSON.stringify(req.params)}`,
-			);
-
-			if (!isUUID(req.params.id)) {
-				res.status(400).send({ message: 'Invalid UUID format' });
-				return;
-			}
-
-			const campaign = await campaignRepository.getById(req.params.id);
-			if (!campaign) {
-				res.status(404).send({
-					message: `Campaign with ID ${req.params.id} not found`,
-				});
-				return;
-			}
-
-			res.send({ data: toDto(campaign) });
-		},
-	);
+	getById(app, {
+		apiNamespace,
+		objectDescriptor: 'Campaign',
+		repository: campaignRepository,
+		toDto,
+	});
 
 	return {
 		campaignRepository,
