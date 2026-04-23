@@ -1,9 +1,12 @@
 import { abilityCheckRoutes } from '#ability-check/ability-check-routes.ts';
 import { AbilityCheckRepository } from '#ability-check/AbilityCheckRepository.ts';
+import { actionRoutes } from '#action/action-routes.ts';
+import { ActionRepository } from '#action/ActionRepository.ts';
 import { campaignRoutes } from '#campaign/campaign-routes.ts';
 import { CampaignRepository } from '#campaign/CampaignRepository.ts';
 import { commandRoutes } from '#command/command-routes.ts';
 import { CommandRouter } from '#command/CommandRouter.ts';
+import { ConditionRepository } from '#condition/ConditionRepository.ts';
 import { mapRoutes } from '#map/map-routes.ts';
 import { MapRepository } from '#map/MapRepository.ts';
 import { narrationRoutes } from '#narration/narration-routes.ts';
@@ -35,6 +38,12 @@ function createApp() {
 	const abilityCheckRepository = new AbilityCheckRepository(
 		narrationRepository,
 	);
+	const conditionRepository = new ConditionRepository();
+	const actionRepository = new ActionRepository(
+		abilityCheckRepository,
+		conditionRepository,
+		narrationRepository,
+	);
 	const regionShapeRepository = new RegionShapeRepository();
 	const regionRepository = new RegionRepository();
 	const mapRepository = new MapRepository(
@@ -47,6 +56,7 @@ function createApp() {
 	mapRoutes(app, commandRouter, mapRepository);
 	abilityCheckRoutes(app, commandRouter, abilityCheckRepository);
 	narrationRoutes(app, commandRouter, narrationRepository);
+	actionRoutes(app, commandRouter, actionRepository);
 
 	routes(app);
 
