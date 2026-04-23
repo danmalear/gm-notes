@@ -1,6 +1,5 @@
-import { toStub as abilityCheckToStub } from '#ability-check/ability-check-mappers.ts';
 import { AbilityCheckRepository } from '#ability-check/AbilityCheckRepository.ts';
-import type { ActionResponse } from '#action/action-dtos.ts';
+import { toStub as actionToStub } from '#action/action-mappers.ts';
 import { ActionRepository } from '#action/ActionRepository.ts';
 import { ConditionRepository } from '#condition/ConditionRepository.ts';
 import { HandoutRepository } from '#handout/HandoutRepository.ts';
@@ -74,8 +73,12 @@ export class RegionRoutes {
 		const items = await this.itemRepository.getByLocationId(locationId);
 		const dtoItems: LocationItemStub[] = [];
 		for (const item of items) {
-			const itemActions = await this.buildActions(item.ItemId);
-			const locationItemActions = await this.buildActions(item.LocationItemId);
+			const itemActions = await this.actionRepository.getByTargetId(
+				item.ItemId,
+			);
+			const locationItemActions = await this.actionRepository.getByTargetId(
+				item.LocationItemId,
+			);
 			const actions = [...itemActions, ...locationItemActions];
 
 			const itemNotes = await this.noteRepository.getByEntityId(item.ItemId);
@@ -97,7 +100,7 @@ export class RegionRoutes {
 					detailsLink: item.DetailsLink ?? undefined,
 					imageFileId: item.ImageFileId ?? undefined,
 					quantity: item.Quantity,
-					actions,
+					actions: actions.map(actionToStub),
 					notes: notes.map((note) => note.Description),
 					isContainer: true,
 					containedItems: dtoContainedItems,
@@ -115,42 +118,13 @@ export class RegionRoutes {
 					detailsLink: item.DetailsLink ?? undefined,
 					imageFileId: item.ImageFileId ?? undefined,
 					quantity: item.Quantity,
-					actions,
+					actions: actions.map(actionToStub),
 					notes: notes.map((note) => note.Description),
 					isContainer: false,
 				});
 			}
 		}
 		return dtoItems;
-	}
-
-	async buildActions(targetId: UUID) {
-		const actions = await this.actionRepository.getByTargetId(targetId);
-		const dtoActions: ActionResponse[] = [];
-		for (const action of actions) {
-			const abilityChecks = await this.abilityCheckRepository.getByActionId(
-				action.ActionId,
-			);
-			const conditions = await this.conditionRepository.getByActionId(
-				action.ActionId,
-			);
-			// const notes = await noteRepository.getByEntityId(action.ActionId);
-			const narration = action.NarrationId
-				? await this.narrationRepository.getById(action.NarrationId)
-				: undefined;
-			dtoActions.push({
-				id: action.ActionId,
-				targetId: action.TargetId,
-				name: action.Name,
-				type: action.Type ?? undefined,
-				narration: narration?.Description,
-				conditions: conditions.map((condition) => condition.Description),
-				abilityChecks: abilityChecks.map(abilityCheckToStub),
-				// @TODO
-				// notes: [],
-			});
-		}
-		return dtoActions;
 	}
 
 	async buildResponse(region: RegionRaw) {
@@ -168,7 +142,7 @@ export class RegionRoutes {
 			region.RegionId,
 		);
 		const items = await this.buildItems(region.RegionId);
-		const actions = await this.buildActions(region.RegionId);
+		const actions = await this.actionRepository.getByTargetId(region.RegionId);
 		const handouts = await this.handoutRepository.getByRegionId(
 			region.RegionId,
 		);
@@ -185,7 +159,7 @@ export class RegionRoutes {
 			shapes,
 			lighting: region.Lighting,
 			narrations: narrations.map(narrationToStub),
-			actions,
+			actions: actions.map(actionToStub),
 			items,
 			handouts: handouts.map((handout) => ({
 				id: handout.HandoutId,

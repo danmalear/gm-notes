@@ -1,4 +1,4 @@
-import type { ActionResponse } from '#action/action-dtos.ts';
+import type { ActionStub } from '#action/action-dtos.ts';
 import type { Value } from '#shared/data-types.ts';
 import type { UUID } from 'crypto';
 
@@ -11,7 +11,7 @@ interface LocationItemStubBase {
 	detailsLink?: string;
 	imageFileId?: string;
 	quantity: number;
-	actions: ActionResponse[];
+	actions: ActionStub[];
 	notes: string[];
 }
 
