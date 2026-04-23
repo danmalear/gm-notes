@@ -134,7 +134,7 @@ const RegionView: React.FC = () => {
 								{region.actions.map((action) => (
 									<Action
 										key={`region-${region.id}-action-${action.id}`}
-										action={action}
+										actionStub={action}
 										topLevelHeading={3}
 									/>
 								))}

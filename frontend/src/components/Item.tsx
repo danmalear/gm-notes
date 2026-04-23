@@ -75,7 +75,7 @@ const Item: React.FC<ItemProps> = ({ item, ...props }) => {
 					<Collapsible headingElement={H2} title="Actions">
 						{item.actions.map((action) => (
 							<Action
-								action={action}
+								actionStub={action}
 								topLevelHeading={getValidHeadingIndex(
 									props.topLevelHeading + 2,
 								)}
