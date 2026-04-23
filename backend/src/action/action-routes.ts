@@ -13,7 +13,7 @@ export function actionRoutes(
 
 	getById(app, {
 		apiNamespace,
-		objectDescriptor: 'action',
+		objectDescriptor: 'Action',
 		repository: actionRepository,
 		toDto,
 	});
