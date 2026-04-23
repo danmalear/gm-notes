@@ -11,10 +11,10 @@ import {
 	CollapsiblesContext,
 	CollapsiblesDispatchContext,
 } from '#shared/collapsible/CollapsiblesContext.ts';
+import Lighting from '#shared/data/Lighting.tsx';
+import Trait from '#shared/data/Trait.tsx';
 import { useContext, useEffect, useReducer } from 'react';
 import { useLoaderData } from 'react-router';
-import Lighting from '../components/Lighting.tsx';
-import Trait from '../components/Trait.tsx';
 import { LegacyContext } from '../legacy/LegacyContext.ts';
 import type { ValidPartySize } from '../legacy/MapData.ts';
 import type { regionLoader } from './region-loader.ts';

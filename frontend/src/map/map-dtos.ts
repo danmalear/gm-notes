@@ -1,5 +1,5 @@
 import type { RegionStub } from '#region/region-dtos.ts';
-import type { Lighting } from '#shared/data-types.ts';
+import type { Lighting } from '#shared/data/data-types.ts';
 import type { UUID } from 'crypto';
 
 export interface MapCreate {

@@ -1,5 +1,5 @@
 import { CampaignContext } from '#campaign/CampaignContext.ts';
-import type { Lighting } from '#shared/data-types.ts';
+import type { Lighting } from '#shared/data/data-types.ts';
 import { AppShell, Box, NavLink, Select, Title } from '@mantine/core';
 import { useContext } from 'react';
 import { Link } from 'react-router';

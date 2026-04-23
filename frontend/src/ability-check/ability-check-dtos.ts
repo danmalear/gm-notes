@@ -1,4 +1,4 @@
-import type { Skill } from '#shared/data-types.ts';
+import type { Skill } from '#shared/data/data-types.ts';
 import type { UUID } from 'crypto';
 
 export interface AbilityCheckResponse {

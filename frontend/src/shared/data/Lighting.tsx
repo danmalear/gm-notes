@@ -2,7 +2,7 @@ import type {
 	Lighting as LightingType,
 	RelativeLighting,
 } from '#shared/data-types.ts';
-import Trait from './Trait.tsx';
+import Trait from '#shared/data/Trait.tsx';
 
 export interface LightingProps {
 	defaultLighting: LightingType;
