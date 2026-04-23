@@ -15,13 +15,13 @@ interface LocationItemResponseBase {
 	notes: string[];
 }
 
-interface ContainerStub extends LocationItemResponseBase {
+interface ContainerResponse extends LocationItemResponseBase {
 	isContainer: true;
 	containedItems: LocationItemResponse[];
 }
 
-interface NonContainerStub extends LocationItemResponseBase {
+interface NonContainerResponse extends LocationItemResponseBase {
 	isContainer: false;
 }
 
-export type LocationItemResponse = ContainerStub | NonContainerStub;
+export type LocationItemResponse = ContainerResponse | NonContainerResponse;
