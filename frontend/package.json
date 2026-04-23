@@ -13,7 +13,9 @@
 	"imports": {
 		"#ability-check/*": "./src/ability-check/*",
 		"#action/*": "./src/action/*",
+		"#campaign/*": "./src/campaign/*",
 		"#dtos/*": "./src/dtos/*",
+		"#map/*": "./src/map/*",
 		"#narration/*": "./src/narration/*",
 		"#shared/*": "./src/shared/*"
 	},
