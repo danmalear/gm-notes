@@ -1,5 +1,5 @@
 import type { Lighting } from '#dtos/data-types.ts';
-import type { MapUpdate } from '#dtos/map.js';
+import type { MapUpdate } from '#dtos/map.ts';
 import { ActionIcon, AppShell, Group, ScrollArea } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';

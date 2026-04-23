@@ -1,5 +1,5 @@
 import { CampaignContext } from '#campaign/CampaignContext.ts';
-import type { MapCreate, MapResponse } from '#dtos/map.js';
+import type { MapCreate, MapResponse } from '#dtos/map.ts';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
 import { ActionIcon, AppShell, Box, Flex } from '@mantine/core';
