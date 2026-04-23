@@ -1,9 +1,9 @@
 import type { DataResponse } from '#dtos/DataResponse.ts';
-import type { RegionCreate, RegionResponse } from '#dtos/region.ts';
 import type { UUID } from 'crypto';
 import { isUUID } from '../helpers/uuid.ts';
 import data from '../legacy/data.ts';
-import api from './api.ts';
+import api from '../services/api.ts';
+import type { RegionCreate, RegionResponse } from './region-dtos.ts';
 
 // @TODO remove this dependency
 const mapDataHC = data.deathHouse;

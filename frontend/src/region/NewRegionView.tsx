@@ -1,10 +1,7 @@
 import { MapContext } from '#map/MapContext.ts';
 import { useContext, useEffect } from 'react';
-import {
-	RegionContext,
-	RegionDispatchContext,
-} from '../contexts/RegionContext.ts';
-import { isExisting, isHardCoded } from '../reducers/regionReducer.ts';
+import { RegionContext, RegionDispatchContext } from './RegionContext.ts';
+import { isExisting, isHardCoded } from './regionReducer.ts';
 
 const NewRegionView: React.FC = () => {
 	const regionState = useContext(RegionContext);

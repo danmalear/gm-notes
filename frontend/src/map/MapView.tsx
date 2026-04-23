@@ -1,20 +1,17 @@
 import type { Lighting } from '#dtos/data-types.ts';
+import { RegionContext, RegionDispatchContext } from '#region/RegionContext.ts';
+import regionReducer, { isHardCoded } from '#region/regionReducer.ts';
+import { isCircle, isPolygon, isRectangle } from '#region/shape/shape-utils.ts';
 import { ActionIcon, AppShell, Group, ScrollArea } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router';
 import AppHeader from '../components/AppHeader.tsx';
-import {
-	RegionContext,
-	RegionDispatchContext,
-} from '../contexts/RegionContext.ts';
 import { getMessage } from '../helpers/error.ts';
-import { isCircle, isPolygon, isRectangle } from '../helpers/shapes.ts';
 import data from '../legacy/data.ts';
 import { LegacyContext } from '../legacy/LegacyContext.ts';
 import type { TimeOfDay } from '../legacy/MapData.ts';
-import regionReducer, { isHardCoded } from '../reducers/regionReducer.ts';
 import type { MapUpdate } from './map-dtos.ts';
 import Map, { type MapArea } from './Map.tsx';
 import { MapContext, MapDispatchContext } from './MapContext.ts';

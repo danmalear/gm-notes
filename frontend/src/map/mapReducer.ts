@@ -1,4 +1,4 @@
-import type { RegionResponse } from '#dtos/region.ts';
+import type { RegionResponse } from '#region/region-dtos.ts';
 import type { MapResponse } from './map-dtos.ts';
 
 export interface Transform {

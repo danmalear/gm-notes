@@ -4,7 +4,7 @@ import type {
 	Polygon,
 	Rectangle,
 	Shape,
-} from '#dtos/region.ts';
+} from '#region/region-dtos.ts';
 
 export type ShapeType = 'Rectangle' | 'Circle' | 'Polygon';
 

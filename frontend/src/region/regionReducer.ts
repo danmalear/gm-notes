@@ -1,11 +1,11 @@
-import type { RegionCreate, RegionResponse, Shape } from '#dtos/region.ts';
 import type { UUID } from 'crypto';
+import type { Region } from '../legacy/MapData.ts';
+import type { RegionCreate, RegionResponse, Shape } from './region-dtos.ts';
 import {
 	isRectangle,
 	isRectangleEqual,
 	type ShapeType,
-} from '../helpers/shapes.ts';
-import type { Region } from '../legacy/MapData.ts';
+} from './shape/shape-utils.ts';
 
 export interface RegionState {
 	region?: RegionResponse | RegionCreate | Region;

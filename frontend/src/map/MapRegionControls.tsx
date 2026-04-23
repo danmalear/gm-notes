@@ -1,14 +1,11 @@
+import { RegionContext, RegionDispatchContext } from '#region/RegionContext.ts';
+import { isHardCoded } from '#region/regionReducer.ts';
+import { createRegion } from '#region/regionService.ts';
+import { scaleShape } from '#region/shape/shape-utils.ts';
 import { ActionIcon } from '@mantine/core';
 import { IconCheck, IconSquarePlus2, IconX } from '@tabler/icons-react';
 import { useContext, useMemo } from 'react';
 import { useNavigate } from 'react-router';
-import {
-	RegionContext,
-	RegionDispatchContext,
-} from '../contexts/RegionContext.ts';
-import { scaleShape } from '../helpers/shapes.ts';
-import { isHardCoded } from '../reducers/regionReducer.ts';
-import { createRegion } from '../services/regionService.ts';
 import { MapContext, MapDispatchContext } from './MapContext.ts';
 
 const MapRegionControls: React.FC = () => {

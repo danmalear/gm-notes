@@ -1,4 +1,3 @@
-import type { Coords } from '#dtos/region.ts';
 import { MapContext } from '#map/MapContext.ts';
 import {
 	useCallback,
@@ -8,17 +7,15 @@ import {
 	useRef,
 	type MouseEvent,
 } from 'react';
-import {
-	RegionContext,
-	RegionDispatchContext,
-} from '../contexts/RegionContext.ts';
+import type { Coords } from './region-dtos.ts';
+import { RegionContext, RegionDispatchContext } from './RegionContext.ts';
+import { isHardCoded } from './regionReducer.ts';
+import DrawRectangle from './shape/DrawRectangle.tsx';
 import {
 	drawRectangle,
 	isRectangle,
 	isWithinRectangle,
-} from '../helpers/shapes.ts';
-import { isHardCoded } from '../reducers/regionReducer.ts';
-import DrawRectangle from './DrawRectangle.tsx';
+} from './shape/shape-utils.ts';
 
 export interface DrawRegionProps extends React.PropsWithChildren {
 	offsetX?: number;

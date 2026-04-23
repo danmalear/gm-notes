@@ -1,5 +1,8 @@
-import type { Circle, Polygon, Rectangle } from '#dtos/region.ts';
 import { filePath } from '#file/fileService.ts';
+import DrawRegion from '#region/DrawRegion.tsx';
+import type { Circle, Polygon, Rectangle } from '#region/region-dtos.ts';
+import { RegionContext } from '#region/RegionContext.ts';
+import { scaleShape, stringifyCoords } from '#region/shape/shape-utils.ts';
 import {
 	useCallback,
 	useContext,
@@ -8,9 +11,6 @@ import {
 	useState,
 } from 'react';
 import { href, useNavigate } from 'react-router';
-import DrawRegion from '../components/DrawRegion.tsx';
-import { RegionContext } from '../contexts/RegionContext.ts';
-import { scaleShape, stringifyCoords } from '../helpers/shapes.ts';
 import { MapContext, MapDispatchContext } from './MapContext.ts';
 
 export interface RectArea {

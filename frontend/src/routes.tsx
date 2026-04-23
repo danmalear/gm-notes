@@ -4,11 +4,11 @@ import CampaignView from '#campaign/CampaignView.tsx';
 import { mapLoader } from '#map/mapLoader.ts';
 import MapsView from '#map/MapsView.tsx';
 import MapView from '#map/MapView.tsx';
+import NewRegionView from '#region/NewRegionView.tsx';
+import { regionLoader } from '#region/regionLoader.ts';
+import RegionView from '#region/RegionView.tsx';
 import { createBrowserRouter, redirect } from 'react-router';
 import App from './App.tsx';
-import { regionLoader } from './routes/loaders/regionLoader.ts';
-import NewRegionView from './routes/NewRegionView.tsx';
-import RegionView from './routes/RegionView.tsx';
 
 const router = createBrowserRouter([
 	{

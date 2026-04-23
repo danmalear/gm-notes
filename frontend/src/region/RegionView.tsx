@@ -14,14 +14,11 @@ import {
 	CollapsiblesContext,
 	CollapsiblesDispatchContext,
 } from '../contexts/CollapsiblesContext.ts';
-import {
-	RegionContext,
-	RegionDispatchContext,
-} from '../contexts/RegionContext.ts';
 import { LegacyContext } from '../legacy/LegacyContext.ts';
 import type { ValidPartySize } from '../legacy/MapData.ts';
 import collapsiblesReducer from '../reducers/collapsibleReducer.ts';
-import type { regionLoader } from './loaders/regionLoader.ts';
+import { RegionContext, RegionDispatchContext } from './RegionContext.ts';
+import type { regionLoader } from './regionLoader.ts';
 import './RegionView.css';
 
 // @TODO remove this dependency

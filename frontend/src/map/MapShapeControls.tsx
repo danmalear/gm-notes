@@ -1,10 +1,7 @@
+import { RegionContext, RegionDispatchContext } from '#region/RegionContext.ts';
 import { ActionIcon } from '@mantine/core';
 import { IconCheck, IconTrash, IconX } from '@tabler/icons-react';
 import { useContext } from 'react';
-import {
-	RegionContext,
-	RegionDispatchContext,
-} from '../contexts/RegionContext.ts';
 
 const MapShapeControls: React.FC = () => {
 	const regionState = useContext(RegionContext);
