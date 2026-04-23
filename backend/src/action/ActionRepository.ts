@@ -5,9 +5,10 @@ import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
+import type { Action } from './Action.ts';
 import { pkColumn, tableName, type ActionRaw } from './Action.ts';
 
-export class ActionRepository extends Repository<ActionRaw, ActionRaw> {
+export class ActionRepository extends Repository<ActionRaw, Action> {
 	abilityCheckRepository: AbilityCheckRepository;
 	conditionRepository: ConditionRepository;
 	narrationRepository: NarrationRepository;
@@ -23,8 +24,22 @@ export class ActionRepository extends Repository<ActionRaw, ActionRaw> {
 		this.narrationRepository = narrationRepository;
 	}
 
-	override async getById(id: UUID): Promise<ActionRaw | undefined> {
-		return await this.getByIdRaw(id);
+	override async getById(id: UUID): Promise<Action | undefined> {
+		const actionRaw = await this.getByIdRaw(id);
+		if (!actionRaw) return undefined;
+		const narration = actionRaw.NarrationId
+			? ((await this.narrationRepository.getById(actionRaw.NarrationId)) ??
+				null)
+			: null;
+		const conditions = await this.conditionRepository.getByActionId(id);
+		const abilityChecks = await this.abilityCheckRepository.getByActionId(id);
+
+		return {
+			...actionRaw,
+			Narration: narration,
+			Conditions: conditions,
+			AbilityChecks: abilityChecks,
+		};
 	}
 
 	/**
