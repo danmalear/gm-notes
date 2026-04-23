@@ -1,6 +1,7 @@
 import Action from '#action/Action.tsx';
 import { filePath } from '#file/file-service.ts';
 import Collapsible from '#shared/collapsible/Collapsible.tsx';
+import ImageModal from '#shared/data/ImageModal.tsx';
 import Trait from '#shared/data/Trait.tsx';
 import {
 	getValidHeadingIndex,
@@ -9,7 +10,6 @@ import {
 } from '#shared/headings.ts';
 import { useState, type MouseEvent } from 'react';
 import CopyLink from '../components/CopyLink.tsx';
-import ImageModal from '../components/modals/ImageModal.tsx';
 import type { Item as ItemHC } from '../legacy/MapData.ts';
 import type { LocationItemStub } from './item-dtos.ts';
 
