@@ -1,5 +1,5 @@
 import type { UUID } from 'crypto';
-import type { ActionStub } from './action.ts';
+import type { ActionStub } from './action-dtos.ts';
 import type { Value } from './data-types.ts';
 
 interface LocationItemStubBase {

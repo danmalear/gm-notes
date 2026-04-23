@@ -1,5 +1,5 @@
 import AbilityCheck from '#ability-check/AbilityCheck.tsx';
-import type { ActionStub } from '#dtos/action.ts';
+import type { ActionStub } from '#dtos/action-dtos.ts';
 import {
 	getValidHeadingIndex,
 	h,
