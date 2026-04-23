@@ -1,5 +1,4 @@
 import Action from '#action/Action.tsx';
-import type { LocationItemStub } from '#dtos/item.ts';
 import { filePath } from '#file/file-service.ts';
 import Collapsible from '#shared/collapsible/Collapsible.tsx';
 import {
@@ -12,6 +11,7 @@ import CopyLink from '../components/CopyLink.tsx';
 import ImageModal from '../components/modals/ImageModal.tsx';
 import Trait from '../components/Trait.tsx';
 import type { Item as ItemHC } from '../legacy/MapData.ts';
+import type { LocationItemStub } from './item-dtos.ts';
 
 // @TODO accommodate contained items loaded from data
 
