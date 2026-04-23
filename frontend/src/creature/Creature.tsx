@@ -1,7 +1,7 @@
+import Collapsible from '../components/Collapsible.tsx';
+import CopyLink from '../components/CopyLink.tsx';
+import Trait from '../components/Trait.tsx';
 import type { Creature, ValidPartySize } from '../legacy/MapData.ts';
-import Collapsible from './Collapsible.tsx';
-import CopyLink from './CopyLink.tsx';
-import Trait from './Trait.tsx';
 
 export interface CreatureProps extends React.PropsWithChildren {
 	creature: Creature;
