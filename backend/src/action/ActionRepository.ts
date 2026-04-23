@@ -2,14 +2,14 @@ import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import { pkColumn, tableName, type Action } from './Action.ts';
+import { pkColumn, tableName, type ActionRaw } from './Action.ts';
 
-export class ActionRepository extends Repository<Action, Action> {
+export class ActionRepository extends Repository<ActionRaw, ActionRaw> {
 	constructor() {
 		super(tableName, pkColumn);
 	}
 
-	override async getById(id: UUID): Promise<Action | undefined> {
+	override async getById(id: UUID): Promise<ActionRaw | undefined> {
 		return await this.getByIdRaw(id);
 	}
 
@@ -20,7 +20,7 @@ export class ActionRepository extends Repository<Action, Action> {
 	 */
 	async getByTargetId(targetId: UUID) {
 		try {
-			return await db<Action>(tableName).where('TargetId', targetId);
+			return await db<ActionRaw>(tableName).where('TargetId', targetId);
 		} catch (e) {
 			throw Error(
 				`Error getting ${this.tableName} records for target ID ${targetId}: ${getMessage(e)}`,

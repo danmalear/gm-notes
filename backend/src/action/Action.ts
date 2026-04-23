@@ -4,7 +4,7 @@ import type { UUID } from 'crypto';
 export const tableName = 'Action';
 export const pkColumn = 'ActionId';
 
-export interface Action {
+export interface ActionRaw {
 	ActionId: UUID;
 	TargetId: UUID;
 	Name: string;
