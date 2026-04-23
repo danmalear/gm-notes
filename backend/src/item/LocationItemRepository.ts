@@ -10,12 +10,15 @@ import {
 	type LocationItemRaw,
 } from './LocationItem.ts';
 
-export class ItemRepository extends Repository<ItemRaw, ItemRaw> {
+export class LocationItemRepository extends Repository<
+	LocationItemRaw,
+	LocationItemRaw
+> {
 	constructor() {
 		super(tableName, pkColumn);
 	}
 
-	override async getById(id: UUID): Promise<ItemRaw | undefined> {
+	override async getById(id: UUID): Promise<LocationItemRaw | undefined> {
 		return await this.getByIdRaw(id);
 	}
 

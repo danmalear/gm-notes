@@ -4,7 +4,7 @@ import { ActionRepository } from '#action/ActionRepository.ts';
 import { ConditionRepository } from '#condition/ConditionRepository.ts';
 import { HandoutRepository } from '#handout/HandoutRepository.ts';
 import type { LocationItemResponse } from '#item/item-dtos.ts';
-import { ItemRepository } from '#item/ItemRepository.ts';
+import { LocationItemRepository } from '#item/LocationItemRepository.ts';
 import { MapRepository } from '#map/MapRepository.ts';
 import { toStub as narrationToStub } from '#narration/narration-mappers.ts';
 import { NarrationRepository } from '#narration/NarrationRepository.ts';
@@ -37,7 +37,7 @@ export class RegionRoutes {
 	actionRepository: ActionRepository;
 	conditionRepository: ConditionRepository;
 	handoutRepository: HandoutRepository;
-	itemRepository: ItemRepository;
+	itemRepository: LocationItemRepository;
 	mapRepository: MapRepository;
 	narrationRepository: NarrationRepository;
 	noteRepository: NoteRepository;
@@ -47,7 +47,7 @@ export class RegionRoutes {
 	constructor() {
 		this.conditionRepository = new ConditionRepository();
 		this.handoutRepository = new HandoutRepository();
-		this.itemRepository = new ItemRepository();
+		this.itemRepository = new LocationItemRepository();
 		this.regionRepository = new RegionRepository();
 		this.regionShapeRepository = new RegionShapeRepository();
 		this.mapRepository = new MapRepository(
