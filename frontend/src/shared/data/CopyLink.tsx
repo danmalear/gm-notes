@@ -1,6 +1,6 @@
 import { Popover, Text } from '@mantine/core';
 import { IconCopy } from '@tabler/icons-react';
-import { MouseEvent, useState } from 'react';
+import { useState, type MouseEvent } from 'react';
 
 export type CopyLinkProps = React.DetailedHTMLProps<
 	React.AnchorHTMLAttributes<HTMLAnchorElement>,
