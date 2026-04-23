@@ -1,7 +1,7 @@
 import { redirect, type LoaderFunctionArgs } from 'react-router';
-import { getMessage } from '../../helpers/error';
-import { isUUID } from '../../helpers/uuid';
-import { getCampaign } from '../../services/campaignService';
+import { getMessage } from '../helpers/error';
+import { isUUID } from '../helpers/uuid.ts';
+import { getCampaign } from './campaignService.ts';
 
 export async function campaignLoader({ params }: LoaderFunctionArgs) {
 	try {

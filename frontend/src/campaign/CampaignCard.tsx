@@ -1,4 +1,3 @@
-import type { CampaignStub as Campaign } from '#dtos/campaign.ts';
 import type { MapResponse as Map } from '#dtos/map.ts';
 import { Card, Title } from '@mantine/core';
 import type { UUID } from 'crypto';
@@ -6,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { getMessage } from '../helpers/error.ts';
 import { filePath } from '../services/fileService.ts';
 import { getMap } from '../services/mapService.ts';
+import type { CampaignStub as Campaign } from './campaign-dtos.ts';
 
 export interface CampaignCardProps extends React.PropsWithChildren {
 	campaign: Campaign;

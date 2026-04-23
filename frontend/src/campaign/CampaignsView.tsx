@@ -1,4 +1,3 @@
-import type { CampaignStub, CreateCampaign } from '#dtos/campaign.ts';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
 import { ActionIcon, AppShell, Box, Flex } from '@mantine/core';
@@ -8,13 +7,11 @@ import type { UUID } from 'crypto';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import AppHeader from '../components/AppHeader.tsx';
-import CampaignCard from '../components/CampaignCard.tsx';
-import CreateCampaignModal from '../components/modals/CreateCampaignModal.tsx';
 import { getMessage } from '../helpers/error.ts';
-import {
-	createCampaign,
-	getAllCampaigns,
-} from '../services/campaignService.ts';
+import type { CampaignStub, CreateCampaign } from './campaign-dtos.ts';
+import CampaignCard from './CampaignCard.tsx';
+import { createCampaign, getAllCampaigns } from './campaignService.ts';
+import CreateCampaignModal from './CreateCampaignModal.tsx';
 
 const CampaignsView: React.FC = () => {
 	const navigate = useNavigate();

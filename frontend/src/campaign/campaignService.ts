@@ -1,13 +1,13 @@
+import type { CommandResponse } from '#dtos/command.ts';
 import type { DataResponse } from '#dtos/DataResponse.ts';
+import type { UUID } from 'crypto';
+import api from '../services/api.ts';
 import type {
 	CampaignResponse,
 	CampaignStub,
 	CreateCampaign,
 	CreateCampaignRequest,
-} from '#dtos/campaign.ts';
-import type { CommandResponse } from '#dtos/command.ts';
-import type { UUID } from 'crypto';
-import api from './api.ts';
+} from './campaign-dtos.ts';
 
 export const getAllCampaigns = async () => {
 	return await api.get<DataResponse<CampaignStub[]>>(`/campaigns`);

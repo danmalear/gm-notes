@@ -1,8 +1,8 @@
+import { campaignLoader } from '#campaign/campaignLoader.ts';
+import CampaignsView from '#campaign/CampaignsView.tsx';
+import CampaignView from '#campaign/CampaignView.tsx';
 import { createBrowserRouter, redirect } from 'react-router';
 import App from './App.tsx';
-import CampaignsView from './routes/CampaignsView.tsx';
-import CampaignView from './routes/CampaignView.tsx';
-import { campaignLoader } from './routes/loaders/campaignLoader.ts';
 import { mapLoader } from './routes/loaders/mapLoader.ts';
 import { regionLoader } from './routes/loaders/regionLoader.ts';
 import MapsView from './routes/MapsView.tsx';

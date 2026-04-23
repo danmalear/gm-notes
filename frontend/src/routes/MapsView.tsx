@@ -1,3 +1,4 @@
+import { CampaignContext } from '#campaign/CampaignContext.ts';
 import type { MapCreate, MapResponse } from '#dtos/map.js';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
@@ -10,7 +11,6 @@ import { useNavigate } from 'react-router';
 import AppHeader from '../components/AppHeader.tsx';
 import MapCard from '../components/MapCard.tsx';
 import CreateMapModal from '../components/modals/CreateMapModal.tsx';
-import { CampaignContext } from '../contexts/CampaignContext.ts';
 import { getMessage } from '../helpers/error.ts';
 import { getMapsByCampaignId, insertMap } from '../services/mapService.ts';
 

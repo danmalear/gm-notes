@@ -1,6 +1,6 @@
 import { Outlet, useLoaderData } from 'react-router';
-import { CampaignContext } from '../contexts/CampaignContext.ts';
-import type { campaignLoader } from './loaders/campaignLoader.ts';
+import { CampaignContext } from './CampaignContext.ts';
+import type { campaignLoader } from './campaignLoader.ts';
 
 const CampaignView: React.FC = () => {
 	const { campaign } = useLoaderData<typeof campaignLoader>();
