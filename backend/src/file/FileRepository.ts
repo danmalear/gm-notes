@@ -1,7 +1,7 @@
 import { Repository } from '#shared/Repository.ts';
 import { pkColumn, tableName, type File } from './File.ts';
 
-export class FileRepository extends Repository<File, File> {
+export class FileRepository extends Repository<File> {
 	constructor() {
 		super(tableName, pkColumn);
 	}
