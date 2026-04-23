@@ -32,4 +32,5 @@ export interface LocationItemStub {
 	itemId: UUID;
 	name: string;
 	quantity: number;
+	isContainer: boolean;
 }
