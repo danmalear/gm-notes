@@ -1,11 +1,11 @@
 import Collapsible from '#shared/collapsible/Collapsible.tsx';
-import SkeletonP from '#shared/components/SkeletonP.tsx';
 import { getMessage } from '#shared/error.ts';
 import {
 	getValidHeadingIndex,
 	h,
 	type ValidHeadingIndex,
 } from '#shared/headings.ts';
+import SkeletonP from '#shared/skeleton/SkeletonP.tsx';
 import { useCallback, useState, type FC, type PropsWithChildren } from 'react';
 import Trait from '../components/Trait.tsx';
 import type { AbilityCheck } from '../legacy/MapData.ts';
