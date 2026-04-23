@@ -1,10 +1,10 @@
-import type { HandoutStub } from '#dtos/handout.ts';
 import { filePath } from '#file/fileService.ts';
 import { Modal, Stack } from '@mantine/core';
 import { type MouseEvent, useState } from 'react';
+import CopyLink from '../components/CopyLink.tsx';
+import ImageModal from '../components/modals/ImageModal.tsx';
 import type { Handout as HandoutData } from '../legacy/MapData.ts';
-import CopyLink from './CopyLink.tsx';
-import ImageModal from './modals/ImageModal.tsx';
+import type { HandoutStub } from './handout-dtos.ts';
 
 export interface HandoutProps {
 	handout: HandoutData | HandoutStub;
