@@ -52,12 +52,7 @@ export class RegionRoutes {
 		this.fileRepository = new FileRepository();
 		this.conditionRepository = new ConditionRepository();
 		this.handoutRepository = new HandoutRepository();
-		this.regionRepository = new RegionRepository();
 		this.regionShapeRepository = new RegionShapeRepository();
-		this.mapRepository = new MapRepository(
-			this.regionRepository,
-			this.regionShapeRepository,
-		);
 		this.narrationRepository = new NarrationRepository();
 		this.abilityCheckRepository = new AbilityCheckRepository(
 			this.narrationRepository,
@@ -77,6 +72,18 @@ export class RegionRoutes {
 			this.actionRepository,
 			this.itemRepository,
 			this.noteRepository,
+		);
+		this.regionRepository = new RegionRepository(
+			this.actionRepository,
+			this.handoutRepository,
+			this.locationItemRepository,
+			this.narrationRepository,
+			this.noteRepository,
+			this.regionShapeRepository,
+		);
+		this.mapRepository = new MapRepository(
+			this.regionRepository,
+			this.regionShapeRepository,
 		);
 	}
 
