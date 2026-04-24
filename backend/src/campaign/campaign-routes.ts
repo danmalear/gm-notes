@@ -1,4 +1,4 @@
-import type { CommandRouter } from '#command/CommandRouter.ts';
+import type { MessageBus } from '#message/MessageBus.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getById } from '#shared/route-utils.ts';
 import type { Express, Response } from 'express';
@@ -9,14 +9,14 @@ import type { CampaignRepository } from './CampaignRepository.ts';
 
 export function campaignRoutes(
 	app: Express,
-	commandRouter: CommandRouter,
+	messageBus: MessageBus,
 	campaignRepository: CampaignRepository,
 ) {
 	const apiNamespace = 'campaigns';
 
 	const campaignCommandHandler = new CampaignCommandHandler(campaignRepository);
 
-	commandRouter.register('Campaign', campaignCommandHandler);
+	messageBus.subscribe('Campaign', campaignCommandHandler);
 
 	app.get(
 		`/${apiNamespace}`,

@@ -6,7 +6,6 @@ import { campaignRoutes } from '#campaign/campaign-routes.ts';
 import { CampaignRepository } from '#campaign/CampaignRepository.ts';
 import { commandRoutes } from '#command/command-routes.ts';
 import { CommandRepository } from '#command/CommandRepository.ts';
-import { CommandRouter } from '#command/CommandRouter.ts';
 import { ConditionRepository } from '#condition/ConditionRepository.ts';
 import { fileRoutes } from '#file/file-routes.ts';
 import { FileRepository } from '#file/FileRepository.ts';
@@ -16,6 +15,7 @@ import { ItemRepository } from '#item/ItemRepository.ts';
 import { LocationItemRepository } from '#item/LocationItemRepository.ts';
 import { mapRoutes } from '#map/map-routes.ts';
 import { MapRepository } from '#map/MapRepository.ts';
+import { MessageBus } from '#message/MessageBus.ts';
 import { narrationRoutes } from '#narration/narration-routes.ts';
 import { NarrationRepository } from '#narration/NarrationRepository.ts';
 import { NoteRepository } from '#note/NoteRepository.ts';
@@ -111,17 +111,17 @@ function createApp() {
 		campaignRepository,
 	} = initRepos();
 
-	const commandRouter = new CommandRouter();
+	const messageBus = new MessageBus();
 
-	commandRoutes(app, commandRouter, commandRepository);
+	commandRoutes(app, messageBus, commandRepository);
 
-	campaignRoutes(app, commandRouter, campaignRepository);
-	mapRoutes(app, commandRouter, mapRepository);
-	regionRoutes(app, commandRouter, regionRepository, regionShapeRepository);
-	abilityCheckRoutes(app, commandRouter, abilityCheckRepository);
-	narrationRoutes(app, commandRouter, narrationRepository);
-	actionRoutes(app, commandRouter, actionRepository);
-	itemRoutes(app, commandRouter, itemRepository, locationItemRepository);
+	campaignRoutes(app, messageBus, campaignRepository);
+	mapRoutes(app, messageBus, mapRepository);
+	regionRoutes(app, messageBus, regionRepository, regionShapeRepository);
+	abilityCheckRoutes(app, messageBus, abilityCheckRepository);
+	narrationRoutes(app, messageBus, narrationRepository);
+	actionRoutes(app, messageBus, actionRepository);
+	itemRoutes(app, messageBus, itemRepository, locationItemRepository);
 	fileRoutes(app, fileRepository);
 
 	app.use((req: Request, res: Response<MessageResponse>) => {

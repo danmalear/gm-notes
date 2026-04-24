@@ -18,6 +18,7 @@
 		"#handout/*": "./src/handout/*",
 		"#item/*": "./src/item/*",
 		"#map/*": "./src/map/*",
+		"#message/*": "./src/framework/message/*",
 		"#narration/*": "./src/narration/*",
 		"#note/*": "./src/note/*",
 		"#region/*": "./src/region/*",

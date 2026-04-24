@@ -1,18 +1,16 @@
+import { validateMessage } from '#message/Message.ts';
+import type { MessageBus } from '#message/MessageBus.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, getStatusCode } from '#shared/error.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
-import {
-	validateCommandRequest,
-	type CommandResponse,
-} from './command-dtos.ts';
+import { type CommandResponse } from './command-dtos.ts';
 import type { Command } from './Command.ts';
 import type { CommandRepository } from './CommandRepository.ts';
-import type { CommandRouter } from './CommandRouter.ts';
 
 export function commandRoutes(
 	app: Express,
-	commandRouter: CommandRouter,
+	messageBus: MessageBus,
 	commandRepository: CommandRepository,
 ) {
 	const apiNamespace = 'commands';
@@ -26,7 +24,7 @@ export function commandRoutes(
 			console.log(`Command received. body: ${JSON.stringify(req.body)}`);
 
 			try {
-				validateCommandRequest(req.body);
+				validateMessage(req.body);
 			} catch (e) {
 				res.status(getStatusCode(e)).send({ message: getMessage(e) });
 				return;
@@ -39,16 +37,16 @@ export function commandRoutes(
 
 			const command: Command = {
 				CommandId: id,
-				AggregateId: null, // @TODO
+				AggregateId: commandRequest.streamId ?? null,
 				CorrelationId: correlationId,
 				Context: commandRequest.context,
-				Type: commandRequest.commandType,
-				Data: commandRequest.commandData,
+				Type: commandRequest.type,
+				Data: commandRequest.data,
 			};
 
 			await commandRepository.insert(command);
 
-			const aggregateId = await commandRouter.send(commandRequest);
+			const aggregateId = await messageBus.send(commandRequest);
 
 			res.send({ data: { id: aggregateId } });
 		},

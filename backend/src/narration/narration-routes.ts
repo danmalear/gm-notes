@@ -1,4 +1,4 @@
-import type { CommandRouter } from '#command/CommandRouter.ts';
+import type { MessageBus } from '#message/MessageBus.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage } from '#shared/error.ts';
 import { getById } from '#shared/route-utils.ts';
@@ -9,7 +9,7 @@ import type { NarrationRepository } from './NarrationRepository.ts';
 
 export function narrationRoutes(
 	app: Express,
-	_commandRouter: CommandRouter,
+	_messageBus: MessageBus,
 	narrationRepository: NarrationRepository,
 ) {
 	const apiNamespace = 'narrations';

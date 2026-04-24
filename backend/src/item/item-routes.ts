@@ -1,4 +1,4 @@
-import type { CommandRouter } from '#command/CommandRouter.ts';
+import type { MessageBus } from '#message/MessageBus.ts';
 import { getById } from '#shared/route-utils.ts';
 import type { Express } from 'express';
 import type { ItemRepository } from './ItemRepository.ts';
@@ -7,7 +7,7 @@ import { toDto } from './location-item-mappers.ts';
 
 export function itemRoutes(
 	app: Express,
-	_commandRouter: CommandRouter,
+	_messageBus: MessageBus,
 	_itemRepository: ItemRepository,
 	locationItemRepository: LocationItemRepository,
 ) {

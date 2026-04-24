@@ -1,101 +1,101 @@
-import type { CommandRequest } from '#command/command-dtos.ts';
 import type { CommandFunction } from '#command/command-types.ts';
-import type { ICommandHandler } from '#command/ICommandHandler.ts';
+import type { IMessageSubscriber } from '#message/IMessageSubscriber.ts';
+import type { Message } from '#message/Message.ts';
 import { BadRequestError, NotImplementedError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { CampaignRaw } from './Campaign.ts';
 import type { CampaignRepository } from './CampaignRepository.ts';
 
-export interface CreateCampaign {
+export interface CreateCampaignData {
 	name: string;
 }
 
-export interface UpdateCampaign {
+export interface UpdateCampaignData {
 	id: UUID;
 	name?: string;
 	activeMapId?: UUID;
 }
 
-export interface CampaignRequest extends CommandRequest {
+export interface CampaignCommandBase extends Message {
 	context: 'Campaign';
 }
 
-interface CreateCampaignRequest extends CampaignRequest {
-	commandType: 'Create';
-	commandData: CreateCampaign;
+interface CreateCampaign extends CampaignCommandBase {
+	type: 'Create';
+	data: CreateCampaignData;
 }
 
-interface UpdateCampaignRequest extends CampaignRequest {
-	commandType: 'Update';
-	commandData: UpdateCampaign;
+interface UpdateCampaign extends CampaignCommandBase {
+	type: 'Update';
+	data: UpdateCampaignData;
 }
 
-export type CampaignCommandRequest =
-	| CreateCampaignRequest
-	| UpdateCampaignRequest;
+export type CampaignCommand = CreateCampaign | UpdateCampaign;
 
 function validateCampaignCommandRequest(
-	commandRequest: CommandRequest,
-): asserts commandRequest is CampaignCommandRequest {
-	const { commandType, commandData } = commandRequest;
-	switch (commandType) {
+	command: Message,
+): asserts command is CampaignCommand {
+	if (command.context !== 'Campaign') {
+		throw new BadRequestError(
+			'Non-campaign command submitted to campaign command handler',
+		);
+	}
+	switch (command.type) {
 		case 'Create':
-			if (!('name' in commandData) || !commandData.name) {
+			if (!('name' in command.data) || !command.data.name) {
 				throw new BadRequestError('Campaigns must have a name specified');
 			}
-			if (typeof commandData.name !== 'string') {
+			if (typeof command.data.name !== 'string') {
 				throw new BadRequestError(
-					`Invalid name specified for campaign: ${commandData.name}`,
+					`Invalid name specified for campaign: ${command.data.name}`,
 				);
 			}
 			break;
 		case 'Update':
 			if (
-				'name' in commandData &&
-				typeof commandData.name !== 'undefined' &&
-				typeof commandData.name !== 'string'
+				'name' in command.data &&
+				typeof command.data.name !== 'undefined' &&
+				typeof command.data.name !== 'string'
 			) {
 				throw new BadRequestError(
-					`Invalid name specified for campaign: ${commandData.name}`,
+					`Invalid name specified for campaign: ${command.data.name}`,
 				);
 			}
 			if (
-				'activeMapId' in commandData &&
-				typeof commandData.activeMapId !== 'undefined' &&
-				(typeof commandData.activeMapId !== 'string' ||
-					!isUUID(commandData.activeMapId))
+				'activeMapId' in command.data &&
+				typeof command.data.activeMapId !== 'undefined' &&
+				(typeof command.data.activeMapId !== 'string' ||
+					!isUUID(command.data.activeMapId))
 			) {
 				throw new BadRequestError(
-					`Invalid ID specified for campaign active map: ${commandData.activeMapId}`,
+					`Invalid ID specified for campaign active map: ${command.data.activeMapId}`,
 				);
 			}
 			break;
 		default:
-			throw new BadRequestError(
-				`Invalid campaign command: ${(commandRequest as CommandRequest).commandType}`,
-			);
+			throw new BadRequestError(`Invalid campaign command: ${command.type}`);
 	}
 }
 
-export class CampaignCommandHandler implements ICommandHandler {
+export class CampaignCommandHandler implements IMessageSubscriber {
 	campaignRepository: CampaignRepository;
 
 	constructor(campaignRepository: CampaignRepository) {
 		this.campaignRepository = campaignRepository;
 	}
 
-	async handle(commandRequest: CommandRequest) {
-		validateCampaignCommandRequest(commandRequest);
-		switch (commandRequest.commandType) {
+	async handle(command: Message) {
+		validateCampaignCommandRequest(command);
+		switch (command.type) {
 			case 'Create':
-				return await this.Create(commandRequest.commandData);
+				return await this.Create(command.data);
 			case 'Update':
-				return await this.Update(commandRequest.commandData);
+				return await this.Update(command.data);
 		}
 	}
 
-	Create: CommandFunction<CreateCampaign> = async (command) => {
+	Create: CommandFunction<CreateCampaignData> = async (command) => {
 		const id = randomUUID();
 
 		const campaign: CampaignRaw = {
@@ -112,7 +112,7 @@ export class CampaignCommandHandler implements ICommandHandler {
 	};
 
 	// @TODO
-	Update: CommandFunction<UpdateCampaign> = async (_command) => {
+	Update: CommandFunction<UpdateCampaignData> = async (_command) => {
 		throw new NotImplementedError();
 	};
 }

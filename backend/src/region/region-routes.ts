@@ -1,4 +1,4 @@
-import type { CommandRouter } from '#command/CommandRouter.ts';
+import type { MessageBus } from '#message/MessageBus.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, InternalError } from '#shared/error.ts';
 import { getById } from '#shared/route-utils.ts';
@@ -24,7 +24,7 @@ import {
 
 export function regionRoutes(
 	app: Express,
-	_commandRouter: CommandRouter,
+	_messageBus: MessageBus,
 	regionRepository: RegionRepository,
 	regionShapeRepository: RegionShapeRepository,
 ) {
