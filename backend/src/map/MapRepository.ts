@@ -1,16 +1,11 @@
+import type { RegionRawWithShapes } from '#region/Region.ts';
 import type { RegionRepository } from '#region/RegionRepository.ts';
 import type { RegionShapeRepository } from '#region/RegionShapeRepository.ts';
 import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import {
-	pkColumn,
-	tableName,
-	type Map,
-	type MapRaw,
-	type TempRegion,
-} from './Map.ts';
+import { pkColumn, tableName, type Map, type MapRaw } from './Map.ts';
 
 export class MapRepository extends Repository<MapRaw, Map> {
 	regionRepository: RegionRepository;
@@ -29,7 +24,7 @@ export class MapRepository extends Repository<MapRaw, Map> {
 		const map = await this.getByIdRaw(id);
 		if (!map) return undefined;
 		const regions = await this.regionRepository.getByMapId(id);
-		const regionsWithShapes: TempRegion[] = [];
+		const regionsWithShapes: RegionRawWithShapes[] = [];
 		for (const region of regions) {
 			const shapes = await this.regionShapeRepository.getByRegionId(
 				region.RegionId,
