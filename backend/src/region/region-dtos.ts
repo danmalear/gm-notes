@@ -1,7 +1,6 @@
 import type { ActionStub } from '#action/action-dtos.ts';
 import type { HandoutStub } from '#handout/handout-dtos.ts';
 import type { LocationItemStub } from '#item/item-dtos.ts';
-import type { MapStub } from '#map/map-dtos.ts';
 import type { NarrationStub } from '#narration/narration-dtos.ts';
 import type { RelativeLighting } from '#shared/data-types.ts';
 import type { UUID } from 'crypto';
@@ -51,8 +50,8 @@ export interface RegionQueryParams {
 
 export interface RegionResponse {
 	id: UUID;
+	mapId: UUID;
 	name: string;
-	map: MapStub;
 	shapes: Shape[];
 	lighting: RelativeLighting;
 	narrations: NarrationStub[];
