@@ -8,6 +8,7 @@ import { commandRoutes } from '#command/command-routes.ts';
 import { CommandRouter } from '#command/CommandRouter.ts';
 import { ConditionRepository } from '#condition/ConditionRepository.ts';
 import { FileRepository } from '#file/FileRepository.ts';
+import { HandoutRepository } from '#handout/HandoutRepository.ts';
 import { itemRoutes } from '#item/item-routes.ts';
 import { ItemRepository } from '#item/ItemRepository.ts';
 import { LocationItemRepository } from '#item/LocationItemRepository.ts';
@@ -42,6 +43,7 @@ function createApp() {
 	const fileRepository = new FileRepository();
 	const noteRepository = new NoteRepository();
 	const narrationRepository = new NarrationRepository();
+	const handoutRepository = new HandoutRepository();
 	const abilityCheckRepository = new AbilityCheckRepository(
 		narrationRepository,
 	);
@@ -62,7 +64,14 @@ function createApp() {
 		noteRepository,
 	);
 	const regionShapeRepository = new RegionShapeRepository();
-	const regionRepository = new RegionRepository();
+	const regionRepository = new RegionRepository(
+		actionRepository,
+		handoutRepository,
+		locationItemRepository,
+		narrationRepository,
+		noteRepository,
+		regionShapeRepository,
+	);
 	const mapRepository = new MapRepository(
 		regionRepository,
 		regionShapeRepository,
