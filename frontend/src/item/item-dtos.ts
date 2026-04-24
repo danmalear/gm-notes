@@ -2,7 +2,7 @@ import type { ActionStub } from '#action/action-dtos.ts';
 import type { Value } from '#shared/data/data-types.ts';
 import type { UUID } from 'crypto';
 
-interface LocationItemStubBase {
+export interface LocationItemResponseBase {
 	id: UUID;
 	locationId: UUID;
 	itemId: UUID;
@@ -15,13 +15,22 @@ interface LocationItemStubBase {
 	notes: string[];
 }
 
-interface ContainerStub extends LocationItemStubBase {
+interface ContainerResponse extends LocationItemResponseBase {
 	isContainer: true;
 	containedItems: LocationItemStub[];
 }
 
-interface NonContainerStub extends LocationItemStubBase {
+interface NonContainerResponse extends LocationItemResponseBase {
 	isContainer: false;
 }
 
-export type LocationItemStub = ContainerStub | NonContainerStub;
+export type LocationItemResponse = ContainerResponse | NonContainerResponse;
+
+export interface LocationItemStub {
+	id: UUID;
+	locationId: UUID;
+	itemId: UUID;
+	name: string;
+	quantity: number;
+	isContainer: boolean;
+}
