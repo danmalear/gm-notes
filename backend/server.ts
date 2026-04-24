@@ -7,6 +7,7 @@ import { CampaignRepository } from '#campaign/CampaignRepository.ts';
 import { commandRoutes } from '#command/command-routes.ts';
 import { CommandRouter } from '#command/CommandRouter.ts';
 import { ConditionRepository } from '#condition/ConditionRepository.ts';
+import { fileRoutes } from '#file/file-routes.ts';
 import { FileRepository } from '#file/FileRepository.ts';
 import { HandoutRepository } from '#handout/HandoutRepository.ts';
 import { itemRoutes } from '#item/item-routes.ts';
@@ -29,7 +30,6 @@ import express, {
 	type Request,
 	type Response,
 } from 'express';
-import { routes } from './src/routes.ts';
 
 function createApp() {
 	const app = express();
@@ -86,8 +86,7 @@ function createApp() {
 	narrationRoutes(app, commandRouter, narrationRepository);
 	actionRoutes(app, commandRouter, actionRepository);
 	itemRoutes(app, commandRouter, itemRepository, locationItemRepository);
-
-	routes(app);
+	fileRoutes(app, fileRepository);
 
 	app.use((req: Request, res: Response<MessageResponse>) => {
 		console.error('Unhandled request received');
