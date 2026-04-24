@@ -154,7 +154,11 @@ const RegionView: React.FC = () => {
 						{'items' in region && region.items?.length ? (
 							<Collapsible headingElement="h2" title="Items">
 								{region.items.map((item, index) => (
-									<Item key={`item-${index}`} item={item} topLevelHeading={3} />
+									<Item
+										key={`item-${index}`}
+										itemStub={item}
+										topLevelHeading={3}
+									/>
 								))}
 							</Collapsible>
 						) : null}
