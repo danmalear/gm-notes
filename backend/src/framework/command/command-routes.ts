@@ -7,12 +7,15 @@ import {
 	type CommandResponse,
 } from './command-dtos.ts';
 import type { Command } from './Command.ts';
-import { CommandRepository } from './CommandRepository.ts';
+import type { CommandRepository } from './CommandRepository.ts';
 import type { CommandRouter } from './CommandRouter.ts';
 
-export function commandRoutes(app: Express, commandRouter: CommandRouter) {
+export function commandRoutes(
+	app: Express,
+	commandRouter: CommandRouter,
+	commandRepository: CommandRepository,
+) {
 	const apiNamespace = 'commands';
-	const commandRepository = new CommandRepository();
 
 	app.post(
 		`/${apiNamespace}`,

@@ -5,6 +5,7 @@ import { ActionRepository } from '#action/ActionRepository.ts';
 import { campaignRoutes } from '#campaign/campaign-routes.ts';
 import { CampaignRepository } from '#campaign/CampaignRepository.ts';
 import { commandRoutes } from '#command/command-routes.ts';
+import { CommandRepository } from '#command/CommandRepository.ts';
 import { CommandRouter } from '#command/CommandRouter.ts';
 import { ConditionRepository } from '#condition/ConditionRepository.ts';
 import { fileRoutes } from '#file/file-routes.ts';
@@ -31,15 +32,8 @@ import express, {
 	type Response,
 } from 'express';
 
-function createApp() {
-	const app = express();
-
-	app.use(cors());
-	app.use(express.json());
-
-	const commandRouter = new CommandRouter();
-
-	commandRoutes(app, commandRouter);
+function initRepos() {
+	const commandRepository = new CommandRepository();
 
 	const fileRepository = new FileRepository();
 	const noteRepository = new NoteRepository();
@@ -78,6 +72,48 @@ function createApp() {
 		regionShapeRepository,
 	);
 	const campaignRepository = new CampaignRepository(mapRepository);
+
+	return {
+		commandRepository,
+		fileRepository,
+		noteRepository,
+		narrationRepository,
+		handoutRepository,
+		abilityCheckRepository,
+		conditionRepository,
+		actionRepository,
+		itemRepository,
+		locationItemRepository,
+		regionShapeRepository,
+		regionRepository,
+		mapRepository,
+		campaignRepository,
+	};
+}
+
+function createApp() {
+	const app = express();
+
+	app.use(cors());
+	app.use(express.json());
+
+	const {
+		commandRepository,
+		fileRepository,
+		narrationRepository,
+		abilityCheckRepository,
+		actionRepository,
+		itemRepository,
+		locationItemRepository,
+		regionShapeRepository,
+		regionRepository,
+		mapRepository,
+		campaignRepository,
+	} = initRepos();
+
+	const commandRouter = new CommandRouter();
+
+	commandRoutes(app, commandRouter, commandRepository);
 
 	campaignRoutes(app, commandRouter, campaignRepository);
 	mapRoutes(app, commandRouter, mapRepository);
