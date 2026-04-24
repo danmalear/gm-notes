@@ -1,6 +1,7 @@
 import type { CommandRouter } from '#command/CommandRouter.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, InternalError } from '#shared/error.ts';
+import { getById } from '#shared/route-utils.ts';
 import { isUUID } from '#shared/uuid.ts';
 import { requiredFields, validatePostBody } from '#shared/validation/http.ts';
 import { randomUUID } from 'crypto';
@@ -66,38 +67,12 @@ export function regionRoutes(
 		},
 	);
 
-	app.get(
-		`/${apiNamespace}/:id`,
-		async (
-			req,
-			res: Response<MessageResponse | DataResponse<RegionResponse>>,
-		) => {
-			console.log(
-				`Region GET request received. params: ${JSON.stringify(req.params)}`,
-			);
-
-			if (!isUUID(req.params.id)) {
-				res.status(400).send({ message: 'Invalid UUID format' });
-				return;
-			}
-
-			const region = await regionRepository.getById(req.params.id);
-			if (!region) {
-				res.status(404).send({
-					message: `Region with ID ${req.params.id} not found`,
-				});
-				return;
-			}
-
-			try {
-				res.send({ data: toDto(region) });
-			} catch (e) {
-				res.status(500).send({
-					message: getMessage(e),
-				});
-			}
-		},
-	);
+	getById(app, {
+		apiNamespace,
+		objectDescriptor: 'Region',
+		repository: regionRepository,
+		toDto,
+	});
 
 	app.post(
 		`/${apiNamespace}`,
