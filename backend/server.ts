@@ -7,10 +7,15 @@ import { CampaignRepository } from '#campaign/CampaignRepository.ts';
 import { commandRoutes } from '#command/command-routes.ts';
 import { CommandRouter } from '#command/CommandRouter.ts';
 import { ConditionRepository } from '#condition/ConditionRepository.ts';
+import { FileRepository } from '#file/FileRepository.ts';
+import { itemRoutes } from '#item/item-routes.ts';
+import { ItemRepository } from '#item/ItemRepository.ts';
+import { LocationItemRepository } from '#item/LocationItemRepository.ts';
 import { mapRoutes } from '#map/map-routes.ts';
 import { MapRepository } from '#map/MapRepository.ts';
 import { narrationRoutes } from '#narration/narration-routes.ts';
 import { NarrationRepository } from '#narration/NarrationRepository.ts';
+import { NoteRepository } from '#note/NoteRepository.ts';
 import { RegionRepository } from '#region/RegionRepository.ts';
 import { RegionShapeRepository } from '#region/RegionShapeRepository.ts';
 import type { MessageResponse } from '#shared/dtos.ts';
@@ -34,6 +39,8 @@ function createApp() {
 
 	commandRoutes(app, commandRouter);
 
+	const fileRepository = new FileRepository();
+	const noteRepository = new NoteRepository();
 	const narrationRepository = new NarrationRepository();
 	const abilityCheckRepository = new AbilityCheckRepository(
 		narrationRepository,
@@ -43,6 +50,16 @@ function createApp() {
 		abilityCheckRepository,
 		conditionRepository,
 		narrationRepository,
+	);
+	const itemRepository = new ItemRepository(
+		actionRepository,
+		fileRepository,
+		noteRepository,
+	);
+	const locationItemRepository = new LocationItemRepository(
+		actionRepository,
+		itemRepository,
+		noteRepository,
 	);
 	const regionShapeRepository = new RegionShapeRepository();
 	const regionRepository = new RegionRepository();
@@ -57,6 +74,7 @@ function createApp() {
 	abilityCheckRoutes(app, commandRouter, abilityCheckRepository);
 	narrationRoutes(app, commandRouter, narrationRepository);
 	actionRoutes(app, commandRouter, actionRepository);
+	itemRoutes(app, commandRouter, itemRepository, locationItemRepository);
 
 	routes(app);
 
