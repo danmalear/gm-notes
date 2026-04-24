@@ -1,4 +1,4 @@
-import { FileRoutes } from '#file/FileRoutes.ts';
+import { FileRoutes } from '#file/file-routes.ts';
 import type { Express } from 'express';
 
 export function routes(app: Express) {
