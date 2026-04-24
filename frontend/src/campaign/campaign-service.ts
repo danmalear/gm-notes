@@ -18,9 +18,9 @@ export const getCampaign = async (id: UUID) => {
 
 export const createCampaign = async (data: CreateCampaign) => {
 	const commandRequest: CreateCampaignRequest = {
-		domain: 'Campaign',
+		context: 'Campaign',
 		commandType: 'Create',
-		command: data,
+		commandData: data,
 	};
 	return await api.post<DataResponse<CommandResponse>>(
 		`/commands`,

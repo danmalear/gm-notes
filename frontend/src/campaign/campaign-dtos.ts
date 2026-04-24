@@ -8,9 +8,9 @@ export interface CreateCampaign {
 }
 
 export interface CreateCampaignRequest {
-	domain: 'Campaign';
+	context: 'Campaign';
 	commandType: 'Create';
-	command: CreateCampaign;
+	commandData: CreateCampaign;
 }
 
 export interface UpdateCampaign {
@@ -20,9 +20,9 @@ export interface UpdateCampaign {
 }
 
 export interface UpdateCampaignRequest {
-	domain: 'Campaign';
+	context: 'Campaign';
 	commandType: 'Update';
-	command: UpdateCampaign;
+	commandData: UpdateCampaign;
 }
 
 // Queries

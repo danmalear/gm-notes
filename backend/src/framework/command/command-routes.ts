@@ -41,9 +41,9 @@ export function commandRoutes(
 				CommandId: id,
 				AggregateId: null, // @TODO
 				CorrelationId: correlationId,
-				Context: commandRequest.domain,
+				Context: commandRequest.context,
 				Type: commandRequest.commandType,
-				Data: commandRequest.command,
+				Data: commandRequest.commandData,
 			};
 
 			await commandRepository.insert(command);

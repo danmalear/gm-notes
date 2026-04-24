@@ -2,9 +2,9 @@ import { BadRequestError } from '#shared/error.ts';
 import type { UUID } from 'crypto';
 
 export interface CommandRequest {
-	domain: string;
+	context: string;
 	commandType: string;
-	command: object;
+	commandData: object;
 }
 
 export function validateCommandRequest(
@@ -16,8 +16,8 @@ export function validateCommandRequest(
 	if (typeof obj !== 'object' || Array.isArray(obj)) {
 		throw new BadRequestError('Invalid body supplied to command request');
 	}
-	if (!('domain' in obj) || !obj.domain || typeof obj.domain !== 'string') {
-		throw new BadRequestError('Invalid domain supplied to command request');
+	if (!('context' in obj) || !obj.context || typeof obj.context !== 'string') {
+		throw new BadRequestError('Invalid context supplied to command request');
 	}
 	if (
 		!('commandType' in obj) ||

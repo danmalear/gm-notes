@@ -18,17 +18,17 @@ export interface UpdateCampaign {
 }
 
 export interface CampaignRequest extends CommandRequest {
-	domain: 'Campaign';
+	context: 'Campaign';
 }
 
 interface CreateCampaignRequest extends CampaignRequest {
 	commandType: 'Create';
-	command: CreateCampaign;
+	commandData: CreateCampaign;
 }
 
 interface UpdateCampaignRequest extends CampaignRequest {
 	commandType: 'Update';
-	command: UpdateCampaign;
+	commandData: UpdateCampaign;
 }
 
 export type CampaignCommandRequest =
@@ -38,36 +38,36 @@ export type CampaignCommandRequest =
 function validateCampaignCommandRequest(
 	commandRequest: CommandRequest,
 ): asserts commandRequest is CampaignCommandRequest {
-	const { commandType, command } = commandRequest;
+	const { commandType, commandData } = commandRequest;
 	switch (commandType) {
 		case 'Create':
-			if (!('name' in command) || !command.name) {
+			if (!('name' in commandData) || !commandData.name) {
 				throw new BadRequestError('Campaigns must have a name specified');
 			}
-			if (typeof command.name !== 'string') {
+			if (typeof commandData.name !== 'string') {
 				throw new BadRequestError(
-					`Invalid name specified for campaign: ${command.name}`,
+					`Invalid name specified for campaign: ${commandData.name}`,
 				);
 			}
 			break;
 		case 'Update':
 			if (
-				'name' in command &&
-				typeof command.name !== 'undefined' &&
-				typeof command.name !== 'string'
+				'name' in commandData &&
+				typeof commandData.name !== 'undefined' &&
+				typeof commandData.name !== 'string'
 			) {
 				throw new BadRequestError(
-					`Invalid name specified for campaign: ${command.name}`,
+					`Invalid name specified for campaign: ${commandData.name}`,
 				);
 			}
 			if (
-				'activeMapId' in command &&
-				typeof command.activeMapId !== 'undefined' &&
-				(typeof command.activeMapId !== 'string' ||
-					!isUUID(command.activeMapId))
+				'activeMapId' in commandData &&
+				typeof commandData.activeMapId !== 'undefined' &&
+				(typeof commandData.activeMapId !== 'string' ||
+					!isUUID(commandData.activeMapId))
 			) {
 				throw new BadRequestError(
-					`Invalid ID specified for campaign active map: ${command.activeMapId}`,
+					`Invalid ID specified for campaign active map: ${commandData.activeMapId}`,
 				);
 			}
 			break;
@@ -89,9 +89,9 @@ export class CampaignCommandHandler implements ICommandHandler {
 		validateCampaignCommandRequest(commandRequest);
 		switch (commandRequest.commandType) {
 			case 'Create':
-				return await this.Create(commandRequest.command);
+				return await this.Create(commandRequest.commandData);
 			case 'Update':
-				return await this.Update(commandRequest.command);
+				return await this.Update(commandRequest.commandData);
 		}
 	}
 
