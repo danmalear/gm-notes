@@ -7,8 +7,13 @@ import {
 	validatePolygon,
 	validateRectangle,
 } from '#region/shape-validators.ts';
-import type { RegionResponse, RegionStub, Shape } from './region-dtos.ts';
-import type { Region, RegionRaw } from './Region.ts';
+import type {
+	RegionResponse,
+	RegionStub,
+	RegionStubWithShapes,
+	Shape,
+} from './region-dtos.ts';
+import type { Region, RegionRaw, RegionRawWithShapes } from './Region.ts';
 import type { RegionShape } from './RegionShape.ts';
 
 export function shapeToStub(shape: RegionShape): Shape {
@@ -50,6 +55,17 @@ export function toStub(region: RegionRaw) {
 		id: region.RegionId,
 		mapId: region.MapId,
 		name: region.Name,
+	};
+
+	return regionStub;
+}
+
+export function toStubWithShapes(region: RegionRawWithShapes) {
+	const regionStub: RegionStubWithShapes = {
+		id: region.RegionId,
+		mapId: region.MapId,
+		name: region.Name,
+		shapes: region.Shapes.map(shapeToStub),
 	};
 
 	return regionStub;

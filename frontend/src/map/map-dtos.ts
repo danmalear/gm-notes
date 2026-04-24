@@ -1,4 +1,4 @@
-import type { RegionStub } from '#region/region-dtos.ts';
+import type { RegionStubWithShapes } from '#region/region-dtos.ts';
 import type { Lighting } from '#shared/data/data-types.ts';
 import type { UUID } from 'crypto';
 
@@ -29,7 +29,7 @@ export interface MapResponse {
 	defaultLighting: Lighting;
 	width: number;
 	height: number;
-	regions: RegionStub[];
+	regions: RegionStubWithShapes[];
 }
 
 export interface MapStub {
