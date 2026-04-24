@@ -19,15 +19,16 @@ export interface RegionRaw {
 	Lighting: RelativeLighting;
 }
 
-export type RegionRawWithShapes = RegionRaw & { Shapes: RegionShape[] };
+export interface RegionRawWithShapes extends RegionRaw {
+	Shapes: RegionShape[];
+}
 
-export interface Region extends RegionRaw {
-	shapes: RegionShape[];
-	lighting: RelativeLighting;
-	narrations: Narration[];
-	// creatures: Creature[];
-	actions: ActionRaw[];
-	items: (ItemRaw & LocationItemRaw)[];
-	handouts: Handout[];
-	notes: Note[];
+export interface Region extends RegionRawWithShapes {
+	Lighting: RelativeLighting;
+	Narrations: Narration[];
+	// Creatures: Creature[];
+	Actions: ActionRaw[];
+	Items: (ItemRaw & LocationItemRaw)[];
+	Handouts: Handout[];
+	Notes: Note[];
 }
