@@ -4,8 +4,8 @@ import { ActionRepository } from '#action/ActionRepository.ts';
 import { ConditionRepository } from '#condition/ConditionRepository.ts';
 import { FileRepository } from '#file/FileRepository.ts';
 import { HandoutRepository } from '#handout/HandoutRepository.ts';
-import type { LocationItemResponse } from '#item/item-dtos.ts';
 import { ItemRepository } from '#item/ItemRepository.ts';
+import { toStub as locationItemToStub } from '#item/location-item-mappers.ts';
 import { LocationItemRepository } from '#item/LocationItemRepository.ts';
 import { MapRepository } from '#map/MapRepository.ts';
 import { toStub as narrationToStub } from '#narration/narration-mappers.ts';
@@ -25,7 +25,7 @@ import {
 	validatePolygon,
 	validateRectangle,
 } from '#shared/validation/shapes.ts';
-import { randomUUID, type UUID } from 'crypto';
+import { randomUUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
 import { buildShapes, getShapeType } from './region-shape-utils.ts';
 import type { RegionRaw } from './Region.ts';
@@ -83,64 +83,6 @@ export class RegionRoutes {
 	// #region Response building
 	// @TODO this should really not all live in the region file
 
-	async buildItems(locationId: UUID) {
-		const items = await this.locationItemRepository.getByLocationId(locationId);
-		const dtoItems: LocationItemResponse[] = [];
-		for (const item of items) {
-			const itemActions = await this.actionRepository.getByTargetId(
-				item.ItemId,
-			);
-			const locationItemActions = await this.actionRepository.getByTargetId(
-				item.LocationItemId,
-			);
-			const actions = [...itemActions, ...locationItemActions];
-
-			const itemNotes = await this.noteRepository.getByEntityId(item.ItemId);
-			const locationItemNotes = await this.noteRepository.getByEntityId(
-				item.LocationItemId,
-			);
-			const notes = [...itemNotes, ...locationItemNotes];
-			if (item.IsContainer) {
-				const dtoContainedItems = await this.buildItems(item.LocationItemId);
-				dtoItems.push({
-					id: item.LocationItemId,
-					locationId: item.LocationId,
-					itemId: item.ItemId,
-					name: item.Name,
-					value:
-						item.Value !== null
-							? `${item.Value} ${item.ValueUnit ?? 'GP'}`
-							: undefined,
-					detailsLink: item.DetailsLink ?? undefined,
-					imageFileId: item.ImageFileId ?? undefined,
-					quantity: item.Quantity,
-					actions: actions.map(actionToStub),
-					notes: notes.map((note) => note.Description),
-					isContainer: true,
-					containedItems: dtoContainedItems,
-				});
-			} else {
-				dtoItems.push({
-					id: item.LocationItemId,
-					locationId: item.LocationId,
-					itemId: item.ItemId,
-					name: item.Name,
-					value:
-						item.Value !== null
-							? `${item.Value} ${item.ValueUnit ?? 'GP'}`
-							: undefined,
-					detailsLink: item.DetailsLink ?? undefined,
-					imageFileId: item.ImageFileId ?? undefined,
-					quantity: item.Quantity,
-					actions: actions.map(actionToStub),
-					notes: notes.map((note) => note.Description),
-					isContainer: false,
-				});
-			}
-		}
-		return dtoItems;
-	}
-
 	async buildResponse(region: RegionRaw) {
 		const map = await this.mapRepository.getById(region.MapId);
 
@@ -155,7 +97,9 @@ export class RegionRoutes {
 		const narrations = await this.narrationRepository.getByRegionId(
 			region.RegionId,
 		);
-		const items = await this.buildItems(region.RegionId);
+		const items = await this.locationItemRepository.getByLocationId(
+			region.RegionId,
+		);
 		const actions = await this.actionRepository.getByTargetId(region.RegionId);
 		const handouts = await this.handoutRepository.getByRegionId(
 			region.RegionId,
@@ -174,7 +118,7 @@ export class RegionRoutes {
 			lighting: region.Lighting,
 			narrations: narrations.map(narrationToStub),
 			actions: actions.map(actionToStub),
-			items,
+			items: items.map(locationItemToStub),
 			handouts: handouts.map((handout) => ({
 				id: handout.HandoutId,
 				campaignId: handout.CampaignId,
