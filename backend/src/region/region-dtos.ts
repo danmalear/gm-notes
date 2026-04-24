@@ -62,7 +62,7 @@ export interface RegionResponse {
 	items: LocationItemStub[];
 	// opportunities?: string[];
 	handouts: HandoutStub[];
-	// notes?: string[];
+	notes: string[];
 }
 
 export interface RegionStub {
