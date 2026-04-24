@@ -4,7 +4,7 @@ import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
 import { pkColumn, tableName, type Note } from './Note.ts';
 
-export class NoteRepository extends Repository<Note, Note> {
+export class NoteRepository extends Repository<Note> {
 	constructor() {
 		super(tableName, pkColumn);
 	}
