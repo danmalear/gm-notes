@@ -17,6 +17,7 @@ import { MapRepository } from '#map/MapRepository.ts';
 import { narrationRoutes } from '#narration/narration-routes.ts';
 import { NarrationRepository } from '#narration/NarrationRepository.ts';
 import { NoteRepository } from '#note/NoteRepository.ts';
+import { regionRoutes } from '#region/region-routes.ts';
 import { RegionRepository } from '#region/RegionRepository.ts';
 import { RegionShapeRepository } from '#region/RegionShapeRepository.ts';
 import type { MessageResponse } from '#shared/dtos.ts';
@@ -80,6 +81,7 @@ function createApp() {
 
 	campaignRoutes(app, commandRouter, campaignRepository);
 	mapRoutes(app, commandRouter, mapRepository);
+	regionRoutes(app, commandRouter, regionRepository, regionShapeRepository);
 	abilityCheckRoutes(app, commandRouter, abilityCheckRepository);
 	narrationRoutes(app, commandRouter, narrationRepository);
 	actionRoutes(app, commandRouter, actionRepository);
