@@ -63,7 +63,7 @@ const MapsView: React.FC = () => {
 		}
 	};
 
-	// #endregion Create campaign stuff
+	// #endregion Create map stuff
 
 	// prevent highlighting text while dragging
 	const handleMouseDown: React.MouseEventHandler<HTMLDivElement> = (
