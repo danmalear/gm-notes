@@ -4,12 +4,17 @@ import { db } from '#shared/db.ts';
 import { getMessage, InternalError } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import { pkColumn, tableName, type ItemRaw } from './Item.ts';
+import {
+	pkColumn as itemPkColumn,
+	tableName as itemTableName,
+	type ItemRaw,
+} from './Item.ts';
 import type { ItemRepository } from './ItemRepository.ts';
 import {
 	itemIdColName,
 	locationIdColName,
-	tableName as locationJoinTableName,
+	pkColumn,
+	tableName,
 	type LocationItem,
 	type LocationItemRaw,
 } from './LocationItem.ts';
@@ -72,13 +77,13 @@ export class LocationItemRepository extends Repository<
 	 */
 	async getByLocationId(locationId: UUID) {
 		try {
-			return await db<ItemRaw>(this.tableName)
-				.innerJoin<LocationItemRaw>(
-					locationJoinTableName,
-					`${locationJoinTableName}.${itemIdColName}`,
-					`${this.tableName}.${this.pkColumn}`,
+			return await db<LocationItemRaw>(this.tableName)
+				.innerJoin<ItemRaw>(
+					itemTableName,
+					`${this.tableName}.${itemIdColName}`,
+					`${itemTableName}.${itemPkColumn}`,
 				)
-				.where(`${locationJoinTableName}.${locationIdColName}`, locationId);
+				.where(`${this.tableName}.${locationIdColName}`, locationId);
 		} catch (e) {
 			throw Error(
 				`Error getting ${this.tableName} records for location ID ${locationId}: ${getMessage(e)}`,
