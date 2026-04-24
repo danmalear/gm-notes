@@ -69,5 +69,8 @@ export interface RegionStub {
 	id: UUID;
 	mapId: UUID;
 	name: string;
+}
+
+export interface RegionStubWithShapes extends RegionStub {
 	shapes: Shape[];
 }
