@@ -1,36 +1,34 @@
 import { AbilityCheckRepository } from '#ability-check/AbilityCheckRepository.ts';
-import { toStub as actionToStub } from '#action/action-mappers.ts';
 import { ActionRepository } from '#action/ActionRepository.ts';
 import { ConditionRepository } from '#condition/ConditionRepository.ts';
 import { FileRepository } from '#file/FileRepository.ts';
 import { HandoutRepository } from '#handout/HandoutRepository.ts';
 import { ItemRepository } from '#item/ItemRepository.ts';
-import { toStub as locationItemToStub } from '#item/location-item-mappers.ts';
 import { LocationItemRepository } from '#item/LocationItemRepository.ts';
 import { MapRepository } from '#map/MapRepository.ts';
-import { toStub as narrationToStub } from '#narration/narration-mappers.ts';
 import { NarrationRepository } from '#narration/NarrationRepository.ts';
 import { NoteRepository } from '#note/NoteRepository.ts';
+import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
+import { getMessage, InternalError } from '#shared/error.ts';
+import { isUUID } from '#shared/uuid.ts';
+import { requiredFields, validatePostBody } from '#shared/validation/http.ts';
+import { randomUUID } from 'crypto';
+import type { Express, Request, Response } from 'express';
 import type {
 	RegionCreate,
 	RegionQueryParams,
 	RegionResponse,
-} from '#region/region-dtos.ts';
-import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
-import { getMessage } from '#shared/error.ts';
-import { isUUID } from '#shared/uuid.ts';
-import { requiredFields, validatePostBody } from '#shared/validation/http.ts';
+	RegionStub,
+} from './region-dtos.ts';
+import { toDto, toStub } from './region-mappers.ts';
+import { getShapeType } from './region-shape-utils.ts';
+import { RegionRepository } from './RegionRepository.ts';
+import { RegionShapeRepository } from './RegionShapeRepository.ts';
 import {
 	validateCircle,
 	validatePolygon,
 	validateRectangle,
-} from '#shared/validation/shapes.ts';
-import { randomUUID } from 'crypto';
-import type { Express, Request, Response } from 'express';
-import { buildShapes, getShapeType } from './region-shape-utils.ts';
-import type { RegionRaw } from './Region.ts';
-import { RegionRepository } from './RegionRepository.ts';
-import { RegionShapeRepository } from './RegionShapeRepository.ts';
+} from './shape-validators.ts';
 
 export class RegionRoutes {
 	static readonly apiNamespace = 'regions';
@@ -87,65 +85,13 @@ export class RegionRoutes {
 		);
 	}
 
-	// #region Response building
-	// @TODO this should really not all live in the region file
-
-	async buildResponse(region: RegionRaw) {
-		const map = await this.mapRepository.getById(region.MapId);
-
-		if (!map) {
-			throw Error('Map for region not found.');
-		}
-
-		const regionShapes = await this.regionShapeRepository.getByRegionId(
-			region.RegionId,
-		);
-		const shapes = await buildShapes(regionShapes);
-		const narrations = await this.narrationRepository.getByRegionId(
-			region.RegionId,
-		);
-		const items = await this.locationItemRepository.getByLocationId(
-			region.RegionId,
-		);
-		const actions = await this.actionRepository.getByTargetId(region.RegionId);
-		const handouts = await this.handoutRepository.getByRegionId(
-			region.RegionId,
-		);
-
-		const regionResponse: RegionResponse = {
-			id: region.RegionId,
-			name: region.Name,
-			map: {
-				id: map.MapId,
-				campaignId: map.CampaignId,
-				name: map.Name,
-				imagePath: map.ImagePath,
-			},
-			shapes,
-			lighting: region.Lighting,
-			narrations: narrations.map(narrationToStub),
-			actions: actions.map(actionToStub),
-			items: items.map(locationItemToStub),
-			handouts: handouts.map((handout) => ({
-				id: handout.HandoutId,
-				campaignId: handout.CampaignId,
-				name: handout.Name,
-				type: handout.Type,
-				source: handout.Source,
-			})),
-		};
-
-		return regionResponse;
-	}
-	// #endregion
-
 	init(app: Express) {
 		app.get(
 			`/${RegionRoutes.apiNamespace}`,
 			async (
 				req: Request<
 					Record<string, never>,
-					MessageResponse | DataResponse<RegionResponse[]>,
+					MessageResponse | DataResponse<RegionStub[]>,
 					Record<string, never>,
 					RegionQueryParams
 				>,
@@ -159,11 +105,11 @@ export class RegionRoutes {
 					? await this.regionRepository.getByMapId(req.query.mapId)
 					: await this.regionRepository.getAll();
 
-				const data: RegionResponse[] = [];
+				const data: RegionStub[] = [];
 
 				try {
 					for (const region of regions) {
-						data.push(await this.buildResponse(region));
+						data.push(toStub(region));
 					}
 				} catch (e) {
 					res.status(500).send({
@@ -201,7 +147,7 @@ export class RegionRoutes {
 				}
 
 				try {
-					res.send({ data: await this.buildResponse(region) });
+					res.send({ data: toDto(region) });
 				} catch (e) {
 					res.status(500).send({
 						message: getMessage(e),
@@ -259,8 +205,10 @@ export class RegionRoutes {
 					return;
 				}
 
-				const region = await this.regionRepository.insert({
-					RegionId: randomUUID(),
+				const id = randomUUID();
+
+				await this.regionRepository.insert({
+					RegionId: id,
 					RegionTemplateId: null,
 					MapId: req.body.mapId,
 					Name: req.body.name,
@@ -270,14 +218,17 @@ export class RegionRoutes {
 				for (const shape of req.body.shapes) {
 					await this.regionShapeRepository.insert({
 						RegionShapeId: randomUUID(),
-						RegionId: region.RegionId,
+						RegionId: id,
 						ShapeType: getShapeType(shape),
 						Coords: shape,
 					});
 				}
 
+				const region = await this.regionRepository.getById(id);
+				if (!region) throw new InternalError('Newly created region not found.');
+
 				try {
-					res.send({ data: await this.buildResponse(region) });
+					res.send({ data: toDto(region) });
 				} catch (e) {
 					res.status(500).send({
 						message: getMessage(e),

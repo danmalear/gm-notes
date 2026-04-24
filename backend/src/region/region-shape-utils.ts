@@ -1,10 +1,5 @@
 import type { Shape } from '#region/region-dtos.ts';
-import type { RegionShape, ShapeType } from '#region/RegionShape.ts';
-import {
-	validateCircle,
-	validatePolygon,
-	validateRectangle,
-} from '#shared/validation/shapes.ts';
+import type { ShapeType } from '#region/RegionShape.ts';
 
 export const isCircle = (shape: Shape) => 'r' in shape;
 export const isRectangle = (shape: Shape) => 'x1' in shape;
@@ -20,30 +15,4 @@ export function getShapeType(shape: Shape): ShapeType {
 	} else {
 		throw Error('Invalid shape type specified');
 	}
-}
-
-export function buildShapes(shapes: RegionShape[]) {
-	const dtoShapes: Shape[] = [];
-
-	for (const shape of shapes) {
-		const coords = shape.Coords;
-		switch (shape.ShapeType) {
-			case 'Circle':
-				validateCircle(coords);
-				dtoShapes.push(coords);
-				break;
-			case 'Rectangle':
-				validateRectangle(coords);
-				dtoShapes.push(coords);
-				break;
-			case 'Polygon':
-				validatePolygon(coords);
-				dtoShapes.push(coords);
-				break;
-			default:
-				throw Error('Invalid shape stored on region');
-		}
-	}
-
-	return dtoShapes;
 }
