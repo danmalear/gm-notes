@@ -46,8 +46,4 @@ export function campaignRoutes(
 		repository: campaignRepository,
 		toDto,
 	});
-
-	return {
-		campaignRepository,
-	};
 }

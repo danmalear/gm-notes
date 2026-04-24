@@ -53,8 +53,4 @@ export function commandRoutes(
 			res.send({ data: { id: aggregateId } });
 		},
 	);
-
-	return {
-		commandRepository,
-	};
 }

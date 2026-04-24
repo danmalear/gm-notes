@@ -73,36 +73,6 @@ export function mapRoutes(
 		toDto,
 	});
 
-	app.get(
-		`/${apiNamespace}/:id`,
-		async (req, res: Response<MessageResponse | DataResponse<MapResponse>>) => {
-			console.log(
-				`Map GET request received. params: ${JSON.stringify(req.params)}`,
-			);
-
-			if (!isUUID(req.params.id)) {
-				res.status(400).send({ message: 'Invalid UUID format' });
-				return;
-			}
-
-			const map = await mapRepository.getById(req.params.id);
-			if (!map) {
-				res.status(404).send({
-					message: `Map with ID ${req.params.id} not found`,
-				});
-				return;
-			}
-
-			try {
-				res.send({ data: toDto(map) });
-			} catch (e) {
-				res.status(500).send({
-					message: getMessage(e),
-				});
-			}
-		},
-	);
-
 	app.post(
 		`/${apiNamespace}`,
 		async (req, res: Response<MessageResponse | DataResponse<MapResponse>>) => {
@@ -210,8 +180,4 @@ export function mapRoutes(
 			res.send({ data: toDto(newMap) });
 		},
 	);
-
-	return {
-		mapRepository,
-	};
 }
