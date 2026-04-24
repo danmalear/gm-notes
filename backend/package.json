@@ -13,6 +13,7 @@
 		"#campaign/*": "./src/campaign/*",
 		"#command/*": "./src/framework/command/*",
 		"#condition/*": "./src/condition/*",
+		"#event/*": "./src/framework/event/*",
 		"#file/*": "./src/file/*",
 		"#handout/*": "./src/handout/*",
 		"#item/*": "./src/item/*",
