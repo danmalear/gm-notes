@@ -6,6 +6,11 @@ export interface StreamConfig {
 	streamRepository: StreamRepository;
 }
 
+export interface LoadAggregateOpts {
+	version?: number;
+	snapshotAt?: string;
+}
+
 export class Stream<T> {
 	streamRepository: StreamRepository;
 	id: UUID;
@@ -17,7 +22,10 @@ export class Stream<T> {
 		this.aggregate = this.loadAggregate();
 	}
 
-	loadAggregate(): T {
+	loadAggregate({
+		version = 0,
+		snapshotAt = new Date().toISOString(),
+	}: LoadAggregateOpts = {}): T {
 		throw new NotImplementedError();
 	}
 }
