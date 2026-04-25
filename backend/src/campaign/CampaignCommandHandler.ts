@@ -18,7 +18,7 @@ export interface UpdateCampaignData {
 }
 
 export interface CampaignCommandBase extends Message {
-	context: 'Campaign';
+	context: 'CampaignCommand';
 }
 
 interface CreateCampaign extends CampaignCommandBase {
@@ -33,10 +33,10 @@ interface UpdateCampaign extends CampaignCommandBase {
 
 export type CampaignCommand = CreateCampaign | UpdateCampaign;
 
-function validateCampaignCommandRequest(
+function validateCampaignCommand(
 	command: Message,
 ): asserts command is CampaignCommand {
-	if (command.context !== 'Campaign') {
+	if (command.context !== 'CampaignCommand') {
 		throw new BadRequestError(
 			'Non-campaign command submitted to campaign command handler',
 		);
@@ -86,7 +86,7 @@ export class CampaignCommandHandler implements IMessageSubscriber {
 	}
 
 	async handle(command: Message) {
-		validateCampaignCommandRequest(command);
+		validateCampaignCommand(command);
 		switch (command.type) {
 			case 'Create':
 				return await this.Create(command.data);

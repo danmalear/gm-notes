@@ -3,26 +3,26 @@ import type { UUID } from 'crypto';
 
 // Commands
 
-export interface CreateCampaign {
+export interface CreateCampaignData {
 	name: string;
 }
 
-export interface CreateCampaignRequest {
-	context: 'Campaign';
-	commandType: 'Create';
-	commandData: CreateCampaign;
+export interface CreateCampaign {
+	context: 'CampaignCommand';
+	type: 'Create';
+	data: CreateCampaignData;
 }
 
-export interface UpdateCampaign {
+export interface UpdateCampaignData {
 	id: UUID;
 	name?: string;
 	activeMapId?: UUID;
 }
 
-export interface UpdateCampaignRequest {
-	context: 'Campaign';
+export interface UpdateCampaign {
+	context: 'CampaignCommand';
 	commandType: 'Update';
-	commandData: UpdateCampaign;
+	commandData: UpdateCampaignData;
 }
 
 // Queries

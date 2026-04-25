@@ -16,7 +16,7 @@ export function campaignRoutes(
 
 	const campaignCommandHandler = new CampaignCommandHandler(campaignRepository);
 
-	messageBus.subscribe('Campaign', campaignCommandHandler);
+	messageBus.subscribe('CampaignCommand', campaignCommandHandler);
 
 	app.get(
 		`/${apiNamespace}`,

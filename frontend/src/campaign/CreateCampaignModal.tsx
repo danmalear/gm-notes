@@ -1,6 +1,6 @@
 import { Button, Modal, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import type { CreateCampaign as Campaign } from './campaign-dtos.ts';
+import type { CreateCampaignData as Campaign } from './campaign-dtos.ts';
 
 export interface CreateCampaignModalProps extends React.PropsWithChildren {
 	opened: boolean;

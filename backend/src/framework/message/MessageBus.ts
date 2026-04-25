@@ -1,4 +1,4 @@
-import type { UUID } from 'crypto';
+import { randomUUID, type UUID } from 'crypto';
 import type { IMessageSubscriber } from './IMessageSubscriber.ts';
 import type { Message } from './Message.ts';
 
@@ -8,18 +8,29 @@ export interface IMessageBus {
 }
 
 export class MessageBus implements IMessageBus {
-	subscribers: Record<string, IMessageSubscriber>;
+	subscribers: Record<string, IMessageSubscriber[]>;
 
 	constructor() {
 		this.subscribers = {};
 	}
 
 	subscribe(context: string, handler: IMessageSubscriber) {
-		this.subscribers[context] = handler;
+		if (!this.subscribers[context]) {
+			this.subscribers[context] = [];
+		}
+		this.subscribers[context].push(handler);
 	}
 
+	// @TODO find a better way to handle IDs - this is ugly as hell
 	async send<TMessage extends Message>(message: TMessage) {
 		const { context } = message;
-		return await this.subscribers[context].handle(message);
+		if (!this.subscribers[context]) {
+			return randomUUID();
+		}
+		let id: UUID | undefined;
+		for (const handler of this.subscribers[context]) {
+			id = await handler.handle(message);
+		}
+		return id ?? message.streamId ?? randomUUID();
 	}
 }
