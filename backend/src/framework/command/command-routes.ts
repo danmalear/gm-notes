@@ -42,6 +42,7 @@ export function commandRoutes(
 				Context: commandRequest.context,
 				Type: commandRequest.type,
 				Data: commandRequest.data,
+				CreatedAt: new Date().toISOString(),
 			};
 
 			await commandRepository.insert(command);

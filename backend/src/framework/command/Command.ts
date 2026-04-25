@@ -10,4 +10,5 @@ export interface Command {
 	Context: string;
 	Type: string;
 	Data: object;
+	CreatedAt: string;
 }
