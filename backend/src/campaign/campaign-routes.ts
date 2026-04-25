@@ -2,9 +2,9 @@ import type { MessageBus } from '#message/MessageBus.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getById } from '#shared/route-utils.ts';
 import type { Express, Response } from 'express';
+import { CampaignCommandHandler } from './campaign-commands.ts';
 import type { CampaignStub } from './campaign-dtos.ts';
 import { toDto, toStub } from './campaign-mappers.ts';
-import { CampaignCommandHandler } from './CampaignCommandHandler.ts';
 import type { CampaignRepository } from './CampaignRepository.ts';
 
 export function campaignRoutes(
