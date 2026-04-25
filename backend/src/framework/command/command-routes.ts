@@ -4,7 +4,7 @@ import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, getStatusCode } from '#shared/error.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
-import { type CommandResponse } from './command-dtos.ts';
+import type { CommandResponse } from './command-dtos.ts';
 import type { Command } from './Command.ts';
 import type { CommandRepository } from './CommandRepository.ts';
 
