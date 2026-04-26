@@ -1,3 +1,5 @@
+import type { IMessageSubscriber } from '#message/IMessageSubscriber.ts';
+import type { Message } from '#message/Message.ts';
 import { NotImplementedError } from '#shared/error.ts';
 import type { UUID } from 'crypto';
 import type { StreamRepository } from './stream-repository.ts';
@@ -11,7 +13,7 @@ export interface LoadAggregateOpts {
 	snapshotAt?: string;
 }
 
-export class Stream<T> {
+export abstract class Stream<T> implements IMessageSubscriber {
 	streamRepository: StreamRepository;
 	id: UUID;
 	aggregate: T;
@@ -28,4 +30,6 @@ export class Stream<T> {
 	}: LoadAggregateOpts = {}): T {
 		throw new NotImplementedError();
 	}
+
+	abstract handle(event: Message): Promise<UUID>;
 }
