@@ -30,24 +30,24 @@ export function commandRoutes(
 				return;
 			}
 
-			const commandRequest = req.body;
+			const command = req.body;
 
 			const id = randomUUID();
 			const correlationId = randomUUID();
 
-			const command: Command = {
+			const commandRecord: Command = {
 				CommandId: id,
-				AggregateId: commandRequest.streamId ?? null,
+				AggregateId: command.streamId ?? null,
 				CorrelationId: correlationId,
-				Context: commandRequest.context,
-				Type: commandRequest.type,
-				Data: commandRequest.data,
+				Context: command.context,
+				Type: command.type,
+				Data: command.data,
 				CreatedAt: new Date().toISOString(),
 			};
 
-			await commandRepository.insert(command);
+			await commandRepository.insert(commandRecord);
 
-			const aggregateId = await messageBus.send(commandRequest);
+			const aggregateId = await messageBus.send(command);
 
 			res.send({ data: { id: aggregateId } });
 		},
