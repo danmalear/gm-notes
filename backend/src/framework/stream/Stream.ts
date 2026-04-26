@@ -13,7 +13,7 @@ export interface LoadAggregateOpts {
 	snapshotAt?: string;
 }
 
-export abstract class Stream<T> implements IMessageSubscriber {
+export abstract class Stream<T> implements IMessageSubscriber<'Event'> {
 	streamRepository: StreamRepository;
 	id: UUID;
 	aggregate: T;

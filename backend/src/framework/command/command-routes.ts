@@ -1,15 +1,15 @@
 import { validateMessage } from '#message/Message.ts';
-import type { MessageBus } from '#message/MessageBus.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, getStatusCode } from '#shared/error.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
 import type { CommandResponse } from './command-dtos.ts';
 import type { CommandRec, CommandRepository } from './command-repository.ts';
+import type { CommandBus } from './CommandBus.ts';
 
 export function commandRoutes(
 	app: Express,
-	messageBus: MessageBus,
+	commandBus: CommandBus,
 	commandRepository: CommandRepository,
 ) {
 	const apiNamespace = 'commands';
@@ -23,7 +23,7 @@ export function commandRoutes(
 			console.log(`Command received. body: ${JSON.stringify(req.body)}`);
 
 			try {
-				validateMessage(req.body);
+				validateMessage(req.body, 'Command');
 			} catch (e) {
 				res.status(getStatusCode(e)).send({ message: getMessage(e) });
 				return;
@@ -46,7 +46,7 @@ export function commandRoutes(
 
 			await commandRepository.insert(commandRecord);
 
-			const aggregateId = await messageBus.send(command);
+			const aggregateId = await commandBus.send(command);
 
 			res.send({ data: { id: aggregateId } });
 		},

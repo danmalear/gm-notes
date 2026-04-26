@@ -1,4 +1,5 @@
-import type { MessageBus } from '#message/MessageBus.ts';
+import type { CommandBus } from '#command/CommandBus.ts';
+import type { EventBus } from '#event/EventBus.ts';
 import { getById } from '#shared/route-utils.ts';
 import type { Express } from 'express';
 import type { ItemRepository } from './item-repository.ts';
@@ -7,7 +8,8 @@ import type { LocationItemRepository } from './location-item-repository.ts';
 
 export function itemRoutes(
 	app: Express,
-	_messageBus: MessageBus,
+	_commandBus: CommandBus,
+	_eventBus: EventBus,
 	_itemRepository: ItemRepository,
 	locationItemRepository: LocationItemRepository,
 ) {

@@ -1,4 +1,5 @@
-import type { MessageBus } from '#message/MessageBus.ts';
+import type { CommandBus } from '#command/CommandBus.ts';
+import type { EventBus } from '#event/EventBus.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, InternalError } from '#shared/error.ts';
 import { getById } from '#shared/route-utils.ts';
@@ -24,7 +25,8 @@ import {
 
 export function regionRoutes(
 	app: Express,
-	_messageBus: MessageBus,
+	_commandBus: CommandBus,
+	_eventBus: EventBus,
 	regionRepository: RegionRepository,
 	regionShapeRepository: RegionShapeRepository,
 ) {

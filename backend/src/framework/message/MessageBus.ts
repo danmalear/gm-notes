@@ -1,20 +1,24 @@
 import { randomUUID, type UUID } from 'crypto';
 import type { IMessageSubscriber } from './IMessageSubscriber.ts';
-import type { Message } from './Message.ts';
+import type { Message, MessageType } from './Message.ts';
 
-export interface IMessageBus {
-	subscribe: (context: string, handler: IMessageSubscriber) => void;
-	send: <TMessage extends Message>(message: TMessage) => Promise<UUID>;
+export interface IMessageBus<TType extends MessageType> {
+	subscribe: (context: string, handler: IMessageSubscriber<TType>) => void;
+	send: (message: Message<TType>) => Promise<UUID>;
 }
 
-export class MessageBus implements IMessageBus {
-	subscribers: Record<string, IMessageSubscriber[]>;
+export class MessageBus<TType extends MessageType>
+	implements IMessageBus<TType>
+{
+	subscribers: Record<string, IMessageSubscriber<TType>[]>;
+	messageType: TType;
 
-	constructor() {
+	constructor(messageType: TType) {
 		this.subscribers = {};
+		this.messageType = messageType;
 	}
 
-	subscribe(context: string, handler: IMessageSubscriber) {
+	subscribe(context: string, handler: IMessageSubscriber<TType>) {
 		if (!this.subscribers[context]) {
 			this.subscribers[context] = [];
 		}
@@ -22,7 +26,7 @@ export class MessageBus implements IMessageBus {
 	}
 
 	// @TODO find a better way to handle IDs - this is ugly as hell
-	async send<TMessage extends Message>(message: TMessage) {
+	async send(message: Message<TType>) {
 		const { context } = message;
 		if (!this.subscribers[context]) {
 			return randomUUID();

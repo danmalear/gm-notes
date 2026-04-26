@@ -1,16 +1,15 @@
 import type { CommandFunction } from '#command/command-types.ts';
-import type { IMessageSubscriber } from '#message/IMessageSubscriber.ts';
-import type { Message } from '#message/Message.ts';
+import type { Command } from '#command/Command.ts';
+import type { ICommandSubscriber } from '#command/ICommandSubscriber.ts';
 import { BadRequestError, NotImplementedError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { CampaignRec, CampaignRepository } from './campaign-repository.ts';
 
-export type CampaignCommandContext = 'CampaignCommand';
-
 export interface CreateCampaign {
 	name: string;
 }
+
 function validateCreateCampaign(
 	command: object,
 ): asserts command is CreateCampaign {
@@ -53,24 +52,15 @@ function validateUpdateCampaign(
 	}
 }
 
-type CreateCampaignCommand = Message<
-	CampaignCommandContext,
-	'Create',
-	CreateCampaign
->;
-
-type UpdateCampaignCommand = Message<
-	CampaignCommandContext,
-	'Update',
-	UpdateCampaign
->;
+type CreateCampaignCommand = Command<'Campaign', 'Create', CreateCampaign>;
+type UpdateCampaignCommand = Command<'Campaign', 'Update', UpdateCampaign>;
 
 export type CampaignCommand = CreateCampaignCommand | UpdateCampaignCommand;
 
 function validateCampaignCommand(
-	command: Message,
+	command: Command,
 ): asserts command is CampaignCommand {
-	if (command.context !== 'CampaignCommand') {
+	if (command.context !== 'Campaign') {
 		throw new BadRequestError(
 			'Non-campaign command submitted to campaign command handler',
 		);
@@ -87,14 +77,14 @@ function validateCampaignCommand(
 	}
 }
 
-export class CampaignCommandHandler implements IMessageSubscriber {
+export class CampaignCommandHandler implements ICommandSubscriber {
 	campaignRepository: CampaignRepository;
 
 	constructor(campaignRepository: CampaignRepository) {
 		this.campaignRepository = campaignRepository;
 	}
 
-	async handle(command: Message) {
+	async handle(command: Command) {
 		validateCampaignCommand(command);
 		switch (command.ref) {
 			case 'Create':

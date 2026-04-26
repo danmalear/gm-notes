@@ -6,7 +6,9 @@ import { CampaignRepository } from '#campaign/campaign-repository.ts';
 import { campaignRoutes } from '#campaign/campaign-routes.ts';
 import { CommandRepository } from '#command/command-repository.ts';
 import { commandRoutes } from '#command/command-routes.ts';
+import { CommandBus } from '#command/CommandBus.ts';
 import { ConditionRepository } from '#condition/condition-repository.ts';
+import { EventBus } from '#event/EventBus.ts';
 import { FileRepository } from '#file/file-repository.ts';
 import { fileRoutes } from '#file/file-routes.ts';
 import { HandoutRepository } from '#handout/handout-repository.ts';
@@ -15,7 +17,6 @@ import { itemRoutes } from '#item/item-routes.ts';
 import { LocationItemRepository } from '#item/location-item-repository.ts';
 import { MapRepository } from '#map/map-repository.ts';
 import { mapRoutes } from '#map/map-routes.ts';
-import { MessageBus } from '#message/MessageBus.ts';
 import { NarrationRepository } from '#narration/narration-repository.ts';
 import { narrationRoutes } from '#narration/narration-routes.ts';
 import { NoteRepository } from '#note/note-repository.ts';
@@ -111,17 +112,24 @@ function createApp() {
 		campaignRepository,
 	} = initRepos();
 
-	const messageBus = new MessageBus();
+	const commandBus = new CommandBus();
+	const eventBus = new EventBus();
 
-	commandRoutes(app, messageBus, commandRepository);
+	commandRoutes(app, commandBus, commandRepository);
 
-	campaignRoutes(app, messageBus, campaignRepository);
-	mapRoutes(app, messageBus, mapRepository);
-	regionRoutes(app, messageBus, regionRepository, regionShapeRepository);
-	abilityCheckRoutes(app, messageBus, abilityCheckRepository);
-	narrationRoutes(app, messageBus, narrationRepository);
-	actionRoutes(app, messageBus, actionRepository);
-	itemRoutes(app, messageBus, itemRepository, locationItemRepository);
+	campaignRoutes(app, commandBus, eventBus, campaignRepository);
+	mapRoutes(app, commandBus, eventBus, mapRepository);
+	regionRoutes(
+		app,
+		commandBus,
+		eventBus,
+		regionRepository,
+		regionShapeRepository,
+	);
+	abilityCheckRoutes(app, commandBus, eventBus, abilityCheckRepository);
+	narrationRoutes(app, commandBus, eventBus, narrationRepository);
+	actionRoutes(app, commandBus, eventBus, actionRepository);
+	itemRoutes(app, commandBus, eventBus, itemRepository, locationItemRepository);
 	fileRoutes(app, fileRepository);
 
 	app.use((req: Request, res: Response<MessageResponse>) => {

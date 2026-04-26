@@ -5,21 +5,22 @@ import type { UUID } from 'crypto';
 export type MessageType = 'Command' | 'Event';
 
 export interface Message<
+	TType extends MessageType = MessageType,
 	TContext extends string = string,
 	TRef extends string = string,
 	TData extends object = object,
 > {
-	type: MessageType;
+	type: TType;
 	context: TContext;
 	streamId: UUID | undefined;
 	ref: TRef;
 	data: TData;
 }
 
-export function validateMessage(
+export function validateMessage<TType extends MessageType>(
 	obj: unknown,
-	messageType: string = 'message',
-): asserts obj is Message {
+	messageType: TType,
+): asserts obj is Message<TType> {
 	if (!obj) {
 		throw new BadRequestError(`No body supplied to ${messageType} request`);
 	}
