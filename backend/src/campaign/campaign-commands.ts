@@ -6,31 +6,31 @@ import { isUUID } from '#shared/uuid.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { CampaignRec, CampaignRepository } from './campaign-repository.ts';
 
-export interface CreateCampaignData {
+export type CampaignCommandContext = 'CampaignCommand';
+
+export interface CreateCampaign {
 	name: string;
 }
 
-export interface UpdateCampaignData {
+export interface UpdateCampaign {
 	id: UUID;
 	name?: string;
 	activeMapId?: UUID;
 }
 
-export interface CampaignCommandBase extends Message {
-	context: 'CampaignCommand';
-}
+type CreateCampaignCommand = Message<
+	CampaignCommandContext,
+	'Create',
+	CreateCampaign
+>;
 
-interface CreateCampaign extends CampaignCommandBase {
-	type: 'Create';
-	data: CreateCampaignData;
-}
+type UpdateCampaignCommand = Message<
+	CampaignCommandContext,
+	'Update',
+	UpdateCampaign
+>;
 
-interface UpdateCampaign extends CampaignCommandBase {
-	type: 'Update';
-	data: UpdateCampaignData;
-}
-
-export type CampaignCommand = CreateCampaign | UpdateCampaign;
+export type CampaignCommand = CreateCampaignCommand | UpdateCampaignCommand;
 
 function validateCampaignCommand(
 	command: Message,
@@ -94,7 +94,7 @@ export class CampaignCommandHandler implements IMessageSubscriber {
 		}
 	}
 
-	Create: CommandFunction<CreateCampaignData> = async (command) => {
+	Create: CommandFunction<CreateCampaign> = async (command) => {
 		const id = randomUUID();
 
 		const campaign: CampaignRec = {
@@ -111,7 +111,7 @@ export class CampaignCommandHandler implements IMessageSubscriber {
 	};
 
 	// @TODO
-	Update: CommandFunction<UpdateCampaignData> = async (_command) => {
+	Update: CommandFunction<UpdateCampaign> = async (_command) => {
 		throw new NotImplementedError();
 	};
 }
