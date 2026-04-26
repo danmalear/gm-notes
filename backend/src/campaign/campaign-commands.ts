@@ -11,11 +11,46 @@ export type CampaignCommandContext = 'CampaignCommand';
 export interface CreateCampaign {
 	name: string;
 }
+function validateCreateCampaign(
+	command: object,
+): asserts command is CreateCampaign {
+	if (!('name' in command) || !command.name) {
+		throw new BadRequestError('Campaigns must have a name specified');
+	}
+	if (typeof command.name !== 'string') {
+		throw new BadRequestError(
+			`Invalid name specified for campaign: ${command.name}`,
+		);
+	}
+}
 
 export interface UpdateCampaign {
 	id: UUID;
 	name?: string;
 	activeMapId?: UUID;
+}
+
+function validateUpdateCampaign(
+	command: object,
+): asserts command is UpdateCampaign {
+	if (
+		'name' in command &&
+		typeof command.name !== 'undefined' &&
+		typeof command.name !== 'string'
+	) {
+		throw new BadRequestError(
+			`Invalid name specified for campaign: ${command.name}`,
+		);
+	}
+	if (
+		'activeMapId' in command &&
+		typeof command.activeMapId !== 'undefined' &&
+		(typeof command.activeMapId !== 'string' || !isUUID(command.activeMapId))
+	) {
+		throw new BadRequestError(
+			`Invalid ID specified for campaign active map: ${command.activeMapId}`,
+		);
+	}
 }
 
 type CreateCampaignCommand = Message<
@@ -42,35 +77,10 @@ function validateCampaignCommand(
 	}
 	switch (command.ref) {
 		case 'Create':
-			if (!('name' in command.data) || !command.data.name) {
-				throw new BadRequestError('Campaigns must have a name specified');
-			}
-			if (typeof command.data.name !== 'string') {
-				throw new BadRequestError(
-					`Invalid name specified for campaign: ${command.data.name}`,
-				);
-			}
+			validateCreateCampaign(command.data);
 			break;
 		case 'Update':
-			if (
-				'name' in command.data &&
-				typeof command.data.name !== 'undefined' &&
-				typeof command.data.name !== 'string'
-			) {
-				throw new BadRequestError(
-					`Invalid name specified for campaign: ${command.data.name}`,
-				);
-			}
-			if (
-				'activeMapId' in command.data &&
-				typeof command.data.activeMapId !== 'undefined' &&
-				(typeof command.data.activeMapId !== 'string' ||
-					!isUUID(command.data.activeMapId))
-			) {
-				throw new BadRequestError(
-					`Invalid ID specified for campaign active map: ${command.data.activeMapId}`,
-				);
-			}
+			validateUpdateCampaign(command.data);
 			break;
 		default:
 			throw new BadRequestError(`Invalid campaign command: ${command.type}`);
