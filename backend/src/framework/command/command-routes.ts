@@ -1,10 +1,10 @@
-import { validateMessage } from '#message/Message.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, getStatusCode } from '#shared/error.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
 import type { CommandResponse } from './command-dtos.ts';
 import type { CommandRec, CommandRepository } from './command-repository.ts';
+import { validateCommand } from './Command.ts';
 import type { CommandBus } from './CommandBus.ts';
 
 export function commandRoutes(
@@ -23,7 +23,7 @@ export function commandRoutes(
 			console.log(`Command received. body: ${JSON.stringify(req.body)}`);
 
 			try {
-				validateMessage(req.body, 'Command');
+				validateCommand(req.body);
 			} catch (e) {
 				res.status(getStatusCode(e)).send({ message: getMessage(e) });
 				return;
