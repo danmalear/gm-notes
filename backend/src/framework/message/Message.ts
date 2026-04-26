@@ -2,14 +2,17 @@ import { BadRequestError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
 import type { UUID } from 'crypto';
 
+export type MessageType = 'Command' | 'Event';
+
 export interface Message<
 	TContext extends string = string,
-	TType extends string = string,
+	TRef extends string = string,
 	TData extends object = object,
 > {
+	type: MessageType;
 	context: TContext;
 	streamId: UUID | undefined;
-	type: TType;
+	ref: TRef;
 	data: TData;
 }
 

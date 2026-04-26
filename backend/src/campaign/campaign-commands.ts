@@ -40,7 +40,7 @@ function validateCampaignCommand(
 			'Non-campaign command submitted to campaign command handler',
 		);
 	}
-	switch (command.type) {
+	switch (command.ref) {
 		case 'Create':
 			if (!('name' in command.data) || !command.data.name) {
 				throw new BadRequestError('Campaigns must have a name specified');
@@ -86,7 +86,7 @@ export class CampaignCommandHandler implements IMessageSubscriber {
 
 	async handle(command: Message) {
 		validateCampaignCommand(command);
-		switch (command.type) {
+		switch (command.ref) {
 			case 'Create':
 				return await this.Create(command.data);
 			case 'Update':
