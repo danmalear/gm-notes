@@ -22,10 +22,7 @@ export class Stream<T> {
 		this.aggregate = this.loadAggregate();
 	}
 
-	loadAggregate({
-		version = 0,
-		snapshotAt = new Date().toISOString(),
-	}: LoadAggregateOpts = {}): T {
+	loadAggregate({ version, snapshotAt }: LoadAggregateOpts = {}): T {
 		throw new NotImplementedError();
 	}
 }
