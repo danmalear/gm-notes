@@ -1,21 +1,37 @@
-import {
-	handoutIdColName,
-	regionIdColName,
-	tableName as regionJoinTableName,
-	type RegionHandout,
-} from '#region/RegionHandout.ts';
 import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import { pkColumn, tableName, type Handout } from './Handout.ts';
 
-export class HandoutRepository extends Repository<Handout, Handout> {
+export type HandoutType = 'Text' | 'Image' | 'File';
+
+export interface HandoutRec {
+	HandoutId: UUID;
+	CampaignId: UUID;
+	Name: string;
+	Type: HandoutType;
+	Source: string;
+}
+
+export interface RegionHandoutRec {
+	RegionId: UUID;
+	HandoutId: UUID;
+}
+
+export const tableName = 'Handout';
+export const pkColumn = 'HandoutId';
+
+export const regionJoinTableName = 'RegionHandout';
+export const pkColumns = ['RegionId', 'HandoutId'];
+export const regionIdColName = 'RegionId';
+export const handoutIdColName = 'HandoutId';
+
+export class HandoutRepository extends Repository<HandoutRec> {
 	constructor() {
 		super(tableName, pkColumn);
 	}
 
-	override async getById(id: UUID): Promise<Handout | undefined> {
+	override async getById(id: UUID): Promise<HandoutRec | undefined> {
 		return await this.getByIdRaw(id);
 	}
 
@@ -26,8 +42,8 @@ export class HandoutRepository extends Repository<Handout, Handout> {
 	 */
 	async getByRegionId(regionId: UUID) {
 		try {
-			return await db<Handout>(this.tableName)
-				.innerJoin<RegionHandout>(
+			return await db<HandoutRec>(this.tableName)
+				.innerJoin<RegionHandoutRec>(
 					regionJoinTableName,
 					`${regionJoinTableName}.${handoutIdColName}`,
 					`${this.tableName}.${this.pkColumn}`,

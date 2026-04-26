@@ -1,7 +1,7 @@
 import type { NarrationResponse, NarrationStub } from './narration-dtos.ts';
-import type { Narration } from './Narration.ts';
+import type { NarrationRec } from './narration-repository.ts';
 
-export function toDto(narration: Narration) {
+export function toDto(narration: NarrationRec) {
 	const narrationResponse: NarrationResponse = {
 		id: narration.NarrationId,
 		name: narration.Name,
@@ -12,7 +12,7 @@ export function toDto(narration: Narration) {
 	return narrationResponse;
 }
 
-export function toStub(narration: Narration) {
+export function toStub(narration: NarrationRec) {
 	const narrationStub: NarrationStub = {
 		id: narration.NarrationId,
 		name: narration.Name,

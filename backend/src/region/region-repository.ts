@@ -1,16 +1,54 @@
-import type { ActionRepository } from '#action/ActionRepository.ts';
-import type { HandoutRepository } from '#handout/HandoutRepository.ts';
-import type { LocationItemRepository } from '#item/LocationItemRepository.ts';
-import type { NarrationRepository } from '#narration/NarrationRepository.ts';
-import type { NoteRepository } from '#note/NoteRepository.ts';
+import type { ActionRec, ActionRepository } from '#action/action-repository.ts';
+import type {
+	HandoutRec,
+	HandoutRepository,
+} from '#handout/handout-repository.ts';
+import type { ItemRec } from '#item/item-repository.ts';
+import type {
+	LocationItemRec,
+	LocationItemRepository,
+} from '#item/location-item-repository.ts';
+import type {
+	NarrationRec,
+	NarrationRepository,
+} from '#narration/narration-repository.ts';
+import type { NoteRec, NoteRepository } from '#note/note-repository.ts';
+import type { RelativeLighting } from '#shared/data-types.ts';
 import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import { pkColumn, tableName, type Region, type RegionRaw } from './Region.ts';
-import type { RegionShapeRepository } from './RegionShapeRepository.ts';
+import type {
+	RegionShapeRec,
+	RegionShapeRepository,
+} from './region-shape-repository.ts';
 
-export class RegionRepository extends Repository<RegionRaw, Region> {
+export interface RegionRec {
+	RegionId: UUID;
+	RegionTemplateId: UUID | null;
+	MapId: UUID;
+	Name: string;
+	Lighting: RelativeLighting;
+}
+
+export interface RegionRecShapes extends RegionRec {
+	Shapes: RegionShapeRec[];
+}
+
+export interface RegionRefRec extends RegionRecShapes {
+	Lighting: RelativeLighting;
+	Narrations: NarrationRec[];
+	// Creatures: CreatureRec[];
+	Actions: ActionRec[];
+	Items: (ItemRec & LocationItemRec)[];
+	Handouts: HandoutRec[];
+	Notes: NoteRec[];
+}
+
+export const tableName = 'Region';
+export const pkColumn = 'RegionId';
+
+export class RegionRepository extends Repository<RegionRec, RegionRefRec> {
 	actionRepository: ActionRepository;
 	// creatureRepository: CreatureRepository;
 	handoutRepository: HandoutRepository;
@@ -38,7 +76,7 @@ export class RegionRepository extends Repository<RegionRaw, Region> {
 		this.regionShapeRepository = regionShapeRepository;
 	}
 
-	override async getById(id: UUID): Promise<Region | undefined> {
+	override async getById(id: UUID): Promise<RegionRefRec | undefined> {
 		const regionRaw = await this.getByIdRaw(id);
 		if (!regionRaw) return undefined;
 
@@ -69,7 +107,7 @@ export class RegionRepository extends Repository<RegionRaw, Region> {
 	 */
 	async getByMapId(mapId: UUID) {
 		try {
-			return await db<RegionRaw>(this.tableName).where('MapId', mapId);
+			return await db<RegionRec>(this.tableName).where('MapId', mapId);
 		} catch (e) {
 			throw Error(
 				`Error getting ${this.tableName} records for map ID ${mapId}: ${getMessage(e)}`,

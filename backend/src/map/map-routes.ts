@@ -19,8 +19,7 @@ import type {
 	MapUpdate,
 } from './map-dtos.ts';
 import { toDto, toStub } from './map-mappers.ts';
-import type { MapRaw } from './Map.ts';
-import type { MapRepository } from './MapRepository.ts';
+import type { MapRec, MapRepository } from './map-repository.ts';
 
 export function mapRoutes(
 	app: Express,
@@ -107,7 +106,7 @@ export function mapRoutes(
 				return;
 			}
 
-			const map: MapRaw = {
+			const map: MapRec = {
 				MapId: randomUUID(),
 				CampaignId: req.body.campaignId,
 				Name: req.body.name,
@@ -163,7 +162,7 @@ export function mapRoutes(
 				return;
 			}
 
-			const map: Partial<MapRaw> = {
+			const map: Partial<MapRec> = {
 				Name: req.body.name,
 				ImagePath: req.body.imagePath,
 				DefaultLighting: req.body.defaultLighting,

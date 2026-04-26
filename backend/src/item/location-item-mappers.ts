@@ -4,10 +4,13 @@ import type {
 	LocationItemResponseBase,
 	LocationItemStub,
 } from './item-dtos.ts';
-import type { ItemRaw } from './Item.ts';
-import type { LocationItem, LocationItemRaw } from './LocationItem.ts';
+import type { ItemRec } from './item-repository.ts';
+import type {
+	LocationItemRec,
+	LocationItemRefRec,
+} from './location-item-repository.ts';
 
-export const toDto = (item: LocationItem) => {
+export const toDto = (item: LocationItemRefRec) => {
 	const locationItemResponseBase: LocationItemResponseBase = {
 		id: item.LocationItemId,
 		locationId: item.LocationId,
@@ -38,7 +41,7 @@ export const toDto = (item: LocationItem) => {
 	return locationItemResponse;
 };
 
-export const toStub = (item: ItemRaw & LocationItemRaw) => {
+export const toStub = (item: ItemRec & LocationItemRec) => {
 	const locationItemStub: LocationItemStub = {
 		id: item.LocationItemId,
 		locationId: item.LocationId,

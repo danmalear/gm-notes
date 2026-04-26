@@ -2,9 +2,12 @@ import type {
 	AbilityCheckResponse,
 	AbilityCheckStub,
 } from './ability-check-dtos.ts';
-import type { AbilityCheck, AbilityCheckRaw } from './AbilityCheck.ts';
+import type {
+	AbilityCheckRec,
+	AbilityCheckRefRec,
+} from './ability-check-repository.ts';
 
-export function toDto(abilityCheck: AbilityCheck) {
+export function toDto(abilityCheck: AbilityCheckRefRec) {
 	const abilityCheckResponse: AbilityCheckResponse = {
 		id: abilityCheck.AbilityCheckId,
 		actionId: abilityCheck.ActionId,
@@ -21,7 +24,7 @@ export function toDto(abilityCheck: AbilityCheck) {
 	return abilityCheckResponse;
 }
 
-export function toStub(abilityCheck: AbilityCheckRaw) {
+export function toStub(abilityCheck: AbilityCheckRec) {
 	const abilityCheckStub: AbilityCheckStub = {
 		id: abilityCheck.AbilityCheckId,
 		actionId: abilityCheck.ActionId,

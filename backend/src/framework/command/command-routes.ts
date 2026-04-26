@@ -5,8 +5,7 @@ import { getMessage, getStatusCode } from '#shared/error.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
 import type { CommandResponse } from './command-dtos.ts';
-import type { Command } from './Command.ts';
-import type { CommandRepository } from './CommandRepository.ts';
+import type { CommandRec, CommandRepository } from './command-repository.ts';
 
 export function commandRoutes(
 	app: Express,
@@ -35,7 +34,7 @@ export function commandRoutes(
 			const id = randomUUID();
 			const correlationId = randomUUID();
 
-			const commandRecord: Command = {
+			const commandRecord: CommandRec = {
 				CommandId: id,
 				AggregateId: command.streamId ?? null,
 				CorrelationId: correlationId,

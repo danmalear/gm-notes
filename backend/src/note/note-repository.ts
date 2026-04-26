@@ -2,14 +2,22 @@ import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import { pkColumn, tableName, type Note } from './Note.ts';
 
-export class NoteRepository extends Repository<Note> {
+export interface NoteRec {
+	NoteId: UUID;
+	EntityId: UUID;
+	Description: string;
+}
+
+export const tableName = 'Note';
+export const pkColumn = 'NoteId';
+
+export class NoteRepository extends Repository<NoteRec> {
 	constructor() {
 		super(tableName, pkColumn);
 	}
 
-	override async getById(id: UUID): Promise<Note | undefined> {
+	override async getById(id: UUID): Promise<NoteRec | undefined> {
 		return await this.getByIdRaw(id);
 	}
 
@@ -20,7 +28,10 @@ export class NoteRepository extends Repository<Note> {
 	 */
 	async getByEntityId(entityId: UUID) {
 		try {
-			const notes = await db<Note>(this.tableName).where('EntityId', entityId);
+			const notes = await db<NoteRec>(this.tableName).where(
+				'EntityId',
+				entityId,
+			);
 			return notes;
 		} catch (e) {
 			throw Error(

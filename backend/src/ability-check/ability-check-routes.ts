@@ -1,8 +1,8 @@
 import type { MessageBus } from '#message/MessageBus.ts';
 import { getById } from '#shared/route-utils.ts';
 import type { Express } from 'express';
-import type { AbilityCheckRepository } from './AbilityCheckRepository.ts';
 import { toDto } from './ability-check-mappers.ts';
+import type { AbilityCheckRepository } from './ability-check-repository.ts';
 
 export function abilityCheckRoutes(
 	app: Express,

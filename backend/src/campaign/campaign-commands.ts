@@ -4,8 +4,7 @@ import type { Message } from '#message/Message.ts';
 import { BadRequestError, NotImplementedError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
 import { randomUUID, type UUID } from 'crypto';
-import type { CampaignRaw } from './Campaign.ts';
-import type { CampaignRepository } from './CampaignRepository.ts';
+import type { CampaignRec, CampaignRepository } from './campaign-repository.ts';
 
 export interface CreateCampaignData {
 	name: string;
@@ -98,7 +97,7 @@ export class CampaignCommandHandler implements IMessageSubscriber {
 	Create: CommandFunction<CreateCampaignData> = async (command) => {
 		const id = randomUUID();
 
-		const campaign: CampaignRaw = {
+		const campaign: CampaignRec = {
 			CampaignId: id,
 			CampaignTemplateId: null,
 			Name: command.name,

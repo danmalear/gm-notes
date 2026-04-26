@@ -5,7 +5,7 @@ import type { Express, Response } from 'express';
 import { CampaignCommandHandler } from './campaign-commands.ts';
 import type { CampaignStub } from './campaign-dtos.ts';
 import { toDto, toStub } from './campaign-mappers.ts';
-import type { CampaignRepository } from './CampaignRepository.ts';
+import type { CampaignRepository } from './campaign-repository.ts';
 
 export function campaignRoutes(
 	app: Express,

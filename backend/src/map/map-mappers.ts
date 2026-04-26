@@ -1,8 +1,8 @@
 import { toStubWithShapes as regionToStub } from '#region/region-mappers.ts';
 import type { MapResponse, MapStub } from './map-dtos.ts';
-import type { Map, MapRaw } from './Map.ts';
+import type { MapRec, MapRefRec } from './map-repository.ts';
 
-export function toDto(map: Map) {
+export function toDto(map: MapRefRec) {
 	const mapResponse: MapResponse = {
 		id: map.MapId,
 		campaignId: map.CampaignId,
@@ -17,7 +17,7 @@ export function toDto(map: Map) {
 	return mapResponse;
 }
 
-export function toStub(map: MapRaw) {
+export function toStub(map: MapRec) {
 	const mapStub: MapStub = {
 		id: map.MapId,
 		campaignId: map.CampaignId,

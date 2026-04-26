@@ -1,8 +1,8 @@
 import { toStub as abilityCheckToStub } from '#ability-check/ability-check-mappers.ts';
 import type { ActionResponse, ActionStub } from './action-dtos.ts';
-import type { Action, ActionRaw } from './Action.ts';
+import type { ActionRec, ActionRefRec } from './action-repository.ts';
 
-export function toDto(action: Action) {
+export function toDto(action: ActionRefRec) {
 	const actionDto: ActionResponse = {
 		id: action.ActionId,
 		targetId: action.TargetId,
@@ -18,7 +18,7 @@ export function toDto(action: Action) {
 	return actionDto;
 }
 
-export function toStub(action: ActionRaw) {
+export function toStub(action: ActionRec) {
 	const actionStub: ActionStub = {
 		id: action.ActionId,
 		targetId: action.TargetId,

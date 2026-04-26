@@ -13,9 +13,9 @@ import type {
 	RegionStub,
 } from './region-dtos.ts';
 import { toDto, toStub } from './region-mappers.ts';
+import type { RegionRepository } from './region-repository.ts';
+import type { RegionShapeRepository } from './region-shape-repository.ts';
 import { getShapeType } from './region-shape-utils.ts';
-import type { RegionRepository } from './RegionRepository.ts';
-import type { RegionShapeRepository } from './RegionShapeRepository.ts';
 import {
 	validateCircle,
 	validatePolygon,

@@ -1,8 +1,8 @@
 import type { MessageBus } from '#message/MessageBus.ts';
 import { getById } from '#shared/route-utils.ts';
 import type { Express } from 'express';
-import type { ActionRepository } from './ActionRepository.ts';
 import { toDto } from './action-mappers.ts';
+import type { ActionRepository } from './action-repository.ts';
 
 export function actionRoutes(
 	app: Express,

@@ -1,13 +1,33 @@
-import type { RegionRawWithShapes } from '#region/Region.ts';
-import type { RegionRepository } from '#region/RegionRepository.ts';
-import type { RegionShapeRepository } from '#region/RegionShapeRepository.ts';
+import type {
+	RegionRecShapes,
+	RegionRepository,
+} from '#region/region-repository.ts';
+import type { RegionShapeRepository } from '#region/region-shape-repository.ts';
+import type { Lighting } from '#shared/data-types.ts';
 import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import { pkColumn, tableName, type Map, type MapRaw } from './Map.ts';
 
-export class MapRepository extends Repository<MapRaw, Map> {
+export interface MapRec {
+	MapId: UUID;
+	CampaignId: UUID;
+	MapTemplateId: UUID | null;
+	Name: string;
+	ImagePath: string;
+	DefaultLighting: Lighting;
+	Width: number;
+	Height: number;
+}
+
+export interface MapRefRec extends MapRec {
+	Regions: RegionRecShapes[];
+}
+
+export const tableName = 'Map';
+export const pkColumn = 'MapId';
+
+export class MapRepository extends Repository<MapRec, MapRefRec> {
 	regionRepository: RegionRepository;
 	regionShapeRepository: RegionShapeRepository;
 
@@ -20,11 +40,11 @@ export class MapRepository extends Repository<MapRaw, Map> {
 		this.regionShapeRepository = regionShapeRepository;
 	}
 
-	override async getById(id: UUID): Promise<Map | undefined> {
+	override async getById(id: UUID): Promise<MapRefRec | undefined> {
 		const map = await this.getByIdRaw(id);
 		if (!map) return undefined;
 		const regions = await this.regionRepository.getByMapId(id);
-		const regionsWithShapes: RegionRawWithShapes[] = [];
+		const regionsWithShapes: RegionRecShapes[] = [];
 		for (const region of regions) {
 			const shapes = await this.regionShapeRepository.getByRegionId(
 				region.RegionId,
@@ -47,7 +67,7 @@ export class MapRepository extends Repository<MapRaw, Map> {
 	 */
 	async getByCampaignId(campaignId: UUID) {
 		try {
-			return await db<MapRaw>(this.tableName).where('CampaignId', campaignId);
+			return await db<MapRec>(this.tableName).where('CampaignId', campaignId);
 		} catch (e) {
 			throw Error(
 				`Error getting ${this.tableName} records for campaign ID ${campaignId}: ${getMessage(e)}`,

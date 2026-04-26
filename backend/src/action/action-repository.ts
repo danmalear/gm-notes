@@ -1,14 +1,39 @@
-import type { AbilityCheckRepository } from '#ability-check/AbilityCheckRepository.ts';
-import type { ConditionRepository } from '#condition/ConditionRepository.ts';
-import type { NarrationRepository } from '#narration/NarrationRepository.ts';
+import type {
+	AbilityCheckRec,
+	AbilityCheckRepository,
+} from '#ability-check/ability-check-repository.ts';
+import type {
+	ConditionRec,
+	ConditionRepository,
+} from '#condition/condition-repository.ts';
+import type {
+	NarrationRec,
+	NarrationRepository,
+} from '#narration/narration-repository.ts';
+import type { ActionType } from '#shared/data-types.ts';
 import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import type { Action } from './Action.ts';
-import { pkColumn, tableName, type ActionRaw } from './Action.ts';
 
-export class ActionRepository extends Repository<ActionRaw, Action> {
+export interface ActionRec {
+	ActionId: UUID;
+	TargetId: UUID;
+	Name: string;
+	Type: ActionType | null;
+	NarrationId: UUID | null;
+}
+
+export interface ActionRefRec extends ActionRec {
+	Narration: NarrationRec | null;
+	Conditions: ConditionRec[];
+	AbilityChecks: AbilityCheckRec[];
+}
+
+export const tableName = 'Action';
+export const pkColumn = 'ActionId';
+
+export class ActionRepository extends Repository<ActionRec, ActionRefRec> {
 	abilityCheckRepository: AbilityCheckRepository;
 	conditionRepository: ConditionRepository;
 	narrationRepository: NarrationRepository;
@@ -24,7 +49,7 @@ export class ActionRepository extends Repository<ActionRaw, Action> {
 		this.narrationRepository = narrationRepository;
 	}
 
-	override async getById(id: UUID): Promise<Action | undefined> {
+	override async getById(id: UUID): Promise<ActionRefRec | undefined> {
 		const actionRaw = await this.getByIdRaw(id);
 		if (!actionRaw) return undefined;
 		const narration = actionRaw.NarrationId
@@ -49,7 +74,7 @@ export class ActionRepository extends Repository<ActionRaw, Action> {
 	 */
 	async getByTargetId(targetId: UUID) {
 		try {
-			return await db<ActionRaw>(tableName).where('TargetId', targetId);
+			return await db<ActionRec>(tableName).where('TargetId', targetId);
 		} catch (e) {
 			throw Error(
 				`Error getting ${this.tableName} records for target ID ${targetId}: ${getMessage(e)}`,

@@ -1,6 +1,6 @@
 import { NotImplementedError } from '#shared/error.ts';
 import type { UUID } from 'crypto';
-import type { StreamRepository } from './StreamRepository.ts';
+import type { StreamRepository } from './stream-repository.ts';
 
 export interface StreamConfig {
 	streamRepository: StreamRepository;

@@ -13,10 +13,14 @@ import type {
 	RegionStubWithShapes,
 	Shape,
 } from './region-dtos.ts';
-import type { Region, RegionRaw, RegionRawWithShapes } from './Region.ts';
-import type { RegionShape } from './RegionShape.ts';
+import type {
+	RegionRec,
+	RegionRecShapes,
+	RegionRefRec,
+} from './region-repository.ts';
+import type { RegionShapeRec } from './region-shape-repository.ts';
 
-export function shapeToStub(shape: RegionShape): Shape {
+export function shapeToStub(shape: RegionShapeRec): Shape {
 	const coords = shape.Coords;
 	switch (shape.ShapeType) {
 		case 'Circle':
@@ -33,7 +37,7 @@ export function shapeToStub(shape: RegionShape): Shape {
 	}
 }
 
-export function toDto(region: Region) {
+export function toDto(region: RegionRefRec) {
 	const regionResponse: RegionResponse = {
 		id: region.RegionId,
 		mapId: region.MapId,
@@ -50,7 +54,7 @@ export function toDto(region: Region) {
 	return regionResponse;
 }
 
-export function toStub(region: RegionRaw) {
+export function toStub(region: RegionRec) {
 	const regionStub: RegionStub = {
 		id: region.RegionId,
 		mapId: region.MapId,
@@ -60,7 +64,7 @@ export function toStub(region: RegionRaw) {
 	return regionStub;
 }
 
-export function toStubWithShapes(region: RegionRawWithShapes) {
+export function toStubWithShapes(region: RegionRecShapes) {
 	const regionStub: RegionStubWithShapes = {
 		id: region.RegionId,
 		mapId: region.MapId,

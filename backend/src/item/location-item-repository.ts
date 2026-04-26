@@ -1,5 +1,5 @@
-import type { ActionRepository } from '#action/ActionRepository.ts';
-import type { NoteRepository } from '#note/NoteRepository.ts';
+import type { ActionRepository } from '#action/action-repository.ts';
+import type { NoteRepository } from '#note/note-repository.ts';
 import { db } from '#shared/db.ts';
 import { getMessage, InternalError } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
@@ -7,21 +7,30 @@ import type { UUID } from 'crypto';
 import {
 	pkColumn as itemPkColumn,
 	tableName as itemTableName,
-	type ItemRaw,
-} from './Item.ts';
-import type { ItemRepository } from './ItemRepository.ts';
-import {
-	itemIdColName,
-	locationIdColName,
-	pkColumn,
-	tableName,
-	type LocationItem,
-	type LocationItemRaw,
-} from './LocationItem.ts';
+	type ItemRec,
+	type ItemRefRec,
+	type ItemRepository,
+} from './item-repository.ts';
+
+export interface LocationItemRec {
+	LocationItemId: UUID;
+	LocationId: UUID;
+	ItemId: UUID;
+	Quantity: number;
+}
+
+export interface LocationItemRefRec extends ItemRefRec, LocationItemRec {
+	ContainedItems: (ItemRec & LocationItemRec)[];
+}
+
+export const tableName = 'LocationItem';
+export const pkColumn = 'LocationItemId';
+export const locationIdColName = 'LocationId';
+export const itemIdColName = 'ItemId';
 
 export class LocationItemRepository extends Repository<
-	LocationItemRaw,
-	LocationItem
+	LocationItemRec,
+	LocationItemRefRec
 > {
 	actionRepository: ActionRepository;
 	itemRepository: ItemRepository;
@@ -38,7 +47,7 @@ export class LocationItemRepository extends Repository<
 		this.noteRepository = noteRepository;
 	}
 
-	override async getById(id: UUID): Promise<LocationItem | undefined> {
+	override async getById(id: UUID): Promise<LocationItemRefRec | undefined> {
 		const locationItemRaw = await this.getByIdRaw(id);
 		if (!locationItemRaw) return undefined;
 
@@ -77,8 +86,8 @@ export class LocationItemRepository extends Repository<
 	 */
 	async getByLocationId(locationId: UUID) {
 		try {
-			return await db<LocationItemRaw>(this.tableName)
-				.innerJoin<ItemRaw>(
+			return await db<LocationItemRec>(this.tableName)
+				.innerJoin<ItemRec>(
 					itemTableName,
 					`${this.tableName}.${itemIdColName}`,
 					`${itemTableName}.${itemPkColumn}`,

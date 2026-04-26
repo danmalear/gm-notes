@@ -1,11 +1,31 @@
-import type { ActionRepository } from '#action/ActionRepository.ts';
-import type { FileRepository } from '#file/FileRepository.ts';
-import type { NoteRepository } from '#note/NoteRepository.ts';
+import type { ActionRec, ActionRepository } from '#action/action-repository.ts';
+import type { FileRec, FileRepository } from '#file/file-repository.ts';
+import type { NoteRec, NoteRepository } from '#note/note-repository.ts';
+import type { CurrencyUnit } from '#shared/data-types.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import { pkColumn, tableName, type Item, type ItemRaw } from './Item.ts';
 
-export class ItemRepository extends Repository<ItemRaw, Item> {
+export interface ItemRec {
+	ItemId: UUID;
+	CampaignId: UUID | null;
+	Name: string;
+	IsContainer: boolean;
+	Value: number | null;
+	ValueUnit: CurrencyUnit | null;
+	DetailsLink: string | null;
+	ImageFileId: string | null;
+}
+
+export interface ItemRefRec extends ItemRec {
+	ImageFile: FileRec | null;
+	Actions: ActionRec[];
+	Notes: NoteRec[];
+}
+
+export const tableName = 'Item';
+export const pkColumn = 'ItemId';
+
+export class ItemRepository extends Repository<ItemRec, ItemRefRec> {
 	actionRepository: ActionRepository;
 	fileRepository: FileRepository;
 	noteRepository: NoteRepository;
@@ -21,7 +41,7 @@ export class ItemRepository extends Repository<ItemRaw, Item> {
 		this.noteRepository = noteRepository;
 	}
 
-	override async getById(id: UUID): Promise<Item | undefined> {
+	override async getById(id: UUID): Promise<ItemRefRec | undefined> {
 		const itemRaw = await this.getByIdRaw(id);
 		if (!itemRaw) return undefined;
 

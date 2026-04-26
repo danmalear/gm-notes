@@ -2,17 +2,25 @@ import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import { pkColumn, tableName, type RegionShape } from './RegionShape.ts';
 
-export class RegionShapeRepository extends Repository<
-	RegionShape,
-	RegionShape
-> {
+export type ShapeType = 'Rectangle' | 'Circle' | 'Polygon';
+
+export interface RegionShapeRec {
+	RegionShapeId: UUID;
+	RegionId: UUID;
+	ShapeType: ShapeType;
+	Coords: object;
+}
+
+export const tableName = 'RegionShape';
+export const pkColumn = 'RegionShapeId';
+
+export class RegionShapeRepository extends Repository<RegionShapeRec> {
 	constructor() {
 		super(tableName, pkColumn);
 	}
 
-	override async getById(id: UUID): Promise<RegionShape | undefined> {
+	override async getById(id: UUID): Promise<RegionShapeRec | undefined> {
 		return await this.getByIdRaw(id);
 	}
 
@@ -23,7 +31,10 @@ export class RegionShapeRepository extends Repository<
 	 */
 	async getByRegionId(regionId: UUID) {
 		try {
-			return await db<RegionShape>(this.tableName).where('RegionId', regionId);
+			return await db<RegionShapeRec>(this.tableName).where(
+				'RegionId',
+				regionId,
+			);
 		} catch (e) {
 			throw Error(
 				`Error getting shape records for region ID ${regionId}: ${getMessage(e)}`,

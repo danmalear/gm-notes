@@ -1,7 +1,7 @@
 import type { CampaignResponse, CampaignStub } from './campaign-dtos.ts';
-import type { Campaign, CampaignRaw } from './Campaign.ts';
+import type { CampaignRec, CampaignRefRec } from './campaign-repository.ts';
 
-export const toDto = (campaign: Campaign) => {
+export const toDto = (campaign: CampaignRefRec) => {
 	const campaignResponse: CampaignResponse = {
 		id: campaign.CampaignId,
 		name: campaign.Name,
@@ -18,7 +18,7 @@ export const toDto = (campaign: Campaign) => {
 	return campaignResponse;
 };
 
-export const toStub = (campaign: CampaignRaw) => {
+export const toStub = (campaign: CampaignRec) => {
 	const campaignStub: CampaignStub = {
 		id: campaign.CampaignId,
 		name: campaign.Name,

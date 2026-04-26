@@ -1,18 +1,37 @@
-import type { NarrationRepository } from '#narration/NarrationRepository.ts';
+import type {
+	NarrationRec,
+	NarrationRepository,
+} from '#narration/narration-repository.ts';
+import type { Skill } from '#shared/data-types.ts';
 import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
-import {
-	pkColumn,
-	tableName,
-	type AbilityCheck,
-	type AbilityCheckRaw,
-} from './AbilityCheck.ts';
+
+export interface AbilityCheckRec {
+	AbilityCheckId: UUID;
+	ActionId: UUID;
+	Skill: Skill;
+	DC: number;
+	SuccessNarrationId: UUID | null;
+	FailureNarrationId: UUID | null;
+	CriticalSuccessNarrationId: UUID | null;
+	CriticalFailureNarrationId: UUID | null;
+}
+
+export interface AbilityCheckRefRec extends AbilityCheckRec {
+	SuccessNarration: NarrationRec | null;
+	FailureNarration: NarrationRec | null;
+	CriticalSuccessNarration: NarrationRec | null;
+	CriticalFailureNarration: NarrationRec | null;
+}
+
+export const tableName = 'AbilityCheck';
+export const pkColumn = 'AbilityCheckId';
 
 export class AbilityCheckRepository extends Repository<
-	AbilityCheckRaw,
-	AbilityCheck
+	AbilityCheckRec,
+	AbilityCheckRefRec
 > {
 	narrationRepository: NarrationRepository;
 
@@ -21,7 +40,7 @@ export class AbilityCheckRepository extends Repository<
 		this.narrationRepository = narrationRepository;
 	}
 
-	override async getById(id: UUID): Promise<AbilityCheck | undefined> {
+	override async getById(id: UUID): Promise<AbilityCheckRefRec | undefined> {
 		const abilityCheck = await this.getByIdRaw(id);
 		if (!abilityCheck) return undefined;
 
@@ -62,7 +81,7 @@ export class AbilityCheckRepository extends Repository<
 	 */
 	async getByActionId(actionId: UUID) {
 		try {
-			return await db<AbilityCheckRaw>(tableName).where('ActionId', actionId);
+			return await db<AbilityCheckRec>(tableName).where('ActionId', actionId);
 		} catch (e) {
 			throw Error(
 				`Error getting ${this.tableName} records for action ID ${actionId}: ${getMessage(e)}`,
