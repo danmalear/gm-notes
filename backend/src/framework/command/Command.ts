@@ -1,23 +1,18 @@
 import { type IMessage } from '#message/IMessage.ts';
 import type { UUID } from 'crypto';
 
-export class Command<
-	TContext extends string = string,
-	TRef extends string = string,
-	TData extends object = object,
-> implements IMessage<'Command'>
-{
+export class Command implements IMessage<'Command'> {
 	type: 'Command';
-	context: TContext;
-	ref: TRef;
+	context: string;
+	ref: string;
 	streamId: UUID | undefined;
-	data: TData;
+	data: object;
 
 	constructor(
-		context: TContext,
-		ref: TRef,
+		context: string,
+		ref: string,
 		streamId: UUID | undefined,
-		data: TData,
+		data: object,
 	) {
 		this.type = 'Command';
 		this.context = context;
