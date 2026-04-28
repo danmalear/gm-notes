@@ -4,6 +4,7 @@ import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
 import { validateCommand, type CommandResponse } from './command-dtos.ts';
 import type { CommandRec, CommandRepository } from './command-repository.ts';
+import { Command } from './Command.ts';
 import type { ICommandBus } from './CommandBus.ts';
 
 export function commandRoutes(
@@ -28,7 +29,12 @@ export function commandRoutes(
 				return;
 			}
 
-			const command = req.body;
+			const command = new Command(
+				req.body.context,
+				req.body.ref,
+				req.body.streamId,
+				req.body.data,
+			);
 
 			const id = randomUUID();
 			const correlationId = randomUUID();
