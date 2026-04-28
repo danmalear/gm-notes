@@ -1,5 +1,5 @@
 import type { UUID } from 'crypto';
-import type { IMessage, MessageType } from './Message.ts';
+import type { IMessage, MessageType } from './IMessage.ts';
 
 /**
  * Something that expects to listen to a message bus

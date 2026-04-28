@@ -1,4 +1,4 @@
-import { validateMessage, type IMessage } from '#message/Message.ts';
+import { validateMessage, type IMessage } from '#message/IMessage.ts';
 
 export type Event<
 	TContext extends string = string,
