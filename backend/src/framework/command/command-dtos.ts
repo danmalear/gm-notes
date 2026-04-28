@@ -16,8 +16,14 @@ export function validateCommand(obj: unknown): asserts obj is Command {
 	if (typeof obj !== 'object' || Array.isArray(obj)) {
 		throw new BadRequestError(`Invalid body supplied to Command request`);
 	}
+	if (!('type' in obj) || obj.type !== 'Command') {
+		throw new BadRequestError(`Non-command supplied to Command request`);
+	}
 	if (!('context' in obj) || !obj.context || typeof obj.context !== 'string') {
 		throw new BadRequestError(`Invalid context supplied to Command request`);
+	}
+	if (!('ref' in obj) || !obj.ref || typeof obj.ref !== 'string') {
+		throw new BadRequestError(`Invalid ref supplied to Command request`);
 	}
 	if (!('streamId' in obj)) {
 		throw new BadRequestError(`No stream ID supplied to Command request`);
@@ -27,9 +33,6 @@ export function validateCommand(obj: unknown): asserts obj is Command {
 		(typeof obj.streamId !== 'string' || !isUUID(obj.streamId))
 	) {
 		throw new BadRequestError(`Invalid stream ID supplied to Command request`);
-	}
-	if (!('type' in obj) || !obj.type || typeof obj.type !== 'string') {
-		throw new BadRequestError(`Invalid type supplied to Command request`);
 	}
 	if (!('data' in obj) || !obj.data || typeof obj.data !== 'object') {
 		throw new BadRequestError(`Invalid data supplied to Command request`);
