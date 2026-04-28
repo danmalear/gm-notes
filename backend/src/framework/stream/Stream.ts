@@ -12,10 +12,10 @@ export interface LoadAggregateOpts {
 	snapshotAt?: string;
 }
 
-export abstract class Stream<T> {
+export abstract class Stream<TAggregate, TEvent extends Event> {
 	streamRepository: StreamRepository;
 	id: UUID;
-	aggregate: T;
+	aggregate: TAggregate;
 
 	constructor(id: UUID, { streamRepository }: StreamConfig) {
 		this.id = id;
@@ -26,9 +26,9 @@ export abstract class Stream<T> {
 	loadAggregate({
 		version: _version,
 		snapshotAt: _snapshotAt,
-	}: LoadAggregateOpts = {}): T {
+	}: LoadAggregateOpts = {}): TAggregate {
 		throw new NotImplementedError();
 	}
 
-	abstract handle(event: Event): Promise<UUID>;
+	abstract applyEvent(event: TEvent): Promise<UUID>;
 }
