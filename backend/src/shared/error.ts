@@ -12,6 +12,12 @@ export class BadRequestError extends HttpError {
 	}
 }
 
+export class NotFoundError extends HttpError {
+	constructor(message: string = 'Resource Not Found') {
+		super(404, message);
+	}
+}
+
 export class InternalError extends HttpError {
 	constructor(message: string = 'Internal Server Error') {
 		super(500, message);
