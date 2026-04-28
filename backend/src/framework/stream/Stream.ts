@@ -1,5 +1,4 @@
 import type { Event } from '#event/Event.ts';
-import type { IEventSubscriber } from '#event/IEventSubscriber.ts';
 import { NotImplementedError } from '#shared/error.ts';
 import type { UUID } from 'crypto';
 import type { StreamRepository } from './stream-repository.ts';
