@@ -1,11 +1,23 @@
-import { validateMessage, type IMessage } from '#message/IMessage.ts';
+import { type IMessage } from '#message/IMessage.ts';
+import type { UUID } from 'crypto';
 
-export type Event<
+export class Event<
 	TContext extends string = string,
 	TRef extends string = string,
 	TData extends object = object,
-> = IMessage<'Event', TContext, TRef, TData>;
+> implements IMessage<'Event'>
+{
+	type: 'Event';
+	context: TContext;
+	ref: TRef;
+	streamId: UUID;
+	data: TData;
 
-export function validateEvent(obj: unknown): asserts obj is Event {
-	validateMessage(obj, 'Event');
+	constructor(context: TContext, ref: TRef, streamId: UUID, data: TData) {
+		this.type = 'Event';
+		this.context = context;
+		this.ref = ref;
+		this.streamId = streamId;
+		this.data = data;
+	}
 }

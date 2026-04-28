@@ -1,11 +1,28 @@
-import { validateMessage, type IMessage } from '#message/IMessage.ts';
+import { type IMessage } from '#message/IMessage.ts';
+import type { UUID } from 'crypto';
 
-export type Command<
+export class Command<
 	TContext extends string = string,
 	TRef extends string = string,
 	TData extends object = object,
-> = IMessage<'Command', TContext, TRef, TData>;
+> implements IMessage<'Command'>
+{
+	type: 'Command';
+	context: TContext;
+	ref: TRef;
+	streamId: UUID | undefined;
+	data: TData;
 
-export function validateCommand(obj: unknown): asserts obj is Command {
-	validateMessage(obj, 'Command');
+	constructor(
+		context: TContext,
+		ref: TRef,
+		streamId: UUID | undefined,
+		data: TData,
+	) {
+		this.type = 'Command';
+		this.context = context;
+		this.ref = ref;
+		this.streamId = streamId;
+		this.data = data;
+	}
 }
