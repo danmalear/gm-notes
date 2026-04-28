@@ -5,7 +5,7 @@ import type {
 	CampaignResponse,
 	CampaignStub,
 	CreateCampaign,
-	CreateCampaignData,
+	CreateCampaignCommand,
 } from './campaign-dtos.ts';
 
 export const getAllCampaigns = async () => {
@@ -16,10 +16,11 @@ export const getCampaign = async (id: UUID) => {
 	return await api.get<DataResponse<CampaignResponse>>(`/campaigns/${id}`);
 };
 
-export const createCampaign = async (data: CreateCampaignData) => {
-	const commandRequest: CreateCampaign = {
-		context: 'CampaignCommand',
-		type: 'Create',
+export const createCampaign = async (data: CreateCampaign) => {
+	const commandRequest: CreateCampaignCommand = {
+		context: 'Campaign',
+		ref: 'Create',
+		streamId: undefined,
 		data: data,
 	};
 	return await api.post<DataResponse<CommandResponse>>(
