@@ -2,9 +2,8 @@ import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, getStatusCode } from '#shared/error.ts';
 import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
-import type { CommandResponse } from './command-dtos.ts';
+import { validateCommand, type CommandResponse } from './command-dtos.ts';
 import type { CommandRec, CommandRepository } from './command-repository.ts';
-import { validateCommand } from './Command.ts';
 import type { ICommandBus } from './CommandBus.ts';
 
 export function commandRoutes(
