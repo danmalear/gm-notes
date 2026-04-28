@@ -27,4 +27,4 @@ EXPOSE $PORT
 USER node
 
 # Define the command to start your application
-CMD [ "node", "server.ts" ]
+CMD [ "node", "src/server.ts" ]
