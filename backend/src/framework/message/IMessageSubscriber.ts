@@ -1,5 +1,5 @@
 import type { UUID } from 'crypto';
-import type { Message, MessageType } from './Message.ts';
+import type { IMessage, MessageType } from './Message.ts';
 
 /**
  * Something that expects to listen to a message bus
@@ -9,7 +9,7 @@ import type { Message, MessageType } from './Message.ts';
  */
 export interface IMessageSubscriber<
 	TType extends MessageType,
-	TMessage extends Message<TType>,
+	TMessage extends IMessage<TType>,
 > {
 	handle: (message: TMessage) => Promise<UUID>;
 }

@@ -1,19 +1,19 @@
 import { randomUUID, type UUID } from 'crypto';
 import type { IMessageSubscriber } from './IMessageSubscriber.ts';
-import type { Message, MessageType } from './Message.ts';
+import type { IMessage, MessageType } from './Message.ts';
 
 export interface IMessageBus<TType extends MessageType> {
 	subscribe: (
 		context: string,
-		handler: IMessageSubscriber<TType, Message<TType>>,
+		handler: IMessageSubscriber<TType, IMessage<TType>>,
 	) => void;
-	send: (message: Message<TType>) => Promise<UUID>;
+	send: (message: IMessage<TType>) => Promise<UUID>;
 }
 
 export class MessageBus<TType extends MessageType>
 	implements IMessageBus<TType>
 {
-	subscribers: Record<string, IMessageSubscriber<TType, Message<TType>>[]>;
+	subscribers: Record<string, IMessageSubscriber<TType, IMessage<TType>>[]>;
 	messageType: TType;
 
 	constructor(messageType: TType) {
@@ -30,7 +30,7 @@ export class MessageBus<TType extends MessageType>
 	 */
 	subscribe(
 		context: string,
-		handler: IMessageSubscriber<TType, Message<TType>>,
+		handler: IMessageSubscriber<TType, IMessage<TType>>,
 	) {
 		if (!this.subscribers[context]) {
 			this.subscribers[context] = [];
@@ -39,7 +39,7 @@ export class MessageBus<TType extends MessageType>
 	}
 
 	// @TODO find a better way to handle IDs - this is ugly as hell
-	async send<TMessage extends Message<TType>>(message: TMessage) {
+	async send<TMessage extends IMessage<TType>>(message: TMessage) {
 		const { context } = message;
 		if (!this.subscribers[context]) {
 			return randomUUID();

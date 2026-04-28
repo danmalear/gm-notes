@@ -4,7 +4,7 @@ import type { UUID } from 'crypto';
 
 export type MessageType = 'Command' | 'Event';
 
-export interface Message<
+export interface IMessage<
 	TType extends MessageType = MessageType,
 	TContext extends string = string,
 	TRef extends string = string,
@@ -20,7 +20,7 @@ export interface Message<
 export function validateMessage<TType extends MessageType>(
 	obj: unknown,
 	messageType: TType,
-): asserts obj is Message<TType> {
+): asserts obj is IMessage<TType> {
 	if (!obj) {
 		throw new BadRequestError(`No body supplied to ${messageType} request`);
 	}
