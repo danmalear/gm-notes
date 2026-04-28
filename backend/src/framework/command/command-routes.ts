@@ -41,7 +41,7 @@ export function commandRoutes(
 
 			const commandRecord: CommandRec = {
 				CommandId: id,
-				AggregateId: command.streamId ?? null,
+				StreamId: command.streamId ?? null,
 				CorrelationId: correlationId,
 				Context: command.context,
 				Type: command.type,

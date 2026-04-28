@@ -3,7 +3,7 @@ import type { UUID } from 'crypto';
 
 export interface CommandRec {
 	CommandId: UUID;
-	AggregateId: UUID | null;
+	StreamId: UUID | null;
 	CorrelationId: UUID;
 	Context: string;
 	Type: string;
