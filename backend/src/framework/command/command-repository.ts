@@ -6,7 +6,7 @@ export interface CommandRec {
 	StreamId: UUID | null;
 	CorrelationId: UUID;
 	Context: string;
-	Type: string;
+	Ref: string;
 	Data: object;
 	CreatedAt: string;
 }

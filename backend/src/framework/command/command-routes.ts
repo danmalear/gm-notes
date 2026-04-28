@@ -44,7 +44,7 @@ export function commandRoutes(
 				StreamId: command.streamId ?? null,
 				CorrelationId: correlationId,
 				Context: command.context,
-				Type: command.type,
+				Ref: command.ref,
 				Data: command.data,
 				CreatedAt: new Date().toISOString(),
 			};
