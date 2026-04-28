@@ -3,7 +3,12 @@ import { isUUID } from '#shared/uuid.ts';
 import type { UUID } from 'crypto';
 import type { Command } from './Command.ts';
 
-export type CommandRequest = Command;
+export type CommandRequest = {
+	context: string;
+	ref: string;
+	streamId: UUID | undefined;
+	data: object;
+};
 
 export interface CommandResponse {
 	id: UUID;
@@ -15,9 +20,6 @@ export function validateCommand(obj: unknown): asserts obj is Command {
 	}
 	if (typeof obj !== 'object' || Array.isArray(obj)) {
 		throw new BadRequestError(`Invalid body supplied to Command request`);
-	}
-	if (!('type' in obj) || obj.type !== 'Command') {
-		throw new BadRequestError(`Non-command supplied to Command request`);
 	}
 	if (!('context' in obj) || !obj.context || typeof obj.context !== 'string') {
 		throw new BadRequestError(`Invalid context supplied to Command request`);
