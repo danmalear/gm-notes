@@ -77,7 +77,8 @@ function validateCampaignCommand(
 	}
 }
 
-export class CampaignCommandHandler implements ICommandSubscriber {
+// @TODO Maybe type param could be CampaignCommand? Depends if it's pre-validated
+export class CampaignCommandHandler implements ICommandSubscriber<Command> {
 	campaignRepository: CampaignRepository;
 
 	constructor(campaignRepository: CampaignRepository) {
