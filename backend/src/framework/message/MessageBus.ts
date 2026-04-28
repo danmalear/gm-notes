@@ -7,7 +7,7 @@ export interface IMessageBus<TType extends MessageType> {
 		context: string,
 		handler: IMessageSubscriber<TType, IMessage<TType>>,
 	) => void;
-	send: (message: IMessage<TType>) => Promise<UUID>;
+	send: <TMessage extends IMessage<TType>>(message: TMessage) => Promise<UUID>;
 }
 
 export class MessageBus<TType extends MessageType>
