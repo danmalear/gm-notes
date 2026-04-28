@@ -1,6 +1,7 @@
 import type { CommandFunction } from '#command/command-types.ts';
 import type { Command } from '#command/Command.ts';
 import type { ICommandSubscriber } from '#command/ICommandSubscriber.ts';
+import type { IEventBus } from '#event/EventBus.ts';
 import { BadRequestError, NotImplementedError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
 import { randomUUID, type UUID } from 'crypto';
@@ -79,9 +80,11 @@ function validateCampaignCommand(
 
 // @TODO Maybe type param could be CampaignCommand? Depends if it's pre-validated
 export class CampaignCommandHandler implements ICommandSubscriber<Command> {
+	eventBus: IEventBus;
 	campaignRepository: CampaignRepository;
 
-	constructor(campaignRepository: CampaignRepository) {
+	constructor(eventBus: IEventBus, campaignRepository: CampaignRepository) {
+		this.eventBus = eventBus;
 		this.campaignRepository = campaignRepository;
 	}
 

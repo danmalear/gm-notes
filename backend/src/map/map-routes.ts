@@ -1,5 +1,5 @@
-import type { CommandBus } from '#command/CommandBus.ts';
-import type { EventBus } from '#event/EventBus.ts';
+import type { ICommandBus } from '#command/CommandBus.ts';
+import type { IEventBus } from '#event/EventBus.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, InternalError } from '#shared/error.ts';
 import { getById } from '#shared/route-utils.ts';
@@ -24,8 +24,8 @@ import type { MapRec, MapRepository } from './map-repository.ts';
 
 export function mapRoutes(
 	app: Express,
-	_commandBus: CommandBus,
-	_eventBus: EventBus,
+	_commandBus: ICommandBus,
+	_eventBus: IEventBus,
 	mapRepository: MapRepository,
 ) {
 	const apiNamespace = 'maps';

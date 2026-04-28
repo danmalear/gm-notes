@@ -1,5 +1,5 @@
-import type { CommandBus } from '#command/CommandBus.ts';
-import type { EventBus } from '#event/EventBus.ts';
+import type { ICommandBus } from '#command/CommandBus.ts';
+import type { IEventBus } from '#event/EventBus.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getById } from '#shared/route-utils.ts';
 import type { Express, Response } from 'express';
@@ -10,13 +10,16 @@ import type { CampaignRepository } from './campaign-repository.ts';
 
 export function campaignRoutes(
 	app: Express,
-	commandBus: CommandBus,
-	_eventBus: EventBus,
+	commandBus: ICommandBus,
+	eventBus: IEventBus,
 	campaignRepository: CampaignRepository,
 ) {
 	const apiNamespace = 'campaigns';
 
-	const campaignCommandHandler = new CampaignCommandHandler(campaignRepository);
+	const campaignCommandHandler = new CampaignCommandHandler(
+		eventBus,
+		campaignRepository,
+	);
 
 	commandBus.subscribe('Campaign', campaignCommandHandler);
 

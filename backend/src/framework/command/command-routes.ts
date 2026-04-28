@@ -5,11 +5,11 @@ import type { Express, Response } from 'express';
 import type { CommandResponse } from './command-dtos.ts';
 import type { CommandRec, CommandRepository } from './command-repository.ts';
 import { validateCommand } from './Command.ts';
-import type { CommandBus } from './CommandBus.ts';
+import type { ICommandBus } from './CommandBus.ts';
 
 export function commandRoutes(
 	app: Express,
-	commandBus: CommandBus,
+	commandBus: ICommandBus,
 	commandRepository: CommandRepository,
 ) {
 	const apiNamespace = 'commands';
