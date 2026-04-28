@@ -27,10 +27,8 @@ export function validateCommand(obj: unknown): asserts obj is Command {
 	if (!('ref' in obj) || !obj.ref || typeof obj.ref !== 'string') {
 		throw new BadRequestError(`Invalid ref supplied to Command request`);
 	}
-	if (!('streamId' in obj)) {
-		throw new BadRequestError(`No stream ID supplied to Command request`);
-	}
 	if (
+		'streamId' in obj &&
 		typeof obj.streamId !== 'undefined' &&
 		(typeof obj.streamId !== 'string' || !isUUID(obj.streamId))
 	) {
