@@ -15,7 +15,7 @@ export class CampaignCreatedEvent extends Event<
 	CampaignCreated
 > {
 	constructor(campaignId: UUID, data: CampaignCreated) {
-		super('Campaign', 'Created', campaignId, data);
+		super('Campaign', 'Created', campaignId, 0, data);
 	}
 }
 
@@ -29,8 +29,8 @@ export class CampaignRenamedEvent extends Event<
 	'Renamed',
 	CampaignRenamed
 > {
-	constructor(campaignId: UUID, data: CampaignRenamed) {
-		super('Campaign', 'Renamed', campaignId, data);
+	constructor(campaignId: UUID, streamVersion: number, data: CampaignRenamed) {
+		super('Campaign', 'Renamed', campaignId, streamVersion, data);
 	}
 }
 

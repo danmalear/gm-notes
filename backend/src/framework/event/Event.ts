@@ -11,13 +11,21 @@ export class Event<
 	context: TContext;
 	ref: TRef;
 	streamId: UUID;
+	streamVersion: number;
 	data: TData;
 
-	constructor(context: TContext, ref: TRef, streamId: UUID, data: TData) {
+	constructor(
+		context: TContext,
+		ref: TRef,
+		streamId: UUID,
+		streamVersion: number,
+		data: TData,
+	) {
 		this.type = 'Event';
 		this.context = context;
 		this.ref = ref;
 		this.streamId = streamId;
 		this.data = data;
+		this.streamVersion = streamVersion;
 	}
 }

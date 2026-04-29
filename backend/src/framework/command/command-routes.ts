@@ -27,6 +27,7 @@ export function commandRoutes(app: Express, commandBus: ICommandBus) {
 				req.body.context,
 				req.body.ref,
 				req.body.streamId,
+				req.body.streamVersion,
 				req.body.data,
 			);
 

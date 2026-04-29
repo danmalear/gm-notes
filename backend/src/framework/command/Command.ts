@@ -6,18 +6,21 @@ export class Command implements IMessage<'Command'> {
 	context: string;
 	ref: string;
 	streamId: UUID | undefined;
+	streamVersion: number;
 	data: object;
 
 	constructor(
 		context: string,
 		ref: string,
 		streamId: UUID | undefined,
+		streamVersion: number,
 		data: object,
 	) {
 		this.type = 'Command';
 		this.context = context;
 		this.ref = ref;
 		this.streamId = streamId;
+		this.streamVersion = streamVersion;
 		this.data = data;
 	}
 }

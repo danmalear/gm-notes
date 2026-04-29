@@ -7,5 +7,6 @@ export interface IMessage<TType extends MessageType = MessageType> {
 	context: string;
 	ref: string;
 	streamId: UUID | undefined;
+	streamVersion: number;
 	data: object;
 }
