@@ -15,6 +15,7 @@
 		"#condition/*": "./src/condition/*",
 		"#event/*": "./src/framework/event/*",
 		"#file/*": "./src/file/*",
+		"#framework/*": "./src/framework/*",
 		"#handout/*": "./src/handout/*",
 		"#item/*": "./src/item/*",
 		"#map/*": "./src/map/*",
