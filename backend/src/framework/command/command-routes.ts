@@ -1,17 +1,11 @@
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, getStatusCode } from '#shared/error.ts';
-import { randomUUID } from 'crypto';
 import type { Express, Response } from 'express';
 import { validateCommand, type CommandResponse } from './command-dtos.ts';
-import type { CommandRec, CommandRepository } from './command-repository.ts';
 import { Command } from './Command.ts';
 import type { ICommandBus } from './CommandBus.ts';
 
-export function commandRoutes(
-	app: Express,
-	commandBus: ICommandBus,
-	commandRepository: CommandRepository,
-) {
+export function commandRoutes(app: Express, commandBus: ICommandBus) {
 	const apiNamespace = 'commands';
 
 	app.post(
@@ -35,21 +29,6 @@ export function commandRoutes(
 				req.body.streamId,
 				req.body.data,
 			);
-
-			const id = randomUUID();
-			const correlationId = randomUUID();
-
-			const commandRecord: CommandRec = {
-				CommandId: id,
-				StreamId: command.streamId ?? null,
-				CorrelationId: correlationId,
-				Context: command.context,
-				Ref: command.ref,
-				Data: command.data,
-				CreatedAt: new Date().toISOString(),
-			};
-
-			await commandRepository.insert(commandRecord);
 
 			const aggregateId = await commandBus.send(command);
 

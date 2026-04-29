@@ -112,10 +112,10 @@ function createApp() {
 		campaignRepository,
 	} = initRepos();
 
-	const commandBus = new CommandBus();
+	const commandBus = new CommandBus(commandRepository);
 	const eventBus = new EventBus();
 
-	commandRoutes(app, commandBus, commandRepository);
+	commandRoutes(app, commandBus);
 
 	campaignRoutes(app, commandBus, eventBus, campaignRepository);
 	mapRoutes(app, commandBus, eventBus, mapRepository);
