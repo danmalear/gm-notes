@@ -24,15 +24,37 @@ export class EventBus extends MessageBus<'Event', Event> implements IEventBus {
 		const id = randomUUID();
 		const correlationId = randomUUID();
 
-		const stream = await this.streamRepository.getById(event.streamId);
+		let streamRecord = await this.streamRepository.getById(event.streamId);
 
-		if (!stream) {
+		if (!streamRecord && event.streamVersion > 0) {
 			throw new InternalError(
 				`Stream ${event.streamId} not found for event ${event.context} ${event.ref}`,
 			);
 		}
 
-		// @TODO version control - add expected versions to avoid conflicts
+		const version = streamRecord?.Version ?? 0;
+
+		if (version !== event.streamVersion) {
+			throw new InternalError(
+				`Stream version ${version} does not match event version ${event.streamVersion}.`,
+			);
+		}
+
+		if (version === 0) {
+			streamRecord = await this.streamRepository.insert({
+				StreamId: event.streamId,
+				Type: event.context,
+				Version: 1,
+				CreatedAt: new Date().toISOString(),
+				UpdatedAt: new Date().toISOString(),
+			});
+		}
+
+		if (!streamRecord) {
+			throw new InternalError(
+				`Cannot retrieve stream record for ID ${event.streamId}`,
+			);
+		}
 
 		const eventRecord: EventRec = {
 			EventId: id,
@@ -41,7 +63,7 @@ export class EventBus extends MessageBus<'Event', Event> implements IEventBus {
 			Context: event.context,
 			Ref: event.ref,
 			Data: event.data,
-			Version: stream.Version + 1,
+			Version: version + 1,
 			OccurredAt: new Date().toISOString(),
 		};
 
