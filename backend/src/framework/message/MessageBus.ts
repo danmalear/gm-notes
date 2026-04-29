@@ -1,3 +1,4 @@
+import wsServer from '#framework/websocket.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { IMessage, MessageType } from './IMessage.ts';
 import type { IMessageSubscriber } from './IMessageSubscriber.ts';
@@ -50,6 +51,13 @@ export class MessageBus<
 		for (const handler of this.subscribers[context]) {
 			id = await handler.handle(message);
 		}
-		return id ?? message.streamId ?? randomUUID();
+
+		id = id ?? message.streamId ?? randomUUID();
+
+		wsServer.emit(
+			`Event/${message.context}/${message.ref}/${id}`,
+			message.data,
+		);
+		return id;
 	}
 }
