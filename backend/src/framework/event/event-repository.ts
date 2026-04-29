@@ -6,7 +6,7 @@ export interface EventRec {
 	StreamId: UUID;
 	CorrelationId: UUID;
 	Context: string;
-	Type: string;
+	Ref: string;
 	Version: number;
 	Data: object;
 	OccurredAt: string;
