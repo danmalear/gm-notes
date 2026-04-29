@@ -2,18 +2,23 @@ import { randomUUID, type UUID } from 'crypto';
 import type { IMessage, MessageType } from './IMessage.ts';
 import type { IMessageSubscriber } from './IMessageSubscriber.ts';
 
-export interface IMessageBus<TType extends MessageType> {
+export interface IMessageBus<
+	TType extends MessageType,
+	TMessage extends IMessage<TType>,
+> {
 	subscribe: (
 		context: string,
 		handler: IMessageSubscriber<TType, IMessage<TType>>,
 	) => void;
-	send: <TMessage extends IMessage<TType>>(message: TMessage) => Promise<UUID>;
+	send: (message: TMessage) => Promise<UUID>;
 }
 
-export class MessageBus<TType extends MessageType>
-	implements IMessageBus<TType>
+export class MessageBus<
+	TType extends MessageType,
+	TMessage extends IMessage<TType>,
+> implements IMessageBus<TType, TMessage>
 {
-	subscribers: Record<string, IMessageSubscriber<TType, IMessage<TType>>[]>;
+	subscribers: Record<string, IMessageSubscriber<TType, TMessage>[]>;
 	messageType: TType;
 
 	constructor(messageType: TType) {
@@ -28,10 +33,7 @@ export class MessageBus<TType extends MessageType>
 	 * @param context Context to listen to
 	 * @param handler A class that can handle messages of the specified type
 	 */
-	subscribe(
-		context: string,
-		handler: IMessageSubscriber<TType, IMessage<TType>>,
-	) {
+	subscribe(context: string, handler: IMessageSubscriber<TType, TMessage>) {
 		if (!this.subscribers[context]) {
 			this.subscribers[context] = [];
 		}
@@ -39,7 +41,7 @@ export class MessageBus<TType extends MessageType>
 	}
 
 	// @TODO find a better way to handle IDs - this is ugly as hell
-	async send<TMessage extends IMessage<TType>>(message: TMessage) {
+	async send(message: TMessage) {
 		const { context } = message;
 		if (!this.subscribers[context]) {
 			return randomUUID();

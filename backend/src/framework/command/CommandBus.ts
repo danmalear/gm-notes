@@ -4,9 +4,12 @@ import { randomUUID, type UUID } from 'crypto';
 import type { Command } from './Command.ts';
 import type { CommandRec, CommandRepository } from './command-repository.ts';
 
-export type ICommandBus = IMessageBus<'Command'>;
+export type ICommandBus = IMessageBus<'Command', Command>;
 
-export class CommandBus extends MessageBus<'Command'> implements ICommandBus {
+export class CommandBus
+	extends MessageBus<'Command', Command>
+	implements ICommandBus
+{
 	commandRepository: CommandRepository;
 
 	constructor(commandRepository: CommandRepository) {
@@ -14,12 +17,10 @@ export class CommandBus extends MessageBus<'Command'> implements ICommandBus {
 		this.commandRepository = commandRepository;
 	}
 
-	override async send<TCommand extends Command>(
-		message: TCommand,
-	): Promise<UUID> {
-		if (!this.subscribers[message.context]) {
+	override async send(command: Command): Promise<UUID> {
+		if (!this.subscribers[command.context]) {
 			throw new NotFoundError(
-				`Context ${message.context} for command request not found`,
+				`Context ${command.context} for command request not found`,
 			);
 		}
 
@@ -28,15 +29,15 @@ export class CommandBus extends MessageBus<'Command'> implements ICommandBus {
 
 		const commandRecord: CommandRec = {
 			CommandId: id,
-			StreamId: message.streamId ?? null,
+			StreamId: command.streamId ?? null,
 			CorrelationId: correlationId,
-			Context: message.context,
-			Ref: message.ref,
-			Data: message.data,
+			Context: command.context,
+			Ref: command.ref,
+			Data: command.data,
 			CreatedAt: new Date().toISOString(),
 		};
 
 		await this.commandRepository.insert(commandRecord);
-		return await super.send(message);
+		return await super.send(command);
 	}
 }

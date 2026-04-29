@@ -8,6 +8,7 @@ import { CommandRepository } from '#command/command-repository.ts';
 import { commandRoutes } from '#command/command-routes.ts';
 import { CommandBus } from '#command/CommandBus.ts';
 import { ConditionRepository } from '#condition/condition-repository.ts';
+import { EventRepository } from '#event/event-repository.ts';
 import { EventBus } from '#event/EventBus.ts';
 import { FileRepository } from '#file/file-repository.ts';
 import { fileRoutes } from '#file/file-routes.ts';
@@ -25,6 +26,7 @@ import { regionRoutes } from '#region/region-routes.ts';
 import { RegionShapeRepository } from '#region/region-shape-repository.ts';
 import type { MessageResponse } from '#shared/dtos.ts';
 import { getMessage } from '#shared/error.ts';
+import { StreamRepository } from '#stream/stream-repository.ts';
 import cors from 'cors';
 import 'dotenv/config';
 import express, {
@@ -35,6 +37,8 @@ import express, {
 
 function initRepos() {
 	const commandRepository = new CommandRepository();
+	const eventRepository = new EventRepository();
+	const streamRepository = new StreamRepository();
 
 	const fileRepository = new FileRepository();
 	const noteRepository = new NoteRepository();
@@ -76,6 +80,8 @@ function initRepos() {
 
 	return {
 		commandRepository,
+		eventRepository,
+		streamRepository,
 		fileRepository,
 		noteRepository,
 		narrationRepository,
@@ -100,6 +106,8 @@ function createApp() {
 
 	const {
 		commandRepository,
+		eventRepository,
+		streamRepository,
 		fileRepository,
 		narrationRepository,
 		abilityCheckRepository,
@@ -113,7 +121,7 @@ function createApp() {
 	} = initRepos();
 
 	const commandBus = new CommandBus(commandRepository);
-	const eventBus = new EventBus();
+	const eventBus = new EventBus(eventRepository, streamRepository);
 
 	commandRoutes(app, commandBus);
 
