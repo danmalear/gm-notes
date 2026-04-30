@@ -13,7 +13,7 @@ export class CommandBus
 	commandRepository: CommandRepository;
 
 	constructor(commandRepository: CommandRepository) {
-		super('Command');
+		super();
 		this.commandRepository = commandRepository;
 	}
 

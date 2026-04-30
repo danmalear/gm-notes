@@ -15,7 +15,7 @@ export class EventBus extends MessageBus<'Event', Event> implements IEventBus {
 		eventRepository: EventRepository,
 		streamRepository: StreamRepository,
 	) {
-		super('Event');
+		super();
 		this.eventRepository = eventRepository;
 		this.streamRepository = streamRepository;
 	}

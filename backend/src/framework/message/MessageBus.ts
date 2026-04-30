@@ -20,14 +20,11 @@ export class MessageBus<
 > implements IMessageBus<TType, TMessage>
 {
 	subscribers: Record<string, IMessageSubscriber<TType, TMessage>[]>;
-	messageType: TType;
 
-	constructor(messageType: TType) {
+	constructor() {
 		this.subscribers = {};
-		this.messageType = messageType;
 	}
 
-	// @TODO account for messageType
 	/**
 	 * Add a class with a handle method to the list of subscribers, so new messages will be processed
 	 *
