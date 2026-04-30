@@ -1,3 +1,4 @@
+import wsServer from '#framework/websocket.ts';
 import { MessageBus, type IMessageBus } from '#message/MessageBus.ts';
 import { InternalError } from '#shared/error.ts';
 import type { StreamRepository } from '#stream/stream-repository.ts';
@@ -68,6 +69,10 @@ export class EventBus extends MessageBus<'Event', Event> implements IEventBus {
 		};
 
 		await this.eventRepository.insert(eventRecord);
+
+		console.log('send');
+
+		wsServer.emit(`Event/${event.context}/${event.ref}/${id}`, event.data);
 		return await super.send(event);
 	}
 }
