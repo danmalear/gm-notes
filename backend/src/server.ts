@@ -12,6 +12,7 @@ import { EventRepository } from '#event/event-repository.ts';
 import { EventBus } from '#event/EventBus.ts';
 import { FileRepository } from '#file/file-repository.ts';
 import { fileRoutes } from '#file/file-routes.ts';
+import wss from '#framework/websocket.ts';
 import { HandoutRepository } from '#handout/handout-repository.ts';
 import { ItemRepository } from '#item/item-repository.ts';
 import { itemRoutes } from '#item/item-routes.ts';
@@ -121,7 +122,7 @@ function createApp() {
 	} = initRepos();
 
 	const commandBus = new CommandBus(commandRepository);
-	const eventBus = new EventBus(eventRepository, streamRepository);
+	const eventBus = new EventBus(eventRepository, streamRepository, wss);
 
 	commandRoutes(app, commandBus);
 

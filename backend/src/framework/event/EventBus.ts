@@ -1,8 +1,8 @@
-import wsServer from '#framework/websocket.ts';
 import { MessageBus, type IMessageBus } from '#message/MessageBus.ts';
 import { InternalError } from '#shared/error.ts';
 import type { StreamRepository } from '#stream/stream-repository.ts';
 import { randomUUID, type UUID } from 'crypto';
+import type { WebSocketServer } from 'ws';
 import type { EventRec, EventRepository } from './event-repository.ts';
 import type { Event } from './Event.ts';
 
@@ -11,14 +11,17 @@ export type IEventBus = IMessageBus<'Event', Event>;
 export class EventBus extends MessageBus<'Event', Event> implements IEventBus {
 	eventRepository: EventRepository;
 	streamRepository: StreamRepository;
+	wss: WebSocketServer;
 
 	constructor(
 		eventRepository: EventRepository,
 		streamRepository: StreamRepository,
+		wss: WebSocketServer,
 	) {
 		super();
 		this.eventRepository = eventRepository;
 		this.streamRepository = streamRepository;
+		this.wss = wss;
 	}
 
 	override async send(event: Event): Promise<UUID> {
@@ -70,9 +73,11 @@ export class EventBus extends MessageBus<'Event', Event> implements IEventBus {
 
 		await this.eventRepository.insert(eventRecord);
 
-		console.log('send');
-
-		wsServer.emit(`Event/${event.context}/${event.ref}/${id}`, event.data);
+		this.wss.emit(
+			'event',
+			`Event/${event.context}/${event.ref}/${id}`,
+			event.data,
+		);
 		return await super.send(event);
 	}
 }
