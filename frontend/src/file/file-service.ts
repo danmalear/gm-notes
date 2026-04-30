@@ -7,8 +7,9 @@ export const uploadFile = async (data: FormData) => {
 
 export const filePath = (fileName: string) => {
 	const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
-	if (!baseUrl) {
-		throw Error('Server base URL not defined.');
+	const port = import.meta.env.VITE_SERVER_PORT;
+	if (!baseUrl || !port) {
+		throw Error('Server configuration not defined.');
 	}
-	return `${baseUrl}/files/${fileName}`;
+	return `${baseUrl}:${port}/files/${fileName}`;
 };
