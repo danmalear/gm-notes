@@ -22,7 +22,8 @@
 		"#map/*": "./src/map/*",
 		"#narration/*": "./src/narration/*",
 		"#region/*": "./src/region/*",
-		"#shared/*": "./src/shared/*"
+		"#shared/*": "./src/shared/*",
+		"#websocket/*": "./src/websocket/*"
 	},
 	"dependencies": {
 		"@mantine/carousel": "^8.0.1",
