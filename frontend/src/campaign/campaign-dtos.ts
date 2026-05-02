@@ -32,10 +32,3 @@ export interface CampaignStub {
 	name: string;
 	activeMapId?: UUID;
 }
-
-// Events
-
-export interface CampaignCreated {
-	id: UUID;
-	name: string;
-}
