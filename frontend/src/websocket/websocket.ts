@@ -11,10 +11,6 @@ ws.addEventListener('close', () => {
 	console.log('Websocket connection closed');
 });
 
-ws.addEventListener('message', (event) => {
-	console.log(event.data);
-});
-
 ws.addEventListener('error', (e) => {
 	console.error(`WEBSOCKET ERROR: ${e}`);
 });
