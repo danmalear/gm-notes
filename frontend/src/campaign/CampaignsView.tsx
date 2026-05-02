@@ -1,14 +1,16 @@
 import AppHeader from '#app-header/AppHeader.tsx';
 import { getMessage } from '#shared/error.ts';
+import { useEventListener } from '#shared/event-listeners/useEventListener.ts';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
 import { ActionIcon, AppShell, Box, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconPlus } from '@tabler/icons-react';
 import type { UUID } from 'crypto';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import type { CampaignStub, CreateCampaign } from './campaign-dtos.ts';
+import { validateCampaignCreated } from './campaign-events.ts';
 import { createCampaign, getAllCampaigns } from './campaign-service.ts';
 import CampaignCard from './CampaignCard.tsx';
 import CreateCampaignModal from './CreateCampaignModal.tsx';
@@ -17,6 +19,10 @@ const CampaignsView: React.FC = () => {
 	const navigate = useNavigate();
 
 	const [campaigns, setCampaigns] = useState<CampaignStub[]>([]);
+
+	// This keeps the array ref through callbacks
+	const campaignsRef = useRef<CampaignStub[]>([]);
+	campaignsRef.current = campaigns;
 
 	useEffect(() => {
 		getAllCampaigns()
@@ -56,16 +62,38 @@ const CampaignsView: React.FC = () => {
 		openCreateCampaign();
 	};
 
-	const handleCampaignCreated = async (campaign: CreateCampaign) => {
+	const handleCreateCampaign = async (campaign: CreateCampaign) => {
 		try {
-			const response = await createCampaign(campaign);
-			const newCampaign = response.data.data;
-			navigate(`${newCampaign.id}/map`);
+			await createCampaign(campaign);
+			// const response = await createCampaign(campaign);
+			// const newCampaign = response.data.data;
+			// navigate(`${newCampaign.id}/map`);
 		} catch (e) {
 			console.error(e);
 			alert(`Error creating campaign: ${getMessage(e)}`);
 		}
 	};
+
+	const handleCampaignCreated = useCallback(
+		(event: object) => {
+			try {
+				validateCampaignCreated(event);
+				setCampaigns([...campaignsRef.current, event]);
+			} catch (e) {
+				console.error('Invalid campaign created event caught:', getMessage(e));
+			}
+		},
+		[campaignsRef],
+	);
+
+	useEventListener(
+		'CampaignsView',
+		{
+			context: 'Campaign',
+			ref: 'Created',
+		},
+		handleCampaignCreated,
+	);
 
 	// #endregion Create campaign stuff
 
@@ -116,7 +144,7 @@ const CampaignsView: React.FC = () => {
 			<CreateCampaignModal
 				opened={createCampaignOpened}
 				onClose={closeCreateCampaign}
-				onCreate={handleCampaignCreated}
+				onCreate={handleCreateCampaign}
 			/>
 			<AppShell
 				id="app-shell"
