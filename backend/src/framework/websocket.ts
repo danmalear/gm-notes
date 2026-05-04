@@ -5,7 +5,7 @@ const wsServer = new WebSocketServer({
 });
 
 wsServer.on('connection', (socket) => {
-	console.log('Websocket client connected');
+	console.log(`Websocket client connected at ${wsServer.path}`);
 
 	socket.on('close', () => {
 		console.log('Websocket client disconnected');
@@ -13,7 +13,6 @@ wsServer.on('connection', (socket) => {
 });
 
 wsServer.on('event', (event, data) => {
-	console.log('event received:', event);
 	wsServer.clients.forEach((client) => {
 		if (client.readyState === WebSocket.OPEN) {
 			client.send(`${event}/${JSON.stringify(data)}`);
