@@ -11,6 +11,6 @@ export default defineConfig({
 		}),
 	],
 	server: {
-		port: parseInt(process.env.VITE_APP_PORT ?? '8080'),
+		port: parseInt(process.env.VITE_PORT ?? '8080'),
 	},
 });

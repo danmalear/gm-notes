@@ -1,3 +1,4 @@
+import { serverBaseUrl } from '#shared/api.ts';
 import { getMessage } from '#shared/error.ts';
 
 const maxDepth = 50;
@@ -29,9 +30,6 @@ function startWebsocket(uri: string) {
 	return ws;
 }
 
-const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
-const port = import.meta.env.VITE_WS_PORT;
-
-ws = startWebsocket(`${baseUrl}:${port}`);
+ws = startWebsocket(`${serverBaseUrl}/ws`);
 
 export default ws;

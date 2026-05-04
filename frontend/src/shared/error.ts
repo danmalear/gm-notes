@@ -29,5 +29,5 @@ export const getMessage = (e: unknown): string => {
 			return e.message;
 		}
 	}
-	return 'Unknown error';
+	return `Unknown error: ${JSON.stringify(e)}`;
 };

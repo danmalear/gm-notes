@@ -12,7 +12,7 @@ import { EventRepository } from '#event/event-repository.ts';
 import { EventBus } from '#event/EventBus.ts';
 import { FileRepository } from '#file/file-repository.ts';
 import { fileRoutes } from '#file/file-routes.ts';
-import wss from '#framework/websocket.ts';
+import createWsServer from '#framework/websocket.ts';
 import { HandoutRepository } from '#handout/handout-repository.ts';
 import { ItemRepository } from '#item/item-repository.ts';
 import { itemRoutes } from '#item/item-routes.ts';
@@ -35,6 +35,7 @@ import express, {
 	type Request,
 	type Response,
 } from 'express';
+import { createServer } from 'http';
 
 function initRepos() {
 	const commandRepository = new CommandRepository();
@@ -99,11 +100,15 @@ function initRepos() {
 	};
 }
 
-function createApp() {
+function createAppServer() {
 	const app = express();
 
 	app.use(cors());
 	app.use(express.json());
+
+	const server = createServer(app);
+
+	const wsServer = createWsServer(server);
 
 	const {
 		commandRepository,
@@ -122,7 +127,7 @@ function createApp() {
 	} = initRepos();
 
 	const commandBus = new CommandBus(commandRepository);
-	const eventBus = new EventBus(eventRepository, streamRepository, wss);
+	const eventBus = new EventBus(eventRepository, streamRepository, wsServer);
 
 	commandRoutes(app, commandBus);
 
@@ -160,12 +165,12 @@ function createApp() {
 		},
 	);
 
-	return app;
+	return server;
 }
 
-const app = createApp();
-const port = process.env.PORT;
+const server = createAppServer();
+const port = process.env.PORT ?? '3000';
 
-app.listen(port, () => {
+server.listen(port, () => {
 	console.log(`Server listening on port ${port}`);
 });

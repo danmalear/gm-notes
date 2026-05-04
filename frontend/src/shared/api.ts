@@ -1,11 +1,8 @@
 import axios from 'axios';
 
-const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
-const port = import.meta.env.VITE_SERVER_PORT;
+export const serverBaseUrl = import.meta.env.VITE_SERVER_BASE_URL;
 
-export const serverBaseUrl = `${baseUrl}${port ? `:${port}` : ''}`;
-
-if (!baseUrl) {
+if (!serverBaseUrl) {
 	throw Error('Server configuration not defined.');
 }
 
