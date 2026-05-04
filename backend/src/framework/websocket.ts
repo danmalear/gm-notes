@@ -4,6 +4,12 @@ const wsServer = new WebSocketServer({
 	port: parseInt(process.env.WS_PORT ?? '8081'),
 });
 
+const wsAddress = wsServer.address();
+
+console.log(
+	`Websocket server listening on port ${typeof wsAddress === 'string' ? wsAddress : wsAddress?.port}`,
+);
+
 wsServer.on('connection', (socket) => {
 	console.log(`Websocket client connected at ${wsServer.path}`);
 
