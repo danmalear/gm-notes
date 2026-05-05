@@ -73,11 +73,7 @@ export class EventBus extends MessageBus<'Event', Event> implements IEventBus {
 
 		await this.eventRepository.insert(eventRecord);
 
-		this.wss.emit(
-			'event',
-			`Event/${event.context}/${event.ref}/${id}`,
-			event.data,
-		);
+		this.wss.emit('event', event);
 		return await super.send(event);
 	}
 }

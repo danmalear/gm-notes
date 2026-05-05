@@ -1,5 +1,6 @@
 import AppHeader from '#app-header/AppHeader.tsx';
 import { getMessage } from '#shared/error.ts';
+import type { Event } from '#shared/event-listeners/Event.ts';
 import { useEventListener } from '#shared/event-listeners/useEventListener.ts';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
@@ -75,10 +76,10 @@ const CampaignsView: React.FC = () => {
 	};
 
 	const handleCampaignCreated = useCallback(
-		(event: object) => {
+		(event: Event) => {
 			try {
-				validateCampaignCreated(event);
-				setCampaigns([...campaignsRef.current, event]);
+				validateCampaignCreated(event.data);
+				setCampaigns([...campaignsRef.current, event.data]);
 			} catch (e) {
 				console.error('Invalid campaign created event caught:', getMessage(e));
 			}

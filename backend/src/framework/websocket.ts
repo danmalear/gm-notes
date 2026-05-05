@@ -19,10 +19,10 @@ export default function createWsServer(server: Server) {
 		});
 	});
 
-	wsServer.on('event', (event, data) => {
+	wsServer.on('event', (event) => {
 		wsServer.clients.forEach((client) => {
 			if (client.readyState === WebSocket.OPEN) {
-				client.send(`${event}/${JSON.stringify(data)}`);
+				client.send(`${JSON.stringify(event)}`);
 			}
 		});
 	});

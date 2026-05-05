@@ -1,9 +1,10 @@
 import type { UUID } from 'crypto';
 import { createContext } from 'react';
+import type { Event } from './Event';
 
 export type KeyedListener = {
 	key: string;
-	handle: (event: object) => void;
+	handle: (event: Event) => void;
 };
 
 export type RefListeners = {

@@ -1,6 +1,7 @@
 import { EventListenerContext } from '#shared/event-listeners/EventListenerContext.ts';
 import type { UUID } from 'crypto';
 import { useContext } from 'react';
+import type { Event } from './Event';
 
 export interface EventOpts {
 	context: string;
@@ -11,7 +12,7 @@ export interface EventOpts {
 export const useEventListener = (
 	key: string,
 	{ context, ref, streamId }: EventOpts,
-	handler: (event: object) => void,
+	handler: (event: Event) => void,
 ) => {
 	const allListeners = useContext(EventListenerContext);
 	if (!allListeners[context]) {
