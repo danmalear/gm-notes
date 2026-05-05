@@ -41,7 +41,7 @@ export class CampaignCommandHandler implements ICommandSubscriber {
 		}
 		switch (command.ref) {
 			case 'Create':
-				return await this.Create(command.data);
+				return await this.Create(command);
 			default:
 				throw new BadRequestError(`Invalid campaign command: ${command.ref}`);
 		}
@@ -50,11 +50,16 @@ export class CampaignCommandHandler implements ICommandSubscriber {
 	Create: CommandFunction = async (command) => {
 		const id = randomUUID();
 
-		validateCreateCampaign(command);
+		validateCreateCampaign(command.data);
 
-		const event = new CampaignCreatedEvent(id, {
-			id,
-			name: command.name,
+		const event = new CampaignCreatedEvent({
+			streamId: id,
+			correlationId: command.correlationId,
+			streamVersion: command.streamVersion,
+			data: {
+				id,
+				name: command.data.name,
+			},
 		});
 
 		return await this.eventBus.send(event);

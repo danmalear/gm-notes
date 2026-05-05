@@ -1,6 +1,9 @@
+import type { EventOpts } from '#event/Event.ts';
 import { Event } from '#event/Event.ts';
 import { isUUID } from '#shared/uuid.ts';
 import type { UUID } from 'crypto';
+
+// #region CampaignCreated
 
 export interface CampaignCreated {
 	id: UUID;
@@ -24,29 +27,66 @@ export function validateCampaignCreated(
 	}
 }
 
+export type CampaignCreatedEventOpts = EventOpts<
+	'Campaign',
+	'Created',
+	CampaignCreated
+>;
+
 export class CampaignCreatedEvent extends Event<
 	'Campaign',
 	'Created',
 	CampaignCreated
 > {
-	constructor(campaignId: UUID, data: CampaignCreated) {
-		super('Campaign', 'Created', campaignId, 0, data);
+	constructor({ streamId, data, correlationId }: CampaignCreatedEventOpts) {
+		super({
+			context: 'Campaign',
+			ref: 'Created',
+			streamId,
+			correlationId,
+			streamVersion: 0,
+			data,
+		});
 	}
 }
+
+// #endregion CampaignCreated
+
+// #region CampaignRenamed
 
 export interface CampaignRenamed {
 	id: UUID;
 	name: string;
 }
 
+export type CampaignRenamedEventOpts = EventOpts<
+	'Campaign',
+	'Renamed',
+	CampaignRenamed
+>;
+
 export class CampaignRenamedEvent extends Event<
 	'Campaign',
 	'Renamed',
 	CampaignRenamed
 > {
-	constructor(campaignId: UUID, streamVersion: number, data: CampaignRenamed) {
-		super('Campaign', 'Renamed', campaignId, streamVersion, data);
+	constructor({
+		streamId,
+		correlationId,
+		streamVersion,
+		data,
+	}: CampaignRenamedEventOpts) {
+		super({
+			context: 'Campaign',
+			ref: 'Renamed',
+			streamId,
+			correlationId,
+			streamVersion,
+			data,
+		});
 	}
 }
+
+// #endregion CampaignRenamed
 
 export type CampaignEvent = CampaignCreatedEvent | CampaignRenamedEvent;

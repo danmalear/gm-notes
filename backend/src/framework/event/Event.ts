@@ -1,6 +1,25 @@
 import { type IMessage } from '#message/IMessage.ts';
 import { randomUUID, type UUID } from 'crypto';
 
+interface BaseEventOpts<
+	TContext extends string = string,
+	TRef extends string = string,
+	TData extends object = object,
+> {
+	context: TContext;
+	ref: TRef;
+	streamId: UUID;
+	correlationId?: UUID;
+	streamVersion: number;
+	data: TData;
+}
+
+export type EventOpts<
+	TContext extends string = string,
+	TRef extends string = string,
+	TData extends object = object,
+> = Omit<Omit<BaseEventOpts<TContext, TRef, TData>, 'context'>, 'ref'>;
+
 export class Event<
 	TContext extends string = string,
 	TRef extends string = string,
@@ -15,14 +34,14 @@ export class Event<
 	streamVersion: number;
 	data: TData;
 
-	constructor(
-		context: TContext,
-		ref: TRef,
-		streamId: UUID,
-		correlationId: UUID | undefined,
-		streamVersion: number,
-		data: TData,
-	) {
+	constructor({
+		context,
+		ref,
+		streamId,
+		correlationId,
+		streamVersion,
+		data,
+	}: BaseEventOpts<TContext, TRef, TData>) {
 		this.type = 'Event';
 		this.context = context;
 		this.ref = ref;
