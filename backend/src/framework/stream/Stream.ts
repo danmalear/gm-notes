@@ -27,6 +27,7 @@ export abstract class Stream<TAggregate, TEvent extends Event> {
 		version: _version,
 		snapshotAt: _snapshotAt,
 	}: LoadAggregateOpts = {}): TAggregate {
+		// @TODO
 		throw new NotImplementedError();
 	}
 
