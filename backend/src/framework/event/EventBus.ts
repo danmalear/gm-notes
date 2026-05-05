@@ -25,6 +25,7 @@ export class EventBus extends MessageBus<'Event', Event> implements IEventBus {
 	}
 
 	override async send(event: Event): Promise<UUID> {
+		console.log('Processing event', event.ref);
 		const id = randomUUID();
 
 		let streamRecord = await this.streamRepository.getById(event.streamId);

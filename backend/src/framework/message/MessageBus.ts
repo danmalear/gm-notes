@@ -38,6 +38,7 @@ export class MessageBus<
 	}
 
 	async send(message: TMessage) {
+		console.log('Processing message', message.ref);
 		const { context } = message;
 		if (!this.subscribers[context]) {
 			return message.correlationId;
