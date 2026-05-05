@@ -25,12 +25,11 @@ export class CommandBus
 		}
 
 		const id = randomUUID();
-		const correlationId = randomUUID();
 
 		const commandRecord: CommandRec = {
 			CommandId: id,
 			StreamId: command.streamId ?? null,
-			CorrelationId: correlationId,
+			CorrelationId: command.correlationId,
 			Context: command.context,
 			Ref: command.ref,
 			Data: command.data,

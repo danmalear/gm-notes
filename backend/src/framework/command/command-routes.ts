@@ -23,13 +23,13 @@ export function commandRoutes(app: Express, commandBus: ICommandBus) {
 				return;
 			}
 
-			const command = new Command(
-				req.body.context,
-				req.body.ref,
-				req.body.streamId,
-				req.body.streamVersion,
-				req.body.data,
-			);
+			const command = new Command({
+				context: req.body.context,
+				ref: req.body.ref,
+				streamId: req.body.streamId,
+				streamVersion: req.body.streamVersion,
+				data: req.body.data,
+			});
 
 			const aggregateId = await commandBus.send(command);
 
