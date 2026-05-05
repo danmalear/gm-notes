@@ -6,6 +6,7 @@ export class Command implements IMessage<'Command'> {
 	context: string;
 	ref: string;
 	streamId: UUID | undefined;
+	correlationId: UUID | undefined;
 	streamVersion: number;
 	data: object;
 
@@ -13,6 +14,7 @@ export class Command implements IMessage<'Command'> {
 		context: string,
 		ref: string,
 		streamId: UUID | undefined,
+		correlationId: UUID | undefined,
 		streamVersion: number,
 		data: object,
 	) {
@@ -20,6 +22,7 @@ export class Command implements IMessage<'Command'> {
 		this.context = context;
 		this.ref = ref;
 		this.streamId = streamId;
+		this.correlationId = correlationId;
 		this.streamVersion = streamVersion;
 		this.data = data;
 	}

@@ -11,6 +11,7 @@ export class Event<
 	context: TContext;
 	ref: TRef;
 	streamId: UUID;
+	correlationId: UUID | undefined;
 	streamVersion: number;
 	data: TData;
 
@@ -18,6 +19,7 @@ export class Event<
 		context: TContext,
 		ref: TRef,
 		streamId: UUID,
+		correlationId: UUID | undefined,
 		streamVersion: number,
 		data: TData,
 	) {
@@ -25,6 +27,7 @@ export class Event<
 		this.context = context;
 		this.ref = ref;
 		this.streamId = streamId;
+		this.correlationId = correlationId;
 		this.data = data;
 		this.streamVersion = streamVersion;
 	}
