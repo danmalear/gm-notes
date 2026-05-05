@@ -1,4 +1,3 @@
-import { serverBaseUrl } from '#shared/api.ts';
 import { getMessage } from '#shared/error.ts';
 
 const maxDepth = 50;
@@ -6,7 +5,10 @@ const maxDepth = 50;
 let ws: WebSocket;
 let depth = 0;
 
-function startWebsocket(uri: string) {
+export function startWebsocket(
+	uri: string,
+	addEventListeners: (ws: WebSocket) => void,
+) {
 	ws = new WebSocket(uri);
 
 	ws.addEventListener('open', () => {
@@ -19,7 +21,7 @@ function startWebsocket(uri: string) {
 		if (depth < maxDepth) {
 			depth++;
 			console.log(`Attempting to reconnect to server, depth ${depth}`);
-			setTimeout(() => startWebsocket(uri), 2000);
+			setTimeout(() => startWebsocket(uri, addEventListeners), 2000);
 		}
 	});
 
@@ -27,9 +29,7 @@ function startWebsocket(uri: string) {
 		console.error(`WEBSOCKET ERROR: ${getMessage(e)}`);
 	});
 
+	addEventListeners(ws);
+
 	return ws;
 }
-
-ws = startWebsocket(`${serverBaseUrl}/ws`);
-
-export default ws;

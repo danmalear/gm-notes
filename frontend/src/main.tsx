@@ -2,14 +2,15 @@ import {
 	EventListenerContext,
 	type EventListeners,
 } from '#shared/event-listeners/EventListenerContext.ts';
-import ws from '#websocket/websocket.ts';
 import { createTheme, MantineProvider } from '@mantine/core';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router';
 import router from './routes.tsx';
 
+import { serverBaseUrl } from '#shared/api.ts';
 import { isUUID } from '#shared/uuid.ts';
+import { startWebsocket } from '#websocket/websocket.ts';
 import '@mantine/core/styles.css';
 import './index.css';
 
@@ -45,27 +46,32 @@ function getValidEvent(event: unknown) {
 	};
 }
 
-ws.addEventListener('message', (event) => {
-	const validEvent = getValidEvent(event.data);
-	if (!validEvent) return;
+function addEventListener(ws: WebSocket) {
+	ws.addEventListener('message', (event) => {
+		console.log('message received', JSON.stringify(event.data));
+		const validEvent = getValidEvent(event.data);
+		if (!validEvent) return;
 
-	const { context, ref, streamId, data } = validEvent;
+		const { context, ref, streamId, data } = validEvent;
 
-	if (!(context in listeners)) return;
-	if (!(ref in listeners[context]!)) return;
+		if (!(context in listeners)) return;
+		if (!(ref in listeners[context]!)) return;
 
-	const refListeners = listeners[context]![ref]!;
+		const refListeners = listeners[context]![ref]!;
 
-	refListeners.all.forEach((listener) => {
-		listener.handle(data);
-	});
-
-	if (refListeners[streamId]) {
-		refListeners[streamId].forEach((listener) => {
+		refListeners.all.forEach((listener) => {
 			listener.handle(data);
 		});
-	}
-});
+
+		if (refListeners[streamId]) {
+			refListeners[streamId].forEach((listener) => {
+				listener.handle(data);
+			});
+		}
+	});
+}
+
+startWebsocket(`${serverBaseUrl}/ws`, addEventListener);
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
