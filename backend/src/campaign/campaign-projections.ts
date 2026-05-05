@@ -1,7 +1,6 @@
 import type { Event } from '#event/Event.ts';
 import type { IEventSubscriber } from '#event/IEventSubscriber.ts';
 import { NotImplementedError } from '#shared/error.ts';
-import type { UUID } from 'crypto';
 import { validateCampaignCreated } from './campaign-events.ts';
 import type { CampaignRec, CampaignRepository } from './campaign-repository.ts';
 
@@ -12,11 +11,11 @@ export class CampaignProjections implements IEventSubscriber {
 		this.campaignRepository = campaignRepository;
 	}
 
-	async handle(event: Event): Promise<UUID> {
+	async handle(event: Event) {
 		switch (event.ref) {
 			case 'Created':
 				await this.Created(event.data);
-				return event.streamId;
+				break;
 			default:
 				throw new NotImplementedError(
 					`Campaign event ${event.ref} not implemented`,

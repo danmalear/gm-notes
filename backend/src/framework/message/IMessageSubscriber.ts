@@ -1,4 +1,3 @@
-import type { UUID } from 'crypto';
 import type { IMessage, MessageType } from './IMessage.ts';
 
 /**
@@ -11,5 +10,5 @@ export interface IMessageSubscriber<
 	TType extends MessageType,
 	TMessage extends IMessage<TType>,
 > {
-	handle: (message: TMessage) => Promise<UUID>;
+	handle: (message: TMessage) => Promise<void>;
 }

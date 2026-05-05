@@ -41,7 +41,8 @@ export class CampaignCommandHandler implements ICommandSubscriber {
 		}
 		switch (command.ref) {
 			case 'Create':
-				return await this.Create(command);
+				await this.Create(command);
+				break;
 			default:
 				throw new BadRequestError(`Invalid campaign command: ${command.ref}`);
 		}
