@@ -26,7 +26,6 @@ export class EventBus extends MessageBus<'Event', Event> implements IEventBus {
 
 	override async send(event: Event): Promise<UUID> {
 		const id = randomUUID();
-		const correlationId = randomUUID();
 
 		let streamRecord = await this.streamRepository.getById(event.streamId);
 
@@ -63,7 +62,7 @@ export class EventBus extends MessageBus<'Event', Event> implements IEventBus {
 		const eventRecord: EventRec = {
 			EventId: id,
 			StreamId: event.streamId,
-			CorrelationId: correlationId,
+			CorrelationId: event.correlationId,
 			Context: event.context,
 			Ref: event.ref,
 			Data: event.data,
