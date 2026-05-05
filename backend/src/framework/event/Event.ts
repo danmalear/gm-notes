@@ -1,5 +1,5 @@
 import { type IMessage } from '#message/IMessage.ts';
-import type { UUID } from 'crypto';
+import { randomUUID, type UUID } from 'crypto';
 
 export class Event<
 	TContext extends string = string,
@@ -11,7 +11,7 @@ export class Event<
 	context: TContext;
 	ref: TRef;
 	streamId: UUID;
-	correlationId: UUID | undefined;
+	correlationId: UUID;
 	streamVersion: number;
 	data: TData;
 
@@ -27,7 +27,7 @@ export class Event<
 		this.context = context;
 		this.ref = ref;
 		this.streamId = streamId;
-		this.correlationId = correlationId;
+		this.correlationId = correlationId ?? randomUUID();
 		this.data = data;
 		this.streamVersion = streamVersion;
 	}
