@@ -31,9 +31,9 @@ export function commandRoutes(app: Express, commandBus: ICommandBus) {
 				data: req.body.data,
 			});
 
-			const aggregateId = await commandBus.send(command);
+			const correlationId = await commandBus.send(command);
 
-			res.send({ data: { id: aggregateId } });
+			res.send({ data: { id: correlationId } });
 		},
 	);
 }
