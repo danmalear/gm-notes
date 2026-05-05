@@ -63,16 +63,17 @@ const CampaignsView: React.FC = () => {
 		openCreateCampaign();
 	};
 
-	const handleCreateCampaign = async (campaign: CreateCampaign) => {
-		try {
-			await createCampaign(campaign);
-			// const response = await createCampaign(campaign);
-			// const newCampaign = response.data.data;
-			// navigate(`${newCampaign.id}/map`);
-		} catch (e) {
-			console.error(e);
-			alert(`Error creating campaign: ${getMessage(e)}`);
-		}
+	const handleCreateCampaign = (campaign: CreateCampaign) => {
+		createCampaign(campaign)
+			.then((res) => {
+				// const response = await createCampaign(campaign);
+				// const newCampaign = response.data.data;
+				// navigate(`${newCampaign.id}/map`);
+			})
+			.catch((e) => {
+				console.error(e);
+				alert(`Error creating campaign: ${getMessage(e)}`);
+			});
 	};
 
 	const handleCampaignCreated = useCallback(

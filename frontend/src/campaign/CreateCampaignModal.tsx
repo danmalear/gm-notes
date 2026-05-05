@@ -4,7 +4,7 @@ import type { CreateCampaign as Campaign } from './campaign-dtos.ts';
 
 export interface CreateCampaignModalProps extends React.PropsWithChildren {
 	opened: boolean;
-	onCreate: (campaign: Campaign) => Promise<void>;
+	onCreate: (campaign: Campaign) => void;
 	onClose: () => void;
 }
 
@@ -25,9 +25,8 @@ const CreateCampaignModal: React.FC<CreateCampaignModalProps> = ({
 
 	const handleCreateClicked: React.FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();
-		onCreate(campaign.getValues()).then(() => {
-			onClose();
-		});
+		onCreate(campaign.getValues());
+		onClose();
 	};
 
 	return (
