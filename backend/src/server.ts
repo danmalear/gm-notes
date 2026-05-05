@@ -2,6 +2,7 @@ import { AbilityCheckRepository } from '#ability-check/ability-check-repository.
 import { abilityCheckRoutes } from '#ability-check/ability-check-routes.ts';
 import { ActionRepository } from '#action/action-repository.ts';
 import { actionRoutes } from '#action/action-routes.ts';
+import { CampaignProjections } from '#campaign/campaign-projections.ts';
 import { CampaignRepository } from '#campaign/campaign-repository.ts';
 import { campaignRoutes } from '#campaign/campaign-routes.ts';
 import { CommandRepository } from '#command/command-repository.ts';
@@ -128,6 +129,10 @@ function createAppServer() {
 
 	const commandBus = new CommandBus(commandRepository);
 	const eventBus = new EventBus(eventRepository, streamRepository, wsServer);
+
+	const campaignProjections = new CampaignProjections(campaignRepository);
+
+	eventBus.subscribe('Campaign', campaignProjections);
 
 	commandRoutes(app, commandBus);
 

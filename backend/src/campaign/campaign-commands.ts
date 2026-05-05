@@ -4,8 +4,8 @@ import type { ICommandSubscriber } from '#command/ICommandSubscriber.ts';
 import type { IEventBus } from '#event/EventBus.ts';
 import { BadRequestError } from '#shared/error.ts';
 import { randomUUID } from 'crypto';
-import type { CampaignRec, CampaignRepository } from './campaign-repository.ts';
-import { CampaignCreatedEvent } from './Campaign.ts';
+import { CampaignCreatedEvent } from './campaign-events.ts';
+import type { CampaignRepository } from './campaign-repository.ts';
 
 export interface CreateCampaign {
 	name: string;
@@ -57,18 +57,6 @@ export class CampaignCommandHandler implements ICommandSubscriber {
 			name: command.name,
 		});
 
-		await this.eventBus.send(event);
-
-		// @TODO projection listener
-		const campaign: CampaignRec = {
-			CampaignId: id,
-			CampaignTemplateId: null,
-			Name: command.name,
-			ActiveMapId: null,
-		};
-
-		await this.campaignRepository.insert(campaign);
-
-		return id;
+		return await this.eventBus.send(event);
 	};
 }
