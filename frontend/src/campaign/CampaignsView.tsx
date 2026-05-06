@@ -1,5 +1,6 @@
 import AppHeader from '#app-header/AppHeader.tsx';
 import { getMessage } from '#shared/error.ts';
+import correlationMatchReducer from '#shared/event-listeners/correlation-match-reducer.ts';
 import type { Event } from '#shared/event-listeners/Event.ts';
 import { useEventListener } from '#shared/event-listeners/useEventListener.ts';
 import { Carousel } from '@mantine/carousel';
@@ -8,7 +9,7 @@ import { ActionIcon, AppShell, Box, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconPlus } from '@tabler/icons-react';
 import type { UUID } from 'crypto';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import type { CampaignStub, CreateCampaign } from './campaign-dtos.ts';
 import { validateCampaignCreated } from './campaign-events.ts';
@@ -56,6 +57,15 @@ const CampaignsView: React.FC = () => {
 		{ open: openCreateCampaign, close: closeCreateCampaign },
 	] = useDisclosure(false);
 
+	const [correlationMatchState, correlationMatchDispatch] = useReducer(
+		correlationMatchReducer,
+		{
+			isListeningForMatch: false,
+			commandCorrelationId: undefined,
+			eventsByCorrelationId: {},
+		},
+	);
+
 	const handleAddCampaignClicked: React.MouseEventHandler<HTMLButtonElement> = (
 		e,
 	) => {
@@ -64,11 +74,15 @@ const CampaignsView: React.FC = () => {
 	};
 
 	const handleCreateCampaign = (campaign: CreateCampaign) => {
+		correlationMatchDispatch({
+			type: 'listenForMatch',
+		});
 		createCampaign(campaign)
 			.then((res) => {
-				// const response = await createCampaign(campaign);
-				// const newCampaign = response.data.data;
-				// navigate(`${newCampaign.id}/map`);
+				correlationMatchDispatch({
+					type: 'matchCommand',
+					commandCorrelationId: res.data.data.id,
+				});
 			})
 			.catch((e) => {
 				console.error(e);
@@ -76,17 +90,18 @@ const CampaignsView: React.FC = () => {
 			});
 	};
 
-	const handleCampaignCreated = useCallback(
-		(event: Event) => {
-			try {
-				validateCampaignCreated(event.data);
-				setCampaigns([...campaignsRef.current, event.data]);
-			} catch (e) {
-				console.error('Invalid campaign created event caught:', getMessage(e));
-			}
-		},
-		[campaignsRef],
-	);
+	const handleCampaignCreated = (event: Event) => {
+		try {
+			validateCampaignCreated(event.data);
+			setCampaigns([...campaignsRef.current, event.data]);
+			correlationMatchDispatch({
+				type: 'matchEvent',
+				event: event,
+			});
+		} catch (e) {
+			console.error('Invalid campaign created event caught:', getMessage(e));
+		}
+	};
 
 	useEventListener(
 		'CampaignsView',
@@ -96,6 +111,14 @@ const CampaignsView: React.FC = () => {
 		},
 		handleCampaignCreated,
 	);
+
+	useEffect(() => {
+		if (correlationMatchState.matchedEvent) {
+			validateCampaignCreated(correlationMatchState.matchedEvent.data);
+			navigate(`${correlationMatchState.matchedEvent.data.id}/map`);
+			correlationMatchDispatch({ type: 'clearMatchedEvent' });
+		}
+	}, [correlationMatchState.matchedEvent, navigate]);
 
 	// #endregion Create campaign stuff
 
