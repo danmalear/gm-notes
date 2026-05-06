@@ -5,7 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"lint": "eslint .",
-		"type-check": "tsc -p tsconfig.json"
+		"type-check": "tsc -p tsconfig.json",
+		"test": "node --test --watch"
 	},
 	"imports": {
 		"#ability-check/*": "./src/ability-check/*",
