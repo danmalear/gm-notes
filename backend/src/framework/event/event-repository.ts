@@ -28,7 +28,7 @@ export class EventRepository extends Repository<EventRec> {
 
 	async getByStreamId(streamId: UUID) {
 		try {
-			await db<EventRec>(this.tableName).where('StreamId', streamId);
+			return await db<EventRec>(this.tableName).where('StreamId', streamId);
 		} catch (e) {
 			throw Error(
 				`Error getting ${this.tableName} records for stream ID ${streamId}: ${getMessage(e)}`,
