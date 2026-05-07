@@ -1,3 +1,5 @@
+import { db } from '#shared/db.ts';
+import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/Repository.ts';
 import type { UUID } from 'crypto';
 
@@ -22,5 +24,15 @@ export class EventRepository extends Repository<EventRec> {
 
 	override async getById(id: UUID): Promise<EventRec | undefined> {
 		return await this.getByIdRaw(id);
+	}
+
+	async getByStreamId(streamId: UUID) {
+		try {
+			await db<EventRec>(this.tableName).where('StreamId', streamId);
+		} catch (e) {
+			throw Error(
+				`Error getting ${this.tableName} records for stream ID ${streamId}: ${getMessage(e)}`,
+			);
+		}
 	}
 }
