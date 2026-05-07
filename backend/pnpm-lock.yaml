@@ -20,6 +20,9 @@ importers:
       knex:
         specifier: 3.2.8
         version: 3.2.8(pg@8.20.0)
+      lodash:
+        specifier: ^4.18.1
+        version: 4.18.1
       multer:
         specifier: 2.1.1
         version: 2.1.1
