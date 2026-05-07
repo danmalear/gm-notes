@@ -1,12 +1,12 @@
 import { BadRequestError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
 import type { UUID } from 'crypto';
-import type { Command } from './Command.ts';
 
 export type CommandRequest = {
 	context: string;
 	ref: string;
 	streamId: UUID | undefined;
+	streamVersion: number | undefined;
 	data: object;
 };
 
@@ -14,17 +14,14 @@ export interface CommandResponse {
 	id: UUID;
 }
 
-export function validateCommand(obj: unknown): asserts obj is Command {
+export function validateCommandRequest(
+	obj: unknown,
+): asserts obj is CommandRequest {
 	if (!obj) {
 		throw new BadRequestError(`No body supplied to Command request`);
 	}
 	if (typeof obj !== 'object' || Array.isArray(obj)) {
 		throw new BadRequestError(`Invalid body supplied to Command request`);
-	}
-	if (!('type' in obj) || !obj.type || obj.type !== 'Command') {
-		throw new BadRequestError(
-			`Invalid message type supplied to Command request`,
-		);
 	}
 	if (!('context' in obj) || !obj.context || typeof obj.context !== 'string') {
 		throw new BadRequestError(`Invalid context supplied to Command request`);
@@ -40,19 +37,9 @@ export function validateCommand(obj: unknown): asserts obj is Command {
 		throw new BadRequestError(`Invalid stream ID supplied to Command request`);
 	}
 	if (
-		!('correlationId' in obj) ||
-		!obj.correlationId ||
-		typeof obj.correlationId !== 'string' ||
-		!isUUID(obj.correlationId)
-	) {
-		throw new BadRequestError(
-			`Invalid correlation ID supplied to Command request`,
-		);
-	}
-	if (
-		!('streamVersion' in obj) ||
-		typeof obj.streamVersion !== 'number' ||
-		obj.streamVersion < 0
+		'streamVersion' in obj &&
+		typeof obj.streamVersion !== 'undefined' &&
+		(typeof obj.streamVersion !== 'number' || obj.streamVersion < 0)
 	) {
 		throw new BadRequestError(
 			`Invalid stream version supplied to Command request`,

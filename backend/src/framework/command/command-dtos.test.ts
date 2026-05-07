@@ -2,165 +2,109 @@ import { BadRequestError } from '#shared/error.ts';
 import assert from 'assert';
 import { randomUUID } from 'crypto';
 import test, { suite } from 'node:test';
-import { validateCommand } from './command-dtos.ts';
-import type { Command } from './Command.ts';
+import { validateCommandRequest, type CommandRequest } from './command-dtos.ts';
 
 suite('Command DTOs', () => {
-	suite('validateCommand', () => {
-		const validType = 'Command';
+	suite('validateCommandRequest', () => {
 		const validContext = 'Context';
 		const validRef = 'DoThis';
 		const validStreamId = randomUUID();
-		const validCorrelationId = randomUUID();
 		const validStreamVersion = 0;
 		const validData = {
 			prop1: 'string',
 			prop2: 1,
 		};
 
-		const validCommand: Command = {
-			type: validType,
+		const validCommandRequest: CommandRequest = {
 			context: validContext,
 			ref: validRef,
 			streamId: validStreamId,
-			correlationId: validCorrelationId,
 			streamVersion: validStreamVersion,
 			data: validData,
 		};
 
-		test('validates a complete valid command', () => {
-			assert.doesNotThrow(() => validateCommand(validCommand));
+		test('validates a complete valid command request', () => {
+			assert.doesNotThrow(() => validateCommandRequest(validCommandRequest));
 		});
 
-		test('validates a minimal valid command', () => {
-			const command: Command = {
-				...validCommand,
+		test('validates a minimal valid command request', () => {
+			const command = {
+				...validCommandRequest,
 				streamId: undefined,
+				streamVersion: undefined,
 				data: {},
 			};
 
-			assert.doesNotThrow(() => validateCommand(command));
+			assert.doesNotThrow(() => validateCommandRequest(command));
 		});
 
-		test('throws an error with no command', () => {
+		test('throws an error with no command request', () => {
 			assert.throws(
-				() => validateCommand(undefined),
+				() => validateCommandRequest(undefined),
 				new BadRequestError(`No body supplied to Command request`),
 			);
 		});
 
-		test('throws an error with bad command', () => {
+		test('throws an error with bad command request', () => {
 			assert.throws(
-				() => validateCommand(validRef),
+				() => validateCommandRequest(validRef),
 				new BadRequestError(`Invalid body supplied to Command request`),
-			);
-		});
-
-		test('throws an error with no type', () => {
-			const command = {
-				...validCommand,
-				type: undefined,
-			};
-
-			assert.throws(
-				() => validateCommand(command),
-				new BadRequestError(`Invalid message type supplied to Command request`),
-			);
-		});
-
-		test('throws an error with a bad type', () => {
-			const command = {
-				...validCommand,
-				type: 'Event',
-			};
-
-			assert.throws(
-				() => validateCommand(command),
-				new BadRequestError(`Invalid message type supplied to Command request`),
 			);
 		});
 
 		test('throws an error with no context', () => {
 			const command = {
-				...validCommand,
+				...validCommandRequest,
 				context: undefined,
 			};
 
 			assert.throws(
-				() => validateCommand(command),
+				() => validateCommandRequest(command),
 				new BadRequestError(`Invalid context supplied to Command request`),
 			);
 		});
 
 		test('throws an error with no ref', () => {
 			const command = {
-				...validCommand,
+				...validCommandRequest,
 				ref: undefined,
 			};
 
 			assert.throws(
-				() => validateCommand(command),
+				() => validateCommandRequest(command),
 				new BadRequestError(`Invalid ref supplied to Command request`),
 			);
 		});
 
 		test('throws an error with null stream ID', () => {
 			const command = {
-				...validCommand,
+				...validCommandRequest,
 				streamId: null,
 			};
 
 			assert.throws(
-				() => validateCommand(command),
+				() => validateCommandRequest(command),
 				new BadRequestError(`Invalid stream ID supplied to Command request`),
 			);
 		});
 
 		test('throws an error with bad stream ID', () => {
 			const command = {
-				...validCommand,
+				...validCommandRequest,
 				streamId: 'Stream1',
 			};
 
-			assert.throws(() => validateCommand(command));
-		});
-
-		test('throws an error with no correlation ID', () => {
-			const command = {
-				...validCommand,
-				correlationId: undefined,
-			};
-
-			assert.throws(
-				() => validateCommand(command),
-				new BadRequestError(
-					`Invalid correlation ID supplied to Command request`,
-				),
-			);
-		});
-
-		test('throws an error with no stream version', () => {
-			const command = {
-				...validCommand,
-				streamVersion: undefined,
-			};
-
-			assert.throws(
-				() => validateCommand(command),
-				new BadRequestError(
-					`Invalid stream version supplied to Command request`,
-				),
-			);
+			assert.throws(() => validateCommandRequest(command));
 		});
 
 		test('throws an error with bad stream version', () => {
 			const command = {
-				...validCommand,
+				...validCommandRequest,
 				streamVersion: -1,
 			};
 
 			assert.throws(
-				() => validateCommand(command),
+				() => validateCommandRequest(command),
 				new BadRequestError(
 					`Invalid stream version supplied to Command request`,
 				),
@@ -169,12 +113,12 @@ suite('Command DTOs', () => {
 
 		test('throws an error with no data', () => {
 			const command = {
-				...validCommand,
+				...validCommandRequest,
 				data: undefined,
 			};
 
 			assert.throws(
-				() => validateCommand(command),
+				() => validateCommandRequest(command),
 				new BadRequestError(`Invalid data supplied to Command request`),
 			);
 		});
