@@ -1,7 +1,8 @@
 import type { EventRepository } from '#event/event-repository.ts';
-import type { Event } from '#event/Event.ts';
+import { Event } from '#event/Event.ts';
 import { NotImplementedError } from '#shared/error.ts';
 import type { UUID } from 'crypto';
+import _ from 'lodash';
 import type { StreamRepository } from './stream-repository.ts';
 
 export interface StreamConfig {
@@ -9,31 +10,49 @@ export interface StreamConfig {
 	eventRepository: EventRepository;
 }
 
-export interface LoadAggregateOpts {
+export interface AggregateOpts {
 	version?: number;
 	snapshotAt?: string;
 }
 
-export abstract class Stream<TAggregate, TEvent extends Event> {
+export abstract class Stream<TAggregate> {
 	streamRepository: StreamRepository;
 	eventRepository: EventRepository;
 	id: UUID;
-	aggregate: TAggregate;
+	#aggregateOptsCache: AggregateOpts | undefined;
+	#aggregateCache: TAggregate | undefined;
 
 	constructor(id: UUID, { streamRepository, eventRepository }: StreamConfig) {
 		this.id = id;
 		this.streamRepository = streamRepository;
 		this.eventRepository = eventRepository;
-		this.aggregate = this.loadAggregate();
 	}
 
-	loadAggregate({
-		version: _version,
-		snapshotAt: _snapshotAt,
-	}: LoadAggregateOpts = {}): TAggregate {
-		// @TODO
+	async getAggregate(opts: AggregateOpts = {}): Promise<TAggregate> {
+		if (_.eq(opts, this.#aggregateOptsCache) && !!this.#aggregateCache) {
+			return this.#aggregateCache;
+		}
+
+		this.#aggregateCache = this.emptyRecord;
+
+		const eventRecs = await this.eventRepository.getByStreamId(this.id);
+
+		for (const eventRec of eventRecs) {
+			const event: Event = new Event({
+				context: eventRec.Context,
+				ref: eventRec.Ref,
+				streamId: this.id,
+				correlationId: eventRec.CorrelationId,
+				streamVersion: eventRec.Version,
+				data: eventRec.Data,
+			});
+			this.applyEvent(this.#aggregateCache, event);
+		}
+
 		throw new NotImplementedError();
 	}
 
-	abstract applyEvent(event: TEvent): Promise<UUID>;
+	abstract emptyRecord: TAggregate;
+
+	abstract applyEvent(aggregate: TAggregate, event: Event): Promise<void>;
 }

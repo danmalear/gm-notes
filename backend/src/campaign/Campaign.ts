@@ -1,13 +1,28 @@
+import type { Event } from '#event/Event.ts';
 import { NotImplementedError } from '#shared/error.ts';
+import type { StreamConfig } from '#stream/Stream.ts';
 import { Stream } from '#stream/Stream.ts';
-import type { CampaignCreated, CampaignEvent } from './campaign-events.ts';
+import type { UUID } from 'crypto';
+import { validateCampaignCreated } from './campaign-events.ts';
 import type { CampaignRec } from './campaign-repository.ts';
 
-export class Campaign extends Stream<CampaignRec, CampaignEvent> {
-	override async applyEvent(event: CampaignEvent) {
+export class Campaign extends Stream<CampaignRec> {
+	override emptyRecord: CampaignRec;
+
+	constructor(id: UUID, streamConfig: StreamConfig) {
+		super(id, streamConfig);
+		this.emptyRecord = {
+			CampaignId: id,
+			CampaignTemplateId: null,
+			ActiveMapId: null,
+			Name: '',
+		};
+	}
+
+	override async applyEvent(aggregate: CampaignRec, event: Event) {
 		switch (event.ref) {
 			case 'Created':
-				return this.Created(event.data);
+				return this.Created(aggregate, event);
 			default:
 				throw new NotImplementedError(
 					`Campaign event ${event.ref} is not implemented.`,
@@ -15,8 +30,9 @@ export class Campaign extends Stream<CampaignRec, CampaignEvent> {
 		}
 	}
 
-	Created(event: CampaignCreated) {
-		this.aggregate.Name = event.name;
-		return this.aggregate.CampaignId;
+	Created(aggregate: CampaignRec, event: Event) {
+		validateCampaignCreated(event.data);
+		aggregate.CampaignId = event.data.id;
+		aggregate.Name = event.data.name;
 	}
 }
