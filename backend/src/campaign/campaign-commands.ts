@@ -56,7 +56,7 @@ export class CampaignCommandHandler implements ICommandSubscriber {
 		const event = new CampaignCreatedEvent({
 			streamId: id,
 			correlationId: command.correlationId,
-			streamVersion: command.streamVersion,
+			streamVersion: 1,
 			data: {
 				id,
 				name: command.data.name,
