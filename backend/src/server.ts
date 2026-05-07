@@ -136,7 +136,14 @@ function createAppServer() {
 
 	commandRoutes(app, commandBus);
 
-	campaignRoutes(app, commandBus, eventBus, campaignRepository);
+	campaignRoutes(
+		app,
+		commandBus,
+		eventBus,
+		eventRepository,
+		streamRepository,
+		campaignRepository,
+	);
 	mapRoutes(app, commandBus, eventBus, mapRepository);
 	regionRoutes(
 		app,

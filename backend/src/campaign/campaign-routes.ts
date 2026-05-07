@@ -1,5 +1,7 @@
 import type { ICommandBus } from '#command/CommandBus.ts';
+import type { EventRepository } from '#event/event-repository.ts';
 import type { IEventBus } from '#event/EventBus.ts';
+import type { StreamRepository } from '#framework/stream/stream-repository.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getById } from '#shared/route-utils.ts';
 import type { Express, Response } from 'express';
@@ -12,14 +14,18 @@ export function campaignRoutes(
 	app: Express,
 	commandBus: ICommandBus,
 	eventBus: IEventBus,
+	eventRepository: EventRepository,
+	streamRepository: StreamRepository,
 	campaignRepository: CampaignRepository,
 ) {
 	const apiNamespace = 'campaigns';
 
-	const campaignCommandHandler = new CampaignCommandHandler(
+	const campaignCommandHandler = new CampaignCommandHandler({
 		eventBus,
+		eventRepository,
+		streamRepository,
 		campaignRepository,
-	);
+	});
 
 	commandBus.subscribe('Campaign', campaignCommandHandler);
 
