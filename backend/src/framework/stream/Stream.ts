@@ -1,6 +1,6 @@
 import type { EventRepository } from '#event/event-repository.ts';
 import { Event } from '#event/Event.ts';
-import { NotImplementedError } from '#shared/error.ts';
+import { InternalError, NotImplementedError } from '#shared/error.ts';
 import type { UUID } from 'crypto';
 import _ from 'lodash';
 import type { StreamRepository } from './stream-repository.ts';
@@ -26,6 +26,14 @@ export abstract class Stream<TAggregate> {
 		this.id = id;
 		this.streamRepository = streamRepository;
 		this.eventRepository = eventRepository;
+	}
+
+	async getVersion() {
+		const stream = await this.streamRepository.getById(this.id);
+		if (!stream) {
+			throw new InternalError('Unable to fetch stream');
+		}
+		return stream.Version;
 	}
 
 	async getAggregate(opts: AggregateOpts = {}): Promise<TAggregate> {
