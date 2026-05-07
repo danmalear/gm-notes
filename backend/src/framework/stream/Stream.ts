@@ -1,6 +1,10 @@
 import type { EventRepository } from '#event/event-repository.ts';
 import { Event } from '#event/Event.ts';
-import { InternalError, NotImplementedError } from '#shared/error.ts';
+import {
+	BadRequestError,
+	InternalError,
+	NotImplementedError,
+} from '#shared/error.ts';
 import type { UUID } from 'crypto';
 import _ from 'lodash';
 import type { StreamRepository } from './stream-repository.ts';
@@ -30,10 +34,31 @@ export abstract class Stream<TAggregate> {
 
 	async getVersion() {
 		const stream = await this.streamRepository.getById(this.id);
-		if (!stream) {
-			throw new InternalError('Unable to fetch stream');
+		return stream?.Version ?? 0;
+	}
+
+	async validateVersion(expectedVersion: number) {
+		const streamVersion = await this.getVersion();
+		if (expectedVersion < 0) {
+			throw new InternalError(
+				`Invalid expected version for stream: ${expectedVersion}`,
+			);
 		}
-		return stream.Version;
+		if (streamVersion === 0 && expectedVersion > 0) {
+			throw new BadRequestError(
+				`Expected stream version ${expectedVersion} but no stream found`,
+			);
+		}
+		if (streamVersion > 0 && expectedVersion === 0) {
+			throw new BadRequestError(
+				`Expected stream not to exist, but stream was found`,
+			);
+		}
+		if (streamVersion !== expectedVersion) {
+			throw new BadRequestError(
+				`Stream version ${streamVersion} does not match expected version ${expectedVersion}`,
+			);
+		}
 	}
 
 	async getAggregate(opts: AggregateOpts = {}): Promise<TAggregate> {
