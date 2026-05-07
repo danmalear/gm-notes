@@ -4,13 +4,13 @@ import type { StreamRepository } from '#framework/stream/stream-repository.ts';
 import type { IMessageSubscriber } from '#message/IMessageSubscriber.ts';
 import type { Command } from './Command.ts';
 
-export interface CommandSubscriberConfig {
+export interface CommandHandlerConfig {
 	eventBus: IEventBus;
 	eventRepository: EventRepository;
 	streamRepository: StreamRepository;
 }
 
-export abstract class CommandSubscriber
+export abstract class CommandHandler
 	implements IMessageSubscriber<'Command', Command>
 {
 	eventBus: IEventBus;
@@ -21,7 +21,7 @@ export abstract class CommandSubscriber
 		eventBus,
 		eventRepository,
 		streamRepository,
-	}: CommandSubscriberConfig) {
+	}: CommandHandlerConfig) {
 		this.eventBus = eventBus;
 		this.eventRepository = eventRepository;
 		this.streamRepository = streamRepository;

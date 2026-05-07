@@ -1,7 +1,7 @@
 import type { CommandFunction } from '#command/command-types.ts';
 import type { Command } from '#command/Command.ts';
-import type { CommandSubscriberConfig } from '#command/CommandSubscriber.ts';
-import { CommandSubscriber } from '#command/CommandSubscriber.ts';
+import type { CommandHandlerConfig } from '#command/CommandHandler.ts';
+import { CommandHandler } from '#command/CommandHandler.ts';
 import { BadRequestError } from '#shared/error.ts';
 import { randomUUID } from 'crypto';
 import { CampaignCreatedEvent } from './campaign-events.ts';
@@ -24,11 +24,11 @@ function validateCreateCampaign(
 	}
 }
 
-interface CampaignCommandHandlerConfig extends CommandSubscriberConfig {
+interface CampaignCommandHandlerConfig extends CommandHandlerConfig {
 	campaignRepository: CampaignRepository;
 }
 
-export class CampaignCommandHandler extends CommandSubscriber {
+export class CampaignCommandHandler extends CommandHandler {
 	campaignRepository: CampaignRepository;
 
 	constructor(config: CampaignCommandHandlerConfig) {
