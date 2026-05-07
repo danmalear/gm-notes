@@ -6,6 +6,7 @@ import { BadRequestError } from '#shared/error.ts';
 import { randomUUID } from 'crypto';
 import { CampaignCreatedEvent } from './campaign-events.ts';
 import type { CampaignRepository } from './campaign-repository.ts';
+import { Campaign } from './Campaign.ts';
 
 export interface CreateCampaign {
 	name: string;
@@ -37,6 +38,13 @@ export class CampaignCommandHandler extends CommandHandler {
 	}
 
 	override async handle(command: Command) {
+		const campaign = command.streamId
+			? new Campaign(command.streamId, {
+					eventRepository: this.eventRepository,
+					streamRepository: this.streamRepository,
+				})
+			: undefined;
+		this.validateCommandVersion(campaign, command);
 		if (command.context !== 'Campaign') {
 			throw new BadRequestError(
 				'Non-campaign command submitted to campaign command handler',

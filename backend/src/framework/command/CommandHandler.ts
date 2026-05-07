@@ -1,6 +1,7 @@
 import type { EventRepository } from '#event/event-repository.ts';
 import type { IEventBus } from '#event/EventBus.ts';
 import type { StreamRepository } from '#framework/stream/stream-repository.ts';
+import type { Stream } from '#framework/stream/Stream.ts';
 import type { IMessageSubscriber } from '#message/IMessageSubscriber.ts';
 import type { Command } from './Command.ts';
 
@@ -25,6 +26,15 @@ export abstract class CommandHandler
 		this.eventBus = eventBus;
 		this.eventRepository = eventRepository;
 		this.streamRepository = streamRepository;
+	}
+
+	async validateCommandVersion(
+		stream: Stream<unknown> | undefined,
+		command: Command,
+	) {
+		if (stream && command.streamVersion !== undefined) {
+			await stream.validateVersion(command.streamVersion);
+		}
 	}
 
 	abstract handle(command: Command): Promise<void>;
