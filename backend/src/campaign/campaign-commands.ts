@@ -1,7 +1,7 @@
 import type { CommandFunction } from '#command/command-types.ts';
 import type { Command } from '#command/Command.ts';
-import type { ICommandSubscriber } from '#command/ICommandSubscriber.ts';
-import type { IEventBus } from '#event/EventBus.ts';
+import type { CommandSubscriberConfig } from '#command/CommandSubscriber.ts';
+import { CommandSubscriber } from '#command/CommandSubscriber.ts';
 import { BadRequestError } from '#shared/error.ts';
 import { randomUUID } from 'crypto';
 import { CampaignCreatedEvent } from './campaign-events.ts';
@@ -24,16 +24,19 @@ function validateCreateCampaign(
 	}
 }
 
-export class CampaignCommandHandler implements ICommandSubscriber {
-	eventBus: IEventBus;
+interface CampaignCommandHandlerConfig extends CommandSubscriberConfig {
+	campaignRepository: CampaignRepository;
+}
+
+export class CampaignCommandHandler extends CommandSubscriber {
 	campaignRepository: CampaignRepository;
 
-	constructor(eventBus: IEventBus, campaignRepository: CampaignRepository) {
-		this.eventBus = eventBus;
-		this.campaignRepository = campaignRepository;
+	constructor(config: CampaignCommandHandlerConfig) {
+		super(config);
+		this.campaignRepository = config.campaignRepository;
 	}
 
-	async handle(command: Command) {
+	override async handle(command: Command) {
 		if (command.context !== 'Campaign') {
 			throw new BadRequestError(
 				'Non-campaign command submitted to campaign command handler',
