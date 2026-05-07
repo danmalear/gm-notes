@@ -1,7 +1,10 @@
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, getStatusCode } from '#shared/error.ts';
 import type { Express, Response } from 'express';
-import { validateCommand, type CommandResponse } from './command-dtos.ts';
+import {
+	validateCommandRequest,
+	type CommandResponse,
+} from './command-dtos.ts';
 import { Command } from './Command.ts';
 import type { ICommandBus } from './CommandBus.ts';
 
@@ -17,7 +20,7 @@ export function commandRoutes(app: Express, commandBus: ICommandBus) {
 			console.log(`Command received. body: ${JSON.stringify(req.body)}`);
 
 			try {
-				validateCommand(req.body);
+				validateCommandRequest(req.body);
 			} catch (e) {
 				res.status(getStatusCode(e)).send({ message: getMessage(e) });
 				return;

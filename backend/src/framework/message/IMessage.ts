@@ -8,6 +8,6 @@ export interface IMessage<TType extends MessageType = MessageType> {
 	ref: string;
 	streamId: UUID | undefined;
 	correlationId: UUID;
-	streamVersion: number;
+	streamVersion: number | undefined;
 	data: object;
 }

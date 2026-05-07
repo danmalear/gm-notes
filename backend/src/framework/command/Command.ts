@@ -6,7 +6,7 @@ interface CommandOpts {
 	ref: string;
 	streamId: UUID | undefined;
 	correlationId?: UUID;
-	streamVersion: number;
+	streamVersion?: number;
 	data: object;
 }
 
@@ -16,7 +16,7 @@ export class Command implements IMessage<'Command'> {
 	ref: string;
 	streamId: UUID | undefined;
 	correlationId: UUID;
-	streamVersion: number;
+	streamVersion: number | undefined;
 	data: object;
 
 	constructor({
