@@ -1,5 +1,5 @@
 import { randomUUID, type UUID } from 'crypto';
-import type { CommandRec, CommandRepository } from './command-repository.ts';
+import type { CommandRec, CommandRepository } from '../command-repository.ts';
 
 const commandId1 = randomUUID();
 const streamId1 = randomUUID();

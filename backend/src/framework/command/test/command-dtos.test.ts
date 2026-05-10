@@ -2,7 +2,10 @@ import { BadRequestError } from '#shared/error.ts';
 import assert from 'assert';
 import { randomUUID } from 'crypto';
 import test, { suite } from 'node:test';
-import { validateCommandRequest, type CommandRequest } from './command-dtos.ts';
+import {
+	validateCommandRequest,
+	type CommandRequest,
+} from '../command-dtos.ts';
 
 suite('Command DTOs', () => {
 	suite('validateCommandRequest', () => {
