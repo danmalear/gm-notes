@@ -1,0 +1,26 @@
+import type { WebSocketServer } from 'ws';
+
+export const fakeWss: WebSocketServer = {
+	options: {},
+	path: '',
+	clients: new Set(),
+	address: () => null,
+	close: () => {},
+	handleUpgrade: () => {},
+	shouldHandle: () => true,
+	on: () => fakeWss,
+	once: () => fakeWss,
+	off: () => fakeWss,
+	addListener: () => fakeWss,
+	removeListener: () => fakeWss,
+	removeAllListeners: () => fakeWss,
+	setMaxListeners: () => fakeWss,
+	getMaxListeners: () => 0,
+	listeners: () => [],
+	rawListeners: () => [],
+	emit: () => true,
+	listenerCount: () => 0,
+	prependListener: () => fakeWss,
+	prependOnceListener: () => fakeWss,
+	eventNames: () => [],
+};
