@@ -12,7 +12,7 @@ const data = {
 };
 const version = 0;
 const occurredAt = new Date('01/01/2026').toUTCString();
-export const event1: EventRec = {
+export const fakeEvent: EventRec = {
 	EventId: eventId,
 	Context: context,
 	Ref: ref,

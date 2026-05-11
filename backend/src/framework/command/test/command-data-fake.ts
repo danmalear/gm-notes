@@ -12,7 +12,7 @@ const data = {
 };
 const createdAt = new Date('01/01/2026').toUTCString();
 
-export const command: CommandRec = {
+export const fakeCommand: CommandRec = {
 	CommandId: commandId,
 	Context: context,
 	Ref: ref,
