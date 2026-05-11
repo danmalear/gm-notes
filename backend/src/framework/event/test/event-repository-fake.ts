@@ -1,13 +1,10 @@
 import type { EventRec, EventRepository } from '#event/event-repository.ts';
 import { fakeRepository } from '#shared/test/repository-fake.ts';
+import { fakeEvent } from './event-data-fake.ts';
 
-interface FakeEventRepositoryConfig {
-	record: EventRec;
-}
-
-export const fakeEventRepository = (config: FakeEventRepositoryConfig) => {
+export const getFakeEventRepository = () => {
 	const fakeBaseRepository = fakeRepository<EventRec>({
-		record: config.record,
+		record: fakeEvent,
 	});
 
 	const fakeEventRepository: EventRepository = {
