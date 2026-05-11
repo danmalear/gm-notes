@@ -1,7 +1,7 @@
-import type { EventBus } from '#event/EventBus.ts';
-import { getFakeStreamRepository } from '#framework/stream/test/stream-repository-fake.ts';
+import { getFakeStreamRepository } from '#framework/stream/fakes/stream-repository-fake.ts';
 import { fakeWss } from '#framework/test/websocket-fake.ts';
 import { randomUUID } from 'crypto';
+import type { EventBus } from '../EventBus.ts';
 import { getFakeEventRepository } from './event-repository-fake.ts';
 
 export const fakeEventBus: EventBus = {

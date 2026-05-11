@@ -1,5 +1,5 @@
-import type { CommandRec } from '#command/command-repository.ts';
 import { randomUUID } from 'crypto';
+import type { CommandRec } from '../command-repository.ts';
 
 const commandId = randomUUID();
 const context = 'Context';

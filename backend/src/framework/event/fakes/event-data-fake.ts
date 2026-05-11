@@ -1,5 +1,5 @@
-import type { EventRec } from '#event/event-repository.ts';
 import { randomUUID } from 'crypto';
+import type { EventRec } from '../event-repository.ts';
 
 const eventId = randomUUID();
 const context = 'Context';

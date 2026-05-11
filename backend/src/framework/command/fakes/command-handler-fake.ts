@@ -1,7 +1,7 @@
-import type { CommandHandler } from '#command/CommandHandler.ts';
-import { fakeEventBus } from '#event/test/event-bus-fake.ts';
-import { getFakeEventRepository } from '#event/test/event-repository-fake.ts';
-import { getFakeStreamRepository } from '#framework/stream/test/stream-repository-fake.ts';
+import { fakeEventBus } from '#event/fakes/event-bus-fake.ts';
+import { getFakeEventRepository } from '#event/fakes/event-repository-fake.ts';
+import { getFakeStreamRepository } from '#framework/stream/fakes/stream-repository-fake.ts';
+import type { CommandHandler } from '../CommandHandler.ts';
 
 export const fakeCommandHandler: CommandHandler = {
 	eventBus: fakeEventBus,

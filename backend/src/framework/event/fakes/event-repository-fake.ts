@@ -1,5 +1,5 @@
-import type { EventRec, EventRepository } from '#event/event-repository.ts';
 import { fakeRepository } from '#shared/test/repository-fake.ts';
+import type { EventRec, EventRepository } from '../event-repository.ts';
 import { fakeEvent } from './event-data-fake.ts';
 
 export const getFakeEventRepository = () => {
