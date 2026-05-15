@@ -37,15 +37,6 @@ export class CampaignCommandHandler extends CommandHandler {
 		this.campaignRepository = config.campaignRepository;
 	}
 
-	override clone() {
-		return new CampaignCommandHandler({
-			eventBus: this.eventBus.clone(),
-			eventRepository: this.eventRepository.clone(),
-			streamRepository: this.streamRepository.clone(),
-			campaignRepository: this.campaignRepository.clone(),
-		});
-	}
-
 	override async handle(command: Command) {
 		const campaign = command.streamId
 			? new Campaign(command.streamId, {

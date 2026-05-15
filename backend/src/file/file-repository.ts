@@ -13,10 +13,6 @@ export class FileRepository extends Repository<FileRec> {
 		super(tableName, pkColumn);
 	}
 
-	override clone() {
-		return new FileRepository();
-	}
-
 	override async getById(id: string): Promise<FileRec | undefined> {
 		// @ts-expect-error This is a rare case of the ID column not being in UUID format
 		return await this.getByIdRaw(id);

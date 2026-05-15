@@ -47,14 +47,6 @@ export class LocationItemRepository extends Repository<
 		this.noteRepository = noteRepository;
 	}
 
-	override clone() {
-		return new LocationItemRepository(
-			this.actionRepository.clone(),
-			this.itemRepository.clone(),
-			this.noteRepository.clone(),
-		);
-	}
-
 	override async getById(id: UUID): Promise<LocationItemRefRec | undefined> {
 		const locationItemRaw = await this.getByIdRaw(id);
 		if (!locationItemRaw) return undefined;

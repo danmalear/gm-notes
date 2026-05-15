@@ -22,10 +22,6 @@ export class EventRepository extends Repository<EventRec> {
 		super(tableName, pkColumn);
 	}
 
-	override clone() {
-		return new EventRepository();
-	}
-
 	override async getById(id: UUID): Promise<EventRec | undefined> {
 		return await this.getByIdRaw(id);
 	}

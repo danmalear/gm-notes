@@ -1,3 +1,4 @@
+import type { ICloneable } from '#shared/ICloneable.ts';
 import type { Repository } from '../Repository.ts';
 
 export interface FakeRepositoryConfig<TRecord extends object> {
@@ -5,7 +6,7 @@ export interface FakeRepositoryConfig<TRecord extends object> {
 }
 
 export class FakeRepository<TRecord extends object>
-	implements Repository<TRecord>
+	implements Repository<TRecord>, ICloneable<FakeRepository<TRecord>>
 {
 	record: TRecord;
 	tableName: string;

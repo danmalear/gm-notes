@@ -11,10 +11,6 @@ export class CampaignProjections implements IEventSubscriber {
 		this.campaignRepository = campaignRepository;
 	}
 
-	clone() {
-		return new CampaignProjections(this.campaignRepository.clone());
-	}
-
 	async handle(event: Event) {
 		switch (event.ref) {
 			case 'Created':

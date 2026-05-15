@@ -20,10 +20,6 @@ export class RegionShapeRepository extends Repository<RegionShapeRec> {
 		super(tableName, pkColumn);
 	}
 
-	override clone() {
-		return new RegionShapeRepository();
-	}
-
 	override async getById(id: UUID): Promise<RegionShapeRec | undefined> {
 		return await this.getByIdRaw(id);
 	}
