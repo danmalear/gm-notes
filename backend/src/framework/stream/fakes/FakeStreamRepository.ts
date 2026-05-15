@@ -11,4 +11,8 @@ export class FakeStreamRepository
 			record: fakeStream,
 		});
 	}
+
+	override clone() {
+		return new FakeStreamRepository();
+	}
 }

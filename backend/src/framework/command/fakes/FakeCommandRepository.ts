@@ -11,4 +11,8 @@ export class FakeCommandRepository
 			record: fakeCommand,
 		});
 	}
+
+	override clone() {
+		return new FakeCommandRepository();
+	}
 }
