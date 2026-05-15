@@ -31,7 +31,7 @@ export class HandoutRepository extends Repository<HandoutRec> {
 		super(tableName, pkColumn);
 	}
 
-	clone() {
+	override clone() {
 		return new HandoutRepository();
 	}
 

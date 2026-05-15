@@ -41,7 +41,7 @@ export class ItemRepository extends Repository<ItemRec, ItemRefRec> {
 		this.noteRepository = noteRepository;
 	}
 
-	clone() {
+	override clone() {
 		return new ItemRepository(
 			this.actionRepository.clone(),
 			this.fileRepository.clone(),

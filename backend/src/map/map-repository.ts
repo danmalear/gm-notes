@@ -40,7 +40,7 @@ export class MapRepository extends Repository<MapRec, MapRefRec> {
 		this.regionShapeRepository = regionShapeRepository;
 	}
 
-	clone() {
+	override clone() {
 		return new MapRepository(
 			this.regionRepository.clone(),
 			this.regionShapeRepository.clone(),

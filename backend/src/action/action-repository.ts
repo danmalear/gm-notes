@@ -49,7 +49,7 @@ export class ActionRepository extends Repository<ActionRec, ActionRefRec> {
 		this.narrationRepository = narrationRepository;
 	}
 
-	clone() {
+	override clone() {
 		return new ActionRepository(
 			this.abilityCheckRepository.clone(),
 			this.conditionRepository.clone(),

@@ -22,7 +22,7 @@ export class EventRepository extends Repository<EventRec> {
 		super(tableName, pkColumn);
 	}
 
-	clone() {
+	override clone() {
 		return new EventRepository();
 	}
 

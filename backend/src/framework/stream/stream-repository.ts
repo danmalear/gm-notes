@@ -17,7 +17,7 @@ export class StreamRepository extends Repository<StreamRec> {
 		super(tableName, pkColumn);
 	}
 
-	clone() {
+	override clone() {
 		return new StreamRepository();
 	}
 

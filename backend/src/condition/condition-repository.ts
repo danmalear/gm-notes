@@ -39,7 +39,7 @@ export class ConditionRepository extends Repository<ConditionRec> {
 		super(tableName, pkColumn);
 	}
 
-	clone() {
+	override clone() {
 		return new ConditionRepository();
 	}
 

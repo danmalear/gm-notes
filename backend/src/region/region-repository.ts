@@ -76,7 +76,7 @@ export class RegionRepository extends Repository<RegionRec, RegionRefRec> {
 		this.regionShapeRepository = regionShapeRepository;
 	}
 
-	clone() {
+	override clone() {
 		return new RegionRepository(
 			this.actionRepository.clone(),
 			this.handoutRepository.clone(),

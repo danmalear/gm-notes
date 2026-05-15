@@ -27,7 +27,7 @@ export class CampaignRepository extends Repository<
 		this.mapRepository = mapRepository;
 	}
 
-	clone() {
+	override clone() {
 		return new CampaignRepository(this.mapRepository.clone());
 	}
 

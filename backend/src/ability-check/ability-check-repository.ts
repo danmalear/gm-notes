@@ -40,7 +40,7 @@ export class AbilityCheckRepository extends Repository<
 		this.narrationRepository = narrationRepository;
 	}
 
-	clone() {
+	override clone() {
 		return new AbilityCheckRepository(this.narrationRepository.clone());
 	}
 

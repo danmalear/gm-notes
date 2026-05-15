@@ -37,7 +37,7 @@ export class CampaignCommandHandler extends CommandHandler {
 		this.campaignRepository = config.campaignRepository;
 	}
 
-	clone() {
+	override clone() {
 		return new CampaignCommandHandler({
 			eventBus: this.eventBus.clone(),
 			eventRepository: this.eventRepository.clone(),

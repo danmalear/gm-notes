@@ -13,7 +13,7 @@ export class FileRepository extends Repository<FileRec> {
 		super(tableName, pkColumn);
 	}
 
-	clone() {
+	override clone() {
 		return new FileRepository();
 	}
 

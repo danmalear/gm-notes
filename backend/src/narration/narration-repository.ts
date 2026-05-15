@@ -40,7 +40,7 @@ export class NarrationRepository extends Repository<NarrationRec> {
 		super(tableName, pkColumn);
 	}
 
-	clone() {
+	override clone() {
 		return new NarrationRepository();
 	}
 

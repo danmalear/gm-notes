@@ -47,7 +47,7 @@ export class LocationItemRepository extends Repository<
 		this.noteRepository = noteRepository;
 	}
 
-	clone() {
+	override clone() {
 		return new LocationItemRepository(
 			this.actionRepository.clone(),
 			this.itemRepository.clone(),
