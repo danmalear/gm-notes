@@ -27,10 +27,12 @@ export class FakeCommandHandler
 	}
 
 	async validateCommandVersion() {
+		this.calls.validateCommandVersion++;
 		return;
 	}
 
 	async handle() {
+		this.calls.handle++;
 		return;
 	}
 
