@@ -1,20 +1,20 @@
 import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import type { UUID } from 'crypto';
-import { Cloneable } from './Cloneable.ts';
+import type { ICloneable } from './ICloneable.ts';
 
-export abstract class Repository<
-	TRaw,
-	TEntity extends TRaw = TRaw,
-> extends Cloneable<Repository<TRaw, TEntity>> {
+export abstract class Repository<TRaw, TEntity extends TRaw = TRaw>
+	implements ICloneable<Repository<TRaw, TEntity>>
+{
 	tableName: string;
 	pkColumn: keyof TRaw;
 
 	constructor(tableName: string, pkColumn: keyof TRaw) {
-		super();
 		this.tableName = tableName;
 		this.pkColumn = pkColumn;
 	}
+
+	abstract clone(): Repository<TRaw, TEntity>;
 
 	/**
 	 * Retrieves a record from the database by its UUID
