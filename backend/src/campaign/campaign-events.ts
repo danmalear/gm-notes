@@ -38,7 +38,7 @@ export class CampaignCreatedEvent extends Event<
 	'Created',
 	CampaignCreated
 > {
-	constructor({ streamId, data, correlationId }: CampaignCreatedEventOpts) {
+	constructor({ streamId, correlationId, data }: CampaignCreatedEventOpts) {
 		super({
 			context: 'Campaign',
 			ref: 'Created',
