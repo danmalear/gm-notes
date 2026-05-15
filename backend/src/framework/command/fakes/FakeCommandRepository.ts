@@ -1,6 +1,6 @@
 import { FakeRepository } from '#shared/test/FakeRepository.ts';
 import type { CommandRec, CommandRepository } from '../command-repository.ts';
-import { fakeCommand } from './command-data-fake.ts';
+import { fakeCommandRec } from './command-data-fake.ts';
 
 export class FakeCommandRepository
 	extends FakeRepository<CommandRec>
@@ -8,7 +8,7 @@ export class FakeCommandRepository
 {
 	constructor() {
 		super({
-			record: fakeCommand,
+			record: fakeCommandRec,
 		});
 	}
 
