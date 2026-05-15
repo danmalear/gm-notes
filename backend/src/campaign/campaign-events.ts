@@ -48,6 +48,15 @@ export class CampaignCreatedEvent extends Event<
 			data,
 		});
 	}
+
+	override clone() {
+		return new CampaignCreatedEvent({
+			streamId: this.streamId,
+			correlationId: this.correlationId,
+			streamVersion: this.streamVersion,
+			data: { ...this.data },
+		});
+	}
 }
 
 // #endregion CampaignCreated
@@ -83,6 +92,15 @@ export class CampaignRenamedEvent extends Event<
 			correlationId,
 			streamVersion,
 			data,
+		});
+	}
+
+	override clone() {
+		return new CampaignRenamedEvent({
+			streamId: this.streamId,
+			correlationId: this.correlationId,
+			streamVersion: this.streamVersion,
+			data: { ...this.data },
 		});
 	}
 }

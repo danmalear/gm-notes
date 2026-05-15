@@ -50,4 +50,15 @@ export class Event<
 		this.data = data;
 		this.streamVersion = streamVersion;
 	}
+
+	clone() {
+		return new Event({
+			context: this.context,
+			ref: this.ref,
+			streamId: this.streamId,
+			correlationId: this.correlationId,
+			streamVersion: this.streamVersion,
+			data: { ...this.data },
+		});
+	}
 }

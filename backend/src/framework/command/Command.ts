@@ -35,4 +35,15 @@ export class Command implements IMessage<'Command'> {
 		this.streamVersion = streamVersion;
 		this.data = data;
 	}
+
+	clone() {
+		return new Command({
+			context: this.context,
+			ref: this.ref,
+			streamId: this.streamId,
+			correlationId: this.correlationId,
+			streamVersion: this.streamVersion,
+			data: { ...this.data },
+		});
+	}
 }
