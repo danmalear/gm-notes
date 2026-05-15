@@ -1,6 +1,5 @@
 import type { EventRepository } from '#event/event-repository.ts';
-import type { Event } from '#event/Event.ts';
-import type { IMessageSubscriber } from '#framework/message/IMessageSubscriber.ts';
+import type { IEventSubscriber } from '#event/IEventSubscriber.ts';
 import { FakeStreamRepository } from '#framework/stream/fakes/FakeStreamRepository.ts';
 import type { StreamRepository } from '#framework/stream/stream-repository.ts';
 import { fakeWss } from '#framework/test/websocket-fake.ts';
@@ -14,10 +13,7 @@ export class FakeEventBus implements EventBus {
 	eventRepository: EventRepository;
 	streamRepository: StreamRepository;
 	wss: WebSocketServer;
-	subscribers: Record<
-		string,
-		IMessageSubscriber<'Event', Event<string, string, object>>[]
-	>;
+	subscribers: Record<string, IEventSubscriber[]>;
 
 	constructor() {
 		this.eventRepository = new FakeEventRepository();
