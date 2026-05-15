@@ -1,0 +1,31 @@
+import type { EventRepository } from '#event/event-repository.ts';
+import type { EventBus } from '#event/EventBus.ts';
+import { FakeEventBus } from '#event/fakes/FakeEventBus.ts';
+import { FakeEventRepository } from '#event/fakes/FakeEventRepository.ts';
+import { FakeStreamRepository } from '#framework/stream/fakes/FakeStreamRepository.ts';
+import type { StreamRepository } from '#framework/stream/stream-repository.ts';
+import type { CommandHandler } from '../CommandHandler.ts';
+
+export class FakeCommandHandler implements CommandHandler {
+	eventBus: EventBus;
+	eventRepository: EventRepository;
+	streamRepository: StreamRepository;
+
+	constructor() {
+		this.eventBus = new FakeEventBus();
+		this.eventRepository = new FakeEventRepository();
+		this.streamRepository = new FakeStreamRepository();
+	}
+
+	async validateCommandVersion() {
+		return;
+	}
+
+	async handle() {
+		return;
+	}
+
+	clone() {
+		return new FakeCommandHandler();
+	}
+}
