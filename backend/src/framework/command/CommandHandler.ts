@@ -28,6 +28,8 @@ export abstract class CommandHandler
 		this.streamRepository = streamRepository;
 	}
 
+	abstract clone(): CommandHandler;
+
 	async validateCommandVersion(
 		stream: Stream<unknown> | undefined,
 		command: Command,

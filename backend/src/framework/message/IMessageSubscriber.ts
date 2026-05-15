@@ -1,3 +1,4 @@
+import type { ICloneable } from '#shared/ICloneable.ts';
 import type { IMessage, MessageType } from './IMessage.ts';
 
 /**
@@ -9,6 +10,6 @@ import type { IMessage, MessageType } from './IMessage.ts';
 export interface IMessageSubscriber<
 	TType extends MessageType,
 	TMessage extends IMessage<TType>,
-> {
+> extends ICloneable<IMessageSubscriber<TType, TMessage>> {
 	handle: (message: TMessage) => Promise<void>;
 }
