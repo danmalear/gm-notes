@@ -31,6 +31,10 @@ export class HandoutRepository extends Repository<HandoutRec> {
 		super(tableName, pkColumn);
 	}
 
+	clone() {
+		return new HandoutRepository();
+	}
+
 	override async getById(id: UUID): Promise<HandoutRec | undefined> {
 		return await this.getByIdRaw(id);
 	}

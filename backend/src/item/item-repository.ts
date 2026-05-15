@@ -41,6 +41,14 @@ export class ItemRepository extends Repository<ItemRec, ItemRefRec> {
 		this.noteRepository = noteRepository;
 	}
 
+	clone() {
+		return new ItemRepository(
+			this.actionRepository.clone(),
+			this.fileRepository.clone(),
+			this.noteRepository.clone(),
+		);
+	}
+
 	override async getById(id: UUID): Promise<ItemRefRec | undefined> {
 		const itemRaw = await this.getByIdRaw(id);
 		if (!itemRaw) return undefined;

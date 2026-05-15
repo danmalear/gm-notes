@@ -76,6 +76,17 @@ export class RegionRepository extends Repository<RegionRec, RegionRefRec> {
 		this.regionShapeRepository = regionShapeRepository;
 	}
 
+	clone() {
+		return new RegionRepository(
+			this.actionRepository.clone(),
+			this.handoutRepository.clone(),
+			this.locationItemRepository.clone(),
+			this.narrationRepository.clone(),
+			this.noteRepository.clone(),
+			this.regionShapeRepository.clone(),
+		);
+	}
+
 	override async getById(id: UUID): Promise<RegionRefRec | undefined> {
 		const regionRaw = await this.getByIdRaw(id);
 		if (!regionRaw) return undefined;

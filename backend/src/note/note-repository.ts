@@ -17,6 +17,10 @@ export class NoteRepository extends Repository<NoteRec> {
 		super(tableName, pkColumn);
 	}
 
+	override clone() {
+		return new NoteRepository();
+	}
+
 	override async getById(id: UUID): Promise<NoteRec | undefined> {
 		return await this.getByIdRaw(id);
 	}

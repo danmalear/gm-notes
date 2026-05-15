@@ -40,6 +40,10 @@ export class AbilityCheckRepository extends Repository<
 		this.narrationRepository = narrationRepository;
 	}
 
+	clone() {
+		return new AbilityCheckRepository(this.narrationRepository.clone());
+	}
+
 	override async getById(id: UUID): Promise<AbilityCheckRefRec | undefined> {
 		const abilityCheck = await this.getByIdRaw(id);
 		if (!abilityCheck) return undefined;

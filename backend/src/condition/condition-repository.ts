@@ -39,6 +39,10 @@ export class ConditionRepository extends Repository<ConditionRec> {
 		super(tableName, pkColumn);
 	}
 
+	clone() {
+		return new ConditionRepository();
+	}
+
 	override async getById(id: UUID): Promise<ConditionRec | undefined> {
 		return await this.getByIdRaw(id);
 	}

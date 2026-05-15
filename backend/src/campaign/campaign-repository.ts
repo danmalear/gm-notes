@@ -27,6 +27,10 @@ export class CampaignRepository extends Repository<
 		this.mapRepository = mapRepository;
 	}
 
+	clone() {
+		return new CampaignRepository(this.mapRepository.clone());
+	}
+
 	override async getById(id: UUID): Promise<CampaignRefRec | undefined> {
 		const campaign = await this.getByIdRaw(id);
 		if (!campaign) return undefined;

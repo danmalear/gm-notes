@@ -19,6 +19,10 @@ export class CommandRepository extends Repository<CommandRec> {
 		super(tableName, pkColumn);
 	}
 
+	override clone() {
+		return new CommandRepository();
+	}
+
 	override async getById(id: UUID): Promise<CommandRec | undefined> {
 		return await this.getByIdRaw(id);
 	}

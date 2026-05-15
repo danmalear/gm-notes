@@ -40,6 +40,10 @@ export class NarrationRepository extends Repository<NarrationRec> {
 		super(tableName, pkColumn);
 	}
 
+	clone() {
+		return new NarrationRepository();
+	}
+
 	override async getById(id: UUID): Promise<NarrationRec | undefined> {
 		return await this.getByIdRaw(id);
 	}

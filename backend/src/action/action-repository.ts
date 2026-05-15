@@ -49,6 +49,14 @@ export class ActionRepository extends Repository<ActionRec, ActionRefRec> {
 		this.narrationRepository = narrationRepository;
 	}
 
+	clone() {
+		return new ActionRepository(
+			this.abilityCheckRepository.clone(),
+			this.conditionRepository.clone(),
+			this.narrationRepository.clone(),
+		);
+	}
+
 	override async getById(id: UUID): Promise<ActionRefRec | undefined> {
 		const actionRaw = await this.getByIdRaw(id);
 		if (!actionRaw) return undefined;

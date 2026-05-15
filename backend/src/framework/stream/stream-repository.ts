@@ -17,6 +17,10 @@ export class StreamRepository extends Repository<StreamRec> {
 		super(tableName, pkColumn);
 	}
 
+	clone() {
+		return new StreamRepository();
+	}
+
 	override async getById(id: UUID): Promise<StreamRec | undefined> {
 		return await this.getByIdRaw(id);
 	}

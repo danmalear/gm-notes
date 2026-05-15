@@ -40,6 +40,13 @@ export class MapRepository extends Repository<MapRec, MapRefRec> {
 		this.regionShapeRepository = regionShapeRepository;
 	}
 
+	clone() {
+		return new MapRepository(
+			this.regionRepository.clone(),
+			this.regionShapeRepository.clone(),
+		);
+	}
+
 	override async getById(id: UUID): Promise<MapRefRec | undefined> {
 		const map = await this.getByIdRaw(id);
 		if (!map) return undefined;

@@ -1,12 +1,17 @@
 import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import type { UUID } from 'crypto';
+import { Cloneable } from './Cloneable.ts';
 
-export abstract class Repository<TRaw, TEntity extends TRaw = TRaw> {
+export abstract class Repository<
+	TRaw,
+	TEntity extends TRaw = TRaw,
+> extends Cloneable<Repository<TRaw, TEntity>> {
 	tableName: string;
 	pkColumn: keyof TRaw;
 
 	constructor(tableName: string, pkColumn: keyof TRaw) {
+		super();
 		this.tableName = tableName;
 		this.pkColumn = pkColumn;
 	}
