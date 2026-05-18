@@ -29,10 +29,16 @@ export function validateCommandRequest(
 	if (typeof obj !== 'object' || Array.isArray(obj)) {
 		throw new BadRequestError(`Invalid body supplied to Command request`);
 	}
-	if (!('context' in obj) || !obj.context || typeof obj.context !== 'string') {
+	if (!('context' in obj) || !obj.context) {
+		throw new BadRequestError(`No context supplied to Command request`);
+	}
+	if (typeof obj.context !== 'string') {
 		throw new BadRequestError(`Invalid context supplied to Command request`);
 	}
-	if (!('ref' in obj) || !obj.ref || typeof obj.ref !== 'string') {
+	if (!('ref' in obj) || !obj.ref) {
+		throw new BadRequestError(`No ref supplied to Command request`);
+	}
+	if (typeof obj.ref !== 'string') {
 		throw new BadRequestError(`Invalid ref supplied to Command request`);
 	}
 	if (

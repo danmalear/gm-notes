@@ -14,6 +14,14 @@ const data = {
 };
 const createdAt = new Date('01/01/2026').toUTCString();
 
+export const fakeCommandRequest = {
+	context,
+	ref,
+	streamId,
+	streamVersion,
+	data,
+};
+
 export const fakeCommand = new Command({
 	context,
 	ref,

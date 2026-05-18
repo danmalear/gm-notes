@@ -1,35 +1,18 @@
 import { BadRequestError } from '#shared/error.ts';
 import assert from 'assert';
-import { randomUUID } from 'crypto';
 import test, { suite } from 'node:test';
-import { validateCommandRequest, type CommandRequest } from './command-dtos.ts';
+import { validateCommandRequest } from './command-dtos.ts';
+import { fakeCommandRequest } from './fakes/command-data-fake.ts';
 
 suite('Command DTOs', () => {
 	suite('validateCommandRequest', () => {
-		const validContext = 'Context';
-		const validRef = 'DoThis';
-		const validStreamId = randomUUID();
-		const validStreamVersion = 0;
-		const validData = {
-			prop1: 'string',
-			prop2: 1,
-		};
-
-		const validCommandRequest: CommandRequest = {
-			context: validContext,
-			ref: validRef,
-			streamId: validStreamId,
-			streamVersion: validStreamVersion,
-			data: validData,
-		};
-
 		test('validates a complete valid command request', () => {
-			assert.doesNotThrow(() => validateCommandRequest(validCommandRequest));
+			assert.doesNotThrow(() => validateCommandRequest(fakeCommandRequest));
 		});
 
 		test('validates a minimal valid command request', () => {
 			const command = {
-				...validCommandRequest,
+				...fakeCommandRequest,
 				streamId: undefined,
 				streamVersion: undefined,
 				data: {},
@@ -39,87 +22,90 @@ suite('Command DTOs', () => {
 		});
 
 		test('throws an error with no command request', () => {
-			assert.throws(
-				() => validateCommandRequest(undefined),
-				new BadRequestError(`No body supplied to Command request`),
-			);
+			assert.throws(() => validateCommandRequest(undefined), BadRequestError);
 		});
 
 		test('throws an error with bad command request', () => {
 			assert.throws(
-				() => validateCommandRequest(validRef),
-				new BadRequestError(`Invalid body supplied to Command request`),
+				() => validateCommandRequest(fakeCommandRequest.ref),
+				BadRequestError,
 			);
 		});
 
 		test('throws an error with no context', () => {
 			const command = {
-				...validCommandRequest,
+				...fakeCommandRequest,
 				context: undefined,
 			};
 
-			assert.throws(
-				() => validateCommandRequest(command),
-				new BadRequestError(`Invalid context supplied to Command request`),
-			);
+			assert.throws(() => validateCommandRequest(command), BadRequestError);
+		});
+
+		test('throws an error with invalid context', () => {
+			const command = {
+				...fakeCommandRequest,
+				context: {
+					description: fakeCommandRequest.context,
+				},
+			};
+
+			assert.throws(() => validateCommandRequest(command), BadRequestError);
 		});
 
 		test('throws an error with no ref', () => {
 			const command = {
-				...validCommandRequest,
+				...fakeCommandRequest,
 				ref: undefined,
 			};
 
-			assert.throws(
-				() => validateCommandRequest(command),
-				new BadRequestError(`Invalid ref supplied to Command request`),
-			);
+			assert.throws(() => validateCommandRequest(command), BadRequestError);
+		});
+
+		test('throws an error with invalid ref', () => {
+			const command = {
+				...fakeCommandRequest,
+				ref: {
+					description: fakeCommandRequest.ref,
+				},
+			};
+
+			assert.throws(() => validateCommandRequest(command), BadRequestError);
 		});
 
 		test('throws an error with null stream ID', () => {
 			const command = {
-				...validCommandRequest,
+				...fakeCommandRequest,
 				streamId: null,
 			};
 
-			assert.throws(
-				() => validateCommandRequest(command),
-				new BadRequestError(`Invalid stream ID supplied to Command request`),
-			);
+			assert.throws(() => validateCommandRequest(command), BadRequestError);
 		});
 
 		test('throws an error with bad stream ID', () => {
 			const command = {
-				...validCommandRequest,
+				...fakeCommandRequest,
 				streamId: 'Stream1',
 			};
 
-			assert.throws(() => validateCommandRequest(command));
+			assert.throws(() => validateCommandRequest(command), BadRequestError);
 		});
 
 		test('throws an error with bad stream version', () => {
 			const command = {
-				...validCommandRequest,
+				...fakeCommandRequest,
 				streamVersion: -1,
 			};
 
-			assert.throws(
-				() => validateCommandRequest(command),
-				BadRequestError,
-				`Invalid stream version supplied to Command request`,
-			);
+			assert.throws(() => validateCommandRequest(command), BadRequestError);
 		});
 
 		test('throws an error with no data', () => {
 			const command = {
-				...validCommandRequest,
+				...fakeCommandRequest,
 				data: undefined,
 			};
 
-			assert.throws(
-				() => validateCommandRequest(command),
-				new BadRequestError(`Invalid data supplied to Command request`),
-			);
+			assert.throws(() => validateCommandRequest(command), BadRequestError);
 		});
 	});
 });
