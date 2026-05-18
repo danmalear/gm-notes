@@ -34,6 +34,10 @@ export class MessageBus<
 		if (!this.subscribers[context]) {
 			this.subscribers[context] = [];
 		}
+		// Don't register the same subscriber twice (allowing for the same kind for now)
+		if (this.subscribers[context].includes(handler)) {
+			return;
+		}
 		this.subscribers[context].push(handler);
 	}
 

@@ -38,7 +38,7 @@ suite('CommandBus', () => {
 		});
 
 		// @TODO this test fails correctly - add a check to the function
-		test.skip('does not subscribe the same command handler twice', () => {
+		test('does not subscribe the same command handler twice', () => {
 			commandBus.subscribers = {
 				Context: [fakeCommandHandler],
 			};
