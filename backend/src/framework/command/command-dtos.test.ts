@@ -105,9 +105,8 @@ suite('Command DTOs', () => {
 
 			assert.throws(
 				() => validateCommandRequest(command),
-				new BadRequestError(
-					`Invalid stream version supplied to Command request`,
-				),
+				BadRequestError,
+				`Invalid stream version supplied to Command request`,
 			);
 		});
 
