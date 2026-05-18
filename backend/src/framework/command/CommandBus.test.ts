@@ -1,4 +1,4 @@
-import { NotImplementedError } from '#shared/error.ts';
+import { NotFoundError } from '#shared/error.ts';
 import assert from 'assert';
 import { beforeEach, suite, test } from 'node:test';
 import { CommandBus } from './CommandBus.ts';
@@ -62,9 +62,14 @@ suite('CommandBus', () => {
 			assert.strictEqual(fakeCommandHandler.calls.handle, 1);
 		});
 
-		// @TODO
-		test.skip('throws an error when an invalid context is supplied', () => {
-			throw new NotImplementedError();
+		test('throws an error when an invalid context is supplied', async () => {
+			const badCommand = fakeCommand.clone();
+			badCommand.context = 'BadContext';
+			await assert.rejects(
+				commandBus.send(badCommand),
+				NotFoundError,
+				`Context ${badCommand.context} for command request not found`,
+			);
 		});
 	});
 });
