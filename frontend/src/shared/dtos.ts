@@ -1,5 +1,8 @@
 import type { UUID } from 'crypto';
 
+/**
+ * Valid request body structure for incoming commands.
+ */
 export interface CommandRequest<
 	TContext extends string,
 	TRef extends string,
@@ -8,6 +11,7 @@ export interface CommandRequest<
 	context: TContext;
 	ref: TRef;
 	streamId: UUID | undefined;
+	streamVersion: number | undefined;
 	data: TData;
 }
 
@@ -19,6 +23,9 @@ export interface MessageResponse {
 	message: string;
 }
 
+/**
+ * Response structure for commands.
+ */
 export interface CommandResponse {
 	id: UUID;
 }

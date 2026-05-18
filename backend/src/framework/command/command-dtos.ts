@@ -2,6 +2,9 @@ import { BadRequestError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
 import type { UUID } from 'crypto';
 
+/**
+ * Valid request body structure for incoming commands.
+ */
 export type CommandRequest = {
 	context: string;
 	ref: string;
@@ -10,6 +13,9 @@ export type CommandRequest = {
 	data: object;
 };
 
+/**
+ * Response structure for commands.
+ */
 export interface CommandResponse {
 	id: UUID;
 }

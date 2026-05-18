@@ -22,6 +22,10 @@ export interface MapQueryParams {
 	campaignId?: UUID;
 }
 
+/**
+ * Hydrated and flattened response structure for maps.
+ * Useful for showing all relevant data for one record.
+ */
 export interface MapResponse {
 	id: UUID;
 	campaignId: UUID;
@@ -33,6 +37,10 @@ export interface MapResponse {
 	regions: RegionStub[];
 }
 
+/**
+ * Minimal response structure for maps.
+ * Useful for showing basic information in a list or as part of a parent object.
+ */
 export interface MapStub {
 	id: UUID;
 	campaignId: UUID;

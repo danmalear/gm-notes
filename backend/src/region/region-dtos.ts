@@ -44,10 +44,17 @@ export interface RegionCreate {
 	// notes: string[];
 }
 
+/**
+ * Valid query parameters for selecting multiple regions
+ */
 export interface RegionQueryParams {
 	mapId?: UUID;
 }
 
+/**
+ * Hydrated and flattened response structure for regions.
+ * Useful for showing all relevant data for one record.
+ */
 export interface RegionResponse {
 	id: UUID;
 	mapId: UUID;
@@ -64,12 +71,20 @@ export interface RegionResponse {
 	notes: string[];
 }
 
+/**
+ * Minimal response structure for regions.
+ * Useful for showing basic information in a list or as part of a parent object.
+ */
 export interface RegionStub {
 	id: UUID;
 	mapId: UUID;
 	name: string;
 }
 
+/**
+ * Same as RegionStub, but includes shapes.
+ * Useful for displaying multiple regions on a map.
+ */
 export interface RegionStubWithShapes extends RegionStub {
 	shapes: Shape[];
 }

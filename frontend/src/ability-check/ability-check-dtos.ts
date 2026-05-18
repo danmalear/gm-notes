@@ -1,6 +1,10 @@
 import type { Skill } from '#shared/data/data-types.ts';
 import type { UUID } from 'crypto';
 
+/**
+ * Hydrated and flattened response structure for ability checks.
+ * Useful for showing all relevant data for one record.
+ */
 export interface AbilityCheckResponse {
 	id: UUID;
 	actionId: UUID;
@@ -12,6 +16,10 @@ export interface AbilityCheckResponse {
 	criticalFailureNarration?: string;
 }
 
+/**
+ * Minimal response structure for ability checks.
+ * Useful for showing basic information in a list or as part of a parent object.
+ */
 export interface AbilityCheckStub {
 	id: UUID;
 	actionId: UUID;
