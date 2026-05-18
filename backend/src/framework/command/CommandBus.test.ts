@@ -37,7 +37,6 @@ suite('CommandBus', () => {
 			assert.strictEqual(commandBus.subscribers['Context'][1], newHandler);
 		});
 
-		// @TODO this test fails correctly - add a check to the function
 		test('does not subscribe the same command handler twice', () => {
 			commandBus.subscribers = {
 				Context: [fakeCommandHandler],
