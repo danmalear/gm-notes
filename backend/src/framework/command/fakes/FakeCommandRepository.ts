@@ -1,4 +1,4 @@
-import { FakeRepository } from '#shared/test/FakeRepository.ts';
+import { FakeRepository } from '#shared/fakes/FakeRepository.ts';
 import type { CommandRec, CommandRepository } from '../command-repository.ts';
 import { fakeCommandRec } from './command-data-fake.ts';
 

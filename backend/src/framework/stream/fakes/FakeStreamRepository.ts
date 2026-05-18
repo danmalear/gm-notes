@@ -1,4 +1,4 @@
-import { FakeRepository } from '#shared/test/FakeRepository.ts';
+import { FakeRepository } from '#shared/fakes/FakeRepository.ts';
 import type { StreamRec, StreamRepository } from '../stream-repository.ts';
 import { fakeStream } from './stream-data-fake.ts';
 
