@@ -65,11 +65,7 @@ suite('CommandBus', () => {
 		test('throws an error when an invalid context is supplied', async () => {
 			const badCommand = fakeCommand.clone();
 			badCommand.context = 'BadContext';
-			await assert.rejects(
-				commandBus.send(badCommand),
-				NotFoundError,
-				`Context ${badCommand.context} for command request not found`,
-			);
+			await assert.rejects(commandBus.send(badCommand), NotFoundError);
 		});
 	});
 });
