@@ -17,7 +17,7 @@ export type CommandRequest = {
  * Response structure for commands.
  */
 export interface CommandResponse {
-	id: UUID;
+	correlationId: UUID;
 }
 
 export function validateCommandRequest(

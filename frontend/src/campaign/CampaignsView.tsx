@@ -81,7 +81,7 @@ const CampaignsView: React.FC = () => {
 			.then((res) => {
 				correlationMatchDispatch({
 					type: 'matchCommand',
-					commandCorrelationId: res.data.data.id,
+					commandCorrelationId: res.data.data.correlationId,
 				});
 			})
 			.catch((e) => {

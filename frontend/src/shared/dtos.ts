@@ -10,8 +10,8 @@ export interface CommandRequest<
 > {
 	context: TContext;
 	ref: TRef;
-	streamId: UUID | undefined;
-	streamVersion: number | undefined;
+	streamId?: UUID;
+	streamVersion?: number;
 	data: TData;
 }
 
@@ -27,5 +27,5 @@ export interface MessageResponse {
  * Response structure for commands.
  */
 export interface CommandResponse {
-	id: UUID;
+	correlationId: UUID;
 }

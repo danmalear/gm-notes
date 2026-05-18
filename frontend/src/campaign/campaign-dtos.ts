@@ -15,7 +15,7 @@ export interface CreateCampaign {
 
 export interface CreateCampaignCommand
 	extends CampaignCommand<'Create', CreateCampaign> {
-	streamId: undefined;
+	streamId?: undefined;
 }
 
 // Queries

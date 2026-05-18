@@ -20,7 +20,6 @@ export const createCampaign = async (data: CreateCampaign) => {
 	const commandRequest: CreateCampaignCommand = {
 		context: 'Campaign',
 		ref: 'Create',
-		streamId: undefined,
 		data: data,
 	};
 	return await api.post<DataResponse<CommandResponse>>(
