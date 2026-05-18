@@ -25,16 +25,22 @@ export interface ItemRefRec extends ItemRec {
 export const tableName = 'Item';
 export const pkColumn = 'ItemId';
 
+export interface ItemRepositoryConfig {
+	actionRepository: ActionRepository;
+	fileRepository: FileRepository;
+	noteRepository: NoteRepository;
+}
+
 export class ItemRepository extends Repository<ItemRec, ItemRefRec> {
 	actionRepository: ActionRepository;
 	fileRepository: FileRepository;
 	noteRepository: NoteRepository;
 
-	constructor(
-		actionRepository: ActionRepository,
-		fileRepository: FileRepository,
-		noteRepository: NoteRepository,
-	) {
+	constructor({
+		actionRepository,
+		fileRepository,
+		noteRepository,
+	}: ItemRepositoryConfig) {
 		super(tableName, pkColumn);
 		this.actionRepository = actionRepository;
 		this.fileRepository = fileRepository;

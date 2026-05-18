@@ -33,16 +33,22 @@ export interface ActionRefRec extends ActionRec {
 export const tableName = 'Action';
 export const pkColumn = 'ActionId';
 
+export interface ActionRepositoryConfig {
+	abilityCheckRepository: AbilityCheckRepository;
+	conditionRepository: ConditionRepository;
+	narrationRepository: NarrationRepository;
+}
+
 export class ActionRepository extends Repository<ActionRec, ActionRefRec> {
 	abilityCheckRepository: AbilityCheckRepository;
 	conditionRepository: ConditionRepository;
 	narrationRepository: NarrationRepository;
 
-	constructor(
-		abilityCheckRepository: AbilityCheckRepository,
-		conditionRepository: ConditionRepository,
-		narrationRepository: NarrationRepository,
-	) {
+	constructor({
+		abilityCheckRepository,
+		conditionRepository,
+		narrationRepository,
+	}: ActionRepositoryConfig) {
 		super(tableName, pkColumn);
 		this.abilityCheckRepository = abilityCheckRepository;
 		this.conditionRepository = conditionRepository;

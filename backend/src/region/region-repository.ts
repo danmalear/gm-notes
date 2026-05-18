@@ -48,6 +48,16 @@ export interface RegionRefRec extends RegionRecShapes {
 export const tableName = 'Region';
 export const pkColumn = 'RegionId';
 
+export interface RegionRepositoryConfig {
+	actionRepository: ActionRepository;
+	// creatureRepository: CreatureRepository;
+	handoutRepository: HandoutRepository;
+	locationItemRepository: LocationItemRepository;
+	narrationRepository: NarrationRepository;
+	noteRepository: NoteRepository;
+	regionShapeRepository: RegionShapeRepository;
+}
+
 export class RegionRepository extends Repository<RegionRec, RegionRefRec> {
 	actionRepository: ActionRepository;
 	// creatureRepository: CreatureRepository;
@@ -57,15 +67,15 @@ export class RegionRepository extends Repository<RegionRec, RegionRefRec> {
 	noteRepository: NoteRepository;
 	regionShapeRepository: RegionShapeRepository;
 
-	constructor(
-		actionRepository: ActionRepository,
-		// creatureRepository: CreatureRepository,
-		handoutRepository: HandoutRepository,
-		locationItemRepository: LocationItemRepository,
-		narrationRepository: NarrationRepository,
-		noteRepository: NoteRepository,
-		regionShapeRepository: RegionShapeRepository,
-	) {
+	constructor({
+		actionRepository,
+		// creatureRepository,
+		handoutRepository,
+		locationItemRepository,
+		narrationRepository,
+		noteRepository,
+		regionShapeRepository,
+	}: RegionRepositoryConfig) {
 		super(tableName, pkColumn);
 		this.actionRepository = actionRepository;
 		// this.creatureRepository = creatureRepository;

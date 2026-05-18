@@ -28,6 +28,12 @@ export const pkColumn = 'LocationItemId';
 export const locationIdColName = 'LocationId';
 export const itemIdColName = 'ItemId';
 
+export interface LocationItemRepositoryConfig {
+	actionRepository: ActionRepository;
+	itemRepository: ItemRepository;
+	noteRepository: NoteRepository;
+}
+
 export class LocationItemRepository extends Repository<
 	LocationItemRec,
 	LocationItemRefRec
@@ -36,11 +42,11 @@ export class LocationItemRepository extends Repository<
 	itemRepository: ItemRepository;
 	noteRepository: NoteRepository;
 
-	constructor(
-		actionRepository: ActionRepository,
-		itemRepository: ItemRepository,
-		noteRepository: NoteRepository,
-	) {
+	constructor({
+		actionRepository,
+		itemRepository,
+		noteRepository,
+	}: LocationItemRepositoryConfig) {
 		super(tableName, pkColumn);
 		this.actionRepository = actionRepository;
 		this.itemRepository = itemRepository;

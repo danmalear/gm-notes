@@ -27,14 +27,19 @@ export interface MapRefRec extends MapRec {
 export const tableName = 'Map';
 export const pkColumn = 'MapId';
 
+export interface MapRepositoryConfig {
+	regionRepository: RegionRepository;
+	regionShapeRepository: RegionShapeRepository;
+}
+
 export class MapRepository extends Repository<MapRec, MapRefRec> {
 	regionRepository: RegionRepository;
 	regionShapeRepository: RegionShapeRepository;
 
-	constructor(
-		regionRepository: RegionRepository,
-		regionShapeRepository: RegionShapeRepository,
-	) {
+	constructor({
+		regionRepository,
+		regionShapeRepository,
+	}: MapRepositoryConfig) {
 		super(tableName, pkColumn);
 		this.regionRepository = regionRepository;
 		this.regionShapeRepository = regionShapeRepository;

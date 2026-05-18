@@ -47,39 +47,39 @@ function initRepos() {
 	const noteRepository = new NoteRepository();
 	const narrationRepository = new NarrationRepository();
 	const handoutRepository = new HandoutRepository();
-	const abilityCheckRepository = new AbilityCheckRepository(
+	const abilityCheckRepository = new AbilityCheckRepository({
 		narrationRepository,
-	);
+	});
 	const conditionRepository = new ConditionRepository();
-	const actionRepository = new ActionRepository(
+	const actionRepository = new ActionRepository({
 		abilityCheckRepository,
 		conditionRepository,
 		narrationRepository,
-	);
-	const itemRepository = new ItemRepository(
+	});
+	const itemRepository = new ItemRepository({
 		actionRepository,
 		fileRepository,
 		noteRepository,
-	);
-	const locationItemRepository = new LocationItemRepository(
+	});
+	const locationItemRepository = new LocationItemRepository({
 		actionRepository,
 		itemRepository,
 		noteRepository,
-	);
+	});
 	const regionShapeRepository = new RegionShapeRepository();
-	const regionRepository = new RegionRepository(
+	const regionRepository = new RegionRepository({
 		actionRepository,
 		handoutRepository,
 		locationItemRepository,
 		narrationRepository,
 		noteRepository,
 		regionShapeRepository,
-	);
-	const mapRepository = new MapRepository(
+	});
+	const mapRepository = new MapRepository({
 		regionRepository,
 		regionShapeRepository,
-	);
-	const campaignRepository = new CampaignRepository(mapRepository);
+	});
+	const campaignRepository = new CampaignRepository({ mapRepository });
 
 	return {
 		commandRepository,

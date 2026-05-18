@@ -16,13 +16,17 @@ export interface CampaignRefRec extends CampaignRec {
 export const tableName = 'Campaign';
 export const pkColumn = 'CampaignId';
 
+export interface CampaignRepositoryConfig {
+	mapRepository: MapRepository;
+}
+
 export class CampaignRepository extends Repository<
 	CampaignRec,
 	CampaignRefRec
 > {
 	mapRepository: MapRepository;
 
-	constructor(mapRepository: MapRepository) {
+	constructor({ mapRepository }: CampaignRepositoryConfig) {
 		super(tableName, pkColumn);
 		this.mapRepository = mapRepository;
 	}

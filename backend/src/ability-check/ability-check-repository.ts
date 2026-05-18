@@ -29,13 +29,17 @@ export interface AbilityCheckRefRec extends AbilityCheckRec {
 export const tableName = 'AbilityCheck';
 export const pkColumn = 'AbilityCheckId';
 
+export interface AbilityCheckRepositoryConfig {
+	narrationRepository: NarrationRepository;
+}
+
 export class AbilityCheckRepository extends Repository<
 	AbilityCheckRec,
 	AbilityCheckRefRec
 > {
 	narrationRepository: NarrationRepository;
 
-	constructor(narrationRepository: NarrationRepository) {
+	constructor({ narrationRepository }: AbilityCheckRepositoryConfig) {
 		super(tableName, pkColumn);
 		this.narrationRepository = narrationRepository;
 	}
