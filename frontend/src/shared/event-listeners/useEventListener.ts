@@ -28,6 +28,8 @@ export const useEventListener = (
 
 	const listenerId = streamId ?? 'all';
 
-	if (refListeners[listenerId].find((listener) => listener.key === key)) return;
+	refListeners[listenerId] = refListeners[listenerId].filter(
+		(listener) => listener.key !== key,
+	);
 	refListeners[listenerId].push({ key, handle: handler });
 };
