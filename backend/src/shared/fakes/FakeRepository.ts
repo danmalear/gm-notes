@@ -6,7 +6,7 @@ export interface FakeRepositoryConfig<TRecord extends object> {
 	record: TRecord;
 }
 
-export const zeroCalls = {
+export const zeroCalls: FakerCalls<Repository<object>> = {
 	getAll: 0,
 	getByIdRaw: 0,
 	getById: 0,
@@ -20,17 +20,17 @@ export abstract class FakeRepository<TRecord extends object>
 	record: TRecord;
 	tableName: string;
 	pkColumn: string;
-	calls: FakerCalls<Repository<TRecord>>;
+	calls: FakerCalls<Repository<object>>;
 
 	constructor(config: FakeRepositoryConfig<TRecord>) {
 		this.tableName = '';
 		this.pkColumn = '';
 		this.record = config.record;
-		this.calls = zeroCalls;
+		this.calls = { ...zeroCalls };
 	}
 
 	resetCalls() {
-		this.calls = zeroCalls;
+		this.calls = { ...zeroCalls };
 	}
 
 	abstract clone(): FakeRepository<TRecord>;

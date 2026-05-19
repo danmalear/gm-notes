@@ -1,8 +1,16 @@
 import type { Faker, FakerCalls } from '#shared/Faker.ts';
-import { FakeRepository, zeroCalls } from '#shared/fakes/FakeRepository.ts';
+import {
+	FakeRepository,
+	zeroCalls as baseZeroCalls,
+} from '#shared/fakes/FakeRepository.ts';
 import type { ICloneable } from '#shared/ICloneable.ts';
 import type { EventRec, EventRepository } from '../event-repository.ts';
 import { fakeEventRec } from './event-data-fake.ts';
+
+const zeroCalls: FakerCalls<EventRepository> = {
+	...baseZeroCalls,
+	getByStreamId: 0,
+};
 
 export class FakeEventRepository
 	extends FakeRepository<EventRec>
@@ -14,14 +22,11 @@ export class FakeEventRepository
 		super({
 			record: fakeEventRec,
 		});
-		this.calls = {
-			...zeroCalls,
-			getByStreamId: 0,
-		};
+		this.calls = { ...zeroCalls };
 	}
 
 	resetCalls(): void {
-		super.resetCalls();
+		this.calls = { ...zeroCalls };
 	}
 
 	clone() {

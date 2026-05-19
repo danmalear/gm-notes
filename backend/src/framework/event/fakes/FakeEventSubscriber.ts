@@ -8,6 +8,10 @@ import type { Faker, FakerCalls } from '#shared/Faker.ts';
 import type { ICloneable } from '#shared/ICloneable.ts';
 import type { IEventSubscriber } from '../IEventSubscriber.ts';
 
+const zeroCalls: FakerCalls<IEventSubscriber> = {
+	handle: 0,
+};
+
 export class FakeEventSubscriber
 	implements Faker<IEventSubscriber>, ICloneable<FakeEventSubscriber>
 {
@@ -20,15 +24,11 @@ export class FakeEventSubscriber
 		this.eventBus = new FakeEventBus();
 		this.eventRepository = new FakeEventRepository();
 		this.streamRepository = new FakeStreamRepository();
-		this.calls = {
-			handle: 0,
-		};
+		this.calls = { ...zeroCalls };
 	}
 
 	resetCalls() {
-		this.calls = {
-			handle: 0,
-		};
+		this.calls = { ...zeroCalls };
 	}
 
 	async handle() {

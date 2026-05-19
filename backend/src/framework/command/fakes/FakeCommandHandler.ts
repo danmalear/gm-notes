@@ -8,6 +8,11 @@ import type { Faker, FakerCalls } from '#shared/Faker.ts';
 import type { ICloneable } from '#shared/ICloneable.ts';
 import type { CommandHandler } from '../CommandHandler.ts';
 
+const zeroCalls: FakerCalls<CommandHandler> = {
+	validateCommandVersion: 0,
+	handle: 0,
+};
+
 export class FakeCommandHandler
 	implements Faker<CommandHandler>, ICloneable<FakeCommandHandler>
 {
@@ -20,17 +25,11 @@ export class FakeCommandHandler
 		this.eventBus = new FakeEventBus();
 		this.eventRepository = new FakeEventRepository();
 		this.streamRepository = new FakeStreamRepository();
-		this.calls = {
-			validateCommandVersion: 0,
-			handle: 0,
-		};
+		this.calls = { ...zeroCalls };
 	}
 
 	resetCalls() {
-		this.calls = {
-			validateCommandVersion: 0,
-			handle: 0,
-		};
+		this.calls = { ...zeroCalls };
 	}
 
 	async validateCommandVersion() {
