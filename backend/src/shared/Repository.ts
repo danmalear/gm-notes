@@ -2,11 +2,14 @@ import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import type { UUID } from 'crypto';
 
-export abstract class Repository<TRaw, TEntity extends TRaw = TRaw> {
+export abstract class Repository<
+	TRecord,
+	TRefRecord extends TRecord = TRecord,
+> {
 	tableName: string;
-	pkColumn: keyof TRaw;
+	pkColumn: string;
 
-	constructor(tableName: string, pkColumn: keyof TRaw) {
+	constructor(tableName: string, pkColumn: string) {
 		this.tableName = tableName;
 		this.pkColumn = pkColumn;
 	}
@@ -20,7 +23,7 @@ export abstract class Repository<TRaw, TEntity extends TRaw = TRaw> {
 		try {
 			return (await db(this.tableName)
 				.where(this.pkColumn as string, id)
-				.first()) as TRaw | undefined;
+				.first()) as TRecord | undefined;
 		} catch (e) {
 			throw Error(`Error getting ${this.tableName} by ID: ${getMessage(e)}`);
 		}
@@ -31,7 +34,7 @@ export abstract class Repository<TRaw, TEntity extends TRaw = TRaw> {
 	 * @param id UUID of the record to retrieve
 	 * @returns The record with the given UUID, or undefined if not found
 	 */
-	abstract getById(id: UUID): Promise<TEntity | undefined>;
+	abstract getById(id: UUID): Promise<TRefRecord | undefined>;
 
 	/**
 	 * Retrieves all records from the database
@@ -39,7 +42,7 @@ export abstract class Repository<TRaw, TEntity extends TRaw = TRaw> {
 	 */
 	async getAll() {
 		try {
-			return (await db(this.tableName)) as TRaw[];
+			return (await db(this.tableName)) as TRecord[];
 		} catch (e) {
 			throw Error(
 				`Error getting all ${this.tableName} records: ${getMessage(e)}`,
@@ -52,12 +55,12 @@ export abstract class Repository<TRaw, TEntity extends TRaw = TRaw> {
 	 * @param data Data to insert into database
 	 * @returns The inserted record
 	 */
-	async insert(data: TRaw) {
+	async insert(data: TRecord) {
 		try {
 			return (await db(this.tableName)
 				.insert(data)
 				.returning('*')
-				.then((returning) => returning[0])) as TRaw;
+				.then((returning) => returning[0])) as TRecord;
 		} catch (e) {
 			throw Error(`Error inserting ${this.tableName}: ${getMessage(e)}`);
 		}
@@ -69,13 +72,13 @@ export abstract class Repository<TRaw, TEntity extends TRaw = TRaw> {
 	 * @param data New data to update the record with
 	 * @returns The updated record
 	 */
-	async update(id: UUID, data: Partial<TRaw>) {
+	async update(id: UUID, data: Partial<TRecord>) {
 		try {
 			return (await db(this.tableName)
 				.where(this.pkColumn as string, id)
 				.update(data)
 				.returning('*')
-				.then((returning) => returning[0])) as TRaw;
+				.then((returning) => returning[0])) as TRecord;
 		} catch (e) {
 			throw Error(
 				`Error updating ${this.tableName} with ID ${id}: ${getMessage(e)}`,
