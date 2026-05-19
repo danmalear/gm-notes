@@ -1,6 +1,6 @@
 import { FakeRepository } from '#shared/fakes/FakeRepository.ts';
 import type { EventRec, EventRepository } from '../event-repository.ts';
-import { fakeEvent } from './event-data-fake.ts';
+import { fakeEventRec } from './event-data-fake.ts';
 
 export class FakeEventRepository
 	extends FakeRepository<EventRec>
@@ -8,7 +8,7 @@ export class FakeEventRepository
 {
 	constructor() {
 		super({
-			record: fakeEvent,
+			record: fakeEventRec,
 		});
 	}
 
