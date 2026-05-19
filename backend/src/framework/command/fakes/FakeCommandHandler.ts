@@ -37,6 +37,10 @@ export class FakeCommandHandler
 	}
 
 	clone() {
-		return new FakeCommandHandler();
+		const newHandler = new FakeCommandHandler();
+		newHandler.calls = {
+			...this.calls,
+		};
+		return newHandler;
 	}
 }
