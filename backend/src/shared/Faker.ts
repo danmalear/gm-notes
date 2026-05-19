@@ -8,4 +8,5 @@ export type FakerCalls<T> = {
 
 export type Faker<T> = T & {
 	calls: FakerCalls<T>;
+	resetCalls: () => void;
 };

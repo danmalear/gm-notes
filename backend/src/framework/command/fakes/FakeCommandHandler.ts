@@ -26,6 +26,13 @@ export class FakeCommandHandler
 		};
 	}
 
+	resetCalls() {
+		this.calls = {
+			validateCommandVersion: 0,
+			handle: 0,
+		};
+	}
+
 	async validateCommandVersion() {
 		this.calls.validateCommandVersion++;
 		return;
