@@ -8,16 +8,18 @@ import type { Event } from './Event.ts';
 
 export type IEventBus = IMessageBus<'Event', Event>;
 
+export interface EventBusConfig {
+	eventRepository: EventRepository;
+	streamRepository: StreamRepository;
+	wss: WebSocketServer;
+}
+
 export class EventBus extends MessageBus<'Event', Event> implements IEventBus {
 	eventRepository: EventRepository;
 	streamRepository: StreamRepository;
 	wss: WebSocketServer;
 
-	constructor(
-		eventRepository: EventRepository,
-		streamRepository: StreamRepository,
-		wss: WebSocketServer,
-	) {
+	constructor({ eventRepository, streamRepository, wss }: EventBusConfig) {
 		super();
 		this.eventRepository = eventRepository;
 		this.streamRepository = streamRepository;

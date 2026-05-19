@@ -128,7 +128,11 @@ function createAppServer() {
 	} = initRepos();
 
 	const commandBus = new CommandBus(commandRepository);
-	const eventBus = new EventBus(eventRepository, streamRepository, wsServer);
+	const eventBus = new EventBus({
+		eventRepository,
+		streamRepository,
+		wss: wsServer,
+	});
 
 	const campaignProjections = new CampaignProjections(campaignRepository);
 
