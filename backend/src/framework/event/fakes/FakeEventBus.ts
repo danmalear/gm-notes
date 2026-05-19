@@ -1,6 +1,6 @@
 import type { EventRepository } from '#event/event-repository.ts';
 import type { IEventSubscriber } from '#event/IEventSubscriber.ts';
-import { fakeWss } from '#framework/fakes/websocket-fake.ts';
+import { FakeWebSocketServer } from '#framework/fakes/FakeWebsocketServer.ts';
 import { FakeStreamRepository } from '#framework/stream/fakes/FakeStreamRepository.ts';
 import type { StreamRepository } from '#framework/stream/stream-repository.ts';
 import type { Faker, FakerCalls } from '#shared/Faker.ts';
@@ -25,7 +25,7 @@ export class FakeEventBus implements Faker<EventBus> {
 	constructor() {
 		this.eventRepository = new FakeEventRepository();
 		this.streamRepository = new FakeStreamRepository();
-		this.wss = fakeWss;
+		this.wss = new FakeWebSocketServer();
 		this.subscribers = {};
 		this.calls = { ...zeroCalls };
 	}

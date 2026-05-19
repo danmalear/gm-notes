@@ -1,4 +1,4 @@
-import { fakeWss } from '#framework/fakes/websocket-fake.ts';
+import { FakeWebSocketServer } from '#framework/fakes/FakeWebsocketServer.ts';
 import { FakeStreamRepository } from '#framework/stream/fakes/FakeStreamRepository.ts';
 import assert from 'assert';
 import { beforeEach, suite, test } from 'node:test';
@@ -13,6 +13,7 @@ suite('CommandBus', () => {
 	const fakeEventHandler = new FakeEventSubscriber();
 	const fakeEventRepository = new FakeEventRepository();
 	const fakeStreamRepository = new FakeStreamRepository();
+	const fakeWss = new FakeWebSocketServer();
 
 	beforeEach(() => {
 		fakeEventHandler.resetCalls();
