@@ -12,6 +12,7 @@ suite('CommandBus', () => {
 	const fakeCommandRepository = new FakeCommandRepository();
 
 	beforeEach(() => {
+		fakeCommandHandler.resetCalls();
 		commandBus = new CommandBus(fakeCommandRepository);
 	});
 
