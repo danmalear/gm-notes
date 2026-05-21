@@ -19,12 +19,12 @@ export interface AggregateOpts {
 	snapshotAt?: string;
 }
 
-export abstract class Stream<TAggregate> {
+export abstract class Stream<TRec> {
 	streamRepository: StreamRepository;
 	eventRepository: EventRepository;
 	id: UUID;
 	#aggregateOptsCache: AggregateOpts | undefined;
-	#aggregateCache: TAggregate | undefined;
+	#aggregateCache: TRec | undefined;
 
 	constructor(id: UUID, { streamRepository, eventRepository }: StreamConfig) {
 		this.id = id;
@@ -61,7 +61,7 @@ export abstract class Stream<TAggregate> {
 		}
 	}
 
-	async getAggregate(opts: AggregateOpts = {}): Promise<TAggregate> {
+	async getAggregate(opts: AggregateOpts = {}): Promise<TRec> {
 		if (_.eq(opts, this.#aggregateOptsCache) && !!this.#aggregateCache) {
 			return this.#aggregateCache;
 		}
@@ -85,7 +85,7 @@ export abstract class Stream<TAggregate> {
 		throw new NotImplementedError();
 	}
 
-	abstract emptyRecord: TAggregate;
+	abstract emptyRecord: TRec;
 
-	abstract applyEvent(aggregate: TAggregate, event: Event): Promise<void>;
+	abstract applyEvent(aggregate: TRec, event: Event): Promise<void>;
 }
