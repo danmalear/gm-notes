@@ -44,7 +44,7 @@ export class CampaignCommandHandler extends CommandHandler {
 					streamRepository: this.streamRepository,
 				})
 			: undefined;
-		this.validateCommandVersion(campaign, command);
+		await this.validateCommandVersion(campaign, command);
 		if (command.context !== 'Campaign') {
 			throw new BadRequestError(
 				'Non-campaign command submitted to campaign command handler',
