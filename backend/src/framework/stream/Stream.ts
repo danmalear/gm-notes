@@ -89,3 +89,18 @@ export abstract class Stream<TRec> {
 
 	abstract applyEvent(aggregate: TRec, event: Event): Promise<void>;
 }
+
+/**
+ * A utility class for loading streams outside of specific contexts,
+ * while still having access to features like version checking
+ */
+export class RawStream extends Stream<Record<string, never>> {
+	override emptyRecord: Record<string, never>;
+
+	constructor(id: UUID, streamConfig: StreamConfig) {
+		super(id, streamConfig);
+		this.emptyRecord = {};
+	}
+
+	override async applyEvent() {}
+}
