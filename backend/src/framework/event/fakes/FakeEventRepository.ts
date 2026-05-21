@@ -16,7 +16,7 @@ export class FakeEventRepository
 	extends FakeRepository<EventRec>
 	implements Faker<EventRepository>, ICloneable<FakeEventRepository>
 {
-	calls: FakerCalls<EventRepository>;
+	override calls: FakerCalls<EventRepository>;
 
 	constructor() {
 		super({
@@ -25,7 +25,7 @@ export class FakeEventRepository
 		this.calls = { ...zeroCalls };
 	}
 
-	resetCalls(): void {
+	override resetCalls(): void {
 		this.calls = { ...zeroCalls };
 	}
 
