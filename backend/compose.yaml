@@ -7,7 +7,3 @@ services:
     volumes:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
-    environment:
-      NODE_ENV: development
-      APP_PORT: 3000
-      DATABASE_URL: postgresql://postgres.cogginfzeybkufpqhdng:jZ@3SaBp9snY3SiX@aws-1-us-east-1.pooler.supabase.com:5432/postgres
