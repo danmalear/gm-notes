@@ -191,9 +191,13 @@ model knex_migrations {
   name           String?   @db.VarChar(255)
   batch          Int?
   migration_time DateTime? @db.Timestamptz(6)
+
+  @@ignore
 }
 
 model knex_migrations_lock {
   index     Int  @id @default(autoincrement())
   is_locked Int?
+
+  @@ignore
 }
