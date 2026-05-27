@@ -28,6 +28,8 @@
 		"#stream/*": "./src/framework/stream/*"
 	},
 	"dependencies": {
+		"@prisma/adapter-pg": "^7.8.0",
+		"@prisma/client": "^7.8.0",
 		"cors": "2.8.6",
 		"dotenv": "17.4.0",
 		"express": "5.2.1",
@@ -35,6 +37,7 @@
 		"lodash": "4.18.1",
 		"multer": "2.1.1",
 		"pg": "8.20.0",
+		"prisma": "^7.8.0",
 		"ws": "8.20.0"
 	},
 	"devDependencies": {
