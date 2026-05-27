@@ -1,8 +1,199 @@
 generator client {
   provider = "prisma-client"
-  output = "./generated"
+  output   = "./generated"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model AbilityCheck {
+  AbilityCheckId             String  @id @db.Uuid
+  ActionId                   String  @db.Uuid
+  Skill                      String
+  DC                         Int
+  SuccessNarrationId         String? @db.Uuid
+  FailureNarrationId         String? @db.Uuid
+  CriticalSuccessNarrationId String? @db.Uuid
+  CriticalFailureNarrationId String? @db.Uuid
+}
+
+model Action {
+  ActionId    String  @id @db.Uuid
+  TargetId    String  @db.Uuid
+  Name        String
+  Type        String?
+  NarrationId String? @db.Uuid
+}
+
+model ActionCondition {
+  ActionId    String @db.Uuid
+  ConditionId String @db.Uuid
+
+  @@id([ActionId, ConditionId])
+}
+
+model Campaign {
+  CampaignId         String  @id @db.Uuid
+  CampaignTemplateId String? @db.Uuid
+  Name               String
+  ActiveMapId        String? @db.Uuid
+}
+
+model CampaignTemplate {
+  CampaignTemplateId String @id @db.Uuid
+  Name               String @db.VarChar(63)
+}
+
+model Condition {
+  ConditionId String  @id @db.Uuid
+  Name        String
+  Description String
+  IsMet       Boolean @default(false)
+  CampaignId  String  @db.Uuid
+}
+
+model File {
+  FileId   String @id @db.Uuid
+  FileName String
+}
+
+model Handout {
+  HandoutId  String @id @db.Uuid
+  CampaignId String @db.Uuid
+  Name       String
+  Type       String
+  Source     String
+}
+
+model Item {
+  ItemId      String  @id @db.Uuid
+  CampaignId  String? @db.Uuid
+  Name        String
+  IsContainer Boolean @default(false)
+  Value       Int?
+  ValueUnit   String?
+  DetailsLink String?
+  ImageFileId String?
+}
+
+model LocationItem {
+  LocationItemId String @id @db.Uuid
+  LocationId     String @db.Uuid
+  ItemId         String @db.Uuid
+  Quantity       Int    @default(1)
+}
+
+model Map {
+  MapId           String  @id @db.Uuid
+  CampaignId      String  @db.Uuid
+  MapTemplateId   String? @db.Uuid
+  Name            String
+  ImagePath       String
+  DefaultLighting String  @default("Bright Light")
+  Width           Int     @default(0)
+  Height          Int     @default(0)
+}
+
+model MapTemplate {
+  MapTemplateId      String  @id @db.Uuid
+  CampaignTemplateId String? @db.Uuid
+  Name               String  @db.VarChar(63)
+  ImagePath          String  @db.VarChar(255)
+}
+
+model Narration {
+  NarrationId         String  @id @db.Uuid
+  NarrationTemplateId String? @db.Uuid
+  Name                String
+  Description         String
+  IsRead              Boolean @default(false)
+}
+
+model NarrationTemplate {
+  NarrationTemplateId String @id @db.Uuid
+  Name                String @db.VarChar(255)
+  Description         String @db.VarChar(255)
+}
+
+model Note {
+  NoteId      String @id @db.Uuid
+  EntityId    String @db.Uuid
+  Description String
+}
+
+model Region {
+  RegionId         String  @id @db.Uuid
+  RegionTemplateId String? @db.Uuid
+  MapId            String  @db.Uuid
+  Name             String
+  Lighting         String  @default("Default")
+}
+
+model RegionHandout {
+  RegionId  String @db.Uuid
+  HandoutId String @db.Uuid
+
+  @@id([RegionId, HandoutId])
+}
+
+model RegionNarration {
+  RegionId    String @db.Uuid
+  NarrationId String @db.Uuid
+
+  @@id([RegionId, NarrationId])
+}
+
+model RegionShape {
+  RegionShapeId String @id @db.Uuid
+  RegionId      String @db.Uuid
+  ShapeType     String
+  Coords        Json
+}
+
+model RegionTemplate {
+  RegionTemplateId String @id @db.Uuid
+  MapTemplateId    String @db.Uuid
+  Name             String @db.VarChar(63)
+}
+
+model es_Command {
+  CommandId     String   @id @db.Uuid
+  StreamId      String?  @db.Uuid
+  CorrelationId String   @db.Uuid
+  Context       String
+  Ref           String
+  Data          Json
+  CreatedAt     DateTime @db.Timestamptz(6)
+}
+
+model es_Event {
+  EventId       String   @id @db.Uuid
+  StreamId      String   @db.Uuid
+  CorrelationId String   @db.Uuid
+  Context       String
+  Ref           String
+  Version       Int
+  Data          Json
+  OccurredAt    DateTime @db.Timestamptz(6)
+}
+
+model es_Stream {
+  StreamId  String   @id @db.Uuid
+  Type      String
+  Version   Int      @default(0)
+  CreatedAt DateTime @db.Timestamptz(6)
+  UpdatedAt DateTime @db.Timestamptz(6)
+}
+
+model knex_migrations {
+  id             Int       @id @default(autoincrement())
+  name           String?   @db.VarChar(255)
+  batch          Int?
+  migration_time DateTime? @db.Timestamptz(6)
+}
+
+model knex_migrations_lock {
+  index     Int  @id @default(autoincrement())
+  is_locked Int?
 }
