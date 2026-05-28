@@ -4,7 +4,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider     = "postgresql"
+  relationMode = "prisma"
+  schemas      = ["public", "es"]
 }
 
 model AbilityCheck {
@@ -16,6 +18,8 @@ model AbilityCheck {
   FailureNarrationId         String? @db.Uuid
   CriticalSuccessNarrationId String? @db.Uuid
   CriticalFailureNarrationId String? @db.Uuid
+
+  @@schema("public")
 }
 
 model Action {
@@ -24,6 +28,8 @@ model Action {
   Name        String
   Type        String?
   NarrationId String? @db.Uuid
+
+  @@schema("public")
 }
 
 model ActionCondition {
@@ -31,6 +37,7 @@ model ActionCondition {
   ConditionId String @db.Uuid
 
   @@id([ActionId, ConditionId])
+  @@schema("public")
 }
 
 model Campaign {
@@ -38,11 +45,15 @@ model Campaign {
   CampaignTemplateId String? @db.Uuid
   Name               String
   ActiveMapId        String? @db.Uuid
+
+  @@schema("public")
 }
 
 model CampaignTemplate {
   CampaignTemplateId String @id @db.Uuid
   Name               String @db.VarChar(63)
+
+  @@schema("public")
 }
 
 model Condition {
@@ -51,11 +62,15 @@ model Condition {
   Description String
   IsMet       Boolean @default(false)
   CampaignId  String  @db.Uuid
+
+  @@schema("public")
 }
 
 model File {
   FileId   String @id @db.Uuid
   FileName String
+
+  @@schema("public")
 }
 
 model Handout {
@@ -64,6 +79,8 @@ model Handout {
   Name       String
   Type       String
   Source     String
+
+  @@schema("public")
 }
 
 model Item {
@@ -75,6 +92,8 @@ model Item {
   ValueUnit   String?
   DetailsLink String?
   ImageFileId String?
+
+  @@schema("public")
 }
 
 model LocationItem {
@@ -82,6 +101,8 @@ model LocationItem {
   LocationId     String @db.Uuid
   ItemId         String @db.Uuid
   Quantity       Int    @default(1)
+
+  @@schema("public")
 }
 
 model Map {
@@ -93,6 +114,8 @@ model Map {
   DefaultLighting String  @default("Bright Light")
   Width           Int     @default(0)
   Height          Int     @default(0)
+
+  @@schema("public")
 }
 
 model MapTemplate {
@@ -100,6 +123,8 @@ model MapTemplate {
   CampaignTemplateId String? @db.Uuid
   Name               String  @db.VarChar(63)
   ImagePath          String  @db.VarChar(255)
+
+  @@schema("public")
 }
 
 model Narration {
@@ -108,18 +133,24 @@ model Narration {
   Name                String
   Description         String
   IsRead              Boolean @default(false)
+
+  @@schema("public")
 }
 
 model NarrationTemplate {
   NarrationTemplateId String @id @db.Uuid
   Name                String @db.VarChar(255)
   Description         String @db.VarChar(255)
+
+  @@schema("public")
 }
 
 model Note {
   NoteId      String @id @db.Uuid
   EntityId    String @db.Uuid
   Description String
+
+  @@schema("public")
 }
 
 model Region {
@@ -128,6 +159,8 @@ model Region {
   MapId            String  @db.Uuid
   Name             String
   Lighting         String  @default("Default")
+
+  @@schema("public")
 }
 
 model RegionHandout {
@@ -135,6 +168,7 @@ model RegionHandout {
   HandoutId String @db.Uuid
 
   @@id([RegionId, HandoutId])
+  @@schema("public")
 }
 
 model RegionNarration {
@@ -142,6 +176,7 @@ model RegionNarration {
   NarrationId String @db.Uuid
 
   @@id([RegionId, NarrationId])
+  @@schema("public")
 }
 
 model RegionShape {
@@ -149,55 +184,14 @@ model RegionShape {
   RegionId      String @db.Uuid
   ShapeType     String
   Coords        Json
+
+  @@schema("public")
 }
 
 model RegionTemplate {
   RegionTemplateId String @id @db.Uuid
   MapTemplateId    String @db.Uuid
   Name             String @db.VarChar(63)
-}
 
-model es_Command {
-  CommandId     String   @id @db.Uuid
-  StreamId      String?  @db.Uuid
-  CorrelationId String   @db.Uuid
-  Context       String
-  Ref           String
-  Data          Json
-  CreatedAt     DateTime @db.Timestamptz(6)
-}
-
-model es_Event {
-  EventId       String   @id @db.Uuid
-  StreamId      String   @db.Uuid
-  CorrelationId String   @db.Uuid
-  Context       String
-  Ref           String
-  Version       Int
-  Data          Json
-  OccurredAt    DateTime @db.Timestamptz(6)
-}
-
-model es_Stream {
-  StreamId  String   @id @db.Uuid
-  Type      String
-  Version   Int      @default(0)
-  CreatedAt DateTime @db.Timestamptz(6)
-  UpdatedAt DateTime @db.Timestamptz(6)
-}
-
-model knex_migrations {
-  id             Int       @id @default(autoincrement())
-  name           String?   @db.VarChar(255)
-  batch          Int?
-  migration_time DateTime? @db.Timestamptz(6)
-
-  @@ignore
-}
-
-model knex_migrations_lock {
-  index     Int  @id @default(autoincrement())
-  is_locked Int?
-
-  @@ignore
+  @@schema("public")
 }

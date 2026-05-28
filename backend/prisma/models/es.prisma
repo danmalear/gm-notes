@@ -1,0 +1,34 @@
+model Command {
+  CommandId     String   @id @db.Uuid
+  StreamId      String?  @db.Uuid
+  CorrelationId String   @db.Uuid
+  Context       String
+  Ref           String
+  Data          Json
+  CreatedAt     DateTime @db.Timestamptz(6)
+
+  @@schema("es")
+}
+
+model Event {
+  EventId       String   @id @db.Uuid
+  StreamId      String   @db.Uuid
+  CorrelationId String   @db.Uuid
+  Context       String
+  Ref           String
+  Version       Int
+  Data          Json
+  OccurredAt    DateTime @db.Timestamptz(6)
+
+  @@schema("es")
+}
+
+model Stream {
+  StreamId  String   @id @db.Uuid
+  Type      String
+  Version   Int      @default(0)
+  CreatedAt DateTime @db.Timestamptz(6)
+  UpdatedAt DateTime @db.Timestamptz(6)
+
+  @@schema("es")
+}
