@@ -2,8 +2,8 @@ import { MessageBus, type IMessageBus } from '#message/MessageBus.ts';
 import type { CommandCreateInput } from '#prisma/generated/models.ts';
 import { NotFoundError } from '#shared/error.ts';
 import { randomUUID, type UUID } from 'crypto';
-import type { Command } from './Command.ts';
 import type { CommandRepository } from './command-repository.ts';
+import type { Command } from './command-temp.ts';
 
 export type ICommandBus = IMessageBus<'Command', Command>;
 

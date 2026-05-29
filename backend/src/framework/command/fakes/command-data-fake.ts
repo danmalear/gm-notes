@@ -1,4 +1,4 @@
-import { Command } from '#command/Command.ts';
+import { Command } from '#command/command-temp.ts';
 import type { CommandModel } from '#prisma-models/Command.ts';
 import { randomUUID } from 'crypto';
 

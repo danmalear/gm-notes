@@ -1,5 +1,5 @@
+import type { Command } from '#command/command-temp.ts';
 import type { CommandFunction } from '#command/command-types.ts';
-import type { Command } from '#command/Command.ts';
 import type { CommandHandlerConfig } from '#command/CommandHandler.ts';
 import { CommandHandler } from '#command/CommandHandler.ts';
 import { BadRequestError } from '#shared/error.ts';
