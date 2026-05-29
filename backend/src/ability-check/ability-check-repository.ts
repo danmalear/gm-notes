@@ -5,7 +5,7 @@ import type {
 import type { Skill } from '#shared/data-types.ts';
 import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
-import { Repository } from '#shared/Repository.ts';
+import { Repository } from '#shared/repository-old.ts';
 import type { UUID } from 'crypto';
 
 export interface AbilityCheckRec {

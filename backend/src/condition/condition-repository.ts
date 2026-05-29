@@ -1,7 +1,7 @@
 import { db } from '#shared/db.ts';
 import { tableColumns } from '#shared/entity-utils.ts';
 import { getMessage } from '#shared/error.ts';
-import { Repository } from '#shared/Repository.ts';
+import { Repository } from '#shared/repository-old.ts';
 import type { UUID } from 'crypto';
 
 export interface ConditionRec {

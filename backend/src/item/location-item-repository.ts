@@ -2,7 +2,7 @@ import type { ActionRepository } from '#action/action-repository.ts';
 import type { NoteRepository } from '#note/note-repository.ts';
 import { db } from '#shared/db.ts';
 import { getMessage, InternalError } from '#shared/error.ts';
-import { Repository } from '#shared/Repository.ts';
+import { Repository } from '#shared/repository-old.ts';
 import type { UUID } from 'crypto';
 import {
 	pkColumn as itemPkColumn,

@@ -1,7 +1,7 @@
 import type { Express, Response } from 'express';
 import type { DataResponse, MessageResponse } from './dtos.ts';
 import { getMessage } from './error.ts';
-import type { Repository } from './Repository.ts';
+import type { Repository } from './repository-old.ts';
 import { isUUID } from './uuid.ts';
 
 interface RouteOpts {

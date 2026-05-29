@@ -1,4 +1,4 @@
-import { Repository } from '#shared/Repository.ts';
+import { Repository } from '#shared/repository-old.ts';
 
 export interface FileRec {
 	FileId: string;

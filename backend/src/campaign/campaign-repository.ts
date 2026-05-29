@@ -1,5 +1,5 @@
 import type { MapRec, MapRepository } from '#map/map-repository.ts';
-import { Repository } from '#shared/Repository.ts';
+import { Repository } from '#shared/repository-old.ts';
 import type { UUID } from 'crypto';
 
 export interface CampaignRec {

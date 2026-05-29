@@ -1,6 +1,6 @@
 import type { Faker, FakerCalls } from '#shared/Faker.ts';
 import type { ICloneable } from '#shared/ICloneable.ts';
-import type { Repository } from '../Repository.ts';
+import type { Repository } from '../repository-old.ts';
 
 export interface FakeRepositoryConfig<TRecord extends object> {
 	record: TRecord;

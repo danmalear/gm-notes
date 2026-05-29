@@ -2,7 +2,7 @@ import type { ActionRec, ActionRepository } from '#action/action-repository.ts';
 import type { FileRec, FileRepository } from '#file/file-repository.ts';
 import type { NoteRec, NoteRepository } from '#note/note-repository.ts';
 import type { CurrencyUnit } from '#shared/data-types.ts';
-import { Repository } from '#shared/Repository.ts';
+import { Repository } from '#shared/repository-old.ts';
 import type { UUID } from 'crypto';
 
 export interface ItemRec {
