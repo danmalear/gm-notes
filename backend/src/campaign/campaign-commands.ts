@@ -1,7 +1,7 @@
+import type { CommandHandlerConfig } from '#command/command-handler.ts';
+import { CommandHandler } from '#command/command-handler.ts';
 import type { Command } from '#command/command-temp.ts';
 import type { CommandFunction } from '#command/command-types.ts';
-import type { CommandHandlerConfig } from '#command/CommandHandler.ts';
-import { CommandHandler } from '#command/CommandHandler.ts';
 import { BadRequestError } from '#shared/error.ts';
 import { randomUUID } from 'crypto';
 import { CampaignCreatedEvent } from './campaign-events.ts';
