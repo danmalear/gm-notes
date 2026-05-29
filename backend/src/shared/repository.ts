@@ -1,4 +1,4 @@
-import type { PrismaClient } from '@prisma/client/extension';
+import type { PrismaClient } from '#prisma-client';
 import type { UUID } from 'crypto';
 
 export interface IRepositoryConfig {
