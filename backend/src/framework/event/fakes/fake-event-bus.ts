@@ -7,7 +7,7 @@ import type { Faker, FakerCalls } from '#shared/Faker.ts';
 import type { UUID } from 'crypto';
 import { randomUUID } from 'crypto';
 import type { WebSocketServer } from 'ws';
-import type { EventBus } from '../EventBus.ts';
+import type { EventBus } from '../event-bus.ts';
 import { FakeEventRepository } from './FakeEventRepository.ts';
 
 const zeroCalls: FakerCalls<EventBus> = {

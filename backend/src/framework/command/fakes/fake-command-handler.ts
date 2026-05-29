@@ -1,6 +1,6 @@
+import type { EventBus } from '#event/event-bus.ts';
 import type { EventRepository } from '#event/event-repository.ts';
-import type { EventBus } from '#event/EventBus.ts';
-import { FakeEventBus } from '#event/fakes/FakeEventBus.ts';
+import { FakeEventBus } from '#event/fakes/fake-event-bus.ts';
 import { FakeEventRepository } from '#event/fakes/FakeEventRepository.ts';
 import { FakeStreamRepository } from '#framework/stream/fakes/FakeStreamRepository.ts';
 import type { StreamRepository } from '#framework/stream/stream-repository.ts';

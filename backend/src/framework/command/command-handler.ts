@@ -1,5 +1,5 @@
+import type { IEventBus } from '#event/event-bus.ts';
 import type { EventRepository } from '#event/event-repository.ts';
-import type { IEventBus } from '#event/EventBus.ts';
 import type { StreamRepository } from '#framework/stream/stream-repository.ts';
 import type { Stream } from '#framework/stream/Stream.ts';
 import type { IMessageSubscriber } from '#message/IMessageSubscriber.ts';
