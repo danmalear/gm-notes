@@ -6,7 +6,7 @@ import { FakeStreamRepository } from '#framework/stream/fakes/FakeStreamReposito
 import type { StreamRepository } from '#framework/stream/stream-repository.ts';
 import type { Faker, FakerCalls } from '#shared/Faker.ts';
 import type { ICloneable } from '#shared/ICloneable.ts';
-import type { IEventSubscriber } from '../IEventSubscriber.ts';
+import type { IEventSubscriber } from '../event-subscriber.ts';
 
 const zeroCalls: FakerCalls<IEventSubscriber> = {
 	handle: 0,

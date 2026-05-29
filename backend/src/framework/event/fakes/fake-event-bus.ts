@@ -1,5 +1,5 @@
 import type { EventRepository } from '#event/event-repository.ts';
-import type { IEventSubscriber } from '#event/IEventSubscriber.ts';
+import type { IEventSubscriber } from '#event/event-subscriber.ts';
 import { FakeWebSocketServer } from '#framework/fakes/FakeWebsocketServer.ts';
 import { FakeStreamRepository } from '#framework/stream/fakes/FakeStreamRepository.ts';
 import type { StreamRepository } from '#framework/stream/stream-repository.ts';

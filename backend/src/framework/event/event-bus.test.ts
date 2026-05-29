@@ -5,8 +5,8 @@ import { beforeEach, suite, test } from 'node:test';
 import { EventBus } from './event-bus.ts';
 import type { Event } from './event.ts';
 import { fakeEvent } from './fakes/event-data-fake.ts';
+import { FakeEventSubscriber } from './fakes/fake-event-subscriber.ts';
 import { FakeEventRepository } from './fakes/FakeEventRepository.ts';
-import { FakeEventSubscriber } from './fakes/FakeEventSubscriber.ts';
 
 suite('CommandBus', () => {
 	let eventBus: EventBus;
