@@ -1,6 +1,10 @@
 import type { PrismaClient } from '@prisma/client/extension';
 import type { UUID } from 'crypto';
 
+export interface IRepositoryConfig {
+	prisma: PrismaClient;
+}
+
 export interface IRepository<
 	TModel,
 	TCreate,
