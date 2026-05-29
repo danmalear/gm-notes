@@ -3,7 +3,7 @@ import type { CommandCreateInput } from '#prisma/generated/models.ts';
 import { NotFoundError } from '#shared/error.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { CommandRepository } from './command-repository.ts';
-import type { Command } from './command-temp.ts';
+import type { Command } from './command.ts';
 
 export type ICommandBus = IMessageBus<'Command', Command>;
 

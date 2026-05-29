@@ -6,7 +6,7 @@ import {
 	validateCommandRequest,
 	type CommandResponse,
 } from './command-dtos.ts';
-import { Command } from './command-temp.ts';
+import { Command } from './command.ts';
 
 export function commandRoutes(app: Express, commandBus: ICommandBus) {
 	const apiNamespace = 'commands';
