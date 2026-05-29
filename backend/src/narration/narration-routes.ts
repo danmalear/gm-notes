@@ -1,4 +1,4 @@
-import type { ICommandBus } from '#command/CommandBus.ts';
+import type { ICommandBus } from '#command/command-bus.ts';
 import type { IEventBus } from '#event/EventBus.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage } from '#shared/error.ts';

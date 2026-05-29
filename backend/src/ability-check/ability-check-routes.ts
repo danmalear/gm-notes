@@ -1,4 +1,4 @@
-import type { ICommandBus } from '#command/CommandBus.ts';
+import type { ICommandBus } from '#command/command-bus.ts';
 import type { IEventBus } from '#event/EventBus.ts';
 import { getById } from '#shared/route-utils.ts';
 import type { Express } from 'express';

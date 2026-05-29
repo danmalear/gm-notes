@@ -1,4 +1,4 @@
-import type { ICommandBus } from '#command/CommandBus.ts';
+import type { ICommandBus } from '#command/command-bus.ts';
 import type { EventRepository } from '#event/event-repository.ts';
 import type { IEventBus } from '#event/EventBus.ts';
 import type { StreamRepository } from '#framework/stream/stream-repository.ts';

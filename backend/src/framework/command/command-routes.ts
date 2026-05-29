@@ -1,12 +1,12 @@
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, getStatusCode } from '#shared/error.ts';
 import type { Express, Response } from 'express';
+import type { ICommandBus } from './command-bus.ts';
 import {
 	validateCommandRequest,
 	type CommandResponse,
 } from './command-dtos.ts';
 import { Command } from './Command.ts';
-import type { ICommandBus } from './CommandBus.ts';
 
 export function commandRoutes(app: Express, commandBus: ICommandBus) {
 	const apiNamespace = 'commands';
