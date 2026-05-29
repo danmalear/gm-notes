@@ -1,5 +1,5 @@
-import type { EventOpts } from '#event/Event.ts';
-import { Event } from '#event/Event.ts';
+import type { EventOpts } from '#event/event-temp.ts';
+import { Event } from '#event/event-temp.ts';
 import { isUUID } from '#shared/uuid.ts';
 import type { UUID } from 'crypto';
 

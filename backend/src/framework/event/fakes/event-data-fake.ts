@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 import type { EventRec } from '../event-repository.ts';
-import { Event } from '../Event.ts';
+import { Event } from '../event-temp.ts';
 
 const eventId = randomUUID();
 const context = 'Context';

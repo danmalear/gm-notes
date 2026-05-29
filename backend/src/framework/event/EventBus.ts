@@ -4,7 +4,7 @@ import type { StreamRepository } from '#stream/stream-repository.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { WebSocketServer } from 'ws';
 import type { EventRec, EventRepository } from './event-repository.ts';
-import type { Event } from './Event.ts';
+import type { Event } from './event-temp.ts';
 
 export type IEventBus = IMessageBus<'Event', Event>;
 

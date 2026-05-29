@@ -1,4 +1,4 @@
-import type { Event } from '#event/Event.ts';
+import type { Event } from '#event/event-temp.ts';
 import type { IEventSubscriber } from '#event/IEventSubscriber.ts';
 import { NotImplementedError } from '#shared/error.ts';
 import { validateCampaignCreated } from './campaign-events.ts';
