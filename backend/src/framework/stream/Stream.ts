@@ -1,5 +1,5 @@
 import type { EventRepository } from '#event/event-repository.ts';
-import { Event } from '#event/event-temp.ts';
+import { Event } from '#event/event.ts';
 import {
 	BadRequestError,
 	InternalError,

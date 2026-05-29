@@ -1,7 +1,7 @@
 import type { CommandHandlerConfig } from '#command/command-handler.ts';
 import { CommandHandler } from '#command/command-handler.ts';
-import type { Command } from '#command/command-temp.ts';
 import type { CommandFunction } from '#command/command-types.ts';
+import type { Command } from '#command/command.ts';
 import { RawStream } from '#framework/stream/Stream.ts';
 import { BadRequestError, NotFoundError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';

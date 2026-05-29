@@ -1,4 +1,4 @@
-import type { Event } from '#event/event-temp.ts';
+import type { Event } from '#event/event.ts';
 import { NotImplementedError } from '#shared/error.ts';
 import type { StreamConfig } from '#stream/Stream.ts';
 import { Stream } from '#stream/Stream.ts';
