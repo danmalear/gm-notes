@@ -6,7 +6,7 @@ import { RawStream } from '#framework/stream/Stream.ts';
 import { BadRequestError, NotFoundError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
 import type { UUID } from 'crypto';
-import { Event } from './event-temp.ts';
+import { Event } from './event.ts';
 
 /**
  * Applies an event manually, for dev use to make manual changes to the event ledger

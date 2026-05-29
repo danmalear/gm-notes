@@ -2,7 +2,7 @@ import { FakeWebSocketServer } from '#framework/fakes/FakeWebsocketServer.ts';
 import { FakeStreamRepository } from '#framework/stream/fakes/FakeStreamRepository.ts';
 import assert from 'assert';
 import { beforeEach, suite, test } from 'node:test';
-import type { Event } from './event-temp.ts';
+import type { Event } from './event.ts';
 import { EventBus } from './EventBus.ts';
 import { fakeEvent } from './fakes/event-data-fake.ts';
 import { FakeEventRepository } from './fakes/FakeEventRepository.ts';
