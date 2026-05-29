@@ -23,12 +23,14 @@ import { mapRoutes } from '#map/map-routes.ts';
 import { NarrationRepository } from '#narration/narration-repository.ts';
 import { narrationRoutes } from '#narration/narration-routes.ts';
 import { NoteRepository } from '#note/note-repository.ts';
+import { PrismaClient } from '#prisma-client';
 import { RegionRepository } from '#region/region-repository.ts';
 import { regionRoutes } from '#region/region-routes.ts';
 import { RegionShapeRepository } from '#region/region-shape-repository.ts';
 import type { MessageResponse } from '#shared/dtos.ts';
 import { getMessage } from '#shared/error.ts';
 import { StreamRepository } from '#stream/stream-repository.ts';
+import { PrismaPg } from '@prisma/adapter-pg';
 import cors from 'cors';
 import 'dotenv/config';
 import express, {
@@ -38,8 +40,8 @@ import express, {
 } from 'express';
 import { createServer } from 'http';
 
-function initRepos() {
-	const commandRepository = new CommandRepository();
+function initRepos(prisma: PrismaClient) {
+	const commandRepository = new CommandRepository({ prisma });
 	const eventRepository = new EventRepository();
 	const streamRepository = new StreamRepository();
 
@@ -111,6 +113,9 @@ function createAppServer() {
 
 	const wsServer = createWsServer(server);
 
+	const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+	const prisma = new PrismaClient({ adapter });
+
 	const {
 		commandRepository,
 		eventRepository,
@@ -125,7 +130,7 @@ function createAppServer() {
 		regionRepository,
 		mapRepository,
 		campaignRepository,
-	} = initRepos();
+	} = initRepos(prisma);
 
 	const commandBus = new CommandBus(commandRepository);
 	const eventBus = new EventBus({

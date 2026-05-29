@@ -3,8 +3,8 @@ import assert from 'assert';
 import { beforeEach, suite, test } from 'node:test';
 import { CommandBus } from './CommandBus.ts';
 import { fakeCommand } from './fakes/command-data-fake.ts';
+import { FakeCommandRepository } from './fakes/fake-command-repository.ts';
 import { FakeCommandHandler } from './fakes/FakeCommandHandler.ts';
-import { FakeCommandRepository } from './fakes/FakeCommandRepository.ts';
 
 suite('CommandBus', () => {
 	let commandBus: CommandBus;

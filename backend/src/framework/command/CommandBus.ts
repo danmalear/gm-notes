@@ -1,8 +1,9 @@
 import { MessageBus, type IMessageBus } from '#message/MessageBus.ts';
+import type { CommandCreateInput } from '#prisma/generated/models.ts';
 import { NotFoundError } from '#shared/error.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { Command } from './Command.ts';
-import type { CommandRec, CommandRepository } from './command-repository.ts';
+import type { CommandRepository } from './command-repository.ts';
 
 export type ICommandBus = IMessageBus<'Command', Command>;
 
@@ -26,17 +27,17 @@ export class CommandBus
 
 		const id = randomUUID();
 
-		const commandRecord: CommandRec = {
+		const commandModel: CommandCreateInput = {
 			CommandId: id,
 			StreamId: command.streamId ?? null,
 			CorrelationId: command.correlationId,
 			Context: command.context,
 			Ref: command.ref,
 			Data: command.data,
-			CreatedAt: new Date().toISOString(),
+			CreatedAt: new Date(),
 		};
 
-		await this.commandRepository.insert(commandRecord);
+		await this.commandRepository.insert(commandModel);
 		return await super.send(command);
 	}
 }

@@ -1,6 +1,6 @@
 import { Command } from '#command/Command.ts';
+import type { CommandModel } from '#prisma-models/Command.ts';
 import { randomUUID } from 'crypto';
-import type { CommandRec } from '../command-repository.ts';
 
 const commandId = randomUUID();
 const context = 'Context';
@@ -12,7 +12,7 @@ const data = {
 	prop1: 'string',
 	prop2: 1,
 };
-const createdAt = new Date('01/01/2026').toUTCString();
+const createdAt = new Date('01/01/2026');
 
 export const fakeCommandRequest = {
 	context,
@@ -31,7 +31,7 @@ export const fakeCommand = new Command({
 	data,
 });
 
-export const fakeCommandRec: CommandRec = {
+export const fakeCommandModel: CommandModel = {
 	CommandId: commandId,
 	Context: context,
 	Ref: ref,
