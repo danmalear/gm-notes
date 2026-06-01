@@ -1,6 +1,6 @@
+import type { IEvent } from '#event/event.ts';
 import { randomUUID } from 'crypto';
 import type { EventRec } from '../event-repository.ts';
-import { Event } from '../event.ts';
 
 const eventId = randomUUID();
 const context = 'Context';
@@ -14,14 +14,14 @@ const data = {
 const version = 0;
 const occurredAt = new Date('01/01/2026').toUTCString();
 
-export const fakeEvent = new Event({
+export const fakeEvent: IEvent = {
 	context,
 	ref,
 	streamId,
 	correlationId,
 	data,
 	streamVersion: version,
-});
+};
 
 export const fakeEventRec: EventRec = {
 	EventId: eventId,

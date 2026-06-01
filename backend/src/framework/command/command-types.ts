@@ -1,7 +1,7 @@
 import type { UUID } from 'crypto';
-import type { Command } from './command.ts';
+import type { ICommand } from './command.ts';
 
 export type CommandFunction = (
-	command: Command,
+	command: ICommand,
 	streamVersion?: number,
 ) => Promise<UUID>;

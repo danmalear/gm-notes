@@ -1,12 +1,12 @@
 import type { CommandHandlerConfig } from '#command/command-handler.ts';
 import { CommandHandler } from '#command/command-handler.ts';
 import type { CommandFunction } from '#command/command-types.ts';
-import type { Command } from '#command/command.ts';
+import type { ICommand } from '#command/command.ts';
 import { RawStream } from '#framework/stream/Stream.ts';
 import { BadRequestError, NotFoundError } from '#shared/error.ts';
 import { isUUID } from '#shared/uuid.ts';
 import type { UUID } from 'crypto';
-import { Event } from './event.ts';
+import type { IEvent } from './event.ts';
 
 /**
  * Applies an event manually, for dev use to make manual changes to the event ledger
@@ -85,7 +85,7 @@ export class EventCommandHandler extends CommandHandler {
 		super(config);
 	}
 
-	override async handle(command: Command) {
+	override async handle(command: ICommand) {
 		const stream = command.streamId
 			? new RawStream(command.streamId, {
 					eventRepository: this.eventRepository,
@@ -113,14 +113,14 @@ export class EventCommandHandler extends CommandHandler {
 	Apply: CommandFunction = async (command, streamVersion = 0) => {
 		validateApplyEvent(command.data);
 
-		const event = new Event({
+		const event: IEvent = {
 			context: command.data.context,
 			ref: command.data.ref,
 			streamId: command.data.streamId,
 			correlationId: command.correlationId,
 			streamVersion: streamVersion + 1,
 			data: command.data,
-		});
+		};
 
 		return await this.eventBus.send(event);
 	};

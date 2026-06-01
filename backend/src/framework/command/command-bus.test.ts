@@ -13,7 +13,7 @@ suite('CommandBus', () => {
 
 	beforeEach(() => {
 		fakeCommandHandler.resetCalls();
-		commandBus = new CommandBus(fakeCommandRepository);
+		commandBus = new CommandBus({ commandRepository: fakeCommandRepository });
 	});
 
 	suite('subscribe', () => {
@@ -64,7 +64,7 @@ suite('CommandBus', () => {
 		});
 
 		test('throws an error when an invalid context is supplied', async () => {
-			const badCommand = fakeCommand.clone();
+			const badCommand = { ...fakeCommand };
 			badCommand.context = 'BadContext';
 			await assert.rejects(commandBus.send(badCommand), NotFoundError);
 		});

@@ -1,24 +1,16 @@
 import { type UUID } from 'crypto';
-import type { IMessage, MessageType } from './IMessage.ts';
+import type { IMessage } from './IMessage.ts';
 import type { IMessageSubscriber } from './IMessageSubscriber.ts';
 
-export interface IMessageBus<
-	TType extends MessageType,
-	TMessage extends IMessage<TType>,
-> {
-	subscribe: (
-		context: string,
-		handler: IMessageSubscriber<TType, IMessage<TType>>,
-	) => void;
+export interface IMessageBus<TMessage extends IMessage> {
+	subscribe: (context: string, handler: IMessageSubscriber<TMessage>) => void;
 	send: (message: TMessage) => Promise<UUID>;
 }
 
-export class MessageBus<
-	TType extends MessageType,
-	TMessage extends IMessage<TType>,
-> implements IMessageBus<TType, TMessage>
+export class MessageBus<TMessage extends IMessage>
+	implements IMessageBus<TMessage>
 {
-	subscribers: Record<string, IMessageSubscriber<TType, TMessage>[]>;
+	subscribers: Record<string, IMessageSubscriber<TMessage>[]>;
 
 	constructor() {
 		this.subscribers = {};
@@ -30,7 +22,7 @@ export class MessageBus<
 	 * @param context Context to listen to
 	 * @param handler A class that can handle messages of the specified type
 	 */
-	subscribe(context: string, handler: IMessageSubscriber<TType, TMessage>) {
+	subscribe(context: string, handler: IMessageSubscriber<TMessage>) {
 		if (!this.subscribers[context]) {
 			this.subscribers[context] = [];
 		}

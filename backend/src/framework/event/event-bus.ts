@@ -4,9 +4,9 @@ import type { StreamRepository } from '#stream/stream-repository.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { WebSocketServer } from 'ws';
 import type { EventRec, EventRepository } from './event-repository.ts';
-import type { Event } from './event.ts';
+import type { IEvent } from './event.ts';
 
-export type IEventBus = IMessageBus<'Event', Event>;
+export type IEventBus = IMessageBus<IEvent>;
 
 export interface EventBusConfig {
 	eventRepository: EventRepository;
@@ -14,7 +14,7 @@ export interface EventBusConfig {
 	wss: WebSocketServer;
 }
 
-export class EventBus extends MessageBus<'Event', Event> implements IEventBus {
+export class EventBus extends MessageBus<IEvent> implements IEventBus {
 	eventRepository: EventRepository;
 	streamRepository: StreamRepository;
 	wss: WebSocketServer;
@@ -26,7 +26,7 @@ export class EventBus extends MessageBus<'Event', Event> implements IEventBus {
 		this.wss = wss;
 	}
 
-	override async send(event: Event): Promise<UUID> {
+	override async send(event: IEvent): Promise<UUID> {
 		console.log('Processing event', event.ref);
 		const id = randomUUID();
 

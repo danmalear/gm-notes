@@ -1,5 +1,5 @@
 import type { EventRepository } from '#event/event-repository.ts';
-import { Event } from '#event/event.ts';
+import type { IEvent } from '#event/event.ts';
 import {
 	BadRequestError,
 	InternalError,
@@ -71,14 +71,14 @@ export abstract class Stream<TRec> {
 		const eventRecs = await this.eventRepository.getByStreamId(this.id);
 
 		for (const eventRec of eventRecs) {
-			const event: Event = new Event({
+			const event: IEvent = {
 				context: eventRec.Context,
 				ref: eventRec.Ref,
 				streamId: this.id,
 				correlationId: eventRec.CorrelationId,
 				streamVersion: eventRec.Version,
 				data: eventRec.Data,
-			});
+			};
 			this.applyEvent(this.#aggregateCache, event);
 		}
 
@@ -87,7 +87,7 @@ export abstract class Stream<TRec> {
 
 	abstract emptyRecord: TRec;
 
-	abstract applyEvent(aggregate: TRec, event: Event): Promise<void>;
+	abstract applyEvent(aggregate: TRec, event: IEvent): Promise<void>;
 }
 
 /**

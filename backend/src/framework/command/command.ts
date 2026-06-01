@@ -1,49 +1,5 @@
-import { type IMessage } from '#message/IMessage.ts';
-import { randomUUID, type UUID } from 'crypto';
+import type { IMessage, MessageOpts } from '#message/IMessage.ts';
 
-interface CommandOpts {
-	context: string;
-	ref: string;
-	streamId: UUID | undefined;
-	correlationId?: UUID;
-	streamVersion?: number;
-	data: object;
-}
+export type CommandOpts<TData extends object> = MessageOpts<TData>;
 
-export class Command implements IMessage<'Command'> {
-	type: 'Command';
-	context: string;
-	ref: string;
-	streamId: UUID | undefined;
-	correlationId: UUID;
-	streamVersion: number | undefined;
-	data: object;
-
-	constructor({
-		context,
-		ref,
-		streamId,
-		correlationId,
-		streamVersion,
-		data,
-	}: CommandOpts) {
-		this.type = 'Command';
-		this.context = context;
-		this.ref = ref;
-		this.streamId = streamId;
-		this.correlationId = correlationId ?? randomUUID();
-		this.streamVersion = streamVersion;
-		this.data = data;
-	}
-
-	clone() {
-		return new Command({
-			context: this.context,
-			ref: this.ref,
-			streamId: this.streamId,
-			correlationId: this.correlationId,
-			streamVersion: this.streamVersion,
-			data: { ...this.data },
-		});
-	}
-}
+export type ICommand = IMessage;

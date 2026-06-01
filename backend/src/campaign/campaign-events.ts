@@ -1,6 +1,6 @@
-import { Event, type EventOpts } from '#event/event.ts';
+import type { EventOpts, IEvent } from '#event/event.ts';
 import { isUUID } from '#shared/uuid.ts';
-import type { UUID } from 'crypto';
+import { randomUUID, type UUID } from 'crypto';
 
 // #region CampaignCreated
 
@@ -26,35 +26,25 @@ export function validateCampaignCreated(
 	}
 }
 
-export type CampaignCreatedEventOpts = EventOpts<
-	'Campaign',
-	'Created',
-	CampaignCreated
->;
+export class CampaignCreatedEvent implements IEvent {
+	context: string;
+	ref: string;
+	streamId: UUID;
+	correlationId: UUID;
+	streamVersion: number;
+	data: CampaignCreated;
 
-export class CampaignCreatedEvent extends Event<
-	'Campaign',
-	'Created',
-	CampaignCreated
-> {
-	constructor({ streamId, correlationId, data }: CampaignCreatedEventOpts) {
-		super({
-			context: 'Campaign',
-			ref: 'Created',
-			streamId,
-			correlationId,
-			streamVersion: 0,
-			data,
-		});
-	}
-
-	override clone() {
-		return new CampaignCreatedEvent({
-			streamId: this.streamId,
-			correlationId: this.correlationId,
-			streamVersion: this.streamVersion,
-			data: { ...this.data },
-		});
+	constructor({
+		streamId,
+		correlationId,
+		data,
+	}: Omit<EventOpts<CampaignCreated>, 'streamVersion'>) {
+		this.context = 'Campaign';
+		this.ref = 'Created';
+		this.streamId = streamId;
+		this.correlationId = correlationId ?? randomUUID();
+		this.streamVersion = 1;
+		this.data = data;
 	}
 }
 
@@ -67,43 +57,27 @@ export interface CampaignRenamed {
 	name: string;
 }
 
-export type CampaignRenamedEventOpts = EventOpts<
-	'Campaign',
-	'Renamed',
-	CampaignRenamed
->;
+export class CampaignRenamedEvent implements IEvent {
+	context: string;
+	ref: string;
+	streamId: UUID;
+	correlationId: UUID;
+	streamVersion: number;
+	data: CampaignRenamed;
 
-export class CampaignRenamedEvent extends Event<
-	'Campaign',
-	'Renamed',
-	CampaignRenamed
-> {
 	constructor({
 		streamId,
 		correlationId,
 		streamVersion,
 		data,
-	}: CampaignRenamedEventOpts) {
-		super({
-			context: 'Campaign',
-			ref: 'Renamed',
-			streamId,
-			correlationId,
-			streamVersion,
-			data,
-		});
-	}
-
-	override clone() {
-		return new CampaignRenamedEvent({
-			streamId: this.streamId,
-			correlationId: this.correlationId,
-			streamVersion: this.streamVersion,
-			data: { ...this.data },
-		});
+	}: EventOpts<CampaignRenamed>) {
+		this.context = 'Campaign';
+		this.ref = 'Renamed';
+		this.streamId = streamId;
+		this.correlationId = correlationId ?? randomUUID();
+		this.streamVersion = streamVersion;
+		this.data = data;
 	}
 }
 
 // #endregion CampaignRenamed
-
-export type CampaignEvent = CampaignCreatedEvent | CampaignRenamedEvent;

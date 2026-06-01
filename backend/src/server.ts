@@ -132,7 +132,7 @@ function createAppServer() {
 		campaignRepository,
 	} = initRepos(prisma);
 
-	const commandBus = new CommandBus(commandRepository);
+	const commandBus = new CommandBus({ commandRepository });
 	const eventBus = new EventBus({
 		eventRepository,
 		streamRepository,

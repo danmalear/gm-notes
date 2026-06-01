@@ -1,14 +1,8 @@
-import type { IMessage, MessageType } from './IMessage.ts';
+import type { IMessage } from './IMessage.ts';
 
 /**
  * Something that expects to listen to a message bus
- *
- * @param TType the type of message (i.e. Command or Event) to listen for
- * @param TMessage the type of message it handles - should be a union type of multiple specific messages
  */
-export interface IMessageSubscriber<
-	TType extends MessageType,
-	TMessage extends IMessage<TType>,
-> {
+export interface IMessageSubscriber<TMessage extends IMessage> {
 	handle: (message: TMessage) => Promise<void>;
 }

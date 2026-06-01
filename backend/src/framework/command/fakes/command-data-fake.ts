@@ -1,4 +1,4 @@
-import { Command } from '#command/command.ts';
+import type { ICommand } from '#command/command.ts';
 import type { CommandModel } from '#prisma-models/Command.ts';
 import { randomUUID } from 'crypto';
 
@@ -22,14 +22,14 @@ export const fakeCommandRequest = {
 	data,
 };
 
-export const fakeCommand = new Command({
+export const fakeCommand: ICommand = {
 	context,
 	ref,
 	streamId,
 	correlationId,
 	streamVersion,
 	data,
-});
+};
 
 export const fakeCommandModel: CommandModel = {
 	CommandId: commandId,

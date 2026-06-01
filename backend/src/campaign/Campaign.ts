@@ -1,4 +1,4 @@
-import type { Event } from '#event/event.ts';
+import type { IEvent } from '#event/event.ts';
 import { NotImplementedError } from '#shared/error.ts';
 import type { StreamConfig } from '#stream/Stream.ts';
 import { Stream } from '#stream/Stream.ts';
@@ -19,7 +19,7 @@ export class Campaign extends Stream<CampaignRec> {
 		};
 	}
 
-	override async applyEvent(aggregate: CampaignRec, event: Event) {
+	override async applyEvent(aggregate: CampaignRec, event: IEvent) {
 		switch (event.ref) {
 			case 'Created':
 				return this.Created(aggregate, event);
@@ -30,7 +30,7 @@ export class Campaign extends Stream<CampaignRec> {
 		}
 	}
 
-	Created(aggregate: CampaignRec, event: Event) {
+	Created(aggregate: CampaignRec, event: IEvent) {
 		validateCampaignCreated(event.data);
 		aggregate.CampaignId = event.data.id;
 		aggregate.Name = event.data.name;

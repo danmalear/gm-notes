@@ -1,64 +1,14 @@
-import { type IMessage } from '#message/IMessage.ts';
-import { randomUUID, type UUID } from 'crypto';
+import type { IMessage, MessageOpts } from '#message/IMessage.ts';
+import { type UUID } from 'crypto';
 
-interface BaseEventOpts<
-	TContext extends string = string,
-	TRef extends string = string,
-	TData extends object = object,
-> {
-	context: TContext;
-	ref: TRef;
+export interface EventOpts<TData extends object> extends MessageOpts<TData> {
 	streamId: UUID;
 	correlationId?: UUID;
 	streamVersion: number;
 	data: TData;
 }
 
-export type EventOpts<
-	TContext extends string = string,
-	TRef extends string = string,
-	TData extends object = object,
-> = Omit<Omit<BaseEventOpts<TContext, TRef, TData>, 'context'>, 'ref'>;
-
-export class Event<
-	TContext extends string = string,
-	TRef extends string = string,
-	TData extends object = object,
-> implements IMessage<'Event'>
-{
-	type: 'Event';
-	context: TContext;
-	ref: TRef;
+export interface IEvent extends IMessage {
 	streamId: UUID;
-	correlationId: UUID;
 	streamVersion: number;
-	data: TData;
-
-	constructor({
-		context,
-		ref,
-		streamId,
-		correlationId,
-		streamVersion,
-		data,
-	}: BaseEventOpts<TContext, TRef, TData>) {
-		this.type = 'Event';
-		this.context = context;
-		this.ref = ref;
-		this.streamId = streamId;
-		this.correlationId = correlationId ?? randomUUID();
-		this.data = data;
-		this.streamVersion = streamVersion;
-	}
-
-	clone() {
-		return new Event({
-			context: this.context,
-			ref: this.ref,
-			streamId: this.streamId,
-			correlationId: this.correlationId,
-			streamVersion: this.streamVersion,
-			data: { ...this.data },
-		});
-	}
 }

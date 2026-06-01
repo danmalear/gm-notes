@@ -3,7 +3,6 @@ import { FakeStreamRepository } from '#framework/stream/fakes/FakeStreamReposito
 import assert from 'assert';
 import { beforeEach, suite, test } from 'node:test';
 import { EventBus } from './event-bus.ts';
-import type { Event } from './event.ts';
 import { fakeEvent } from './fakes/event-data-fake.ts';
 import { FakeEventSubscriber } from './fakes/fake-event-subscriber.ts';
 import { FakeEventRepository } from './fakes/FakeEventRepository.ts';
@@ -63,7 +62,7 @@ suite('CommandBus', () => {
 		});
 
 		test('nothing happens when an invalid context is supplied', async () => {
-			const badEvent = fakeEvent.clone() as Event<string, string, object>;
+			const badEvent = { ...fakeEvent };
 			badEvent.context = 'BadContext';
 			await eventBus.send(badEvent);
 			assert.strictEqual(fakeEventHandler.calls.handle, 0);
