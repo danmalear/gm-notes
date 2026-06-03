@@ -1,6 +1,6 @@
 import type { ICommandBus } from '#command/command-bus.ts';
 import type { IEventBus } from '#event/event-bus.ts';
-import { getById } from '#shared/route-utils.ts';
+import { getByIdDEPRECATED } from '#shared/route-utils.ts';
 import type { Express } from 'express';
 import { toDto } from './action-mappers.ts';
 import type { ActionRepository } from './action-repository.ts';
@@ -13,7 +13,7 @@ export function actionRoutes(
 ) {
 	const apiNamespace = 'actions';
 
-	getById(app, {
+	getByIdDEPRECATED(app, {
 		apiNamespace,
 		objectDescriptor: 'Action',
 		repository: actionRepository,

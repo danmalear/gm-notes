@@ -3,7 +3,7 @@ import type { IEventBus } from '#event/event-bus.ts';
 import type { EventRepository } from '#event/event-repository.ts';
 import type { StreamRepository } from '#framework/stream/stream-repository.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
-import { getById } from '#shared/route-utils.ts';
+import { getByIdDEPRECATED } from '#shared/route-utils.ts';
 import type { Express, Response } from 'express';
 import { CampaignCommandHandler } from './campaign-commands.ts';
 import type { CampaignStub } from './campaign-dtos.ts';
@@ -51,7 +51,7 @@ export function campaignRoutes(
 		},
 	);
 
-	getById(app, {
+	getByIdDEPRECATED(app, {
 		apiNamespace,
 		objectDescriptor: 'Campaign',
 		repository: campaignRepository,

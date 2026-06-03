@@ -1,6 +1,6 @@
 import type { ICommandBus } from '#command/command-bus.ts';
 import type { IEventBus } from '#event/event-bus.ts';
-import { getById } from '#shared/route-utils.ts';
+import { getByIdDEPRECATED } from '#shared/route-utils.ts';
 import type { Express } from 'express';
 import type { ItemRepository } from './item-repository.ts';
 import { toDto } from './location-item-mappers.ts';
@@ -15,7 +15,7 @@ export function itemRoutes(
 ) {
 	const apiNamespace = 'items';
 
-	getById(app, {
+	getByIdDEPRECATED(app, {
 		apiNamespace: `${apiNamespace}/location`,
 		objectDescriptor: 'Location Item',
 		repository: locationItemRepository,

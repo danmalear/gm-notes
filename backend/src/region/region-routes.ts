@@ -2,7 +2,7 @@ import type { ICommandBus } from '#command/command-bus.ts';
 import type { IEventBus } from '#event/event-bus.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, InternalError } from '#shared/error.ts';
-import { getById } from '#shared/route-utils.ts';
+import { getByIdDEPRECATED } from '#shared/route-utils.ts';
 import { isUUID } from '#shared/uuid.ts';
 import { requiredFields, validatePostBody } from '#shared/validation/http.ts';
 import { randomUUID } from 'crypto';
@@ -69,7 +69,7 @@ export function regionRoutes(
 		},
 	);
 
-	getById(app, {
+	getByIdDEPRECATED(app, {
 		apiNamespace,
 		objectDescriptor: 'Region',
 		repository: regionRepository,
