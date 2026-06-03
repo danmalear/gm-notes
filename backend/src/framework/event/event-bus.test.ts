@@ -1,5 +1,5 @@
 import { FakeWebSocketServer } from '#framework/fakes/FakeWebsocketServer.ts';
-import { FakeStreamRepository } from '#framework/stream/fakes/FakeStreamRepository.ts';
+import { FakeStreamRepository } from '#framework/stream/fakes/fake-stream-repository.ts';
 import assert from 'assert';
 import { beforeEach, suite, test } from 'node:test';
 import { EventBus } from './event-bus.ts';
