@@ -1,6 +1,6 @@
 import type { IEvent } from '#event/event.ts';
-import type { StreamConfig } from '#framework/stream/stream-temp.ts';
-import { Stream } from '#framework/stream/stream-temp.ts';
+import type { StreamConfig } from '#framework/stream/stream.ts';
+import { Stream } from '#framework/stream/stream.ts';
 import { NotImplementedError } from '#shared/error.ts';
 import type { UUID } from 'crypto';
 import { validateCampaignCreated } from './campaign-events.ts';
