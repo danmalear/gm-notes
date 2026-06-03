@@ -35,7 +35,7 @@ export class CommandRepository
 
 	async getAll(): Promise<CommandModel[]> {
 		try {
-			return this.prisma.command.findMany();
+			return await this.prisma.command.findMany();
 		} catch (e) {
 			throw new Error(`Error getting all Command records: ${getMessage(e)}`);
 		}
