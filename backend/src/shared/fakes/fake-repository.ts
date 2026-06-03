@@ -1,6 +1,6 @@
 import type { PrismaClient } from '#prisma-client';
 import type { Faker, FakerCalls } from '#shared/Faker.ts';
-import type { ICloneable } from '#shared/ICloneable.ts';
+import type { ICloneable } from '#shared/cloneable.ts';
 import type { IRepository } from '../repository.ts';
 
 export interface FakeRepositoryConfig<TModel extends object> {

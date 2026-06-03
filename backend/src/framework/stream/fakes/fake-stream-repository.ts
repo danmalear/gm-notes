@@ -3,9 +3,9 @@ import type {
 	StreamModel,
 	StreamUpdateInput,
 } from '#prisma-models/Stream.ts';
+import type { ICloneable } from '#shared/cloneable.ts';
 import type { Faker } from '#shared/Faker.ts';
 import { FakeRepository } from '#shared/fakes/fake-repository.ts';
-import type { ICloneable } from '#shared/ICloneable.ts';
 import type { StreamRepository } from '../stream-repository.ts';
 import { fakeStreamModel } from './stream-data-fake.ts';
 

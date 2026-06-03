@@ -3,9 +3,9 @@ import type {
 	CommandModel,
 	CommandUpdateInput,
 } from '#prisma-models/Command.ts';
+import type { ICloneable } from '#shared/cloneable.ts';
 import type { Faker } from '#shared/Faker.ts';
 import { FakeRepository } from '#shared/fakes/fake-repository.ts';
-import type { ICloneable } from '#shared/ICloneable.ts';
 import type { CommandRepository } from '../command-repository.ts';
 import { fakeCommandModel } from './command-data-fake.ts';
 
