@@ -1,7 +1,7 @@
 import type { EventBus } from '#event/event-bus.ts';
 import type { EventRepository } from '#event/event-repository.ts';
 import { FakeEventBus } from '#event/fakes/fake-event-bus.ts';
-import { FakeEventRepository } from '#event/fakes/FakeEventRepository.ts';
+import { FakeEventRepository } from '#event/fakes/fake-event-repository.ts';
 import { FakeStreamRepository } from '#framework/stream/fakes/FakeStreamRepository.ts';
 import type { StreamRepository } from '#framework/stream/stream-repository.ts';
 import type { Faker, FakerCalls } from '#shared/Faker.ts';

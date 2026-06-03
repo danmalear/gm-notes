@@ -8,7 +8,7 @@ import type { UUID } from 'crypto';
 import { randomUUID } from 'crypto';
 import type { WebSocketServer } from 'ws';
 import type { EventBus } from '../event-bus.ts';
-import { FakeEventRepository } from './FakeEventRepository.ts';
+import { FakeEventRepository } from './fake-event-repository.ts';
 
 const zeroCalls: FakerCalls<EventBus> = {
 	send: 0,
