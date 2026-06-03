@@ -3,7 +3,7 @@ import type { IEventSubscriber } from '#event/event-subscriber.ts';
 import { FakeWebSocketServer } from '#framework/fakes/FakeWebsocketServer.ts';
 import { FakeStreamRepository } from '#framework/stream/fakes/fake-stream-repository.ts';
 import type { StreamRepository } from '#framework/stream/stream-repository.ts';
-import type { Faker, FakerCalls } from '#shared/Faker.ts';
+import type { Faker, FakerCalls } from '#shared/faker.ts';
 import type { UUID } from 'crypto';
 import { randomUUID } from 'crypto';
 import type { WebSocketServer } from 'ws';

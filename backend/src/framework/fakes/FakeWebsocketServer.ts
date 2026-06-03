@@ -1,4 +1,4 @@
-import type { Faker, FakerCalls } from '#shared/Faker.ts';
+import type { Faker, FakerCalls } from '#shared/faker.ts';
 import { EventEmitter } from 'events';
 import type { WebSocket, WebSocketServer } from 'ws';
 

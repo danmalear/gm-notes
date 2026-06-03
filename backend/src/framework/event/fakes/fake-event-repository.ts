@@ -4,7 +4,7 @@ import type {
 	EventUpdateInput,
 } from '#prisma-models/Event.ts';
 import type { ICloneable } from '#shared/cloneable.ts';
-import type { Faker, FakerCalls } from '#shared/Faker.ts';
+import type { Faker, FakerCalls } from '#shared/faker.ts';
 import {
 	FakeRepository,
 	zeroCalls as baseZeroCalls,

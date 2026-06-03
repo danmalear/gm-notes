@@ -4,8 +4,8 @@ import { FakeEventBus } from '#event/fakes/fake-event-bus.ts';
 import { FakeEventRepository } from '#event/fakes/fake-event-repository.ts';
 import { FakeStreamRepository } from '#framework/stream/fakes/fake-stream-repository.ts';
 import type { StreamRepository } from '#framework/stream/stream-repository.ts';
-import type { Faker, FakerCalls } from '#shared/Faker.ts';
 import type { ICloneable } from '#shared/cloneable.ts';
+import type { Faker, FakerCalls } from '#shared/faker.ts';
 import type { CommandHandler } from '../command-handler.ts';
 
 const zeroCalls: FakerCalls<CommandHandler> = {
