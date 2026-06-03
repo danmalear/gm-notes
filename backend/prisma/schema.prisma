@@ -10,15 +10,23 @@ datasource db {
 }
 
 model AbilityCheck {
-  AbilityCheckId             String  @id @db.Uuid
-  ActionId                   String  @db.Uuid
+  AbilityCheckId             String     @id @db.Uuid
+  ActionId                   String     @db.Uuid
   Skill                      String
   DC                         Int
-  SuccessNarrationId         String? @db.Uuid
-  FailureNarrationId         String? @db.Uuid
-  CriticalSuccessNarrationId String? @db.Uuid
-  CriticalFailureNarrationId String? @db.Uuid
+  SuccessNarrationId         String?    @db.Uuid
+  SuccessNarration           Narration? @relation(name: "Success", fields: [SuccessNarrationId], references: [NarrationId])
+  FailureNarrationId         String?    @db.Uuid
+  FailureNarration           Narration? @relation(name: "Failure", fields: [FailureNarrationId], references: [NarrationId])
+  CriticalSuccessNarrationId String?    @db.Uuid
+  CriticalSuccessNarration   Narration? @relation(name: "CriticalSuccess", fields: [CriticalSuccessNarrationId], references: [NarrationId])
+  CriticalFailureNarrationId String?    @db.Uuid
+  CriticalFailureNarration   Narration? @relation(name: "CriticalFailure", fields: [CriticalFailureNarrationId], references: [NarrationId])
 
+  @@index([SuccessNarrationId])
+  @@index([FailureNarrationId])
+  @@index([CriticalSuccessNarrationId])
+  @@index([CriticalFailureNarrationId])
   @@schema("public")
 }
 
@@ -128,12 +136,16 @@ model MapTemplate {
 }
 
 model Narration {
-  NarrationId         String            @id @db.Uuid
-  NarrationTemplateId String?           @db.Uuid
-  Name                String
-  Description         String
-  IsRead              Boolean           @default(false)
-  RegionNarrations    RegionNarration[]
+  NarrationId                  String            @id @db.Uuid
+  NarrationTemplateId          String?           @db.Uuid
+  Name                         String
+  Description                  String
+  IsRead                       Boolean           @default(false)
+  RegionNarrations             RegionNarration[]
+  SuccessAbilityChecks         AbilityCheck[]    @relation(name: "Success")
+  FailureAbilityChecks         AbilityCheck[]    @relation(name: "Failure")
+  CriticalSuccessAbilityChecks AbilityCheck[]    @relation(name: "CriticalSuccess")
+  CriticalFailureAbilityChecks AbilityCheck[]    @relation(name: "CriticalFailure")
 
   @@schema("public")
 }
