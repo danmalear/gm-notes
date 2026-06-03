@@ -1,9 +1,10 @@
 import { MessageBus, type IMessageBus } from '#message/MessageBus.ts';
+import type { EventCreateInput } from '#prisma-models/Event.ts';
 import { InternalError } from '#shared/error.ts';
 import type { StreamRepository } from '#stream/stream-repository.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { WebSocketServer } from 'ws';
-import type { EventRec, EventRepository } from './event-repository.ts';
+import type { EventRepository } from './event-repository.ts';
 import type { IEvent } from './event.ts';
 
 export type IEventBus = IMessageBus<IEvent>;
@@ -62,7 +63,7 @@ export class EventBus extends MessageBus<IEvent> implements IEventBus {
 			);
 		}
 
-		const eventRecord: EventRec = {
+		const eventModel: EventCreateInput = {
 			EventId: id,
 			StreamId: event.streamId,
 			CorrelationId: event.correlationId,
@@ -70,10 +71,10 @@ export class EventBus extends MessageBus<IEvent> implements IEventBus {
 			Ref: event.ref,
 			Data: event.data,
 			Version: version + 1,
-			OccurredAt: new Date().toISOString(),
+			OccurredAt: new Date(),
 		};
 
-		await this.eventRepository.insert(eventRecord);
+		await this.eventRepository.insert(eventModel);
 
 		this.wss.emit('event', event);
 		return await super.send(event);

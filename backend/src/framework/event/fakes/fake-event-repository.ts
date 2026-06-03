@@ -1,11 +1,16 @@
+import type {
+	EventCreateInput,
+	EventModel,
+	EventUpdateInput,
+} from '#prisma-models/Event.ts';
 import type { Faker, FakerCalls } from '#shared/Faker.ts';
 import {
 	FakeRepository,
 	zeroCalls as baseZeroCalls,
-} from '#shared/fakes/FakeRepository.ts';
+} from '#shared/fakes/fake-repository.ts';
 import type { ICloneable } from '#shared/ICloneable.ts';
-import type { EventRec, EventRepository } from '../event-repository.ts';
-import { fakeEventRec } from './event-data-fake.ts';
+import type { EventRepository } from '../event-repository.ts';
+import { fakeEventModel } from './event-data-fake.ts';
 
 const zeroCalls: FakerCalls<EventRepository> = {
 	...baseZeroCalls,
@@ -13,14 +18,14 @@ const zeroCalls: FakerCalls<EventRepository> = {
 };
 
 export class FakeEventRepository
-	extends FakeRepository<EventRec>
+	extends FakeRepository<EventModel, EventCreateInput, EventUpdateInput>
 	implements Faker<EventRepository>, ICloneable<FakeEventRepository>
 {
 	override calls: FakerCalls<EventRepository>;
 
 	constructor() {
 		super({
-			record: fakeEventRec,
+			model: fakeEventModel,
 		});
 		this.calls = { ...zeroCalls };
 	}

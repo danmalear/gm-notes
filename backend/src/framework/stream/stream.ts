@@ -68,16 +68,17 @@ export abstract class Stream<TRec> {
 
 		this.#aggregateCache = this.emptyRecord;
 
-		const eventRecs = await this.eventRepository.getByStreamId(this.id);
+		const eventModels = await this.eventRepository.getByStreamId(this.id);
 
-		for (const eventRec of eventRecs) {
+		for (const eventModel of eventModels) {
+			// Assume UUID/JSON data is stored correctly - for now at least
 			const event: IEvent = {
-				context: eventRec.Context,
-				ref: eventRec.Ref,
+				context: eventModel.Context,
+				ref: eventModel.Ref,
 				streamId: this.id,
-				correlationId: eventRec.CorrelationId,
-				streamVersion: eventRec.Version,
-				data: eventRec.Data,
+				correlationId: eventModel.CorrelationId as UUID,
+				streamVersion: eventModel.Version,
+				data: eventModel.Data as object,
 			};
 			this.applyEvent(this.#aggregateCache, event);
 		}

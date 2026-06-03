@@ -1,6 +1,6 @@
 import type { IEvent } from '#event/event.ts';
+import type { EventModel } from '#prisma-models/Event.ts';
 import { randomUUID } from 'crypto';
-import type { EventRec } from '../event-repository.ts';
 
 const eventId = randomUUID();
 const context = 'Context';
@@ -12,7 +12,7 @@ const data = {
 	prop2: 1,
 };
 const version = 0;
-const occurredAt = new Date('01/01/2026').toUTCString();
+const occurredAt = new Date('01/01/2026');
 
 export const fakeEvent: IEvent = {
 	context,
@@ -23,7 +23,7 @@ export const fakeEvent: IEvent = {
 	streamVersion: version,
 };
 
-export const fakeEventRec: EventRec = {
+export const fakeEventModel: EventModel = {
 	EventId: eventId,
 	Context: context,
 	Ref: ref,
