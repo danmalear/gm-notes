@@ -1,16 +1,21 @@
+import type {
+	StreamCreateInput,
+	StreamModel,
+	StreamUpdateInput,
+} from '#prisma-models/Stream.ts';
 import type { Faker } from '#shared/Faker.ts';
-import { FakeRepository } from '#shared/fakes/FakeRepository.ts';
+import { FakeRepository } from '#shared/fakes/fake-repository.ts';
 import type { ICloneable } from '#shared/ICloneable.ts';
-import type { StreamRec, StreamRepository } from '../stream-repository.ts';
-import { fakeStream } from './stream-data-fake.ts';
+import type { StreamRepository } from '../stream-repository.ts';
+import { fakeStreamModel } from './stream-data-fake.ts';
 
 export class FakeStreamRepository
-	extends FakeRepository<StreamRec>
+	extends FakeRepository<StreamModel, StreamCreateInput, StreamUpdateInput>
 	implements Faker<StreamRepository>, ICloneable<FakeStreamRepository>
 {
 	constructor() {
 		super({
-			record: fakeStream,
+			model: fakeStreamModel,
 		});
 	}
 

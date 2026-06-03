@@ -1,13 +1,13 @@
+import type { StreamModel } from '#prisma-models/Stream.ts';
 import { randomUUID } from 'crypto';
-import type { StreamRec } from '../stream-repository.ts';
 
 const streamId = randomUUID();
 const streamType = 'Object';
 const version = 0;
-const createdAt = new Date('01/01/2026').toUTCString();
-const updatedAt = new Date('01/02/2026').toUTCString();
+const createdAt = new Date('01/01/2026');
+const updatedAt = new Date('01/02/2026');
 
-export const fakeStream: StreamRec = {
+export const fakeStreamModel: StreamModel = {
 	StreamId: streamId,
 	Type: streamType,
 	Version: version,

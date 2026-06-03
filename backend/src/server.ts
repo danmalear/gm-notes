@@ -43,7 +43,7 @@ import { createServer } from 'http';
 function initRepos(prisma: PrismaClient) {
 	const commandRepository = new CommandRepository({ prisma });
 	const eventRepository = new EventRepository();
-	const streamRepository = new StreamRepository();
+	const streamRepository = new StreamRepository({ prisma });
 
 	const fileRepository = new FileRepository();
 	const noteRepository = new NoteRepository();
