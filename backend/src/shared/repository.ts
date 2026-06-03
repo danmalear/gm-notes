@@ -12,7 +12,7 @@ export interface IRepository<
 	TModel,
 	TCreate,
 	TUpdate,
-	TRefModel extends TModel = TModel,
+	TModelIncludeAll extends TModel = TModel,
 > {
 	prisma: PrismaClient;
 
@@ -28,7 +28,7 @@ export interface IRepository<
 	 * @param id UUID of the record to retrieve
 	 * @returns The record with the given UUID, or null if not found
 	 */
-	getById(id: UUID): Promise<TRefModel | null>;
+	getById(id: UUID): Promise<TModelIncludeAll | null>;
 
 	/**
 	 * Retrieves all records from the database
