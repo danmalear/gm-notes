@@ -182,6 +182,7 @@ export type NarrationWhereInput = {
   Name?: Prisma.StringFilter<"Narration"> | string
   Description?: Prisma.StringFilter<"Narration"> | string
   IsRead?: Prisma.BoolFilter<"Narration"> | boolean
+  RegionNarrations?: Prisma.RegionNarrationListRelationFilter
 }
 
 export type NarrationOrderByWithRelationInput = {
@@ -190,6 +191,7 @@ export type NarrationOrderByWithRelationInput = {
   Name?: Prisma.SortOrder
   Description?: Prisma.SortOrder
   IsRead?: Prisma.SortOrder
+  RegionNarrations?: Prisma.RegionNarrationOrderByRelationAggregateInput
 }
 
 export type NarrationWhereUniqueInput = Prisma.AtLeast<{
@@ -201,6 +203,7 @@ export type NarrationWhereUniqueInput = Prisma.AtLeast<{
   Name?: Prisma.StringFilter<"Narration"> | string
   Description?: Prisma.StringFilter<"Narration"> | string
   IsRead?: Prisma.BoolFilter<"Narration"> | boolean
+  RegionNarrations?: Prisma.RegionNarrationListRelationFilter
 }, "NarrationId">
 
 export type NarrationOrderByWithAggregationInput = {
@@ -231,6 +234,7 @@ export type NarrationCreateInput = {
   Name: string
   Description: string
   IsRead?: boolean
+  RegionNarrations?: Prisma.RegionNarrationCreateNestedManyWithoutNarrationInput
 }
 
 export type NarrationUncheckedCreateInput = {
@@ -239,6 +243,7 @@ export type NarrationUncheckedCreateInput = {
   Name: string
   Description: string
   IsRead?: boolean
+  RegionNarrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutNarrationInput
 }
 
 export type NarrationUpdateInput = {
@@ -247,6 +252,7 @@ export type NarrationUpdateInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Description?: Prisma.StringFieldUpdateOperationsInput | string
   IsRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  RegionNarrations?: Prisma.RegionNarrationUpdateManyWithoutNarrationNestedInput
 }
 
 export type NarrationUncheckedUpdateInput = {
@@ -255,6 +261,7 @@ export type NarrationUncheckedUpdateInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Description?: Prisma.StringFieldUpdateOperationsInput | string
   IsRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  RegionNarrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutNarrationNestedInput
 }
 
 export type NarrationCreateManyInput = {
@@ -305,6 +312,102 @@ export type NarrationMinOrderByAggregateInput = {
   IsRead?: Prisma.SortOrder
 }
 
+export type NarrationScalarRelationFilter = {
+  is?: Prisma.NarrationWhereInput
+  isNot?: Prisma.NarrationWhereInput
+}
+
+export type NarrationCreateNestedOneWithoutRegionNarrationsInput = {
+  create?: Prisma.XOR<Prisma.NarrationCreateWithoutRegionNarrationsInput, Prisma.NarrationUncheckedCreateWithoutRegionNarrationsInput>
+  connectOrCreate?: Prisma.NarrationCreateOrConnectWithoutRegionNarrationsInput
+  connect?: Prisma.NarrationWhereUniqueInput
+}
+
+export type NarrationUpdateOneRequiredWithoutRegionNarrationsNestedInput = {
+  create?: Prisma.XOR<Prisma.NarrationCreateWithoutRegionNarrationsInput, Prisma.NarrationUncheckedCreateWithoutRegionNarrationsInput>
+  connectOrCreate?: Prisma.NarrationCreateOrConnectWithoutRegionNarrationsInput
+  upsert?: Prisma.NarrationUpsertWithoutRegionNarrationsInput
+  connect?: Prisma.NarrationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.NarrationUpdateToOneWithWhereWithoutRegionNarrationsInput, Prisma.NarrationUpdateWithoutRegionNarrationsInput>, Prisma.NarrationUncheckedUpdateWithoutRegionNarrationsInput>
+}
+
+export type NarrationCreateWithoutRegionNarrationsInput = {
+  NarrationId: string
+  NarrationTemplateId?: string | null
+  Name: string
+  Description: string
+  IsRead?: boolean
+}
+
+export type NarrationUncheckedCreateWithoutRegionNarrationsInput = {
+  NarrationId: string
+  NarrationTemplateId?: string | null
+  Name: string
+  Description: string
+  IsRead?: boolean
+}
+
+export type NarrationCreateOrConnectWithoutRegionNarrationsInput = {
+  where: Prisma.NarrationWhereUniqueInput
+  create: Prisma.XOR<Prisma.NarrationCreateWithoutRegionNarrationsInput, Prisma.NarrationUncheckedCreateWithoutRegionNarrationsInput>
+}
+
+export type NarrationUpsertWithoutRegionNarrationsInput = {
+  update: Prisma.XOR<Prisma.NarrationUpdateWithoutRegionNarrationsInput, Prisma.NarrationUncheckedUpdateWithoutRegionNarrationsInput>
+  create: Prisma.XOR<Prisma.NarrationCreateWithoutRegionNarrationsInput, Prisma.NarrationUncheckedCreateWithoutRegionNarrationsInput>
+  where?: Prisma.NarrationWhereInput
+}
+
+export type NarrationUpdateToOneWithWhereWithoutRegionNarrationsInput = {
+  where?: Prisma.NarrationWhereInput
+  data: Prisma.XOR<Prisma.NarrationUpdateWithoutRegionNarrationsInput, Prisma.NarrationUncheckedUpdateWithoutRegionNarrationsInput>
+}
+
+export type NarrationUpdateWithoutRegionNarrationsInput = {
+  NarrationId?: Prisma.StringFieldUpdateOperationsInput | string
+  NarrationTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Description?: Prisma.StringFieldUpdateOperationsInput | string
+  IsRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
+export type NarrationUncheckedUpdateWithoutRegionNarrationsInput = {
+  NarrationId?: Prisma.StringFieldUpdateOperationsInput | string
+  NarrationTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Description?: Prisma.StringFieldUpdateOperationsInput | string
+  IsRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
+
+/**
+ * Count Type NarrationCountOutputType
+ */
+
+export type NarrationCountOutputType = {
+  RegionNarrations: number
+}
+
+export type NarrationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  RegionNarrations?: boolean | NarrationCountOutputTypeCountRegionNarrationsArgs
+}
+
+/**
+ * NarrationCountOutputType without action
+ */
+export type NarrationCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the NarrationCountOutputType
+   */
+  select?: Prisma.NarrationCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * NarrationCountOutputType without action
+ */
+export type NarrationCountOutputTypeCountRegionNarrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RegionNarrationWhereInput
+}
 
 
 export type NarrationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -313,6 +416,8 @@ export type NarrationSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   Name?: boolean
   Description?: boolean
   IsRead?: boolean
+  RegionNarrations?: boolean | Prisma.Narration$RegionNarrationsArgs<ExtArgs>
+  _count?: boolean | Prisma.NarrationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["narration"]>
 
 export type NarrationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -340,10 +445,18 @@ export type NarrationSelectScalar = {
 }
 
 export type NarrationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"NarrationId" | "NarrationTemplateId" | "Name" | "Description" | "IsRead", ExtArgs["result"]["narration"]>
+export type NarrationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  RegionNarrations?: boolean | Prisma.Narration$RegionNarrationsArgs<ExtArgs>
+  _count?: boolean | Prisma.NarrationCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type NarrationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type NarrationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $NarrationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Narration"
-  objects: {}
+  objects: {
+    RegionNarrations: Prisma.$RegionNarrationPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     NarrationId: string
     NarrationTemplateId: string | null
@@ -744,6 +857,7 @@ readonly fields: NarrationFieldRefs;
  */
 export interface Prisma__NarrationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  RegionNarrations<T extends Prisma.Narration$RegionNarrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Narration$RegionNarrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RegionNarrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -795,6 +909,10 @@ export type NarrationFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.NarrationOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NarrationInclude<ExtArgs> | null
+  /**
    * Filter, which Narration to fetch.
    */
   where: Prisma.NarrationWhereUniqueInput
@@ -813,6 +931,10 @@ export type NarrationFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.NarrationOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NarrationInclude<ExtArgs> | null
+  /**
    * Filter, which Narration to fetch.
    */
   where: Prisma.NarrationWhereUniqueInput
@@ -830,6 +952,10 @@ export type NarrationFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Omit specific fields from the Narration
    */
   omit?: Prisma.NarrationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NarrationInclude<ExtArgs> | null
   /**
    * Filter, which Narration to fetch.
    */
@@ -879,6 +1005,10 @@ export type NarrationFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.NarrationOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NarrationInclude<ExtArgs> | null
+  /**
    * Filter, which Narration to fetch.
    */
   where?: Prisma.NarrationWhereInput
@@ -926,6 +1056,10 @@ export type NarrationFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the Narration
    */
   omit?: Prisma.NarrationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NarrationInclude<ExtArgs> | null
   /**
    * Filter, which Narrations to fetch.
    */
@@ -975,6 +1109,10 @@ export type NarrationCreateArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.NarrationOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NarrationInclude<ExtArgs> | null
+  /**
    * The data needed to create a Narration.
    */
   data: Prisma.XOR<Prisma.NarrationCreateInput, Prisma.NarrationUncheckedCreateInput>
@@ -1022,6 +1160,10 @@ export type NarrationUpdateArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Narration
    */
   omit?: Prisma.NarrationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NarrationInclude<ExtArgs> | null
   /**
    * The data needed to update a Narration.
    */
@@ -1089,6 +1231,10 @@ export type NarrationUpsertArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.NarrationOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NarrationInclude<ExtArgs> | null
+  /**
    * The filter to search for the Narration to update in case it exists.
    */
   where: Prisma.NarrationWhereUniqueInput
@@ -1115,6 +1261,10 @@ export type NarrationDeleteArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.NarrationOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NarrationInclude<ExtArgs> | null
+  /**
    * Filter which Narration to delete.
    */
   where: Prisma.NarrationWhereUniqueInput
@@ -1135,6 +1285,30 @@ export type NarrationDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
+ * Narration.RegionNarrations
+ */
+export type Narration$RegionNarrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RegionNarration
+   */
+  select?: Prisma.RegionNarrationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RegionNarration
+   */
+  omit?: Prisma.RegionNarrationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionNarrationInclude<ExtArgs> | null
+  where?: Prisma.RegionNarrationWhereInput
+  orderBy?: Prisma.RegionNarrationOrderByWithRelationInput | Prisma.RegionNarrationOrderByWithRelationInput[]
+  cursor?: Prisma.RegionNarrationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RegionNarrationScalarFieldEnum | Prisma.RegionNarrationScalarFieldEnum[]
+}
+
+/**
  * Narration without action
  */
 export type NarrationDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1146,4 +1320,8 @@ export type NarrationDefaultArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Narration
    */
   omit?: Prisma.NarrationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NarrationInclude<ExtArgs> | null
 }

@@ -158,11 +158,15 @@ export type RegionNarrationWhereInput = {
   NOT?: Prisma.RegionNarrationWhereInput | Prisma.RegionNarrationWhereInput[]
   RegionId?: Prisma.UuidFilter<"RegionNarration"> | string
   NarrationId?: Prisma.UuidFilter<"RegionNarration"> | string
+  Region?: Prisma.XOR<Prisma.RegionScalarRelationFilter, Prisma.RegionWhereInput>
+  Narration?: Prisma.XOR<Prisma.NarrationScalarRelationFilter, Prisma.NarrationWhereInput>
 }
 
 export type RegionNarrationOrderByWithRelationInput = {
   RegionId?: Prisma.SortOrder
   NarrationId?: Prisma.SortOrder
+  Region?: Prisma.RegionOrderByWithRelationInput
+  Narration?: Prisma.NarrationOrderByWithRelationInput
 }
 
 export type RegionNarrationWhereUniqueInput = Prisma.AtLeast<{
@@ -172,6 +176,8 @@ export type RegionNarrationWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.RegionNarrationWhereInput | Prisma.RegionNarrationWhereInput[]
   RegionId?: Prisma.UuidFilter<"RegionNarration"> | string
   NarrationId?: Prisma.UuidFilter<"RegionNarration"> | string
+  Region?: Prisma.XOR<Prisma.RegionScalarRelationFilter, Prisma.RegionWhereInput>
+  Narration?: Prisma.XOR<Prisma.NarrationScalarRelationFilter, Prisma.NarrationWhereInput>
 }, "RegionId_NarrationId">
 
 export type RegionNarrationOrderByWithAggregationInput = {
@@ -191,8 +197,8 @@ export type RegionNarrationScalarWhereWithAggregatesInput = {
 }
 
 export type RegionNarrationCreateInput = {
-  RegionId: string
-  NarrationId: string
+  Region: Prisma.RegionCreateNestedOneWithoutRegionNarrationsInput
+  Narration: Prisma.NarrationCreateNestedOneWithoutRegionNarrationsInput
 }
 
 export type RegionNarrationUncheckedCreateInput = {
@@ -201,8 +207,8 @@ export type RegionNarrationUncheckedCreateInput = {
 }
 
 export type RegionNarrationUpdateInput = {
-  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
-  NarrationId?: Prisma.StringFieldUpdateOperationsInput | string
+  Region?: Prisma.RegionUpdateOneRequiredWithoutRegionNarrationsNestedInput
+  Narration?: Prisma.NarrationUpdateOneRequiredWithoutRegionNarrationsNestedInput
 }
 
 export type RegionNarrationUncheckedUpdateInput = {
@@ -216,13 +222,22 @@ export type RegionNarrationCreateManyInput = {
 }
 
 export type RegionNarrationUpdateManyMutationInput = {
-  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
-  NarrationId?: Prisma.StringFieldUpdateOperationsInput | string
+
 }
 
 export type RegionNarrationUncheckedUpdateManyInput = {
   RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   NarrationId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type RegionNarrationListRelationFilter = {
+  every?: Prisma.RegionNarrationWhereInput
+  some?: Prisma.RegionNarrationWhereInput
+  none?: Prisma.RegionNarrationWhereInput
+}
+
+export type RegionNarrationOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type RegionNarrationRegionIdNarrationIdCompoundUniqueInput = {
@@ -245,21 +260,219 @@ export type RegionNarrationMinOrderByAggregateInput = {
   NarrationId?: Prisma.SortOrder
 }
 
+export type RegionNarrationCreateNestedManyWithoutNarrationInput = {
+  create?: Prisma.XOR<Prisma.RegionNarrationCreateWithoutNarrationInput, Prisma.RegionNarrationUncheckedCreateWithoutNarrationInput> | Prisma.RegionNarrationCreateWithoutNarrationInput[] | Prisma.RegionNarrationUncheckedCreateWithoutNarrationInput[]
+  connectOrCreate?: Prisma.RegionNarrationCreateOrConnectWithoutNarrationInput | Prisma.RegionNarrationCreateOrConnectWithoutNarrationInput[]
+  createMany?: Prisma.RegionNarrationCreateManyNarrationInputEnvelope
+  connect?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+}
+
+export type RegionNarrationUncheckedCreateNestedManyWithoutNarrationInput = {
+  create?: Prisma.XOR<Prisma.RegionNarrationCreateWithoutNarrationInput, Prisma.RegionNarrationUncheckedCreateWithoutNarrationInput> | Prisma.RegionNarrationCreateWithoutNarrationInput[] | Prisma.RegionNarrationUncheckedCreateWithoutNarrationInput[]
+  connectOrCreate?: Prisma.RegionNarrationCreateOrConnectWithoutNarrationInput | Prisma.RegionNarrationCreateOrConnectWithoutNarrationInput[]
+  createMany?: Prisma.RegionNarrationCreateManyNarrationInputEnvelope
+  connect?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+}
+
+export type RegionNarrationUpdateManyWithoutNarrationNestedInput = {
+  create?: Prisma.XOR<Prisma.RegionNarrationCreateWithoutNarrationInput, Prisma.RegionNarrationUncheckedCreateWithoutNarrationInput> | Prisma.RegionNarrationCreateWithoutNarrationInput[] | Prisma.RegionNarrationUncheckedCreateWithoutNarrationInput[]
+  connectOrCreate?: Prisma.RegionNarrationCreateOrConnectWithoutNarrationInput | Prisma.RegionNarrationCreateOrConnectWithoutNarrationInput[]
+  upsert?: Prisma.RegionNarrationUpsertWithWhereUniqueWithoutNarrationInput | Prisma.RegionNarrationUpsertWithWhereUniqueWithoutNarrationInput[]
+  createMany?: Prisma.RegionNarrationCreateManyNarrationInputEnvelope
+  set?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+  disconnect?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+  delete?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+  connect?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+  update?: Prisma.RegionNarrationUpdateWithWhereUniqueWithoutNarrationInput | Prisma.RegionNarrationUpdateWithWhereUniqueWithoutNarrationInput[]
+  updateMany?: Prisma.RegionNarrationUpdateManyWithWhereWithoutNarrationInput | Prisma.RegionNarrationUpdateManyWithWhereWithoutNarrationInput[]
+  deleteMany?: Prisma.RegionNarrationScalarWhereInput | Prisma.RegionNarrationScalarWhereInput[]
+}
+
+export type RegionNarrationUncheckedUpdateManyWithoutNarrationNestedInput = {
+  create?: Prisma.XOR<Prisma.RegionNarrationCreateWithoutNarrationInput, Prisma.RegionNarrationUncheckedCreateWithoutNarrationInput> | Prisma.RegionNarrationCreateWithoutNarrationInput[] | Prisma.RegionNarrationUncheckedCreateWithoutNarrationInput[]
+  connectOrCreate?: Prisma.RegionNarrationCreateOrConnectWithoutNarrationInput | Prisma.RegionNarrationCreateOrConnectWithoutNarrationInput[]
+  upsert?: Prisma.RegionNarrationUpsertWithWhereUniqueWithoutNarrationInput | Prisma.RegionNarrationUpsertWithWhereUniqueWithoutNarrationInput[]
+  createMany?: Prisma.RegionNarrationCreateManyNarrationInputEnvelope
+  set?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+  disconnect?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+  delete?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+  connect?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+  update?: Prisma.RegionNarrationUpdateWithWhereUniqueWithoutNarrationInput | Prisma.RegionNarrationUpdateWithWhereUniqueWithoutNarrationInput[]
+  updateMany?: Prisma.RegionNarrationUpdateManyWithWhereWithoutNarrationInput | Prisma.RegionNarrationUpdateManyWithWhereWithoutNarrationInput[]
+  deleteMany?: Prisma.RegionNarrationScalarWhereInput | Prisma.RegionNarrationScalarWhereInput[]
+}
+
+export type RegionNarrationCreateNestedManyWithoutRegionInput = {
+  create?: Prisma.XOR<Prisma.RegionNarrationCreateWithoutRegionInput, Prisma.RegionNarrationUncheckedCreateWithoutRegionInput> | Prisma.RegionNarrationCreateWithoutRegionInput[] | Prisma.RegionNarrationUncheckedCreateWithoutRegionInput[]
+  connectOrCreate?: Prisma.RegionNarrationCreateOrConnectWithoutRegionInput | Prisma.RegionNarrationCreateOrConnectWithoutRegionInput[]
+  createMany?: Prisma.RegionNarrationCreateManyRegionInputEnvelope
+  connect?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+}
+
+export type RegionNarrationUncheckedCreateNestedManyWithoutRegionInput = {
+  create?: Prisma.XOR<Prisma.RegionNarrationCreateWithoutRegionInput, Prisma.RegionNarrationUncheckedCreateWithoutRegionInput> | Prisma.RegionNarrationCreateWithoutRegionInput[] | Prisma.RegionNarrationUncheckedCreateWithoutRegionInput[]
+  connectOrCreate?: Prisma.RegionNarrationCreateOrConnectWithoutRegionInput | Prisma.RegionNarrationCreateOrConnectWithoutRegionInput[]
+  createMany?: Prisma.RegionNarrationCreateManyRegionInputEnvelope
+  connect?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+}
+
+export type RegionNarrationUpdateManyWithoutRegionNestedInput = {
+  create?: Prisma.XOR<Prisma.RegionNarrationCreateWithoutRegionInput, Prisma.RegionNarrationUncheckedCreateWithoutRegionInput> | Prisma.RegionNarrationCreateWithoutRegionInput[] | Prisma.RegionNarrationUncheckedCreateWithoutRegionInput[]
+  connectOrCreate?: Prisma.RegionNarrationCreateOrConnectWithoutRegionInput | Prisma.RegionNarrationCreateOrConnectWithoutRegionInput[]
+  upsert?: Prisma.RegionNarrationUpsertWithWhereUniqueWithoutRegionInput | Prisma.RegionNarrationUpsertWithWhereUniqueWithoutRegionInput[]
+  createMany?: Prisma.RegionNarrationCreateManyRegionInputEnvelope
+  set?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+  disconnect?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+  delete?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+  connect?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+  update?: Prisma.RegionNarrationUpdateWithWhereUniqueWithoutRegionInput | Prisma.RegionNarrationUpdateWithWhereUniqueWithoutRegionInput[]
+  updateMany?: Prisma.RegionNarrationUpdateManyWithWhereWithoutRegionInput | Prisma.RegionNarrationUpdateManyWithWhereWithoutRegionInput[]
+  deleteMany?: Prisma.RegionNarrationScalarWhereInput | Prisma.RegionNarrationScalarWhereInput[]
+}
+
+export type RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput = {
+  create?: Prisma.XOR<Prisma.RegionNarrationCreateWithoutRegionInput, Prisma.RegionNarrationUncheckedCreateWithoutRegionInput> | Prisma.RegionNarrationCreateWithoutRegionInput[] | Prisma.RegionNarrationUncheckedCreateWithoutRegionInput[]
+  connectOrCreate?: Prisma.RegionNarrationCreateOrConnectWithoutRegionInput | Prisma.RegionNarrationCreateOrConnectWithoutRegionInput[]
+  upsert?: Prisma.RegionNarrationUpsertWithWhereUniqueWithoutRegionInput | Prisma.RegionNarrationUpsertWithWhereUniqueWithoutRegionInput[]
+  createMany?: Prisma.RegionNarrationCreateManyRegionInputEnvelope
+  set?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+  disconnect?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+  delete?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+  connect?: Prisma.RegionNarrationWhereUniqueInput | Prisma.RegionNarrationWhereUniqueInput[]
+  update?: Prisma.RegionNarrationUpdateWithWhereUniqueWithoutRegionInput | Prisma.RegionNarrationUpdateWithWhereUniqueWithoutRegionInput[]
+  updateMany?: Prisma.RegionNarrationUpdateManyWithWhereWithoutRegionInput | Prisma.RegionNarrationUpdateManyWithWhereWithoutRegionInput[]
+  deleteMany?: Prisma.RegionNarrationScalarWhereInput | Prisma.RegionNarrationScalarWhereInput[]
+}
+
+export type RegionNarrationCreateWithoutNarrationInput = {
+  Region: Prisma.RegionCreateNestedOneWithoutRegionNarrationsInput
+}
+
+export type RegionNarrationUncheckedCreateWithoutNarrationInput = {
+  RegionId: string
+}
+
+export type RegionNarrationCreateOrConnectWithoutNarrationInput = {
+  where: Prisma.RegionNarrationWhereUniqueInput
+  create: Prisma.XOR<Prisma.RegionNarrationCreateWithoutNarrationInput, Prisma.RegionNarrationUncheckedCreateWithoutNarrationInput>
+}
+
+export type RegionNarrationCreateManyNarrationInputEnvelope = {
+  data: Prisma.RegionNarrationCreateManyNarrationInput | Prisma.RegionNarrationCreateManyNarrationInput[]
+  skipDuplicates?: boolean
+}
+
+export type RegionNarrationUpsertWithWhereUniqueWithoutNarrationInput = {
+  where: Prisma.RegionNarrationWhereUniqueInput
+  update: Prisma.XOR<Prisma.RegionNarrationUpdateWithoutNarrationInput, Prisma.RegionNarrationUncheckedUpdateWithoutNarrationInput>
+  create: Prisma.XOR<Prisma.RegionNarrationCreateWithoutNarrationInput, Prisma.RegionNarrationUncheckedCreateWithoutNarrationInput>
+}
+
+export type RegionNarrationUpdateWithWhereUniqueWithoutNarrationInput = {
+  where: Prisma.RegionNarrationWhereUniqueInput
+  data: Prisma.XOR<Prisma.RegionNarrationUpdateWithoutNarrationInput, Prisma.RegionNarrationUncheckedUpdateWithoutNarrationInput>
+}
+
+export type RegionNarrationUpdateManyWithWhereWithoutNarrationInput = {
+  where: Prisma.RegionNarrationScalarWhereInput
+  data: Prisma.XOR<Prisma.RegionNarrationUpdateManyMutationInput, Prisma.RegionNarrationUncheckedUpdateManyWithoutNarrationInput>
+}
+
+export type RegionNarrationScalarWhereInput = {
+  AND?: Prisma.RegionNarrationScalarWhereInput | Prisma.RegionNarrationScalarWhereInput[]
+  OR?: Prisma.RegionNarrationScalarWhereInput[]
+  NOT?: Prisma.RegionNarrationScalarWhereInput | Prisma.RegionNarrationScalarWhereInput[]
+  RegionId?: Prisma.UuidFilter<"RegionNarration"> | string
+  NarrationId?: Prisma.UuidFilter<"RegionNarration"> | string
+}
+
+export type RegionNarrationCreateWithoutRegionInput = {
+  Narration: Prisma.NarrationCreateNestedOneWithoutRegionNarrationsInput
+}
+
+export type RegionNarrationUncheckedCreateWithoutRegionInput = {
+  NarrationId: string
+}
+
+export type RegionNarrationCreateOrConnectWithoutRegionInput = {
+  where: Prisma.RegionNarrationWhereUniqueInput
+  create: Prisma.XOR<Prisma.RegionNarrationCreateWithoutRegionInput, Prisma.RegionNarrationUncheckedCreateWithoutRegionInput>
+}
+
+export type RegionNarrationCreateManyRegionInputEnvelope = {
+  data: Prisma.RegionNarrationCreateManyRegionInput | Prisma.RegionNarrationCreateManyRegionInput[]
+  skipDuplicates?: boolean
+}
+
+export type RegionNarrationUpsertWithWhereUniqueWithoutRegionInput = {
+  where: Prisma.RegionNarrationWhereUniqueInput
+  update: Prisma.XOR<Prisma.RegionNarrationUpdateWithoutRegionInput, Prisma.RegionNarrationUncheckedUpdateWithoutRegionInput>
+  create: Prisma.XOR<Prisma.RegionNarrationCreateWithoutRegionInput, Prisma.RegionNarrationUncheckedCreateWithoutRegionInput>
+}
+
+export type RegionNarrationUpdateWithWhereUniqueWithoutRegionInput = {
+  where: Prisma.RegionNarrationWhereUniqueInput
+  data: Prisma.XOR<Prisma.RegionNarrationUpdateWithoutRegionInput, Prisma.RegionNarrationUncheckedUpdateWithoutRegionInput>
+}
+
+export type RegionNarrationUpdateManyWithWhereWithoutRegionInput = {
+  where: Prisma.RegionNarrationScalarWhereInput
+  data: Prisma.XOR<Prisma.RegionNarrationUpdateManyMutationInput, Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionInput>
+}
+
+export type RegionNarrationCreateManyNarrationInput = {
+  RegionId: string
+}
+
+export type RegionNarrationUpdateWithoutNarrationInput = {
+  Region?: Prisma.RegionUpdateOneRequiredWithoutRegionNarrationsNestedInput
+}
+
+export type RegionNarrationUncheckedUpdateWithoutNarrationInput = {
+  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type RegionNarrationUncheckedUpdateManyWithoutNarrationInput = {
+  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type RegionNarrationCreateManyRegionInput = {
+  NarrationId: string
+}
+
+export type RegionNarrationUpdateWithoutRegionInput = {
+  Narration?: Prisma.NarrationUpdateOneRequiredWithoutRegionNarrationsNestedInput
+}
+
+export type RegionNarrationUncheckedUpdateWithoutRegionInput = {
+  NarrationId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type RegionNarrationUncheckedUpdateManyWithoutRegionInput = {
+  NarrationId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
 
 
 export type RegionNarrationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   RegionId?: boolean
   NarrationId?: boolean
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
+  Narration?: boolean | Prisma.NarrationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["regionNarration"]>
 
 export type RegionNarrationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   RegionId?: boolean
   NarrationId?: boolean
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
+  Narration?: boolean | Prisma.NarrationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["regionNarration"]>
 
 export type RegionNarrationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   RegionId?: boolean
   NarrationId?: boolean
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
+  Narration?: boolean | Prisma.NarrationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["regionNarration"]>
 
 export type RegionNarrationSelectScalar = {
@@ -268,10 +481,25 @@ export type RegionNarrationSelectScalar = {
 }
 
 export type RegionNarrationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"RegionId" | "NarrationId", ExtArgs["result"]["regionNarration"]>
+export type RegionNarrationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
+  Narration?: boolean | Prisma.NarrationDefaultArgs<ExtArgs>
+}
+export type RegionNarrationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
+  Narration?: boolean | Prisma.NarrationDefaultArgs<ExtArgs>
+}
+export type RegionNarrationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
+  Narration?: boolean | Prisma.NarrationDefaultArgs<ExtArgs>
+}
 
 export type $RegionNarrationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "RegionNarration"
-  objects: {}
+  objects: {
+    Region: Prisma.$RegionPayload<ExtArgs>
+    Narration: Prisma.$NarrationPayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     RegionId: string
     NarrationId: string
@@ -669,6 +897,8 @@ readonly fields: RegionNarrationFieldRefs;
  */
 export interface Prisma__RegionNarrationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  Region<T extends Prisma.RegionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RegionDefaultArgs<ExtArgs>>): Prisma.Prisma__RegionClient<runtime.Types.Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Narration<T extends Prisma.NarrationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.NarrationDefaultArgs<ExtArgs>>): Prisma.Prisma__NarrationClient<runtime.Types.Result.GetResult<Prisma.$NarrationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -717,6 +947,10 @@ export type RegionNarrationFindUniqueArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.RegionNarrationOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionNarrationInclude<ExtArgs> | null
+  /**
    * Filter, which RegionNarration to fetch.
    */
   where: Prisma.RegionNarrationWhereUniqueInput
@@ -735,6 +969,10 @@ export type RegionNarrationFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.E
    */
   omit?: Prisma.RegionNarrationOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionNarrationInclude<ExtArgs> | null
+  /**
    * Filter, which RegionNarration to fetch.
    */
   where: Prisma.RegionNarrationWhereUniqueInput
@@ -752,6 +990,10 @@ export type RegionNarrationFindFirstArgs<ExtArgs extends runtime.Types.Extension
    * Omit specific fields from the RegionNarration
    */
   omit?: Prisma.RegionNarrationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionNarrationInclude<ExtArgs> | null
   /**
    * Filter, which RegionNarration to fetch.
    */
@@ -801,6 +1043,10 @@ export type RegionNarrationFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Ex
    */
   omit?: Prisma.RegionNarrationOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionNarrationInclude<ExtArgs> | null
+  /**
    * Filter, which RegionNarration to fetch.
    */
   where?: Prisma.RegionNarrationWhereInput
@@ -848,6 +1094,10 @@ export type RegionNarrationFindManyArgs<ExtArgs extends runtime.Types.Extensions
    * Omit specific fields from the RegionNarration
    */
   omit?: Prisma.RegionNarrationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionNarrationInclude<ExtArgs> | null
   /**
    * Filter, which RegionNarrations to fetch.
    */
@@ -897,6 +1147,10 @@ export type RegionNarrationCreateArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.RegionNarrationOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionNarrationInclude<ExtArgs> | null
+  /**
    * The data needed to create a RegionNarration.
    */
   data: Prisma.XOR<Prisma.RegionNarrationCreateInput, Prisma.RegionNarrationUncheckedCreateInput>
@@ -930,6 +1184,10 @@ export type RegionNarrationCreateManyAndReturnArgs<ExtArgs extends runtime.Types
    */
   data: Prisma.RegionNarrationCreateManyInput | Prisma.RegionNarrationCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionNarrationIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -944,6 +1202,10 @@ export type RegionNarrationUpdateArgs<ExtArgs extends runtime.Types.Extensions.I
    * Omit specific fields from the RegionNarration
    */
   omit?: Prisma.RegionNarrationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionNarrationInclude<ExtArgs> | null
   /**
    * The data needed to update a RegionNarration.
    */
@@ -996,6 +1258,10 @@ export type RegionNarrationUpdateManyAndReturnArgs<ExtArgs extends runtime.Types
    * Limit how many RegionNarrations to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionNarrationIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1010,6 +1276,10 @@ export type RegionNarrationUpsertArgs<ExtArgs extends runtime.Types.Extensions.I
    * Omit specific fields from the RegionNarration
    */
   omit?: Prisma.RegionNarrationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionNarrationInclude<ExtArgs> | null
   /**
    * The filter to search for the RegionNarration to update in case it exists.
    */
@@ -1036,6 +1306,10 @@ export type RegionNarrationDeleteArgs<ExtArgs extends runtime.Types.Extensions.I
    * Omit specific fields from the RegionNarration
    */
   omit?: Prisma.RegionNarrationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionNarrationInclude<ExtArgs> | null
   /**
    * Filter which RegionNarration to delete.
    */
@@ -1068,4 +1342,8 @@ export type RegionNarrationDefaultArgs<ExtArgs extends runtime.Types.Extensions.
    * Omit specific fields from the RegionNarration
    */
   omit?: Prisma.RegionNarrationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionNarrationInclude<ExtArgs> | null
 }

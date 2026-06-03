@@ -128,11 +128,12 @@ model MapTemplate {
 }
 
 model Narration {
-  NarrationId         String  @id @db.Uuid
-  NarrationTemplateId String? @db.Uuid
+  NarrationId         String            @id @db.Uuid
+  NarrationTemplateId String?           @db.Uuid
   Name                String
   Description         String
-  IsRead              Boolean @default(false)
+  IsRead              Boolean           @default(false)
+  RegionNarrations    RegionNarration[]
 
   @@schema("public")
 }
@@ -154,11 +155,12 @@ model Note {
 }
 
 model Region {
-  RegionId         String  @id @db.Uuid
-  RegionTemplateId String? @db.Uuid
-  MapId            String  @db.Uuid
+  RegionId         String            @id @db.Uuid
+  RegionTemplateId String?           @db.Uuid
+  MapId            String            @db.Uuid
   Name             String
-  Lighting         String  @default("Default")
+  Lighting         String            @default("Default")
+  RegionNarrations RegionNarration[]
 
   @@schema("public")
 }
@@ -172,10 +174,13 @@ model RegionHandout {
 }
 
 model RegionNarration {
-  RegionId    String @db.Uuid
-  NarrationId String @db.Uuid
+  RegionId    String    @db.Uuid
+  Region      Region    @relation(fields: [RegionId], references: [RegionId])
+  NarrationId String    @db.Uuid
+  Narration   Narration @relation(fields: [NarrationId], references: [NarrationId])
 
   @@id([RegionId, NarrationId])
+  @@index([NarrationId])
   @@schema("public")
 }
 
