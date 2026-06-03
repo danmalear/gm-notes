@@ -6,7 +6,7 @@ import { BadRequestError } from '#shared/error.ts';
 import { randomUUID } from 'crypto';
 import { CampaignCreatedEvent } from './campaign-events.ts';
 import type { CampaignRepository } from './campaign-repository.ts';
-import { Campaign } from './Campaign.ts';
+import { Campaign } from './campaign-temp.ts';
 
 export interface CreateCampaign {
 	name: string;
