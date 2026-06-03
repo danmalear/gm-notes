@@ -1,12 +1,10 @@
-import type {
-	AbilityCheckRec,
-	AbilityCheckRepository,
-} from '#ability-check/ability-check-repository.ts';
+import type { AbilityCheckRepository } from '#ability-check/ability-check-repository.ts';
 import type {
 	ConditionRec,
 	ConditionRepository,
 } from '#condition/condition-repository.ts';
 import type { NarrationRepository } from '#narration/narration-repository.ts';
+import type { AbilityCheckModel } from '#prisma-models/AbilityCheck.ts';
 import type { NarrationModel } from '#prisma-models/Narration.ts';
 import type { ActionType } from '#shared/data-types.ts';
 import { db } from '#shared/db.ts';
@@ -25,7 +23,7 @@ export interface ActionRec {
 export interface ActionRefRec extends ActionRec {
 	Narration: NarrationModel | null;
 	Conditions: ConditionRec[];
-	AbilityChecks: AbilityCheckRec[];
+	AbilityChecks: AbilityCheckModel[];
 }
 
 export const tableName = 'Action';

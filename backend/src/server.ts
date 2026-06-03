@@ -49,9 +49,7 @@ function initRepos(prisma: PrismaClient) {
 	const noteRepository = new NoteRepository();
 	const narrationRepository = new NarrationRepository({ prisma });
 	const handoutRepository = new HandoutRepository();
-	const abilityCheckRepository = new AbilityCheckRepository({
-		narrationRepository,
-	});
+	const abilityCheckRepository = new AbilityCheckRepository({ prisma });
 	const conditionRepository = new ConditionRepository();
 	const actionRepository = new ActionRepository({
 		abilityCheckRepository,

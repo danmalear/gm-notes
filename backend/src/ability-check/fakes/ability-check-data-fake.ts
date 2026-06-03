@@ -2,10 +2,8 @@ import type {
 	AbilityCheckResponse,
 	AbilityCheckStub,
 } from '#ability-check/ability-check-dtos.ts';
-import type {
-	AbilityCheckRec,
-	AbilityCheckRefRec,
-} from '#ability-check/ability-check-repository.ts';
+import type { AbilityCheckIncludeAll } from '#ability-check/ability-check-repository.ts';
+import type { AbilityCheckModel } from '#prisma-models/AbilityCheck.ts';
 import type { NarrationModel } from '#prisma-models/Narration.ts';
 import { randomUUID } from 'crypto';
 
@@ -48,7 +46,7 @@ const critFailure: NarrationModel = {
 	IsRead: false,
 };
 
-export const abilityCheckRec: AbilityCheckRec = {
+export const abilityCheckRec: AbilityCheckModel = {
 	AbilityCheckId: abilityCheckId,
 	ActionId: actionId,
 	Skill: skill,
@@ -59,7 +57,7 @@ export const abilityCheckRec: AbilityCheckRec = {
 	CriticalFailureNarrationId: critFailureId,
 };
 
-export const abilityCheckRecMin: AbilityCheckRec = {
+export const abilityCheckRecMin: AbilityCheckModel = {
 	AbilityCheckId: abilityCheckId,
 	ActionId: actionId,
 	Skill: skill,
@@ -70,7 +68,7 @@ export const abilityCheckRecMin: AbilityCheckRec = {
 	CriticalFailureNarrationId: null,
 };
 
-export const abilityCheckRefRec: AbilityCheckRefRec = {
+export const abilityCheckRefRec: AbilityCheckIncludeAll = {
 	AbilityCheckId: abilityCheckId,
 	ActionId: actionId,
 	Skill: skill,
@@ -85,7 +83,7 @@ export const abilityCheckRefRec: AbilityCheckRefRec = {
 	CriticalFailureNarration: critFailure,
 };
 
-export const abilityCheckRefRecMin: AbilityCheckRefRec = {
+export const abilityCheckRefRecMin: AbilityCheckIncludeAll = {
 	AbilityCheckId: abilityCheckId,
 	ActionId: actionId,
 	Skill: skill,

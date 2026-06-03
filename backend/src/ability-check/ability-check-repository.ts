@@ -1,79 +1,104 @@
-import type { NarrationRepository } from '#narration/narration-repository.ts';
+import type { PrismaClient } from '#prisma-client';
+import type {
+	AbilityCheckCreateInput,
+	AbilityCheckInclude,
+	AbilityCheckModel,
+	AbilityCheckUpdateInput,
+} from '#prisma-models/AbilityCheck.ts';
 import type { NarrationModel } from '#prisma-models/Narration.ts';
-import type { Skill } from '#shared/data-types.ts';
-import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
-import { Repository } from '#shared/repository-old.ts';
+import type { IRepository, IRepositoryConfig } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 
-export interface AbilityCheckRec {
-	AbilityCheckId: UUID;
-	ActionId: UUID;
-	Skill: Skill;
-	DC: number;
-	SuccessNarrationId: UUID | null;
-	FailureNarrationId: UUID | null;
-	CriticalSuccessNarrationId: UUID | null;
-	CriticalFailureNarrationId: UUID | null;
-}
-
-export interface AbilityCheckRefRec extends AbilityCheckRec {
+export interface AbilityCheckIncludeAll extends AbilityCheckModel {
 	SuccessNarration: NarrationModel | null;
 	FailureNarration: NarrationModel | null;
 	CriticalSuccessNarration: NarrationModel | null;
 	CriticalFailureNarration: NarrationModel | null;
 }
 
-export const tableName = 'AbilityCheck';
-export const pkColumn = 'AbilityCheckId';
+export class AbilityCheckRepository
+	implements
+		IRepository<
+			AbilityCheckModel,
+			AbilityCheckCreateInput,
+			AbilityCheckUpdateInput,
+			AbilityCheckIncludeAll
+		>
+{
+	prisma: PrismaClient;
 
-export interface AbilityCheckRepositoryConfig {
-	narrationRepository: NarrationRepository;
-}
-
-export class AbilityCheckRepository extends Repository<
-	AbilityCheckRec,
-	AbilityCheckRefRec
-> {
-	narrationRepository: NarrationRepository;
-
-	constructor({ narrationRepository }: AbilityCheckRepositoryConfig) {
-		super(tableName, pkColumn);
-		this.narrationRepository = narrationRepository;
+	constructor({ prisma }: IRepositoryConfig) {
+		this.prisma = prisma;
 	}
 
-	override async getById(id: UUID): Promise<AbilityCheckRefRec | undefined> {
-		const abilityCheck = await this.getByIdRaw(id);
-		if (!abilityCheck) return undefined;
+	async getByIdRaw(abilityCheckId: UUID): Promise<AbilityCheckModel | null> {
+		try {
+			return await this.prisma.abilityCheck.findUnique({
+				where: {
+					AbilityCheckId: abilityCheckId,
+				},
+			});
+		} catch (e) {
+			throw new Error(`Error getting Ability Check by ID: ${getMessage(e)}`);
+		}
+	}
 
-		const successNarration = abilityCheck.SuccessNarrationId
-			? ((await this.narrationRepository.getById(
-					abilityCheck.SuccessNarrationId,
-				)) ?? null)
-			: null;
-		const criticalSuccessNarration = abilityCheck.CriticalSuccessNarrationId
-			? ((await this.narrationRepository.getById(
-					abilityCheck.CriticalSuccessNarrationId,
-				)) ?? null)
-			: null;
-		const failureNarration = abilityCheck.FailureNarrationId
-			? ((await this.narrationRepository.getById(
-					abilityCheck.FailureNarrationId,
-				)) ?? null)
-			: null;
-		const criticalFailureNarration = abilityCheck.CriticalFailureNarrationId
-			? ((await this.narrationRepository.getById(
-					abilityCheck.CriticalFailureNarrationId,
-				)) ?? null)
-			: null;
+	async getById(abilityCheckId: UUID) {
+		try {
+			const includeNarrations = {
+				SuccessNarration: true,
+				FailureNarration: true,
+				CriticalSuccessNarration: true,
+				CriticalFailureNarration: true,
+			} satisfies AbilityCheckInclude;
+			return await this.prisma.abilityCheck.findUnique({
+				where: {
+					AbilityCheckId: abilityCheckId,
+				},
+				include: includeNarrations,
+			});
+		} catch (e) {
+			throw new Error(`Error getting Ability Check by ID: ${getMessage(e)}`);
+		}
+	}
 
-		return {
-			...abilityCheck,
-			SuccessNarration: successNarration,
-			CriticalSuccessNarration: criticalSuccessNarration,
-			FailureNarration: failureNarration,
-			CriticalFailureNarration: criticalFailureNarration,
-		};
+	async getAll(): Promise<AbilityCheckModel[]> {
+		try {
+			return await this.prisma.abilityCheck.findMany();
+		} catch (e) {
+			throw new Error(
+				`Error getting all Ability Check records: ${getMessage(e)}`,
+			);
+		}
+	}
+
+	async insert(data: AbilityCheckCreateInput): Promise<AbilityCheckModel> {
+		try {
+			return await this.prisma.abilityCheck.create({
+				data,
+			});
+		} catch (e) {
+			throw new Error(`Error creating new Ability Check: ${getMessage(e)}`);
+		}
+	}
+
+	async update(
+		abilityCheckId: UUID,
+		data: AbilityCheckUpdateInput,
+	): Promise<AbilityCheckModel> {
+		try {
+			return await this.prisma.abilityCheck.update({
+				where: {
+					AbilityCheckId: abilityCheckId,
+				},
+				data,
+			});
+		} catch (e) {
+			throw new Error(
+				`Error updating Ability Check with ID ${abilityCheckId}: ${getMessage(e)}`,
+			);
+		}
 	}
 
 	/**
@@ -83,10 +108,14 @@ export class AbilityCheckRepository extends Repository<
 	 */
 	async getByActionId(actionId: UUID) {
 		try {
-			return await db<AbilityCheckRec>(tableName).where('ActionId', actionId);
+			return await this.prisma.abilityCheck.findMany({
+				where: {
+					ActionId: actionId,
+				},
+			});
 		} catch (e) {
-			throw Error(
-				`Error getting ${this.tableName} records for action ID ${actionId}: ${getMessage(e)}`,
+			throw new Error(
+				`Error getting Ability Check records for action ID ${actionId}: ${getMessage(e)}`,
 			);
 		}
 	}
