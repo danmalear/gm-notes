@@ -1,47 +1,73 @@
-import { db } from '#shared/db.ts';
-import { tableColumns } from '#shared/entity-utils.ts';
+import type { PrismaClient } from '#prisma-client';
+import type {
+	NarrationCreateInput,
+	NarrationModel,
+	NarrationUpdateInput,
+} from '#prisma-models/Narration.ts';
 import { getMessage } from '#shared/error.ts';
-import { Repository } from '#shared/repository-old.ts';
+import type { IRepository, IRepositoryConfig } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 
-export interface NarrationRec {
-	NarrationId: UUID;
-	NarrationTemplateId: UUID | null;
-	Name: string;
-	Description: string;
-	IsRead: boolean;
-}
+export class NarrationRepository
+	implements
+		IRepository<NarrationModel, NarrationCreateInput, NarrationUpdateInput>
+{
+	prisma: PrismaClient;
 
-export interface RegionNarrationRec {
-	RegionId: UUID;
-	NarrationId: UUID;
-}
-
-export const tableName = 'Narration';
-export const pkColumn = 'NarrationId';
-
-export const columnNames: (keyof NarrationRec)[] = [
-	'NarrationId',
-	'NarrationTemplateId',
-	'Name',
-	'Description',
-	'IsRead',
-];
-
-export const tableColumnNames = tableColumns(tableName, columnNames);
-
-export const regionJoinTableName = 'RegionNarration';
-export const pkColumns = ['RegionId', 'NarrationId'];
-export const regionIdColName = 'RegionId';
-export const narrationIdColName = 'NarrationId';
-
-export class NarrationRepository extends Repository<NarrationRec> {
-	constructor() {
-		super(tableName, pkColumn);
+	constructor({ prisma }: IRepositoryConfig) {
+		this.prisma = prisma;
 	}
 
-	override async getById(id: UUID): Promise<NarrationRec | undefined> {
-		return await this.getByIdRaw(id);
+	async getByIdRaw(narrationId: UUID): Promise<NarrationModel | null> {
+		try {
+			return await this.prisma.narration.findUnique({
+				where: {
+					NarrationId: narrationId,
+				},
+			});
+		} catch (e) {
+			throw new Error(`Error getting Narration by ID: ${getMessage(e)}`);
+		}
+	}
+
+	async getById(narrationId: UUID): Promise<NarrationModel | null> {
+		return await this.getByIdRaw(narrationId);
+	}
+
+	async getAll(): Promise<NarrationModel[]> {
+		try {
+			return await this.prisma.narration.findMany();
+		} catch (e) {
+			throw new Error(`Error getting all Narration records: ${getMessage(e)}`);
+		}
+	}
+
+	async insert(data: NarrationCreateInput): Promise<NarrationModel> {
+		try {
+			return await this.prisma.narration.create({
+				data,
+			});
+		} catch (e) {
+			throw new Error(`Error creating new Narration: ${getMessage(e)}`);
+		}
+	}
+
+	async update(
+		narrationId: UUID,
+		data: NarrationUpdateInput,
+	): Promise<NarrationModel> {
+		try {
+			return await this.prisma.narration.update({
+				where: {
+					NarrationId: narrationId,
+				},
+				data,
+			});
+		} catch (e) {
+			throw new Error(
+				`Error updating Narration with ID ${narrationId}: ${getMessage(e)}`,
+			);
+		}
 	}
 
 	/**
@@ -51,17 +77,18 @@ export class NarrationRepository extends Repository<NarrationRec> {
 	 */
 	async getByRegionId(regionId: UUID) {
 		try {
-			return await db<NarrationRec>(this.tableName)
-				.innerJoin<RegionNarrationRec>(
-					regionJoinTableName,
-					`${regionJoinTableName}.${narrationIdColName}`,
-					`${this.tableName}.${this.pkColumn}`,
-				)
-				.where(`${regionJoinTableName}.${regionIdColName}`, regionId)
-				.select<NarrationRec[]>(...tableColumnNames);
+			return await this.prisma.narration.findMany({
+				where: {
+					RegionNarrations: {
+						some: {
+							RegionId: regionId,
+						},
+					},
+				},
+			});
 		} catch (e) {
 			throw Error(
-				`Error getting ${this.tableName} records for region ID ${regionId}: ${getMessage(e)}`,
+				`Error getting Narration records for region ID ${regionId}: ${getMessage(e)}`,
 			);
 		}
 	}

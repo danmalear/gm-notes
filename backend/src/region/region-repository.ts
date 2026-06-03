@@ -8,11 +8,9 @@ import type {
 	LocationItemRec,
 	LocationItemRepository,
 } from '#item/location-item-repository.ts';
-import type {
-	NarrationRec,
-	NarrationRepository,
-} from '#narration/narration-repository.ts';
+import type { NarrationRepository } from '#narration/narration-repository.ts';
 import type { NoteRec, NoteRepository } from '#note/note-repository.ts';
+import type { NarrationModel } from '#prisma-models/Narration.ts';
 import type { RelativeLighting } from '#shared/data-types.ts';
 import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
@@ -37,7 +35,7 @@ export interface RegionRecShapes extends RegionRec {
 
 export interface RegionRefRec extends RegionRecShapes {
 	Lighting: RelativeLighting;
-	Narrations: NarrationRec[];
+	Narrations: NarrationModel[];
 	// Creatures: CreatureRec[];
 	Actions: ActionRec[];
 	Items: (ItemRec & LocationItemRec)[];

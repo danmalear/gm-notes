@@ -6,10 +6,8 @@ import type {
 	ConditionRec,
 	ConditionRepository,
 } from '#condition/condition-repository.ts';
-import type {
-	NarrationRec,
-	NarrationRepository,
-} from '#narration/narration-repository.ts';
+import type { NarrationRepository } from '#narration/narration-repository.ts';
+import type { NarrationModel } from '#prisma-models/Narration.ts';
 import type { ActionType } from '#shared/data-types.ts';
 import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
@@ -25,7 +23,7 @@ export interface ActionRec {
 }
 
 export interface ActionRefRec extends ActionRec {
-	Narration: NarrationRec | null;
+	Narration: NarrationModel | null;
 	Conditions: ConditionRec[];
 	AbilityChecks: AbilityCheckRec[];
 }

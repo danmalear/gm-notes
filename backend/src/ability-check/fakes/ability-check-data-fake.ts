@@ -6,7 +6,7 @@ import type {
 	AbilityCheckRec,
 	AbilityCheckRefRec,
 } from '#ability-check/ability-check-repository.ts';
-import type { NarrationRec } from '#narration/narration-repository.ts';
+import type { NarrationModel } from '#prisma-models/Narration.ts';
 import { randomUUID } from 'crypto';
 
 const abilityCheckId = randomUUID();
@@ -19,28 +19,28 @@ const critSuccessId = randomUUID();
 const critFailureId = randomUUID();
 
 // @TODO Move to narration fake?
-const success: NarrationRec = {
+const success: NarrationModel = {
 	NarrationId: successId,
 	NarrationTemplateId: null,
 	Name: 'Success Narration',
 	Description: 'Success Narration Description',
 	IsRead: true,
 };
-const failure: NarrationRec = {
+const failure: NarrationModel = {
 	NarrationId: failureId,
 	NarrationTemplateId: null,
 	Name: 'Failure Narration',
 	Description: 'Failure Narration Description',
 	IsRead: false,
 };
-const critSuccess: NarrationRec = {
+const critSuccess: NarrationModel = {
 	NarrationId: critSuccessId,
 	NarrationTemplateId: null,
 	Name: 'Critical Success Narration',
 	Description: 'Critical Success Narration Description',
 	IsRead: true,
 };
-const critFailure: NarrationRec = {
+const critFailure: NarrationModel = {
 	NarrationId: critFailureId,
 	NarrationTemplateId: null,
 	Name: 'Critical Failure Narration',

@@ -1,7 +1,5 @@
-import type {
-	NarrationRec,
-	NarrationRepository,
-} from '#narration/narration-repository.ts';
+import type { NarrationRepository } from '#narration/narration-repository.ts';
+import type { NarrationModel } from '#prisma-models/Narration.ts';
 import type { Skill } from '#shared/data-types.ts';
 import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
@@ -20,10 +18,10 @@ export interface AbilityCheckRec {
 }
 
 export interface AbilityCheckRefRec extends AbilityCheckRec {
-	SuccessNarration: NarrationRec | null;
-	FailureNarration: NarrationRec | null;
-	CriticalSuccessNarration: NarrationRec | null;
-	CriticalFailureNarration: NarrationRec | null;
+	SuccessNarration: NarrationModel | null;
+	FailureNarration: NarrationModel | null;
+	CriticalSuccessNarration: NarrationModel | null;
+	CriticalFailureNarration: NarrationModel | null;
 }
 
 export const tableName = 'AbilityCheck';

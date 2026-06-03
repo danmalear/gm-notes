@@ -2,7 +2,7 @@ import type { ICommandBus } from '#command/command-bus.ts';
 import type { IEventBus } from '#event/event-bus.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage } from '#shared/error.ts';
-import { getByIdDEPRECATED } from '#shared/route-utils.ts';
+import { getById } from '#shared/route-utils.ts';
 import type { Express, Request } from 'express';
 import type { NarrationQueryParams, NarrationStub } from './narration-dtos.ts';
 import { toDto, toStub } from './narration-mappers.ts';
@@ -53,7 +53,7 @@ export function narrationRoutes(
 		},
 	);
 
-	getByIdDEPRECATED(app, {
+	getById(app, {
 		apiNamespace,
 		objectDescriptor: 'Narration',
 		repository: narrationRepository,
