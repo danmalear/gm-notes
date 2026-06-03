@@ -2,6 +2,9 @@ import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import type { UUID } from 'crypto';
 
+/**
+ * @deprecated
+ */
 export abstract class Repository<
 	TRecord,
 	TRefRecord extends TRecord = TRecord,

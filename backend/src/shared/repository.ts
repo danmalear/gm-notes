@@ -5,6 +5,9 @@ export interface IRepositoryConfig {
 	prisma: PrismaClient;
 }
 
+/**
+ * Interface for data access repository - defines all baseline operations
+ */
 export interface IRepository<
 	TModel,
 	TCreate,
