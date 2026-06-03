@@ -72,10 +72,16 @@ export function getByIdDEPRECATED<TEntityRaw, TEntity extends TEntityRaw, TDto>(
 /**
  * Options for creating a default get by ID route
  */
-export interface GetByIdOpts<TModel, TCreate, TUpdate, TDto> extends RouteOpts {
+export interface GetByIdOpts<
+	TDto,
+	TModel,
+	TCreate,
+	TUpdate,
+	TModelIncludeAll extends TModel,
+> extends RouteOpts {
 	objectDescriptor: string;
-	repository: IRepository<TModel, TCreate, TUpdate>;
-	toDto: (model: TModel) => TDto;
+	repository: IRepository<TModel, TCreate, TUpdate, TModelIncludeAll>;
+	toDto: (model: TModelIncludeAll) => TDto;
 }
 
 /**
@@ -84,14 +90,20 @@ export interface GetByIdOpts<TModel, TCreate, TUpdate, TDto> extends RouteOpts {
  * @param app Express app
  * @param opts Option params for get by ID route
  */
-export function getById<TModel, TCreate, TUpdate, TDto>(
+export function getById<
+	TDto,
+	TModel,
+	TCreate,
+	TUpdate,
+	TModelIncludeAll extends TModel,
+>(
 	app: Express,
 	{
 		apiNamespace,
 		objectDescriptor,
 		repository,
 		toDto,
-	}: GetByIdOpts<TModel, TCreate, TUpdate, TDto>,
+	}: GetByIdOpts<TDto, TModel, TCreate, TUpdate, TModelIncludeAll>,
 ) {
 	app.get(
 		`/${apiNamespace}/:id`,
