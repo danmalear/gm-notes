@@ -2,7 +2,7 @@ import type { IEventBus } from '#event/event-bus.ts';
 import type { EventRepository } from '#event/event-repository.ts';
 import type { StreamRepository } from '#framework/stream/stream-repository.ts';
 import type { Stream } from '#framework/stream/stream.ts';
-import type { IMessageSubscriber } from '#message/IMessageSubscriber.ts';
+import type { IMessageSubscriber } from '#message/message-subscriber.ts';
 import type { ICommand } from './command.ts';
 
 export interface CommandHandlerConfig {

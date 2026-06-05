@@ -1,4 +1,4 @@
-import type { IMessage } from './IMessage.ts';
+import type { IMessage } from './message.ts';
 
 /**
  * Something that expects to listen to a message bus

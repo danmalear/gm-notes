@@ -1,4 +1,4 @@
-import { MessageBus, type IMessageBus } from '#message/MessageBus.ts';
+import { MessageBus, type IMessageBus } from '#message/message-bus.ts';
 import type { CommandCreateInput } from '#prisma/generated/models.ts';
 import { NotFoundError } from '#shared/error.ts';
 import { randomUUID, type UUID } from 'crypto';

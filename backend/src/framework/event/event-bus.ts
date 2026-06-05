@@ -1,4 +1,4 @@
-import { MessageBus, type IMessageBus } from '#message/MessageBus.ts';
+import { MessageBus, type IMessageBus } from '#message/message-bus.ts';
 import type { EventCreateInput } from '#prisma-models/Event.ts';
 import { InternalError } from '#shared/error.ts';
 import type { StreamRepository } from '#stream/stream-repository.ts';

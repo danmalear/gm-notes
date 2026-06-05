@@ -1,6 +1,6 @@
 import { type UUID } from 'crypto';
-import type { IMessage } from './IMessage.ts';
-import type { IMessageSubscriber } from './IMessageSubscriber.ts';
+import type { IMessageSubscriber } from './message-subscriber.ts';
+import type { IMessage } from './message.ts';
 
 export interface IMessageBus<TMessage extends IMessage> {
 	subscribe: (context: string, handler: IMessageSubscriber<TMessage>) => void;

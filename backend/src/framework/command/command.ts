@@ -1,4 +1,4 @@
-import type { IMessage, MessageOpts } from '#message/IMessage.ts';
+import type { IMessage, MessageOpts } from '#message/message.ts';
 
 export type CommandOpts<TData extends object> = MessageOpts<TData>;
 
