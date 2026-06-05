@@ -1,32 +1,25 @@
-import type { PrismaClient } from '#prisma-client';
 import type {
 	CommandCreateInput,
 	CommandModel,
 	CommandUpdateInput,
 } from '#prisma-models/Command.ts';
 import { getMessage } from '#shared/error.ts';
-import type { IRepository, IRepositoryConfig } from '#shared/repository.ts';
+import { Repository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 
-export class CommandRepository
-	implements IRepository<CommandModel, CommandCreateInput, CommandUpdateInput>
-{
-	prisma: PrismaClient;
-
-	constructor({ prisma }: IRepositoryConfig) {
-		this.prisma = prisma;
-	}
-
+export class CommandRepository extends Repository<
+	CommandModel,
+	CommandCreateInput,
+	CommandUpdateInput
+> {
 	async getByIdRaw(commandId: UUID): Promise<CommandModel | null> {
-		try {
-			return await this.prisma.command.findUnique({
-				where: {
-					CommandId: commandId,
-				},
-			});
-		} catch (e) {
-			throw new Error(`Error getting Command by ID: ${getMessage(e)}`);
-		}
+		return await this.$getByIdRaw({
+			delegate: this.prisma.command,
+			where: {
+				CommandId: commandId,
+			},
+			descriptor: 'Command',
+		});
 	}
 
 	async getById(commandId: UUID): Promise<CommandModel | null> {

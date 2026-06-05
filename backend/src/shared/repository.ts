@@ -1,5 +1,6 @@
 import type { PrismaClient } from '#prisma-client';
 import type { UUID } from 'crypto';
+import { getMessage } from './error.ts';
 
 export interface IRepositoryConfig {
 	prisma: PrismaClient;
@@ -50,4 +51,87 @@ export interface IRepository<
 	 * @returns The updated record
 	 */
 	update(id: UUID, data: TUpdate): Promise<TModel>;
+}
+
+export interface GetByIdRawOpts<
+	TModel,
+	TWhere extends object,
+	TDelegate extends {
+		findUnique: (args: { where: TWhere }) => Promise<TModel | null>;
+	},
+> {
+	delegate: TDelegate;
+	where: TWhere;
+	descriptor: string;
+}
+
+/**
+ * Abstract for data access repository - defines all baseline operations and provides basic functionality
+ */
+export abstract class Repository<
+	TModel,
+	TCreate,
+	TUpdate,
+	TModelIncludeAll extends TModel = TModel,
+> implements IRepository<TModel, TCreate, TUpdate, TModelIncludeAll>
+{
+	prisma: PrismaClient;
+
+	constructor({ prisma }: IRepositoryConfig) {
+		this.prisma = prisma;
+	}
+
+	async $getByIdRaw<
+		TWhere extends object,
+		TDelegate extends {
+			findUnique: (args: { where: TWhere }) => Promise<TModel | null>;
+		},
+	>({
+		delegate,
+		where,
+		descriptor,
+	}: GetByIdRawOpts<TModel, TWhere, TDelegate>) {
+		try {
+			return await delegate.findUnique({
+				where,
+			});
+		} catch (e) {
+			throw new Error(`Error getting ${descriptor} by ID: ${getMessage(e)}`);
+		}
+	}
+
+	/**
+	 * Retrieves a record from the database by its UUID
+	 * @param id UUID of the record to retrieve
+	 * @returns The record with the given UUID, or null if not found
+	 */
+	abstract getByIdRaw(id: UUID): Promise<TModel | null>;
+
+	/**
+	 * Retrieves a record from the database by its UUID and hydrates any foreign key relationships
+	 * @param id UUID of the record to retrieve
+	 * @returns The record with the given UUID, or null if not found
+	 */
+	abstract getById(id: UUID): Promise<TModelIncludeAll | null>;
+
+	/**
+	 * Retrieves all records from the database
+	 * @returns An array of all records (empty array if none found)
+	 */
+	abstract getAll(): Promise<TModel[]>;
+
+	/**
+	 * Inserts a new record into the database
+	 * @param data Data to insert into database
+	 * @returns The inserted record
+	 */
+	abstract insert(data: TCreate): Promise<TModel>;
+
+	/**
+	 * Updates an existing database record with new data
+	 * @param id UUID of the existing record to update
+	 * @param data New data to update the record with
+	 * @returns The updated record
+	 */
+	abstract update(id: UUID, data: TUpdate): Promise<TModel>;
 }
