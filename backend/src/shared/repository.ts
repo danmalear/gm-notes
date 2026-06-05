@@ -53,16 +53,27 @@ export interface IRepository<
 	update(id: UUID, data: TUpdate): Promise<TModel>;
 }
 
-export interface GetByIdRawOpts<
+interface Delegate<TModel, TFindUniqueWhere, TFindManyWhere> {
+	findUnique: (args: { where: TFindUniqueWhere }) => Promise<TModel | null>;
+	findMany: (args?: { where: TFindManyWhere }) => Promise<TModel[]>;
+}
+
+export interface GetManyOpts<
 	TModel,
 	TWhere extends object,
-	TDelegate extends {
-		findUnique: (args: { where: TWhere }) => Promise<TModel | null>;
-	},
+	TDelegate extends Delegate<TModel, never, TWhere>,
+> {
+	delegate: TDelegate;
+	where?: TWhere;
+}
+
+export interface GetOneOpts<
+	TModel,
+	TWhere extends object,
+	TDelegate extends Delegate<TModel, TWhere, never>,
 > {
 	delegate: TDelegate;
 	where: TWhere;
-	descriptor: string;
 }
 
 /**
@@ -76,27 +87,41 @@ export abstract class Repository<
 > implements IRepository<TModel, TCreate, TUpdate, TModelIncludeAll>
 {
 	prisma: PrismaClient;
+	abstract descriptor: string;
 
 	constructor({ prisma }: IRepositoryConfig) {
 		this.prisma = prisma;
 	}
 
-	async $getByIdRaw<
+	async $getOne<
 		TWhere extends object,
-		TDelegate extends {
-			findUnique: (args: { where: TWhere }) => Promise<TModel | null>;
-		},
-	>({
-		delegate,
-		where,
-		descriptor,
-	}: GetByIdRawOpts<TModel, TWhere, TDelegate>) {
+		TDelegate extends Delegate<TModel, TWhere, never>,
+	>({ delegate, where }: GetOneOpts<TModel, TWhere, TDelegate>) {
 		try {
 			return await delegate.findUnique({
 				where,
 			});
 		} catch (e) {
-			throw new Error(`Error getting ${descriptor} by ID: ${getMessage(e)}`);
+			throw new Error(
+				`Error getting ${this.descriptor} by ID: ${getMessage(e)}`,
+			);
+		}
+	}
+
+	async $getMany<
+		TWhere extends object,
+		TDelegate extends Delegate<TModel, never, TWhere>,
+	>({ delegate, where }: GetManyOpts<TModel, TWhere, TDelegate>) {
+		try {
+			return where
+				? await delegate.findMany({
+						where,
+					})
+				: await delegate.findMany();
+		} catch (e) {
+			throw new Error(
+				`Error getting ${this.descriptor} records: ${getMessage(e)}`,
+			);
 		}
 	}
 

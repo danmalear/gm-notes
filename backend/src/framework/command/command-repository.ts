@@ -12,13 +12,14 @@ export class CommandRepository extends Repository<
 	CommandCreateInput,
 	CommandUpdateInput
 > {
+	override descriptor = 'Command';
+
 	async getByIdRaw(commandId: UUID): Promise<CommandModel | null> {
-		return await this.$getByIdRaw({
+		return await this.$getOne({
 			delegate: this.prisma.command,
 			where: {
 				CommandId: commandId,
 			},
-			descriptor: 'Command',
 		});
 	}
 
@@ -27,11 +28,9 @@ export class CommandRepository extends Repository<
 	}
 
 	async getAll(): Promise<CommandModel[]> {
-		try {
-			return await this.prisma.command.findMany();
-		} catch (e) {
-			throw new Error(`Error getting all Command records: ${getMessage(e)}`);
-		}
+		return await this.$getMany({
+			delegate: this.prisma.command,
+		});
 	}
 
 	async insert(data: CommandCreateInput): Promise<CommandModel> {
