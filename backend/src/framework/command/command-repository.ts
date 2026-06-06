@@ -41,10 +41,6 @@ export class CommandRepository
 		return await this.getByIdRaw(commandId);
 	}
 
-	async insert(data: CommandCreateInput): Promise<CommandModel> {
-		return await this.$insert({ data });
-	}
-
 	async update(
 		commandId: UUID,
 		data: CommandUpdateInput,

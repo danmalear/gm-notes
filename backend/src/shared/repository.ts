@@ -187,7 +187,9 @@ export abstract class Repository<
 	 * @param data Data to insert into database
 	 * @returns The inserted record
 	 */
-	abstract insert(data: TCreate): Promise<TModel>;
+	async insert(data: TCreate): Promise<TModel> {
+		return await this.$insert({ data });
+	}
 
 	/**
 	 * Updates an existing database record with new data
