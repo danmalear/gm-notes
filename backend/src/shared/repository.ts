@@ -53,7 +53,7 @@ export interface IRepository<
 	update(id: UUID, data: TUpdate): Promise<TModel>;
 }
 
-interface Delegate<
+export interface Delegate<
 	TModel,
 	TFindUniqueWhere,
 	TFindManyWhere,
@@ -69,40 +69,19 @@ interface Delegate<
 	}) => Promise<TModel>;
 }
 
-export interface GetManyOpts<
-	TModel,
-	TWhere extends object,
-	TDelegate extends Delegate<TModel, never, TWhere, never, never>,
-> {
-	delegate: TDelegate;
+export interface GetManyOpts<TWhere extends object> {
 	where?: TWhere;
 }
 
-export interface GetOneOpts<
-	TModel,
-	TWhere extends object,
-	TDelegate extends Delegate<TModel, TWhere, never, never, never>,
-> {
-	delegate: TDelegate;
+export interface GetOneOpts<TWhere extends object> {
 	where: TWhere;
 }
 
-export interface InsertOpts<
-	TModel,
-	TInput extends object,
-	TDelegate extends Delegate<TModel, never, never, TInput, never>,
-> {
-	delegate: TDelegate;
+export interface InsertOpts<TInput extends object> {
 	data: TInput;
 }
 
-export interface UpdateOpts<
-	TModel,
-	TWhere extends object,
-	TInput extends object,
-	TDelegate extends Delegate<TModel, TWhere, never, never, TInput>,
-> {
-	delegate: TDelegate;
+export interface UpdateOpts<TWhere extends object, TInput extends object> {
 	where: TWhere;
 	data: TInput;
 }
@@ -114,22 +93,29 @@ export abstract class Repository<
 	TModel,
 	TCreate extends object,
 	TUpdate extends object,
+	TFindUniqueWhere extends object,
+	TFindManyWhere extends object,
+	TDelegate extends Delegate<
+		TModel,
+		TFindUniqueWhere,
+		TFindManyWhere,
+		TCreate,
+		TUpdate
+	>,
 	TModelIncludeAll extends TModel = TModel,
 > implements IRepository<TModel, TCreate, TUpdate, TModelIncludeAll>
 {
 	prisma: PrismaClient;
 	abstract descriptor: string;
+	abstract delegate: TDelegate;
 
 	constructor({ prisma }: IRepositoryConfig) {
 		this.prisma = prisma;
 	}
 
-	async $getOne<
-		TWhere extends object,
-		TDelegate extends Delegate<TModel, TWhere, never, never, never>,
-	>({ delegate, where }: GetOneOpts<TModel, TWhere, TDelegate>) {
+	async $getOne({ where }: GetOneOpts<TFindUniqueWhere>) {
 		try {
-			return await delegate.findUnique({
+			return await this.delegate.findUnique({
 				where,
 			});
 		} catch (e) {
@@ -139,16 +125,13 @@ export abstract class Repository<
 		}
 	}
 
-	async $getMany<
-		TWhere extends object,
-		TDelegate extends Delegate<TModel, never, TWhere, never, never>,
-	>({ delegate, where }: GetManyOpts<TModel, TWhere, TDelegate>) {
+	async $getMany(args?: GetManyOpts<TFindManyWhere>) {
 		try {
-			return where
-				? await delegate.findMany({
-						where,
+			return args?.where
+				? await this.delegate.findMany({
+						where: args.where,
 					})
-				: await delegate.findMany();
+				: await this.delegate.findMany();
 		} catch (e) {
 			throw new Error(
 				`Error getting ${this.descriptor} records: ${getMessage(e)}`,
@@ -156,11 +139,9 @@ export abstract class Repository<
 		}
 	}
 
-	async $insert<
-		TDelegate extends Delegate<TModel, never, never, TCreate, never>,
-	>({ delegate, data }: InsertOpts<TModel, TCreate, TDelegate>) {
+	async $insert({ data }: InsertOpts<TCreate>) {
 		try {
-			return await delegate.create({
+			return await this.delegate.create({
 				data,
 			});
 		} catch (e) {
@@ -170,12 +151,9 @@ export abstract class Repository<
 		}
 	}
 
-	async $update<
-		TWhere extends object,
-		TDelegate extends Delegate<TModel, TWhere, never, never, TUpdate>,
-	>({ delegate, where, data }: UpdateOpts<TModel, TWhere, TUpdate, TDelegate>) {
+	async $update({ where, data }: UpdateOpts<TFindUniqueWhere, TUpdate>) {
 		try {
-			return await delegate.update({
+			return await this.delegate.update({
 				where,
 				data,
 			});

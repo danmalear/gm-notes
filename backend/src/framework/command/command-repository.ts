@@ -1,7 +1,10 @@
 import type {
 	CommandCreateInput,
+	CommandDelegate,
 	CommandModel,
 	CommandUpdateInput,
+	CommandWhereInput,
+	CommandWhereUniqueInput,
 } from '#prisma-models/Command.ts';
 import { Repository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
@@ -9,13 +12,16 @@ import type { UUID } from 'crypto';
 export class CommandRepository extends Repository<
 	CommandModel,
 	CommandCreateInput,
-	CommandUpdateInput
+	CommandUpdateInput,
+	CommandWhereUniqueInput,
+	CommandWhereInput,
+	CommandDelegate
 > {
 	override descriptor = 'Command';
+	override delegate = this.prisma.command;
 
 	async getByIdRaw(commandId: UUID): Promise<CommandModel | null> {
 		return await this.$getOne({
-			delegate: this.prisma.command,
 			where: {
 				CommandId: commandId,
 			},
@@ -27,16 +33,11 @@ export class CommandRepository extends Repository<
 	}
 
 	async getAll(): Promise<CommandModel[]> {
-		return await this.$getMany({
-			delegate: this.prisma.command,
-		});
+		return await this.$getMany();
 	}
 
 	async insert(data: CommandCreateInput): Promise<CommandModel> {
-		return await this.$insert({
-			delegate: this.prisma.command,
-			data,
-		});
+		return await this.$insert({ data });
 	}
 
 	async update(
@@ -44,7 +45,6 @@ export class CommandRepository extends Repository<
 		data: CommandUpdateInput,
 	): Promise<CommandModel> {
 		return await this.$update({
-			delegate: this.prisma.command,
 			where: {
 				CommandId: commandId,
 			},
