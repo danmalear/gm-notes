@@ -1,73 +1,59 @@
-import type { PrismaClient } from '#prisma-client';
 import type {
 	NarrationCreateInput,
+	NarrationDelegate,
 	NarrationModel,
 	NarrationUpdateInput,
+	NarrationWhereInput,
+	NarrationWhereUniqueInput,
 } from '#prisma-models/Narration.ts';
-import { getMessage } from '#shared/error.ts';
-import type { IRepository, IRepositoryConfig } from '#shared/repository.ts';
+import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 
-export class NarrationRepository
-	implements
-		IRepository<NarrationModel, NarrationCreateInput, NarrationUpdateInput>
-{
-	prisma: PrismaClient;
+export interface INarrationRepository
+	extends IRepository<
+		NarrationModel,
+		NarrationCreateInput,
+		NarrationUpdateInput
+	> {
+	getByRegionId(regionId: UUID): Promise<NarrationModel[]>;
+}
 
-	constructor({ prisma }: IRepositoryConfig) {
-		this.prisma = prisma;
-	}
+export class NarrationRepository
+	extends Repository<
+		NarrationModel,
+		NarrationCreateInput,
+		NarrationUpdateInput,
+		NarrationWhereUniqueInput,
+		NarrationWhereInput,
+		NarrationDelegate
+	>
+	implements INarrationRepository
+{
+	override descriptor = 'Narration';
+	override delegate = this.prisma.narration;
 
 	async getByIdRaw(narrationId: UUID): Promise<NarrationModel | null> {
-		try {
-			return await this.prisma.narration.findUnique({
-				where: {
-					NarrationId: narrationId,
-				},
-			});
-		} catch (e) {
-			throw new Error(`Error getting Narration by ID: ${getMessage(e)}`);
-		}
+		return await this.$getOne({
+			where: {
+				NarrationId: narrationId,
+			},
+		});
 	}
 
 	async getById(narrationId: UUID): Promise<NarrationModel | null> {
 		return await this.getByIdRaw(narrationId);
 	}
 
-	async getAll(): Promise<NarrationModel[]> {
-		try {
-			return await this.prisma.narration.findMany();
-		} catch (e) {
-			throw new Error(`Error getting all Narration records: ${getMessage(e)}`);
-		}
-	}
-
-	async insert(data: NarrationCreateInput): Promise<NarrationModel> {
-		try {
-			return await this.prisma.narration.create({
-				data,
-			});
-		} catch (e) {
-			throw new Error(`Error creating new Narration: ${getMessage(e)}`);
-		}
-	}
-
 	async update(
 		narrationId: UUID,
 		data: NarrationUpdateInput,
 	): Promise<NarrationModel> {
-		try {
-			return await this.prisma.narration.update({
-				where: {
-					NarrationId: narrationId,
-				},
-				data,
-			});
-		} catch (e) {
-			throw new Error(
-				`Error updating Narration with ID ${narrationId}: ${getMessage(e)}`,
-			);
-		}
+		return this.$update({
+			where: {
+				NarrationId: narrationId,
+			},
+			data,
+		});
 	}
 
 	/**
@@ -76,20 +62,14 @@ export class NarrationRepository
 	 * @returns The list of narrations (empty array if none found)
 	 */
 	async getByRegionId(regionId: UUID) {
-		try {
-			return await this.prisma.narration.findMany({
-				where: {
-					RegionNarrations: {
-						some: {
-							RegionId: regionId,
-						},
+		return this.$getMany({
+			where: {
+				RegionNarrations: {
+					some: {
+						RegionId: regionId,
 					},
 				},
-			});
-		} catch (e) {
-			throw Error(
-				`Error getting Narration records for region ID ${regionId}: ${getMessage(e)}`,
-			);
-		}
+			},
+		});
 	}
 }

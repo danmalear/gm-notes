@@ -8,7 +8,7 @@ import type {
 	LocationItemRec,
 	LocationItemRepository,
 } from '#item/location-item-repository.ts';
-import type { NarrationRepository } from '#narration/narration-repository.ts';
+import type { INarrationRepository } from '#narration/narration-repository.ts';
 import type { NoteRec, NoteRepository } from '#note/note-repository.ts';
 import type { NarrationModel } from '#prisma-models/Narration.ts';
 import type { RelativeLighting } from '#shared/data-types.ts';
@@ -51,7 +51,7 @@ export interface RegionRepositoryConfig {
 	// creatureRepository: CreatureRepository;
 	handoutRepository: HandoutRepository;
 	locationItemRepository: LocationItemRepository;
-	narrationRepository: NarrationRepository;
+	narrationRepository: INarrationRepository;
 	noteRepository: NoteRepository;
 	regionShapeRepository: RegionShapeRepository;
 }
@@ -61,7 +61,7 @@ export class RegionRepository extends Repository<RegionRec, RegionRefRec> {
 	// creatureRepository: CreatureRepository;
 	handoutRepository: HandoutRepository;
 	locationItemRepository: LocationItemRepository;
-	narrationRepository: NarrationRepository;
+	narrationRepository: INarrationRepository;
 	noteRepository: NoteRepository;
 	regionShapeRepository: RegionShapeRepository;
 

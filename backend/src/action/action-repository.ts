@@ -3,7 +3,7 @@ import type {
 	ConditionRec,
 	ConditionRepository,
 } from '#condition/condition-repository.ts';
-import type { NarrationRepository } from '#narration/narration-repository.ts';
+import type { INarrationRepository } from '#narration/narration-repository.ts';
 import type { AbilityCheckModel } from '#prisma-models/AbilityCheck.ts';
 import type { NarrationModel } from '#prisma-models/Narration.ts';
 import type { ActionType } from '#shared/data-types.ts';
@@ -32,13 +32,13 @@ export const pkColumn = 'ActionId';
 export interface ActionRepositoryConfig {
 	abilityCheckRepository: AbilityCheckRepository;
 	conditionRepository: ConditionRepository;
-	narrationRepository: NarrationRepository;
+	narrationRepository: INarrationRepository;
 }
 
 export class ActionRepository extends Repository<ActionRec, ActionRefRec> {
 	abilityCheckRepository: AbilityCheckRepository;
 	conditionRepository: ConditionRepository;
-	narrationRepository: NarrationRepository;
+	narrationRepository: INarrationRepository;
 
 	constructor({
 		abilityCheckRepository,

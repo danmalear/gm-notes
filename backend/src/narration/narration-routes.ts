@@ -6,13 +6,13 @@ import { getById } from '#shared/route-utils.ts';
 import type { Express, Request } from 'express';
 import type { NarrationQueryParams, NarrationStub } from './narration-dtos.ts';
 import { toDto, toStub } from './narration-mappers.ts';
-import type { NarrationRepository } from './narration-repository.ts';
+import type { INarrationRepository } from './narration-repository.ts';
 
 export function narrationRoutes(
 	app: Express,
 	_commandBus: ICommandBus,
 	_eventBus: IEventBus,
-	narrationRepository: NarrationRepository,
+	narrationRepository: INarrationRepository,
 ) {
 	const apiNamespace = 'narrations';
 
