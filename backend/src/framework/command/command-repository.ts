@@ -6,17 +6,26 @@ import type {
 	CommandWhereInput,
 	CommandWhereUniqueInput,
 } from '#prisma-models/Command.ts';
-import { Repository } from '#shared/repository.ts';
+import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 
-export class CommandRepository extends Repository<
+export type ICommandRepository = IRepository<
 	CommandModel,
 	CommandCreateInput,
-	CommandUpdateInput,
-	CommandWhereUniqueInput,
-	CommandWhereInput,
-	CommandDelegate
-> {
+	CommandUpdateInput
+>;
+
+export class CommandRepository
+	extends Repository<
+		CommandModel,
+		CommandCreateInput,
+		CommandUpdateInput,
+		CommandWhereUniqueInput,
+		CommandWhereInput,
+		CommandDelegate
+	>
+	implements ICommandRepository
+{
 	override descriptor = 'Command';
 	override delegate = this.prisma.command;
 
