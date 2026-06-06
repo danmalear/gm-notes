@@ -144,7 +144,9 @@ export abstract class Repository<
 				data,
 			});
 		} catch (e) {
-			throw new Error(`Error creating new Command: ${getMessage(e)}`);
+			throw new Error(
+				`Error creating new ${this.descriptor}: ${getMessage(e)}`,
+			);
 		}
 	}
 
