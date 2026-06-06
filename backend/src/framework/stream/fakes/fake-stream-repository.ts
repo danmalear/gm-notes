@@ -6,12 +6,12 @@ import type {
 import type { ICloneable } from '#shared/cloneable.ts';
 import type { Faker } from '#shared/faker.ts';
 import { FakeRepository } from '#shared/fakes/fake-repository.ts';
-import type { StreamRepository } from '../stream-repository.ts';
+import type { IStreamRepository } from '../stream-repository.ts';
 import { fakeStreamModel } from './stream-data-fake.ts';
 
 export class FakeStreamRepository
 	extends FakeRepository<StreamModel, StreamCreateInput, StreamUpdateInput>
-	implements Faker<StreamRepository>, ICloneable<FakeStreamRepository>
+	implements Faker<IStreamRepository>, ICloneable<FakeStreamRepository>
 {
 	constructor() {
 		super({

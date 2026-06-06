@@ -1,7 +1,7 @@
 import type { ICommandBus } from '#command/command-bus.ts';
 import type { IEventBus } from '#event/event-bus.ts';
 import type { EventRepository } from '#event/event-repository.ts';
-import type { StreamRepository } from '#framework/stream/stream-repository.ts';
+import type { IStreamRepository } from '#framework/stream/stream-repository.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getByIdDEPRECATED } from '#shared/route-utils.ts';
 import type { Express, Response } from 'express';
@@ -15,7 +15,7 @@ export function campaignRoutes(
 	commandBus: ICommandBus,
 	eventBus: IEventBus,
 	eventRepository: EventRepository,
-	streamRepository: StreamRepository,
+	streamRepository: IStreamRepository,
 	campaignRepository: CampaignRepository,
 ) {
 	const apiNamespace = 'campaigns';

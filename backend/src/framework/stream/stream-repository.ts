@@ -1,68 +1,52 @@
-import type { PrismaClient } from '#prisma-client';
 import type {
 	StreamCreateInput,
+	StreamDelegate,
 	StreamModel,
 	StreamUpdateInput,
+	StreamWhereInput,
+	StreamWhereUniqueInput,
 } from '#prisma-models/Stream.ts';
-import { getMessage } from '#shared/error.ts';
-import type { IRepository, IRepositoryConfig } from '#shared/repository.ts';
+import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 
-export class StreamRepository
-	implements IRepository<StreamModel, StreamCreateInput, StreamUpdateInput>
-{
-	prisma: PrismaClient;
+export type IStreamRepository = IRepository<
+	StreamModel,
+	StreamCreateInput,
+	StreamUpdateInput
+>;
 
-	constructor({ prisma }: IRepositoryConfig) {
-		this.prisma = prisma;
-	}
+export class StreamRepository
+	extends Repository<
+		StreamModel,
+		StreamCreateInput,
+		StreamUpdateInput,
+		StreamWhereUniqueInput,
+		StreamWhereInput,
+		StreamDelegate
+	>
+	implements IStreamRepository
+{
+	override descriptor = 'Stream';
+	override delegate = this.prisma.stream;
 
 	async getByIdRaw(streamId: UUID): Promise<StreamModel | null> {
-		try {
-			return await this.prisma.stream.findUnique({
-				where: {
-					StreamId: streamId,
-				},
-			});
-		} catch (e) {
-			throw new Error(`Error getting Stream by ID: ${getMessage(e)}`);
-		}
+		return await this.$getOne({
+			where: {
+				StreamId: streamId,
+			},
+		});
 	}
 
 	async getById(commandId: UUID): Promise<StreamModel | null> {
 		return await this.getByIdRaw(commandId);
 	}
 
-	async getAll(): Promise<StreamModel[]> {
-		try {
-			return await this.prisma.stream.findMany();
-		} catch (e) {
-			throw new Error(`Error getting all Stream records: ${getMessage(e)}`);
-		}
-	}
-
-	async insert(data: StreamCreateInput): Promise<StreamModel> {
-		try {
-			return await this.prisma.stream.create({
-				data,
-			});
-		} catch (e) {
-			throw new Error(`Error creating new Stream: ${getMessage(e)}`);
-		}
-	}
-
 	async update(streamId: UUID, data: StreamUpdateInput): Promise<StreamModel> {
-		try {
-			return await this.prisma.stream.update({
-				where: {
-					StreamId: streamId,
-				},
-				data,
-			});
-		} catch (e) {
-			throw new Error(
-				`Error updating Stream with ID ${streamId}: ${getMessage(e)}`,
-			);
-		}
+		return await this.$update({
+			where: {
+				StreamId: streamId,
+			},
+			data,
+		});
 	}
 }

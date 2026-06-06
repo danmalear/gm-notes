@@ -1,7 +1,7 @@
 import { MessageBus, type IMessageBus } from '#message/message-bus.ts';
 import type { EventCreateInput } from '#prisma-models/Event.ts';
 import { InternalError } from '#shared/error.ts';
-import type { StreamRepository } from '#stream/stream-repository.ts';
+import type { IStreamRepository } from '#stream/stream-repository.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { WebSocketServer } from 'ws';
 import type { EventRepository } from './event-repository.ts';
@@ -11,13 +11,13 @@ export type IEventBus = IMessageBus<IEvent>;
 
 export interface EventBusConfig {
 	eventRepository: EventRepository;
-	streamRepository: StreamRepository;
+	streamRepository: IStreamRepository;
 	wss: WebSocketServer;
 }
 
 export class EventBus extends MessageBus<IEvent> implements IEventBus {
 	eventRepository: EventRepository;
-	streamRepository: StreamRepository;
+	streamRepository: IStreamRepository;
 	wss: WebSocketServer;
 
 	constructor({ eventRepository, streamRepository, wss }: EventBusConfig) {

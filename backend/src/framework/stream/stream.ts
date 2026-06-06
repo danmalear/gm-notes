@@ -7,10 +7,10 @@ import {
 } from '#shared/error.ts';
 import type { UUID } from 'crypto';
 import _ from 'lodash';
-import type { StreamRepository } from './stream-repository.ts';
+import type { IStreamRepository } from './stream-repository.ts';
 
 export interface StreamConfig {
-	streamRepository: StreamRepository;
+	streamRepository: IStreamRepository;
 	eventRepository: EventRepository;
 }
 
@@ -20,7 +20,7 @@ export interface AggregateOpts {
 }
 
 export abstract class Stream<TRec> {
-	streamRepository: StreamRepository;
+	streamRepository: IStreamRepository;
 	eventRepository: EventRepository;
 	id: UUID;
 	#aggregateOptsCache: AggregateOpts | undefined;
