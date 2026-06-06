@@ -34,13 +34,10 @@ export class CommandRepository extends Repository<
 	}
 
 	async insert(data: CommandCreateInput): Promise<CommandModel> {
-		try {
-			return await this.prisma.command.create({
-				data,
-			});
-		} catch (e) {
-			throw new Error(`Error creating new Command: ${getMessage(e)}`);
-		}
+		return await this.$insert({
+			delegate: this.prisma.command,
+			data,
+		});
 	}
 
 	async update(

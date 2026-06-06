@@ -53,15 +53,16 @@ export interface IRepository<
 	update(id: UUID, data: TUpdate): Promise<TModel>;
 }
 
-interface Delegate<TModel, TFindUniqueWhere, TFindManyWhere> {
+interface Delegate<TModel, TFindUniqueWhere, TFindManyWhere, TCreateInput> {
 	findUnique: (args: { where: TFindUniqueWhere }) => Promise<TModel | null>;
 	findMany: (args?: { where: TFindManyWhere }) => Promise<TModel[]>;
+	create: (args: { data: TCreateInput }) => Promise<TModel>;
 }
 
 export interface GetManyOpts<
 	TModel,
 	TWhere extends object,
-	TDelegate extends Delegate<TModel, never, TWhere>,
+	TDelegate extends Delegate<TModel, never, TWhere, never>,
 > {
 	delegate: TDelegate;
 	where?: TWhere;
@@ -70,10 +71,19 @@ export interface GetManyOpts<
 export interface GetOneOpts<
 	TModel,
 	TWhere extends object,
-	TDelegate extends Delegate<TModel, TWhere, never>,
+	TDelegate extends Delegate<TModel, TWhere, never, never>,
 > {
 	delegate: TDelegate;
 	where: TWhere;
+}
+
+export interface InsertOpts<
+	TModel,
+	TInput extends object,
+	TDelegate extends Delegate<TModel, never, never, TInput>,
+> {
+	delegate: TDelegate;
+	data: TInput;
 }
 
 /**
@@ -81,8 +91,8 @@ export interface GetOneOpts<
  */
 export abstract class Repository<
 	TModel,
-	TCreate,
-	TUpdate,
+	TCreate extends object,
+	TUpdate extends object,
 	TModelIncludeAll extends TModel = TModel,
 > implements IRepository<TModel, TCreate, TUpdate, TModelIncludeAll>
 {
@@ -95,7 +105,7 @@ export abstract class Repository<
 
 	async $getOne<
 		TWhere extends object,
-		TDelegate extends Delegate<TModel, TWhere, never>,
+		TDelegate extends Delegate<TModel, TWhere, never, never>,
 	>({ delegate, where }: GetOneOpts<TModel, TWhere, TDelegate>) {
 		try {
 			return await delegate.findUnique({
@@ -110,7 +120,7 @@ export abstract class Repository<
 
 	async $getMany<
 		TWhere extends object,
-		TDelegate extends Delegate<TModel, never, TWhere>,
+		TDelegate extends Delegate<TModel, never, TWhere, never>,
 	>({ delegate, where }: GetManyOpts<TModel, TWhere, TDelegate>) {
 		try {
 			return where
@@ -122,6 +132,19 @@ export abstract class Repository<
 			throw new Error(
 				`Error getting ${this.descriptor} records: ${getMessage(e)}`,
 			);
+		}
+	}
+
+	async $insert<TDelegate extends Delegate<TModel, never, never, TCreate>>({
+		delegate,
+		data,
+	}: InsertOpts<TModel, TCreate, TDelegate>) {
+		try {
+			return await delegate.create({
+				data,
+			});
+		} catch (e) {
+			throw new Error(`Error creating new Command: ${getMessage(e)}`);
 		}
 	}
 
