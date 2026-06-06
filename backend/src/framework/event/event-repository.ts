@@ -6,8 +6,7 @@ import type {
 import type { PrismaClient } from '#prisma/generated/client.ts';
 import { getMessage } from '#shared/error.ts';
 import type { IRepository, IRepositoryConfig } from '#shared/repository.ts';
-
-import type { UUID } from 'crypto';
+import type { UUID } from 'node:crypto';
 
 export class EventRepository
 	implements IRepository<EventModel, EventCreateInput, EventUpdateInput>
