@@ -178,7 +178,9 @@ export abstract class Repository<
 	 * Retrieves all records from the database
 	 * @returns An array of all records (empty array if none found)
 	 */
-	abstract getAll(): Promise<TModel[]>;
+	async getAll(): Promise<TModel[]> {
+		return await this.$getMany();
+	}
 
 	/**
 	 * Inserts a new record into the database

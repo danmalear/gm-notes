@@ -41,10 +41,6 @@ export class CommandRepository
 		return await this.getByIdRaw(commandId);
 	}
 
-	async getAll(): Promise<CommandModel[]> {
-		return await this.$getMany();
-	}
-
 	async insert(data: CommandCreateInput): Promise<CommandModel> {
 		return await this.$insert({ data });
 	}
