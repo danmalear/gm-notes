@@ -15,8 +15,6 @@ export interface IRepository<
 	TUpdate,
 	TModelIncludeAll extends TModel = TModel,
 > {
-	prisma: PrismaClient;
-
 	/**
 	 * Retrieves a record from the database by its UUID
 	 * @param id UUID of the record to retrieve

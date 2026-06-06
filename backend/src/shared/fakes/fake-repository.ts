@@ -1,4 +1,3 @@
-import type { PrismaClient } from '#prisma-client';
 import type { ICloneable } from '#shared/cloneable.ts';
 import type { Faker, FakerCalls } from '#shared/faker.ts';
 import type { IRepository } from '../repository.ts';
@@ -20,16 +19,12 @@ export abstract class FakeRepository<TModel extends object, TCreate, TUpdate>
 		Faker<IRepository<TModel, TCreate, TUpdate>>,
 		ICloneable<FakeRepository<TModel, TCreate, TUpdate>>
 {
-	prisma: PrismaClient;
 	model: TModel;
 	calls: FakerCalls<IRepository<object, object, object>>;
 
 	constructor(config: FakeRepositoryConfig<TModel>) {
 		this.model = config.model;
 		this.calls = { ...zeroCalls };
-		// making a fake prisma client is more trouble than it's worth
-		// this should never be accessed anyway
-		this.prisma = null as unknown as PrismaClient;
 	}
 
 	resetCalls() {
