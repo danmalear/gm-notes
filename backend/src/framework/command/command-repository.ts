@@ -3,7 +3,6 @@ import type {
 	CommandModel,
 	CommandUpdateInput,
 } from '#prisma-models/Command.ts';
-import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 
@@ -44,17 +43,12 @@ export class CommandRepository extends Repository<
 		commandId: UUID,
 		data: CommandUpdateInput,
 	): Promise<CommandModel> {
-		try {
-			return await this.prisma.command.update({
-				where: {
-					CommandId: commandId,
-				},
-				data,
-			});
-		} catch (e) {
-			throw new Error(
-				`Error updating Command with ID ${commandId}: ${getMessage(e)}`,
-			);
-		}
+		return await this.$update({
+			delegate: this.prisma.command,
+			where: {
+				CommandId: commandId,
+			},
+			data,
+		});
 	}
 }

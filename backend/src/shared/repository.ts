@@ -53,16 +53,26 @@ export interface IRepository<
 	update(id: UUID, data: TUpdate): Promise<TModel>;
 }
 
-interface Delegate<TModel, TFindUniqueWhere, TFindManyWhere, TCreateInput> {
+interface Delegate<
+	TModel,
+	TFindUniqueWhere,
+	TFindManyWhere,
+	TCreateInput,
+	TUpdateInput,
+> {
 	findUnique: (args: { where: TFindUniqueWhere }) => Promise<TModel | null>;
 	findMany: (args?: { where: TFindManyWhere }) => Promise<TModel[]>;
 	create: (args: { data: TCreateInput }) => Promise<TModel>;
+	update: (args: {
+		where: TFindUniqueWhere;
+		data: TUpdateInput;
+	}) => Promise<TModel>;
 }
 
 export interface GetManyOpts<
 	TModel,
 	TWhere extends object,
-	TDelegate extends Delegate<TModel, never, TWhere, never>,
+	TDelegate extends Delegate<TModel, never, TWhere, never, never>,
 > {
 	delegate: TDelegate;
 	where?: TWhere;
@@ -71,7 +81,7 @@ export interface GetManyOpts<
 export interface GetOneOpts<
 	TModel,
 	TWhere extends object,
-	TDelegate extends Delegate<TModel, TWhere, never, never>,
+	TDelegate extends Delegate<TModel, TWhere, never, never, never>,
 > {
 	delegate: TDelegate;
 	where: TWhere;
@@ -80,9 +90,20 @@ export interface GetOneOpts<
 export interface InsertOpts<
 	TModel,
 	TInput extends object,
-	TDelegate extends Delegate<TModel, never, never, TInput>,
+	TDelegate extends Delegate<TModel, never, never, TInput, never>,
 > {
 	delegate: TDelegate;
+	data: TInput;
+}
+
+export interface UpdateOpts<
+	TModel,
+	TWhere extends object,
+	TInput extends object,
+	TDelegate extends Delegate<TModel, TWhere, never, never, TInput>,
+> {
+	delegate: TDelegate;
+	where: TWhere;
 	data: TInput;
 }
 
@@ -105,7 +126,7 @@ export abstract class Repository<
 
 	async $getOne<
 		TWhere extends object,
-		TDelegate extends Delegate<TModel, TWhere, never, never>,
+		TDelegate extends Delegate<TModel, TWhere, never, never, never>,
 	>({ delegate, where }: GetOneOpts<TModel, TWhere, TDelegate>) {
 		try {
 			return await delegate.findUnique({
@@ -120,7 +141,7 @@ export abstract class Repository<
 
 	async $getMany<
 		TWhere extends object,
-		TDelegate extends Delegate<TModel, never, TWhere, never>,
+		TDelegate extends Delegate<TModel, never, TWhere, never, never>,
 	>({ delegate, where }: GetManyOpts<TModel, TWhere, TDelegate>) {
 		try {
 			return where
@@ -135,10 +156,9 @@ export abstract class Repository<
 		}
 	}
 
-	async $insert<TDelegate extends Delegate<TModel, never, never, TCreate>>({
-		delegate,
-		data,
-	}: InsertOpts<TModel, TCreate, TDelegate>) {
+	async $insert<
+		TDelegate extends Delegate<TModel, never, never, TCreate, never>,
+	>({ delegate, data }: InsertOpts<TModel, TCreate, TDelegate>) {
 		try {
 			return await delegate.create({
 				data,
@@ -147,6 +167,20 @@ export abstract class Repository<
 			throw new Error(
 				`Error creating new ${this.descriptor}: ${getMessage(e)}`,
 			);
+		}
+	}
+
+	async $update<
+		TWhere extends object,
+		TDelegate extends Delegate<TModel, TWhere, never, never, TUpdate>,
+	>({ delegate, where, data }: UpdateOpts<TModel, TWhere, TUpdate, TDelegate>) {
+		try {
+			return await delegate.update({
+				where,
+				data,
+			});
+		} catch (e) {
+			throw new Error(`Error updating ${this.descriptor}: ${getMessage(e)}`);
 		}
 	}
 
