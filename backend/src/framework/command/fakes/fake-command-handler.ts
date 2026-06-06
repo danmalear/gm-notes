@@ -1,5 +1,5 @@
 import type { EventBus } from '#event/event-bus.ts';
-import type { EventRepository } from '#event/event-repository.ts';
+import type { IEventRepository } from '#event/event-repository.ts';
 import { FakeEventBus } from '#event/fakes/fake-event-bus.ts';
 import { FakeEventRepository } from '#event/fakes/fake-event-repository.ts';
 import { FakeStreamRepository } from '#framework/stream/fakes/fake-stream-repository.ts';
@@ -17,7 +17,7 @@ export class FakeCommandHandler
 	implements Faker<CommandHandler>, ICloneable<FakeCommandHandler>
 {
 	eventBus: EventBus;
-	eventRepository: EventRepository;
+	eventRepository: IEventRepository;
 	streamRepository: IStreamRepository;
 	calls: FakerCalls<CommandHandler>;
 

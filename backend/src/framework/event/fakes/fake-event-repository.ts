@@ -9,19 +9,19 @@ import {
 	FakeRepository,
 	zeroCalls as baseZeroCalls,
 } from '#shared/fakes/fake-repository.ts';
-import type { EventRepository } from '../event-repository.ts';
+import type { IEventRepository } from '../event-repository.ts';
 import { fakeEventModel } from './event-data-fake.ts';
 
-const zeroCalls: FakerCalls<EventRepository> = {
+const zeroCalls: FakerCalls<IEventRepository> = {
 	...baseZeroCalls,
 	getByStreamId: 0,
 };
 
 export class FakeEventRepository
 	extends FakeRepository<EventModel, EventCreateInput, EventUpdateInput>
-	implements Faker<EventRepository>, ICloneable<FakeEventRepository>
+	implements Faker<IEventRepository>, ICloneable<FakeEventRepository>
 {
-	override calls: FakerCalls<EventRepository>;
+	override calls: FakerCalls<IEventRepository>;
 
 	constructor() {
 		super({

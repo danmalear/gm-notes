@@ -4,19 +4,19 @@ import { InternalError } from '#shared/error.ts';
 import type { IStreamRepository } from '#stream/stream-repository.ts';
 import { randomUUID, type UUID } from 'crypto';
 import type { WebSocketServer } from 'ws';
-import type { EventRepository } from './event-repository.ts';
+import type { IEventRepository } from './event-repository.ts';
 import type { IEvent } from './event.ts';
 
 export type IEventBus = IMessageBus<IEvent>;
 
 export interface EventBusConfig {
-	eventRepository: EventRepository;
+	eventRepository: IEventRepository;
 	streamRepository: IStreamRepository;
 	wss: WebSocketServer;
 }
 
 export class EventBus extends MessageBus<IEvent> implements IEventBus {
-	eventRepository: EventRepository;
+	eventRepository: IEventRepository;
 	streamRepository: IStreamRepository;
 	wss: WebSocketServer;
 

@@ -1,4 +1,4 @@
-import type { EventRepository } from '#event/event-repository.ts';
+import type { IEventRepository } from '#event/event-repository.ts';
 import type { IEvent } from '#event/event.ts';
 import {
 	BadRequestError,
@@ -11,7 +11,7 @@ import type { IStreamRepository } from './stream-repository.ts';
 
 export interface StreamConfig {
 	streamRepository: IStreamRepository;
-	eventRepository: EventRepository;
+	eventRepository: IEventRepository;
 }
 
 export interface AggregateOpts {
@@ -21,7 +21,7 @@ export interface AggregateOpts {
 
 export abstract class Stream<TRec> {
 	streamRepository: IStreamRepository;
-	eventRepository: EventRepository;
+	eventRepository: IEventRepository;
 	id: UUID;
 	#aggregateOptsCache: AggregateOpts | undefined;
 	#aggregateCache: TRec | undefined;

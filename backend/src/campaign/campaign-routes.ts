@@ -1,6 +1,6 @@
 import type { ICommandBus } from '#command/command-bus.ts';
 import type { IEventBus } from '#event/event-bus.ts';
-import type { EventRepository } from '#event/event-repository.ts';
+import type { IEventRepository } from '#event/event-repository.ts';
 import type { IStreamRepository } from '#framework/stream/stream-repository.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getByIdDEPRECATED } from '#shared/route-utils.ts';
@@ -14,7 +14,7 @@ export function campaignRoutes(
 	app: Express,
 	commandBus: ICommandBus,
 	eventBus: IEventBus,
-	eventRepository: EventRepository,
+	eventRepository: IEventRepository,
 	streamRepository: IStreamRepository,
 	campaignRepository: CampaignRepository,
 ) {
