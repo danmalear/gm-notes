@@ -2,17 +2,17 @@ import { MessageBus, type IMessageBus } from '#message/message-bus.ts';
 import type { CommandCreateInput } from '#prisma/generated/models.ts';
 import { NotFoundError } from '#shared/error.ts';
 import { randomUUID, type UUID } from 'crypto';
-import type { CommandRepository } from './command-repository.ts';
+import type { ICommandRepository } from './command-repository.ts';
 import type { ICommand } from './command.ts';
 
 export type ICommandBus = IMessageBus<ICommand>;
 
 export interface CommandBusConfig {
-	commandRepository: CommandRepository;
+	commandRepository: ICommandRepository;
 }
 
 export class CommandBus extends MessageBus<ICommand> implements ICommandBus {
-	commandRepository: CommandRepository;
+	commandRepository: ICommandRepository;
 
 	constructor({ commandRepository }: CommandBusConfig) {
 		super();
