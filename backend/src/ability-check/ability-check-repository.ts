@@ -37,7 +37,9 @@ export class AbilityCheckRepository
 {
 	override descriptor = 'Ability Check';
 
-	async getByIdRaw(abilityCheckId: UUID): Promise<AbilityCheckModel | null> {
+	override async getByIdRaw(
+		abilityCheckId: UUID,
+	): Promise<AbilityCheckModel | null> {
 		try {
 			return await this.prisma.abilityCheck.findUnique({
 				where: {
@@ -49,7 +51,7 @@ export class AbilityCheckRepository
 		}
 	}
 
-	async getById(abilityCheckId: UUID) {
+	override async getById(abilityCheckId: UUID) {
 		try {
 			const includeNarrations = {
 				SuccessNarration: true,
@@ -68,7 +70,7 @@ export class AbilityCheckRepository
 		}
 	}
 
-	async getAll(): Promise<AbilityCheckModel[]> {
+	override async getAll(): Promise<AbilityCheckModel[]> {
 		try {
 			return await this.prisma.abilityCheck.findMany();
 		} catch (e) {

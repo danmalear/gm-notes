@@ -18,7 +18,7 @@ export class EventRepository
 {
 	override descriptor = 'Event';
 
-	async getByIdRaw(eventId: UUID): Promise<EventModel | null> {
+	override async getByIdRaw(eventId: UUID): Promise<EventModel | null> {
 		try {
 			return await this.prisma.event.findUnique({
 				where: {
@@ -30,7 +30,7 @@ export class EventRepository
 		}
 	}
 
-	async getById(eventId: UUID): Promise<EventModel | null> {
+	override async getById(eventId: UUID): Promise<EventModel | null> {
 		return await this.getByIdRaw(eventId);
 	}
 
@@ -52,7 +52,10 @@ export class EventRepository
 		}
 	}
 
-	async update(eventId: UUID, data: EventUpdateInput): Promise<EventModel> {
+	override async update(
+		eventId: UUID,
+		data: EventUpdateInput,
+	): Promise<EventModel> {
 		try {
 			return await this.prisma.event.update({
 				where: {
