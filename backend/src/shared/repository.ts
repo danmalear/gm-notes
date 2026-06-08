@@ -36,11 +36,19 @@ export interface IRepository<
 	getAll(): Promise<TModel[]>;
 
 	/**
+	 * @deprecated
 	 * Inserts a new record into the database
 	 * @param data Data to insert into database
 	 * @returns The inserted record
 	 */
 	insert(data: TCreate): Promise<TModel>;
+
+	/**
+	 * Creates a new record in the database
+	 * @param data Data to insert into database
+	 * @returns The created record
+	 */
+	create(data: TCreate): Promise<TModel>;
 
 	/**
 	 * Updates an existing database record with new data
