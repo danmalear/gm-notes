@@ -1,4 +1,3 @@
-import type { PrismaClient } from '#prisma-client';
 import type {
 	AbilityCheckCreateInput,
 	AbilityCheckInclude,
@@ -7,7 +6,7 @@ import type {
 } from '#prisma-models/AbilityCheck.ts';
 import type { NarrationModel } from '#prisma-models/Narration.ts';
 import { getMessage } from '#shared/error.ts';
-import type { IRepository, IRepositoryConfig } from '#shared/repository.ts';
+import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 
 export interface AbilityCheckIncludeAll extends AbilityCheckModel {
@@ -17,20 +16,26 @@ export interface AbilityCheckIncludeAll extends AbilityCheckModel {
 	CriticalFailureNarration: NarrationModel | null;
 }
 
-export class AbilityCheckRepository
-	implements
-		IRepository<
-			AbilityCheckModel,
-			AbilityCheckCreateInput,
-			AbilityCheckUpdateInput,
-			AbilityCheckIncludeAll
-		>
-{
-	prisma: PrismaClient;
+export interface IAbilityCheckRepository
+	extends IRepository<
+		AbilityCheckModel,
+		AbilityCheckCreateInput,
+		AbilityCheckUpdateInput,
+		AbilityCheckIncludeAll
+	> {
+	getByActionId(actionId: UUID): Promise<AbilityCheckModel[]>;
+}
 
-	constructor({ prisma }: IRepositoryConfig) {
-		this.prisma = prisma;
-	}
+export class AbilityCheckRepository
+	extends Repository<
+		AbilityCheckModel,
+		AbilityCheckCreateInput,
+		AbilityCheckUpdateInput,
+		AbilityCheckIncludeAll
+	>
+	implements IAbilityCheckRepository
+{
+	override descriptor = 'Ability Check';
 
 	async getByIdRaw(abilityCheckId: UUID): Promise<AbilityCheckModel | null> {
 		try {
@@ -59,7 +64,7 @@ export class AbilityCheckRepository
 				include: includeNarrations,
 			});
 		} catch (e) {
-			throw new Error(`Error getting Ability Check by ID: ${getMessage(e)}`);
+			throw this.getByIdError(abilityCheckId, e);
 		}
 	}
 
@@ -67,19 +72,19 @@ export class AbilityCheckRepository
 		try {
 			return await this.prisma.abilityCheck.findMany();
 		} catch (e) {
-			throw new Error(
-				`Error getting all Ability Check records: ${getMessage(e)}`,
-			);
+			throw this.getAllError(e);
 		}
 	}
 
-	async insert(data: AbilityCheckCreateInput): Promise<AbilityCheckModel> {
+	override async create(
+		data: AbilityCheckCreateInput,
+	): Promise<AbilityCheckModel> {
 		try {
 			return await this.prisma.abilityCheck.create({
 				data,
 			});
 		} catch (e) {
-			throw new Error(`Error creating new Ability Check: ${getMessage(e)}`);
+			throw this.createError(e);
 		}
 	}
 
@@ -95,9 +100,7 @@ export class AbilityCheckRepository
 				data,
 			});
 		} catch (e) {
-			throw new Error(
-				`Error updating Ability Check with ID ${abilityCheckId}: ${getMessage(e)}`,
-			);
+			throw this.updateError(abilityCheckId, e);
 		}
 	}
 
@@ -115,7 +118,7 @@ export class AbilityCheckRepository
 			});
 		} catch (e) {
 			throw new Error(
-				`Error getting Ability Check records for action ID ${actionId}: ${getMessage(e)}`,
+				`Error getting ${this.descriptor} records for Action ID ${actionId}: ${getMessage(e)}`,
 			);
 		}
 	}
