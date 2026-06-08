@@ -51,124 +51,43 @@ export interface IRepository<
 	update(id: UUID, data: TUpdate): Promise<TModel>;
 }
 
-export interface Delegate<
-	TModel,
-	TFindUniqueWhere,
-	TFindManyWhere,
-	TCreateInput,
-	TUpdateInput,
-	TInclude,
-> {
-	findUnique: (args: {
-		where: TFindUniqueWhere;
-		include?: TInclude;
-	}) => Promise<TModel | null>;
-	findMany: (args?: { where: TFindManyWhere }) => Promise<TModel[]>;
-	create: (args: { data: TCreateInput }) => Promise<TModel>;
-	update: (args: {
-		where: TFindUniqueWhere;
-		data: TUpdateInput;
-	}) => Promise<TModel>;
-}
-
-export interface GetManyOpts<TWhere extends object> {
-	where?: TWhere;
-}
-
-export interface GetOneOpts<
-	TWhere extends object,
-	TInclude extends object = object,
-> {
-	where: TWhere;
-	include?: TInclude;
-}
-
-export interface InsertOpts<TInput extends object> {
-	data: TInput;
-}
-
-export interface UpdateOpts<TWhere extends object, TInput extends object> {
-	where: TWhere;
-	data: TInput;
-}
-
 /**
  * Abstract for data access repository - defines all baseline operations and provides basic functionality
  */
 export abstract class Repository<
 	TModel,
-	TCreate extends object,
-	TUpdate extends object,
-	TFindUniqueWhere extends object,
-	TFindManyWhere extends object,
-	TDelegate extends Delegate<
-		TModel,
-		TFindUniqueWhere,
-		TFindManyWhere,
-		TCreate,
-		TUpdate,
-		TInclude
-	>,
-	TInclude extends object = object,
+	TCreateInput extends object,
+	TUpdateInput extends object,
 	TModelIncludeAll extends TModel = TModel,
-> implements IRepository<TModel, TCreate, TUpdate, TModelIncludeAll>
+> implements IRepository<TModel, TCreateInput, TUpdateInput, TModelIncludeAll>
 {
 	prisma: PrismaClient;
 	abstract descriptor: string;
-	abstract delegate: TDelegate;
 
 	constructor({ prisma }: IRepositoryConfig) {
 		this.prisma = prisma;
 	}
 
-	async $getOne({ where, include }: GetOneOpts<TFindUniqueWhere, TInclude>) {
-		try {
-			return await this.delegate.findUnique({
-				where,
-				include,
-			});
-		} catch (e) {
-			throw new Error(
-				`Error getting ${this.descriptor} by ID: ${getMessage(e)}`,
-			);
-		}
+	getByIdError(id: UUID, e: unknown) {
+		return new Error(
+			`Error getting ${this.descriptor} by ID ${id}: ${getMessage(e)}`,
+		);
 	}
 
-	async $getMany(args?: GetManyOpts<TFindManyWhere>) {
-		try {
-			return args?.where
-				? await this.delegate.findMany({
-						where: args.where,
-					})
-				: await this.delegate.findMany();
-		} catch (e) {
-			throw new Error(
-				`Error getting ${this.descriptor} records: ${getMessage(e)}`,
-			);
-		}
+	getAllError(e: unknown) {
+		return new Error(
+			`Error getting all ${this.descriptor} records: ${getMessage(e)}`,
+		);
 	}
 
-	async $insert({ data }: InsertOpts<TCreate>) {
-		try {
-			return await this.delegate.create({
-				data,
-			});
-		} catch (e) {
-			throw new Error(
-				`Error creating new ${this.descriptor}: ${getMessage(e)}`,
-			);
-		}
+	createError(e: unknown) {
+		return new Error(`Error creating new ${this.descriptor}: ${getMessage(e)}`);
 	}
 
-	async $update({ where, data }: UpdateOpts<TFindUniqueWhere, TUpdate>) {
-		try {
-			return await this.delegate.update({
-				where,
-				data,
-			});
-		} catch (e) {
-			throw new Error(`Error updating ${this.descriptor}: ${getMessage(e)}`);
-		}
+	updateError(id: UUID, e: unknown) {
+		return new Error(
+			`Error updating ${this.descriptor} with id ${id}: ${getMessage(e)}`,
+		);
 	}
 
 	/**
@@ -189,17 +108,20 @@ export abstract class Repository<
 	 * Retrieves all records from the database
 	 * @returns An array of all records (empty array if none found)
 	 */
-	async getAll(): Promise<TModel[]> {
-		return await this.$getMany();
-	}
+	abstract getAll(): Promise<TModel[]>;
 
 	/**
-	 * Inserts a new record into the database
+	 * Creates a new record in the database
 	 * @param data Data to insert into database
 	 * @returns The inserted record
 	 */
-	async insert(data: TCreate): Promise<TModel> {
-		return await this.$insert({ data });
+	abstract create(data: TCreateInput): Promise<TModel>;
+
+	/**
+	 * @deprecated
+	 */
+	async insert(data: TCreateInput): Promise<TModel> {
+		return await this.create(data);
 	}
 
 	/**
@@ -208,5 +130,5 @@ export abstract class Repository<
 	 * @param data New data to update the record with
 	 * @returns The updated record
 	 */
-	abstract update(id: UUID, data: TUpdate): Promise<TModel>;
+	abstract update(id: UUID, data: TUpdateInput): Promise<TModel>;
 }

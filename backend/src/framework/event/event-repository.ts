@@ -1,11 +1,9 @@
 import type {
 	EventCreateInput,
-	EventDelegate,
 	EventModel,
 	EventUpdateInput,
-	EventWhereInput,
-	EventWhereUniqueInput,
 } from '#prisma-models/Event.ts';
+import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'node:crypto';
 
@@ -15,45 +13,74 @@ export interface IEventRepository
 }
 
 export class EventRepository
-	extends Repository<
-		EventModel,
-		EventCreateInput,
-		EventUpdateInput,
-		EventWhereUniqueInput,
-		EventWhereInput,
-		EventDelegate
-	>
+	extends Repository<EventModel, EventCreateInput, EventUpdateInput>
 	implements IEventRepository
 {
 	override descriptor = 'Event';
-	override delegate = this.prisma.event;
 
 	async getByIdRaw(eventId: UUID): Promise<EventModel | null> {
-		return await this.$getOne({
-			where: {
-				EventId: eventId,
-			},
-		});
+		try {
+			return await this.prisma.event.findUnique({
+				where: {
+					EventId: eventId,
+				},
+			});
+		} catch (e) {
+			throw this.getByIdError(eventId, e);
+		}
 	}
 
 	async getById(eventId: UUID): Promise<EventModel | null> {
 		return await this.getByIdRaw(eventId);
 	}
 
-	async update(eventId: UUID, data: EventUpdateInput): Promise<EventModel> {
-		return await this.$update({
-			where: {
-				EventId: eventId,
-			},
-			data,
-		});
+	override async getAll(): Promise<EventModel[]> {
+		try {
+			return await this.prisma.event.findMany();
+		} catch (e) {
+			throw this.getAllError(e);
+		}
 	}
 
+	override async create(data: EventCreateInput): Promise<EventModel> {
+		try {
+			return await this.prisma.event.create({
+				data,
+			});
+		} catch (e) {
+			throw this.createError(e);
+		}
+	}
+
+	async update(eventId: UUID, data: EventUpdateInput): Promise<EventModel> {
+		try {
+			return await this.prisma.event.update({
+				where: {
+					EventId: eventId,
+				},
+				data,
+			});
+		} catch (e) {
+			throw this.updateError(eventId, e);
+		}
+	}
+
+	/**
+	 * Retrieves event records from the database for a given stream ID
+	 * @param id UUID of the stream to get events for
+	 * @returns The list of events (empty array if none found)
+	 */
 	async getByStreamId(streamId: UUID): Promise<EventModel[]> {
-		return await this.$getMany({
-			where: {
-				StreamId: streamId,
-			},
-		});
+		try {
+			return await this.prisma.event.findMany({
+				where: {
+					StreamId: streamId,
+				},
+			});
+		} catch (e) {
+			throw new Error(
+				`Error getting ${this.descriptor} records by Stream ID ${streamId}: ${getMessage(e)}`,
+			);
+		}
 	}
 }
