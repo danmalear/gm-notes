@@ -57,8 +57,12 @@ export interface Delegate<
 	TFindManyWhere,
 	TCreateInput,
 	TUpdateInput,
+	TInclude,
 > {
-	findUnique: (args: { where: TFindUniqueWhere }) => Promise<TModel | null>;
+	findUnique: (args: {
+		where: TFindUniqueWhere;
+		include?: TInclude;
+	}) => Promise<TModel | null>;
 	findMany: (args?: { where: TFindManyWhere }) => Promise<TModel[]>;
 	create: (args: { data: TCreateInput }) => Promise<TModel>;
 	update: (args: {
@@ -71,8 +75,12 @@ export interface GetManyOpts<TWhere extends object> {
 	where?: TWhere;
 }
 
-export interface GetOneOpts<TWhere extends object> {
+export interface GetOneOpts<
+	TWhere extends object,
+	TInclude extends object = object,
+> {
 	where: TWhere;
+	include?: TInclude;
 }
 
 export interface InsertOpts<TInput extends object> {
@@ -98,8 +106,10 @@ export abstract class Repository<
 		TFindUniqueWhere,
 		TFindManyWhere,
 		TCreate,
-		TUpdate
+		TUpdate,
+		TInclude
 	>,
+	TInclude extends object = object,
 	TModelIncludeAll extends TModel = TModel,
 > implements IRepository<TModel, TCreate, TUpdate, TModelIncludeAll>
 {
@@ -111,10 +121,11 @@ export abstract class Repository<
 		this.prisma = prisma;
 	}
 
-	async $getOne({ where }: GetOneOpts<TFindUniqueWhere>) {
+	async $getOne({ where, include }: GetOneOpts<TFindUniqueWhere, TInclude>) {
 		try {
 			return await this.delegate.findUnique({
 				where,
+				include,
 			});
 		} catch (e) {
 			throw new Error(
