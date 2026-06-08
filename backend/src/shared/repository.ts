@@ -56,8 +56,8 @@ export interface IRepository<
  */
 export abstract class Repository<
 	TModel,
-	TCreateInput extends object,
-	TUpdateInput extends object,
+	TCreateInput,
+	TUpdateInput,
 	TModelIncludeAll extends TModel = TModel,
 > implements IRepository<TModel, TCreateInput, TUpdateInput, TModelIncludeAll>
 {
