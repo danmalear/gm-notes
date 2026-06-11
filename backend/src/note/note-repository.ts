@@ -1,24 +1,72 @@
-import { db } from '#shared/db.ts';
+import type {
+	NoteCreateInput,
+	NoteModel,
+	NoteUpdateInput,
+} from '#prisma-models/Note.ts';
 import { getMessage } from '#shared/error.ts';
-import { Repository } from '#shared/repository-old.ts';
+import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 
-export interface NoteRec {
-	NoteId: UUID;
-	EntityId: UUID;
-	Description: string;
+export interface INoteRepository
+	extends IRepository<NoteModel, NoteCreateInput, NoteUpdateInput> {
+	getByEntityId(entityId: UUID): Promise<NoteModel[]>;
 }
 
-export const tableName = 'Note';
-export const pkColumn = 'NoteId';
+export class NoteRepository extends Repository<
+	NoteModel,
+	NoteCreateInput,
+	NoteUpdateInput
+> {
+	override descriptor = 'Note';
 
-export class NoteRepository extends Repository<NoteRec> {
-	constructor() {
-		super(tableName, pkColumn);
+	override async getByIdRaw(noteId: UUID): Promise<NoteModel | null> {
+		try {
+			return await this.prisma.note.findUnique({
+				where: {
+					NoteId: noteId,
+				},
+			});
+		} catch (e) {
+			throw this.getByIdError(noteId, e);
+		}
 	}
 
-	override async getById(id: UUID): Promise<NoteRec | undefined> {
-		return await this.getByIdRaw(id);
+	override async getById(noteId: UUID): Promise<NoteModel | null> {
+		return await this.getByIdRaw(noteId);
+	}
+
+	override async getAll(): Promise<NoteModel[]> {
+		try {
+			return await this.prisma.note.findMany();
+		} catch (e) {
+			throw this.getAllError(e);
+		}
+	}
+
+	override async create(data: NoteCreateInput): Promise<NoteModel> {
+		try {
+			return await this.prisma.note.create({
+				data,
+			});
+		} catch (e) {
+			throw this.createError(e);
+		}
+	}
+
+	override async update(
+		noteId: UUID,
+		data: NoteUpdateInput,
+	): Promise<NoteModel> {
+		try {
+			return await this.prisma.note.update({
+				where: {
+					NoteId: noteId,
+				},
+				data,
+			});
+		} catch (e) {
+			throw this.updateError(noteId, e);
+		}
 	}
 
 	/**
@@ -28,14 +76,15 @@ export class NoteRepository extends Repository<NoteRec> {
 	 */
 	async getByEntityId(entityId: UUID) {
 		try {
-			const notes = await db<NoteRec>(this.tableName).where(
-				'EntityId',
-				entityId,
-			);
+			const notes = await this.prisma.note.findMany({
+				where: {
+					EntityId: entityId,
+				},
+			});
 			return notes;
 		} catch (e) {
 			throw Error(
-				`Error getting ${this.tableName} records for entity ID ${entityId}: ${getMessage(e)}`,
+				`Error getting ${this.descriptor} records by Entity ID ${entityId}: ${getMessage(e)}`,
 			);
 		}
 	}

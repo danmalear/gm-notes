@@ -1,5 +1,5 @@
 import type { ActionRepository } from '#action/action-repository.ts';
-import type { NoteRepository } from '#note/note-repository.ts';
+import type { INoteRepository } from '#note/note-repository.ts';
 import { db } from '#shared/db.ts';
 import { getMessage, InternalError } from '#shared/error.ts';
 import { Repository } from '#shared/repository-old.ts';
@@ -31,7 +31,7 @@ export const itemIdColName = 'ItemId';
 export interface LocationItemRepositoryConfig {
 	actionRepository: ActionRepository;
 	itemRepository: ItemRepository;
-	noteRepository: NoteRepository;
+	noteRepository: INoteRepository;
 }
 
 export class LocationItemRepository extends Repository<
@@ -40,7 +40,7 @@ export class LocationItemRepository extends Repository<
 > {
 	actionRepository: ActionRepository;
 	itemRepository: ItemRepository;
-	noteRepository: NoteRepository;
+	noteRepository: INoteRepository;
 
 	constructor({
 		actionRepository,

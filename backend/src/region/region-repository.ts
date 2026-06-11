@@ -9,8 +9,9 @@ import type {
 	LocationItemRepository,
 } from '#item/location-item-repository.ts';
 import type { INarrationRepository } from '#narration/narration-repository.ts';
-import type { NoteRec, NoteRepository } from '#note/note-repository.ts';
+import type { INoteRepository } from '#note/note-repository.ts';
 import type { NarrationModel } from '#prisma-models/Narration.ts';
+import type { NoteModel } from '#prisma-models/Note.ts';
 import type { RelativeLighting } from '#shared/data-types.ts';
 import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
@@ -40,7 +41,7 @@ export interface RegionRefRec extends RegionRecShapes {
 	Actions: ActionRec[];
 	Items: (ItemRec & LocationItemRec)[];
 	Handouts: HandoutRec[];
-	Notes: NoteRec[];
+	Notes: NoteModel[];
 }
 
 export const tableName = 'Region';
@@ -52,7 +53,7 @@ export interface RegionRepositoryConfig {
 	handoutRepository: HandoutRepository;
 	locationItemRepository: LocationItemRepository;
 	narrationRepository: INarrationRepository;
-	noteRepository: NoteRepository;
+	noteRepository: INoteRepository;
 	regionShapeRepository: RegionShapeRepository;
 }
 
@@ -62,7 +63,7 @@ export class RegionRepository extends Repository<RegionRec, RegionRefRec> {
 	handoutRepository: HandoutRepository;
 	locationItemRepository: LocationItemRepository;
 	narrationRepository: INarrationRepository;
-	noteRepository: NoteRepository;
+	noteRepository: INoteRepository;
 	regionShapeRepository: RegionShapeRepository;
 
 	constructor({

@@ -46,7 +46,7 @@ function initRepos(prisma: PrismaClient) {
 	const streamRepository = new StreamRepository({ prisma });
 
 	const fileRepository = new FileRepository({ prisma });
-	const noteRepository = new NoteRepository();
+	const noteRepository = new NoteRepository({ prisma });
 	const narrationRepository = new NarrationRepository({ prisma });
 	const handoutRepository = new HandoutRepository();
 	const abilityCheckRepository = new AbilityCheckRepository({ prisma });
