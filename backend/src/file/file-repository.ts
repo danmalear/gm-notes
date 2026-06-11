@@ -11,9 +11,6 @@ export interface IFileRepository
 	getById(fileId: string): Promise<FileModel | null>;
 }
 
-export const tableName = 'File';
-export const pkColumn = 'FileId';
-
 export class FileRepository
 	extends Repository<FileModel, FileCreateInput, FileUpdateInput>
 	implements IFileRepository
