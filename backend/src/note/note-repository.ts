@@ -74,7 +74,7 @@ export class NoteRepository extends Repository<
 	 * @param entityId UUID of the entity to get notes for
 	 * @returns The list of notes (empty array if none found)
 	 */
-	async getByEntityId(entityId: UUID) {
+	async getByEntityId(entityId: UUID): Promise<NoteModel[]> {
 		try {
 			const notes = await this.prisma.note.findMany({
 				where: {
