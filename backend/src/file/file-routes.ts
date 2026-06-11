@@ -3,11 +3,11 @@ import type { Express, Request, Response } from 'express';
 import multer from 'multer';
 import path from 'path';
 import type { FileStub } from './file-dtos.ts';
-import type { FileRepository } from './file-repository.ts';
+import type { IFileRepository } from './file-repository.ts';
 
 const upload = multer({ dest: path.resolve('uploads') });
 
-export function fileRoutes(app: Express, fileRepository: FileRepository) {
+export function fileRoutes(app: Express, fileRepository: IFileRepository) {
 	const apiNamespace = 'files';
 
 	app.get(

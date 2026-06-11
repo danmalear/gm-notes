@@ -1,6 +1,7 @@
 import type { ActionRec, ActionRepository } from '#action/action-repository.ts';
-import type { FileRec, FileRepository } from '#file/file-repository.ts';
+import type { IFileRepository } from '#file/file-repository.ts';
 import type { NoteRec, NoteRepository } from '#note/note-repository.ts';
+import type { FileModel } from '#prisma-models/File.ts';
 import type { CurrencyUnit } from '#shared/data-types.ts';
 import { Repository } from '#shared/repository-old.ts';
 import type { UUID } from 'crypto';
@@ -17,7 +18,7 @@ export interface ItemRec {
 }
 
 export interface ItemRefRec extends ItemRec {
-	ImageFile: FileRec | null;
+	ImageFile: FileModel | null;
 	Actions: ActionRec[];
 	Notes: NoteRec[];
 }
@@ -27,13 +28,13 @@ export const pkColumn = 'ItemId';
 
 export interface ItemRepositoryConfig {
 	actionRepository: ActionRepository;
-	fileRepository: FileRepository;
+	fileRepository: IFileRepository;
 	noteRepository: NoteRepository;
 }
 
 export class ItemRepository extends Repository<ItemRec, ItemRefRec> {
 	actionRepository: ActionRepository;
-	fileRepository: FileRepository;
+	fileRepository: IFileRepository;
 	noteRepository: NoteRepository;
 
 	constructor({
