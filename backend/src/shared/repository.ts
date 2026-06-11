@@ -94,7 +94,7 @@ export abstract class Repository<
 
 	updateError(id: UUID, e: unknown) {
 		return new Error(
-			`Error updating ${this.descriptor} with id ${id}: ${getMessage(e)}`,
+			`Error updating ${this.descriptor} with ID ${id}: ${getMessage(e)}`,
 		);
 	}
 
