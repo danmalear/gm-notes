@@ -158,11 +158,15 @@ export type RegionHandoutWhereInput = {
   NOT?: Prisma.RegionHandoutWhereInput | Prisma.RegionHandoutWhereInput[]
   RegionId?: Prisma.UuidFilter<"RegionHandout"> | string
   HandoutId?: Prisma.UuidFilter<"RegionHandout"> | string
+  Region?: Prisma.XOR<Prisma.RegionScalarRelationFilter, Prisma.RegionWhereInput>
+  Handout?: Prisma.XOR<Prisma.HandoutScalarRelationFilter, Prisma.HandoutWhereInput>
 }
 
 export type RegionHandoutOrderByWithRelationInput = {
   RegionId?: Prisma.SortOrder
   HandoutId?: Prisma.SortOrder
+  Region?: Prisma.RegionOrderByWithRelationInput
+  Handout?: Prisma.HandoutOrderByWithRelationInput
 }
 
 export type RegionHandoutWhereUniqueInput = Prisma.AtLeast<{
@@ -172,6 +176,8 @@ export type RegionHandoutWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.RegionHandoutWhereInput | Prisma.RegionHandoutWhereInput[]
   RegionId?: Prisma.UuidFilter<"RegionHandout"> | string
   HandoutId?: Prisma.UuidFilter<"RegionHandout"> | string
+  Region?: Prisma.XOR<Prisma.RegionScalarRelationFilter, Prisma.RegionWhereInput>
+  Handout?: Prisma.XOR<Prisma.HandoutScalarRelationFilter, Prisma.HandoutWhereInput>
 }, "RegionId_HandoutId">
 
 export type RegionHandoutOrderByWithAggregationInput = {
@@ -191,8 +197,8 @@ export type RegionHandoutScalarWhereWithAggregatesInput = {
 }
 
 export type RegionHandoutCreateInput = {
-  RegionId: string
-  HandoutId: string
+  Region: Prisma.RegionCreateNestedOneWithoutRegionHandoutsInput
+  Handout: Prisma.HandoutCreateNestedOneWithoutRegionHandoutsInput
 }
 
 export type RegionHandoutUncheckedCreateInput = {
@@ -201,8 +207,8 @@ export type RegionHandoutUncheckedCreateInput = {
 }
 
 export type RegionHandoutUpdateInput = {
-  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
-  HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
+  Region?: Prisma.RegionUpdateOneRequiredWithoutRegionHandoutsNestedInput
+  Handout?: Prisma.HandoutUpdateOneRequiredWithoutRegionHandoutsNestedInput
 }
 
 export type RegionHandoutUncheckedUpdateInput = {
@@ -216,13 +222,22 @@ export type RegionHandoutCreateManyInput = {
 }
 
 export type RegionHandoutUpdateManyMutationInput = {
-  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
-  HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
+
 }
 
 export type RegionHandoutUncheckedUpdateManyInput = {
   RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type RegionHandoutListRelationFilter = {
+  every?: Prisma.RegionHandoutWhereInput
+  some?: Prisma.RegionHandoutWhereInput
+  none?: Prisma.RegionHandoutWhereInput
+}
+
+export type RegionHandoutOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type RegionHandoutRegionIdHandoutIdCompoundUniqueInput = {
@@ -245,21 +260,219 @@ export type RegionHandoutMinOrderByAggregateInput = {
   HandoutId?: Prisma.SortOrder
 }
 
+export type RegionHandoutCreateNestedManyWithoutHandoutInput = {
+  create?: Prisma.XOR<Prisma.RegionHandoutCreateWithoutHandoutInput, Prisma.RegionHandoutUncheckedCreateWithoutHandoutInput> | Prisma.RegionHandoutCreateWithoutHandoutInput[] | Prisma.RegionHandoutUncheckedCreateWithoutHandoutInput[]
+  connectOrCreate?: Prisma.RegionHandoutCreateOrConnectWithoutHandoutInput | Prisma.RegionHandoutCreateOrConnectWithoutHandoutInput[]
+  createMany?: Prisma.RegionHandoutCreateManyHandoutInputEnvelope
+  connect?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+}
+
+export type RegionHandoutUncheckedCreateNestedManyWithoutHandoutInput = {
+  create?: Prisma.XOR<Prisma.RegionHandoutCreateWithoutHandoutInput, Prisma.RegionHandoutUncheckedCreateWithoutHandoutInput> | Prisma.RegionHandoutCreateWithoutHandoutInput[] | Prisma.RegionHandoutUncheckedCreateWithoutHandoutInput[]
+  connectOrCreate?: Prisma.RegionHandoutCreateOrConnectWithoutHandoutInput | Prisma.RegionHandoutCreateOrConnectWithoutHandoutInput[]
+  createMany?: Prisma.RegionHandoutCreateManyHandoutInputEnvelope
+  connect?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+}
+
+export type RegionHandoutUpdateManyWithoutHandoutNestedInput = {
+  create?: Prisma.XOR<Prisma.RegionHandoutCreateWithoutHandoutInput, Prisma.RegionHandoutUncheckedCreateWithoutHandoutInput> | Prisma.RegionHandoutCreateWithoutHandoutInput[] | Prisma.RegionHandoutUncheckedCreateWithoutHandoutInput[]
+  connectOrCreate?: Prisma.RegionHandoutCreateOrConnectWithoutHandoutInput | Prisma.RegionHandoutCreateOrConnectWithoutHandoutInput[]
+  upsert?: Prisma.RegionHandoutUpsertWithWhereUniqueWithoutHandoutInput | Prisma.RegionHandoutUpsertWithWhereUniqueWithoutHandoutInput[]
+  createMany?: Prisma.RegionHandoutCreateManyHandoutInputEnvelope
+  set?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+  disconnect?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+  delete?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+  connect?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+  update?: Prisma.RegionHandoutUpdateWithWhereUniqueWithoutHandoutInput | Prisma.RegionHandoutUpdateWithWhereUniqueWithoutHandoutInput[]
+  updateMany?: Prisma.RegionHandoutUpdateManyWithWhereWithoutHandoutInput | Prisma.RegionHandoutUpdateManyWithWhereWithoutHandoutInput[]
+  deleteMany?: Prisma.RegionHandoutScalarWhereInput | Prisma.RegionHandoutScalarWhereInput[]
+}
+
+export type RegionHandoutUncheckedUpdateManyWithoutHandoutNestedInput = {
+  create?: Prisma.XOR<Prisma.RegionHandoutCreateWithoutHandoutInput, Prisma.RegionHandoutUncheckedCreateWithoutHandoutInput> | Prisma.RegionHandoutCreateWithoutHandoutInput[] | Prisma.RegionHandoutUncheckedCreateWithoutHandoutInput[]
+  connectOrCreate?: Prisma.RegionHandoutCreateOrConnectWithoutHandoutInput | Prisma.RegionHandoutCreateOrConnectWithoutHandoutInput[]
+  upsert?: Prisma.RegionHandoutUpsertWithWhereUniqueWithoutHandoutInput | Prisma.RegionHandoutUpsertWithWhereUniqueWithoutHandoutInput[]
+  createMany?: Prisma.RegionHandoutCreateManyHandoutInputEnvelope
+  set?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+  disconnect?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+  delete?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+  connect?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+  update?: Prisma.RegionHandoutUpdateWithWhereUniqueWithoutHandoutInput | Prisma.RegionHandoutUpdateWithWhereUniqueWithoutHandoutInput[]
+  updateMany?: Prisma.RegionHandoutUpdateManyWithWhereWithoutHandoutInput | Prisma.RegionHandoutUpdateManyWithWhereWithoutHandoutInput[]
+  deleteMany?: Prisma.RegionHandoutScalarWhereInput | Prisma.RegionHandoutScalarWhereInput[]
+}
+
+export type RegionHandoutCreateNestedManyWithoutRegionInput = {
+  create?: Prisma.XOR<Prisma.RegionHandoutCreateWithoutRegionInput, Prisma.RegionHandoutUncheckedCreateWithoutRegionInput> | Prisma.RegionHandoutCreateWithoutRegionInput[] | Prisma.RegionHandoutUncheckedCreateWithoutRegionInput[]
+  connectOrCreate?: Prisma.RegionHandoutCreateOrConnectWithoutRegionInput | Prisma.RegionHandoutCreateOrConnectWithoutRegionInput[]
+  createMany?: Prisma.RegionHandoutCreateManyRegionInputEnvelope
+  connect?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+}
+
+export type RegionHandoutUncheckedCreateNestedManyWithoutRegionInput = {
+  create?: Prisma.XOR<Prisma.RegionHandoutCreateWithoutRegionInput, Prisma.RegionHandoutUncheckedCreateWithoutRegionInput> | Prisma.RegionHandoutCreateWithoutRegionInput[] | Prisma.RegionHandoutUncheckedCreateWithoutRegionInput[]
+  connectOrCreate?: Prisma.RegionHandoutCreateOrConnectWithoutRegionInput | Prisma.RegionHandoutCreateOrConnectWithoutRegionInput[]
+  createMany?: Prisma.RegionHandoutCreateManyRegionInputEnvelope
+  connect?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+}
+
+export type RegionHandoutUpdateManyWithoutRegionNestedInput = {
+  create?: Prisma.XOR<Prisma.RegionHandoutCreateWithoutRegionInput, Prisma.RegionHandoutUncheckedCreateWithoutRegionInput> | Prisma.RegionHandoutCreateWithoutRegionInput[] | Prisma.RegionHandoutUncheckedCreateWithoutRegionInput[]
+  connectOrCreate?: Prisma.RegionHandoutCreateOrConnectWithoutRegionInput | Prisma.RegionHandoutCreateOrConnectWithoutRegionInput[]
+  upsert?: Prisma.RegionHandoutUpsertWithWhereUniqueWithoutRegionInput | Prisma.RegionHandoutUpsertWithWhereUniqueWithoutRegionInput[]
+  createMany?: Prisma.RegionHandoutCreateManyRegionInputEnvelope
+  set?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+  disconnect?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+  delete?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+  connect?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+  update?: Prisma.RegionHandoutUpdateWithWhereUniqueWithoutRegionInput | Prisma.RegionHandoutUpdateWithWhereUniqueWithoutRegionInput[]
+  updateMany?: Prisma.RegionHandoutUpdateManyWithWhereWithoutRegionInput | Prisma.RegionHandoutUpdateManyWithWhereWithoutRegionInput[]
+  deleteMany?: Prisma.RegionHandoutScalarWhereInput | Prisma.RegionHandoutScalarWhereInput[]
+}
+
+export type RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput = {
+  create?: Prisma.XOR<Prisma.RegionHandoutCreateWithoutRegionInput, Prisma.RegionHandoutUncheckedCreateWithoutRegionInput> | Prisma.RegionHandoutCreateWithoutRegionInput[] | Prisma.RegionHandoutUncheckedCreateWithoutRegionInput[]
+  connectOrCreate?: Prisma.RegionHandoutCreateOrConnectWithoutRegionInput | Prisma.RegionHandoutCreateOrConnectWithoutRegionInput[]
+  upsert?: Prisma.RegionHandoutUpsertWithWhereUniqueWithoutRegionInput | Prisma.RegionHandoutUpsertWithWhereUniqueWithoutRegionInput[]
+  createMany?: Prisma.RegionHandoutCreateManyRegionInputEnvelope
+  set?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+  disconnect?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+  delete?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+  connect?: Prisma.RegionHandoutWhereUniqueInput | Prisma.RegionHandoutWhereUniqueInput[]
+  update?: Prisma.RegionHandoutUpdateWithWhereUniqueWithoutRegionInput | Prisma.RegionHandoutUpdateWithWhereUniqueWithoutRegionInput[]
+  updateMany?: Prisma.RegionHandoutUpdateManyWithWhereWithoutRegionInput | Prisma.RegionHandoutUpdateManyWithWhereWithoutRegionInput[]
+  deleteMany?: Prisma.RegionHandoutScalarWhereInput | Prisma.RegionHandoutScalarWhereInput[]
+}
+
+export type RegionHandoutCreateWithoutHandoutInput = {
+  Region: Prisma.RegionCreateNestedOneWithoutRegionHandoutsInput
+}
+
+export type RegionHandoutUncheckedCreateWithoutHandoutInput = {
+  RegionId: string
+}
+
+export type RegionHandoutCreateOrConnectWithoutHandoutInput = {
+  where: Prisma.RegionHandoutWhereUniqueInput
+  create: Prisma.XOR<Prisma.RegionHandoutCreateWithoutHandoutInput, Prisma.RegionHandoutUncheckedCreateWithoutHandoutInput>
+}
+
+export type RegionHandoutCreateManyHandoutInputEnvelope = {
+  data: Prisma.RegionHandoutCreateManyHandoutInput | Prisma.RegionHandoutCreateManyHandoutInput[]
+  skipDuplicates?: boolean
+}
+
+export type RegionHandoutUpsertWithWhereUniqueWithoutHandoutInput = {
+  where: Prisma.RegionHandoutWhereUniqueInput
+  update: Prisma.XOR<Prisma.RegionHandoutUpdateWithoutHandoutInput, Prisma.RegionHandoutUncheckedUpdateWithoutHandoutInput>
+  create: Prisma.XOR<Prisma.RegionHandoutCreateWithoutHandoutInput, Prisma.RegionHandoutUncheckedCreateWithoutHandoutInput>
+}
+
+export type RegionHandoutUpdateWithWhereUniqueWithoutHandoutInput = {
+  where: Prisma.RegionHandoutWhereUniqueInput
+  data: Prisma.XOR<Prisma.RegionHandoutUpdateWithoutHandoutInput, Prisma.RegionHandoutUncheckedUpdateWithoutHandoutInput>
+}
+
+export type RegionHandoutUpdateManyWithWhereWithoutHandoutInput = {
+  where: Prisma.RegionHandoutScalarWhereInput
+  data: Prisma.XOR<Prisma.RegionHandoutUpdateManyMutationInput, Prisma.RegionHandoutUncheckedUpdateManyWithoutHandoutInput>
+}
+
+export type RegionHandoutScalarWhereInput = {
+  AND?: Prisma.RegionHandoutScalarWhereInput | Prisma.RegionHandoutScalarWhereInput[]
+  OR?: Prisma.RegionHandoutScalarWhereInput[]
+  NOT?: Prisma.RegionHandoutScalarWhereInput | Prisma.RegionHandoutScalarWhereInput[]
+  RegionId?: Prisma.UuidFilter<"RegionHandout"> | string
+  HandoutId?: Prisma.UuidFilter<"RegionHandout"> | string
+}
+
+export type RegionHandoutCreateWithoutRegionInput = {
+  Handout: Prisma.HandoutCreateNestedOneWithoutRegionHandoutsInput
+}
+
+export type RegionHandoutUncheckedCreateWithoutRegionInput = {
+  HandoutId: string
+}
+
+export type RegionHandoutCreateOrConnectWithoutRegionInput = {
+  where: Prisma.RegionHandoutWhereUniqueInput
+  create: Prisma.XOR<Prisma.RegionHandoutCreateWithoutRegionInput, Prisma.RegionHandoutUncheckedCreateWithoutRegionInput>
+}
+
+export type RegionHandoutCreateManyRegionInputEnvelope = {
+  data: Prisma.RegionHandoutCreateManyRegionInput | Prisma.RegionHandoutCreateManyRegionInput[]
+  skipDuplicates?: boolean
+}
+
+export type RegionHandoutUpsertWithWhereUniqueWithoutRegionInput = {
+  where: Prisma.RegionHandoutWhereUniqueInput
+  update: Prisma.XOR<Prisma.RegionHandoutUpdateWithoutRegionInput, Prisma.RegionHandoutUncheckedUpdateWithoutRegionInput>
+  create: Prisma.XOR<Prisma.RegionHandoutCreateWithoutRegionInput, Prisma.RegionHandoutUncheckedCreateWithoutRegionInput>
+}
+
+export type RegionHandoutUpdateWithWhereUniqueWithoutRegionInput = {
+  where: Prisma.RegionHandoutWhereUniqueInput
+  data: Prisma.XOR<Prisma.RegionHandoutUpdateWithoutRegionInput, Prisma.RegionHandoutUncheckedUpdateWithoutRegionInput>
+}
+
+export type RegionHandoutUpdateManyWithWhereWithoutRegionInput = {
+  where: Prisma.RegionHandoutScalarWhereInput
+  data: Prisma.XOR<Prisma.RegionHandoutUpdateManyMutationInput, Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionInput>
+}
+
+export type RegionHandoutCreateManyHandoutInput = {
+  RegionId: string
+}
+
+export type RegionHandoutUpdateWithoutHandoutInput = {
+  Region?: Prisma.RegionUpdateOneRequiredWithoutRegionHandoutsNestedInput
+}
+
+export type RegionHandoutUncheckedUpdateWithoutHandoutInput = {
+  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type RegionHandoutUncheckedUpdateManyWithoutHandoutInput = {
+  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type RegionHandoutCreateManyRegionInput = {
+  HandoutId: string
+}
+
+export type RegionHandoutUpdateWithoutRegionInput = {
+  Handout?: Prisma.HandoutUpdateOneRequiredWithoutRegionHandoutsNestedInput
+}
+
+export type RegionHandoutUncheckedUpdateWithoutRegionInput = {
+  HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type RegionHandoutUncheckedUpdateManyWithoutRegionInput = {
+  HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
 
 
 export type RegionHandoutSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   RegionId?: boolean
   HandoutId?: boolean
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
+  Handout?: boolean | Prisma.HandoutDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["regionHandout"]>
 
 export type RegionHandoutSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   RegionId?: boolean
   HandoutId?: boolean
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
+  Handout?: boolean | Prisma.HandoutDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["regionHandout"]>
 
 export type RegionHandoutSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   RegionId?: boolean
   HandoutId?: boolean
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
+  Handout?: boolean | Prisma.HandoutDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["regionHandout"]>
 
 export type RegionHandoutSelectScalar = {
@@ -268,10 +481,25 @@ export type RegionHandoutSelectScalar = {
 }
 
 export type RegionHandoutOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"RegionId" | "HandoutId", ExtArgs["result"]["regionHandout"]>
+export type RegionHandoutInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
+  Handout?: boolean | Prisma.HandoutDefaultArgs<ExtArgs>
+}
+export type RegionHandoutIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
+  Handout?: boolean | Prisma.HandoutDefaultArgs<ExtArgs>
+}
+export type RegionHandoutIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
+  Handout?: boolean | Prisma.HandoutDefaultArgs<ExtArgs>
+}
 
 export type $RegionHandoutPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "RegionHandout"
-  objects: {}
+  objects: {
+    Region: Prisma.$RegionPayload<ExtArgs>
+    Handout: Prisma.$HandoutPayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     RegionId: string
     HandoutId: string
@@ -669,6 +897,8 @@ readonly fields: RegionHandoutFieldRefs;
  */
 export interface Prisma__RegionHandoutClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  Region<T extends Prisma.RegionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RegionDefaultArgs<ExtArgs>>): Prisma.Prisma__RegionClient<runtime.Types.Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Handout<T extends Prisma.HandoutDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HandoutDefaultArgs<ExtArgs>>): Prisma.Prisma__HandoutClient<runtime.Types.Result.GetResult<Prisma.$HandoutPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -717,6 +947,10 @@ export type RegionHandoutFindUniqueArgs<ExtArgs extends runtime.Types.Extensions
    */
   omit?: Prisma.RegionHandoutOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionHandoutInclude<ExtArgs> | null
+  /**
    * Filter, which RegionHandout to fetch.
    */
   where: Prisma.RegionHandoutWhereUniqueInput
@@ -735,6 +969,10 @@ export type RegionHandoutFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Ext
    */
   omit?: Prisma.RegionHandoutOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionHandoutInclude<ExtArgs> | null
+  /**
    * Filter, which RegionHandout to fetch.
    */
   where: Prisma.RegionHandoutWhereUniqueInput
@@ -752,6 +990,10 @@ export type RegionHandoutFindFirstArgs<ExtArgs extends runtime.Types.Extensions.
    * Omit specific fields from the RegionHandout
    */
   omit?: Prisma.RegionHandoutOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionHandoutInclude<ExtArgs> | null
   /**
    * Filter, which RegionHandout to fetch.
    */
@@ -801,6 +1043,10 @@ export type RegionHandoutFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Exte
    */
   omit?: Prisma.RegionHandoutOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionHandoutInclude<ExtArgs> | null
+  /**
    * Filter, which RegionHandout to fetch.
    */
   where?: Prisma.RegionHandoutWhereInput
@@ -848,6 +1094,10 @@ export type RegionHandoutFindManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Omit specific fields from the RegionHandout
    */
   omit?: Prisma.RegionHandoutOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionHandoutInclude<ExtArgs> | null
   /**
    * Filter, which RegionHandouts to fetch.
    */
@@ -897,6 +1147,10 @@ export type RegionHandoutCreateArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.RegionHandoutOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionHandoutInclude<ExtArgs> | null
+  /**
    * The data needed to create a RegionHandout.
    */
   data: Prisma.XOR<Prisma.RegionHandoutCreateInput, Prisma.RegionHandoutUncheckedCreateInput>
@@ -930,6 +1184,10 @@ export type RegionHandoutCreateManyAndReturnArgs<ExtArgs extends runtime.Types.E
    */
   data: Prisma.RegionHandoutCreateManyInput | Prisma.RegionHandoutCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionHandoutIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -944,6 +1202,10 @@ export type RegionHandoutUpdateArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Omit specific fields from the RegionHandout
    */
   omit?: Prisma.RegionHandoutOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionHandoutInclude<ExtArgs> | null
   /**
    * The data needed to update a RegionHandout.
    */
@@ -996,6 +1258,10 @@ export type RegionHandoutUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.E
    * Limit how many RegionHandouts to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionHandoutIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1010,6 +1276,10 @@ export type RegionHandoutUpsertArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Omit specific fields from the RegionHandout
    */
   omit?: Prisma.RegionHandoutOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionHandoutInclude<ExtArgs> | null
   /**
    * The filter to search for the RegionHandout to update in case it exists.
    */
@@ -1036,6 +1306,10 @@ export type RegionHandoutDeleteArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Omit specific fields from the RegionHandout
    */
   omit?: Prisma.RegionHandoutOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionHandoutInclude<ExtArgs> | null
   /**
    * Filter which RegionHandout to delete.
    */
@@ -1068,4 +1342,8 @@ export type RegionHandoutDefaultArgs<ExtArgs extends runtime.Types.Extensions.In
    * Omit specific fields from the RegionHandout
    */
   omit?: Prisma.RegionHandoutOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionHandoutInclude<ExtArgs> | null
 }

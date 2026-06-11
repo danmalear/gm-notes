@@ -82,11 +82,12 @@ model File {
 }
 
 model Handout {
-  HandoutId  String @id @db.Uuid
-  CampaignId String @db.Uuid
-  Name       String
-  Type       String
-  Source     String
+  HandoutId      String          @id @db.Uuid
+  CampaignId     String          @db.Uuid
+  Name           String
+  Type           String
+  Source         String
+  regionHandouts RegionHandout[]
 
   @@schema("public")
 }
@@ -173,15 +174,19 @@ model Region {
   Name             String
   Lighting         String            @default("Default")
   RegionNarrations RegionNarration[]
+  regionHandouts   RegionHandout[]
 
   @@schema("public")
 }
 
 model RegionHandout {
-  RegionId  String @db.Uuid
-  HandoutId String @db.Uuid
+  RegionId  String  @db.Uuid
+  Region    Region  @relation(fields: [RegionId], references: [RegionId])
+  HandoutId String  @db.Uuid
+  Handout   Handout @relation(fields: [HandoutId], references: [HandoutId])
 
   @@id([RegionId, HandoutId])
+  @@index([HandoutId])
   @@schema("public")
 }
 
