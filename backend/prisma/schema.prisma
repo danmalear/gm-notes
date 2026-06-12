@@ -92,6 +92,14 @@ model Handout {
   @@schema("public")
 }
 
+enum HandoutType {
+  Text
+  Image
+  File
+
+  @@schema("public")
+}
+
 model Item {
   ItemId      String  @id @db.Uuid
   CampaignId  String? @db.Uuid
