@@ -1,8 +1,5 @@
 import type { ActionRec, ActionRepository } from '#action/action-repository.ts';
-import type {
-	HandoutRec,
-	HandoutRepository,
-} from '#handout/handout-repository.ts';
+import type { IHandoutRepository } from '#handout/handout-repository.ts';
 import type { ItemRec } from '#item/item-repository.ts';
 import type {
 	LocationItemRec,
@@ -10,6 +7,7 @@ import type {
 } from '#item/location-item-repository.ts';
 import type { INarrationRepository } from '#narration/narration-repository.ts';
 import type { INoteRepository } from '#note/note-repository.ts';
+import type { HandoutModel } from '#prisma-models/Handout.ts';
 import type { NarrationModel } from '#prisma-models/Narration.ts';
 import type { NoteModel } from '#prisma-models/Note.ts';
 import type { RelativeLighting } from '#shared/data-types.ts';
@@ -40,7 +38,7 @@ export interface RegionRefRec extends RegionRecShapes {
 	// Creatures: CreatureRec[];
 	Actions: ActionRec[];
 	Items: (ItemRec & LocationItemRec)[];
-	Handouts: HandoutRec[];
+	Handouts: HandoutModel[];
 	Notes: NoteModel[];
 }
 
@@ -50,7 +48,7 @@ export const pkColumn = 'RegionId';
 export interface RegionRepositoryConfig {
 	actionRepository: ActionRepository;
 	// creatureRepository: CreatureRepository;
-	handoutRepository: HandoutRepository;
+	handoutRepository: IHandoutRepository;
 	locationItemRepository: LocationItemRepository;
 	narrationRepository: INarrationRepository;
 	noteRepository: INoteRepository;
@@ -60,7 +58,7 @@ export interface RegionRepositoryConfig {
 export class RegionRepository extends Repository<RegionRec, RegionRefRec> {
 	actionRepository: ActionRepository;
 	// creatureRepository: CreatureRepository;
-	handoutRepository: HandoutRepository;
+	handoutRepository: IHandoutRepository;
 	locationItemRepository: LocationItemRepository;
 	narrationRepository: INarrationRepository;
 	noteRepository: INoteRepository;

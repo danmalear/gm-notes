@@ -1,38 +1,71 @@
-import { db } from '#shared/db.ts';
+import type {
+	HandoutCreateInput,
+	HandoutModel,
+	HandoutUpdateInput,
+} from '#prisma-models/Handout.ts';
 import { getMessage } from '#shared/error.ts';
-import { Repository } from '#shared/repository-old.ts';
+import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 
-export type HandoutType = 'Text' | 'Image' | 'File';
-
-export interface HandoutRec {
-	HandoutId: UUID;
-	CampaignId: UUID;
-	Name: string;
-	Type: HandoutType;
-	Source: string;
+export interface IHandoutRepository
+	extends IRepository<HandoutModel, HandoutCreateInput, HandoutUpdateInput> {
+	getByRegionId(regionId: UUID): Promise<HandoutModel[]>;
 }
 
-export interface RegionHandoutRec {
-	RegionId: UUID;
-	HandoutId: UUID;
-}
+export class HandoutRepository
+	extends Repository<HandoutModel, HandoutCreateInput, HandoutUpdateInput>
+	implements IHandoutRepository
+{
+	override descriptor = 'Handout';
 
-export const tableName = 'Handout';
-export const pkColumn = 'HandoutId';
-
-export const regionJoinTableName = 'RegionHandout';
-export const pkColumns = ['RegionId', 'HandoutId'];
-export const regionIdColName = 'RegionId';
-export const handoutIdColName = 'HandoutId';
-
-export class HandoutRepository extends Repository<HandoutRec> {
-	constructor() {
-		super(tableName, pkColumn);
+	override async getByIdRaw(handoutId: UUID): Promise<HandoutModel | null> {
+		try {
+			return await this.prisma.handout.findUnique({
+				where: {
+					HandoutId: handoutId,
+				},
+			});
+		} catch (e) {
+			throw this.getByIdError(handoutId, e);
+		}
 	}
 
-	override async getById(id: UUID): Promise<HandoutRec | undefined> {
+	override async getById(id: UUID): Promise<HandoutModel | null> {
 		return await this.getByIdRaw(id);
+	}
+
+	override async getAll(): Promise<HandoutModel[]> {
+		try {
+			return await this.prisma.handout.findMany();
+		} catch (e) {
+			throw this.getAllError(e);
+		}
+	}
+
+	override async create(data: HandoutCreateInput): Promise<HandoutModel> {
+		try {
+			return await this.prisma.handout.create({
+				data,
+			});
+		} catch (e) {
+			throw this.createError(e);
+		}
+	}
+
+	override async update(
+		handoutId: UUID,
+		data: HandoutUpdateInput,
+	): Promise<HandoutModel> {
+		try {
+			return await this.prisma.handout.update({
+				where: {
+					HandoutId: handoutId,
+				},
+				data,
+			});
+		} catch (e) {
+			throw this.updateError(handoutId, e);
+		}
 	}
 
 	/**
@@ -40,18 +73,20 @@ export class HandoutRepository extends Repository<HandoutRec> {
 	 * @param id UUID of the region to get handouts for
 	 * @returns The list of handouts (empty array if none found)
 	 */
-	async getByRegionId(regionId: UUID) {
+	async getByRegionId(regionId: UUID): Promise<HandoutModel[]> {
 		try {
-			return await db<HandoutRec>(this.tableName)
-				.innerJoin<RegionHandoutRec>(
-					regionJoinTableName,
-					`${regionJoinTableName}.${handoutIdColName}`,
-					`${this.tableName}.${this.pkColumn}`,
-				)
-				.where(`${regionJoinTableName}.${regionIdColName}`, regionId);
+			return await this.prisma.handout.findMany({
+				where: {
+					RegionHandouts: {
+						some: {
+							RegionId: regionId,
+						},
+					},
+				},
+			});
 		} catch (e) {
-			throw Error(
-				`Error getting ${this.tableName} records for region ID ${regionId}: ${getMessage(e)}`,
+			throw new Error(
+				`Error getting ${this.descriptor} records by Region ID ${regionId}: ${getMessage(e)}`,
 			);
 		}
 	}
