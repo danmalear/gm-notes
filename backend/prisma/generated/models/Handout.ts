@@ -28,7 +28,7 @@ export type HandoutMinAggregateOutputType = {
   HandoutId: string | null
   CampaignId: string | null
   Name: string | null
-  Type: string | null
+  Type: $Enums.HandoutType | null
   Source: string | null
 }
 
@@ -36,7 +36,7 @@ export type HandoutMaxAggregateOutputType = {
   HandoutId: string | null
   CampaignId: string | null
   Name: string | null
-  Type: string | null
+  Type: $Enums.HandoutType | null
   Source: string | null
 }
 
@@ -151,7 +151,7 @@ export type HandoutGroupByOutputType = {
   HandoutId: string
   CampaignId: string
   Name: string
-  Type: string
+  Type: $Enums.HandoutType
   Source: string
   _count: HandoutCountAggregateOutputType | null
   _min: HandoutMinAggregateOutputType | null
@@ -180,7 +180,7 @@ export type HandoutWhereInput = {
   HandoutId?: Prisma.UuidFilter<"Handout"> | string
   CampaignId?: Prisma.UuidFilter<"Handout"> | string
   Name?: Prisma.StringFilter<"Handout"> | string
-  Type?: Prisma.StringFilter<"Handout"> | string
+  Type?: Prisma.EnumHandoutTypeFilter<"Handout"> | $Enums.HandoutType
   Source?: Prisma.StringFilter<"Handout"> | string
   RegionHandouts?: Prisma.RegionHandoutListRelationFilter
 }
@@ -201,7 +201,7 @@ export type HandoutWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.HandoutWhereInput | Prisma.HandoutWhereInput[]
   CampaignId?: Prisma.UuidFilter<"Handout"> | string
   Name?: Prisma.StringFilter<"Handout"> | string
-  Type?: Prisma.StringFilter<"Handout"> | string
+  Type?: Prisma.EnumHandoutTypeFilter<"Handout"> | $Enums.HandoutType
   Source?: Prisma.StringFilter<"Handout"> | string
   RegionHandouts?: Prisma.RegionHandoutListRelationFilter
 }, "HandoutId">
@@ -224,7 +224,7 @@ export type HandoutScalarWhereWithAggregatesInput = {
   HandoutId?: Prisma.UuidWithAggregatesFilter<"Handout"> | string
   CampaignId?: Prisma.UuidWithAggregatesFilter<"Handout"> | string
   Name?: Prisma.StringWithAggregatesFilter<"Handout"> | string
-  Type?: Prisma.StringWithAggregatesFilter<"Handout"> | string
+  Type?: Prisma.EnumHandoutTypeWithAggregatesFilter<"Handout"> | $Enums.HandoutType
   Source?: Prisma.StringWithAggregatesFilter<"Handout"> | string
 }
 
@@ -232,7 +232,7 @@ export type HandoutCreateInput = {
   HandoutId: string
   CampaignId: string
   Name: string
-  Type: string
+  Type: $Enums.HandoutType
   Source: string
   RegionHandouts?: Prisma.RegionHandoutCreateNestedManyWithoutHandoutInput
 }
@@ -241,7 +241,7 @@ export type HandoutUncheckedCreateInput = {
   HandoutId: string
   CampaignId: string
   Name: string
-  Type: string
+  Type: $Enums.HandoutType
   Source: string
   RegionHandouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutHandoutInput
 }
@@ -250,7 +250,7 @@ export type HandoutUpdateInput = {
   HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
   CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  Type?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.EnumHandoutTypeFieldUpdateOperationsInput | $Enums.HandoutType
   Source?: Prisma.StringFieldUpdateOperationsInput | string
   RegionHandouts?: Prisma.RegionHandoutUpdateManyWithoutHandoutNestedInput
 }
@@ -259,7 +259,7 @@ export type HandoutUncheckedUpdateInput = {
   HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
   CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  Type?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.EnumHandoutTypeFieldUpdateOperationsInput | $Enums.HandoutType
   Source?: Prisma.StringFieldUpdateOperationsInput | string
   RegionHandouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutHandoutNestedInput
 }
@@ -268,7 +268,7 @@ export type HandoutCreateManyInput = {
   HandoutId: string
   CampaignId: string
   Name: string
-  Type: string
+  Type: $Enums.HandoutType
   Source: string
 }
 
@@ -276,7 +276,7 @@ export type HandoutUpdateManyMutationInput = {
   HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
   CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  Type?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.EnumHandoutTypeFieldUpdateOperationsInput | $Enums.HandoutType
   Source?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -284,7 +284,7 @@ export type HandoutUncheckedUpdateManyInput = {
   HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
   CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  Type?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.EnumHandoutTypeFieldUpdateOperationsInput | $Enums.HandoutType
   Source?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -317,6 +317,10 @@ export type HandoutScalarRelationFilter = {
   isNot?: Prisma.HandoutWhereInput
 }
 
+export type EnumHandoutTypeFieldUpdateOperationsInput = {
+  set?: $Enums.HandoutType
+}
+
 export type HandoutCreateNestedOneWithoutRegionHandoutsInput = {
   create?: Prisma.XOR<Prisma.HandoutCreateWithoutRegionHandoutsInput, Prisma.HandoutUncheckedCreateWithoutRegionHandoutsInput>
   connectOrCreate?: Prisma.HandoutCreateOrConnectWithoutRegionHandoutsInput
@@ -335,7 +339,7 @@ export type HandoutCreateWithoutRegionHandoutsInput = {
   HandoutId: string
   CampaignId: string
   Name: string
-  Type: string
+  Type: $Enums.HandoutType
   Source: string
 }
 
@@ -343,7 +347,7 @@ export type HandoutUncheckedCreateWithoutRegionHandoutsInput = {
   HandoutId: string
   CampaignId: string
   Name: string
-  Type: string
+  Type: $Enums.HandoutType
   Source: string
 }
 
@@ -367,7 +371,7 @@ export type HandoutUpdateWithoutRegionHandoutsInput = {
   HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
   CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  Type?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.EnumHandoutTypeFieldUpdateOperationsInput | $Enums.HandoutType
   Source?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -375,7 +379,7 @@ export type HandoutUncheckedUpdateWithoutRegionHandoutsInput = {
   HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
   CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  Type?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.EnumHandoutTypeFieldUpdateOperationsInput | $Enums.HandoutType
   Source?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -461,7 +465,7 @@ export type $HandoutPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     HandoutId: string
     CampaignId: string
     Name: string
-    Type: string
+    Type: $Enums.HandoutType
     Source: string
   }, ExtArgs["result"]["handout"]>
   composites: {}
@@ -890,7 +894,7 @@ export interface HandoutFieldRefs {
   readonly HandoutId: Prisma.FieldRef<"Handout", 'String'>
   readonly CampaignId: Prisma.FieldRef<"Handout", 'String'>
   readonly Name: Prisma.FieldRef<"Handout", 'String'>
-  readonly Type: Prisma.FieldRef<"Handout", 'String'>
+  readonly Type: Prisma.FieldRef<"Handout", 'HandoutType'>
   readonly Source: Prisma.FieldRef<"Handout", 'String'>
 }
     

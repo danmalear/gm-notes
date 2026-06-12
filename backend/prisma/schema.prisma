@@ -85,7 +85,7 @@ model Handout {
   HandoutId      String          @id @db.Uuid
   CampaignId     String          @db.Uuid
   Name           String
-  Type           String
+  Type           HandoutType
   Source         String
   RegionHandouts RegionHandout[]
 

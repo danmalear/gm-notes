@@ -2519,6 +2519,20 @@ export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'HandoutType'
+ */
+export type EnumHandoutTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HandoutType'>
+    
+
+
+/**
+ * Reference to a field of type 'HandoutType[]'
+ */
+export type ListEnumHandoutTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HandoutType[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
