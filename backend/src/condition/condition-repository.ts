@@ -1,46 +1,75 @@
-import { db } from '#shared/db.ts';
-import { tableColumns } from '#shared/entity-utils.ts';
+import type {
+	ConditionCreateInput,
+	ConditionModel,
+	ConditionUpdateInput,
+} from '#prisma-models/Condition.ts';
 import { getMessage } from '#shared/error.ts';
-import { Repository } from '#shared/repository-old.ts';
+import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 
-export interface ConditionRec {
-	ConditionId: UUID;
-	CampaignId: UUID;
-	Name: string;
-	Description: string;
-	IsMet: boolean;
+export interface IConditionRepository
+	extends IRepository<
+		ConditionModel,
+		ConditionCreateInput,
+		ConditionUpdateInput
+	> {
+	getByActionId(actionId: UUID): Promise<ConditionModel[]>;
 }
 
-export interface ActionConditionRec {
-	ActionId: UUID;
-	ConditionId: UUID;
-}
+export class ConditionRepository
+	extends Repository<ConditionModel, ConditionCreateInput, ConditionUpdateInput>
+	implements IConditionRepository
+{
+	override descriptor = 'Condition';
 
-export const tableName = 'Condition';
-export const pkColumn = 'ConditionId';
-
-const columnNames: (keyof ConditionRec)[] = [
-	'ConditionId',
-	'CampaignId',
-	'Name',
-	'Description',
-	'IsMet',
-];
-
-export const tableColumnNames = tableColumns(tableName, columnNames);
-
-export const actionJoinTableName = 'ActionCondition';
-export const actionIdColName = 'ActionId';
-export const conditionIdColName = 'ConditionId';
-
-export class ConditionRepository extends Repository<ConditionRec> {
-	constructor() {
-		super(tableName, pkColumn);
+	override async getByIdRaw(conditionId: UUID): Promise<ConditionModel | null> {
+		try {
+			return await this.prisma.condition.findUnique({
+				where: {
+					ConditionId: conditionId,
+				},
+			});
+		} catch (e) {
+			throw this.getByIdError(conditionId, e);
+		}
 	}
 
-	override async getById(id: UUID): Promise<ConditionRec | undefined> {
+	override async getById(id: UUID): Promise<ConditionModel | null> {
 		return await this.getByIdRaw(id);
+	}
+
+	override async getAll(): Promise<ConditionModel[]> {
+		try {
+			return await this.prisma.condition.findMany();
+		} catch (e) {
+			throw this.getAllError(e);
+		}
+	}
+
+	override async create(data: ConditionCreateInput): Promise<ConditionModel> {
+		try {
+			return await this.prisma.condition.create({
+				data,
+			});
+		} catch (e) {
+			throw this.createError(e);
+		}
+	}
+
+	override async update(
+		conditionId: UUID,
+		data: ConditionUpdateInput,
+	): Promise<ConditionModel> {
+		try {
+			return await this.prisma.condition.update({
+				where: {
+					ConditionId: conditionId,
+				},
+				data,
+			});
+		} catch (e) {
+			throw this.updateError(conditionId, e);
+		}
 	}
 
 	/**
@@ -50,17 +79,19 @@ export class ConditionRepository extends Repository<ConditionRec> {
 	 */
 	async getByActionId(actionId: UUID) {
 		try {
-			return await db<ConditionRec>(this.tableName)
-				.innerJoin<ActionConditionRec>(
-					actionJoinTableName,
-					`${actionJoinTableName}.${conditionIdColName}`,
-					`${this.tableName}.${this.pkColumn}`,
-				)
-				.where(`${actionJoinTableName}.${actionIdColName}`, actionId)
-				.select<ConditionRec[]>(tableColumnNames);
+			const conditions = await this.prisma.condition.findMany({
+				where: {
+					ActionConditions: {
+						some: {
+							ActionId: actionId,
+						},
+					},
+				},
+			});
+			return conditions;
 		} catch (e) {
-			throw Error(
-				`Error getting ${this.tableName} records for action ID ${actionId}: ${getMessage(e)}`,
+			throw new Error(
+				`Error getting ${this.descriptor} records by Action ID ${actionId}: ${getMessage(e)}`,
 			);
 		}
 	}
