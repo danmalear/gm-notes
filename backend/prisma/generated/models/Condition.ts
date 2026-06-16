@@ -182,6 +182,7 @@ export type ConditionWhereInput = {
   Description?: Prisma.StringFilter<"Condition"> | string
   IsMet?: Prisma.BoolFilter<"Condition"> | boolean
   CampaignId?: Prisma.UuidFilter<"Condition"> | string
+  actionConditions?: Prisma.ActionConditionListRelationFilter
 }
 
 export type ConditionOrderByWithRelationInput = {
@@ -190,6 +191,7 @@ export type ConditionOrderByWithRelationInput = {
   Description?: Prisma.SortOrder
   IsMet?: Prisma.SortOrder
   CampaignId?: Prisma.SortOrder
+  actionConditions?: Prisma.ActionConditionOrderByRelationAggregateInput
 }
 
 export type ConditionWhereUniqueInput = Prisma.AtLeast<{
@@ -201,6 +203,7 @@ export type ConditionWhereUniqueInput = Prisma.AtLeast<{
   Description?: Prisma.StringFilter<"Condition"> | string
   IsMet?: Prisma.BoolFilter<"Condition"> | boolean
   CampaignId?: Prisma.UuidFilter<"Condition"> | string
+  actionConditions?: Prisma.ActionConditionListRelationFilter
 }, "ConditionId">
 
 export type ConditionOrderByWithAggregationInput = {
@@ -231,6 +234,7 @@ export type ConditionCreateInput = {
   Description: string
   IsMet?: boolean
   CampaignId: string
+  actionConditions?: Prisma.ActionConditionCreateNestedManyWithoutConditionInput
 }
 
 export type ConditionUncheckedCreateInput = {
@@ -239,6 +243,7 @@ export type ConditionUncheckedCreateInput = {
   Description: string
   IsMet?: boolean
   CampaignId: string
+  actionConditions?: Prisma.ActionConditionUncheckedCreateNestedManyWithoutConditionInput
 }
 
 export type ConditionUpdateInput = {
@@ -247,6 +252,7 @@ export type ConditionUpdateInput = {
   Description?: Prisma.StringFieldUpdateOperationsInput | string
   IsMet?: Prisma.BoolFieldUpdateOperationsInput | boolean
   CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  actionConditions?: Prisma.ActionConditionUpdateManyWithoutConditionNestedInput
 }
 
 export type ConditionUncheckedUpdateInput = {
@@ -255,6 +261,7 @@ export type ConditionUncheckedUpdateInput = {
   Description?: Prisma.StringFieldUpdateOperationsInput | string
   IsMet?: Prisma.BoolFieldUpdateOperationsInput | boolean
   CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  actionConditions?: Prisma.ActionConditionUncheckedUpdateManyWithoutConditionNestedInput
 }
 
 export type ConditionCreateManyInput = {
@@ -281,6 +288,11 @@ export type ConditionUncheckedUpdateManyInput = {
   CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
+export type ConditionScalarRelationFilter = {
+  is?: Prisma.ConditionWhereInput
+  isNot?: Prisma.ConditionWhereInput
+}
+
 export type ConditionCountOrderByAggregateInput = {
   ConditionId?: Prisma.SortOrder
   Name?: Prisma.SortOrder
@@ -305,10 +317,101 @@ export type ConditionMinOrderByAggregateInput = {
   CampaignId?: Prisma.SortOrder
 }
 
+export type ConditionCreateNestedOneWithoutActionConditionsInput = {
+  create?: Prisma.XOR<Prisma.ConditionCreateWithoutActionConditionsInput, Prisma.ConditionUncheckedCreateWithoutActionConditionsInput>
+  connectOrCreate?: Prisma.ConditionCreateOrConnectWithoutActionConditionsInput
+  connect?: Prisma.ConditionWhereUniqueInput
+}
+
+export type ConditionUpdateOneRequiredWithoutActionConditionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ConditionCreateWithoutActionConditionsInput, Prisma.ConditionUncheckedCreateWithoutActionConditionsInput>
+  connectOrCreate?: Prisma.ConditionCreateOrConnectWithoutActionConditionsInput
+  upsert?: Prisma.ConditionUpsertWithoutActionConditionsInput
+  connect?: Prisma.ConditionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ConditionUpdateToOneWithWhereWithoutActionConditionsInput, Prisma.ConditionUpdateWithoutActionConditionsInput>, Prisma.ConditionUncheckedUpdateWithoutActionConditionsInput>
+}
+
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
+export type ConditionCreateWithoutActionConditionsInput = {
+  ConditionId: string
+  Name: string
+  Description: string
+  IsMet?: boolean
+  CampaignId: string
+}
+
+export type ConditionUncheckedCreateWithoutActionConditionsInput = {
+  ConditionId: string
+  Name: string
+  Description: string
+  IsMet?: boolean
+  CampaignId: string
+}
+
+export type ConditionCreateOrConnectWithoutActionConditionsInput = {
+  where: Prisma.ConditionWhereUniqueInput
+  create: Prisma.XOR<Prisma.ConditionCreateWithoutActionConditionsInput, Prisma.ConditionUncheckedCreateWithoutActionConditionsInput>
+}
+
+export type ConditionUpsertWithoutActionConditionsInput = {
+  update: Prisma.XOR<Prisma.ConditionUpdateWithoutActionConditionsInput, Prisma.ConditionUncheckedUpdateWithoutActionConditionsInput>
+  create: Prisma.XOR<Prisma.ConditionCreateWithoutActionConditionsInput, Prisma.ConditionUncheckedCreateWithoutActionConditionsInput>
+  where?: Prisma.ConditionWhereInput
+}
+
+export type ConditionUpdateToOneWithWhereWithoutActionConditionsInput = {
+  where?: Prisma.ConditionWhereInput
+  data: Prisma.XOR<Prisma.ConditionUpdateWithoutActionConditionsInput, Prisma.ConditionUncheckedUpdateWithoutActionConditionsInput>
+}
+
+export type ConditionUpdateWithoutActionConditionsInput = {
+  ConditionId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Description?: Prisma.StringFieldUpdateOperationsInput | string
+  IsMet?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type ConditionUncheckedUpdateWithoutActionConditionsInput = {
+  ConditionId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Description?: Prisma.StringFieldUpdateOperationsInput | string
+  IsMet?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+
+/**
+ * Count Type ConditionCountOutputType
+ */
+
+export type ConditionCountOutputType = {
+  actionConditions: number
+}
+
+export type ConditionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  actionConditions?: boolean | ConditionCountOutputTypeCountActionConditionsArgs
+}
+
+/**
+ * ConditionCountOutputType without action
+ */
+export type ConditionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ConditionCountOutputType
+   */
+  select?: Prisma.ConditionCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ConditionCountOutputType without action
+ */
+export type ConditionCountOutputTypeCountActionConditionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ActionConditionWhereInput
+}
 
 
 export type ConditionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -317,6 +420,8 @@ export type ConditionSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   Description?: boolean
   IsMet?: boolean
   CampaignId?: boolean
+  actionConditions?: boolean | Prisma.Condition$actionConditionsArgs<ExtArgs>
+  _count?: boolean | Prisma.ConditionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["condition"]>
 
 export type ConditionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -344,10 +449,18 @@ export type ConditionSelectScalar = {
 }
 
 export type ConditionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"ConditionId" | "Name" | "Description" | "IsMet" | "CampaignId", ExtArgs["result"]["condition"]>
+export type ConditionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  actionConditions?: boolean | Prisma.Condition$actionConditionsArgs<ExtArgs>
+  _count?: boolean | Prisma.ConditionCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type ConditionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type ConditionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $ConditionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Condition"
-  objects: {}
+  objects: {
+    actionConditions: Prisma.$ActionConditionPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     ConditionId: string
     Name: string
@@ -748,6 +861,7 @@ readonly fields: ConditionFieldRefs;
  */
 export interface Prisma__ConditionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  actionConditions<T extends Prisma.Condition$actionConditionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Condition$actionConditionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActionConditionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -799,6 +913,10 @@ export type ConditionFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.ConditionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConditionInclude<ExtArgs> | null
+  /**
    * Filter, which Condition to fetch.
    */
   where: Prisma.ConditionWhereUniqueInput
@@ -817,6 +935,10 @@ export type ConditionFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.ConditionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConditionInclude<ExtArgs> | null
+  /**
    * Filter, which Condition to fetch.
    */
   where: Prisma.ConditionWhereUniqueInput
@@ -834,6 +956,10 @@ export type ConditionFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Omit specific fields from the Condition
    */
   omit?: Prisma.ConditionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConditionInclude<ExtArgs> | null
   /**
    * Filter, which Condition to fetch.
    */
@@ -883,6 +1009,10 @@ export type ConditionFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.ConditionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConditionInclude<ExtArgs> | null
+  /**
    * Filter, which Condition to fetch.
    */
   where?: Prisma.ConditionWhereInput
@@ -930,6 +1060,10 @@ export type ConditionFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the Condition
    */
   omit?: Prisma.ConditionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConditionInclude<ExtArgs> | null
   /**
    * Filter, which Conditions to fetch.
    */
@@ -979,6 +1113,10 @@ export type ConditionCreateArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.ConditionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConditionInclude<ExtArgs> | null
+  /**
    * The data needed to create a Condition.
    */
   data: Prisma.XOR<Prisma.ConditionCreateInput, Prisma.ConditionUncheckedCreateInput>
@@ -1026,6 +1164,10 @@ export type ConditionUpdateArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Condition
    */
   omit?: Prisma.ConditionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConditionInclude<ExtArgs> | null
   /**
    * The data needed to update a Condition.
    */
@@ -1093,6 +1235,10 @@ export type ConditionUpsertArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.ConditionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConditionInclude<ExtArgs> | null
+  /**
    * The filter to search for the Condition to update in case it exists.
    */
   where: Prisma.ConditionWhereUniqueInput
@@ -1119,6 +1265,10 @@ export type ConditionDeleteArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.ConditionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConditionInclude<ExtArgs> | null
+  /**
    * Filter which Condition to delete.
    */
   where: Prisma.ConditionWhereUniqueInput
@@ -1139,6 +1289,30 @@ export type ConditionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
+ * Condition.actionConditions
+ */
+export type Condition$actionConditionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ActionCondition
+   */
+  select?: Prisma.ActionConditionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ActionCondition
+   */
+  omit?: Prisma.ActionConditionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionConditionInclude<ExtArgs> | null
+  where?: Prisma.ActionConditionWhereInput
+  orderBy?: Prisma.ActionConditionOrderByWithRelationInput | Prisma.ActionConditionOrderByWithRelationInput[]
+  cursor?: Prisma.ActionConditionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ActionConditionScalarFieldEnum | Prisma.ActionConditionScalarFieldEnum[]
+}
+
+/**
  * Condition without action
  */
 export type ConditionDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1150,4 +1324,8 @@ export type ConditionDefaultArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Condition
    */
   omit?: Prisma.ConditionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConditionInclude<ExtArgs> | null
 }

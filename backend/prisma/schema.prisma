@@ -31,20 +31,24 @@ model AbilityCheck {
 }
 
 model Action {
-  ActionId    String  @id @db.Uuid
-  TargetId    String  @db.Uuid
-  Name        String
-  Type        String?
-  NarrationId String? @db.Uuid
+  ActionId         String            @id @db.Uuid
+  TargetId         String            @db.Uuid
+  Name             String
+  Type             String?
+  NarrationId      String?           @db.Uuid
+  ActionConditions ActionCondition[]
 
   @@schema("public")
 }
 
 model ActionCondition {
-  ActionId    String @db.Uuid
-  ConditionId String @db.Uuid
+  ActionId    String    @db.Uuid
+  Action      Action    @relation(fields: [ActionId], references: [ActionId])
+  ConditionId String    @db.Uuid
+  Condition   Condition @relation(fields: [ConditionId], references: [ConditionId])
 
   @@id([ActionId, ConditionId])
+  @@index([ConditionId])
   @@schema("public")
 }
 
@@ -65,11 +69,12 @@ model CampaignTemplate {
 }
 
 model Condition {
-  ConditionId String  @id @db.Uuid
-  Name        String
-  Description String
-  IsMet       Boolean @default(false)
-  CampaignId  String  @db.Uuid
+  ConditionId      String            @id @db.Uuid
+  Name             String
+  Description      String
+  IsMet            Boolean           @default(false)
+  CampaignId       String            @db.Uuid
+  actionConditions ActionCondition[]
 
   @@schema("public")
 }

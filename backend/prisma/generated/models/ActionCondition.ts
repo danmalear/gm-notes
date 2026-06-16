@@ -158,11 +158,15 @@ export type ActionConditionWhereInput = {
   NOT?: Prisma.ActionConditionWhereInput | Prisma.ActionConditionWhereInput[]
   ActionId?: Prisma.UuidFilter<"ActionCondition"> | string
   ConditionId?: Prisma.UuidFilter<"ActionCondition"> | string
+  Action?: Prisma.XOR<Prisma.ActionScalarRelationFilter, Prisma.ActionWhereInput>
+  Condition?: Prisma.XOR<Prisma.ConditionScalarRelationFilter, Prisma.ConditionWhereInput>
 }
 
 export type ActionConditionOrderByWithRelationInput = {
   ActionId?: Prisma.SortOrder
   ConditionId?: Prisma.SortOrder
+  Action?: Prisma.ActionOrderByWithRelationInput
+  Condition?: Prisma.ConditionOrderByWithRelationInput
 }
 
 export type ActionConditionWhereUniqueInput = Prisma.AtLeast<{
@@ -172,6 +176,8 @@ export type ActionConditionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ActionConditionWhereInput | Prisma.ActionConditionWhereInput[]
   ActionId?: Prisma.UuidFilter<"ActionCondition"> | string
   ConditionId?: Prisma.UuidFilter<"ActionCondition"> | string
+  Action?: Prisma.XOR<Prisma.ActionScalarRelationFilter, Prisma.ActionWhereInput>
+  Condition?: Prisma.XOR<Prisma.ConditionScalarRelationFilter, Prisma.ConditionWhereInput>
 }, "ActionId_ConditionId">
 
 export type ActionConditionOrderByWithAggregationInput = {
@@ -191,8 +197,8 @@ export type ActionConditionScalarWhereWithAggregatesInput = {
 }
 
 export type ActionConditionCreateInput = {
-  ActionId: string
-  ConditionId: string
+  Action: Prisma.ActionCreateNestedOneWithoutActionConditionsInput
+  Condition: Prisma.ConditionCreateNestedOneWithoutActionConditionsInput
 }
 
 export type ActionConditionUncheckedCreateInput = {
@@ -201,8 +207,8 @@ export type ActionConditionUncheckedCreateInput = {
 }
 
 export type ActionConditionUpdateInput = {
-  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
-  ConditionId?: Prisma.StringFieldUpdateOperationsInput | string
+  Action?: Prisma.ActionUpdateOneRequiredWithoutActionConditionsNestedInput
+  Condition?: Prisma.ConditionUpdateOneRequiredWithoutActionConditionsNestedInput
 }
 
 export type ActionConditionUncheckedUpdateInput = {
@@ -216,13 +222,22 @@ export type ActionConditionCreateManyInput = {
 }
 
 export type ActionConditionUpdateManyMutationInput = {
-  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
-  ConditionId?: Prisma.StringFieldUpdateOperationsInput | string
+
 }
 
 export type ActionConditionUncheckedUpdateManyInput = {
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   ConditionId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type ActionConditionListRelationFilter = {
+  every?: Prisma.ActionConditionWhereInput
+  some?: Prisma.ActionConditionWhereInput
+  none?: Prisma.ActionConditionWhereInput
+}
+
+export type ActionConditionOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type ActionConditionActionIdConditionIdCompoundUniqueInput = {
@@ -245,21 +260,219 @@ export type ActionConditionMinOrderByAggregateInput = {
   ConditionId?: Prisma.SortOrder
 }
 
+export type ActionConditionCreateNestedManyWithoutActionInput = {
+  create?: Prisma.XOR<Prisma.ActionConditionCreateWithoutActionInput, Prisma.ActionConditionUncheckedCreateWithoutActionInput> | Prisma.ActionConditionCreateWithoutActionInput[] | Prisma.ActionConditionUncheckedCreateWithoutActionInput[]
+  connectOrCreate?: Prisma.ActionConditionCreateOrConnectWithoutActionInput | Prisma.ActionConditionCreateOrConnectWithoutActionInput[]
+  createMany?: Prisma.ActionConditionCreateManyActionInputEnvelope
+  connect?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+}
+
+export type ActionConditionUncheckedCreateNestedManyWithoutActionInput = {
+  create?: Prisma.XOR<Prisma.ActionConditionCreateWithoutActionInput, Prisma.ActionConditionUncheckedCreateWithoutActionInput> | Prisma.ActionConditionCreateWithoutActionInput[] | Prisma.ActionConditionUncheckedCreateWithoutActionInput[]
+  connectOrCreate?: Prisma.ActionConditionCreateOrConnectWithoutActionInput | Prisma.ActionConditionCreateOrConnectWithoutActionInput[]
+  createMany?: Prisma.ActionConditionCreateManyActionInputEnvelope
+  connect?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+}
+
+export type ActionConditionUpdateManyWithoutActionNestedInput = {
+  create?: Prisma.XOR<Prisma.ActionConditionCreateWithoutActionInput, Prisma.ActionConditionUncheckedCreateWithoutActionInput> | Prisma.ActionConditionCreateWithoutActionInput[] | Prisma.ActionConditionUncheckedCreateWithoutActionInput[]
+  connectOrCreate?: Prisma.ActionConditionCreateOrConnectWithoutActionInput | Prisma.ActionConditionCreateOrConnectWithoutActionInput[]
+  upsert?: Prisma.ActionConditionUpsertWithWhereUniqueWithoutActionInput | Prisma.ActionConditionUpsertWithWhereUniqueWithoutActionInput[]
+  createMany?: Prisma.ActionConditionCreateManyActionInputEnvelope
+  set?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+  disconnect?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+  delete?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+  connect?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+  update?: Prisma.ActionConditionUpdateWithWhereUniqueWithoutActionInput | Prisma.ActionConditionUpdateWithWhereUniqueWithoutActionInput[]
+  updateMany?: Prisma.ActionConditionUpdateManyWithWhereWithoutActionInput | Prisma.ActionConditionUpdateManyWithWhereWithoutActionInput[]
+  deleteMany?: Prisma.ActionConditionScalarWhereInput | Prisma.ActionConditionScalarWhereInput[]
+}
+
+export type ActionConditionUncheckedUpdateManyWithoutActionNestedInput = {
+  create?: Prisma.XOR<Prisma.ActionConditionCreateWithoutActionInput, Prisma.ActionConditionUncheckedCreateWithoutActionInput> | Prisma.ActionConditionCreateWithoutActionInput[] | Prisma.ActionConditionUncheckedCreateWithoutActionInput[]
+  connectOrCreate?: Prisma.ActionConditionCreateOrConnectWithoutActionInput | Prisma.ActionConditionCreateOrConnectWithoutActionInput[]
+  upsert?: Prisma.ActionConditionUpsertWithWhereUniqueWithoutActionInput | Prisma.ActionConditionUpsertWithWhereUniqueWithoutActionInput[]
+  createMany?: Prisma.ActionConditionCreateManyActionInputEnvelope
+  set?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+  disconnect?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+  delete?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+  connect?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+  update?: Prisma.ActionConditionUpdateWithWhereUniqueWithoutActionInput | Prisma.ActionConditionUpdateWithWhereUniqueWithoutActionInput[]
+  updateMany?: Prisma.ActionConditionUpdateManyWithWhereWithoutActionInput | Prisma.ActionConditionUpdateManyWithWhereWithoutActionInput[]
+  deleteMany?: Prisma.ActionConditionScalarWhereInput | Prisma.ActionConditionScalarWhereInput[]
+}
+
+export type ActionConditionCreateNestedManyWithoutConditionInput = {
+  create?: Prisma.XOR<Prisma.ActionConditionCreateWithoutConditionInput, Prisma.ActionConditionUncheckedCreateWithoutConditionInput> | Prisma.ActionConditionCreateWithoutConditionInput[] | Prisma.ActionConditionUncheckedCreateWithoutConditionInput[]
+  connectOrCreate?: Prisma.ActionConditionCreateOrConnectWithoutConditionInput | Prisma.ActionConditionCreateOrConnectWithoutConditionInput[]
+  createMany?: Prisma.ActionConditionCreateManyConditionInputEnvelope
+  connect?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+}
+
+export type ActionConditionUncheckedCreateNestedManyWithoutConditionInput = {
+  create?: Prisma.XOR<Prisma.ActionConditionCreateWithoutConditionInput, Prisma.ActionConditionUncheckedCreateWithoutConditionInput> | Prisma.ActionConditionCreateWithoutConditionInput[] | Prisma.ActionConditionUncheckedCreateWithoutConditionInput[]
+  connectOrCreate?: Prisma.ActionConditionCreateOrConnectWithoutConditionInput | Prisma.ActionConditionCreateOrConnectWithoutConditionInput[]
+  createMany?: Prisma.ActionConditionCreateManyConditionInputEnvelope
+  connect?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+}
+
+export type ActionConditionUpdateManyWithoutConditionNestedInput = {
+  create?: Prisma.XOR<Prisma.ActionConditionCreateWithoutConditionInput, Prisma.ActionConditionUncheckedCreateWithoutConditionInput> | Prisma.ActionConditionCreateWithoutConditionInput[] | Prisma.ActionConditionUncheckedCreateWithoutConditionInput[]
+  connectOrCreate?: Prisma.ActionConditionCreateOrConnectWithoutConditionInput | Prisma.ActionConditionCreateOrConnectWithoutConditionInput[]
+  upsert?: Prisma.ActionConditionUpsertWithWhereUniqueWithoutConditionInput | Prisma.ActionConditionUpsertWithWhereUniqueWithoutConditionInput[]
+  createMany?: Prisma.ActionConditionCreateManyConditionInputEnvelope
+  set?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+  disconnect?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+  delete?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+  connect?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+  update?: Prisma.ActionConditionUpdateWithWhereUniqueWithoutConditionInput | Prisma.ActionConditionUpdateWithWhereUniqueWithoutConditionInput[]
+  updateMany?: Prisma.ActionConditionUpdateManyWithWhereWithoutConditionInput | Prisma.ActionConditionUpdateManyWithWhereWithoutConditionInput[]
+  deleteMany?: Prisma.ActionConditionScalarWhereInput | Prisma.ActionConditionScalarWhereInput[]
+}
+
+export type ActionConditionUncheckedUpdateManyWithoutConditionNestedInput = {
+  create?: Prisma.XOR<Prisma.ActionConditionCreateWithoutConditionInput, Prisma.ActionConditionUncheckedCreateWithoutConditionInput> | Prisma.ActionConditionCreateWithoutConditionInput[] | Prisma.ActionConditionUncheckedCreateWithoutConditionInput[]
+  connectOrCreate?: Prisma.ActionConditionCreateOrConnectWithoutConditionInput | Prisma.ActionConditionCreateOrConnectWithoutConditionInput[]
+  upsert?: Prisma.ActionConditionUpsertWithWhereUniqueWithoutConditionInput | Prisma.ActionConditionUpsertWithWhereUniqueWithoutConditionInput[]
+  createMany?: Prisma.ActionConditionCreateManyConditionInputEnvelope
+  set?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+  disconnect?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+  delete?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+  connect?: Prisma.ActionConditionWhereUniqueInput | Prisma.ActionConditionWhereUniqueInput[]
+  update?: Prisma.ActionConditionUpdateWithWhereUniqueWithoutConditionInput | Prisma.ActionConditionUpdateWithWhereUniqueWithoutConditionInput[]
+  updateMany?: Prisma.ActionConditionUpdateManyWithWhereWithoutConditionInput | Prisma.ActionConditionUpdateManyWithWhereWithoutConditionInput[]
+  deleteMany?: Prisma.ActionConditionScalarWhereInput | Prisma.ActionConditionScalarWhereInput[]
+}
+
+export type ActionConditionCreateWithoutActionInput = {
+  Condition: Prisma.ConditionCreateNestedOneWithoutActionConditionsInput
+}
+
+export type ActionConditionUncheckedCreateWithoutActionInput = {
+  ConditionId: string
+}
+
+export type ActionConditionCreateOrConnectWithoutActionInput = {
+  where: Prisma.ActionConditionWhereUniqueInput
+  create: Prisma.XOR<Prisma.ActionConditionCreateWithoutActionInput, Prisma.ActionConditionUncheckedCreateWithoutActionInput>
+}
+
+export type ActionConditionCreateManyActionInputEnvelope = {
+  data: Prisma.ActionConditionCreateManyActionInput | Prisma.ActionConditionCreateManyActionInput[]
+  skipDuplicates?: boolean
+}
+
+export type ActionConditionUpsertWithWhereUniqueWithoutActionInput = {
+  where: Prisma.ActionConditionWhereUniqueInput
+  update: Prisma.XOR<Prisma.ActionConditionUpdateWithoutActionInput, Prisma.ActionConditionUncheckedUpdateWithoutActionInput>
+  create: Prisma.XOR<Prisma.ActionConditionCreateWithoutActionInput, Prisma.ActionConditionUncheckedCreateWithoutActionInput>
+}
+
+export type ActionConditionUpdateWithWhereUniqueWithoutActionInput = {
+  where: Prisma.ActionConditionWhereUniqueInput
+  data: Prisma.XOR<Prisma.ActionConditionUpdateWithoutActionInput, Prisma.ActionConditionUncheckedUpdateWithoutActionInput>
+}
+
+export type ActionConditionUpdateManyWithWhereWithoutActionInput = {
+  where: Prisma.ActionConditionScalarWhereInput
+  data: Prisma.XOR<Prisma.ActionConditionUpdateManyMutationInput, Prisma.ActionConditionUncheckedUpdateManyWithoutActionInput>
+}
+
+export type ActionConditionScalarWhereInput = {
+  AND?: Prisma.ActionConditionScalarWhereInput | Prisma.ActionConditionScalarWhereInput[]
+  OR?: Prisma.ActionConditionScalarWhereInput[]
+  NOT?: Prisma.ActionConditionScalarWhereInput | Prisma.ActionConditionScalarWhereInput[]
+  ActionId?: Prisma.UuidFilter<"ActionCondition"> | string
+  ConditionId?: Prisma.UuidFilter<"ActionCondition"> | string
+}
+
+export type ActionConditionCreateWithoutConditionInput = {
+  Action: Prisma.ActionCreateNestedOneWithoutActionConditionsInput
+}
+
+export type ActionConditionUncheckedCreateWithoutConditionInput = {
+  ActionId: string
+}
+
+export type ActionConditionCreateOrConnectWithoutConditionInput = {
+  where: Prisma.ActionConditionWhereUniqueInput
+  create: Prisma.XOR<Prisma.ActionConditionCreateWithoutConditionInput, Prisma.ActionConditionUncheckedCreateWithoutConditionInput>
+}
+
+export type ActionConditionCreateManyConditionInputEnvelope = {
+  data: Prisma.ActionConditionCreateManyConditionInput | Prisma.ActionConditionCreateManyConditionInput[]
+  skipDuplicates?: boolean
+}
+
+export type ActionConditionUpsertWithWhereUniqueWithoutConditionInput = {
+  where: Prisma.ActionConditionWhereUniqueInput
+  update: Prisma.XOR<Prisma.ActionConditionUpdateWithoutConditionInput, Prisma.ActionConditionUncheckedUpdateWithoutConditionInput>
+  create: Prisma.XOR<Prisma.ActionConditionCreateWithoutConditionInput, Prisma.ActionConditionUncheckedCreateWithoutConditionInput>
+}
+
+export type ActionConditionUpdateWithWhereUniqueWithoutConditionInput = {
+  where: Prisma.ActionConditionWhereUniqueInput
+  data: Prisma.XOR<Prisma.ActionConditionUpdateWithoutConditionInput, Prisma.ActionConditionUncheckedUpdateWithoutConditionInput>
+}
+
+export type ActionConditionUpdateManyWithWhereWithoutConditionInput = {
+  where: Prisma.ActionConditionScalarWhereInput
+  data: Prisma.XOR<Prisma.ActionConditionUpdateManyMutationInput, Prisma.ActionConditionUncheckedUpdateManyWithoutConditionInput>
+}
+
+export type ActionConditionCreateManyActionInput = {
+  ConditionId: string
+}
+
+export type ActionConditionUpdateWithoutActionInput = {
+  Condition?: Prisma.ConditionUpdateOneRequiredWithoutActionConditionsNestedInput
+}
+
+export type ActionConditionUncheckedUpdateWithoutActionInput = {
+  ConditionId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type ActionConditionUncheckedUpdateManyWithoutActionInput = {
+  ConditionId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type ActionConditionCreateManyConditionInput = {
+  ActionId: string
+}
+
+export type ActionConditionUpdateWithoutConditionInput = {
+  Action?: Prisma.ActionUpdateOneRequiredWithoutActionConditionsNestedInput
+}
+
+export type ActionConditionUncheckedUpdateWithoutConditionInput = {
+  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type ActionConditionUncheckedUpdateManyWithoutConditionInput = {
+  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
 
 
 export type ActionConditionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   ActionId?: boolean
   ConditionId?: boolean
+  Action?: boolean | Prisma.ActionDefaultArgs<ExtArgs>
+  Condition?: boolean | Prisma.ConditionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["actionCondition"]>
 
 export type ActionConditionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   ActionId?: boolean
   ConditionId?: boolean
+  Action?: boolean | Prisma.ActionDefaultArgs<ExtArgs>
+  Condition?: boolean | Prisma.ConditionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["actionCondition"]>
 
 export type ActionConditionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   ActionId?: boolean
   ConditionId?: boolean
+  Action?: boolean | Prisma.ActionDefaultArgs<ExtArgs>
+  Condition?: boolean | Prisma.ConditionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["actionCondition"]>
 
 export type ActionConditionSelectScalar = {
@@ -268,10 +481,25 @@ export type ActionConditionSelectScalar = {
 }
 
 export type ActionConditionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"ActionId" | "ConditionId", ExtArgs["result"]["actionCondition"]>
+export type ActionConditionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Action?: boolean | Prisma.ActionDefaultArgs<ExtArgs>
+  Condition?: boolean | Prisma.ConditionDefaultArgs<ExtArgs>
+}
+export type ActionConditionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Action?: boolean | Prisma.ActionDefaultArgs<ExtArgs>
+  Condition?: boolean | Prisma.ConditionDefaultArgs<ExtArgs>
+}
+export type ActionConditionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Action?: boolean | Prisma.ActionDefaultArgs<ExtArgs>
+  Condition?: boolean | Prisma.ConditionDefaultArgs<ExtArgs>
+}
 
 export type $ActionConditionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ActionCondition"
-  objects: {}
+  objects: {
+    Action: Prisma.$ActionPayload<ExtArgs>
+    Condition: Prisma.$ConditionPayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     ActionId: string
     ConditionId: string
@@ -669,6 +897,8 @@ readonly fields: ActionConditionFieldRefs;
  */
 export interface Prisma__ActionConditionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  Action<T extends Prisma.ActionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ActionDefaultArgs<ExtArgs>>): Prisma.Prisma__ActionClient<runtime.Types.Result.GetResult<Prisma.$ActionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Condition<T extends Prisma.ConditionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ConditionDefaultArgs<ExtArgs>>): Prisma.Prisma__ConditionClient<runtime.Types.Result.GetResult<Prisma.$ConditionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -717,6 +947,10 @@ export type ActionConditionFindUniqueArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.ActionConditionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionConditionInclude<ExtArgs> | null
+  /**
    * Filter, which ActionCondition to fetch.
    */
   where: Prisma.ActionConditionWhereUniqueInput
@@ -735,6 +969,10 @@ export type ActionConditionFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.E
    */
   omit?: Prisma.ActionConditionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionConditionInclude<ExtArgs> | null
+  /**
    * Filter, which ActionCondition to fetch.
    */
   where: Prisma.ActionConditionWhereUniqueInput
@@ -752,6 +990,10 @@ export type ActionConditionFindFirstArgs<ExtArgs extends runtime.Types.Extension
    * Omit specific fields from the ActionCondition
    */
   omit?: Prisma.ActionConditionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionConditionInclude<ExtArgs> | null
   /**
    * Filter, which ActionCondition to fetch.
    */
@@ -801,6 +1043,10 @@ export type ActionConditionFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Ex
    */
   omit?: Prisma.ActionConditionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionConditionInclude<ExtArgs> | null
+  /**
    * Filter, which ActionCondition to fetch.
    */
   where?: Prisma.ActionConditionWhereInput
@@ -848,6 +1094,10 @@ export type ActionConditionFindManyArgs<ExtArgs extends runtime.Types.Extensions
    * Omit specific fields from the ActionCondition
    */
   omit?: Prisma.ActionConditionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionConditionInclude<ExtArgs> | null
   /**
    * Filter, which ActionConditions to fetch.
    */
@@ -897,6 +1147,10 @@ export type ActionConditionCreateArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.ActionConditionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionConditionInclude<ExtArgs> | null
+  /**
    * The data needed to create a ActionCondition.
    */
   data: Prisma.XOR<Prisma.ActionConditionCreateInput, Prisma.ActionConditionUncheckedCreateInput>
@@ -930,6 +1184,10 @@ export type ActionConditionCreateManyAndReturnArgs<ExtArgs extends runtime.Types
    */
   data: Prisma.ActionConditionCreateManyInput | Prisma.ActionConditionCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionConditionIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -944,6 +1202,10 @@ export type ActionConditionUpdateArgs<ExtArgs extends runtime.Types.Extensions.I
    * Omit specific fields from the ActionCondition
    */
   omit?: Prisma.ActionConditionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionConditionInclude<ExtArgs> | null
   /**
    * The data needed to update a ActionCondition.
    */
@@ -996,6 +1258,10 @@ export type ActionConditionUpdateManyAndReturnArgs<ExtArgs extends runtime.Types
    * Limit how many ActionConditions to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionConditionIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1010,6 +1276,10 @@ export type ActionConditionUpsertArgs<ExtArgs extends runtime.Types.Extensions.I
    * Omit specific fields from the ActionCondition
    */
   omit?: Prisma.ActionConditionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionConditionInclude<ExtArgs> | null
   /**
    * The filter to search for the ActionCondition to update in case it exists.
    */
@@ -1036,6 +1306,10 @@ export type ActionConditionDeleteArgs<ExtArgs extends runtime.Types.Extensions.I
    * Omit specific fields from the ActionCondition
    */
   omit?: Prisma.ActionConditionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionConditionInclude<ExtArgs> | null
   /**
    * Filter which ActionCondition to delete.
    */
@@ -1068,4 +1342,8 @@ export type ActionConditionDefaultArgs<ExtArgs extends runtime.Types.Extensions.
    * Omit specific fields from the ActionCondition
    */
   omit?: Prisma.ActionConditionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionConditionInclude<ExtArgs> | null
 }
