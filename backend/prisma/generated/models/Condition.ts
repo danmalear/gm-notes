@@ -182,7 +182,7 @@ export type ConditionWhereInput = {
   Description?: Prisma.StringFilter<"Condition"> | string
   IsMet?: Prisma.BoolFilter<"Condition"> | boolean
   CampaignId?: Prisma.UuidFilter<"Condition"> | string
-  actionConditions?: Prisma.ActionConditionListRelationFilter
+  ActionConditions?: Prisma.ActionConditionListRelationFilter
 }
 
 export type ConditionOrderByWithRelationInput = {
@@ -191,7 +191,7 @@ export type ConditionOrderByWithRelationInput = {
   Description?: Prisma.SortOrder
   IsMet?: Prisma.SortOrder
   CampaignId?: Prisma.SortOrder
-  actionConditions?: Prisma.ActionConditionOrderByRelationAggregateInput
+  ActionConditions?: Prisma.ActionConditionOrderByRelationAggregateInput
 }
 
 export type ConditionWhereUniqueInput = Prisma.AtLeast<{
@@ -203,7 +203,7 @@ export type ConditionWhereUniqueInput = Prisma.AtLeast<{
   Description?: Prisma.StringFilter<"Condition"> | string
   IsMet?: Prisma.BoolFilter<"Condition"> | boolean
   CampaignId?: Prisma.UuidFilter<"Condition"> | string
-  actionConditions?: Prisma.ActionConditionListRelationFilter
+  ActionConditions?: Prisma.ActionConditionListRelationFilter
 }, "ConditionId">
 
 export type ConditionOrderByWithAggregationInput = {
@@ -234,7 +234,7 @@ export type ConditionCreateInput = {
   Description: string
   IsMet?: boolean
   CampaignId: string
-  actionConditions?: Prisma.ActionConditionCreateNestedManyWithoutConditionInput
+  ActionConditions?: Prisma.ActionConditionCreateNestedManyWithoutConditionInput
 }
 
 export type ConditionUncheckedCreateInput = {
@@ -243,7 +243,7 @@ export type ConditionUncheckedCreateInput = {
   Description: string
   IsMet?: boolean
   CampaignId: string
-  actionConditions?: Prisma.ActionConditionUncheckedCreateNestedManyWithoutConditionInput
+  ActionConditions?: Prisma.ActionConditionUncheckedCreateNestedManyWithoutConditionInput
 }
 
 export type ConditionUpdateInput = {
@@ -252,7 +252,7 @@ export type ConditionUpdateInput = {
   Description?: Prisma.StringFieldUpdateOperationsInput | string
   IsMet?: Prisma.BoolFieldUpdateOperationsInput | boolean
   CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
-  actionConditions?: Prisma.ActionConditionUpdateManyWithoutConditionNestedInput
+  ActionConditions?: Prisma.ActionConditionUpdateManyWithoutConditionNestedInput
 }
 
 export type ConditionUncheckedUpdateInput = {
@@ -261,7 +261,7 @@ export type ConditionUncheckedUpdateInput = {
   Description?: Prisma.StringFieldUpdateOperationsInput | string
   IsMet?: Prisma.BoolFieldUpdateOperationsInput | boolean
   CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
-  actionConditions?: Prisma.ActionConditionUncheckedUpdateManyWithoutConditionNestedInput
+  ActionConditions?: Prisma.ActionConditionUncheckedUpdateManyWithoutConditionNestedInput
 }
 
 export type ConditionCreateManyInput = {
@@ -389,11 +389,11 @@ export type ConditionUncheckedUpdateWithoutActionConditionsInput = {
  */
 
 export type ConditionCountOutputType = {
-  actionConditions: number
+  ActionConditions: number
 }
 
 export type ConditionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  actionConditions?: boolean | ConditionCountOutputTypeCountActionConditionsArgs
+  ActionConditions?: boolean | ConditionCountOutputTypeCountActionConditionsArgs
 }
 
 /**
@@ -420,7 +420,7 @@ export type ConditionSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   Description?: boolean
   IsMet?: boolean
   CampaignId?: boolean
-  actionConditions?: boolean | Prisma.Condition$actionConditionsArgs<ExtArgs>
+  ActionConditions?: boolean | Prisma.Condition$ActionConditionsArgs<ExtArgs>
   _count?: boolean | Prisma.ConditionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["condition"]>
 
@@ -450,7 +450,7 @@ export type ConditionSelectScalar = {
 
 export type ConditionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"ConditionId" | "Name" | "Description" | "IsMet" | "CampaignId", ExtArgs["result"]["condition"]>
 export type ConditionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  actionConditions?: boolean | Prisma.Condition$actionConditionsArgs<ExtArgs>
+  ActionConditions?: boolean | Prisma.Condition$ActionConditionsArgs<ExtArgs>
   _count?: boolean | Prisma.ConditionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ConditionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -459,7 +459,7 @@ export type ConditionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
 export type $ConditionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Condition"
   objects: {
-    actionConditions: Prisma.$ActionConditionPayload<ExtArgs>[]
+    ActionConditions: Prisma.$ActionConditionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     ConditionId: string
@@ -861,7 +861,7 @@ readonly fields: ConditionFieldRefs;
  */
 export interface Prisma__ConditionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  actionConditions<T extends Prisma.Condition$actionConditionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Condition$actionConditionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActionConditionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ActionConditions<T extends Prisma.Condition$ActionConditionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Condition$ActionConditionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActionConditionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1289,9 +1289,9 @@ export type ConditionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
- * Condition.actionConditions
+ * Condition.ActionConditions
  */
-export type Condition$actionConditionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Condition$ActionConditionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the ActionCondition
    */

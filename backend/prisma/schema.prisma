@@ -74,7 +74,7 @@ model Condition {
   Description      String
   IsMet            Boolean           @default(false)
   CampaignId       String            @db.Uuid
-  actionConditions ActionCondition[]
+  ActionConditions ActionCondition[]
 
   @@schema("public")
 }
