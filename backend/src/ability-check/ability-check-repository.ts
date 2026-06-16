@@ -47,7 +47,7 @@ export class AbilityCheckRepository
 				},
 			});
 		} catch (e) {
-			throw new Error(`Error getting Ability Check by ID: ${getMessage(e)}`);
+			throw this.getByIdError(abilityCheckId, e);
 		}
 	}
 
