@@ -36,13 +36,30 @@ model Action {
   ActionId         String            @id @db.Uuid
   TargetId         String            @db.Uuid
   Name             String
-  Type             String?
+  Type             ActionType?
   NarrationId      String?           @db.Uuid
   Narration        Narration?        @relation(fields: [NarrationId], references: [NarrationId])
   ActionConditions ActionCondition[]
   AbilityChecks    AbilityCheck[]
 
   @@index([NarrationId])
+  @@schema("public")
+}
+
+enum ActionType {
+  Attack
+  Dash
+  Disengage
+  Dodge
+  Help
+  Hide
+  Influence
+  Magic
+  Ready
+  Search
+  Study
+  Utilize
+
   @@schema("public")
 }
 

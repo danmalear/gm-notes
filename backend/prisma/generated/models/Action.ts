@@ -28,7 +28,7 @@ export type ActionMinAggregateOutputType = {
   ActionId: string | null
   TargetId: string | null
   Name: string | null
-  Type: string | null
+  Type: $Enums.ActionType | null
   NarrationId: string | null
 }
 
@@ -36,7 +36,7 @@ export type ActionMaxAggregateOutputType = {
   ActionId: string | null
   TargetId: string | null
   Name: string | null
-  Type: string | null
+  Type: $Enums.ActionType | null
   NarrationId: string | null
 }
 
@@ -151,7 +151,7 @@ export type ActionGroupByOutputType = {
   ActionId: string
   TargetId: string
   Name: string
-  Type: string | null
+  Type: $Enums.ActionType | null
   NarrationId: string | null
   _count: ActionCountAggregateOutputType | null
   _min: ActionMinAggregateOutputType | null
@@ -180,7 +180,7 @@ export type ActionWhereInput = {
   ActionId?: Prisma.UuidFilter<"Action"> | string
   TargetId?: Prisma.UuidFilter<"Action"> | string
   Name?: Prisma.StringFilter<"Action"> | string
-  Type?: Prisma.StringNullableFilter<"Action"> | string | null
+  Type?: Prisma.EnumActionTypeNullableFilter<"Action"> | $Enums.ActionType | null
   NarrationId?: Prisma.UuidNullableFilter<"Action"> | string | null
   Narration?: Prisma.XOR<Prisma.NarrationNullableScalarRelationFilter, Prisma.NarrationWhereInput> | null
   ActionConditions?: Prisma.ActionConditionListRelationFilter
@@ -205,7 +205,7 @@ export type ActionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ActionWhereInput | Prisma.ActionWhereInput[]
   TargetId?: Prisma.UuidFilter<"Action"> | string
   Name?: Prisma.StringFilter<"Action"> | string
-  Type?: Prisma.StringNullableFilter<"Action"> | string | null
+  Type?: Prisma.EnumActionTypeNullableFilter<"Action"> | $Enums.ActionType | null
   NarrationId?: Prisma.UuidNullableFilter<"Action"> | string | null
   Narration?: Prisma.XOR<Prisma.NarrationNullableScalarRelationFilter, Prisma.NarrationWhereInput> | null
   ActionConditions?: Prisma.ActionConditionListRelationFilter
@@ -230,7 +230,7 @@ export type ActionScalarWhereWithAggregatesInput = {
   ActionId?: Prisma.UuidWithAggregatesFilter<"Action"> | string
   TargetId?: Prisma.UuidWithAggregatesFilter<"Action"> | string
   Name?: Prisma.StringWithAggregatesFilter<"Action"> | string
-  Type?: Prisma.StringNullableWithAggregatesFilter<"Action"> | string | null
+  Type?: Prisma.EnumActionTypeNullableWithAggregatesFilter<"Action"> | $Enums.ActionType | null
   NarrationId?: Prisma.UuidNullableWithAggregatesFilter<"Action"> | string | null
 }
 
@@ -238,7 +238,7 @@ export type ActionCreateInput = {
   ActionId: string
   TargetId: string
   Name: string
-  Type?: string | null
+  Type?: $Enums.ActionType | null
   Narration?: Prisma.NarrationCreateNestedOneWithoutActionsInput
   ActionConditions?: Prisma.ActionConditionCreateNestedManyWithoutActionInput
   AbilityChecks?: Prisma.AbilityCheckCreateNestedManyWithoutActionInput
@@ -248,7 +248,7 @@ export type ActionUncheckedCreateInput = {
   ActionId: string
   TargetId: string
   Name: string
-  Type?: string | null
+  Type?: $Enums.ActionType | null
   NarrationId?: string | null
   ActionConditions?: Prisma.ActionConditionUncheckedCreateNestedManyWithoutActionInput
   AbilityChecks?: Prisma.AbilityCheckUncheckedCreateNestedManyWithoutActionInput
@@ -258,7 +258,7 @@ export type ActionUpdateInput = {
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   TargetId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  Type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
   Narration?: Prisma.NarrationUpdateOneWithoutActionsNestedInput
   ActionConditions?: Prisma.ActionConditionUpdateManyWithoutActionNestedInput
   AbilityChecks?: Prisma.AbilityCheckUpdateManyWithoutActionNestedInput
@@ -268,7 +268,7 @@ export type ActionUncheckedUpdateInput = {
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   TargetId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  Type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
   NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ActionConditions?: Prisma.ActionConditionUncheckedUpdateManyWithoutActionNestedInput
   AbilityChecks?: Prisma.AbilityCheckUncheckedUpdateManyWithoutActionNestedInput
@@ -278,7 +278,7 @@ export type ActionCreateManyInput = {
   ActionId: string
   TargetId: string
   Name: string
-  Type?: string | null
+  Type?: $Enums.ActionType | null
   NarrationId?: string | null
 }
 
@@ -286,14 +286,14 @@ export type ActionUpdateManyMutationInput = {
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   TargetId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  Type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
 }
 
 export type ActionUncheckedUpdateManyInput = {
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   TargetId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  Type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
   NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -348,6 +348,10 @@ export type ActionUpdateOneRequiredWithoutAbilityChecksNestedInput = {
   upsert?: Prisma.ActionUpsertWithoutAbilityChecksInput
   connect?: Prisma.ActionWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ActionUpdateToOneWithWhereWithoutAbilityChecksInput, Prisma.ActionUpdateWithoutAbilityChecksInput>, Prisma.ActionUncheckedUpdateWithoutAbilityChecksInput>
+}
+
+export type NullableEnumActionTypeFieldUpdateOperationsInput = {
+  set?: $Enums.ActionType | null
 }
 
 export type ActionCreateNestedOneWithoutActionConditionsInput = {
@@ -410,7 +414,7 @@ export type ActionCreateWithoutAbilityChecksInput = {
   ActionId: string
   TargetId: string
   Name: string
-  Type?: string | null
+  Type?: $Enums.ActionType | null
   Narration?: Prisma.NarrationCreateNestedOneWithoutActionsInput
   ActionConditions?: Prisma.ActionConditionCreateNestedManyWithoutActionInput
 }
@@ -419,7 +423,7 @@ export type ActionUncheckedCreateWithoutAbilityChecksInput = {
   ActionId: string
   TargetId: string
   Name: string
-  Type?: string | null
+  Type?: $Enums.ActionType | null
   NarrationId?: string | null
   ActionConditions?: Prisma.ActionConditionUncheckedCreateNestedManyWithoutActionInput
 }
@@ -444,7 +448,7 @@ export type ActionUpdateWithoutAbilityChecksInput = {
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   TargetId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  Type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
   Narration?: Prisma.NarrationUpdateOneWithoutActionsNestedInput
   ActionConditions?: Prisma.ActionConditionUpdateManyWithoutActionNestedInput
 }
@@ -453,7 +457,7 @@ export type ActionUncheckedUpdateWithoutAbilityChecksInput = {
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   TargetId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  Type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
   NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ActionConditions?: Prisma.ActionConditionUncheckedUpdateManyWithoutActionNestedInput
 }
@@ -462,7 +466,7 @@ export type ActionCreateWithoutActionConditionsInput = {
   ActionId: string
   TargetId: string
   Name: string
-  Type?: string | null
+  Type?: $Enums.ActionType | null
   Narration?: Prisma.NarrationCreateNestedOneWithoutActionsInput
   AbilityChecks?: Prisma.AbilityCheckCreateNestedManyWithoutActionInput
 }
@@ -471,7 +475,7 @@ export type ActionUncheckedCreateWithoutActionConditionsInput = {
   ActionId: string
   TargetId: string
   Name: string
-  Type?: string | null
+  Type?: $Enums.ActionType | null
   NarrationId?: string | null
   AbilityChecks?: Prisma.AbilityCheckUncheckedCreateNestedManyWithoutActionInput
 }
@@ -496,7 +500,7 @@ export type ActionUpdateWithoutActionConditionsInput = {
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   TargetId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  Type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
   Narration?: Prisma.NarrationUpdateOneWithoutActionsNestedInput
   AbilityChecks?: Prisma.AbilityCheckUpdateManyWithoutActionNestedInput
 }
@@ -505,7 +509,7 @@ export type ActionUncheckedUpdateWithoutActionConditionsInput = {
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   TargetId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  Type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
   NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   AbilityChecks?: Prisma.AbilityCheckUncheckedUpdateManyWithoutActionNestedInput
 }
@@ -514,7 +518,7 @@ export type ActionCreateWithoutNarrationInput = {
   ActionId: string
   TargetId: string
   Name: string
-  Type?: string | null
+  Type?: $Enums.ActionType | null
   ActionConditions?: Prisma.ActionConditionCreateNestedManyWithoutActionInput
   AbilityChecks?: Prisma.AbilityCheckCreateNestedManyWithoutActionInput
 }
@@ -523,7 +527,7 @@ export type ActionUncheckedCreateWithoutNarrationInput = {
   ActionId: string
   TargetId: string
   Name: string
-  Type?: string | null
+  Type?: $Enums.ActionType | null
   ActionConditions?: Prisma.ActionConditionUncheckedCreateNestedManyWithoutActionInput
   AbilityChecks?: Prisma.AbilityCheckUncheckedCreateNestedManyWithoutActionInput
 }
@@ -561,7 +565,7 @@ export type ActionScalarWhereInput = {
   ActionId?: Prisma.UuidFilter<"Action"> | string
   TargetId?: Prisma.UuidFilter<"Action"> | string
   Name?: Prisma.StringFilter<"Action"> | string
-  Type?: Prisma.StringNullableFilter<"Action"> | string | null
+  Type?: Prisma.EnumActionTypeNullableFilter<"Action"> | $Enums.ActionType | null
   NarrationId?: Prisma.UuidNullableFilter<"Action"> | string | null
 }
 
@@ -569,14 +573,14 @@ export type ActionCreateManyNarrationInput = {
   ActionId: string
   TargetId: string
   Name: string
-  Type?: string | null
+  Type?: $Enums.ActionType | null
 }
 
 export type ActionUpdateWithoutNarrationInput = {
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   TargetId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  Type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
   ActionConditions?: Prisma.ActionConditionUpdateManyWithoutActionNestedInput
   AbilityChecks?: Prisma.AbilityCheckUpdateManyWithoutActionNestedInput
 }
@@ -585,7 +589,7 @@ export type ActionUncheckedUpdateWithoutNarrationInput = {
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   TargetId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  Type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
   ActionConditions?: Prisma.ActionConditionUncheckedUpdateManyWithoutActionNestedInput
   AbilityChecks?: Prisma.AbilityCheckUncheckedUpdateManyWithoutActionNestedInput
 }
@@ -594,7 +598,7 @@ export type ActionUncheckedUpdateManyWithoutNarrationInput = {
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   TargetId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  Type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
 }
 
 
@@ -700,7 +704,7 @@ export type $ActionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     ActionId: string
     TargetId: string
     Name: string
-    Type: string | null
+    Type: $Enums.ActionType | null
     NarrationId: string | null
   }, ExtArgs["result"]["action"]>
   composites: {}
@@ -1131,7 +1135,7 @@ export interface ActionFieldRefs {
   readonly ActionId: Prisma.FieldRef<"Action", 'String'>
   readonly TargetId: Prisma.FieldRef<"Action", 'String'>
   readonly Name: Prisma.FieldRef<"Action", 'String'>
-  readonly Type: Prisma.FieldRef<"Action", 'String'>
+  readonly Type: Prisma.FieldRef<"Action", 'ActionType'>
   readonly NarrationId: Prisma.FieldRef<"Action", 'String'>
 }
     

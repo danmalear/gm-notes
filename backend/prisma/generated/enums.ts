@@ -9,6 +9,24 @@
 * 🟢 You can import this file directly.
 */
 
+export const ActionType = {
+  Attack: 'Attack',
+  Dash: 'Dash',
+  Disengage: 'Disengage',
+  Dodge: 'Dodge',
+  Help: 'Help',
+  Hide: 'Hide',
+  Influence: 'Influence',
+  Magic: 'Magic',
+  Ready: 'Ready',
+  Search: 'Search',
+  Study: 'Study',
+  Utilize: 'Utilize'
+} as const
+
+export type ActionType = (typeof ActionType)[keyof typeof ActionType]
+
+
 export const HandoutType = {
   Text: 'Text',
   Image: 'Image',
