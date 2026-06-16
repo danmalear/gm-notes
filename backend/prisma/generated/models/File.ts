@@ -159,12 +159,14 @@ export type FileWhereInput = {
   FileId?: Prisma.UuidFilter<"File"> | string
   FileName?: Prisma.StringFilter<"File"> | string
   Item?: Prisma.XOR<Prisma.ItemNullableScalarRelationFilter, Prisma.ItemWhereInput> | null
+  Map?: Prisma.XOR<Prisma.MapNullableScalarRelationFilter, Prisma.MapWhereInput> | null
 }
 
 export type FileOrderByWithRelationInput = {
   FileId?: Prisma.SortOrder
   FileName?: Prisma.SortOrder
   Item?: Prisma.ItemOrderByWithRelationInput
+  Map?: Prisma.MapOrderByWithRelationInput
 }
 
 export type FileWhereUniqueInput = Prisma.AtLeast<{
@@ -174,6 +176,7 @@ export type FileWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.FileWhereInput | Prisma.FileWhereInput[]
   FileName?: Prisma.StringFilter<"File"> | string
   Item?: Prisma.XOR<Prisma.ItemNullableScalarRelationFilter, Prisma.ItemWhereInput> | null
+  Map?: Prisma.XOR<Prisma.MapNullableScalarRelationFilter, Prisma.MapWhereInput> | null
 }, "FileId">
 
 export type FileOrderByWithAggregationInput = {
@@ -196,24 +199,28 @@ export type FileCreateInput = {
   FileId: string
   FileName: string
   Item?: Prisma.ItemCreateNestedOneWithoutFileInput
+  Map?: Prisma.MapCreateNestedOneWithoutImageFileInput
 }
 
 export type FileUncheckedCreateInput = {
   FileId: string
   FileName: string
   Item?: Prisma.ItemUncheckedCreateNestedOneWithoutFileInput
+  Map?: Prisma.MapUncheckedCreateNestedOneWithoutImageFileInput
 }
 
 export type FileUpdateInput = {
   FileId?: Prisma.StringFieldUpdateOperationsInput | string
   FileName?: Prisma.StringFieldUpdateOperationsInput | string
   Item?: Prisma.ItemUpdateOneWithoutFileNestedInput
+  Map?: Prisma.MapUpdateOneWithoutImageFileNestedInput
 }
 
 export type FileUncheckedUpdateInput = {
   FileId?: Prisma.StringFieldUpdateOperationsInput | string
   FileName?: Prisma.StringFieldUpdateOperationsInput | string
   Item?: Prisma.ItemUncheckedUpdateOneWithoutFileNestedInput
+  Map?: Prisma.MapUncheckedUpdateOneWithoutImageFileNestedInput
 }
 
 export type FileCreateManyInput = {
@@ -251,6 +258,11 @@ export type FileNullableScalarRelationFilter = {
   isNot?: Prisma.FileWhereInput | null
 }
 
+export type FileScalarRelationFilter = {
+  is?: Prisma.FileWhereInput
+  isNot?: Prisma.FileWhereInput
+}
+
 export type FileCreateNestedOneWithoutItemInput = {
   create?: Prisma.XOR<Prisma.FileCreateWithoutItemInput, Prisma.FileUncheckedCreateWithoutItemInput>
   connectOrCreate?: Prisma.FileCreateOrConnectWithoutItemInput
@@ -267,14 +279,30 @@ export type FileUpdateOneWithoutItemNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.FileUpdateToOneWithWhereWithoutItemInput, Prisma.FileUpdateWithoutItemInput>, Prisma.FileUncheckedUpdateWithoutItemInput>
 }
 
+export type FileCreateNestedOneWithoutMapInput = {
+  create?: Prisma.XOR<Prisma.FileCreateWithoutMapInput, Prisma.FileUncheckedCreateWithoutMapInput>
+  connectOrCreate?: Prisma.FileCreateOrConnectWithoutMapInput
+  connect?: Prisma.FileWhereUniqueInput
+}
+
+export type FileUpdateOneRequiredWithoutMapNestedInput = {
+  create?: Prisma.XOR<Prisma.FileCreateWithoutMapInput, Prisma.FileUncheckedCreateWithoutMapInput>
+  connectOrCreate?: Prisma.FileCreateOrConnectWithoutMapInput
+  upsert?: Prisma.FileUpsertWithoutMapInput
+  connect?: Prisma.FileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.FileUpdateToOneWithWhereWithoutMapInput, Prisma.FileUpdateWithoutMapInput>, Prisma.FileUncheckedUpdateWithoutMapInput>
+}
+
 export type FileCreateWithoutItemInput = {
   FileId: string
   FileName: string
+  Map?: Prisma.MapCreateNestedOneWithoutImageFileInput
 }
 
 export type FileUncheckedCreateWithoutItemInput = {
   FileId: string
   FileName: string
+  Map?: Prisma.MapUncheckedCreateNestedOneWithoutImageFileInput
 }
 
 export type FileCreateOrConnectWithoutItemInput = {
@@ -296,11 +324,53 @@ export type FileUpdateToOneWithWhereWithoutItemInput = {
 export type FileUpdateWithoutItemInput = {
   FileId?: Prisma.StringFieldUpdateOperationsInput | string
   FileName?: Prisma.StringFieldUpdateOperationsInput | string
+  Map?: Prisma.MapUpdateOneWithoutImageFileNestedInput
 }
 
 export type FileUncheckedUpdateWithoutItemInput = {
   FileId?: Prisma.StringFieldUpdateOperationsInput | string
   FileName?: Prisma.StringFieldUpdateOperationsInput | string
+  Map?: Prisma.MapUncheckedUpdateOneWithoutImageFileNestedInput
+}
+
+export type FileCreateWithoutMapInput = {
+  FileId: string
+  FileName: string
+  Item?: Prisma.ItemCreateNestedOneWithoutFileInput
+}
+
+export type FileUncheckedCreateWithoutMapInput = {
+  FileId: string
+  FileName: string
+  Item?: Prisma.ItemUncheckedCreateNestedOneWithoutFileInput
+}
+
+export type FileCreateOrConnectWithoutMapInput = {
+  where: Prisma.FileWhereUniqueInput
+  create: Prisma.XOR<Prisma.FileCreateWithoutMapInput, Prisma.FileUncheckedCreateWithoutMapInput>
+}
+
+export type FileUpsertWithoutMapInput = {
+  update: Prisma.XOR<Prisma.FileUpdateWithoutMapInput, Prisma.FileUncheckedUpdateWithoutMapInput>
+  create: Prisma.XOR<Prisma.FileCreateWithoutMapInput, Prisma.FileUncheckedCreateWithoutMapInput>
+  where?: Prisma.FileWhereInput
+}
+
+export type FileUpdateToOneWithWhereWithoutMapInput = {
+  where?: Prisma.FileWhereInput
+  data: Prisma.XOR<Prisma.FileUpdateWithoutMapInput, Prisma.FileUncheckedUpdateWithoutMapInput>
+}
+
+export type FileUpdateWithoutMapInput = {
+  FileId?: Prisma.StringFieldUpdateOperationsInput | string
+  FileName?: Prisma.StringFieldUpdateOperationsInput | string
+  Item?: Prisma.ItemUpdateOneWithoutFileNestedInput
+}
+
+export type FileUncheckedUpdateWithoutMapInput = {
+  FileId?: Prisma.StringFieldUpdateOperationsInput | string
+  FileName?: Prisma.StringFieldUpdateOperationsInput | string
+  Item?: Prisma.ItemUncheckedUpdateOneWithoutFileNestedInput
 }
 
 
@@ -309,6 +379,7 @@ export type FileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   FileId?: boolean
   FileName?: boolean
   Item?: boolean | Prisma.File$ItemArgs<ExtArgs>
+  Map?: boolean | Prisma.File$MapArgs<ExtArgs>
 }, ExtArgs["result"]["file"]>
 
 export type FileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -329,6 +400,7 @@ export type FileSelectScalar = {
 export type FileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"FileId" | "FileName", ExtArgs["result"]["file"]>
 export type FileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Item?: boolean | Prisma.File$ItemArgs<ExtArgs>
+  Map?: boolean | Prisma.File$MapArgs<ExtArgs>
 }
 export type FileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 export type FileIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -337,6 +409,7 @@ export type $FilePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "File"
   objects: {
     Item: Prisma.$ItemPayload<ExtArgs> | null
+    Map: Prisma.$MapPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     FileId: string
@@ -736,6 +809,7 @@ readonly fields: FileFieldRefs;
 export interface Prisma__FileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Item<T extends Prisma.File$ItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.File$ItemArgs<ExtArgs>>): Prisma.Prisma__ItemClient<runtime.Types.Result.GetResult<Prisma.$ItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Map<T extends Prisma.File$MapArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.File$MapArgs<ExtArgs>>): Prisma.Prisma__MapClient<runtime.Types.Result.GetResult<Prisma.$MapPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1176,6 +1250,25 @@ export type File$ItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs 
    */
   include?: Prisma.ItemInclude<ExtArgs> | null
   where?: Prisma.ItemWhereInput
+}
+
+/**
+ * File.Map
+ */
+export type File$MapArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Map
+   */
+  select?: Prisma.MapSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Map
+   */
+  omit?: Prisma.MapOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MapInclude<ExtArgs> | null
+  where?: Prisma.MapWhereInput
 }
 
 /**

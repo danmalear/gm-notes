@@ -117,6 +117,7 @@ model File {
   FileId   String @id @db.Uuid
   FileName String
   Item     Item?
+  Map      Map?
 
   @@schema("public")
 }
@@ -158,7 +159,6 @@ model Item {
   Notes         Note[]         @relation(name: "ParentItem")
 
   @@index([CampaignId])
-  @@index([ImageFileId])
   @@schema("public")
 }
 
@@ -183,7 +183,8 @@ model Map {
   Campaign        Campaign   @relation(name: "MapCampaign", fields: [CampaignId], references: [CampaignId], onUpdate: Restrict)
   MapTemplateId   String?    @db.Uuid
   Name            String
-  ImagePath       String
+  ImageFileId     String     @unique
+  ImageFile       File       @relation(fields: [ImageFileId], references: [FileId])
   DefaultLighting String     @default("Bright Light")
   Width           Int        @default(0)
   Height          Int        @default(0)

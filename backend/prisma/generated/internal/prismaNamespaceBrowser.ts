@@ -240,7 +240,7 @@ export const MapScalarFieldEnum = {
   CampaignId: 'CampaignId',
   MapTemplateId: 'MapTemplateId',
   Name: 'Name',
-  ImagePath: 'ImagePath',
+  ImageFileId: 'ImageFileId',
   DefaultLighting: 'DefaultLighting',
   Width: 'Width',
   Height: 'Height'
