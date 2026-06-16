@@ -1,70 +1,108 @@
-import type { AbilityCheckRepository } from '#ability-check/ability-check-repository.ts';
-import type { IConditionRepository } from '#condition/condition-repository.ts';
-import type { INarrationRepository } from '#narration/narration-repository.ts';
 import type { AbilityCheckModel } from '#prisma-models/AbilityCheck.ts';
+import type {
+	ActionCreateInput,
+	ActionInclude,
+	ActionModel,
+	ActionUpdateInput,
+} from '#prisma-models/Action.ts';
 import type { ConditionModel } from '#prisma-models/Condition.ts';
 import type { NarrationModel } from '#prisma-models/Narration.ts';
-import type { ActionType } from '#shared/data-types.ts';
-import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
-import { Repository } from '#shared/repository-old.ts';
+import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 
-export interface ActionRec {
-	ActionId: UUID;
-	TargetId: UUID;
-	Name: string;
-	Type: ActionType | null;
-	NarrationId: UUID | null;
-}
-
-export interface ActionRefRec extends ActionRec {
+export interface ActionIncludeAll extends ActionModel {
 	Narration: NarrationModel | null;
 	Conditions: ConditionModel[];
 	AbilityChecks: AbilityCheckModel[];
 }
 
-export const tableName = 'Action';
-export const pkColumn = 'ActionId';
-
-export interface ActionRepositoryConfig {
-	abilityCheckRepository: AbilityCheckRepository;
-	conditionRepository: IConditionRepository;
-	narrationRepository: INarrationRepository;
+export interface IActionRepository
+	extends IRepository<
+		ActionModel,
+		ActionCreateInput,
+		ActionUpdateInput,
+		ActionIncludeAll
+	> {
+	getByTargetId(targetId: UUID): Promise<ActionModel[]>;
 }
 
-export class ActionRepository extends Repository<ActionRec, ActionRefRec> {
-	abilityCheckRepository: AbilityCheckRepository;
-	conditionRepository: IConditionRepository;
-	narrationRepository: INarrationRepository;
+export class ActionRepository extends Repository<
+	ActionModel,
+	ActionCreateInput,
+	ActionUpdateInput,
+	ActionIncludeAll
+> {
+	override descriptor = 'Action';
 
-	constructor({
-		abilityCheckRepository,
-		conditionRepository,
-		narrationRepository,
-	}: ActionRepositoryConfig) {
-		super(tableName, pkColumn);
-		this.abilityCheckRepository = abilityCheckRepository;
-		this.conditionRepository = conditionRepository;
-		this.narrationRepository = narrationRepository;
+	override async getByIdRaw(actionId: UUID): Promise<ActionModel | null> {
+		try {
+			return await this.prisma.action.findUnique({
+				where: {
+					ActionId: actionId,
+				},
+			});
+		} catch (e) {
+			throw this.getByIdError(actionId, e);
+		}
 	}
 
-	override async getById(id: UUID): Promise<ActionRefRec | undefined> {
-		const actionRaw = await this.getByIdRaw(id);
-		if (!actionRaw) return undefined;
-		const narration = actionRaw.NarrationId
-			? ((await this.narrationRepository.getById(actionRaw.NarrationId)) ??
-				null)
-			: null;
-		const conditions = await this.conditionRepository.getByActionId(id);
-		const abilityChecks = await this.abilityCheckRepository.getByActionId(id);
+	override async getById(actionId: UUID): Promise<ActionIncludeAll | null> {
+		try {
+			const include = {
+				AbilityChecks: true,
+				ActionConditions: {
+					include: {
+						Condition: true,
+					},
+				},
+				Narration: true,
+			} satisfies ActionInclude;
+			const action = await this.prisma.action.findUnique({
+				where: {
+					ActionId: actionId,
+				},
+				include,
+			});
+			if (!action) return null;
+			return {
+				...action,
+				Conditions: action?.ActionConditions.map((ac) => ac.Condition),
+			};
+		} catch (e) {
+			throw this.getByIdError(actionId, e);
+		}
+	}
 
-		return {
-			...actionRaw,
-			Narration: narration,
-			Conditions: conditions,
-			AbilityChecks: abilityChecks,
-		};
+	override async getAll(): Promise<ActionModel[]> {
+		try {
+			return await this.prisma.action.findMany();
+		} catch (e) {
+			throw this.getAllError(e);
+		}
+	}
+
+	override async create(data: ActionCreateInput): Promise<ActionModel> {
+		try {
+			return await this.prisma.action.create({
+				data,
+			});
+		} catch (e) {
+			throw this.createError(e);
+		}
+	}
+
+	async update(actionId: UUID, data: ActionUpdateInput): Promise<ActionModel> {
+		try {
+			return await this.prisma.action.update({
+				where: {
+					ActionId: actionId,
+				},
+				data,
+			});
+		} catch (e) {
+			throw this.updateError(actionId, e);
+		}
 	}
 
 	/**
@@ -74,10 +112,14 @@ export class ActionRepository extends Repository<ActionRec, ActionRefRec> {
 	 */
 	async getByTargetId(targetId: UUID) {
 		try {
-			return await db<ActionRec>(tableName).where('TargetId', targetId);
+			return await this.prisma.action.findMany({
+				where: {
+					TargetId: targetId,
+				},
+			});
 		} catch (e) {
-			throw Error(
-				`Error getting ${this.tableName} records for target ID ${targetId}: ${getMessage(e)}`,
+			throw new Error(
+				`Error getting ${this.descriptor} records for Target ID ${targetId}: ${getMessage(e)}`,
 			);
 		}
 	}

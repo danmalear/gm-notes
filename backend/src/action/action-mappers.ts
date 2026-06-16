@@ -1,11 +1,13 @@
 import { toStub as abilityCheckToStub } from '#ability-check/ability-check-mappers.ts';
+import type { ActionModel } from '#prisma-models/Action.ts';
+import type { UUID } from 'node:crypto';
 import type { ActionResponse, ActionStub } from './action-dtos.ts';
-import type { ActionRec, ActionRefRec } from './action-repository.ts';
+import type { ActionIncludeAll } from './action-repository.ts';
 
-export function toDto(action: ActionRefRec) {
+export function toDto(action: ActionIncludeAll) {
 	const actionDto: ActionResponse = {
-		id: action.ActionId,
-		targetId: action.TargetId,
+		id: action.ActionId as UUID,
+		targetId: action.TargetId as UUID,
 		name: action.Name,
 		type: action.Type ?? undefined,
 		narration: action.Narration?.Description,
@@ -18,10 +20,10 @@ export function toDto(action: ActionRefRec) {
 	return actionDto;
 }
 
-export function toStub(action: ActionRec) {
+export function toStub(action: ActionModel) {
 	const actionStub: ActionStub = {
-		id: action.ActionId,
-		targetId: action.TargetId,
+		id: action.ActionId as UUID,
+		targetId: action.TargetId as UUID,
 		name: action.Name,
 		type: action.Type ?? undefined,
 	};

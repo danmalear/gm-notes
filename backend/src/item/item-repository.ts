@@ -1,6 +1,7 @@
-import type { ActionRec, ActionRepository } from '#action/action-repository.ts';
+import type { IActionRepository } from '#action/action-repository.ts';
 import type { IFileRepository } from '#file/file-repository.ts';
 import type { INoteRepository } from '#note/note-repository.ts';
+import type { ActionModel } from '#prisma-models/Action.ts';
 import type { FileModel } from '#prisma-models/File.ts';
 import type { NoteModel } from '#prisma-models/Note.ts';
 import type { CurrencyUnit } from '#shared/data-types.ts';
@@ -20,7 +21,7 @@ export interface ItemRec {
 
 export interface ItemRefRec extends ItemRec {
 	ImageFile: FileModel | null;
-	Actions: ActionRec[];
+	Actions: ActionModel[];
 	Notes: NoteModel[];
 }
 
@@ -28,13 +29,13 @@ export const tableName = 'Item';
 export const pkColumn = 'ItemId';
 
 export interface ItemRepositoryConfig {
-	actionRepository: ActionRepository;
+	actionRepository: IActionRepository;
 	fileRepository: IFileRepository;
 	noteRepository: INoteRepository;
 }
 
 export class ItemRepository extends Repository<ItemRec, ItemRefRec> {
-	actionRepository: ActionRepository;
+	actionRepository: IActionRepository;
 	fileRepository: IFileRepository;
 	noteRepository: INoteRepository;
 

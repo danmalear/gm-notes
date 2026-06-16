@@ -1,5 +1,5 @@
 import type { AbilityCheckStub } from '#ability-check/ability-check-dtos.ts';
-import type { ActionType } from '#shared/data-types.ts';
+import type { ActionType } from '#prisma-enums';
 import type { UUID } from 'crypto';
 
 /**
