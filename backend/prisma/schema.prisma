@@ -38,9 +38,11 @@ model Action {
   Name             String
   Type             String?
   NarrationId      String?           @db.Uuid
+  Narration        Narration?        @relation(fields: [NarrationId], references: [NarrationId])
   ActionConditions ActionCondition[]
   AbilityChecks    AbilityCheck[]
 
+  @@index([NarrationId])
   @@schema("public")
 }
 
@@ -163,6 +165,7 @@ model Narration {
   FailureAbilityChecks         AbilityCheck[]    @relation(name: "Failure")
   CriticalSuccessAbilityChecks AbilityCheck[]    @relation(name: "CriticalSuccess")
   CriticalFailureAbilityChecks AbilityCheck[]    @relation(name: "CriticalFailure")
+  Actions                      Action[]
 
   @@schema("public")
 }
