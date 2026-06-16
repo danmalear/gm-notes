@@ -2512,6 +2512,20 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'Skill'
+ */
+export type EnumSkillFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Skill'>
+    
+
+
+/**
+ * Reference to a field of type 'Skill[]'
+ */
+export type ListEnumSkillFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Skill[]'>
+    
+
+
+/**
  * Reference to a field of type 'ActionType'
  */
 export type EnumActionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ActionType'>

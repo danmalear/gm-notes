@@ -34,3 +34,27 @@ export const HandoutType = {
 } as const
 
 export type HandoutType = (typeof HandoutType)[keyof typeof HandoutType]
+
+
+export const Skill = {
+  Acrobatics: 'Acrobatics',
+  AnimalHandling: 'AnimalHandling',
+  Arcana: 'Arcana',
+  Athletics: 'Athletics',
+  Deception: 'Deception',
+  History: 'History',
+  Insight: 'Insight',
+  Intimidation: 'Intimidation',
+  Investigation: 'Investigation',
+  Medicine: 'Medicine',
+  Nature: 'Nature',
+  Perception: 'Perception',
+  Performance: 'Performance',
+  Persuasion: 'Persuasion',
+  Religion: 'Religion',
+  SleightOfHand: 'SleightOfHand',
+  Stealth: 'Stealth',
+  Survival: 'Survival'
+} as const
+
+export type Skill = (typeof Skill)[keyof typeof Skill]

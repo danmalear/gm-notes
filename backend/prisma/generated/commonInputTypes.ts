@@ -209,6 +209,23 @@ export type IntWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedIntFilter<$PrismaModel>
 }
 
+export type EnumSkillFilter<$PrismaModel = never> = {
+  equals?: $Enums.Skill | Prisma.EnumSkillFieldRefInput<$PrismaModel>
+  in?: $Enums.Skill[] | Prisma.ListEnumSkillFieldRefInput<$PrismaModel>
+  notIn?: $Enums.Skill[] | Prisma.ListEnumSkillFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSkillFilter<$PrismaModel> | $Enums.Skill
+}
+
+export type EnumSkillWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.Skill | Prisma.EnumSkillFieldRefInput<$PrismaModel>
+  in?: $Enums.Skill[] | Prisma.ListEnumSkillFieldRefInput<$PrismaModel>
+  notIn?: $Enums.Skill[] | Prisma.ListEnumSkillFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSkillWithAggregatesFilter<$PrismaModel> | $Enums.Skill
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSkillFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSkillFilter<$PrismaModel>
+}
+
 export type EnumActionTypeNullableFilter<$PrismaModel = never> = {
   equals?: $Enums.ActionType | Prisma.EnumActionTypeFieldRefInput<$PrismaModel> | null
   in?: $Enums.ActionType[] | Prisma.ListEnumActionTypeFieldRefInput<$PrismaModel> | null
@@ -507,6 +524,23 @@ export type NestedFloatFilter<$PrismaModel = never> = {
   gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   not?: Prisma.NestedFloatFilter<$PrismaModel> | number
+}
+
+export type NestedEnumSkillFilter<$PrismaModel = never> = {
+  equals?: $Enums.Skill | Prisma.EnumSkillFieldRefInput<$PrismaModel>
+  in?: $Enums.Skill[] | Prisma.ListEnumSkillFieldRefInput<$PrismaModel>
+  notIn?: $Enums.Skill[] | Prisma.ListEnumSkillFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSkillFilter<$PrismaModel> | $Enums.Skill
+}
+
+export type NestedEnumSkillWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.Skill | Prisma.EnumSkillFieldRefInput<$PrismaModel>
+  in?: $Enums.Skill[] | Prisma.ListEnumSkillFieldRefInput<$PrismaModel>
+  notIn?: $Enums.Skill[] | Prisma.ListEnumSkillFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSkillWithAggregatesFilter<$PrismaModel> | $Enums.Skill
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSkillFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSkillFilter<$PrismaModel>
 }
 
 export type NestedEnumActionTypeNullableFilter<$PrismaModel = never> = {

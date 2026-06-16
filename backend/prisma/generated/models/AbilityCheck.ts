@@ -37,7 +37,7 @@ export type AbilityCheckSumAggregateOutputType = {
 export type AbilityCheckMinAggregateOutputType = {
   AbilityCheckId: string | null
   ActionId: string | null
-  Skill: string | null
+  Skill: $Enums.Skill | null
   DC: number | null
   SuccessNarrationId: string | null
   FailureNarrationId: string | null
@@ -48,7 +48,7 @@ export type AbilityCheckMinAggregateOutputType = {
 export type AbilityCheckMaxAggregateOutputType = {
   AbilityCheckId: string | null
   ActionId: string | null
-  Skill: string | null
+  Skill: $Enums.Skill | null
   DC: number | null
   SuccessNarrationId: string | null
   FailureNarrationId: string | null
@@ -200,7 +200,7 @@ export type AbilityCheckGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 export type AbilityCheckGroupByOutputType = {
   AbilityCheckId: string
   ActionId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   SuccessNarrationId: string | null
   FailureNarrationId: string | null
@@ -234,7 +234,7 @@ export type AbilityCheckWhereInput = {
   NOT?: Prisma.AbilityCheckWhereInput | Prisma.AbilityCheckWhereInput[]
   AbilityCheckId?: Prisma.UuidFilter<"AbilityCheck"> | string
   ActionId?: Prisma.UuidFilter<"AbilityCheck"> | string
-  Skill?: Prisma.StringFilter<"AbilityCheck"> | string
+  Skill?: Prisma.EnumSkillFilter<"AbilityCheck"> | $Enums.Skill
   DC?: Prisma.IntFilter<"AbilityCheck"> | number
   SuccessNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
   FailureNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
@@ -269,7 +269,7 @@ export type AbilityCheckWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.AbilityCheckWhereInput[]
   NOT?: Prisma.AbilityCheckWhereInput | Prisma.AbilityCheckWhereInput[]
   ActionId?: Prisma.UuidFilter<"AbilityCheck"> | string
-  Skill?: Prisma.StringFilter<"AbilityCheck"> | string
+  Skill?: Prisma.EnumSkillFilter<"AbilityCheck"> | $Enums.Skill
   DC?: Prisma.IntFilter<"AbilityCheck"> | number
   SuccessNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
   FailureNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
@@ -304,7 +304,7 @@ export type AbilityCheckScalarWhereWithAggregatesInput = {
   NOT?: Prisma.AbilityCheckScalarWhereWithAggregatesInput | Prisma.AbilityCheckScalarWhereWithAggregatesInput[]
   AbilityCheckId?: Prisma.UuidWithAggregatesFilter<"AbilityCheck"> | string
   ActionId?: Prisma.UuidWithAggregatesFilter<"AbilityCheck"> | string
-  Skill?: Prisma.StringWithAggregatesFilter<"AbilityCheck"> | string
+  Skill?: Prisma.EnumSkillWithAggregatesFilter<"AbilityCheck"> | $Enums.Skill
   DC?: Prisma.IntWithAggregatesFilter<"AbilityCheck"> | number
   SuccessNarrationId?: Prisma.UuidNullableWithAggregatesFilter<"AbilityCheck"> | string | null
   FailureNarrationId?: Prisma.UuidNullableWithAggregatesFilter<"AbilityCheck"> | string | null
@@ -314,7 +314,7 @@ export type AbilityCheckScalarWhereWithAggregatesInput = {
 
 export type AbilityCheckCreateInput = {
   AbilityCheckId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   Action: Prisma.ActionCreateNestedOneWithoutAbilityChecksInput
   SuccessNarration?: Prisma.NarrationCreateNestedOneWithoutSuccessAbilityChecksInput
@@ -326,7 +326,7 @@ export type AbilityCheckCreateInput = {
 export type AbilityCheckUncheckedCreateInput = {
   AbilityCheckId: string
   ActionId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   SuccessNarrationId?: string | null
   FailureNarrationId?: string | null
@@ -336,7 +336,7 @@ export type AbilityCheckUncheckedCreateInput = {
 
 export type AbilityCheckUpdateInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   Action?: Prisma.ActionUpdateOneRequiredWithoutAbilityChecksNestedInput
   SuccessNarration?: Prisma.NarrationUpdateOneWithoutSuccessAbilityChecksNestedInput
@@ -348,7 +348,7 @@ export type AbilityCheckUpdateInput = {
 export type AbilityCheckUncheckedUpdateInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   SuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   FailureNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -359,7 +359,7 @@ export type AbilityCheckUncheckedUpdateInput = {
 export type AbilityCheckCreateManyInput = {
   AbilityCheckId: string
   ActionId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   SuccessNarrationId?: string | null
   FailureNarrationId?: string | null
@@ -369,14 +369,14 @@ export type AbilityCheckCreateManyInput = {
 
 export type AbilityCheckUpdateManyMutationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type AbilityCheckUncheckedUpdateManyInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   SuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   FailureNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -433,6 +433,10 @@ export type AbilityCheckListRelationFilter = {
 
 export type AbilityCheckOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type EnumSkillFieldUpdateOperationsInput = {
+  set?: $Enums.Skill
 }
 
 export type AbilityCheckCreateNestedManyWithoutActionInput = {
@@ -647,7 +651,7 @@ export type AbilityCheckUncheckedUpdateManyWithoutCriticalFailureNarrationNested
 
 export type AbilityCheckCreateWithoutActionInput = {
   AbilityCheckId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   SuccessNarration?: Prisma.NarrationCreateNestedOneWithoutSuccessAbilityChecksInput
   FailureNarration?: Prisma.NarrationCreateNestedOneWithoutFailureAbilityChecksInput
@@ -657,7 +661,7 @@ export type AbilityCheckCreateWithoutActionInput = {
 
 export type AbilityCheckUncheckedCreateWithoutActionInput = {
   AbilityCheckId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   SuccessNarrationId?: string | null
   FailureNarrationId?: string | null
@@ -697,7 +701,7 @@ export type AbilityCheckScalarWhereInput = {
   NOT?: Prisma.AbilityCheckScalarWhereInput | Prisma.AbilityCheckScalarWhereInput[]
   AbilityCheckId?: Prisma.UuidFilter<"AbilityCheck"> | string
   ActionId?: Prisma.UuidFilter<"AbilityCheck"> | string
-  Skill?: Prisma.StringFilter<"AbilityCheck"> | string
+  Skill?: Prisma.EnumSkillFilter<"AbilityCheck"> | $Enums.Skill
   DC?: Prisma.IntFilter<"AbilityCheck"> | number
   SuccessNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
   FailureNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
@@ -707,7 +711,7 @@ export type AbilityCheckScalarWhereInput = {
 
 export type AbilityCheckCreateWithoutSuccessNarrationInput = {
   AbilityCheckId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   Action: Prisma.ActionCreateNestedOneWithoutAbilityChecksInput
   FailureNarration?: Prisma.NarrationCreateNestedOneWithoutFailureAbilityChecksInput
@@ -718,7 +722,7 @@ export type AbilityCheckCreateWithoutSuccessNarrationInput = {
 export type AbilityCheckUncheckedCreateWithoutSuccessNarrationInput = {
   AbilityCheckId: string
   ActionId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   FailureNarrationId?: string | null
   CriticalSuccessNarrationId?: string | null
@@ -737,7 +741,7 @@ export type AbilityCheckCreateManySuccessNarrationInputEnvelope = {
 
 export type AbilityCheckCreateWithoutFailureNarrationInput = {
   AbilityCheckId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   Action: Prisma.ActionCreateNestedOneWithoutAbilityChecksInput
   SuccessNarration?: Prisma.NarrationCreateNestedOneWithoutSuccessAbilityChecksInput
@@ -748,7 +752,7 @@ export type AbilityCheckCreateWithoutFailureNarrationInput = {
 export type AbilityCheckUncheckedCreateWithoutFailureNarrationInput = {
   AbilityCheckId: string
   ActionId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   SuccessNarrationId?: string | null
   CriticalSuccessNarrationId?: string | null
@@ -767,7 +771,7 @@ export type AbilityCheckCreateManyFailureNarrationInputEnvelope = {
 
 export type AbilityCheckCreateWithoutCriticalSuccessNarrationInput = {
   AbilityCheckId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   Action: Prisma.ActionCreateNestedOneWithoutAbilityChecksInput
   SuccessNarration?: Prisma.NarrationCreateNestedOneWithoutSuccessAbilityChecksInput
@@ -778,7 +782,7 @@ export type AbilityCheckCreateWithoutCriticalSuccessNarrationInput = {
 export type AbilityCheckUncheckedCreateWithoutCriticalSuccessNarrationInput = {
   AbilityCheckId: string
   ActionId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   SuccessNarrationId?: string | null
   FailureNarrationId?: string | null
@@ -797,7 +801,7 @@ export type AbilityCheckCreateManyCriticalSuccessNarrationInputEnvelope = {
 
 export type AbilityCheckCreateWithoutCriticalFailureNarrationInput = {
   AbilityCheckId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   Action: Prisma.ActionCreateNestedOneWithoutAbilityChecksInput
   SuccessNarration?: Prisma.NarrationCreateNestedOneWithoutSuccessAbilityChecksInput
@@ -808,7 +812,7 @@ export type AbilityCheckCreateWithoutCriticalFailureNarrationInput = {
 export type AbilityCheckUncheckedCreateWithoutCriticalFailureNarrationInput = {
   AbilityCheckId: string
   ActionId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   SuccessNarrationId?: string | null
   FailureNarrationId?: string | null
@@ -891,7 +895,7 @@ export type AbilityCheckUpdateManyWithWhereWithoutCriticalFailureNarrationInput 
 
 export type AbilityCheckCreateManyActionInput = {
   AbilityCheckId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   SuccessNarrationId?: string | null
   FailureNarrationId?: string | null
@@ -901,7 +905,7 @@ export type AbilityCheckCreateManyActionInput = {
 
 export type AbilityCheckUpdateWithoutActionInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   SuccessNarration?: Prisma.NarrationUpdateOneWithoutSuccessAbilityChecksNestedInput
   FailureNarration?: Prisma.NarrationUpdateOneWithoutFailureAbilityChecksNestedInput
@@ -911,7 +915,7 @@ export type AbilityCheckUpdateWithoutActionInput = {
 
 export type AbilityCheckUncheckedUpdateWithoutActionInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   SuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   FailureNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -921,7 +925,7 @@ export type AbilityCheckUncheckedUpdateWithoutActionInput = {
 
 export type AbilityCheckUncheckedUpdateManyWithoutActionInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   SuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   FailureNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -932,7 +936,7 @@ export type AbilityCheckUncheckedUpdateManyWithoutActionInput = {
 export type AbilityCheckCreateManySuccessNarrationInput = {
   AbilityCheckId: string
   ActionId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   FailureNarrationId?: string | null
   CriticalSuccessNarrationId?: string | null
@@ -942,7 +946,7 @@ export type AbilityCheckCreateManySuccessNarrationInput = {
 export type AbilityCheckCreateManyFailureNarrationInput = {
   AbilityCheckId: string
   ActionId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   SuccessNarrationId?: string | null
   CriticalSuccessNarrationId?: string | null
@@ -952,7 +956,7 @@ export type AbilityCheckCreateManyFailureNarrationInput = {
 export type AbilityCheckCreateManyCriticalSuccessNarrationInput = {
   AbilityCheckId: string
   ActionId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   SuccessNarrationId?: string | null
   FailureNarrationId?: string | null
@@ -962,7 +966,7 @@ export type AbilityCheckCreateManyCriticalSuccessNarrationInput = {
 export type AbilityCheckCreateManyCriticalFailureNarrationInput = {
   AbilityCheckId: string
   ActionId: string
-  Skill: string
+  Skill: $Enums.Skill
   DC: number
   SuccessNarrationId?: string | null
   FailureNarrationId?: string | null
@@ -971,7 +975,7 @@ export type AbilityCheckCreateManyCriticalFailureNarrationInput = {
 
 export type AbilityCheckUpdateWithoutSuccessNarrationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   Action?: Prisma.ActionUpdateOneRequiredWithoutAbilityChecksNestedInput
   FailureNarration?: Prisma.NarrationUpdateOneWithoutFailureAbilityChecksNestedInput
@@ -982,7 +986,7 @@ export type AbilityCheckUpdateWithoutSuccessNarrationInput = {
 export type AbilityCheckUncheckedUpdateWithoutSuccessNarrationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   FailureNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CriticalSuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -992,7 +996,7 @@ export type AbilityCheckUncheckedUpdateWithoutSuccessNarrationInput = {
 export type AbilityCheckUncheckedUpdateManyWithoutSuccessNarrationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   FailureNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CriticalSuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1001,7 +1005,7 @@ export type AbilityCheckUncheckedUpdateManyWithoutSuccessNarrationInput = {
 
 export type AbilityCheckUpdateWithoutFailureNarrationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   Action?: Prisma.ActionUpdateOneRequiredWithoutAbilityChecksNestedInput
   SuccessNarration?: Prisma.NarrationUpdateOneWithoutSuccessAbilityChecksNestedInput
@@ -1012,7 +1016,7 @@ export type AbilityCheckUpdateWithoutFailureNarrationInput = {
 export type AbilityCheckUncheckedUpdateWithoutFailureNarrationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   SuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CriticalSuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1022,7 +1026,7 @@ export type AbilityCheckUncheckedUpdateWithoutFailureNarrationInput = {
 export type AbilityCheckUncheckedUpdateManyWithoutFailureNarrationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   SuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CriticalSuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1031,7 +1035,7 @@ export type AbilityCheckUncheckedUpdateManyWithoutFailureNarrationInput = {
 
 export type AbilityCheckUpdateWithoutCriticalSuccessNarrationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   Action?: Prisma.ActionUpdateOneRequiredWithoutAbilityChecksNestedInput
   SuccessNarration?: Prisma.NarrationUpdateOneWithoutSuccessAbilityChecksNestedInput
@@ -1042,7 +1046,7 @@ export type AbilityCheckUpdateWithoutCriticalSuccessNarrationInput = {
 export type AbilityCheckUncheckedUpdateWithoutCriticalSuccessNarrationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   SuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   FailureNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1052,7 +1056,7 @@ export type AbilityCheckUncheckedUpdateWithoutCriticalSuccessNarrationInput = {
 export type AbilityCheckUncheckedUpdateManyWithoutCriticalSuccessNarrationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   SuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   FailureNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1061,7 +1065,7 @@ export type AbilityCheckUncheckedUpdateManyWithoutCriticalSuccessNarrationInput 
 
 export type AbilityCheckUpdateWithoutCriticalFailureNarrationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   Action?: Prisma.ActionUpdateOneRequiredWithoutAbilityChecksNestedInput
   SuccessNarration?: Prisma.NarrationUpdateOneWithoutSuccessAbilityChecksNestedInput
@@ -1072,7 +1076,7 @@ export type AbilityCheckUpdateWithoutCriticalFailureNarrationInput = {
 export type AbilityCheckUncheckedUpdateWithoutCriticalFailureNarrationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   SuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   FailureNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1082,7 +1086,7 @@ export type AbilityCheckUncheckedUpdateWithoutCriticalFailureNarrationInput = {
 export type AbilityCheckUncheckedUpdateManyWithoutCriticalFailureNarrationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
-  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   DC?: Prisma.IntFieldUpdateOperationsInput | number
   SuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   FailureNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1185,7 +1189,7 @@ export type $AbilityCheckPayload<ExtArgs extends runtime.Types.Extensions.Intern
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     AbilityCheckId: string
     ActionId: string
-    Skill: string
+    Skill: $Enums.Skill
     DC: number
     SuccessNarrationId: string | null
     FailureNarrationId: string | null
@@ -1621,7 +1625,7 @@ export interface Prisma__AbilityCheckClient<T, Null = never, ExtArgs extends run
 export interface AbilityCheckFieldRefs {
   readonly AbilityCheckId: Prisma.FieldRef<"AbilityCheck", 'String'>
   readonly ActionId: Prisma.FieldRef<"AbilityCheck", 'String'>
-  readonly Skill: Prisma.FieldRef<"AbilityCheck", 'String'>
+  readonly Skill: Prisma.FieldRef<"AbilityCheck", 'Skill'>
   readonly DC: Prisma.FieldRef<"AbilityCheck", 'Int'>
   readonly SuccessNarrationId: Prisma.FieldRef<"AbilityCheck", 'String'>
   readonly FailureNarrationId: Prisma.FieldRef<"AbilityCheck", 'String'>

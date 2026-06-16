@@ -13,7 +13,7 @@ model AbilityCheck {
   AbilityCheckId             String     @id @db.Uuid
   ActionId                   String     @db.Uuid
   Action                     Action     @relation(fields: [ActionId], references: [ActionId])
-  Skill                      String
+  Skill                      Skill
   DC                         Int
   SuccessNarrationId         String?    @db.Uuid
   SuccessNarration           Narration? @relation(name: "Success", fields: [SuccessNarrationId], references: [NarrationId])
@@ -250,6 +250,29 @@ model RegionTemplate {
   RegionTemplateId String @id @db.Uuid
   MapTemplateId    String @db.Uuid
   Name             String @db.VarChar(63)
+
+  @@schema("public")
+}
+
+enum Skill {
+  Acrobatics
+  AnimalHandling @map("Animal Handling")
+  Arcana
+  Athletics
+  Deception
+  History
+  Insight
+  Intimidation
+  Investigation
+  Medicine
+  Nature
+  Perception
+  Performance
+  Persuasion
+  Religion
+  SleightOfHand  @map("Sleight of Hand")
+  Stealth
+  Survival
 
   @@schema("public")
 }
