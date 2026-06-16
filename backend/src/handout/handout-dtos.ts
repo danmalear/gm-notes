@@ -1,6 +1,5 @@
+import type { HandoutType } from '#prisma-enums';
 import type { UUID } from 'crypto';
-
-export type HandoutType = 'Text' | 'Image' | 'File';
 
 /**
  * Minimal response structure for handouts.
