@@ -83,7 +83,7 @@ export class NoteRepository extends Repository<
 			});
 			return notes;
 		} catch (e) {
-			throw Error(
+			throw new Error(
 				`Error getting ${this.descriptor} records by Entity ID ${entityId}: ${getMessage(e)}`,
 			);
 		}
