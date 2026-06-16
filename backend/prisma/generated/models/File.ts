@@ -158,11 +158,13 @@ export type FileWhereInput = {
   NOT?: Prisma.FileWhereInput | Prisma.FileWhereInput[]
   FileId?: Prisma.UuidFilter<"File"> | string
   FileName?: Prisma.StringFilter<"File"> | string
+  Item?: Prisma.XOR<Prisma.ItemNullableScalarRelationFilter, Prisma.ItemWhereInput> | null
 }
 
 export type FileOrderByWithRelationInput = {
   FileId?: Prisma.SortOrder
   FileName?: Prisma.SortOrder
+  Item?: Prisma.ItemOrderByWithRelationInput
 }
 
 export type FileWhereUniqueInput = Prisma.AtLeast<{
@@ -171,6 +173,7 @@ export type FileWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.FileWhereInput[]
   NOT?: Prisma.FileWhereInput | Prisma.FileWhereInput[]
   FileName?: Prisma.StringFilter<"File"> | string
+  Item?: Prisma.XOR<Prisma.ItemNullableScalarRelationFilter, Prisma.ItemWhereInput> | null
 }, "FileId">
 
 export type FileOrderByWithAggregationInput = {
@@ -192,21 +195,25 @@ export type FileScalarWhereWithAggregatesInput = {
 export type FileCreateInput = {
   FileId: string
   FileName: string
+  Item?: Prisma.ItemCreateNestedOneWithoutFileInput
 }
 
 export type FileUncheckedCreateInput = {
   FileId: string
   FileName: string
+  Item?: Prisma.ItemUncheckedCreateNestedOneWithoutFileInput
 }
 
 export type FileUpdateInput = {
   FileId?: Prisma.StringFieldUpdateOperationsInput | string
   FileName?: Prisma.StringFieldUpdateOperationsInput | string
+  Item?: Prisma.ItemUpdateOneWithoutFileNestedInput
 }
 
 export type FileUncheckedUpdateInput = {
   FileId?: Prisma.StringFieldUpdateOperationsInput | string
   FileName?: Prisma.StringFieldUpdateOperationsInput | string
+  Item?: Prisma.ItemUncheckedUpdateOneWithoutFileNestedInput
 }
 
 export type FileCreateManyInput = {
@@ -239,11 +246,69 @@ export type FileMinOrderByAggregateInput = {
   FileName?: Prisma.SortOrder
 }
 
+export type FileNullableScalarRelationFilter = {
+  is?: Prisma.FileWhereInput | null
+  isNot?: Prisma.FileWhereInput | null
+}
+
+export type FileCreateNestedOneWithoutItemInput = {
+  create?: Prisma.XOR<Prisma.FileCreateWithoutItemInput, Prisma.FileUncheckedCreateWithoutItemInput>
+  connectOrCreate?: Prisma.FileCreateOrConnectWithoutItemInput
+  connect?: Prisma.FileWhereUniqueInput
+}
+
+export type FileUpdateOneWithoutItemNestedInput = {
+  create?: Prisma.XOR<Prisma.FileCreateWithoutItemInput, Prisma.FileUncheckedCreateWithoutItemInput>
+  connectOrCreate?: Prisma.FileCreateOrConnectWithoutItemInput
+  upsert?: Prisma.FileUpsertWithoutItemInput
+  disconnect?: Prisma.FileWhereInput | boolean
+  delete?: Prisma.FileWhereInput | boolean
+  connect?: Prisma.FileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.FileUpdateToOneWithWhereWithoutItemInput, Prisma.FileUpdateWithoutItemInput>, Prisma.FileUncheckedUpdateWithoutItemInput>
+}
+
+export type FileCreateWithoutItemInput = {
+  FileId: string
+  FileName: string
+}
+
+export type FileUncheckedCreateWithoutItemInput = {
+  FileId: string
+  FileName: string
+}
+
+export type FileCreateOrConnectWithoutItemInput = {
+  where: Prisma.FileWhereUniqueInput
+  create: Prisma.XOR<Prisma.FileCreateWithoutItemInput, Prisma.FileUncheckedCreateWithoutItemInput>
+}
+
+export type FileUpsertWithoutItemInput = {
+  update: Prisma.XOR<Prisma.FileUpdateWithoutItemInput, Prisma.FileUncheckedUpdateWithoutItemInput>
+  create: Prisma.XOR<Prisma.FileCreateWithoutItemInput, Prisma.FileUncheckedCreateWithoutItemInput>
+  where?: Prisma.FileWhereInput
+}
+
+export type FileUpdateToOneWithWhereWithoutItemInput = {
+  where?: Prisma.FileWhereInput
+  data: Prisma.XOR<Prisma.FileUpdateWithoutItemInput, Prisma.FileUncheckedUpdateWithoutItemInput>
+}
+
+export type FileUpdateWithoutItemInput = {
+  FileId?: Prisma.StringFieldUpdateOperationsInput | string
+  FileName?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type FileUncheckedUpdateWithoutItemInput = {
+  FileId?: Prisma.StringFieldUpdateOperationsInput | string
+  FileName?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
 
 
 export type FileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   FileId?: boolean
   FileName?: boolean
+  Item?: boolean | Prisma.File$ItemArgs<ExtArgs>
 }, ExtArgs["result"]["file"]>
 
 export type FileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -262,10 +327,17 @@ export type FileSelectScalar = {
 }
 
 export type FileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"FileId" | "FileName", ExtArgs["result"]["file"]>
+export type FileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Item?: boolean | Prisma.File$ItemArgs<ExtArgs>
+}
+export type FileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type FileIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $FilePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "File"
-  objects: {}
+  objects: {
+    Item: Prisma.$ItemPayload<ExtArgs> | null
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     FileId: string
     FileName: string
@@ -663,6 +735,7 @@ readonly fields: FileFieldRefs;
  */
 export interface Prisma__FileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  Item<T extends Prisma.File$ItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.File$ItemArgs<ExtArgs>>): Prisma.Prisma__ItemClient<runtime.Types.Result.GetResult<Prisma.$ItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -711,6 +784,10 @@ export type FileFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.FileOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FileInclude<ExtArgs> | null
+  /**
    * Filter, which File to fetch.
    */
   where: Prisma.FileWhereUniqueInput
@@ -729,6 +806,10 @@ export type FileFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.FileOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FileInclude<ExtArgs> | null
+  /**
    * Filter, which File to fetch.
    */
   where: Prisma.FileWhereUniqueInput
@@ -746,6 +827,10 @@ export type FileFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the File
    */
   omit?: Prisma.FileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FileInclude<ExtArgs> | null
   /**
    * Filter, which File to fetch.
    */
@@ -795,6 +880,10 @@ export type FileFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.FileOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FileInclude<ExtArgs> | null
+  /**
    * Filter, which File to fetch.
    */
   where?: Prisma.FileWhereInput
@@ -842,6 +931,10 @@ export type FileFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the File
    */
   omit?: Prisma.FileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FileInclude<ExtArgs> | null
   /**
    * Filter, which Files to fetch.
    */
@@ -891,6 +984,10 @@ export type FileCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.FileOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FileInclude<ExtArgs> | null
+  /**
    * The data needed to create a File.
    */
   data: Prisma.XOR<Prisma.FileCreateInput, Prisma.FileUncheckedCreateInput>
@@ -938,6 +1035,10 @@ export type FileUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the File
    */
   omit?: Prisma.FileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FileInclude<ExtArgs> | null
   /**
    * The data needed to update a File.
    */
@@ -1005,6 +1106,10 @@ export type FileUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.FileOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FileInclude<ExtArgs> | null
+  /**
    * The filter to search for the File to update in case it exists.
    */
   where: Prisma.FileWhereUniqueInput
@@ -1031,6 +1136,10 @@ export type FileDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.FileOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FileInclude<ExtArgs> | null
+  /**
    * Filter which File to delete.
    */
   where: Prisma.FileWhereUniqueInput
@@ -1051,6 +1160,25 @@ export type FileDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * File.Item
+ */
+export type File$ItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Item
+   */
+  select?: Prisma.ItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Item
+   */
+  omit?: Prisma.ItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ItemInclude<ExtArgs> | null
+  where?: Prisma.ItemWhereInput
+}
+
+/**
  * File without action
  */
 export type FileDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1062,4 +1190,8 @@ export type FileDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Omit specific fields from the File
    */
   omit?: Prisma.FileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FileInclude<ExtArgs> | null
 }

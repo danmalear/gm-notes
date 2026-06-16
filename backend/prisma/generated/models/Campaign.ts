@@ -174,6 +174,11 @@ export type CampaignWhereInput = {
   CampaignTemplateId?: Prisma.UuidNullableFilter<"Campaign"> | string | null
   Name?: Prisma.StringFilter<"Campaign"> | string
   ActiveMapId?: Prisma.UuidNullableFilter<"Campaign"> | string | null
+  ActiveMap?: Prisma.XOR<Prisma.MapNullableScalarRelationFilter, Prisma.MapWhereInput> | null
+  Conditions?: Prisma.ConditionListRelationFilter
+  Handouts?: Prisma.HandoutListRelationFilter
+  Items?: Prisma.ItemListRelationFilter
+  Maps?: Prisma.MapListRelationFilter
 }
 
 export type CampaignOrderByWithRelationInput = {
@@ -181,6 +186,11 @@ export type CampaignOrderByWithRelationInput = {
   CampaignTemplateId?: Prisma.SortOrderInput | Prisma.SortOrder
   Name?: Prisma.SortOrder
   ActiveMapId?: Prisma.SortOrderInput | Prisma.SortOrder
+  ActiveMap?: Prisma.MapOrderByWithRelationInput
+  Conditions?: Prisma.ConditionOrderByRelationAggregateInput
+  Handouts?: Prisma.HandoutOrderByRelationAggregateInput
+  Items?: Prisma.ItemOrderByRelationAggregateInput
+  Maps?: Prisma.MapOrderByRelationAggregateInput
 }
 
 export type CampaignWhereUniqueInput = Prisma.AtLeast<{
@@ -191,6 +201,11 @@ export type CampaignWhereUniqueInput = Prisma.AtLeast<{
   CampaignTemplateId?: Prisma.UuidNullableFilter<"Campaign"> | string | null
   Name?: Prisma.StringFilter<"Campaign"> | string
   ActiveMapId?: Prisma.UuidNullableFilter<"Campaign"> | string | null
+  ActiveMap?: Prisma.XOR<Prisma.MapNullableScalarRelationFilter, Prisma.MapWhereInput> | null
+  Conditions?: Prisma.ConditionListRelationFilter
+  Handouts?: Prisma.HandoutListRelationFilter
+  Items?: Prisma.ItemListRelationFilter
+  Maps?: Prisma.MapListRelationFilter
 }, "CampaignId">
 
 export type CampaignOrderByWithAggregationInput = {
@@ -217,7 +232,11 @@ export type CampaignCreateInput = {
   CampaignId: string
   CampaignTemplateId?: string | null
   Name: string
-  ActiveMapId?: string | null
+  ActiveMap?: Prisma.MapCreateNestedOneWithoutCampaignsInput
+  Conditions?: Prisma.ConditionCreateNestedManyWithoutCampaignInput
+  Handouts?: Prisma.HandoutCreateNestedManyWithoutCampaignInput
+  Items?: Prisma.ItemCreateNestedManyWithoutCampaignInput
+  Maps?: Prisma.MapCreateNestedManyWithoutCampaignInput
 }
 
 export type CampaignUncheckedCreateInput = {
@@ -225,13 +244,21 @@ export type CampaignUncheckedCreateInput = {
   CampaignTemplateId?: string | null
   Name: string
   ActiveMapId?: string | null
+  Conditions?: Prisma.ConditionUncheckedCreateNestedManyWithoutCampaignInput
+  Handouts?: Prisma.HandoutUncheckedCreateNestedManyWithoutCampaignInput
+  Items?: Prisma.ItemUncheckedCreateNestedManyWithoutCampaignInput
+  Maps?: Prisma.MapUncheckedCreateNestedManyWithoutCampaignInput
 }
 
 export type CampaignUpdateInput = {
   CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
   CampaignTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  ActiveMapId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ActiveMap?: Prisma.MapUpdateOneWithoutCampaignsNestedInput
+  Conditions?: Prisma.ConditionUpdateManyWithoutCampaignNestedInput
+  Handouts?: Prisma.HandoutUpdateManyWithoutCampaignNestedInput
+  Items?: Prisma.ItemUpdateManyWithoutCampaignNestedInput
+  Maps?: Prisma.MapUpdateManyWithoutCampaignNestedInput
 }
 
 export type CampaignUncheckedUpdateInput = {
@@ -239,6 +266,10 @@ export type CampaignUncheckedUpdateInput = {
   CampaignTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   ActiveMapId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Conditions?: Prisma.ConditionUncheckedUpdateManyWithoutCampaignNestedInput
+  Handouts?: Prisma.HandoutUncheckedUpdateManyWithoutCampaignNestedInput
+  Items?: Prisma.ItemUncheckedUpdateManyWithoutCampaignNestedInput
+  Maps?: Prisma.MapUncheckedUpdateManyWithoutCampaignNestedInput
 }
 
 export type CampaignCreateManyInput = {
@@ -252,7 +283,6 @@ export type CampaignUpdateManyMutationInput = {
   CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
   CampaignTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  ActiveMapId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CampaignUncheckedUpdateManyInput = {
@@ -283,6 +313,494 @@ export type CampaignMinOrderByAggregateInput = {
   ActiveMapId?: Prisma.SortOrder
 }
 
+export type CampaignScalarRelationFilter = {
+  is?: Prisma.CampaignWhereInput
+  isNot?: Prisma.CampaignWhereInput
+}
+
+export type CampaignNullableScalarRelationFilter = {
+  is?: Prisma.CampaignWhereInput | null
+  isNot?: Prisma.CampaignWhereInput | null
+}
+
+export type CampaignListRelationFilter = {
+  every?: Prisma.CampaignWhereInput
+  some?: Prisma.CampaignWhereInput
+  none?: Prisma.CampaignWhereInput
+}
+
+export type CampaignOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
+export type CampaignCreateNestedOneWithoutConditionsInput = {
+  create?: Prisma.XOR<Prisma.CampaignCreateWithoutConditionsInput, Prisma.CampaignUncheckedCreateWithoutConditionsInput>
+  connectOrCreate?: Prisma.CampaignCreateOrConnectWithoutConditionsInput
+  connect?: Prisma.CampaignWhereUniqueInput
+}
+
+export type CampaignUpdateOneRequiredWithoutConditionsNestedInput = {
+  create?: Prisma.XOR<Prisma.CampaignCreateWithoutConditionsInput, Prisma.CampaignUncheckedCreateWithoutConditionsInput>
+  connectOrCreate?: Prisma.CampaignCreateOrConnectWithoutConditionsInput
+  upsert?: Prisma.CampaignUpsertWithoutConditionsInput
+  connect?: Prisma.CampaignWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CampaignUpdateToOneWithWhereWithoutConditionsInput, Prisma.CampaignUpdateWithoutConditionsInput>, Prisma.CampaignUncheckedUpdateWithoutConditionsInput>
+}
+
+export type CampaignCreateNestedOneWithoutHandoutsInput = {
+  create?: Prisma.XOR<Prisma.CampaignCreateWithoutHandoutsInput, Prisma.CampaignUncheckedCreateWithoutHandoutsInput>
+  connectOrCreate?: Prisma.CampaignCreateOrConnectWithoutHandoutsInput
+  connect?: Prisma.CampaignWhereUniqueInput
+}
+
+export type CampaignUpdateOneRequiredWithoutHandoutsNestedInput = {
+  create?: Prisma.XOR<Prisma.CampaignCreateWithoutHandoutsInput, Prisma.CampaignUncheckedCreateWithoutHandoutsInput>
+  connectOrCreate?: Prisma.CampaignCreateOrConnectWithoutHandoutsInput
+  upsert?: Prisma.CampaignUpsertWithoutHandoutsInput
+  connect?: Prisma.CampaignWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CampaignUpdateToOneWithWhereWithoutHandoutsInput, Prisma.CampaignUpdateWithoutHandoutsInput>, Prisma.CampaignUncheckedUpdateWithoutHandoutsInput>
+}
+
+export type CampaignCreateNestedOneWithoutItemsInput = {
+  create?: Prisma.XOR<Prisma.CampaignCreateWithoutItemsInput, Prisma.CampaignUncheckedCreateWithoutItemsInput>
+  connectOrCreate?: Prisma.CampaignCreateOrConnectWithoutItemsInput
+  connect?: Prisma.CampaignWhereUniqueInput
+}
+
+export type CampaignUpdateOneWithoutItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.CampaignCreateWithoutItemsInput, Prisma.CampaignUncheckedCreateWithoutItemsInput>
+  connectOrCreate?: Prisma.CampaignCreateOrConnectWithoutItemsInput
+  upsert?: Prisma.CampaignUpsertWithoutItemsInput
+  disconnect?: Prisma.CampaignWhereInput | boolean
+  delete?: Prisma.CampaignWhereInput | boolean
+  connect?: Prisma.CampaignWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CampaignUpdateToOneWithWhereWithoutItemsInput, Prisma.CampaignUpdateWithoutItemsInput>, Prisma.CampaignUncheckedUpdateWithoutItemsInput>
+}
+
+export type CampaignCreateNestedOneWithoutMapsInput = {
+  create?: Prisma.XOR<Prisma.CampaignCreateWithoutMapsInput, Prisma.CampaignUncheckedCreateWithoutMapsInput>
+  connectOrCreate?: Prisma.CampaignCreateOrConnectWithoutMapsInput
+  connect?: Prisma.CampaignWhereUniqueInput
+}
+
+export type CampaignCreateNestedManyWithoutActiveMapInput = {
+  create?: Prisma.XOR<Prisma.CampaignCreateWithoutActiveMapInput, Prisma.CampaignUncheckedCreateWithoutActiveMapInput> | Prisma.CampaignCreateWithoutActiveMapInput[] | Prisma.CampaignUncheckedCreateWithoutActiveMapInput[]
+  connectOrCreate?: Prisma.CampaignCreateOrConnectWithoutActiveMapInput | Prisma.CampaignCreateOrConnectWithoutActiveMapInput[]
+  createMany?: Prisma.CampaignCreateManyActiveMapInputEnvelope
+  connect?: Prisma.CampaignWhereUniqueInput | Prisma.CampaignWhereUniqueInput[]
+}
+
+export type CampaignUncheckedCreateNestedManyWithoutActiveMapInput = {
+  create?: Prisma.XOR<Prisma.CampaignCreateWithoutActiveMapInput, Prisma.CampaignUncheckedCreateWithoutActiveMapInput> | Prisma.CampaignCreateWithoutActiveMapInput[] | Prisma.CampaignUncheckedCreateWithoutActiveMapInput[]
+  connectOrCreate?: Prisma.CampaignCreateOrConnectWithoutActiveMapInput | Prisma.CampaignCreateOrConnectWithoutActiveMapInput[]
+  createMany?: Prisma.CampaignCreateManyActiveMapInputEnvelope
+  connect?: Prisma.CampaignWhereUniqueInput | Prisma.CampaignWhereUniqueInput[]
+}
+
+export type CampaignUpdateOneRequiredWithoutMapsNestedInput = {
+  create?: Prisma.XOR<Prisma.CampaignCreateWithoutMapsInput, Prisma.CampaignUncheckedCreateWithoutMapsInput>
+  connectOrCreate?: Prisma.CampaignCreateOrConnectWithoutMapsInput
+  upsert?: Prisma.CampaignUpsertWithoutMapsInput
+  connect?: Prisma.CampaignWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CampaignUpdateToOneWithWhereWithoutMapsInput, Prisma.CampaignUpdateWithoutMapsInput>, Prisma.CampaignUncheckedUpdateWithoutMapsInput>
+}
+
+export type CampaignUpdateManyWithoutActiveMapNestedInput = {
+  create?: Prisma.XOR<Prisma.CampaignCreateWithoutActiveMapInput, Prisma.CampaignUncheckedCreateWithoutActiveMapInput> | Prisma.CampaignCreateWithoutActiveMapInput[] | Prisma.CampaignUncheckedCreateWithoutActiveMapInput[]
+  connectOrCreate?: Prisma.CampaignCreateOrConnectWithoutActiveMapInput | Prisma.CampaignCreateOrConnectWithoutActiveMapInput[]
+  upsert?: Prisma.CampaignUpsertWithWhereUniqueWithoutActiveMapInput | Prisma.CampaignUpsertWithWhereUniqueWithoutActiveMapInput[]
+  createMany?: Prisma.CampaignCreateManyActiveMapInputEnvelope
+  set?: Prisma.CampaignWhereUniqueInput | Prisma.CampaignWhereUniqueInput[]
+  disconnect?: Prisma.CampaignWhereUniqueInput | Prisma.CampaignWhereUniqueInput[]
+  delete?: Prisma.CampaignWhereUniqueInput | Prisma.CampaignWhereUniqueInput[]
+  connect?: Prisma.CampaignWhereUniqueInput | Prisma.CampaignWhereUniqueInput[]
+  update?: Prisma.CampaignUpdateWithWhereUniqueWithoutActiveMapInput | Prisma.CampaignUpdateWithWhereUniqueWithoutActiveMapInput[]
+  updateMany?: Prisma.CampaignUpdateManyWithWhereWithoutActiveMapInput | Prisma.CampaignUpdateManyWithWhereWithoutActiveMapInput[]
+  deleteMany?: Prisma.CampaignScalarWhereInput | Prisma.CampaignScalarWhereInput[]
+}
+
+export type CampaignUncheckedUpdateManyWithoutActiveMapNestedInput = {
+  create?: Prisma.XOR<Prisma.CampaignCreateWithoutActiveMapInput, Prisma.CampaignUncheckedCreateWithoutActiveMapInput> | Prisma.CampaignCreateWithoutActiveMapInput[] | Prisma.CampaignUncheckedCreateWithoutActiveMapInput[]
+  connectOrCreate?: Prisma.CampaignCreateOrConnectWithoutActiveMapInput | Prisma.CampaignCreateOrConnectWithoutActiveMapInput[]
+  upsert?: Prisma.CampaignUpsertWithWhereUniqueWithoutActiveMapInput | Prisma.CampaignUpsertWithWhereUniqueWithoutActiveMapInput[]
+  createMany?: Prisma.CampaignCreateManyActiveMapInputEnvelope
+  set?: Prisma.CampaignWhereUniqueInput | Prisma.CampaignWhereUniqueInput[]
+  disconnect?: Prisma.CampaignWhereUniqueInput | Prisma.CampaignWhereUniqueInput[]
+  delete?: Prisma.CampaignWhereUniqueInput | Prisma.CampaignWhereUniqueInput[]
+  connect?: Prisma.CampaignWhereUniqueInput | Prisma.CampaignWhereUniqueInput[]
+  update?: Prisma.CampaignUpdateWithWhereUniqueWithoutActiveMapInput | Prisma.CampaignUpdateWithWhereUniqueWithoutActiveMapInput[]
+  updateMany?: Prisma.CampaignUpdateManyWithWhereWithoutActiveMapInput | Prisma.CampaignUpdateManyWithWhereWithoutActiveMapInput[]
+  deleteMany?: Prisma.CampaignScalarWhereInput | Prisma.CampaignScalarWhereInput[]
+}
+
+export type CampaignCreateWithoutConditionsInput = {
+  CampaignId: string
+  CampaignTemplateId?: string | null
+  Name: string
+  ActiveMap?: Prisma.MapCreateNestedOneWithoutCampaignsInput
+  Handouts?: Prisma.HandoutCreateNestedManyWithoutCampaignInput
+  Items?: Prisma.ItemCreateNestedManyWithoutCampaignInput
+  Maps?: Prisma.MapCreateNestedManyWithoutCampaignInput
+}
+
+export type CampaignUncheckedCreateWithoutConditionsInput = {
+  CampaignId: string
+  CampaignTemplateId?: string | null
+  Name: string
+  ActiveMapId?: string | null
+  Handouts?: Prisma.HandoutUncheckedCreateNestedManyWithoutCampaignInput
+  Items?: Prisma.ItemUncheckedCreateNestedManyWithoutCampaignInput
+  Maps?: Prisma.MapUncheckedCreateNestedManyWithoutCampaignInput
+}
+
+export type CampaignCreateOrConnectWithoutConditionsInput = {
+  where: Prisma.CampaignWhereUniqueInput
+  create: Prisma.XOR<Prisma.CampaignCreateWithoutConditionsInput, Prisma.CampaignUncheckedCreateWithoutConditionsInput>
+}
+
+export type CampaignUpsertWithoutConditionsInput = {
+  update: Prisma.XOR<Prisma.CampaignUpdateWithoutConditionsInput, Prisma.CampaignUncheckedUpdateWithoutConditionsInput>
+  create: Prisma.XOR<Prisma.CampaignCreateWithoutConditionsInput, Prisma.CampaignUncheckedCreateWithoutConditionsInput>
+  where?: Prisma.CampaignWhereInput
+}
+
+export type CampaignUpdateToOneWithWhereWithoutConditionsInput = {
+  where?: Prisma.CampaignWhereInput
+  data: Prisma.XOR<Prisma.CampaignUpdateWithoutConditionsInput, Prisma.CampaignUncheckedUpdateWithoutConditionsInput>
+}
+
+export type CampaignUpdateWithoutConditionsInput = {
+  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  CampaignTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  ActiveMap?: Prisma.MapUpdateOneWithoutCampaignsNestedInput
+  Handouts?: Prisma.HandoutUpdateManyWithoutCampaignNestedInput
+  Items?: Prisma.ItemUpdateManyWithoutCampaignNestedInput
+  Maps?: Prisma.MapUpdateManyWithoutCampaignNestedInput
+}
+
+export type CampaignUncheckedUpdateWithoutConditionsInput = {
+  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  CampaignTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  ActiveMapId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Handouts?: Prisma.HandoutUncheckedUpdateManyWithoutCampaignNestedInput
+  Items?: Prisma.ItemUncheckedUpdateManyWithoutCampaignNestedInput
+  Maps?: Prisma.MapUncheckedUpdateManyWithoutCampaignNestedInput
+}
+
+export type CampaignCreateWithoutHandoutsInput = {
+  CampaignId: string
+  CampaignTemplateId?: string | null
+  Name: string
+  ActiveMap?: Prisma.MapCreateNestedOneWithoutCampaignsInput
+  Conditions?: Prisma.ConditionCreateNestedManyWithoutCampaignInput
+  Items?: Prisma.ItemCreateNestedManyWithoutCampaignInput
+  Maps?: Prisma.MapCreateNestedManyWithoutCampaignInput
+}
+
+export type CampaignUncheckedCreateWithoutHandoutsInput = {
+  CampaignId: string
+  CampaignTemplateId?: string | null
+  Name: string
+  ActiveMapId?: string | null
+  Conditions?: Prisma.ConditionUncheckedCreateNestedManyWithoutCampaignInput
+  Items?: Prisma.ItemUncheckedCreateNestedManyWithoutCampaignInput
+  Maps?: Prisma.MapUncheckedCreateNestedManyWithoutCampaignInput
+}
+
+export type CampaignCreateOrConnectWithoutHandoutsInput = {
+  where: Prisma.CampaignWhereUniqueInput
+  create: Prisma.XOR<Prisma.CampaignCreateWithoutHandoutsInput, Prisma.CampaignUncheckedCreateWithoutHandoutsInput>
+}
+
+export type CampaignUpsertWithoutHandoutsInput = {
+  update: Prisma.XOR<Prisma.CampaignUpdateWithoutHandoutsInput, Prisma.CampaignUncheckedUpdateWithoutHandoutsInput>
+  create: Prisma.XOR<Prisma.CampaignCreateWithoutHandoutsInput, Prisma.CampaignUncheckedCreateWithoutHandoutsInput>
+  where?: Prisma.CampaignWhereInput
+}
+
+export type CampaignUpdateToOneWithWhereWithoutHandoutsInput = {
+  where?: Prisma.CampaignWhereInput
+  data: Prisma.XOR<Prisma.CampaignUpdateWithoutHandoutsInput, Prisma.CampaignUncheckedUpdateWithoutHandoutsInput>
+}
+
+export type CampaignUpdateWithoutHandoutsInput = {
+  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  CampaignTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  ActiveMap?: Prisma.MapUpdateOneWithoutCampaignsNestedInput
+  Conditions?: Prisma.ConditionUpdateManyWithoutCampaignNestedInput
+  Items?: Prisma.ItemUpdateManyWithoutCampaignNestedInput
+  Maps?: Prisma.MapUpdateManyWithoutCampaignNestedInput
+}
+
+export type CampaignUncheckedUpdateWithoutHandoutsInput = {
+  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  CampaignTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  ActiveMapId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Conditions?: Prisma.ConditionUncheckedUpdateManyWithoutCampaignNestedInput
+  Items?: Prisma.ItemUncheckedUpdateManyWithoutCampaignNestedInput
+  Maps?: Prisma.MapUncheckedUpdateManyWithoutCampaignNestedInput
+}
+
+export type CampaignCreateWithoutItemsInput = {
+  CampaignId: string
+  CampaignTemplateId?: string | null
+  Name: string
+  ActiveMap?: Prisma.MapCreateNestedOneWithoutCampaignsInput
+  Conditions?: Prisma.ConditionCreateNestedManyWithoutCampaignInput
+  Handouts?: Prisma.HandoutCreateNestedManyWithoutCampaignInput
+  Maps?: Prisma.MapCreateNestedManyWithoutCampaignInput
+}
+
+export type CampaignUncheckedCreateWithoutItemsInput = {
+  CampaignId: string
+  CampaignTemplateId?: string | null
+  Name: string
+  ActiveMapId?: string | null
+  Conditions?: Prisma.ConditionUncheckedCreateNestedManyWithoutCampaignInput
+  Handouts?: Prisma.HandoutUncheckedCreateNestedManyWithoutCampaignInput
+  Maps?: Prisma.MapUncheckedCreateNestedManyWithoutCampaignInput
+}
+
+export type CampaignCreateOrConnectWithoutItemsInput = {
+  where: Prisma.CampaignWhereUniqueInput
+  create: Prisma.XOR<Prisma.CampaignCreateWithoutItemsInput, Prisma.CampaignUncheckedCreateWithoutItemsInput>
+}
+
+export type CampaignUpsertWithoutItemsInput = {
+  update: Prisma.XOR<Prisma.CampaignUpdateWithoutItemsInput, Prisma.CampaignUncheckedUpdateWithoutItemsInput>
+  create: Prisma.XOR<Prisma.CampaignCreateWithoutItemsInput, Prisma.CampaignUncheckedCreateWithoutItemsInput>
+  where?: Prisma.CampaignWhereInput
+}
+
+export type CampaignUpdateToOneWithWhereWithoutItemsInput = {
+  where?: Prisma.CampaignWhereInput
+  data: Prisma.XOR<Prisma.CampaignUpdateWithoutItemsInput, Prisma.CampaignUncheckedUpdateWithoutItemsInput>
+}
+
+export type CampaignUpdateWithoutItemsInput = {
+  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  CampaignTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  ActiveMap?: Prisma.MapUpdateOneWithoutCampaignsNestedInput
+  Conditions?: Prisma.ConditionUpdateManyWithoutCampaignNestedInput
+  Handouts?: Prisma.HandoutUpdateManyWithoutCampaignNestedInput
+  Maps?: Prisma.MapUpdateManyWithoutCampaignNestedInput
+}
+
+export type CampaignUncheckedUpdateWithoutItemsInput = {
+  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  CampaignTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  ActiveMapId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Conditions?: Prisma.ConditionUncheckedUpdateManyWithoutCampaignNestedInput
+  Handouts?: Prisma.HandoutUncheckedUpdateManyWithoutCampaignNestedInput
+  Maps?: Prisma.MapUncheckedUpdateManyWithoutCampaignNestedInput
+}
+
+export type CampaignCreateWithoutMapsInput = {
+  CampaignId: string
+  CampaignTemplateId?: string | null
+  Name: string
+  ActiveMap?: Prisma.MapCreateNestedOneWithoutCampaignsInput
+  Conditions?: Prisma.ConditionCreateNestedManyWithoutCampaignInput
+  Handouts?: Prisma.HandoutCreateNestedManyWithoutCampaignInput
+  Items?: Prisma.ItemCreateNestedManyWithoutCampaignInput
+}
+
+export type CampaignUncheckedCreateWithoutMapsInput = {
+  CampaignId: string
+  CampaignTemplateId?: string | null
+  Name: string
+  ActiveMapId?: string | null
+  Conditions?: Prisma.ConditionUncheckedCreateNestedManyWithoutCampaignInput
+  Handouts?: Prisma.HandoutUncheckedCreateNestedManyWithoutCampaignInput
+  Items?: Prisma.ItemUncheckedCreateNestedManyWithoutCampaignInput
+}
+
+export type CampaignCreateOrConnectWithoutMapsInput = {
+  where: Prisma.CampaignWhereUniqueInput
+  create: Prisma.XOR<Prisma.CampaignCreateWithoutMapsInput, Prisma.CampaignUncheckedCreateWithoutMapsInput>
+}
+
+export type CampaignCreateWithoutActiveMapInput = {
+  CampaignId: string
+  CampaignTemplateId?: string | null
+  Name: string
+  Conditions?: Prisma.ConditionCreateNestedManyWithoutCampaignInput
+  Handouts?: Prisma.HandoutCreateNestedManyWithoutCampaignInput
+  Items?: Prisma.ItemCreateNestedManyWithoutCampaignInput
+  Maps?: Prisma.MapCreateNestedManyWithoutCampaignInput
+}
+
+export type CampaignUncheckedCreateWithoutActiveMapInput = {
+  CampaignId: string
+  CampaignTemplateId?: string | null
+  Name: string
+  Conditions?: Prisma.ConditionUncheckedCreateNestedManyWithoutCampaignInput
+  Handouts?: Prisma.HandoutUncheckedCreateNestedManyWithoutCampaignInput
+  Items?: Prisma.ItemUncheckedCreateNestedManyWithoutCampaignInput
+  Maps?: Prisma.MapUncheckedCreateNestedManyWithoutCampaignInput
+}
+
+export type CampaignCreateOrConnectWithoutActiveMapInput = {
+  where: Prisma.CampaignWhereUniqueInput
+  create: Prisma.XOR<Prisma.CampaignCreateWithoutActiveMapInput, Prisma.CampaignUncheckedCreateWithoutActiveMapInput>
+}
+
+export type CampaignCreateManyActiveMapInputEnvelope = {
+  data: Prisma.CampaignCreateManyActiveMapInput | Prisma.CampaignCreateManyActiveMapInput[]
+  skipDuplicates?: boolean
+}
+
+export type CampaignUpsertWithoutMapsInput = {
+  update: Prisma.XOR<Prisma.CampaignUpdateWithoutMapsInput, Prisma.CampaignUncheckedUpdateWithoutMapsInput>
+  create: Prisma.XOR<Prisma.CampaignCreateWithoutMapsInput, Prisma.CampaignUncheckedCreateWithoutMapsInput>
+  where?: Prisma.CampaignWhereInput
+}
+
+export type CampaignUpdateToOneWithWhereWithoutMapsInput = {
+  where?: Prisma.CampaignWhereInput
+  data: Prisma.XOR<Prisma.CampaignUpdateWithoutMapsInput, Prisma.CampaignUncheckedUpdateWithoutMapsInput>
+}
+
+export type CampaignUpdateWithoutMapsInput = {
+  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  CampaignTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  ActiveMap?: Prisma.MapUpdateOneWithoutCampaignsNestedInput
+  Conditions?: Prisma.ConditionUpdateManyWithoutCampaignNestedInput
+  Handouts?: Prisma.HandoutUpdateManyWithoutCampaignNestedInput
+  Items?: Prisma.ItemUpdateManyWithoutCampaignNestedInput
+}
+
+export type CampaignUncheckedUpdateWithoutMapsInput = {
+  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  CampaignTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  ActiveMapId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Conditions?: Prisma.ConditionUncheckedUpdateManyWithoutCampaignNestedInput
+  Handouts?: Prisma.HandoutUncheckedUpdateManyWithoutCampaignNestedInput
+  Items?: Prisma.ItemUncheckedUpdateManyWithoutCampaignNestedInput
+}
+
+export type CampaignUpsertWithWhereUniqueWithoutActiveMapInput = {
+  where: Prisma.CampaignWhereUniqueInput
+  update: Prisma.XOR<Prisma.CampaignUpdateWithoutActiveMapInput, Prisma.CampaignUncheckedUpdateWithoutActiveMapInput>
+  create: Prisma.XOR<Prisma.CampaignCreateWithoutActiveMapInput, Prisma.CampaignUncheckedCreateWithoutActiveMapInput>
+}
+
+export type CampaignUpdateWithWhereUniqueWithoutActiveMapInput = {
+  where: Prisma.CampaignWhereUniqueInput
+  data: Prisma.XOR<Prisma.CampaignUpdateWithoutActiveMapInput, Prisma.CampaignUncheckedUpdateWithoutActiveMapInput>
+}
+
+export type CampaignUpdateManyWithWhereWithoutActiveMapInput = {
+  where: Prisma.CampaignScalarWhereInput
+  data: Prisma.XOR<Prisma.CampaignUpdateManyMutationInput, Prisma.CampaignUncheckedUpdateManyWithoutActiveMapInput>
+}
+
+export type CampaignScalarWhereInput = {
+  AND?: Prisma.CampaignScalarWhereInput | Prisma.CampaignScalarWhereInput[]
+  OR?: Prisma.CampaignScalarWhereInput[]
+  NOT?: Prisma.CampaignScalarWhereInput | Prisma.CampaignScalarWhereInput[]
+  CampaignId?: Prisma.UuidFilter<"Campaign"> | string
+  CampaignTemplateId?: Prisma.UuidNullableFilter<"Campaign"> | string | null
+  Name?: Prisma.StringFilter<"Campaign"> | string
+  ActiveMapId?: Prisma.UuidNullableFilter<"Campaign"> | string | null
+}
+
+export type CampaignCreateManyActiveMapInput = {
+  CampaignId: string
+  CampaignTemplateId?: string | null
+  Name: string
+}
+
+export type CampaignUpdateWithoutActiveMapInput = {
+  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  CampaignTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Conditions?: Prisma.ConditionUpdateManyWithoutCampaignNestedInput
+  Handouts?: Prisma.HandoutUpdateManyWithoutCampaignNestedInput
+  Items?: Prisma.ItemUpdateManyWithoutCampaignNestedInput
+  Maps?: Prisma.MapUpdateManyWithoutCampaignNestedInput
+}
+
+export type CampaignUncheckedUpdateWithoutActiveMapInput = {
+  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  CampaignTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Conditions?: Prisma.ConditionUncheckedUpdateManyWithoutCampaignNestedInput
+  Handouts?: Prisma.HandoutUncheckedUpdateManyWithoutCampaignNestedInput
+  Items?: Prisma.ItemUncheckedUpdateManyWithoutCampaignNestedInput
+  Maps?: Prisma.MapUncheckedUpdateManyWithoutCampaignNestedInput
+}
+
+export type CampaignUncheckedUpdateManyWithoutActiveMapInput = {
+  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  CampaignTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+
+/**
+ * Count Type CampaignCountOutputType
+ */
+
+export type CampaignCountOutputType = {
+  Conditions: number
+  Handouts: number
+  Items: number
+  Maps: number
+}
+
+export type CampaignCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Conditions?: boolean | CampaignCountOutputTypeCountConditionsArgs
+  Handouts?: boolean | CampaignCountOutputTypeCountHandoutsArgs
+  Items?: boolean | CampaignCountOutputTypeCountItemsArgs
+  Maps?: boolean | CampaignCountOutputTypeCountMapsArgs
+}
+
+/**
+ * CampaignCountOutputType without action
+ */
+export type CampaignCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CampaignCountOutputType
+   */
+  select?: Prisma.CampaignCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * CampaignCountOutputType without action
+ */
+export type CampaignCountOutputTypeCountConditionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ConditionWhereInput
+}
+
+/**
+ * CampaignCountOutputType without action
+ */
+export type CampaignCountOutputTypeCountHandoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HandoutWhereInput
+}
+
+/**
+ * CampaignCountOutputType without action
+ */
+export type CampaignCountOutputTypeCountItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ItemWhereInput
+}
+
+/**
+ * CampaignCountOutputType without action
+ */
+export type CampaignCountOutputTypeCountMapsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MapWhereInput
+}
 
 
 export type CampaignSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -290,6 +808,12 @@ export type CampaignSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   CampaignTemplateId?: boolean
   Name?: boolean
   ActiveMapId?: boolean
+  ActiveMap?: boolean | Prisma.Campaign$ActiveMapArgs<ExtArgs>
+  Conditions?: boolean | Prisma.Campaign$ConditionsArgs<ExtArgs>
+  Handouts?: boolean | Prisma.Campaign$HandoutsArgs<ExtArgs>
+  Items?: boolean | Prisma.Campaign$ItemsArgs<ExtArgs>
+  Maps?: boolean | Prisma.Campaign$MapsArgs<ExtArgs>
+  _count?: boolean | Prisma.CampaignCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["campaign"]>
 
 export type CampaignSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -297,6 +821,7 @@ export type CampaignSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   CampaignTemplateId?: boolean
   Name?: boolean
   ActiveMapId?: boolean
+  ActiveMap?: boolean | Prisma.Campaign$ActiveMapArgs<ExtArgs>
 }, ExtArgs["result"]["campaign"]>
 
 export type CampaignSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -304,6 +829,7 @@ export type CampaignSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   CampaignTemplateId?: boolean
   Name?: boolean
   ActiveMapId?: boolean
+  ActiveMap?: boolean | Prisma.Campaign$ActiveMapArgs<ExtArgs>
 }, ExtArgs["result"]["campaign"]>
 
 export type CampaignSelectScalar = {
@@ -314,10 +840,30 @@ export type CampaignSelectScalar = {
 }
 
 export type CampaignOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"CampaignId" | "CampaignTemplateId" | "Name" | "ActiveMapId", ExtArgs["result"]["campaign"]>
+export type CampaignInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  ActiveMap?: boolean | Prisma.Campaign$ActiveMapArgs<ExtArgs>
+  Conditions?: boolean | Prisma.Campaign$ConditionsArgs<ExtArgs>
+  Handouts?: boolean | Prisma.Campaign$HandoutsArgs<ExtArgs>
+  Items?: boolean | Prisma.Campaign$ItemsArgs<ExtArgs>
+  Maps?: boolean | Prisma.Campaign$MapsArgs<ExtArgs>
+  _count?: boolean | Prisma.CampaignCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type CampaignIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  ActiveMap?: boolean | Prisma.Campaign$ActiveMapArgs<ExtArgs>
+}
+export type CampaignIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  ActiveMap?: boolean | Prisma.Campaign$ActiveMapArgs<ExtArgs>
+}
 
 export type $CampaignPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Campaign"
-  objects: {}
+  objects: {
+    ActiveMap: Prisma.$MapPayload<ExtArgs> | null
+    Conditions: Prisma.$ConditionPayload<ExtArgs>[]
+    Handouts: Prisma.$HandoutPayload<ExtArgs>[]
+    Items: Prisma.$ItemPayload<ExtArgs>[]
+    Maps: Prisma.$MapPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     CampaignId: string
     CampaignTemplateId: string | null
@@ -717,6 +1263,11 @@ readonly fields: CampaignFieldRefs;
  */
 export interface Prisma__CampaignClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  ActiveMap<T extends Prisma.Campaign$ActiveMapArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campaign$ActiveMapArgs<ExtArgs>>): Prisma.Prisma__MapClient<runtime.Types.Result.GetResult<Prisma.$MapPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Conditions<T extends Prisma.Campaign$ConditionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campaign$ConditionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConditionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Handouts<T extends Prisma.Campaign$HandoutsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campaign$HandoutsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HandoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Items<T extends Prisma.Campaign$ItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campaign$ItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Maps<T extends Prisma.Campaign$MapsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campaign$MapsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MapPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -767,6 +1318,10 @@ export type CampaignFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   omit?: Prisma.CampaignOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignInclude<ExtArgs> | null
+  /**
    * Filter, which Campaign to fetch.
    */
   where: Prisma.CampaignWhereUniqueInput
@@ -785,6 +1340,10 @@ export type CampaignFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.CampaignOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignInclude<ExtArgs> | null
+  /**
    * Filter, which Campaign to fetch.
    */
   where: Prisma.CampaignWhereUniqueInput
@@ -802,6 +1361,10 @@ export type CampaignFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the Campaign
    */
   omit?: Prisma.CampaignOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignInclude<ExtArgs> | null
   /**
    * Filter, which Campaign to fetch.
    */
@@ -851,6 +1414,10 @@ export type CampaignFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.CampaignOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignInclude<ExtArgs> | null
+  /**
    * Filter, which Campaign to fetch.
    */
   where?: Prisma.CampaignWhereInput
@@ -898,6 +1465,10 @@ export type CampaignFindManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Campaign
    */
   omit?: Prisma.CampaignOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignInclude<ExtArgs> | null
   /**
    * Filter, which Campaigns to fetch.
    */
@@ -947,6 +1518,10 @@ export type CampaignCreateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.CampaignOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignInclude<ExtArgs> | null
+  /**
    * The data needed to create a Campaign.
    */
   data: Prisma.XOR<Prisma.CampaignCreateInput, Prisma.CampaignUncheckedCreateInput>
@@ -980,6 +1555,10 @@ export type CampaignCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    */
   data: Prisma.CampaignCreateManyInput | Prisma.CampaignCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -994,6 +1573,10 @@ export type CampaignUpdateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Campaign
    */
   omit?: Prisma.CampaignOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignInclude<ExtArgs> | null
   /**
    * The data needed to update a Campaign.
    */
@@ -1046,6 +1629,10 @@ export type CampaignUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    * Limit how many Campaigns to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1060,6 +1647,10 @@ export type CampaignUpsertArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Campaign
    */
   omit?: Prisma.CampaignOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignInclude<ExtArgs> | null
   /**
    * The filter to search for the Campaign to update in case it exists.
    */
@@ -1087,6 +1678,10 @@ export type CampaignDeleteArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.CampaignOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignInclude<ExtArgs> | null
+  /**
    * Filter which Campaign to delete.
    */
   where: Prisma.CampaignWhereUniqueInput
@@ -1107,6 +1702,121 @@ export type CampaignDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
+ * Campaign.ActiveMap
+ */
+export type Campaign$ActiveMapArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Map
+   */
+  select?: Prisma.MapSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Map
+   */
+  omit?: Prisma.MapOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MapInclude<ExtArgs> | null
+  where?: Prisma.MapWhereInput
+}
+
+/**
+ * Campaign.Conditions
+ */
+export type Campaign$ConditionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Condition
+   */
+  select?: Prisma.ConditionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Condition
+   */
+  omit?: Prisma.ConditionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConditionInclude<ExtArgs> | null
+  where?: Prisma.ConditionWhereInput
+  orderBy?: Prisma.ConditionOrderByWithRelationInput | Prisma.ConditionOrderByWithRelationInput[]
+  cursor?: Prisma.ConditionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ConditionScalarFieldEnum | Prisma.ConditionScalarFieldEnum[]
+}
+
+/**
+ * Campaign.Handouts
+ */
+export type Campaign$HandoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Handout
+   */
+  select?: Prisma.HandoutSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Handout
+   */
+  omit?: Prisma.HandoutOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HandoutInclude<ExtArgs> | null
+  where?: Prisma.HandoutWhereInput
+  orderBy?: Prisma.HandoutOrderByWithRelationInput | Prisma.HandoutOrderByWithRelationInput[]
+  cursor?: Prisma.HandoutWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HandoutScalarFieldEnum | Prisma.HandoutScalarFieldEnum[]
+}
+
+/**
+ * Campaign.Items
+ */
+export type Campaign$ItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Item
+   */
+  select?: Prisma.ItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Item
+   */
+  omit?: Prisma.ItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ItemInclude<ExtArgs> | null
+  where?: Prisma.ItemWhereInput
+  orderBy?: Prisma.ItemOrderByWithRelationInput | Prisma.ItemOrderByWithRelationInput[]
+  cursor?: Prisma.ItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ItemScalarFieldEnum | Prisma.ItemScalarFieldEnum[]
+}
+
+/**
+ * Campaign.Maps
+ */
+export type Campaign$MapsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Map
+   */
+  select?: Prisma.MapSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Map
+   */
+  omit?: Prisma.MapOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MapInclude<ExtArgs> | null
+  where?: Prisma.MapWhereInput
+  orderBy?: Prisma.MapOrderByWithRelationInput | Prisma.MapOrderByWithRelationInput[]
+  cursor?: Prisma.MapWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MapScalarFieldEnum | Prisma.MapScalarFieldEnum[]
+}
+
+/**
  * Campaign without action
  */
 export type CampaignDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1118,4 +1828,8 @@ export type CampaignDefaultArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Campaign
    */
   omit?: Prisma.CampaignOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignInclude<ExtArgs> | null
 }

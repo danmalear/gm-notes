@@ -170,6 +170,7 @@ export type RegionShapeWhereInput = {
   RegionId?: Prisma.UuidFilter<"RegionShape"> | string
   ShapeType?: Prisma.StringFilter<"RegionShape"> | string
   Coords?: Prisma.JsonFilter<"RegionShape">
+  Region?: Prisma.XOR<Prisma.RegionScalarRelationFilter, Prisma.RegionWhereInput>
 }
 
 export type RegionShapeOrderByWithRelationInput = {
@@ -177,6 +178,7 @@ export type RegionShapeOrderByWithRelationInput = {
   RegionId?: Prisma.SortOrder
   ShapeType?: Prisma.SortOrder
   Coords?: Prisma.SortOrder
+  Region?: Prisma.RegionOrderByWithRelationInput
 }
 
 export type RegionShapeWhereUniqueInput = Prisma.AtLeast<{
@@ -187,6 +189,7 @@ export type RegionShapeWhereUniqueInput = Prisma.AtLeast<{
   RegionId?: Prisma.UuidFilter<"RegionShape"> | string
   ShapeType?: Prisma.StringFilter<"RegionShape"> | string
   Coords?: Prisma.JsonFilter<"RegionShape">
+  Region?: Prisma.XOR<Prisma.RegionScalarRelationFilter, Prisma.RegionWhereInput>
 }, "RegionShapeId">
 
 export type RegionShapeOrderByWithAggregationInput = {
@@ -211,9 +214,9 @@ export type RegionShapeScalarWhereWithAggregatesInput = {
 
 export type RegionShapeCreateInput = {
   RegionShapeId: string
-  RegionId: string
   ShapeType: string
   Coords: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  Region: Prisma.RegionCreateNestedOneWithoutRegionShapesInput
 }
 
 export type RegionShapeUncheckedCreateInput = {
@@ -225,9 +228,9 @@ export type RegionShapeUncheckedCreateInput = {
 
 export type RegionShapeUpdateInput = {
   RegionShapeId?: Prisma.StringFieldUpdateOperationsInput | string
-  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   ShapeType?: Prisma.StringFieldUpdateOperationsInput | string
   Coords?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  Region?: Prisma.RegionUpdateOneRequiredWithoutRegionShapesNestedInput
 }
 
 export type RegionShapeUncheckedUpdateInput = {
@@ -246,7 +249,6 @@ export type RegionShapeCreateManyInput = {
 
 export type RegionShapeUpdateManyMutationInput = {
   RegionShapeId?: Prisma.StringFieldUpdateOperationsInput | string
-  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   ShapeType?: Prisma.StringFieldUpdateOperationsInput | string
   Coords?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
@@ -256,6 +258,16 @@ export type RegionShapeUncheckedUpdateManyInput = {
   RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   ShapeType?: Prisma.StringFieldUpdateOperationsInput | string
   Coords?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+}
+
+export type RegionShapeListRelationFilter = {
+  every?: Prisma.RegionShapeWhereInput
+  some?: Prisma.RegionShapeWhereInput
+  none?: Prisma.RegionShapeWhereInput
+}
+
+export type RegionShapeOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type RegionShapeCountOrderByAggregateInput = {
@@ -277,6 +289,120 @@ export type RegionShapeMinOrderByAggregateInput = {
   ShapeType?: Prisma.SortOrder
 }
 
+export type RegionShapeCreateNestedManyWithoutRegionInput = {
+  create?: Prisma.XOR<Prisma.RegionShapeCreateWithoutRegionInput, Prisma.RegionShapeUncheckedCreateWithoutRegionInput> | Prisma.RegionShapeCreateWithoutRegionInput[] | Prisma.RegionShapeUncheckedCreateWithoutRegionInput[]
+  connectOrCreate?: Prisma.RegionShapeCreateOrConnectWithoutRegionInput | Prisma.RegionShapeCreateOrConnectWithoutRegionInput[]
+  createMany?: Prisma.RegionShapeCreateManyRegionInputEnvelope
+  connect?: Prisma.RegionShapeWhereUniqueInput | Prisma.RegionShapeWhereUniqueInput[]
+}
+
+export type RegionShapeUncheckedCreateNestedManyWithoutRegionInput = {
+  create?: Prisma.XOR<Prisma.RegionShapeCreateWithoutRegionInput, Prisma.RegionShapeUncheckedCreateWithoutRegionInput> | Prisma.RegionShapeCreateWithoutRegionInput[] | Prisma.RegionShapeUncheckedCreateWithoutRegionInput[]
+  connectOrCreate?: Prisma.RegionShapeCreateOrConnectWithoutRegionInput | Prisma.RegionShapeCreateOrConnectWithoutRegionInput[]
+  createMany?: Prisma.RegionShapeCreateManyRegionInputEnvelope
+  connect?: Prisma.RegionShapeWhereUniqueInput | Prisma.RegionShapeWhereUniqueInput[]
+}
+
+export type RegionShapeUpdateManyWithoutRegionNestedInput = {
+  create?: Prisma.XOR<Prisma.RegionShapeCreateWithoutRegionInput, Prisma.RegionShapeUncheckedCreateWithoutRegionInput> | Prisma.RegionShapeCreateWithoutRegionInput[] | Prisma.RegionShapeUncheckedCreateWithoutRegionInput[]
+  connectOrCreate?: Prisma.RegionShapeCreateOrConnectWithoutRegionInput | Prisma.RegionShapeCreateOrConnectWithoutRegionInput[]
+  upsert?: Prisma.RegionShapeUpsertWithWhereUniqueWithoutRegionInput | Prisma.RegionShapeUpsertWithWhereUniqueWithoutRegionInput[]
+  createMany?: Prisma.RegionShapeCreateManyRegionInputEnvelope
+  set?: Prisma.RegionShapeWhereUniqueInput | Prisma.RegionShapeWhereUniqueInput[]
+  disconnect?: Prisma.RegionShapeWhereUniqueInput | Prisma.RegionShapeWhereUniqueInput[]
+  delete?: Prisma.RegionShapeWhereUniqueInput | Prisma.RegionShapeWhereUniqueInput[]
+  connect?: Prisma.RegionShapeWhereUniqueInput | Prisma.RegionShapeWhereUniqueInput[]
+  update?: Prisma.RegionShapeUpdateWithWhereUniqueWithoutRegionInput | Prisma.RegionShapeUpdateWithWhereUniqueWithoutRegionInput[]
+  updateMany?: Prisma.RegionShapeUpdateManyWithWhereWithoutRegionInput | Prisma.RegionShapeUpdateManyWithWhereWithoutRegionInput[]
+  deleteMany?: Prisma.RegionShapeScalarWhereInput | Prisma.RegionShapeScalarWhereInput[]
+}
+
+export type RegionShapeUncheckedUpdateManyWithoutRegionNestedInput = {
+  create?: Prisma.XOR<Prisma.RegionShapeCreateWithoutRegionInput, Prisma.RegionShapeUncheckedCreateWithoutRegionInput> | Prisma.RegionShapeCreateWithoutRegionInput[] | Prisma.RegionShapeUncheckedCreateWithoutRegionInput[]
+  connectOrCreate?: Prisma.RegionShapeCreateOrConnectWithoutRegionInput | Prisma.RegionShapeCreateOrConnectWithoutRegionInput[]
+  upsert?: Prisma.RegionShapeUpsertWithWhereUniqueWithoutRegionInput | Prisma.RegionShapeUpsertWithWhereUniqueWithoutRegionInput[]
+  createMany?: Prisma.RegionShapeCreateManyRegionInputEnvelope
+  set?: Prisma.RegionShapeWhereUniqueInput | Prisma.RegionShapeWhereUniqueInput[]
+  disconnect?: Prisma.RegionShapeWhereUniqueInput | Prisma.RegionShapeWhereUniqueInput[]
+  delete?: Prisma.RegionShapeWhereUniqueInput | Prisma.RegionShapeWhereUniqueInput[]
+  connect?: Prisma.RegionShapeWhereUniqueInput | Prisma.RegionShapeWhereUniqueInput[]
+  update?: Prisma.RegionShapeUpdateWithWhereUniqueWithoutRegionInput | Prisma.RegionShapeUpdateWithWhereUniqueWithoutRegionInput[]
+  updateMany?: Prisma.RegionShapeUpdateManyWithWhereWithoutRegionInput | Prisma.RegionShapeUpdateManyWithWhereWithoutRegionInput[]
+  deleteMany?: Prisma.RegionShapeScalarWhereInput | Prisma.RegionShapeScalarWhereInput[]
+}
+
+export type RegionShapeCreateWithoutRegionInput = {
+  RegionShapeId: string
+  ShapeType: string
+  Coords: Prisma.JsonNullValueInput | runtime.InputJsonValue
+}
+
+export type RegionShapeUncheckedCreateWithoutRegionInput = {
+  RegionShapeId: string
+  ShapeType: string
+  Coords: Prisma.JsonNullValueInput | runtime.InputJsonValue
+}
+
+export type RegionShapeCreateOrConnectWithoutRegionInput = {
+  where: Prisma.RegionShapeWhereUniqueInput
+  create: Prisma.XOR<Prisma.RegionShapeCreateWithoutRegionInput, Prisma.RegionShapeUncheckedCreateWithoutRegionInput>
+}
+
+export type RegionShapeCreateManyRegionInputEnvelope = {
+  data: Prisma.RegionShapeCreateManyRegionInput | Prisma.RegionShapeCreateManyRegionInput[]
+  skipDuplicates?: boolean
+}
+
+export type RegionShapeUpsertWithWhereUniqueWithoutRegionInput = {
+  where: Prisma.RegionShapeWhereUniqueInput
+  update: Prisma.XOR<Prisma.RegionShapeUpdateWithoutRegionInput, Prisma.RegionShapeUncheckedUpdateWithoutRegionInput>
+  create: Prisma.XOR<Prisma.RegionShapeCreateWithoutRegionInput, Prisma.RegionShapeUncheckedCreateWithoutRegionInput>
+}
+
+export type RegionShapeUpdateWithWhereUniqueWithoutRegionInput = {
+  where: Prisma.RegionShapeWhereUniqueInput
+  data: Prisma.XOR<Prisma.RegionShapeUpdateWithoutRegionInput, Prisma.RegionShapeUncheckedUpdateWithoutRegionInput>
+}
+
+export type RegionShapeUpdateManyWithWhereWithoutRegionInput = {
+  where: Prisma.RegionShapeScalarWhereInput
+  data: Prisma.XOR<Prisma.RegionShapeUpdateManyMutationInput, Prisma.RegionShapeUncheckedUpdateManyWithoutRegionInput>
+}
+
+export type RegionShapeScalarWhereInput = {
+  AND?: Prisma.RegionShapeScalarWhereInput | Prisma.RegionShapeScalarWhereInput[]
+  OR?: Prisma.RegionShapeScalarWhereInput[]
+  NOT?: Prisma.RegionShapeScalarWhereInput | Prisma.RegionShapeScalarWhereInput[]
+  RegionShapeId?: Prisma.UuidFilter<"RegionShape"> | string
+  RegionId?: Prisma.UuidFilter<"RegionShape"> | string
+  ShapeType?: Prisma.StringFilter<"RegionShape"> | string
+  Coords?: Prisma.JsonFilter<"RegionShape">
+}
+
+export type RegionShapeCreateManyRegionInput = {
+  RegionShapeId: string
+  ShapeType: string
+  Coords: Prisma.JsonNullValueInput | runtime.InputJsonValue
+}
+
+export type RegionShapeUpdateWithoutRegionInput = {
+  RegionShapeId?: Prisma.StringFieldUpdateOperationsInput | string
+  ShapeType?: Prisma.StringFieldUpdateOperationsInput | string
+  Coords?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+}
+
+export type RegionShapeUncheckedUpdateWithoutRegionInput = {
+  RegionShapeId?: Prisma.StringFieldUpdateOperationsInput | string
+  ShapeType?: Prisma.StringFieldUpdateOperationsInput | string
+  Coords?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+}
+
+export type RegionShapeUncheckedUpdateManyWithoutRegionInput = {
+  RegionShapeId?: Prisma.StringFieldUpdateOperationsInput | string
+  ShapeType?: Prisma.StringFieldUpdateOperationsInput | string
+  Coords?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+}
+
 
 
 export type RegionShapeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -284,6 +410,7 @@ export type RegionShapeSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   RegionId?: boolean
   ShapeType?: boolean
   Coords?: boolean
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["regionShape"]>
 
 export type RegionShapeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -291,6 +418,7 @@ export type RegionShapeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   RegionId?: boolean
   ShapeType?: boolean
   Coords?: boolean
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["regionShape"]>
 
 export type RegionShapeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -298,6 +426,7 @@ export type RegionShapeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   RegionId?: boolean
   ShapeType?: boolean
   Coords?: boolean
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["regionShape"]>
 
 export type RegionShapeSelectScalar = {
@@ -308,10 +437,21 @@ export type RegionShapeSelectScalar = {
 }
 
 export type RegionShapeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"RegionShapeId" | "RegionId" | "ShapeType" | "Coords", ExtArgs["result"]["regionShape"]>
+export type RegionShapeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
+}
+export type RegionShapeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
+}
+export type RegionShapeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Region?: boolean | Prisma.RegionDefaultArgs<ExtArgs>
+}
 
 export type $RegionShapePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "RegionShape"
-  objects: {}
+  objects: {
+    Region: Prisma.$RegionPayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     RegionShapeId: string
     RegionId: string
@@ -711,6 +851,7 @@ readonly fields: RegionShapeFieldRefs;
  */
 export interface Prisma__RegionShapeClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  Region<T extends Prisma.RegionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RegionDefaultArgs<ExtArgs>>): Prisma.Prisma__RegionClient<runtime.Types.Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -761,6 +902,10 @@ export type RegionShapeFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.RegionShapeOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionShapeInclude<ExtArgs> | null
+  /**
    * Filter, which RegionShape to fetch.
    */
   where: Prisma.RegionShapeWhereUniqueInput
@@ -779,6 +924,10 @@ export type RegionShapeFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Exten
    */
   omit?: Prisma.RegionShapeOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionShapeInclude<ExtArgs> | null
+  /**
    * Filter, which RegionShape to fetch.
    */
   where: Prisma.RegionShapeWhereUniqueInput
@@ -796,6 +945,10 @@ export type RegionShapeFindFirstArgs<ExtArgs extends runtime.Types.Extensions.In
    * Omit specific fields from the RegionShape
    */
   omit?: Prisma.RegionShapeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionShapeInclude<ExtArgs> | null
   /**
    * Filter, which RegionShape to fetch.
    */
@@ -845,6 +998,10 @@ export type RegionShapeFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extens
    */
   omit?: Prisma.RegionShapeOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionShapeInclude<ExtArgs> | null
+  /**
    * Filter, which RegionShape to fetch.
    */
   where?: Prisma.RegionShapeWhereInput
@@ -892,6 +1049,10 @@ export type RegionShapeFindManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Omit specific fields from the RegionShape
    */
   omit?: Prisma.RegionShapeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionShapeInclude<ExtArgs> | null
   /**
    * Filter, which RegionShapes to fetch.
    */
@@ -941,6 +1102,10 @@ export type RegionShapeCreateArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   omit?: Prisma.RegionShapeOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionShapeInclude<ExtArgs> | null
+  /**
    * The data needed to create a RegionShape.
    */
   data: Prisma.XOR<Prisma.RegionShapeCreateInput, Prisma.RegionShapeUncheckedCreateInput>
@@ -974,6 +1139,10 @@ export type RegionShapeCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ext
    */
   data: Prisma.RegionShapeCreateManyInput | Prisma.RegionShapeCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionShapeIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -988,6 +1157,10 @@ export type RegionShapeUpdateArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the RegionShape
    */
   omit?: Prisma.RegionShapeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionShapeInclude<ExtArgs> | null
   /**
    * The data needed to update a RegionShape.
    */
@@ -1040,6 +1213,10 @@ export type RegionShapeUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Ext
    * Limit how many RegionShapes to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionShapeIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1054,6 +1231,10 @@ export type RegionShapeUpsertArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the RegionShape
    */
   omit?: Prisma.RegionShapeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionShapeInclude<ExtArgs> | null
   /**
    * The filter to search for the RegionShape to update in case it exists.
    */
@@ -1080,6 +1261,10 @@ export type RegionShapeDeleteArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the RegionShape
    */
   omit?: Prisma.RegionShapeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionShapeInclude<ExtArgs> | null
   /**
    * Filter which RegionShape to delete.
    */
@@ -1112,4 +1297,8 @@ export type RegionShapeDefaultArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Omit specific fields from the RegionShape
    */
   omit?: Prisma.RegionShapeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionShapeInclude<ExtArgs> | null
 }

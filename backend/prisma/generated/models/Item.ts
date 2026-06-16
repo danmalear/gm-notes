@@ -240,6 +240,11 @@ export type ItemWhereInput = {
   ValueUnit?: Prisma.StringNullableFilter<"Item"> | string | null
   DetailsLink?: Prisma.StringNullableFilter<"Item"> | string | null
   ImageFileId?: Prisma.StringNullableFilter<"Item"> | string | null
+  Campaign?: Prisma.XOR<Prisma.CampaignNullableScalarRelationFilter, Prisma.CampaignWhereInput> | null
+  File?: Prisma.XOR<Prisma.FileNullableScalarRelationFilter, Prisma.FileWhereInput> | null
+  Actions?: Prisma.ActionListRelationFilter
+  LocationItems?: Prisma.LocationItemListRelationFilter
+  Notes?: Prisma.NoteListRelationFilter
 }
 
 export type ItemOrderByWithRelationInput = {
@@ -251,10 +256,16 @@ export type ItemOrderByWithRelationInput = {
   ValueUnit?: Prisma.SortOrderInput | Prisma.SortOrder
   DetailsLink?: Prisma.SortOrderInput | Prisma.SortOrder
   ImageFileId?: Prisma.SortOrderInput | Prisma.SortOrder
+  Campaign?: Prisma.CampaignOrderByWithRelationInput
+  File?: Prisma.FileOrderByWithRelationInput
+  Actions?: Prisma.ActionOrderByRelationAggregateInput
+  LocationItems?: Prisma.LocationItemOrderByRelationAggregateInput
+  Notes?: Prisma.NoteOrderByRelationAggregateInput
 }
 
 export type ItemWhereUniqueInput = Prisma.AtLeast<{
   ItemId?: string
+  ImageFileId?: string
   AND?: Prisma.ItemWhereInput | Prisma.ItemWhereInput[]
   OR?: Prisma.ItemWhereInput[]
   NOT?: Prisma.ItemWhereInput | Prisma.ItemWhereInput[]
@@ -264,8 +275,12 @@ export type ItemWhereUniqueInput = Prisma.AtLeast<{
   Value?: Prisma.IntNullableFilter<"Item"> | number | null
   ValueUnit?: Prisma.StringNullableFilter<"Item"> | string | null
   DetailsLink?: Prisma.StringNullableFilter<"Item"> | string | null
-  ImageFileId?: Prisma.StringNullableFilter<"Item"> | string | null
-}, "ItemId">
+  Campaign?: Prisma.XOR<Prisma.CampaignNullableScalarRelationFilter, Prisma.CampaignWhereInput> | null
+  File?: Prisma.XOR<Prisma.FileNullableScalarRelationFilter, Prisma.FileWhereInput> | null
+  Actions?: Prisma.ActionListRelationFilter
+  LocationItems?: Prisma.LocationItemListRelationFilter
+  Notes?: Prisma.NoteListRelationFilter
+}, "ItemId" | "ImageFileId">
 
 export type ItemOrderByWithAggregationInput = {
   ItemId?: Prisma.SortOrder
@@ -299,13 +314,16 @@ export type ItemScalarWhereWithAggregatesInput = {
 
 export type ItemCreateInput = {
   ItemId: string
-  CampaignId?: string | null
   Name: string
   IsContainer?: boolean
   Value?: number | null
   ValueUnit?: string | null
   DetailsLink?: string | null
-  ImageFileId?: string | null
+  Campaign?: Prisma.CampaignCreateNestedOneWithoutItemsInput
+  File?: Prisma.FileCreateNestedOneWithoutItemInput
+  Actions?: Prisma.ActionCreateNestedManyWithoutItemInput
+  LocationItems?: Prisma.LocationItemCreateNestedManyWithoutItemInput
+  Notes?: Prisma.NoteCreateNestedManyWithoutItemInput
 }
 
 export type ItemUncheckedCreateInput = {
@@ -317,17 +335,23 @@ export type ItemUncheckedCreateInput = {
   ValueUnit?: string | null
   DetailsLink?: string | null
   ImageFileId?: string | null
+  Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutItemInput
+  LocationItems?: Prisma.LocationItemUncheckedCreateNestedManyWithoutItemInput
+  Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutItemInput
 }
 
 export type ItemUpdateInput = {
   ItemId?: Prisma.StringFieldUpdateOperationsInput | string
-  CampaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Campaign?: Prisma.CampaignUpdateOneWithoutItemsNestedInput
+  File?: Prisma.FileUpdateOneWithoutItemNestedInput
+  Actions?: Prisma.ActionUpdateManyWithoutItemNestedInput
+  LocationItems?: Prisma.LocationItemUpdateManyWithoutItemNestedInput
+  Notes?: Prisma.NoteUpdateManyWithoutItemNestedInput
 }
 
 export type ItemUncheckedUpdateInput = {
@@ -339,6 +363,9 @@ export type ItemUncheckedUpdateInput = {
   ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Actions?: Prisma.ActionUncheckedUpdateManyWithoutItemNestedInput
+  LocationItems?: Prisma.LocationItemUncheckedUpdateManyWithoutItemNestedInput
+  Notes?: Prisma.NoteUncheckedUpdateManyWithoutItemNestedInput
 }
 
 export type ItemCreateManyInput = {
@@ -354,13 +381,11 @@ export type ItemCreateManyInput = {
 
 export type ItemUpdateManyMutationInput = {
   ItemId?: Prisma.StringFieldUpdateOperationsInput | string
-  CampaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ItemUncheckedUpdateManyInput = {
@@ -372,6 +397,21 @@ export type ItemUncheckedUpdateManyInput = {
   ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ItemNullableScalarRelationFilter = {
+  is?: Prisma.ItemWhereInput | null
+  isNot?: Prisma.ItemWhereInput | null
+}
+
+export type ItemListRelationFilter = {
+  every?: Prisma.ItemWhereInput
+  some?: Prisma.ItemWhereInput
+  none?: Prisma.ItemWhereInput
+}
+
+export type ItemOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type ItemCountOrderByAggregateInput = {
@@ -415,6 +455,101 @@ export type ItemSumOrderByAggregateInput = {
   Value?: Prisma.SortOrder
 }
 
+export type ItemScalarRelationFilter = {
+  is?: Prisma.ItemWhereInput
+  isNot?: Prisma.ItemWhereInput
+}
+
+export type ItemCreateNestedOneWithoutActionsInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutActionsInput, Prisma.ItemUncheckedCreateWithoutActionsInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutActionsInput
+  connect?: Prisma.ItemWhereUniqueInput
+}
+
+export type ItemUpdateOneWithoutActionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutActionsInput, Prisma.ItemUncheckedCreateWithoutActionsInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutActionsInput
+  upsert?: Prisma.ItemUpsertWithoutActionsInput
+  disconnect?: Prisma.ItemWhereInput | boolean
+  delete?: Prisma.ItemWhereInput | boolean
+  connect?: Prisma.ItemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ItemUpdateToOneWithWhereWithoutActionsInput, Prisma.ItemUpdateWithoutActionsInput>, Prisma.ItemUncheckedUpdateWithoutActionsInput>
+}
+
+export type ItemCreateNestedManyWithoutCampaignInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutCampaignInput, Prisma.ItemUncheckedCreateWithoutCampaignInput> | Prisma.ItemCreateWithoutCampaignInput[] | Prisma.ItemUncheckedCreateWithoutCampaignInput[]
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutCampaignInput | Prisma.ItemCreateOrConnectWithoutCampaignInput[]
+  createMany?: Prisma.ItemCreateManyCampaignInputEnvelope
+  connect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+}
+
+export type ItemUncheckedCreateNestedManyWithoutCampaignInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutCampaignInput, Prisma.ItemUncheckedCreateWithoutCampaignInput> | Prisma.ItemCreateWithoutCampaignInput[] | Prisma.ItemUncheckedCreateWithoutCampaignInput[]
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutCampaignInput | Prisma.ItemCreateOrConnectWithoutCampaignInput[]
+  createMany?: Prisma.ItemCreateManyCampaignInputEnvelope
+  connect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+}
+
+export type ItemUpdateManyWithoutCampaignNestedInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutCampaignInput, Prisma.ItemUncheckedCreateWithoutCampaignInput> | Prisma.ItemCreateWithoutCampaignInput[] | Prisma.ItemUncheckedCreateWithoutCampaignInput[]
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutCampaignInput | Prisma.ItemCreateOrConnectWithoutCampaignInput[]
+  upsert?: Prisma.ItemUpsertWithWhereUniqueWithoutCampaignInput | Prisma.ItemUpsertWithWhereUniqueWithoutCampaignInput[]
+  createMany?: Prisma.ItemCreateManyCampaignInputEnvelope
+  set?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+  disconnect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+  delete?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+  connect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+  update?: Prisma.ItemUpdateWithWhereUniqueWithoutCampaignInput | Prisma.ItemUpdateWithWhereUniqueWithoutCampaignInput[]
+  updateMany?: Prisma.ItemUpdateManyWithWhereWithoutCampaignInput | Prisma.ItemUpdateManyWithWhereWithoutCampaignInput[]
+  deleteMany?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
+}
+
+export type ItemUncheckedUpdateManyWithoutCampaignNestedInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutCampaignInput, Prisma.ItemUncheckedCreateWithoutCampaignInput> | Prisma.ItemCreateWithoutCampaignInput[] | Prisma.ItemUncheckedCreateWithoutCampaignInput[]
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutCampaignInput | Prisma.ItemCreateOrConnectWithoutCampaignInput[]
+  upsert?: Prisma.ItemUpsertWithWhereUniqueWithoutCampaignInput | Prisma.ItemUpsertWithWhereUniqueWithoutCampaignInput[]
+  createMany?: Prisma.ItemCreateManyCampaignInputEnvelope
+  set?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+  disconnect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+  delete?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+  connect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+  update?: Prisma.ItemUpdateWithWhereUniqueWithoutCampaignInput | Prisma.ItemUpdateWithWhereUniqueWithoutCampaignInput[]
+  updateMany?: Prisma.ItemUpdateManyWithWhereWithoutCampaignInput | Prisma.ItemUpdateManyWithWhereWithoutCampaignInput[]
+  deleteMany?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
+}
+
+export type ItemCreateNestedOneWithoutFileInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutFileInput, Prisma.ItemUncheckedCreateWithoutFileInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutFileInput
+  connect?: Prisma.ItemWhereUniqueInput
+}
+
+export type ItemUncheckedCreateNestedOneWithoutFileInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutFileInput, Prisma.ItemUncheckedCreateWithoutFileInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutFileInput
+  connect?: Prisma.ItemWhereUniqueInput
+}
+
+export type ItemUpdateOneWithoutFileNestedInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutFileInput, Prisma.ItemUncheckedCreateWithoutFileInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutFileInput
+  upsert?: Prisma.ItemUpsertWithoutFileInput
+  disconnect?: Prisma.ItemWhereInput | boolean
+  delete?: Prisma.ItemWhereInput | boolean
+  connect?: Prisma.ItemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ItemUpdateToOneWithWhereWithoutFileInput, Prisma.ItemUpdateWithoutFileInput>, Prisma.ItemUncheckedUpdateWithoutFileInput>
+}
+
+export type ItemUncheckedUpdateOneWithoutFileNestedInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutFileInput, Prisma.ItemUncheckedCreateWithoutFileInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutFileInput
+  upsert?: Prisma.ItemUpsertWithoutFileInput
+  disconnect?: Prisma.ItemWhereInput | boolean
+  delete?: Prisma.ItemWhereInput | boolean
+  connect?: Prisma.ItemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ItemUpdateToOneWithWhereWithoutFileInput, Prisma.ItemUpdateWithoutFileInput>, Prisma.ItemUncheckedUpdateWithoutFileInput>
+}
+
 export type NullableIntFieldUpdateOperationsInput = {
   set?: number | null
   increment?: number
@@ -423,6 +558,467 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type ItemCreateNestedOneWithoutLocationItemsInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutLocationItemsInput, Prisma.ItemUncheckedCreateWithoutLocationItemsInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutLocationItemsInput
+  connect?: Prisma.ItemWhereUniqueInput
+}
+
+export type ItemUpdateOneRequiredWithoutLocationItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutLocationItemsInput, Prisma.ItemUncheckedCreateWithoutLocationItemsInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutLocationItemsInput
+  upsert?: Prisma.ItemUpsertWithoutLocationItemsInput
+  connect?: Prisma.ItemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ItemUpdateToOneWithWhereWithoutLocationItemsInput, Prisma.ItemUpdateWithoutLocationItemsInput>, Prisma.ItemUncheckedUpdateWithoutLocationItemsInput>
+}
+
+export type ItemCreateNestedOneWithoutNotesInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutNotesInput, Prisma.ItemUncheckedCreateWithoutNotesInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutNotesInput
+  connect?: Prisma.ItemWhereUniqueInput
+}
+
+export type ItemUpdateOneWithoutNotesNestedInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutNotesInput, Prisma.ItemUncheckedCreateWithoutNotesInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutNotesInput
+  upsert?: Prisma.ItemUpsertWithoutNotesInput
+  disconnect?: Prisma.ItemWhereInput | boolean
+  delete?: Prisma.ItemWhereInput | boolean
+  connect?: Prisma.ItemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ItemUpdateToOneWithWhereWithoutNotesInput, Prisma.ItemUpdateWithoutNotesInput>, Prisma.ItemUncheckedUpdateWithoutNotesInput>
+}
+
+export type ItemCreateWithoutActionsInput = {
+  ItemId: string
+  Name: string
+  IsContainer?: boolean
+  Value?: number | null
+  ValueUnit?: string | null
+  DetailsLink?: string | null
+  Campaign?: Prisma.CampaignCreateNestedOneWithoutItemsInput
+  File?: Prisma.FileCreateNestedOneWithoutItemInput
+  LocationItems?: Prisma.LocationItemCreateNestedManyWithoutItemInput
+  Notes?: Prisma.NoteCreateNestedManyWithoutItemInput
+}
+
+export type ItemUncheckedCreateWithoutActionsInput = {
+  ItemId: string
+  CampaignId?: string | null
+  Name: string
+  IsContainer?: boolean
+  Value?: number | null
+  ValueUnit?: string | null
+  DetailsLink?: string | null
+  ImageFileId?: string | null
+  LocationItems?: Prisma.LocationItemUncheckedCreateNestedManyWithoutItemInput
+  Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutItemInput
+}
+
+export type ItemCreateOrConnectWithoutActionsInput = {
+  where: Prisma.ItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.ItemCreateWithoutActionsInput, Prisma.ItemUncheckedCreateWithoutActionsInput>
+}
+
+export type ItemUpsertWithoutActionsInput = {
+  update: Prisma.XOR<Prisma.ItemUpdateWithoutActionsInput, Prisma.ItemUncheckedUpdateWithoutActionsInput>
+  create: Prisma.XOR<Prisma.ItemCreateWithoutActionsInput, Prisma.ItemUncheckedCreateWithoutActionsInput>
+  where?: Prisma.ItemWhereInput
+}
+
+export type ItemUpdateToOneWithWhereWithoutActionsInput = {
+  where?: Prisma.ItemWhereInput
+  data: Prisma.XOR<Prisma.ItemUpdateWithoutActionsInput, Prisma.ItemUncheckedUpdateWithoutActionsInput>
+}
+
+export type ItemUpdateWithoutActionsInput = {
+  ItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Campaign?: Prisma.CampaignUpdateOneWithoutItemsNestedInput
+  File?: Prisma.FileUpdateOneWithoutItemNestedInput
+  LocationItems?: Prisma.LocationItemUpdateManyWithoutItemNestedInput
+  Notes?: Prisma.NoteUpdateManyWithoutItemNestedInput
+}
+
+export type ItemUncheckedUpdateWithoutActionsInput = {
+  ItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  CampaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  LocationItems?: Prisma.LocationItemUncheckedUpdateManyWithoutItemNestedInput
+  Notes?: Prisma.NoteUncheckedUpdateManyWithoutItemNestedInput
+}
+
+export type ItemCreateWithoutCampaignInput = {
+  ItemId: string
+  Name: string
+  IsContainer?: boolean
+  Value?: number | null
+  ValueUnit?: string | null
+  DetailsLink?: string | null
+  File?: Prisma.FileCreateNestedOneWithoutItemInput
+  Actions?: Prisma.ActionCreateNestedManyWithoutItemInput
+  LocationItems?: Prisma.LocationItemCreateNestedManyWithoutItemInput
+  Notes?: Prisma.NoteCreateNestedManyWithoutItemInput
+}
+
+export type ItemUncheckedCreateWithoutCampaignInput = {
+  ItemId: string
+  Name: string
+  IsContainer?: boolean
+  Value?: number | null
+  ValueUnit?: string | null
+  DetailsLink?: string | null
+  ImageFileId?: string | null
+  Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutItemInput
+  LocationItems?: Prisma.LocationItemUncheckedCreateNestedManyWithoutItemInput
+  Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutItemInput
+}
+
+export type ItemCreateOrConnectWithoutCampaignInput = {
+  where: Prisma.ItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.ItemCreateWithoutCampaignInput, Prisma.ItemUncheckedCreateWithoutCampaignInput>
+}
+
+export type ItemCreateManyCampaignInputEnvelope = {
+  data: Prisma.ItemCreateManyCampaignInput | Prisma.ItemCreateManyCampaignInput[]
+  skipDuplicates?: boolean
+}
+
+export type ItemUpsertWithWhereUniqueWithoutCampaignInput = {
+  where: Prisma.ItemWhereUniqueInput
+  update: Prisma.XOR<Prisma.ItemUpdateWithoutCampaignInput, Prisma.ItemUncheckedUpdateWithoutCampaignInput>
+  create: Prisma.XOR<Prisma.ItemCreateWithoutCampaignInput, Prisma.ItemUncheckedCreateWithoutCampaignInput>
+}
+
+export type ItemUpdateWithWhereUniqueWithoutCampaignInput = {
+  where: Prisma.ItemWhereUniqueInput
+  data: Prisma.XOR<Prisma.ItemUpdateWithoutCampaignInput, Prisma.ItemUncheckedUpdateWithoutCampaignInput>
+}
+
+export type ItemUpdateManyWithWhereWithoutCampaignInput = {
+  where: Prisma.ItemScalarWhereInput
+  data: Prisma.XOR<Prisma.ItemUpdateManyMutationInput, Prisma.ItemUncheckedUpdateManyWithoutCampaignInput>
+}
+
+export type ItemScalarWhereInput = {
+  AND?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
+  OR?: Prisma.ItemScalarWhereInput[]
+  NOT?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
+  ItemId?: Prisma.UuidFilter<"Item"> | string
+  CampaignId?: Prisma.UuidNullableFilter<"Item"> | string | null
+  Name?: Prisma.StringFilter<"Item"> | string
+  IsContainer?: Prisma.BoolFilter<"Item"> | boolean
+  Value?: Prisma.IntNullableFilter<"Item"> | number | null
+  ValueUnit?: Prisma.StringNullableFilter<"Item"> | string | null
+  DetailsLink?: Prisma.StringNullableFilter<"Item"> | string | null
+  ImageFileId?: Prisma.StringNullableFilter<"Item"> | string | null
+}
+
+export type ItemCreateWithoutFileInput = {
+  ItemId: string
+  Name: string
+  IsContainer?: boolean
+  Value?: number | null
+  ValueUnit?: string | null
+  DetailsLink?: string | null
+  Campaign?: Prisma.CampaignCreateNestedOneWithoutItemsInput
+  Actions?: Prisma.ActionCreateNestedManyWithoutItemInput
+  LocationItems?: Prisma.LocationItemCreateNestedManyWithoutItemInput
+  Notes?: Prisma.NoteCreateNestedManyWithoutItemInput
+}
+
+export type ItemUncheckedCreateWithoutFileInput = {
+  ItemId: string
+  CampaignId?: string | null
+  Name: string
+  IsContainer?: boolean
+  Value?: number | null
+  ValueUnit?: string | null
+  DetailsLink?: string | null
+  Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutItemInput
+  LocationItems?: Prisma.LocationItemUncheckedCreateNestedManyWithoutItemInput
+  Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutItemInput
+}
+
+export type ItemCreateOrConnectWithoutFileInput = {
+  where: Prisma.ItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.ItemCreateWithoutFileInput, Prisma.ItemUncheckedCreateWithoutFileInput>
+}
+
+export type ItemUpsertWithoutFileInput = {
+  update: Prisma.XOR<Prisma.ItemUpdateWithoutFileInput, Prisma.ItemUncheckedUpdateWithoutFileInput>
+  create: Prisma.XOR<Prisma.ItemCreateWithoutFileInput, Prisma.ItemUncheckedCreateWithoutFileInput>
+  where?: Prisma.ItemWhereInput
+}
+
+export type ItemUpdateToOneWithWhereWithoutFileInput = {
+  where?: Prisma.ItemWhereInput
+  data: Prisma.XOR<Prisma.ItemUpdateWithoutFileInput, Prisma.ItemUncheckedUpdateWithoutFileInput>
+}
+
+export type ItemUpdateWithoutFileInput = {
+  ItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Campaign?: Prisma.CampaignUpdateOneWithoutItemsNestedInput
+  Actions?: Prisma.ActionUpdateManyWithoutItemNestedInput
+  LocationItems?: Prisma.LocationItemUpdateManyWithoutItemNestedInput
+  Notes?: Prisma.NoteUpdateManyWithoutItemNestedInput
+}
+
+export type ItemUncheckedUpdateWithoutFileInput = {
+  ItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  CampaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Actions?: Prisma.ActionUncheckedUpdateManyWithoutItemNestedInput
+  LocationItems?: Prisma.LocationItemUncheckedUpdateManyWithoutItemNestedInput
+  Notes?: Prisma.NoteUncheckedUpdateManyWithoutItemNestedInput
+}
+
+export type ItemCreateWithoutLocationItemsInput = {
+  ItemId: string
+  Name: string
+  IsContainer?: boolean
+  Value?: number | null
+  ValueUnit?: string | null
+  DetailsLink?: string | null
+  Campaign?: Prisma.CampaignCreateNestedOneWithoutItemsInput
+  File?: Prisma.FileCreateNestedOneWithoutItemInput
+  Actions?: Prisma.ActionCreateNestedManyWithoutItemInput
+  Notes?: Prisma.NoteCreateNestedManyWithoutItemInput
+}
+
+export type ItemUncheckedCreateWithoutLocationItemsInput = {
+  ItemId: string
+  CampaignId?: string | null
+  Name: string
+  IsContainer?: boolean
+  Value?: number | null
+  ValueUnit?: string | null
+  DetailsLink?: string | null
+  ImageFileId?: string | null
+  Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutItemInput
+  Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutItemInput
+}
+
+export type ItemCreateOrConnectWithoutLocationItemsInput = {
+  where: Prisma.ItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.ItemCreateWithoutLocationItemsInput, Prisma.ItemUncheckedCreateWithoutLocationItemsInput>
+}
+
+export type ItemUpsertWithoutLocationItemsInput = {
+  update: Prisma.XOR<Prisma.ItemUpdateWithoutLocationItemsInput, Prisma.ItemUncheckedUpdateWithoutLocationItemsInput>
+  create: Prisma.XOR<Prisma.ItemCreateWithoutLocationItemsInput, Prisma.ItemUncheckedCreateWithoutLocationItemsInput>
+  where?: Prisma.ItemWhereInput
+}
+
+export type ItemUpdateToOneWithWhereWithoutLocationItemsInput = {
+  where?: Prisma.ItemWhereInput
+  data: Prisma.XOR<Prisma.ItemUpdateWithoutLocationItemsInput, Prisma.ItemUncheckedUpdateWithoutLocationItemsInput>
+}
+
+export type ItemUpdateWithoutLocationItemsInput = {
+  ItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Campaign?: Prisma.CampaignUpdateOneWithoutItemsNestedInput
+  File?: Prisma.FileUpdateOneWithoutItemNestedInput
+  Actions?: Prisma.ActionUpdateManyWithoutItemNestedInput
+  Notes?: Prisma.NoteUpdateManyWithoutItemNestedInput
+}
+
+export type ItemUncheckedUpdateWithoutLocationItemsInput = {
+  ItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  CampaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Actions?: Prisma.ActionUncheckedUpdateManyWithoutItemNestedInput
+  Notes?: Prisma.NoteUncheckedUpdateManyWithoutItemNestedInput
+}
+
+export type ItemCreateWithoutNotesInput = {
+  ItemId: string
+  Name: string
+  IsContainer?: boolean
+  Value?: number | null
+  ValueUnit?: string | null
+  DetailsLink?: string | null
+  Campaign?: Prisma.CampaignCreateNestedOneWithoutItemsInput
+  File?: Prisma.FileCreateNestedOneWithoutItemInput
+  Actions?: Prisma.ActionCreateNestedManyWithoutItemInput
+  LocationItems?: Prisma.LocationItemCreateNestedManyWithoutItemInput
+}
+
+export type ItemUncheckedCreateWithoutNotesInput = {
+  ItemId: string
+  CampaignId?: string | null
+  Name: string
+  IsContainer?: boolean
+  Value?: number | null
+  ValueUnit?: string | null
+  DetailsLink?: string | null
+  ImageFileId?: string | null
+  Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutItemInput
+  LocationItems?: Prisma.LocationItemUncheckedCreateNestedManyWithoutItemInput
+}
+
+export type ItemCreateOrConnectWithoutNotesInput = {
+  where: Prisma.ItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.ItemCreateWithoutNotesInput, Prisma.ItemUncheckedCreateWithoutNotesInput>
+}
+
+export type ItemUpsertWithoutNotesInput = {
+  update: Prisma.XOR<Prisma.ItemUpdateWithoutNotesInput, Prisma.ItemUncheckedUpdateWithoutNotesInput>
+  create: Prisma.XOR<Prisma.ItemCreateWithoutNotesInput, Prisma.ItemUncheckedCreateWithoutNotesInput>
+  where?: Prisma.ItemWhereInput
+}
+
+export type ItemUpdateToOneWithWhereWithoutNotesInput = {
+  where?: Prisma.ItemWhereInput
+  data: Prisma.XOR<Prisma.ItemUpdateWithoutNotesInput, Prisma.ItemUncheckedUpdateWithoutNotesInput>
+}
+
+export type ItemUpdateWithoutNotesInput = {
+  ItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Campaign?: Prisma.CampaignUpdateOneWithoutItemsNestedInput
+  File?: Prisma.FileUpdateOneWithoutItemNestedInput
+  Actions?: Prisma.ActionUpdateManyWithoutItemNestedInput
+  LocationItems?: Prisma.LocationItemUpdateManyWithoutItemNestedInput
+}
+
+export type ItemUncheckedUpdateWithoutNotesInput = {
+  ItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  CampaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Actions?: Prisma.ActionUncheckedUpdateManyWithoutItemNestedInput
+  LocationItems?: Prisma.LocationItemUncheckedUpdateManyWithoutItemNestedInput
+}
+
+export type ItemCreateManyCampaignInput = {
+  ItemId: string
+  Name: string
+  IsContainer?: boolean
+  Value?: number | null
+  ValueUnit?: string | null
+  DetailsLink?: string | null
+  ImageFileId?: string | null
+}
+
+export type ItemUpdateWithoutCampaignInput = {
+  ItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  File?: Prisma.FileUpdateOneWithoutItemNestedInput
+  Actions?: Prisma.ActionUpdateManyWithoutItemNestedInput
+  LocationItems?: Prisma.LocationItemUpdateManyWithoutItemNestedInput
+  Notes?: Prisma.NoteUpdateManyWithoutItemNestedInput
+}
+
+export type ItemUncheckedUpdateWithoutCampaignInput = {
+  ItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Actions?: Prisma.ActionUncheckedUpdateManyWithoutItemNestedInput
+  LocationItems?: Prisma.LocationItemUncheckedUpdateManyWithoutItemNestedInput
+  Notes?: Prisma.NoteUncheckedUpdateManyWithoutItemNestedInput
+}
+
+export type ItemUncheckedUpdateManyWithoutCampaignInput = {
+  ItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+
+/**
+ * Count Type ItemCountOutputType
+ */
+
+export type ItemCountOutputType = {
+  Actions: number
+  LocationItems: number
+  Notes: number
+}
+
+export type ItemCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Actions?: boolean | ItemCountOutputTypeCountActionsArgs
+  LocationItems?: boolean | ItemCountOutputTypeCountLocationItemsArgs
+  Notes?: boolean | ItemCountOutputTypeCountNotesArgs
+}
+
+/**
+ * ItemCountOutputType without action
+ */
+export type ItemCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ItemCountOutputType
+   */
+  select?: Prisma.ItemCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ItemCountOutputType without action
+ */
+export type ItemCountOutputTypeCountActionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ActionWhereInput
+}
+
+/**
+ * ItemCountOutputType without action
+ */
+export type ItemCountOutputTypeCountLocationItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LocationItemWhereInput
+}
+
+/**
+ * ItemCountOutputType without action
+ */
+export type ItemCountOutputTypeCountNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NoteWhereInput
+}
 
 
 export type ItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -434,6 +1030,12 @@ export type ItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   ValueUnit?: boolean
   DetailsLink?: boolean
   ImageFileId?: boolean
+  Campaign?: boolean | Prisma.Item$CampaignArgs<ExtArgs>
+  File?: boolean | Prisma.Item$FileArgs<ExtArgs>
+  Actions?: boolean | Prisma.Item$ActionsArgs<ExtArgs>
+  LocationItems?: boolean | Prisma.Item$LocationItemsArgs<ExtArgs>
+  Notes?: boolean | Prisma.Item$NotesArgs<ExtArgs>
+  _count?: boolean | Prisma.ItemCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["item"]>
 
 export type ItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -445,6 +1047,8 @@ export type ItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   ValueUnit?: boolean
   DetailsLink?: boolean
   ImageFileId?: boolean
+  Campaign?: boolean | Prisma.Item$CampaignArgs<ExtArgs>
+  File?: boolean | Prisma.Item$FileArgs<ExtArgs>
 }, ExtArgs["result"]["item"]>
 
 export type ItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -456,6 +1060,8 @@ export type ItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   ValueUnit?: boolean
   DetailsLink?: boolean
   ImageFileId?: boolean
+  Campaign?: boolean | Prisma.Item$CampaignArgs<ExtArgs>
+  File?: boolean | Prisma.Item$FileArgs<ExtArgs>
 }, ExtArgs["result"]["item"]>
 
 export type ItemSelectScalar = {
@@ -470,10 +1076,32 @@ export type ItemSelectScalar = {
 }
 
 export type ItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"ItemId" | "CampaignId" | "Name" | "IsContainer" | "Value" | "ValueUnit" | "DetailsLink" | "ImageFileId", ExtArgs["result"]["item"]>
+export type ItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Campaign?: boolean | Prisma.Item$CampaignArgs<ExtArgs>
+  File?: boolean | Prisma.Item$FileArgs<ExtArgs>
+  Actions?: boolean | Prisma.Item$ActionsArgs<ExtArgs>
+  LocationItems?: boolean | Prisma.Item$LocationItemsArgs<ExtArgs>
+  Notes?: boolean | Prisma.Item$NotesArgs<ExtArgs>
+  _count?: boolean | Prisma.ItemCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type ItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Campaign?: boolean | Prisma.Item$CampaignArgs<ExtArgs>
+  File?: boolean | Prisma.Item$FileArgs<ExtArgs>
+}
+export type ItemIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Campaign?: boolean | Prisma.Item$CampaignArgs<ExtArgs>
+  File?: boolean | Prisma.Item$FileArgs<ExtArgs>
+}
 
 export type $ItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Item"
-  objects: {}
+  objects: {
+    Campaign: Prisma.$CampaignPayload<ExtArgs> | null
+    File: Prisma.$FilePayload<ExtArgs> | null
+    Actions: Prisma.$ActionPayload<ExtArgs>[]
+    LocationItems: Prisma.$LocationItemPayload<ExtArgs>[]
+    Notes: Prisma.$NotePayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     ItemId: string
     CampaignId: string | null
@@ -877,6 +1505,11 @@ readonly fields: ItemFieldRefs;
  */
 export interface Prisma__ItemClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  Campaign<T extends Prisma.Item$CampaignArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$CampaignArgs<ExtArgs>>): Prisma.Prisma__CampaignClient<runtime.Types.Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  File<T extends Prisma.Item$FileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$FileArgs<ExtArgs>>): Prisma.Prisma__FileClient<runtime.Types.Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Actions<T extends Prisma.Item$ActionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$ActionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  LocationItems<T extends Prisma.Item$LocationItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$LocationItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocationItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Notes<T extends Prisma.Item$NotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$NotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -931,6 +1564,10 @@ export type ItemFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.ItemOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ItemInclude<ExtArgs> | null
+  /**
    * Filter, which Item to fetch.
    */
   where: Prisma.ItemWhereUniqueInput
@@ -949,6 +1586,10 @@ export type ItemFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.ItemOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ItemInclude<ExtArgs> | null
+  /**
    * Filter, which Item to fetch.
    */
   where: Prisma.ItemWhereUniqueInput
@@ -966,6 +1607,10 @@ export type ItemFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Item
    */
   omit?: Prisma.ItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ItemInclude<ExtArgs> | null
   /**
    * Filter, which Item to fetch.
    */
@@ -1015,6 +1660,10 @@ export type ItemFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.ItemOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ItemInclude<ExtArgs> | null
+  /**
    * Filter, which Item to fetch.
    */
   where?: Prisma.ItemWhereInput
@@ -1062,6 +1711,10 @@ export type ItemFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the Item
    */
   omit?: Prisma.ItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ItemInclude<ExtArgs> | null
   /**
    * Filter, which Items to fetch.
    */
@@ -1111,6 +1764,10 @@ export type ItemCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.ItemOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ItemInclude<ExtArgs> | null
+  /**
    * The data needed to create a Item.
    */
   data: Prisma.XOR<Prisma.ItemCreateInput, Prisma.ItemUncheckedCreateInput>
@@ -1144,6 +1801,10 @@ export type ItemCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.ItemCreateManyInput | Prisma.ItemCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ItemIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1158,6 +1819,10 @@ export type ItemUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the Item
    */
   omit?: Prisma.ItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ItemInclude<ExtArgs> | null
   /**
    * The data needed to update a Item.
    */
@@ -1210,6 +1875,10 @@ export type ItemUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Items to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ItemIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1224,6 +1893,10 @@ export type ItemUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the Item
    */
   omit?: Prisma.ItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ItemInclude<ExtArgs> | null
   /**
    * The filter to search for the Item to update in case it exists.
    */
@@ -1251,6 +1924,10 @@ export type ItemDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.ItemOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ItemInclude<ExtArgs> | null
+  /**
    * Filter which Item to delete.
    */
   where: Prisma.ItemWhereUniqueInput
@@ -1271,6 +1948,116 @@ export type ItemDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * Item.Campaign
+ */
+export type Item$CampaignArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Campaign
+   */
+  select?: Prisma.CampaignSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Campaign
+   */
+  omit?: Prisma.CampaignOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignInclude<ExtArgs> | null
+  where?: Prisma.CampaignWhereInput
+}
+
+/**
+ * Item.File
+ */
+export type Item$FileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the File
+   */
+  select?: Prisma.FileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the File
+   */
+  omit?: Prisma.FileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FileInclude<ExtArgs> | null
+  where?: Prisma.FileWhereInput
+}
+
+/**
+ * Item.Actions
+ */
+export type Item$ActionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Action
+   */
+  select?: Prisma.ActionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Action
+   */
+  omit?: Prisma.ActionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionInclude<ExtArgs> | null
+  where?: Prisma.ActionWhereInput
+  orderBy?: Prisma.ActionOrderByWithRelationInput | Prisma.ActionOrderByWithRelationInput[]
+  cursor?: Prisma.ActionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ActionScalarFieldEnum | Prisma.ActionScalarFieldEnum[]
+}
+
+/**
+ * Item.LocationItems
+ */
+export type Item$LocationItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LocationItem
+   */
+  select?: Prisma.LocationItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LocationItem
+   */
+  omit?: Prisma.LocationItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LocationItemInclude<ExtArgs> | null
+  where?: Prisma.LocationItemWhereInput
+  orderBy?: Prisma.LocationItemOrderByWithRelationInput | Prisma.LocationItemOrderByWithRelationInput[]
+  cursor?: Prisma.LocationItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LocationItemScalarFieldEnum | Prisma.LocationItemScalarFieldEnum[]
+}
+
+/**
+ * Item.Notes
+ */
+export type Item$NotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Note
+   */
+  select?: Prisma.NoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Note
+   */
+  omit?: Prisma.NoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NoteInclude<ExtArgs> | null
+  where?: Prisma.NoteWhereInput
+  orderBy?: Prisma.NoteOrderByWithRelationInput | Prisma.NoteOrderByWithRelationInput[]
+  cursor?: Prisma.NoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NoteScalarFieldEnum | Prisma.NoteScalarFieldEnum[]
+}
+
+/**
  * Item without action
  */
 export type ItemDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1282,4 +2069,8 @@ export type ItemDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Omit specific fields from the Item
    */
   omit?: Prisma.ItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ItemInclude<ExtArgs> | null
 }

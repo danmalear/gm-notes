@@ -182,9 +182,12 @@ export type ActionWhereInput = {
   Name?: Prisma.StringFilter<"Action"> | string
   Type?: Prisma.EnumActionTypeNullableFilter<"Action"> | $Enums.ActionType | null
   NarrationId?: Prisma.UuidNullableFilter<"Action"> | string | null
+  Region?: Prisma.XOR<Prisma.RegionNullableScalarRelationFilter, Prisma.RegionWhereInput> | null
+  Item?: Prisma.XOR<Prisma.ItemNullableScalarRelationFilter, Prisma.ItemWhereInput> | null
+  LocationItem?: Prisma.XOR<Prisma.LocationItemNullableScalarRelationFilter, Prisma.LocationItemWhereInput> | null
   Narration?: Prisma.XOR<Prisma.NarrationNullableScalarRelationFilter, Prisma.NarrationWhereInput> | null
-  ActionConditions?: Prisma.ActionConditionListRelationFilter
   AbilityChecks?: Prisma.AbilityCheckListRelationFilter
+  ActionConditions?: Prisma.ActionConditionListRelationFilter
 }
 
 export type ActionOrderByWithRelationInput = {
@@ -193,9 +196,12 @@ export type ActionOrderByWithRelationInput = {
   Name?: Prisma.SortOrder
   Type?: Prisma.SortOrderInput | Prisma.SortOrder
   NarrationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  Region?: Prisma.RegionOrderByWithRelationInput
+  Item?: Prisma.ItemOrderByWithRelationInput
+  LocationItem?: Prisma.LocationItemOrderByWithRelationInput
   Narration?: Prisma.NarrationOrderByWithRelationInput
-  ActionConditions?: Prisma.ActionConditionOrderByRelationAggregateInput
   AbilityChecks?: Prisma.AbilityCheckOrderByRelationAggregateInput
+  ActionConditions?: Prisma.ActionConditionOrderByRelationAggregateInput
 }
 
 export type ActionWhereUniqueInput = Prisma.AtLeast<{
@@ -207,9 +213,12 @@ export type ActionWhereUniqueInput = Prisma.AtLeast<{
   Name?: Prisma.StringFilter<"Action"> | string
   Type?: Prisma.EnumActionTypeNullableFilter<"Action"> | $Enums.ActionType | null
   NarrationId?: Prisma.UuidNullableFilter<"Action"> | string | null
+  Region?: Prisma.XOR<Prisma.RegionNullableScalarRelationFilter, Prisma.RegionWhereInput> | null
+  Item?: Prisma.XOR<Prisma.ItemNullableScalarRelationFilter, Prisma.ItemWhereInput> | null
+  LocationItem?: Prisma.XOR<Prisma.LocationItemNullableScalarRelationFilter, Prisma.LocationItemWhereInput> | null
   Narration?: Prisma.XOR<Prisma.NarrationNullableScalarRelationFilter, Prisma.NarrationWhereInput> | null
-  ActionConditions?: Prisma.ActionConditionListRelationFilter
   AbilityChecks?: Prisma.AbilityCheckListRelationFilter
+  ActionConditions?: Prisma.ActionConditionListRelationFilter
 }, "ActionId">
 
 export type ActionOrderByWithAggregationInput = {
@@ -236,12 +245,14 @@ export type ActionScalarWhereWithAggregatesInput = {
 
 export type ActionCreateInput = {
   ActionId: string
-  TargetId: string
   Name: string
   Type?: $Enums.ActionType | null
+  Region?: Prisma.RegionCreateNestedOneWithoutActionsInput
+  Item?: Prisma.ItemCreateNestedOneWithoutActionsInput
+  LocationItem?: Prisma.LocationItemCreateNestedOneWithoutActionsInput
   Narration?: Prisma.NarrationCreateNestedOneWithoutActionsInput
-  ActionConditions?: Prisma.ActionConditionCreateNestedManyWithoutActionInput
   AbilityChecks?: Prisma.AbilityCheckCreateNestedManyWithoutActionInput
+  ActionConditions?: Prisma.ActionConditionCreateNestedManyWithoutActionInput
 }
 
 export type ActionUncheckedCreateInput = {
@@ -250,18 +261,20 @@ export type ActionUncheckedCreateInput = {
   Name: string
   Type?: $Enums.ActionType | null
   NarrationId?: string | null
-  ActionConditions?: Prisma.ActionConditionUncheckedCreateNestedManyWithoutActionInput
   AbilityChecks?: Prisma.AbilityCheckUncheckedCreateNestedManyWithoutActionInput
+  ActionConditions?: Prisma.ActionConditionUncheckedCreateNestedManyWithoutActionInput
 }
 
 export type ActionUpdateInput = {
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
-  TargetId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
+  Region?: Prisma.RegionUpdateOneWithoutActionsNestedInput
+  Item?: Prisma.ItemUpdateOneWithoutActionsNestedInput
+  LocationItem?: Prisma.LocationItemUpdateOneWithoutActionsNestedInput
   Narration?: Prisma.NarrationUpdateOneWithoutActionsNestedInput
-  ActionConditions?: Prisma.ActionConditionUpdateManyWithoutActionNestedInput
   AbilityChecks?: Prisma.AbilityCheckUpdateManyWithoutActionNestedInput
+  ActionConditions?: Prisma.ActionConditionUpdateManyWithoutActionNestedInput
 }
 
 export type ActionUncheckedUpdateInput = {
@@ -270,8 +283,8 @@ export type ActionUncheckedUpdateInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
   NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ActionConditions?: Prisma.ActionConditionUncheckedUpdateManyWithoutActionNestedInput
   AbilityChecks?: Prisma.AbilityCheckUncheckedUpdateManyWithoutActionNestedInput
+  ActionConditions?: Prisma.ActionConditionUncheckedUpdateManyWithoutActionNestedInput
 }
 
 export type ActionCreateManyInput = {
@@ -284,7 +297,6 @@ export type ActionCreateManyInput = {
 
 export type ActionUpdateManyMutationInput = {
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
-  TargetId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
 }
@@ -368,6 +380,90 @@ export type ActionUpdateOneRequiredWithoutActionConditionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ActionUpdateToOneWithWhereWithoutActionConditionsInput, Prisma.ActionUpdateWithoutActionConditionsInput>, Prisma.ActionUncheckedUpdateWithoutActionConditionsInput>
 }
 
+export type ActionCreateNestedManyWithoutItemInput = {
+  create?: Prisma.XOR<Prisma.ActionCreateWithoutItemInput, Prisma.ActionUncheckedCreateWithoutItemInput> | Prisma.ActionCreateWithoutItemInput[] | Prisma.ActionUncheckedCreateWithoutItemInput[]
+  connectOrCreate?: Prisma.ActionCreateOrConnectWithoutItemInput | Prisma.ActionCreateOrConnectWithoutItemInput[]
+  createMany?: Prisma.ActionCreateManyItemInputEnvelope
+  connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+}
+
+export type ActionUncheckedCreateNestedManyWithoutItemInput = {
+  create?: Prisma.XOR<Prisma.ActionCreateWithoutItemInput, Prisma.ActionUncheckedCreateWithoutItemInput> | Prisma.ActionCreateWithoutItemInput[] | Prisma.ActionUncheckedCreateWithoutItemInput[]
+  connectOrCreate?: Prisma.ActionCreateOrConnectWithoutItemInput | Prisma.ActionCreateOrConnectWithoutItemInput[]
+  createMany?: Prisma.ActionCreateManyItemInputEnvelope
+  connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+}
+
+export type ActionUpdateManyWithoutItemNestedInput = {
+  create?: Prisma.XOR<Prisma.ActionCreateWithoutItemInput, Prisma.ActionUncheckedCreateWithoutItemInput> | Prisma.ActionCreateWithoutItemInput[] | Prisma.ActionUncheckedCreateWithoutItemInput[]
+  connectOrCreate?: Prisma.ActionCreateOrConnectWithoutItemInput | Prisma.ActionCreateOrConnectWithoutItemInput[]
+  upsert?: Prisma.ActionUpsertWithWhereUniqueWithoutItemInput | Prisma.ActionUpsertWithWhereUniqueWithoutItemInput[]
+  createMany?: Prisma.ActionCreateManyItemInputEnvelope
+  set?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  disconnect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  delete?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  update?: Prisma.ActionUpdateWithWhereUniqueWithoutItemInput | Prisma.ActionUpdateWithWhereUniqueWithoutItemInput[]
+  updateMany?: Prisma.ActionUpdateManyWithWhereWithoutItemInput | Prisma.ActionUpdateManyWithWhereWithoutItemInput[]
+  deleteMany?: Prisma.ActionScalarWhereInput | Prisma.ActionScalarWhereInput[]
+}
+
+export type ActionUncheckedUpdateManyWithoutItemNestedInput = {
+  create?: Prisma.XOR<Prisma.ActionCreateWithoutItemInput, Prisma.ActionUncheckedCreateWithoutItemInput> | Prisma.ActionCreateWithoutItemInput[] | Prisma.ActionUncheckedCreateWithoutItemInput[]
+  connectOrCreate?: Prisma.ActionCreateOrConnectWithoutItemInput | Prisma.ActionCreateOrConnectWithoutItemInput[]
+  upsert?: Prisma.ActionUpsertWithWhereUniqueWithoutItemInput | Prisma.ActionUpsertWithWhereUniqueWithoutItemInput[]
+  createMany?: Prisma.ActionCreateManyItemInputEnvelope
+  set?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  disconnect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  delete?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  update?: Prisma.ActionUpdateWithWhereUniqueWithoutItemInput | Prisma.ActionUpdateWithWhereUniqueWithoutItemInput[]
+  updateMany?: Prisma.ActionUpdateManyWithWhereWithoutItemInput | Prisma.ActionUpdateManyWithWhereWithoutItemInput[]
+  deleteMany?: Prisma.ActionScalarWhereInput | Prisma.ActionScalarWhereInput[]
+}
+
+export type ActionCreateNestedManyWithoutLocationItemInput = {
+  create?: Prisma.XOR<Prisma.ActionCreateWithoutLocationItemInput, Prisma.ActionUncheckedCreateWithoutLocationItemInput> | Prisma.ActionCreateWithoutLocationItemInput[] | Prisma.ActionUncheckedCreateWithoutLocationItemInput[]
+  connectOrCreate?: Prisma.ActionCreateOrConnectWithoutLocationItemInput | Prisma.ActionCreateOrConnectWithoutLocationItemInput[]
+  createMany?: Prisma.ActionCreateManyLocationItemInputEnvelope
+  connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+}
+
+export type ActionUncheckedCreateNestedManyWithoutLocationItemInput = {
+  create?: Prisma.XOR<Prisma.ActionCreateWithoutLocationItemInput, Prisma.ActionUncheckedCreateWithoutLocationItemInput> | Prisma.ActionCreateWithoutLocationItemInput[] | Prisma.ActionUncheckedCreateWithoutLocationItemInput[]
+  connectOrCreate?: Prisma.ActionCreateOrConnectWithoutLocationItemInput | Prisma.ActionCreateOrConnectWithoutLocationItemInput[]
+  createMany?: Prisma.ActionCreateManyLocationItemInputEnvelope
+  connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+}
+
+export type ActionUpdateManyWithoutLocationItemNestedInput = {
+  create?: Prisma.XOR<Prisma.ActionCreateWithoutLocationItemInput, Prisma.ActionUncheckedCreateWithoutLocationItemInput> | Prisma.ActionCreateWithoutLocationItemInput[] | Prisma.ActionUncheckedCreateWithoutLocationItemInput[]
+  connectOrCreate?: Prisma.ActionCreateOrConnectWithoutLocationItemInput | Prisma.ActionCreateOrConnectWithoutLocationItemInput[]
+  upsert?: Prisma.ActionUpsertWithWhereUniqueWithoutLocationItemInput | Prisma.ActionUpsertWithWhereUniqueWithoutLocationItemInput[]
+  createMany?: Prisma.ActionCreateManyLocationItemInputEnvelope
+  set?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  disconnect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  delete?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  update?: Prisma.ActionUpdateWithWhereUniqueWithoutLocationItemInput | Prisma.ActionUpdateWithWhereUniqueWithoutLocationItemInput[]
+  updateMany?: Prisma.ActionUpdateManyWithWhereWithoutLocationItemInput | Prisma.ActionUpdateManyWithWhereWithoutLocationItemInput[]
+  deleteMany?: Prisma.ActionScalarWhereInput | Prisma.ActionScalarWhereInput[]
+}
+
+export type ActionUncheckedUpdateManyWithoutLocationItemNestedInput = {
+  create?: Prisma.XOR<Prisma.ActionCreateWithoutLocationItemInput, Prisma.ActionUncheckedCreateWithoutLocationItemInput> | Prisma.ActionCreateWithoutLocationItemInput[] | Prisma.ActionUncheckedCreateWithoutLocationItemInput[]
+  connectOrCreate?: Prisma.ActionCreateOrConnectWithoutLocationItemInput | Prisma.ActionCreateOrConnectWithoutLocationItemInput[]
+  upsert?: Prisma.ActionUpsertWithWhereUniqueWithoutLocationItemInput | Prisma.ActionUpsertWithWhereUniqueWithoutLocationItemInput[]
+  createMany?: Prisma.ActionCreateManyLocationItemInputEnvelope
+  set?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  disconnect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  delete?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  update?: Prisma.ActionUpdateWithWhereUniqueWithoutLocationItemInput | Prisma.ActionUpdateWithWhereUniqueWithoutLocationItemInput[]
+  updateMany?: Prisma.ActionUpdateManyWithWhereWithoutLocationItemInput | Prisma.ActionUpdateManyWithWhereWithoutLocationItemInput[]
+  deleteMany?: Prisma.ActionScalarWhereInput | Prisma.ActionScalarWhereInput[]
+}
+
 export type ActionCreateNestedManyWithoutNarrationInput = {
   create?: Prisma.XOR<Prisma.ActionCreateWithoutNarrationInput, Prisma.ActionUncheckedCreateWithoutNarrationInput> | Prisma.ActionCreateWithoutNarrationInput[] | Prisma.ActionUncheckedCreateWithoutNarrationInput[]
   connectOrCreate?: Prisma.ActionCreateOrConnectWithoutNarrationInput | Prisma.ActionCreateOrConnectWithoutNarrationInput[]
@@ -410,11 +506,55 @@ export type ActionUncheckedUpdateManyWithoutNarrationNestedInput = {
   deleteMany?: Prisma.ActionScalarWhereInput | Prisma.ActionScalarWhereInput[]
 }
 
+export type ActionCreateNestedManyWithoutRegionInput = {
+  create?: Prisma.XOR<Prisma.ActionCreateWithoutRegionInput, Prisma.ActionUncheckedCreateWithoutRegionInput> | Prisma.ActionCreateWithoutRegionInput[] | Prisma.ActionUncheckedCreateWithoutRegionInput[]
+  connectOrCreate?: Prisma.ActionCreateOrConnectWithoutRegionInput | Prisma.ActionCreateOrConnectWithoutRegionInput[]
+  createMany?: Prisma.ActionCreateManyRegionInputEnvelope
+  connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+}
+
+export type ActionUncheckedCreateNestedManyWithoutRegionInput = {
+  create?: Prisma.XOR<Prisma.ActionCreateWithoutRegionInput, Prisma.ActionUncheckedCreateWithoutRegionInput> | Prisma.ActionCreateWithoutRegionInput[] | Prisma.ActionUncheckedCreateWithoutRegionInput[]
+  connectOrCreate?: Prisma.ActionCreateOrConnectWithoutRegionInput | Prisma.ActionCreateOrConnectWithoutRegionInput[]
+  createMany?: Prisma.ActionCreateManyRegionInputEnvelope
+  connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+}
+
+export type ActionUpdateManyWithoutRegionNestedInput = {
+  create?: Prisma.XOR<Prisma.ActionCreateWithoutRegionInput, Prisma.ActionUncheckedCreateWithoutRegionInput> | Prisma.ActionCreateWithoutRegionInput[] | Prisma.ActionUncheckedCreateWithoutRegionInput[]
+  connectOrCreate?: Prisma.ActionCreateOrConnectWithoutRegionInput | Prisma.ActionCreateOrConnectWithoutRegionInput[]
+  upsert?: Prisma.ActionUpsertWithWhereUniqueWithoutRegionInput | Prisma.ActionUpsertWithWhereUniqueWithoutRegionInput[]
+  createMany?: Prisma.ActionCreateManyRegionInputEnvelope
+  set?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  disconnect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  delete?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  update?: Prisma.ActionUpdateWithWhereUniqueWithoutRegionInput | Prisma.ActionUpdateWithWhereUniqueWithoutRegionInput[]
+  updateMany?: Prisma.ActionUpdateManyWithWhereWithoutRegionInput | Prisma.ActionUpdateManyWithWhereWithoutRegionInput[]
+  deleteMany?: Prisma.ActionScalarWhereInput | Prisma.ActionScalarWhereInput[]
+}
+
+export type ActionUncheckedUpdateManyWithoutRegionNestedInput = {
+  create?: Prisma.XOR<Prisma.ActionCreateWithoutRegionInput, Prisma.ActionUncheckedCreateWithoutRegionInput> | Prisma.ActionCreateWithoutRegionInput[] | Prisma.ActionUncheckedCreateWithoutRegionInput[]
+  connectOrCreate?: Prisma.ActionCreateOrConnectWithoutRegionInput | Prisma.ActionCreateOrConnectWithoutRegionInput[]
+  upsert?: Prisma.ActionUpsertWithWhereUniqueWithoutRegionInput | Prisma.ActionUpsertWithWhereUniqueWithoutRegionInput[]
+  createMany?: Prisma.ActionCreateManyRegionInputEnvelope
+  set?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  disconnect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  delete?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  connect?: Prisma.ActionWhereUniqueInput | Prisma.ActionWhereUniqueInput[]
+  update?: Prisma.ActionUpdateWithWhereUniqueWithoutRegionInput | Prisma.ActionUpdateWithWhereUniqueWithoutRegionInput[]
+  updateMany?: Prisma.ActionUpdateManyWithWhereWithoutRegionInput | Prisma.ActionUpdateManyWithWhereWithoutRegionInput[]
+  deleteMany?: Prisma.ActionScalarWhereInput | Prisma.ActionScalarWhereInput[]
+}
+
 export type ActionCreateWithoutAbilityChecksInput = {
   ActionId: string
-  TargetId: string
   Name: string
   Type?: $Enums.ActionType | null
+  Region?: Prisma.RegionCreateNestedOneWithoutActionsInput
+  Item?: Prisma.ItemCreateNestedOneWithoutActionsInput
+  LocationItem?: Prisma.LocationItemCreateNestedOneWithoutActionsInput
   Narration?: Prisma.NarrationCreateNestedOneWithoutActionsInput
   ActionConditions?: Prisma.ActionConditionCreateNestedManyWithoutActionInput
 }
@@ -446,9 +586,11 @@ export type ActionUpdateToOneWithWhereWithoutAbilityChecksInput = {
 
 export type ActionUpdateWithoutAbilityChecksInput = {
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
-  TargetId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
+  Region?: Prisma.RegionUpdateOneWithoutActionsNestedInput
+  Item?: Prisma.ItemUpdateOneWithoutActionsNestedInput
+  LocationItem?: Prisma.LocationItemUpdateOneWithoutActionsNestedInput
   Narration?: Prisma.NarrationUpdateOneWithoutActionsNestedInput
   ActionConditions?: Prisma.ActionConditionUpdateManyWithoutActionNestedInput
 }
@@ -464,9 +606,11 @@ export type ActionUncheckedUpdateWithoutAbilityChecksInput = {
 
 export type ActionCreateWithoutActionConditionsInput = {
   ActionId: string
-  TargetId: string
   Name: string
   Type?: $Enums.ActionType | null
+  Region?: Prisma.RegionCreateNestedOneWithoutActionsInput
+  Item?: Prisma.ItemCreateNestedOneWithoutActionsInput
+  LocationItem?: Prisma.LocationItemCreateNestedOneWithoutActionsInput
   Narration?: Prisma.NarrationCreateNestedOneWithoutActionsInput
   AbilityChecks?: Prisma.AbilityCheckCreateNestedManyWithoutActionInput
 }
@@ -498,9 +642,11 @@ export type ActionUpdateToOneWithWhereWithoutActionConditionsInput = {
 
 export type ActionUpdateWithoutActionConditionsInput = {
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
-  TargetId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
+  Region?: Prisma.RegionUpdateOneWithoutActionsNestedInput
+  Item?: Prisma.ItemUpdateOneWithoutActionsNestedInput
+  LocationItem?: Prisma.LocationItemUpdateOneWithoutActionsNestedInput
   Narration?: Prisma.NarrationUpdateOneWithoutActionsNestedInput
   AbilityChecks?: Prisma.AbilityCheckUpdateManyWithoutActionNestedInput
 }
@@ -514,13 +660,118 @@ export type ActionUncheckedUpdateWithoutActionConditionsInput = {
   AbilityChecks?: Prisma.AbilityCheckUncheckedUpdateManyWithoutActionNestedInput
 }
 
-export type ActionCreateWithoutNarrationInput = {
+export type ActionCreateWithoutItemInput = {
   ActionId: string
-  TargetId: string
   Name: string
   Type?: $Enums.ActionType | null
-  ActionConditions?: Prisma.ActionConditionCreateNestedManyWithoutActionInput
+  Region?: Prisma.RegionCreateNestedOneWithoutActionsInput
+  LocationItem?: Prisma.LocationItemCreateNestedOneWithoutActionsInput
+  Narration?: Prisma.NarrationCreateNestedOneWithoutActionsInput
   AbilityChecks?: Prisma.AbilityCheckCreateNestedManyWithoutActionInput
+  ActionConditions?: Prisma.ActionConditionCreateNestedManyWithoutActionInput
+}
+
+export type ActionUncheckedCreateWithoutItemInput = {
+  ActionId: string
+  Name: string
+  Type?: $Enums.ActionType | null
+  NarrationId?: string | null
+  AbilityChecks?: Prisma.AbilityCheckUncheckedCreateNestedManyWithoutActionInput
+  ActionConditions?: Prisma.ActionConditionUncheckedCreateNestedManyWithoutActionInput
+}
+
+export type ActionCreateOrConnectWithoutItemInput = {
+  where: Prisma.ActionWhereUniqueInput
+  create: Prisma.XOR<Prisma.ActionCreateWithoutItemInput, Prisma.ActionUncheckedCreateWithoutItemInput>
+}
+
+export type ActionCreateManyItemInputEnvelope = {
+  data: Prisma.ActionCreateManyItemInput | Prisma.ActionCreateManyItemInput[]
+  skipDuplicates?: boolean
+}
+
+export type ActionUpsertWithWhereUniqueWithoutItemInput = {
+  where: Prisma.ActionWhereUniqueInput
+  update: Prisma.XOR<Prisma.ActionUpdateWithoutItemInput, Prisma.ActionUncheckedUpdateWithoutItemInput>
+  create: Prisma.XOR<Prisma.ActionCreateWithoutItemInput, Prisma.ActionUncheckedCreateWithoutItemInput>
+}
+
+export type ActionUpdateWithWhereUniqueWithoutItemInput = {
+  where: Prisma.ActionWhereUniqueInput
+  data: Prisma.XOR<Prisma.ActionUpdateWithoutItemInput, Prisma.ActionUncheckedUpdateWithoutItemInput>
+}
+
+export type ActionUpdateManyWithWhereWithoutItemInput = {
+  where: Prisma.ActionScalarWhereInput
+  data: Prisma.XOR<Prisma.ActionUpdateManyMutationInput, Prisma.ActionUncheckedUpdateManyWithoutItemInput>
+}
+
+export type ActionScalarWhereInput = {
+  AND?: Prisma.ActionScalarWhereInput | Prisma.ActionScalarWhereInput[]
+  OR?: Prisma.ActionScalarWhereInput[]
+  NOT?: Prisma.ActionScalarWhereInput | Prisma.ActionScalarWhereInput[]
+  ActionId?: Prisma.UuidFilter<"Action"> | string
+  TargetId?: Prisma.UuidFilter<"Action"> | string
+  Name?: Prisma.StringFilter<"Action"> | string
+  Type?: Prisma.EnumActionTypeNullableFilter<"Action"> | $Enums.ActionType | null
+  NarrationId?: Prisma.UuidNullableFilter<"Action"> | string | null
+}
+
+export type ActionCreateWithoutLocationItemInput = {
+  ActionId: string
+  Name: string
+  Type?: $Enums.ActionType | null
+  Region?: Prisma.RegionCreateNestedOneWithoutActionsInput
+  Item?: Prisma.ItemCreateNestedOneWithoutActionsInput
+  Narration?: Prisma.NarrationCreateNestedOneWithoutActionsInput
+  AbilityChecks?: Prisma.AbilityCheckCreateNestedManyWithoutActionInput
+  ActionConditions?: Prisma.ActionConditionCreateNestedManyWithoutActionInput
+}
+
+export type ActionUncheckedCreateWithoutLocationItemInput = {
+  ActionId: string
+  Name: string
+  Type?: $Enums.ActionType | null
+  NarrationId?: string | null
+  AbilityChecks?: Prisma.AbilityCheckUncheckedCreateNestedManyWithoutActionInput
+  ActionConditions?: Prisma.ActionConditionUncheckedCreateNestedManyWithoutActionInput
+}
+
+export type ActionCreateOrConnectWithoutLocationItemInput = {
+  where: Prisma.ActionWhereUniqueInput
+  create: Prisma.XOR<Prisma.ActionCreateWithoutLocationItemInput, Prisma.ActionUncheckedCreateWithoutLocationItemInput>
+}
+
+export type ActionCreateManyLocationItemInputEnvelope = {
+  data: Prisma.ActionCreateManyLocationItemInput | Prisma.ActionCreateManyLocationItemInput[]
+  skipDuplicates?: boolean
+}
+
+export type ActionUpsertWithWhereUniqueWithoutLocationItemInput = {
+  where: Prisma.ActionWhereUniqueInput
+  update: Prisma.XOR<Prisma.ActionUpdateWithoutLocationItemInput, Prisma.ActionUncheckedUpdateWithoutLocationItemInput>
+  create: Prisma.XOR<Prisma.ActionCreateWithoutLocationItemInput, Prisma.ActionUncheckedCreateWithoutLocationItemInput>
+}
+
+export type ActionUpdateWithWhereUniqueWithoutLocationItemInput = {
+  where: Prisma.ActionWhereUniqueInput
+  data: Prisma.XOR<Prisma.ActionUpdateWithoutLocationItemInput, Prisma.ActionUncheckedUpdateWithoutLocationItemInput>
+}
+
+export type ActionUpdateManyWithWhereWithoutLocationItemInput = {
+  where: Prisma.ActionScalarWhereInput
+  data: Prisma.XOR<Prisma.ActionUpdateManyMutationInput, Prisma.ActionUncheckedUpdateManyWithoutLocationItemInput>
+}
+
+export type ActionCreateWithoutNarrationInput = {
+  ActionId: string
+  Name: string
+  Type?: $Enums.ActionType | null
+  Region?: Prisma.RegionCreateNestedOneWithoutActionsInput
+  Item?: Prisma.ItemCreateNestedOneWithoutActionsInput
+  LocationItem?: Prisma.LocationItemCreateNestedOneWithoutActionsInput
+  AbilityChecks?: Prisma.AbilityCheckCreateNestedManyWithoutActionInput
+  ActionConditions?: Prisma.ActionConditionCreateNestedManyWithoutActionInput
 }
 
 export type ActionUncheckedCreateWithoutNarrationInput = {
@@ -528,8 +779,8 @@ export type ActionUncheckedCreateWithoutNarrationInput = {
   TargetId: string
   Name: string
   Type?: $Enums.ActionType | null
-  ActionConditions?: Prisma.ActionConditionUncheckedCreateNestedManyWithoutActionInput
   AbilityChecks?: Prisma.AbilityCheckUncheckedCreateNestedManyWithoutActionInput
+  ActionConditions?: Prisma.ActionConditionUncheckedCreateNestedManyWithoutActionInput
 }
 
 export type ActionCreateOrConnectWithoutNarrationInput = {
@@ -558,15 +809,118 @@ export type ActionUpdateManyWithWhereWithoutNarrationInput = {
   data: Prisma.XOR<Prisma.ActionUpdateManyMutationInput, Prisma.ActionUncheckedUpdateManyWithoutNarrationInput>
 }
 
-export type ActionScalarWhereInput = {
-  AND?: Prisma.ActionScalarWhereInput | Prisma.ActionScalarWhereInput[]
-  OR?: Prisma.ActionScalarWhereInput[]
-  NOT?: Prisma.ActionScalarWhereInput | Prisma.ActionScalarWhereInput[]
-  ActionId?: Prisma.UuidFilter<"Action"> | string
-  TargetId?: Prisma.UuidFilter<"Action"> | string
-  Name?: Prisma.StringFilter<"Action"> | string
-  Type?: Prisma.EnumActionTypeNullableFilter<"Action"> | $Enums.ActionType | null
-  NarrationId?: Prisma.UuidNullableFilter<"Action"> | string | null
+export type ActionCreateWithoutRegionInput = {
+  ActionId: string
+  Name: string
+  Type?: $Enums.ActionType | null
+  Item?: Prisma.ItemCreateNestedOneWithoutActionsInput
+  LocationItem?: Prisma.LocationItemCreateNestedOneWithoutActionsInput
+  Narration?: Prisma.NarrationCreateNestedOneWithoutActionsInput
+  AbilityChecks?: Prisma.AbilityCheckCreateNestedManyWithoutActionInput
+  ActionConditions?: Prisma.ActionConditionCreateNestedManyWithoutActionInput
+}
+
+export type ActionUncheckedCreateWithoutRegionInput = {
+  ActionId: string
+  Name: string
+  Type?: $Enums.ActionType | null
+  NarrationId?: string | null
+  AbilityChecks?: Prisma.AbilityCheckUncheckedCreateNestedManyWithoutActionInput
+  ActionConditions?: Prisma.ActionConditionUncheckedCreateNestedManyWithoutActionInput
+}
+
+export type ActionCreateOrConnectWithoutRegionInput = {
+  where: Prisma.ActionWhereUniqueInput
+  create: Prisma.XOR<Prisma.ActionCreateWithoutRegionInput, Prisma.ActionUncheckedCreateWithoutRegionInput>
+}
+
+export type ActionCreateManyRegionInputEnvelope = {
+  data: Prisma.ActionCreateManyRegionInput | Prisma.ActionCreateManyRegionInput[]
+  skipDuplicates?: boolean
+}
+
+export type ActionUpsertWithWhereUniqueWithoutRegionInput = {
+  where: Prisma.ActionWhereUniqueInput
+  update: Prisma.XOR<Prisma.ActionUpdateWithoutRegionInput, Prisma.ActionUncheckedUpdateWithoutRegionInput>
+  create: Prisma.XOR<Prisma.ActionCreateWithoutRegionInput, Prisma.ActionUncheckedCreateWithoutRegionInput>
+}
+
+export type ActionUpdateWithWhereUniqueWithoutRegionInput = {
+  where: Prisma.ActionWhereUniqueInput
+  data: Prisma.XOR<Prisma.ActionUpdateWithoutRegionInput, Prisma.ActionUncheckedUpdateWithoutRegionInput>
+}
+
+export type ActionUpdateManyWithWhereWithoutRegionInput = {
+  where: Prisma.ActionScalarWhereInput
+  data: Prisma.XOR<Prisma.ActionUpdateManyMutationInput, Prisma.ActionUncheckedUpdateManyWithoutRegionInput>
+}
+
+export type ActionCreateManyItemInput = {
+  ActionId: string
+  Name: string
+  Type?: $Enums.ActionType | null
+  NarrationId?: string | null
+}
+
+export type ActionUpdateWithoutItemInput = {
+  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
+  Region?: Prisma.RegionUpdateOneWithoutActionsNestedInput
+  LocationItem?: Prisma.LocationItemUpdateOneWithoutActionsNestedInput
+  Narration?: Prisma.NarrationUpdateOneWithoutActionsNestedInput
+  AbilityChecks?: Prisma.AbilityCheckUpdateManyWithoutActionNestedInput
+  ActionConditions?: Prisma.ActionConditionUpdateManyWithoutActionNestedInput
+}
+
+export type ActionUncheckedUpdateWithoutItemInput = {
+  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
+  NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  AbilityChecks?: Prisma.AbilityCheckUncheckedUpdateManyWithoutActionNestedInput
+  ActionConditions?: Prisma.ActionConditionUncheckedUpdateManyWithoutActionNestedInput
+}
+
+export type ActionUncheckedUpdateManyWithoutItemInput = {
+  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
+  NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ActionCreateManyLocationItemInput = {
+  ActionId: string
+  Name: string
+  Type?: $Enums.ActionType | null
+  NarrationId?: string | null
+}
+
+export type ActionUpdateWithoutLocationItemInput = {
+  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
+  Region?: Prisma.RegionUpdateOneWithoutActionsNestedInput
+  Item?: Prisma.ItemUpdateOneWithoutActionsNestedInput
+  Narration?: Prisma.NarrationUpdateOneWithoutActionsNestedInput
+  AbilityChecks?: Prisma.AbilityCheckUpdateManyWithoutActionNestedInput
+  ActionConditions?: Prisma.ActionConditionUpdateManyWithoutActionNestedInput
+}
+
+export type ActionUncheckedUpdateWithoutLocationItemInput = {
+  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
+  NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  AbilityChecks?: Prisma.AbilityCheckUncheckedUpdateManyWithoutActionNestedInput
+  ActionConditions?: Prisma.ActionConditionUncheckedUpdateManyWithoutActionNestedInput
+}
+
+export type ActionUncheckedUpdateManyWithoutLocationItemInput = {
+  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
+  NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ActionCreateManyNarrationInput = {
@@ -578,11 +932,13 @@ export type ActionCreateManyNarrationInput = {
 
 export type ActionUpdateWithoutNarrationInput = {
   ActionId?: Prisma.StringFieldUpdateOperationsInput | string
-  TargetId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
-  ActionConditions?: Prisma.ActionConditionUpdateManyWithoutActionNestedInput
+  Region?: Prisma.RegionUpdateOneWithoutActionsNestedInput
+  Item?: Prisma.ItemUpdateOneWithoutActionsNestedInput
+  LocationItem?: Prisma.LocationItemUpdateOneWithoutActionsNestedInput
   AbilityChecks?: Prisma.AbilityCheckUpdateManyWithoutActionNestedInput
+  ActionConditions?: Prisma.ActionConditionUpdateManyWithoutActionNestedInput
 }
 
 export type ActionUncheckedUpdateWithoutNarrationInput = {
@@ -590,8 +946,8 @@ export type ActionUncheckedUpdateWithoutNarrationInput = {
   TargetId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
-  ActionConditions?: Prisma.ActionConditionUncheckedUpdateManyWithoutActionNestedInput
   AbilityChecks?: Prisma.AbilityCheckUncheckedUpdateManyWithoutActionNestedInput
+  ActionConditions?: Prisma.ActionConditionUncheckedUpdateManyWithoutActionNestedInput
 }
 
 export type ActionUncheckedUpdateManyWithoutNarrationInput = {
@@ -601,19 +957,53 @@ export type ActionUncheckedUpdateManyWithoutNarrationInput = {
   Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
 }
 
+export type ActionCreateManyRegionInput = {
+  ActionId: string
+  Name: string
+  Type?: $Enums.ActionType | null
+  NarrationId?: string | null
+}
+
+export type ActionUpdateWithoutRegionInput = {
+  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
+  Item?: Prisma.ItemUpdateOneWithoutActionsNestedInput
+  LocationItem?: Prisma.LocationItemUpdateOneWithoutActionsNestedInput
+  Narration?: Prisma.NarrationUpdateOneWithoutActionsNestedInput
+  AbilityChecks?: Prisma.AbilityCheckUpdateManyWithoutActionNestedInput
+  ActionConditions?: Prisma.ActionConditionUpdateManyWithoutActionNestedInput
+}
+
+export type ActionUncheckedUpdateWithoutRegionInput = {
+  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
+  NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  AbilityChecks?: Prisma.AbilityCheckUncheckedUpdateManyWithoutActionNestedInput
+  ActionConditions?: Prisma.ActionConditionUncheckedUpdateManyWithoutActionNestedInput
+}
+
+export type ActionUncheckedUpdateManyWithoutRegionInput = {
+  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.NullableEnumActionTypeFieldUpdateOperationsInput | $Enums.ActionType | null
+  NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
 
 /**
  * Count Type ActionCountOutputType
  */
 
 export type ActionCountOutputType = {
-  ActionConditions: number
   AbilityChecks: number
+  ActionConditions: number
 }
 
 export type ActionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  ActionConditions?: boolean | ActionCountOutputTypeCountActionConditionsArgs
   AbilityChecks?: boolean | ActionCountOutputTypeCountAbilityChecksArgs
+  ActionConditions?: boolean | ActionCountOutputTypeCountActionConditionsArgs
 }
 
 /**
@@ -629,15 +1019,15 @@ export type ActionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
 /**
  * ActionCountOutputType without action
  */
-export type ActionCountOutputTypeCountActionConditionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ActionConditionWhereInput
+export type ActionCountOutputTypeCountAbilityChecksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AbilityCheckWhereInput
 }
 
 /**
  * ActionCountOutputType without action
  */
-export type ActionCountOutputTypeCountAbilityChecksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AbilityCheckWhereInput
+export type ActionCountOutputTypeCountActionConditionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ActionConditionWhereInput
 }
 
 
@@ -647,9 +1037,12 @@ export type ActionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   Name?: boolean
   Type?: boolean
   NarrationId?: boolean
+  Region?: boolean | Prisma.Action$RegionArgs<ExtArgs>
+  Item?: boolean | Prisma.Action$ItemArgs<ExtArgs>
+  LocationItem?: boolean | Prisma.Action$LocationItemArgs<ExtArgs>
   Narration?: boolean | Prisma.Action$NarrationArgs<ExtArgs>
-  ActionConditions?: boolean | Prisma.Action$ActionConditionsArgs<ExtArgs>
   AbilityChecks?: boolean | Prisma.Action$AbilityChecksArgs<ExtArgs>
+  ActionConditions?: boolean | Prisma.Action$ActionConditionsArgs<ExtArgs>
   _count?: boolean | Prisma.ActionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["action"]>
 
@@ -659,6 +1052,9 @@ export type ActionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   Name?: boolean
   Type?: boolean
   NarrationId?: boolean
+  Region?: boolean | Prisma.Action$RegionArgs<ExtArgs>
+  Item?: boolean | Prisma.Action$ItemArgs<ExtArgs>
+  LocationItem?: boolean | Prisma.Action$LocationItemArgs<ExtArgs>
   Narration?: boolean | Prisma.Action$NarrationArgs<ExtArgs>
 }, ExtArgs["result"]["action"]>
 
@@ -668,6 +1064,9 @@ export type ActionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   Name?: boolean
   Type?: boolean
   NarrationId?: boolean
+  Region?: boolean | Prisma.Action$RegionArgs<ExtArgs>
+  Item?: boolean | Prisma.Action$ItemArgs<ExtArgs>
+  LocationItem?: boolean | Prisma.Action$LocationItemArgs<ExtArgs>
   Narration?: boolean | Prisma.Action$NarrationArgs<ExtArgs>
 }, ExtArgs["result"]["action"]>
 
@@ -681,24 +1080,36 @@ export type ActionSelectScalar = {
 
 export type ActionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"ActionId" | "TargetId" | "Name" | "Type" | "NarrationId", ExtArgs["result"]["action"]>
 export type ActionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Region?: boolean | Prisma.Action$RegionArgs<ExtArgs>
+  Item?: boolean | Prisma.Action$ItemArgs<ExtArgs>
+  LocationItem?: boolean | Prisma.Action$LocationItemArgs<ExtArgs>
   Narration?: boolean | Prisma.Action$NarrationArgs<ExtArgs>
-  ActionConditions?: boolean | Prisma.Action$ActionConditionsArgs<ExtArgs>
   AbilityChecks?: boolean | Prisma.Action$AbilityChecksArgs<ExtArgs>
+  ActionConditions?: boolean | Prisma.Action$ActionConditionsArgs<ExtArgs>
   _count?: boolean | Prisma.ActionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ActionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Region?: boolean | Prisma.Action$RegionArgs<ExtArgs>
+  Item?: boolean | Prisma.Action$ItemArgs<ExtArgs>
+  LocationItem?: boolean | Prisma.Action$LocationItemArgs<ExtArgs>
   Narration?: boolean | Prisma.Action$NarrationArgs<ExtArgs>
 }
 export type ActionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Region?: boolean | Prisma.Action$RegionArgs<ExtArgs>
+  Item?: boolean | Prisma.Action$ItemArgs<ExtArgs>
+  LocationItem?: boolean | Prisma.Action$LocationItemArgs<ExtArgs>
   Narration?: boolean | Prisma.Action$NarrationArgs<ExtArgs>
 }
 
 export type $ActionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Action"
   objects: {
+    Region: Prisma.$RegionPayload<ExtArgs> | null
+    Item: Prisma.$ItemPayload<ExtArgs> | null
+    LocationItem: Prisma.$LocationItemPayload<ExtArgs> | null
     Narration: Prisma.$NarrationPayload<ExtArgs> | null
-    ActionConditions: Prisma.$ActionConditionPayload<ExtArgs>[]
     AbilityChecks: Prisma.$AbilityCheckPayload<ExtArgs>[]
+    ActionConditions: Prisma.$ActionConditionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     ActionId: string
@@ -1100,9 +1511,12 @@ readonly fields: ActionFieldRefs;
  */
 export interface Prisma__ActionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  Region<T extends Prisma.Action$RegionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Action$RegionArgs<ExtArgs>>): Prisma.Prisma__RegionClient<runtime.Types.Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Item<T extends Prisma.Action$ItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Action$ItemArgs<ExtArgs>>): Prisma.Prisma__ItemClient<runtime.Types.Result.GetResult<Prisma.$ItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  LocationItem<T extends Prisma.Action$LocationItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Action$LocationItemArgs<ExtArgs>>): Prisma.Prisma__LocationItemClient<runtime.Types.Result.GetResult<Prisma.$LocationItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Narration<T extends Prisma.Action$NarrationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Action$NarrationArgs<ExtArgs>>): Prisma.Prisma__NarrationClient<runtime.Types.Result.GetResult<Prisma.$NarrationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  ActionConditions<T extends Prisma.Action$ActionConditionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Action$ActionConditionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActionConditionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   AbilityChecks<T extends Prisma.Action$AbilityChecksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Action$AbilityChecksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AbilityCheckPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ActionConditions<T extends Prisma.Action$ActionConditionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Action$ActionConditionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActionConditionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1538,6 +1952,63 @@ export type ActionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
+ * Action.Region
+ */
+export type Action$RegionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Region
+   */
+  select?: Prisma.RegionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Region
+   */
+  omit?: Prisma.RegionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionInclude<ExtArgs> | null
+  where?: Prisma.RegionWhereInput
+}
+
+/**
+ * Action.Item
+ */
+export type Action$ItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Item
+   */
+  select?: Prisma.ItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Item
+   */
+  omit?: Prisma.ItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ItemInclude<ExtArgs> | null
+  where?: Prisma.ItemWhereInput
+}
+
+/**
+ * Action.LocationItem
+ */
+export type Action$LocationItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LocationItem
+   */
+  select?: Prisma.LocationItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LocationItem
+   */
+  omit?: Prisma.LocationItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LocationItemInclude<ExtArgs> | null
+  where?: Prisma.LocationItemWhereInput
+}
+
+/**
  * Action.Narration
  */
 export type Action$NarrationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1554,30 +2025,6 @@ export type Action$NarrationArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   include?: Prisma.NarrationInclude<ExtArgs> | null
   where?: Prisma.NarrationWhereInput
-}
-
-/**
- * Action.ActionConditions
- */
-export type Action$ActionConditionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ActionCondition
-   */
-  select?: Prisma.ActionConditionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ActionCondition
-   */
-  omit?: Prisma.ActionConditionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ActionConditionInclude<ExtArgs> | null
-  where?: Prisma.ActionConditionWhereInput
-  orderBy?: Prisma.ActionConditionOrderByWithRelationInput | Prisma.ActionConditionOrderByWithRelationInput[]
-  cursor?: Prisma.ActionConditionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ActionConditionScalarFieldEnum | Prisma.ActionConditionScalarFieldEnum[]
 }
 
 /**
@@ -1602,6 +2049,30 @@ export type Action$AbilityChecksArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.AbilityCheckScalarFieldEnum | Prisma.AbilityCheckScalarFieldEnum[]
+}
+
+/**
+ * Action.ActionConditions
+ */
+export type Action$ActionConditionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ActionCondition
+   */
+  select?: Prisma.ActionConditionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ActionCondition
+   */
+  omit?: Prisma.ActionConditionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionConditionInclude<ExtArgs> | null
+  where?: Prisma.ActionConditionWhereInput
+  orderBy?: Prisma.ActionConditionOrderByWithRelationInput | Prisma.ActionConditionOrderByWithRelationInput[]
+  cursor?: Prisma.ActionConditionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ActionConditionScalarFieldEnum | Prisma.ActionConditionScalarFieldEnum[]
 }
 
 /**

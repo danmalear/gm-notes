@@ -182,6 +182,7 @@ export type HandoutWhereInput = {
   Name?: Prisma.StringFilter<"Handout"> | string
   Type?: Prisma.EnumHandoutTypeFilter<"Handout"> | $Enums.HandoutType
   Source?: Prisma.StringFilter<"Handout"> | string
+  Campaign?: Prisma.XOR<Prisma.CampaignScalarRelationFilter, Prisma.CampaignWhereInput>
   RegionHandouts?: Prisma.RegionHandoutListRelationFilter
 }
 
@@ -191,6 +192,7 @@ export type HandoutOrderByWithRelationInput = {
   Name?: Prisma.SortOrder
   Type?: Prisma.SortOrder
   Source?: Prisma.SortOrder
+  Campaign?: Prisma.CampaignOrderByWithRelationInput
   RegionHandouts?: Prisma.RegionHandoutOrderByRelationAggregateInput
 }
 
@@ -203,6 +205,7 @@ export type HandoutWhereUniqueInput = Prisma.AtLeast<{
   Name?: Prisma.StringFilter<"Handout"> | string
   Type?: Prisma.EnumHandoutTypeFilter<"Handout"> | $Enums.HandoutType
   Source?: Prisma.StringFilter<"Handout"> | string
+  Campaign?: Prisma.XOR<Prisma.CampaignScalarRelationFilter, Prisma.CampaignWhereInput>
   RegionHandouts?: Prisma.RegionHandoutListRelationFilter
 }, "HandoutId">
 
@@ -230,10 +233,10 @@ export type HandoutScalarWhereWithAggregatesInput = {
 
 export type HandoutCreateInput = {
   HandoutId: string
-  CampaignId: string
   Name: string
   Type: $Enums.HandoutType
   Source: string
+  Campaign: Prisma.CampaignCreateNestedOneWithoutHandoutsInput
   RegionHandouts?: Prisma.RegionHandoutCreateNestedManyWithoutHandoutInput
 }
 
@@ -248,10 +251,10 @@ export type HandoutUncheckedCreateInput = {
 
 export type HandoutUpdateInput = {
   HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
-  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.EnumHandoutTypeFieldUpdateOperationsInput | $Enums.HandoutType
   Source?: Prisma.StringFieldUpdateOperationsInput | string
+  Campaign?: Prisma.CampaignUpdateOneRequiredWithoutHandoutsNestedInput
   RegionHandouts?: Prisma.RegionHandoutUpdateManyWithoutHandoutNestedInput
 }
 
@@ -274,7 +277,6 @@ export type HandoutCreateManyInput = {
 
 export type HandoutUpdateManyMutationInput = {
   HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
-  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.EnumHandoutTypeFieldUpdateOperationsInput | $Enums.HandoutType
   Source?: Prisma.StringFieldUpdateOperationsInput | string
@@ -286,6 +288,16 @@ export type HandoutUncheckedUpdateManyInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.EnumHandoutTypeFieldUpdateOperationsInput | $Enums.HandoutType
   Source?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type HandoutListRelationFilter = {
+  every?: Prisma.HandoutWhereInput
+  some?: Prisma.HandoutWhereInput
+  none?: Prisma.HandoutWhereInput
+}
+
+export type HandoutOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type HandoutCountOrderByAggregateInput = {
@@ -317,6 +329,48 @@ export type HandoutScalarRelationFilter = {
   isNot?: Prisma.HandoutWhereInput
 }
 
+export type HandoutCreateNestedManyWithoutCampaignInput = {
+  create?: Prisma.XOR<Prisma.HandoutCreateWithoutCampaignInput, Prisma.HandoutUncheckedCreateWithoutCampaignInput> | Prisma.HandoutCreateWithoutCampaignInput[] | Prisma.HandoutUncheckedCreateWithoutCampaignInput[]
+  connectOrCreate?: Prisma.HandoutCreateOrConnectWithoutCampaignInput | Prisma.HandoutCreateOrConnectWithoutCampaignInput[]
+  createMany?: Prisma.HandoutCreateManyCampaignInputEnvelope
+  connect?: Prisma.HandoutWhereUniqueInput | Prisma.HandoutWhereUniqueInput[]
+}
+
+export type HandoutUncheckedCreateNestedManyWithoutCampaignInput = {
+  create?: Prisma.XOR<Prisma.HandoutCreateWithoutCampaignInput, Prisma.HandoutUncheckedCreateWithoutCampaignInput> | Prisma.HandoutCreateWithoutCampaignInput[] | Prisma.HandoutUncheckedCreateWithoutCampaignInput[]
+  connectOrCreate?: Prisma.HandoutCreateOrConnectWithoutCampaignInput | Prisma.HandoutCreateOrConnectWithoutCampaignInput[]
+  createMany?: Prisma.HandoutCreateManyCampaignInputEnvelope
+  connect?: Prisma.HandoutWhereUniqueInput | Prisma.HandoutWhereUniqueInput[]
+}
+
+export type HandoutUpdateManyWithoutCampaignNestedInput = {
+  create?: Prisma.XOR<Prisma.HandoutCreateWithoutCampaignInput, Prisma.HandoutUncheckedCreateWithoutCampaignInput> | Prisma.HandoutCreateWithoutCampaignInput[] | Prisma.HandoutUncheckedCreateWithoutCampaignInput[]
+  connectOrCreate?: Prisma.HandoutCreateOrConnectWithoutCampaignInput | Prisma.HandoutCreateOrConnectWithoutCampaignInput[]
+  upsert?: Prisma.HandoutUpsertWithWhereUniqueWithoutCampaignInput | Prisma.HandoutUpsertWithWhereUniqueWithoutCampaignInput[]
+  createMany?: Prisma.HandoutCreateManyCampaignInputEnvelope
+  set?: Prisma.HandoutWhereUniqueInput | Prisma.HandoutWhereUniqueInput[]
+  disconnect?: Prisma.HandoutWhereUniqueInput | Prisma.HandoutWhereUniqueInput[]
+  delete?: Prisma.HandoutWhereUniqueInput | Prisma.HandoutWhereUniqueInput[]
+  connect?: Prisma.HandoutWhereUniqueInput | Prisma.HandoutWhereUniqueInput[]
+  update?: Prisma.HandoutUpdateWithWhereUniqueWithoutCampaignInput | Prisma.HandoutUpdateWithWhereUniqueWithoutCampaignInput[]
+  updateMany?: Prisma.HandoutUpdateManyWithWhereWithoutCampaignInput | Prisma.HandoutUpdateManyWithWhereWithoutCampaignInput[]
+  deleteMany?: Prisma.HandoutScalarWhereInput | Prisma.HandoutScalarWhereInput[]
+}
+
+export type HandoutUncheckedUpdateManyWithoutCampaignNestedInput = {
+  create?: Prisma.XOR<Prisma.HandoutCreateWithoutCampaignInput, Prisma.HandoutUncheckedCreateWithoutCampaignInput> | Prisma.HandoutCreateWithoutCampaignInput[] | Prisma.HandoutUncheckedCreateWithoutCampaignInput[]
+  connectOrCreate?: Prisma.HandoutCreateOrConnectWithoutCampaignInput | Prisma.HandoutCreateOrConnectWithoutCampaignInput[]
+  upsert?: Prisma.HandoutUpsertWithWhereUniqueWithoutCampaignInput | Prisma.HandoutUpsertWithWhereUniqueWithoutCampaignInput[]
+  createMany?: Prisma.HandoutCreateManyCampaignInputEnvelope
+  set?: Prisma.HandoutWhereUniqueInput | Prisma.HandoutWhereUniqueInput[]
+  disconnect?: Prisma.HandoutWhereUniqueInput | Prisma.HandoutWhereUniqueInput[]
+  delete?: Prisma.HandoutWhereUniqueInput | Prisma.HandoutWhereUniqueInput[]
+  connect?: Prisma.HandoutWhereUniqueInput | Prisma.HandoutWhereUniqueInput[]
+  update?: Prisma.HandoutUpdateWithWhereUniqueWithoutCampaignInput | Prisma.HandoutUpdateWithWhereUniqueWithoutCampaignInput[]
+  updateMany?: Prisma.HandoutUpdateManyWithWhereWithoutCampaignInput | Prisma.HandoutUpdateManyWithWhereWithoutCampaignInput[]
+  deleteMany?: Prisma.HandoutScalarWhereInput | Prisma.HandoutScalarWhereInput[]
+}
+
 export type EnumHandoutTypeFieldUpdateOperationsInput = {
   set?: $Enums.HandoutType
 }
@@ -335,12 +389,65 @@ export type HandoutUpdateOneRequiredWithoutRegionHandoutsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.HandoutUpdateToOneWithWhereWithoutRegionHandoutsInput, Prisma.HandoutUpdateWithoutRegionHandoutsInput>, Prisma.HandoutUncheckedUpdateWithoutRegionHandoutsInput>
 }
 
-export type HandoutCreateWithoutRegionHandoutsInput = {
+export type HandoutCreateWithoutCampaignInput = {
   HandoutId: string
-  CampaignId: string
   Name: string
   Type: $Enums.HandoutType
   Source: string
+  RegionHandouts?: Prisma.RegionHandoutCreateNestedManyWithoutHandoutInput
+}
+
+export type HandoutUncheckedCreateWithoutCampaignInput = {
+  HandoutId: string
+  Name: string
+  Type: $Enums.HandoutType
+  Source: string
+  RegionHandouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutHandoutInput
+}
+
+export type HandoutCreateOrConnectWithoutCampaignInput = {
+  where: Prisma.HandoutWhereUniqueInput
+  create: Prisma.XOR<Prisma.HandoutCreateWithoutCampaignInput, Prisma.HandoutUncheckedCreateWithoutCampaignInput>
+}
+
+export type HandoutCreateManyCampaignInputEnvelope = {
+  data: Prisma.HandoutCreateManyCampaignInput | Prisma.HandoutCreateManyCampaignInput[]
+  skipDuplicates?: boolean
+}
+
+export type HandoutUpsertWithWhereUniqueWithoutCampaignInput = {
+  where: Prisma.HandoutWhereUniqueInput
+  update: Prisma.XOR<Prisma.HandoutUpdateWithoutCampaignInput, Prisma.HandoutUncheckedUpdateWithoutCampaignInput>
+  create: Prisma.XOR<Prisma.HandoutCreateWithoutCampaignInput, Prisma.HandoutUncheckedCreateWithoutCampaignInput>
+}
+
+export type HandoutUpdateWithWhereUniqueWithoutCampaignInput = {
+  where: Prisma.HandoutWhereUniqueInput
+  data: Prisma.XOR<Prisma.HandoutUpdateWithoutCampaignInput, Prisma.HandoutUncheckedUpdateWithoutCampaignInput>
+}
+
+export type HandoutUpdateManyWithWhereWithoutCampaignInput = {
+  where: Prisma.HandoutScalarWhereInput
+  data: Prisma.XOR<Prisma.HandoutUpdateManyMutationInput, Prisma.HandoutUncheckedUpdateManyWithoutCampaignInput>
+}
+
+export type HandoutScalarWhereInput = {
+  AND?: Prisma.HandoutScalarWhereInput | Prisma.HandoutScalarWhereInput[]
+  OR?: Prisma.HandoutScalarWhereInput[]
+  NOT?: Prisma.HandoutScalarWhereInput | Prisma.HandoutScalarWhereInput[]
+  HandoutId?: Prisma.UuidFilter<"Handout"> | string
+  CampaignId?: Prisma.UuidFilter<"Handout"> | string
+  Name?: Prisma.StringFilter<"Handout"> | string
+  Type?: Prisma.EnumHandoutTypeFilter<"Handout"> | $Enums.HandoutType
+  Source?: Prisma.StringFilter<"Handout"> | string
+}
+
+export type HandoutCreateWithoutRegionHandoutsInput = {
+  HandoutId: string
+  Name: string
+  Type: $Enums.HandoutType
+  Source: string
+  Campaign: Prisma.CampaignCreateNestedOneWithoutHandoutsInput
 }
 
 export type HandoutUncheckedCreateWithoutRegionHandoutsInput = {
@@ -369,15 +476,45 @@ export type HandoutUpdateToOneWithWhereWithoutRegionHandoutsInput = {
 
 export type HandoutUpdateWithoutRegionHandoutsInput = {
   HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.EnumHandoutTypeFieldUpdateOperationsInput | $Enums.HandoutType
+  Source?: Prisma.StringFieldUpdateOperationsInput | string
+  Campaign?: Prisma.CampaignUpdateOneRequiredWithoutHandoutsNestedInput
+}
+
+export type HandoutUncheckedUpdateWithoutRegionHandoutsInput = {
+  HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
   CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.EnumHandoutTypeFieldUpdateOperationsInput | $Enums.HandoutType
   Source?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type HandoutUncheckedUpdateWithoutRegionHandoutsInput = {
+export type HandoutCreateManyCampaignInput = {
+  HandoutId: string
+  Name: string
+  Type: $Enums.HandoutType
+  Source: string
+}
+
+export type HandoutUpdateWithoutCampaignInput = {
   HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
-  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.EnumHandoutTypeFieldUpdateOperationsInput | $Enums.HandoutType
+  Source?: Prisma.StringFieldUpdateOperationsInput | string
+  RegionHandouts?: Prisma.RegionHandoutUpdateManyWithoutHandoutNestedInput
+}
+
+export type HandoutUncheckedUpdateWithoutCampaignInput = {
+  HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.EnumHandoutTypeFieldUpdateOperationsInput | $Enums.HandoutType
+  Source?: Prisma.StringFieldUpdateOperationsInput | string
+  RegionHandouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutHandoutNestedInput
+}
+
+export type HandoutUncheckedUpdateManyWithoutCampaignInput = {
+  HandoutId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.EnumHandoutTypeFieldUpdateOperationsInput | $Enums.HandoutType
   Source?: Prisma.StringFieldUpdateOperationsInput | string
@@ -420,6 +557,7 @@ export type HandoutSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   Name?: boolean
   Type?: boolean
   Source?: boolean
+  Campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
   RegionHandouts?: boolean | Prisma.Handout$RegionHandoutsArgs<ExtArgs>
   _count?: boolean | Prisma.HandoutCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["handout"]>
@@ -430,6 +568,7 @@ export type HandoutSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   Name?: boolean
   Type?: boolean
   Source?: boolean
+  Campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["handout"]>
 
 export type HandoutSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -438,6 +577,7 @@ export type HandoutSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   Name?: boolean
   Type?: boolean
   Source?: boolean
+  Campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["handout"]>
 
 export type HandoutSelectScalar = {
@@ -450,15 +590,21 @@ export type HandoutSelectScalar = {
 
 export type HandoutOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"HandoutId" | "CampaignId" | "Name" | "Type" | "Source", ExtArgs["result"]["handout"]>
 export type HandoutInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
   RegionHandouts?: boolean | Prisma.Handout$RegionHandoutsArgs<ExtArgs>
   _count?: boolean | Prisma.HandoutCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type HandoutIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type HandoutIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type HandoutIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
+}
+export type HandoutIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
+}
 
 export type $HandoutPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Handout"
   objects: {
+    Campaign: Prisma.$CampaignPayload<ExtArgs>
     RegionHandouts: Prisma.$RegionHandoutPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -861,6 +1007,7 @@ readonly fields: HandoutFieldRefs;
  */
 export interface Prisma__HandoutClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  Campaign<T extends Prisma.CampaignDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CampaignDefaultArgs<ExtArgs>>): Prisma.Prisma__CampaignClient<runtime.Types.Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   RegionHandouts<T extends Prisma.Handout$RegionHandoutsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Handout$RegionHandoutsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RegionHandoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1150,6 +1297,10 @@ export type HandoutCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    */
   data: Prisma.HandoutCreateManyInput | Prisma.HandoutCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HandoutIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1220,6 +1371,10 @@ export type HandoutUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many Handouts to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HandoutIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

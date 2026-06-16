@@ -35,14 +35,29 @@ model AbilityCheck {
 model Action {
   ActionId         String            @id @db.Uuid
   TargetId         String            @db.Uuid
+  Region           Region?           @relation(name: "TargetRegion", fields: [TargetId], references: [RegionId], map: "Action_RegionId_fkey")
+  Item             Item?             @relation(name: "TargetItem", fields: [TargetId], references: [ItemId], map: "Action_ItemId_fkey")
+  LocationItem     LocationItem?     @relation(name: "TargetLocationItem", fields: [TargetId], references: [LocationItemId], map: "Action_LocationItemId_fkey")
   Name             String
   Type             ActionType?
   NarrationId      String?           @db.Uuid
   Narration        Narration?        @relation(fields: [NarrationId], references: [NarrationId])
-  ActionConditions ActionCondition[]
   AbilityChecks    AbilityCheck[]
+  ActionConditions ActionCondition[]
 
   @@index([NarrationId])
+  @@index([TargetId])
+  @@schema("public")
+}
+
+model ActionCondition {
+  ActionId    String    @db.Uuid
+  Action      Action    @relation(fields: [ActionId], references: [ActionId])
+  ConditionId String    @db.Uuid
+  Condition   Condition @relation(fields: [ConditionId], references: [ConditionId])
+
+  @@id([ActionId, ConditionId])
+  @@index([ConditionId])
   @@schema("public")
 }
 
@@ -63,23 +78,18 @@ enum ActionType {
   @@schema("public")
 }
 
-model ActionCondition {
-  ActionId    String    @db.Uuid
-  Action      Action    @relation(fields: [ActionId], references: [ActionId])
-  ConditionId String    @db.Uuid
-  Condition   Condition @relation(fields: [ConditionId], references: [ConditionId])
-
-  @@id([ActionId, ConditionId])
-  @@index([ConditionId])
-  @@schema("public")
-}
-
 model Campaign {
-  CampaignId         String  @id @db.Uuid
-  CampaignTemplateId String? @db.Uuid
+  CampaignId         String      @id @db.Uuid
+  CampaignTemplateId String?     @db.Uuid
   Name               String
-  ActiveMapId        String? @db.Uuid
+  ActiveMapId        String?     @db.Uuid
+  ActiveMap          Map?        @relation(name: "CampaignActiveMap", fields: [ActiveMapId], references: [MapId])
+  Conditions         Condition[]
+  Handouts           Handout[]
+  Items              Item[]
+  Maps               Map[]       @relation(name: "MapCampaign")
 
+  @@index([ActiveMapId])
   @@schema("public")
 }
 
@@ -96,14 +106,17 @@ model Condition {
   Description      String
   IsMet            Boolean           @default(false)
   CampaignId       String            @db.Uuid
+  Campaign         Campaign          @relation(fields: [CampaignId], references: [CampaignId])
   ActionConditions ActionCondition[]
 
+  @@index([CampaignId])
   @@schema("public")
 }
 
 model File {
   FileId   String @id @db.Uuid
   FileName String
+  Item     Item?
 
   @@schema("public")
 }
@@ -111,11 +124,13 @@ model File {
 model Handout {
   HandoutId      String          @id @db.Uuid
   CampaignId     String          @db.Uuid
+  Campaign       Campaign        @relation(fields: [CampaignId], references: [CampaignId])
   Name           String
   Type           HandoutType
   Source         String
   RegionHandouts RegionHandout[]
 
+  @@index([CampaignId])
   @@schema("public")
 }
 
@@ -128,37 +143,53 @@ enum HandoutType {
 }
 
 model Item {
-  ItemId      String  @id @db.Uuid
-  CampaignId  String? @db.Uuid
-  Name        String
-  IsContainer Boolean @default(false)
-  Value       Int?
-  ValueUnit   String?
-  DetailsLink String?
-  ImageFileId String?
+  ItemId        String         @id @db.Uuid
+  CampaignId    String?        @db.Uuid
+  Campaign      Campaign?      @relation(fields: [CampaignId], references: [CampaignId])
+  Name          String
+  IsContainer   Boolean        @default(false)
+  Value         Int?
+  ValueUnit     String?
+  DetailsLink   String?
+  ImageFileId   String?        @unique
+  File          File?          @relation(fields: [ImageFileId], references: [FileId])
+  Actions       Action[]       @relation(name: "TargetItem")
+  LocationItems LocationItem[]
+  Notes         Note[]         @relation(name: "ParentItem")
 
+  @@index([CampaignId])
+  @@index([ImageFileId])
   @@schema("public")
 }
 
 model LocationItem {
-  LocationItemId String @id @db.Uuid
-  LocationId     String @db.Uuid
-  ItemId         String @db.Uuid
-  Quantity       Int    @default(1)
+  LocationItemId String   @id @db.Uuid
+  LocationId     String   @db.Uuid
+  Region         Region?  @relation(fields: [LocationId], references: [RegionId])
+  ItemId         String   @db.Uuid
+  Item           Item     @relation(fields: [ItemId], references: [ItemId])
+  Quantity       Int      @default(1)
+  Actions        Action[] @relation(name: "TargetLocationItem")
+  Notes          Note[]   @relation(name: "ParentLocationItem")
 
+  @@index([LocationId])
+  @@index([ItemId])
   @@schema("public")
 }
 
 model Map {
-  MapId           String  @id @db.Uuid
-  CampaignId      String  @db.Uuid
-  MapTemplateId   String? @db.Uuid
+  MapId           String     @id @db.Uuid
+  CampaignId      String     @db.Uuid
+  Campaign        Campaign   @relation(name: "MapCampaign", fields: [CampaignId], references: [CampaignId], onUpdate: Restrict)
+  MapTemplateId   String?    @db.Uuid
   Name            String
   ImagePath       String
-  DefaultLighting String  @default("Bright Light")
-  Width           Int     @default(0)
-  Height          Int     @default(0)
+  DefaultLighting String     @default("Bright Light")
+  Width           Int        @default(0)
+  Height          Int        @default(0)
+  Campaigns       Campaign[] @relation(name: "CampaignActiveMap")
 
+  @@index([CampaignId])
   @@schema("public")
 }
 
@@ -177,12 +208,12 @@ model Narration {
   Name                         String
   Description                  String
   IsRead                       Boolean           @default(false)
+  Actions                      Action[]
   RegionNarrations             RegionNarration[]
   SuccessAbilityChecks         AbilityCheck[]    @relation(name: "Success")
   FailureAbilityChecks         AbilityCheck[]    @relation(name: "Failure")
   CriticalSuccessAbilityChecks AbilityCheck[]    @relation(name: "CriticalSuccess")
   CriticalFailureAbilityChecks AbilityCheck[]    @relation(name: "CriticalFailure")
-  Actions                      Action[]
 
   @@schema("public")
 }
@@ -196,10 +227,14 @@ model NarrationTemplate {
 }
 
 model Note {
-  NoteId      String @id @db.Uuid
-  EntityId    String @db.Uuid
-  Description String
+  NoteId       String        @id @db.Uuid
+  EntityId     String        @db.Uuid
+  Region       Region?       @relation(name: "ParentRegion", fields: [EntityId], references: [RegionId], map: "Note_RegionId_fkey")
+  Item         Item?         @relation(name: "ParentItem", fields: [EntityId], references: [ItemId], map: "Note_ItemId_fkey")
+  LocationItem LocationItem? @relation(name: "ParentLocationItem", fields: [EntityId], references: [LocationItemId], map: "Note_LocationItemId_fkey")
+  Description  String
 
+  @@index([EntityId])
   @@schema("public")
 }
 
@@ -209,8 +244,12 @@ model Region {
   MapId            String            @db.Uuid
   Name             String
   Lighting         String            @default("Default")
-  RegionNarrations RegionNarration[]
+  Actions          Action[]          @relation(name: "TargetRegion")
+  LocationItems    LocationItem[]
+  Notes            Note[]            @relation(name: "ParentRegion")
   RegionHandouts   RegionHandout[]
+  RegionNarrations RegionNarration[]
+  RegionShapes     RegionShape[]
 
   @@schema("public")
 }
@@ -240,9 +279,11 @@ model RegionNarration {
 model RegionShape {
   RegionShapeId String @id @db.Uuid
   RegionId      String @db.Uuid
+  Region        Region @relation(fields: [RegionId], references: [RegionId])
   ShapeType     String
   Coords        Json
 
+  @@index([RegionId])
   @@schema("public")
 }
 

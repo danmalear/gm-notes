@@ -182,6 +182,7 @@ export type ConditionWhereInput = {
   Description?: Prisma.StringFilter<"Condition"> | string
   IsMet?: Prisma.BoolFilter<"Condition"> | boolean
   CampaignId?: Prisma.UuidFilter<"Condition"> | string
+  Campaign?: Prisma.XOR<Prisma.CampaignScalarRelationFilter, Prisma.CampaignWhereInput>
   ActionConditions?: Prisma.ActionConditionListRelationFilter
 }
 
@@ -191,6 +192,7 @@ export type ConditionOrderByWithRelationInput = {
   Description?: Prisma.SortOrder
   IsMet?: Prisma.SortOrder
   CampaignId?: Prisma.SortOrder
+  Campaign?: Prisma.CampaignOrderByWithRelationInput
   ActionConditions?: Prisma.ActionConditionOrderByRelationAggregateInput
 }
 
@@ -203,6 +205,7 @@ export type ConditionWhereUniqueInput = Prisma.AtLeast<{
   Description?: Prisma.StringFilter<"Condition"> | string
   IsMet?: Prisma.BoolFilter<"Condition"> | boolean
   CampaignId?: Prisma.UuidFilter<"Condition"> | string
+  Campaign?: Prisma.XOR<Prisma.CampaignScalarRelationFilter, Prisma.CampaignWhereInput>
   ActionConditions?: Prisma.ActionConditionListRelationFilter
 }, "ConditionId">
 
@@ -233,7 +236,7 @@ export type ConditionCreateInput = {
   Name: string
   Description: string
   IsMet?: boolean
-  CampaignId: string
+  Campaign: Prisma.CampaignCreateNestedOneWithoutConditionsInput
   ActionConditions?: Prisma.ActionConditionCreateNestedManyWithoutConditionInput
 }
 
@@ -251,7 +254,7 @@ export type ConditionUpdateInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Description?: Prisma.StringFieldUpdateOperationsInput | string
   IsMet?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  Campaign?: Prisma.CampaignUpdateOneRequiredWithoutConditionsNestedInput
   ActionConditions?: Prisma.ActionConditionUpdateManyWithoutConditionNestedInput
 }
 
@@ -277,7 +280,6 @@ export type ConditionUpdateManyMutationInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Description?: Prisma.StringFieldUpdateOperationsInput | string
   IsMet?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ConditionUncheckedUpdateManyInput = {
@@ -291,6 +293,16 @@ export type ConditionUncheckedUpdateManyInput = {
 export type ConditionScalarRelationFilter = {
   is?: Prisma.ConditionWhereInput
   isNot?: Prisma.ConditionWhereInput
+}
+
+export type ConditionListRelationFilter = {
+  every?: Prisma.ConditionWhereInput
+  some?: Prisma.ConditionWhereInput
+  none?: Prisma.ConditionWhereInput
+}
+
+export type ConditionOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type ConditionCountOrderByAggregateInput = {
@@ -331,6 +343,48 @@ export type ConditionUpdateOneRequiredWithoutActionConditionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ConditionUpdateToOneWithWhereWithoutActionConditionsInput, Prisma.ConditionUpdateWithoutActionConditionsInput>, Prisma.ConditionUncheckedUpdateWithoutActionConditionsInput>
 }
 
+export type ConditionCreateNestedManyWithoutCampaignInput = {
+  create?: Prisma.XOR<Prisma.ConditionCreateWithoutCampaignInput, Prisma.ConditionUncheckedCreateWithoutCampaignInput> | Prisma.ConditionCreateWithoutCampaignInput[] | Prisma.ConditionUncheckedCreateWithoutCampaignInput[]
+  connectOrCreate?: Prisma.ConditionCreateOrConnectWithoutCampaignInput | Prisma.ConditionCreateOrConnectWithoutCampaignInput[]
+  createMany?: Prisma.ConditionCreateManyCampaignInputEnvelope
+  connect?: Prisma.ConditionWhereUniqueInput | Prisma.ConditionWhereUniqueInput[]
+}
+
+export type ConditionUncheckedCreateNestedManyWithoutCampaignInput = {
+  create?: Prisma.XOR<Prisma.ConditionCreateWithoutCampaignInput, Prisma.ConditionUncheckedCreateWithoutCampaignInput> | Prisma.ConditionCreateWithoutCampaignInput[] | Prisma.ConditionUncheckedCreateWithoutCampaignInput[]
+  connectOrCreate?: Prisma.ConditionCreateOrConnectWithoutCampaignInput | Prisma.ConditionCreateOrConnectWithoutCampaignInput[]
+  createMany?: Prisma.ConditionCreateManyCampaignInputEnvelope
+  connect?: Prisma.ConditionWhereUniqueInput | Prisma.ConditionWhereUniqueInput[]
+}
+
+export type ConditionUpdateManyWithoutCampaignNestedInput = {
+  create?: Prisma.XOR<Prisma.ConditionCreateWithoutCampaignInput, Prisma.ConditionUncheckedCreateWithoutCampaignInput> | Prisma.ConditionCreateWithoutCampaignInput[] | Prisma.ConditionUncheckedCreateWithoutCampaignInput[]
+  connectOrCreate?: Prisma.ConditionCreateOrConnectWithoutCampaignInput | Prisma.ConditionCreateOrConnectWithoutCampaignInput[]
+  upsert?: Prisma.ConditionUpsertWithWhereUniqueWithoutCampaignInput | Prisma.ConditionUpsertWithWhereUniqueWithoutCampaignInput[]
+  createMany?: Prisma.ConditionCreateManyCampaignInputEnvelope
+  set?: Prisma.ConditionWhereUniqueInput | Prisma.ConditionWhereUniqueInput[]
+  disconnect?: Prisma.ConditionWhereUniqueInput | Prisma.ConditionWhereUniqueInput[]
+  delete?: Prisma.ConditionWhereUniqueInput | Prisma.ConditionWhereUniqueInput[]
+  connect?: Prisma.ConditionWhereUniqueInput | Prisma.ConditionWhereUniqueInput[]
+  update?: Prisma.ConditionUpdateWithWhereUniqueWithoutCampaignInput | Prisma.ConditionUpdateWithWhereUniqueWithoutCampaignInput[]
+  updateMany?: Prisma.ConditionUpdateManyWithWhereWithoutCampaignInput | Prisma.ConditionUpdateManyWithWhereWithoutCampaignInput[]
+  deleteMany?: Prisma.ConditionScalarWhereInput | Prisma.ConditionScalarWhereInput[]
+}
+
+export type ConditionUncheckedUpdateManyWithoutCampaignNestedInput = {
+  create?: Prisma.XOR<Prisma.ConditionCreateWithoutCampaignInput, Prisma.ConditionUncheckedCreateWithoutCampaignInput> | Prisma.ConditionCreateWithoutCampaignInput[] | Prisma.ConditionUncheckedCreateWithoutCampaignInput[]
+  connectOrCreate?: Prisma.ConditionCreateOrConnectWithoutCampaignInput | Prisma.ConditionCreateOrConnectWithoutCampaignInput[]
+  upsert?: Prisma.ConditionUpsertWithWhereUniqueWithoutCampaignInput | Prisma.ConditionUpsertWithWhereUniqueWithoutCampaignInput[]
+  createMany?: Prisma.ConditionCreateManyCampaignInputEnvelope
+  set?: Prisma.ConditionWhereUniqueInput | Prisma.ConditionWhereUniqueInput[]
+  disconnect?: Prisma.ConditionWhereUniqueInput | Prisma.ConditionWhereUniqueInput[]
+  delete?: Prisma.ConditionWhereUniqueInput | Prisma.ConditionWhereUniqueInput[]
+  connect?: Prisma.ConditionWhereUniqueInput | Prisma.ConditionWhereUniqueInput[]
+  update?: Prisma.ConditionUpdateWithWhereUniqueWithoutCampaignInput | Prisma.ConditionUpdateWithWhereUniqueWithoutCampaignInput[]
+  updateMany?: Prisma.ConditionUpdateManyWithWhereWithoutCampaignInput | Prisma.ConditionUpdateManyWithWhereWithoutCampaignInput[]
+  deleteMany?: Prisma.ConditionScalarWhereInput | Prisma.ConditionScalarWhereInput[]
+}
+
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
@@ -340,7 +394,7 @@ export type ConditionCreateWithoutActionConditionsInput = {
   Name: string
   Description: string
   IsMet?: boolean
-  CampaignId: string
+  Campaign: Prisma.CampaignCreateNestedOneWithoutConditionsInput
 }
 
 export type ConditionUncheckedCreateWithoutActionConditionsInput = {
@@ -372,7 +426,7 @@ export type ConditionUpdateWithoutActionConditionsInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Description?: Prisma.StringFieldUpdateOperationsInput | string
   IsMet?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  Campaign?: Prisma.CampaignUpdateOneRequiredWithoutConditionsNestedInput
 }
 
 export type ConditionUncheckedUpdateWithoutActionConditionsInput = {
@@ -381,6 +435,89 @@ export type ConditionUncheckedUpdateWithoutActionConditionsInput = {
   Description?: Prisma.StringFieldUpdateOperationsInput | string
   IsMet?: Prisma.BoolFieldUpdateOperationsInput | boolean
   CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type ConditionCreateWithoutCampaignInput = {
+  ConditionId: string
+  Name: string
+  Description: string
+  IsMet?: boolean
+  ActionConditions?: Prisma.ActionConditionCreateNestedManyWithoutConditionInput
+}
+
+export type ConditionUncheckedCreateWithoutCampaignInput = {
+  ConditionId: string
+  Name: string
+  Description: string
+  IsMet?: boolean
+  ActionConditions?: Prisma.ActionConditionUncheckedCreateNestedManyWithoutConditionInput
+}
+
+export type ConditionCreateOrConnectWithoutCampaignInput = {
+  where: Prisma.ConditionWhereUniqueInput
+  create: Prisma.XOR<Prisma.ConditionCreateWithoutCampaignInput, Prisma.ConditionUncheckedCreateWithoutCampaignInput>
+}
+
+export type ConditionCreateManyCampaignInputEnvelope = {
+  data: Prisma.ConditionCreateManyCampaignInput | Prisma.ConditionCreateManyCampaignInput[]
+  skipDuplicates?: boolean
+}
+
+export type ConditionUpsertWithWhereUniqueWithoutCampaignInput = {
+  where: Prisma.ConditionWhereUniqueInput
+  update: Prisma.XOR<Prisma.ConditionUpdateWithoutCampaignInput, Prisma.ConditionUncheckedUpdateWithoutCampaignInput>
+  create: Prisma.XOR<Prisma.ConditionCreateWithoutCampaignInput, Prisma.ConditionUncheckedCreateWithoutCampaignInput>
+}
+
+export type ConditionUpdateWithWhereUniqueWithoutCampaignInput = {
+  where: Prisma.ConditionWhereUniqueInput
+  data: Prisma.XOR<Prisma.ConditionUpdateWithoutCampaignInput, Prisma.ConditionUncheckedUpdateWithoutCampaignInput>
+}
+
+export type ConditionUpdateManyWithWhereWithoutCampaignInput = {
+  where: Prisma.ConditionScalarWhereInput
+  data: Prisma.XOR<Prisma.ConditionUpdateManyMutationInput, Prisma.ConditionUncheckedUpdateManyWithoutCampaignInput>
+}
+
+export type ConditionScalarWhereInput = {
+  AND?: Prisma.ConditionScalarWhereInput | Prisma.ConditionScalarWhereInput[]
+  OR?: Prisma.ConditionScalarWhereInput[]
+  NOT?: Prisma.ConditionScalarWhereInput | Prisma.ConditionScalarWhereInput[]
+  ConditionId?: Prisma.UuidFilter<"Condition"> | string
+  Name?: Prisma.StringFilter<"Condition"> | string
+  Description?: Prisma.StringFilter<"Condition"> | string
+  IsMet?: Prisma.BoolFilter<"Condition"> | boolean
+  CampaignId?: Prisma.UuidFilter<"Condition"> | string
+}
+
+export type ConditionCreateManyCampaignInput = {
+  ConditionId: string
+  Name: string
+  Description: string
+  IsMet?: boolean
+}
+
+export type ConditionUpdateWithoutCampaignInput = {
+  ConditionId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Description?: Prisma.StringFieldUpdateOperationsInput | string
+  IsMet?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ActionConditions?: Prisma.ActionConditionUpdateManyWithoutConditionNestedInput
+}
+
+export type ConditionUncheckedUpdateWithoutCampaignInput = {
+  ConditionId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Description?: Prisma.StringFieldUpdateOperationsInput | string
+  IsMet?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ActionConditions?: Prisma.ActionConditionUncheckedUpdateManyWithoutConditionNestedInput
+}
+
+export type ConditionUncheckedUpdateManyWithoutCampaignInput = {
+  ConditionId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Description?: Prisma.StringFieldUpdateOperationsInput | string
+  IsMet?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -420,6 +557,7 @@ export type ConditionSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   Description?: boolean
   IsMet?: boolean
   CampaignId?: boolean
+  Campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
   ActionConditions?: boolean | Prisma.Condition$ActionConditionsArgs<ExtArgs>
   _count?: boolean | Prisma.ConditionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["condition"]>
@@ -430,6 +568,7 @@ export type ConditionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   Description?: boolean
   IsMet?: boolean
   CampaignId?: boolean
+  Campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["condition"]>
 
 export type ConditionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -438,6 +577,7 @@ export type ConditionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   Description?: boolean
   IsMet?: boolean
   CampaignId?: boolean
+  Campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["condition"]>
 
 export type ConditionSelectScalar = {
@@ -450,15 +590,21 @@ export type ConditionSelectScalar = {
 
 export type ConditionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"ConditionId" | "Name" | "Description" | "IsMet" | "CampaignId", ExtArgs["result"]["condition"]>
 export type ConditionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
   ActionConditions?: boolean | Prisma.Condition$ActionConditionsArgs<ExtArgs>
   _count?: boolean | Prisma.ConditionCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type ConditionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type ConditionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type ConditionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
+}
+export type ConditionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
+}
 
 export type $ConditionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Condition"
   objects: {
+    Campaign: Prisma.$CampaignPayload<ExtArgs>
     ActionConditions: Prisma.$ActionConditionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -861,6 +1007,7 @@ readonly fields: ConditionFieldRefs;
  */
 export interface Prisma__ConditionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  Campaign<T extends Prisma.CampaignDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CampaignDefaultArgs<ExtArgs>>): Prisma.Prisma__CampaignClient<runtime.Types.Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   ActionConditions<T extends Prisma.Condition$ActionConditionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Condition$ActionConditionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActionConditionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1150,6 +1297,10 @@ export type ConditionCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    */
   data: Prisma.ConditionCreateManyInput | Prisma.ConditionCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConditionIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1220,6 +1371,10 @@ export type ConditionUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    * Limit how many Conditions to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConditionIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
