@@ -1,4 +1,4 @@
-import type { Skill } from '#shared/data-types.ts';
+import type { Skill } from '#prisma-enums';
 import type { UUID } from 'crypto';
 
 /**
