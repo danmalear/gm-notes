@@ -183,6 +183,7 @@ export type ActionWhereInput = {
   Type?: Prisma.StringNullableFilter<"Action"> | string | null
   NarrationId?: Prisma.UuidNullableFilter<"Action"> | string | null
   ActionConditions?: Prisma.ActionConditionListRelationFilter
+  AbilityChecks?: Prisma.AbilityCheckListRelationFilter
 }
 
 export type ActionOrderByWithRelationInput = {
@@ -192,6 +193,7 @@ export type ActionOrderByWithRelationInput = {
   Type?: Prisma.SortOrderInput | Prisma.SortOrder
   NarrationId?: Prisma.SortOrderInput | Prisma.SortOrder
   ActionConditions?: Prisma.ActionConditionOrderByRelationAggregateInput
+  AbilityChecks?: Prisma.AbilityCheckOrderByRelationAggregateInput
 }
 
 export type ActionWhereUniqueInput = Prisma.AtLeast<{
@@ -204,6 +206,7 @@ export type ActionWhereUniqueInput = Prisma.AtLeast<{
   Type?: Prisma.StringNullableFilter<"Action"> | string | null
   NarrationId?: Prisma.UuidNullableFilter<"Action"> | string | null
   ActionConditions?: Prisma.ActionConditionListRelationFilter
+  AbilityChecks?: Prisma.AbilityCheckListRelationFilter
 }, "ActionId">
 
 export type ActionOrderByWithAggregationInput = {
@@ -235,6 +238,7 @@ export type ActionCreateInput = {
   Type?: string | null
   NarrationId?: string | null
   ActionConditions?: Prisma.ActionConditionCreateNestedManyWithoutActionInput
+  AbilityChecks?: Prisma.AbilityCheckCreateNestedManyWithoutActionInput
 }
 
 export type ActionUncheckedCreateInput = {
@@ -244,6 +248,7 @@ export type ActionUncheckedCreateInput = {
   Type?: string | null
   NarrationId?: string | null
   ActionConditions?: Prisma.ActionConditionUncheckedCreateNestedManyWithoutActionInput
+  AbilityChecks?: Prisma.AbilityCheckUncheckedCreateNestedManyWithoutActionInput
 }
 
 export type ActionUpdateInput = {
@@ -253,6 +258,7 @@ export type ActionUpdateInput = {
   Type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ActionConditions?: Prisma.ActionConditionUpdateManyWithoutActionNestedInput
+  AbilityChecks?: Prisma.AbilityCheckUpdateManyWithoutActionNestedInput
 }
 
 export type ActionUncheckedUpdateInput = {
@@ -262,6 +268,7 @@ export type ActionUncheckedUpdateInput = {
   Type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ActionConditions?: Prisma.ActionConditionUncheckedUpdateManyWithoutActionNestedInput
+  AbilityChecks?: Prisma.AbilityCheckUncheckedUpdateManyWithoutActionNestedInput
 }
 
 export type ActionCreateManyInput = {
@@ -288,6 +295,11 @@ export type ActionUncheckedUpdateManyInput = {
   NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
+export type ActionScalarRelationFilter = {
+  is?: Prisma.ActionWhereInput
+  isNot?: Prisma.ActionWhereInput
+}
+
 export type ActionCountOrderByAggregateInput = {
   ActionId?: Prisma.SortOrder
   TargetId?: Prisma.SortOrder
@@ -312,9 +324,18 @@ export type ActionMinOrderByAggregateInput = {
   NarrationId?: Prisma.SortOrder
 }
 
-export type ActionScalarRelationFilter = {
-  is?: Prisma.ActionWhereInput
-  isNot?: Prisma.ActionWhereInput
+export type ActionCreateNestedOneWithoutAbilityChecksInput = {
+  create?: Prisma.XOR<Prisma.ActionCreateWithoutAbilityChecksInput, Prisma.ActionUncheckedCreateWithoutAbilityChecksInput>
+  connectOrCreate?: Prisma.ActionCreateOrConnectWithoutAbilityChecksInput
+  connect?: Prisma.ActionWhereUniqueInput
+}
+
+export type ActionUpdateOneRequiredWithoutAbilityChecksNestedInput = {
+  create?: Prisma.XOR<Prisma.ActionCreateWithoutAbilityChecksInput, Prisma.ActionUncheckedCreateWithoutAbilityChecksInput>
+  connectOrCreate?: Prisma.ActionCreateOrConnectWithoutAbilityChecksInput
+  upsert?: Prisma.ActionUpsertWithoutAbilityChecksInput
+  connect?: Prisma.ActionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ActionUpdateToOneWithWhereWithoutAbilityChecksInput, Prisma.ActionUpdateWithoutAbilityChecksInput>, Prisma.ActionUncheckedUpdateWithoutAbilityChecksInput>
 }
 
 export type ActionCreateNestedOneWithoutActionConditionsInput = {
@@ -331,12 +352,65 @@ export type ActionUpdateOneRequiredWithoutActionConditionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ActionUpdateToOneWithWhereWithoutActionConditionsInput, Prisma.ActionUpdateWithoutActionConditionsInput>, Prisma.ActionUncheckedUpdateWithoutActionConditionsInput>
 }
 
+export type ActionCreateWithoutAbilityChecksInput = {
+  ActionId: string
+  TargetId: string
+  Name: string
+  Type?: string | null
+  NarrationId?: string | null
+  ActionConditions?: Prisma.ActionConditionCreateNestedManyWithoutActionInput
+}
+
+export type ActionUncheckedCreateWithoutAbilityChecksInput = {
+  ActionId: string
+  TargetId: string
+  Name: string
+  Type?: string | null
+  NarrationId?: string | null
+  ActionConditions?: Prisma.ActionConditionUncheckedCreateNestedManyWithoutActionInput
+}
+
+export type ActionCreateOrConnectWithoutAbilityChecksInput = {
+  where: Prisma.ActionWhereUniqueInput
+  create: Prisma.XOR<Prisma.ActionCreateWithoutAbilityChecksInput, Prisma.ActionUncheckedCreateWithoutAbilityChecksInput>
+}
+
+export type ActionUpsertWithoutAbilityChecksInput = {
+  update: Prisma.XOR<Prisma.ActionUpdateWithoutAbilityChecksInput, Prisma.ActionUncheckedUpdateWithoutAbilityChecksInput>
+  create: Prisma.XOR<Prisma.ActionCreateWithoutAbilityChecksInput, Prisma.ActionUncheckedCreateWithoutAbilityChecksInput>
+  where?: Prisma.ActionWhereInput
+}
+
+export type ActionUpdateToOneWithWhereWithoutAbilityChecksInput = {
+  where?: Prisma.ActionWhereInput
+  data: Prisma.XOR<Prisma.ActionUpdateWithoutAbilityChecksInput, Prisma.ActionUncheckedUpdateWithoutAbilityChecksInput>
+}
+
+export type ActionUpdateWithoutAbilityChecksInput = {
+  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
+  TargetId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ActionConditions?: Prisma.ActionConditionUpdateManyWithoutActionNestedInput
+}
+
+export type ActionUncheckedUpdateWithoutAbilityChecksInput = {
+  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
+  TargetId?: Prisma.StringFieldUpdateOperationsInput | string
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  Type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ActionConditions?: Prisma.ActionConditionUncheckedUpdateManyWithoutActionNestedInput
+}
+
 export type ActionCreateWithoutActionConditionsInput = {
   ActionId: string
   TargetId: string
   Name: string
   Type?: string | null
   NarrationId?: string | null
+  AbilityChecks?: Prisma.AbilityCheckCreateNestedManyWithoutActionInput
 }
 
 export type ActionUncheckedCreateWithoutActionConditionsInput = {
@@ -345,6 +419,7 @@ export type ActionUncheckedCreateWithoutActionConditionsInput = {
   Name: string
   Type?: string | null
   NarrationId?: string | null
+  AbilityChecks?: Prisma.AbilityCheckUncheckedCreateNestedManyWithoutActionInput
 }
 
 export type ActionCreateOrConnectWithoutActionConditionsInput = {
@@ -369,6 +444,7 @@ export type ActionUpdateWithoutActionConditionsInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  AbilityChecks?: Prisma.AbilityCheckUpdateManyWithoutActionNestedInput
 }
 
 export type ActionUncheckedUpdateWithoutActionConditionsInput = {
@@ -377,6 +453,7 @@ export type ActionUncheckedUpdateWithoutActionConditionsInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   NarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  AbilityChecks?: Prisma.AbilityCheckUncheckedUpdateManyWithoutActionNestedInput
 }
 
 
@@ -386,10 +463,12 @@ export type ActionUncheckedUpdateWithoutActionConditionsInput = {
 
 export type ActionCountOutputType = {
   ActionConditions: number
+  AbilityChecks: number
 }
 
 export type ActionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   ActionConditions?: boolean | ActionCountOutputTypeCountActionConditionsArgs
+  AbilityChecks?: boolean | ActionCountOutputTypeCountAbilityChecksArgs
 }
 
 /**
@@ -409,6 +488,13 @@ export type ActionCountOutputTypeCountActionConditionsArgs<ExtArgs extends runti
   where?: Prisma.ActionConditionWhereInput
 }
 
+/**
+ * ActionCountOutputType without action
+ */
+export type ActionCountOutputTypeCountAbilityChecksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AbilityCheckWhereInput
+}
+
 
 export type ActionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   ActionId?: boolean
@@ -417,6 +503,7 @@ export type ActionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   Type?: boolean
   NarrationId?: boolean
   ActionConditions?: boolean | Prisma.Action$ActionConditionsArgs<ExtArgs>
+  AbilityChecks?: boolean | Prisma.Action$AbilityChecksArgs<ExtArgs>
   _count?: boolean | Prisma.ActionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["action"]>
 
@@ -447,6 +534,7 @@ export type ActionSelectScalar = {
 export type ActionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"ActionId" | "TargetId" | "Name" | "Type" | "NarrationId", ExtArgs["result"]["action"]>
 export type ActionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   ActionConditions?: boolean | Prisma.Action$ActionConditionsArgs<ExtArgs>
+  AbilityChecks?: boolean | Prisma.Action$AbilityChecksArgs<ExtArgs>
   _count?: boolean | Prisma.ActionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ActionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -456,6 +544,7 @@ export type $ActionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name: "Action"
   objects: {
     ActionConditions: Prisma.$ActionConditionPayload<ExtArgs>[]
+    AbilityChecks: Prisma.$AbilityCheckPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     ActionId: string
@@ -858,6 +947,7 @@ readonly fields: ActionFieldRefs;
 export interface Prisma__ActionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   ActionConditions<T extends Prisma.Action$ActionConditionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Action$ActionConditionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActionConditionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  AbilityChecks<T extends Prisma.Action$AbilityChecksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Action$AbilityChecksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AbilityCheckPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1306,6 +1396,30 @@ export type Action$ActionConditionsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.ActionConditionScalarFieldEnum | Prisma.ActionConditionScalarFieldEnum[]
+}
+
+/**
+ * Action.AbilityChecks
+ */
+export type Action$AbilityChecksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AbilityCheck
+   */
+  select?: Prisma.AbilityCheckSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AbilityCheck
+   */
+  omit?: Prisma.AbilityCheckOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AbilityCheckInclude<ExtArgs> | null
+  where?: Prisma.AbilityCheckWhereInput
+  orderBy?: Prisma.AbilityCheckOrderByWithRelationInput | Prisma.AbilityCheckOrderByWithRelationInput[]
+  cursor?: Prisma.AbilityCheckWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AbilityCheckScalarFieldEnum | Prisma.AbilityCheckScalarFieldEnum[]
 }
 
 /**

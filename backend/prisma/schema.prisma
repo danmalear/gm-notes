@@ -12,6 +12,7 @@ datasource db {
 model AbilityCheck {
   AbilityCheckId             String     @id @db.Uuid
   ActionId                   String     @db.Uuid
+  Action                     Action     @relation(fields: [ActionId], references: [ActionId])
   Skill                      String
   DC                         Int
   SuccessNarrationId         String?    @db.Uuid
@@ -27,6 +28,7 @@ model AbilityCheck {
   @@index([FailureNarrationId])
   @@index([CriticalSuccessNarrationId])
   @@index([CriticalFailureNarrationId])
+  @@index([ActionId])
   @@schema("public")
 }
 
@@ -37,6 +39,7 @@ model Action {
   Type             String?
   NarrationId      String?           @db.Uuid
   ActionConditions ActionCondition[]
+  AbilityChecks    AbilityCheck[]
 
   @@schema("public")
 }

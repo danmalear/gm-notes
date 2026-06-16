@@ -240,6 +240,7 @@ export type AbilityCheckWhereInput = {
   FailureNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
   CriticalSuccessNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
   CriticalFailureNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
+  Action?: Prisma.XOR<Prisma.ActionScalarRelationFilter, Prisma.ActionWhereInput>
   SuccessNarration?: Prisma.XOR<Prisma.NarrationNullableScalarRelationFilter, Prisma.NarrationWhereInput> | null
   FailureNarration?: Prisma.XOR<Prisma.NarrationNullableScalarRelationFilter, Prisma.NarrationWhereInput> | null
   CriticalSuccessNarration?: Prisma.XOR<Prisma.NarrationNullableScalarRelationFilter, Prisma.NarrationWhereInput> | null
@@ -255,6 +256,7 @@ export type AbilityCheckOrderByWithRelationInput = {
   FailureNarrationId?: Prisma.SortOrderInput | Prisma.SortOrder
   CriticalSuccessNarrationId?: Prisma.SortOrderInput | Prisma.SortOrder
   CriticalFailureNarrationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  Action?: Prisma.ActionOrderByWithRelationInput
   SuccessNarration?: Prisma.NarrationOrderByWithRelationInput
   FailureNarration?: Prisma.NarrationOrderByWithRelationInput
   CriticalSuccessNarration?: Prisma.NarrationOrderByWithRelationInput
@@ -273,6 +275,7 @@ export type AbilityCheckWhereUniqueInput = Prisma.AtLeast<{
   FailureNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
   CriticalSuccessNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
   CriticalFailureNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
+  Action?: Prisma.XOR<Prisma.ActionScalarRelationFilter, Prisma.ActionWhereInput>
   SuccessNarration?: Prisma.XOR<Prisma.NarrationNullableScalarRelationFilter, Prisma.NarrationWhereInput> | null
   FailureNarration?: Prisma.XOR<Prisma.NarrationNullableScalarRelationFilter, Prisma.NarrationWhereInput> | null
   CriticalSuccessNarration?: Prisma.XOR<Prisma.NarrationNullableScalarRelationFilter, Prisma.NarrationWhereInput> | null
@@ -311,9 +314,9 @@ export type AbilityCheckScalarWhereWithAggregatesInput = {
 
 export type AbilityCheckCreateInput = {
   AbilityCheckId: string
-  ActionId: string
   Skill: string
   DC: number
+  Action: Prisma.ActionCreateNestedOneWithoutAbilityChecksInput
   SuccessNarration?: Prisma.NarrationCreateNestedOneWithoutSuccessAbilityChecksInput
   FailureNarration?: Prisma.NarrationCreateNestedOneWithoutFailureAbilityChecksInput
   CriticalSuccessNarration?: Prisma.NarrationCreateNestedOneWithoutCriticalSuccessAbilityChecksInput
@@ -333,9 +336,9 @@ export type AbilityCheckUncheckedCreateInput = {
 
 export type AbilityCheckUpdateInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
-  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   Skill?: Prisma.StringFieldUpdateOperationsInput | string
   DC?: Prisma.IntFieldUpdateOperationsInput | number
+  Action?: Prisma.ActionUpdateOneRequiredWithoutAbilityChecksNestedInput
   SuccessNarration?: Prisma.NarrationUpdateOneWithoutSuccessAbilityChecksNestedInput
   FailureNarration?: Prisma.NarrationUpdateOneWithoutFailureAbilityChecksNestedInput
   CriticalSuccessNarration?: Prisma.NarrationUpdateOneWithoutCriticalSuccessAbilityChecksNestedInput
@@ -366,7 +369,6 @@ export type AbilityCheckCreateManyInput = {
 
 export type AbilityCheckUpdateManyMutationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
-  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   Skill?: Prisma.StringFieldUpdateOperationsInput | string
   DC?: Prisma.IntFieldUpdateOperationsInput | number
 }
@@ -431,6 +433,48 @@ export type AbilityCheckListRelationFilter = {
 
 export type AbilityCheckOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type AbilityCheckCreateNestedManyWithoutActionInput = {
+  create?: Prisma.XOR<Prisma.AbilityCheckCreateWithoutActionInput, Prisma.AbilityCheckUncheckedCreateWithoutActionInput> | Prisma.AbilityCheckCreateWithoutActionInput[] | Prisma.AbilityCheckUncheckedCreateWithoutActionInput[]
+  connectOrCreate?: Prisma.AbilityCheckCreateOrConnectWithoutActionInput | Prisma.AbilityCheckCreateOrConnectWithoutActionInput[]
+  createMany?: Prisma.AbilityCheckCreateManyActionInputEnvelope
+  connect?: Prisma.AbilityCheckWhereUniqueInput | Prisma.AbilityCheckWhereUniqueInput[]
+}
+
+export type AbilityCheckUncheckedCreateNestedManyWithoutActionInput = {
+  create?: Prisma.XOR<Prisma.AbilityCheckCreateWithoutActionInput, Prisma.AbilityCheckUncheckedCreateWithoutActionInput> | Prisma.AbilityCheckCreateWithoutActionInput[] | Prisma.AbilityCheckUncheckedCreateWithoutActionInput[]
+  connectOrCreate?: Prisma.AbilityCheckCreateOrConnectWithoutActionInput | Prisma.AbilityCheckCreateOrConnectWithoutActionInput[]
+  createMany?: Prisma.AbilityCheckCreateManyActionInputEnvelope
+  connect?: Prisma.AbilityCheckWhereUniqueInput | Prisma.AbilityCheckWhereUniqueInput[]
+}
+
+export type AbilityCheckUpdateManyWithoutActionNestedInput = {
+  create?: Prisma.XOR<Prisma.AbilityCheckCreateWithoutActionInput, Prisma.AbilityCheckUncheckedCreateWithoutActionInput> | Prisma.AbilityCheckCreateWithoutActionInput[] | Prisma.AbilityCheckUncheckedCreateWithoutActionInput[]
+  connectOrCreate?: Prisma.AbilityCheckCreateOrConnectWithoutActionInput | Prisma.AbilityCheckCreateOrConnectWithoutActionInput[]
+  upsert?: Prisma.AbilityCheckUpsertWithWhereUniqueWithoutActionInput | Prisma.AbilityCheckUpsertWithWhereUniqueWithoutActionInput[]
+  createMany?: Prisma.AbilityCheckCreateManyActionInputEnvelope
+  set?: Prisma.AbilityCheckWhereUniqueInput | Prisma.AbilityCheckWhereUniqueInput[]
+  disconnect?: Prisma.AbilityCheckWhereUniqueInput | Prisma.AbilityCheckWhereUniqueInput[]
+  delete?: Prisma.AbilityCheckWhereUniqueInput | Prisma.AbilityCheckWhereUniqueInput[]
+  connect?: Prisma.AbilityCheckWhereUniqueInput | Prisma.AbilityCheckWhereUniqueInput[]
+  update?: Prisma.AbilityCheckUpdateWithWhereUniqueWithoutActionInput | Prisma.AbilityCheckUpdateWithWhereUniqueWithoutActionInput[]
+  updateMany?: Prisma.AbilityCheckUpdateManyWithWhereWithoutActionInput | Prisma.AbilityCheckUpdateManyWithWhereWithoutActionInput[]
+  deleteMany?: Prisma.AbilityCheckScalarWhereInput | Prisma.AbilityCheckScalarWhereInput[]
+}
+
+export type AbilityCheckUncheckedUpdateManyWithoutActionNestedInput = {
+  create?: Prisma.XOR<Prisma.AbilityCheckCreateWithoutActionInput, Prisma.AbilityCheckUncheckedCreateWithoutActionInput> | Prisma.AbilityCheckCreateWithoutActionInput[] | Prisma.AbilityCheckUncheckedCreateWithoutActionInput[]
+  connectOrCreate?: Prisma.AbilityCheckCreateOrConnectWithoutActionInput | Prisma.AbilityCheckCreateOrConnectWithoutActionInput[]
+  upsert?: Prisma.AbilityCheckUpsertWithWhereUniqueWithoutActionInput | Prisma.AbilityCheckUpsertWithWhereUniqueWithoutActionInput[]
+  createMany?: Prisma.AbilityCheckCreateManyActionInputEnvelope
+  set?: Prisma.AbilityCheckWhereUniqueInput | Prisma.AbilityCheckWhereUniqueInput[]
+  disconnect?: Prisma.AbilityCheckWhereUniqueInput | Prisma.AbilityCheckWhereUniqueInput[]
+  delete?: Prisma.AbilityCheckWhereUniqueInput | Prisma.AbilityCheckWhereUniqueInput[]
+  connect?: Prisma.AbilityCheckWhereUniqueInput | Prisma.AbilityCheckWhereUniqueInput[]
+  update?: Prisma.AbilityCheckUpdateWithWhereUniqueWithoutActionInput | Prisma.AbilityCheckUpdateWithWhereUniqueWithoutActionInput[]
+  updateMany?: Prisma.AbilityCheckUpdateManyWithWhereWithoutActionInput | Prisma.AbilityCheckUpdateManyWithWhereWithoutActionInput[]
+  deleteMany?: Prisma.AbilityCheckScalarWhereInput | Prisma.AbilityCheckScalarWhereInput[]
 }
 
 export type AbilityCheckCreateNestedManyWithoutSuccessNarrationInput = {
@@ -601,11 +645,71 @@ export type AbilityCheckUncheckedUpdateManyWithoutCriticalFailureNarrationNested
   deleteMany?: Prisma.AbilityCheckScalarWhereInput | Prisma.AbilityCheckScalarWhereInput[]
 }
 
-export type AbilityCheckCreateWithoutSuccessNarrationInput = {
+export type AbilityCheckCreateWithoutActionInput = {
   AbilityCheckId: string
-  ActionId: string
   Skill: string
   DC: number
+  SuccessNarration?: Prisma.NarrationCreateNestedOneWithoutSuccessAbilityChecksInput
+  FailureNarration?: Prisma.NarrationCreateNestedOneWithoutFailureAbilityChecksInput
+  CriticalSuccessNarration?: Prisma.NarrationCreateNestedOneWithoutCriticalSuccessAbilityChecksInput
+  CriticalFailureNarration?: Prisma.NarrationCreateNestedOneWithoutCriticalFailureAbilityChecksInput
+}
+
+export type AbilityCheckUncheckedCreateWithoutActionInput = {
+  AbilityCheckId: string
+  Skill: string
+  DC: number
+  SuccessNarrationId?: string | null
+  FailureNarrationId?: string | null
+  CriticalSuccessNarrationId?: string | null
+  CriticalFailureNarrationId?: string | null
+}
+
+export type AbilityCheckCreateOrConnectWithoutActionInput = {
+  where: Prisma.AbilityCheckWhereUniqueInput
+  create: Prisma.XOR<Prisma.AbilityCheckCreateWithoutActionInput, Prisma.AbilityCheckUncheckedCreateWithoutActionInput>
+}
+
+export type AbilityCheckCreateManyActionInputEnvelope = {
+  data: Prisma.AbilityCheckCreateManyActionInput | Prisma.AbilityCheckCreateManyActionInput[]
+  skipDuplicates?: boolean
+}
+
+export type AbilityCheckUpsertWithWhereUniqueWithoutActionInput = {
+  where: Prisma.AbilityCheckWhereUniqueInput
+  update: Prisma.XOR<Prisma.AbilityCheckUpdateWithoutActionInput, Prisma.AbilityCheckUncheckedUpdateWithoutActionInput>
+  create: Prisma.XOR<Prisma.AbilityCheckCreateWithoutActionInput, Prisma.AbilityCheckUncheckedCreateWithoutActionInput>
+}
+
+export type AbilityCheckUpdateWithWhereUniqueWithoutActionInput = {
+  where: Prisma.AbilityCheckWhereUniqueInput
+  data: Prisma.XOR<Prisma.AbilityCheckUpdateWithoutActionInput, Prisma.AbilityCheckUncheckedUpdateWithoutActionInput>
+}
+
+export type AbilityCheckUpdateManyWithWhereWithoutActionInput = {
+  where: Prisma.AbilityCheckScalarWhereInput
+  data: Prisma.XOR<Prisma.AbilityCheckUpdateManyMutationInput, Prisma.AbilityCheckUncheckedUpdateManyWithoutActionInput>
+}
+
+export type AbilityCheckScalarWhereInput = {
+  AND?: Prisma.AbilityCheckScalarWhereInput | Prisma.AbilityCheckScalarWhereInput[]
+  OR?: Prisma.AbilityCheckScalarWhereInput[]
+  NOT?: Prisma.AbilityCheckScalarWhereInput | Prisma.AbilityCheckScalarWhereInput[]
+  AbilityCheckId?: Prisma.UuidFilter<"AbilityCheck"> | string
+  ActionId?: Prisma.UuidFilter<"AbilityCheck"> | string
+  Skill?: Prisma.StringFilter<"AbilityCheck"> | string
+  DC?: Prisma.IntFilter<"AbilityCheck"> | number
+  SuccessNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
+  FailureNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
+  CriticalSuccessNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
+  CriticalFailureNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
+}
+
+export type AbilityCheckCreateWithoutSuccessNarrationInput = {
+  AbilityCheckId: string
+  Skill: string
+  DC: number
+  Action: Prisma.ActionCreateNestedOneWithoutAbilityChecksInput
   FailureNarration?: Prisma.NarrationCreateNestedOneWithoutFailureAbilityChecksInput
   CriticalSuccessNarration?: Prisma.NarrationCreateNestedOneWithoutCriticalSuccessAbilityChecksInput
   CriticalFailureNarration?: Prisma.NarrationCreateNestedOneWithoutCriticalFailureAbilityChecksInput
@@ -633,9 +737,9 @@ export type AbilityCheckCreateManySuccessNarrationInputEnvelope = {
 
 export type AbilityCheckCreateWithoutFailureNarrationInput = {
   AbilityCheckId: string
-  ActionId: string
   Skill: string
   DC: number
+  Action: Prisma.ActionCreateNestedOneWithoutAbilityChecksInput
   SuccessNarration?: Prisma.NarrationCreateNestedOneWithoutSuccessAbilityChecksInput
   CriticalSuccessNarration?: Prisma.NarrationCreateNestedOneWithoutCriticalSuccessAbilityChecksInput
   CriticalFailureNarration?: Prisma.NarrationCreateNestedOneWithoutCriticalFailureAbilityChecksInput
@@ -663,9 +767,9 @@ export type AbilityCheckCreateManyFailureNarrationInputEnvelope = {
 
 export type AbilityCheckCreateWithoutCriticalSuccessNarrationInput = {
   AbilityCheckId: string
-  ActionId: string
   Skill: string
   DC: number
+  Action: Prisma.ActionCreateNestedOneWithoutAbilityChecksInput
   SuccessNarration?: Prisma.NarrationCreateNestedOneWithoutSuccessAbilityChecksInput
   FailureNarration?: Prisma.NarrationCreateNestedOneWithoutFailureAbilityChecksInput
   CriticalFailureNarration?: Prisma.NarrationCreateNestedOneWithoutCriticalFailureAbilityChecksInput
@@ -693,9 +797,9 @@ export type AbilityCheckCreateManyCriticalSuccessNarrationInputEnvelope = {
 
 export type AbilityCheckCreateWithoutCriticalFailureNarrationInput = {
   AbilityCheckId: string
-  ActionId: string
   Skill: string
   DC: number
+  Action: Prisma.ActionCreateNestedOneWithoutAbilityChecksInput
   SuccessNarration?: Prisma.NarrationCreateNestedOneWithoutSuccessAbilityChecksInput
   FailureNarration?: Prisma.NarrationCreateNestedOneWithoutFailureAbilityChecksInput
   CriticalSuccessNarration?: Prisma.NarrationCreateNestedOneWithoutCriticalSuccessAbilityChecksInput
@@ -735,20 +839,6 @@ export type AbilityCheckUpdateWithWhereUniqueWithoutSuccessNarrationInput = {
 export type AbilityCheckUpdateManyWithWhereWithoutSuccessNarrationInput = {
   where: Prisma.AbilityCheckScalarWhereInput
   data: Prisma.XOR<Prisma.AbilityCheckUpdateManyMutationInput, Prisma.AbilityCheckUncheckedUpdateManyWithoutSuccessNarrationInput>
-}
-
-export type AbilityCheckScalarWhereInput = {
-  AND?: Prisma.AbilityCheckScalarWhereInput | Prisma.AbilityCheckScalarWhereInput[]
-  OR?: Prisma.AbilityCheckScalarWhereInput[]
-  NOT?: Prisma.AbilityCheckScalarWhereInput | Prisma.AbilityCheckScalarWhereInput[]
-  AbilityCheckId?: Prisma.UuidFilter<"AbilityCheck"> | string
-  ActionId?: Prisma.UuidFilter<"AbilityCheck"> | string
-  Skill?: Prisma.StringFilter<"AbilityCheck"> | string
-  DC?: Prisma.IntFilter<"AbilityCheck"> | number
-  SuccessNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
-  FailureNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
-  CriticalSuccessNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
-  CriticalFailureNarrationId?: Prisma.UuidNullableFilter<"AbilityCheck"> | string | null
 }
 
 export type AbilityCheckUpsertWithWhereUniqueWithoutFailureNarrationInput = {
@@ -799,6 +889,46 @@ export type AbilityCheckUpdateManyWithWhereWithoutCriticalFailureNarrationInput 
   data: Prisma.XOR<Prisma.AbilityCheckUpdateManyMutationInput, Prisma.AbilityCheckUncheckedUpdateManyWithoutCriticalFailureNarrationInput>
 }
 
+export type AbilityCheckCreateManyActionInput = {
+  AbilityCheckId: string
+  Skill: string
+  DC: number
+  SuccessNarrationId?: string | null
+  FailureNarrationId?: string | null
+  CriticalSuccessNarrationId?: string | null
+  CriticalFailureNarrationId?: string | null
+}
+
+export type AbilityCheckUpdateWithoutActionInput = {
+  AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  DC?: Prisma.IntFieldUpdateOperationsInput | number
+  SuccessNarration?: Prisma.NarrationUpdateOneWithoutSuccessAbilityChecksNestedInput
+  FailureNarration?: Prisma.NarrationUpdateOneWithoutFailureAbilityChecksNestedInput
+  CriticalSuccessNarration?: Prisma.NarrationUpdateOneWithoutCriticalSuccessAbilityChecksNestedInput
+  CriticalFailureNarration?: Prisma.NarrationUpdateOneWithoutCriticalFailureAbilityChecksNestedInput
+}
+
+export type AbilityCheckUncheckedUpdateWithoutActionInput = {
+  AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  DC?: Prisma.IntFieldUpdateOperationsInput | number
+  SuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  FailureNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CriticalSuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CriticalFailureNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type AbilityCheckUncheckedUpdateManyWithoutActionInput = {
+  AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
+  Skill?: Prisma.StringFieldUpdateOperationsInput | string
+  DC?: Prisma.IntFieldUpdateOperationsInput | number
+  SuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  FailureNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CriticalSuccessNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CriticalFailureNarrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
 export type AbilityCheckCreateManySuccessNarrationInput = {
   AbilityCheckId: string
   ActionId: string
@@ -841,9 +971,9 @@ export type AbilityCheckCreateManyCriticalFailureNarrationInput = {
 
 export type AbilityCheckUpdateWithoutSuccessNarrationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
-  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   Skill?: Prisma.StringFieldUpdateOperationsInput | string
   DC?: Prisma.IntFieldUpdateOperationsInput | number
+  Action?: Prisma.ActionUpdateOneRequiredWithoutAbilityChecksNestedInput
   FailureNarration?: Prisma.NarrationUpdateOneWithoutFailureAbilityChecksNestedInput
   CriticalSuccessNarration?: Prisma.NarrationUpdateOneWithoutCriticalSuccessAbilityChecksNestedInput
   CriticalFailureNarration?: Prisma.NarrationUpdateOneWithoutCriticalFailureAbilityChecksNestedInput
@@ -871,9 +1001,9 @@ export type AbilityCheckUncheckedUpdateManyWithoutSuccessNarrationInput = {
 
 export type AbilityCheckUpdateWithoutFailureNarrationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
-  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   Skill?: Prisma.StringFieldUpdateOperationsInput | string
   DC?: Prisma.IntFieldUpdateOperationsInput | number
+  Action?: Prisma.ActionUpdateOneRequiredWithoutAbilityChecksNestedInput
   SuccessNarration?: Prisma.NarrationUpdateOneWithoutSuccessAbilityChecksNestedInput
   CriticalSuccessNarration?: Prisma.NarrationUpdateOneWithoutCriticalSuccessAbilityChecksNestedInput
   CriticalFailureNarration?: Prisma.NarrationUpdateOneWithoutCriticalFailureAbilityChecksNestedInput
@@ -901,9 +1031,9 @@ export type AbilityCheckUncheckedUpdateManyWithoutFailureNarrationInput = {
 
 export type AbilityCheckUpdateWithoutCriticalSuccessNarrationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
-  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   Skill?: Prisma.StringFieldUpdateOperationsInput | string
   DC?: Prisma.IntFieldUpdateOperationsInput | number
+  Action?: Prisma.ActionUpdateOneRequiredWithoutAbilityChecksNestedInput
   SuccessNarration?: Prisma.NarrationUpdateOneWithoutSuccessAbilityChecksNestedInput
   FailureNarration?: Prisma.NarrationUpdateOneWithoutFailureAbilityChecksNestedInput
   CriticalFailureNarration?: Prisma.NarrationUpdateOneWithoutCriticalFailureAbilityChecksNestedInput
@@ -931,9 +1061,9 @@ export type AbilityCheckUncheckedUpdateManyWithoutCriticalSuccessNarrationInput 
 
 export type AbilityCheckUpdateWithoutCriticalFailureNarrationInput = {
   AbilityCheckId?: Prisma.StringFieldUpdateOperationsInput | string
-  ActionId?: Prisma.StringFieldUpdateOperationsInput | string
   Skill?: Prisma.StringFieldUpdateOperationsInput | string
   DC?: Prisma.IntFieldUpdateOperationsInput | number
+  Action?: Prisma.ActionUpdateOneRequiredWithoutAbilityChecksNestedInput
   SuccessNarration?: Prisma.NarrationUpdateOneWithoutSuccessAbilityChecksNestedInput
   FailureNarration?: Prisma.NarrationUpdateOneWithoutFailureAbilityChecksNestedInput
   CriticalSuccessNarration?: Prisma.NarrationUpdateOneWithoutCriticalSuccessAbilityChecksNestedInput
@@ -970,6 +1100,7 @@ export type AbilityCheckSelect<ExtArgs extends runtime.Types.Extensions.Internal
   FailureNarrationId?: boolean
   CriticalSuccessNarrationId?: boolean
   CriticalFailureNarrationId?: boolean
+  Action?: boolean | Prisma.ActionDefaultArgs<ExtArgs>
   SuccessNarration?: boolean | Prisma.AbilityCheck$SuccessNarrationArgs<ExtArgs>
   FailureNarration?: boolean | Prisma.AbilityCheck$FailureNarrationArgs<ExtArgs>
   CriticalSuccessNarration?: boolean | Prisma.AbilityCheck$CriticalSuccessNarrationArgs<ExtArgs>
@@ -985,6 +1116,7 @@ export type AbilityCheckSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   FailureNarrationId?: boolean
   CriticalSuccessNarrationId?: boolean
   CriticalFailureNarrationId?: boolean
+  Action?: boolean | Prisma.ActionDefaultArgs<ExtArgs>
   SuccessNarration?: boolean | Prisma.AbilityCheck$SuccessNarrationArgs<ExtArgs>
   FailureNarration?: boolean | Prisma.AbilityCheck$FailureNarrationArgs<ExtArgs>
   CriticalSuccessNarration?: boolean | Prisma.AbilityCheck$CriticalSuccessNarrationArgs<ExtArgs>
@@ -1000,6 +1132,7 @@ export type AbilityCheckSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   FailureNarrationId?: boolean
   CriticalSuccessNarrationId?: boolean
   CriticalFailureNarrationId?: boolean
+  Action?: boolean | Prisma.ActionDefaultArgs<ExtArgs>
   SuccessNarration?: boolean | Prisma.AbilityCheck$SuccessNarrationArgs<ExtArgs>
   FailureNarration?: boolean | Prisma.AbilityCheck$FailureNarrationArgs<ExtArgs>
   CriticalSuccessNarration?: boolean | Prisma.AbilityCheck$CriticalSuccessNarrationArgs<ExtArgs>
@@ -1019,18 +1152,21 @@ export type AbilityCheckSelectScalar = {
 
 export type AbilityCheckOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"AbilityCheckId" | "ActionId" | "Skill" | "DC" | "SuccessNarrationId" | "FailureNarrationId" | "CriticalSuccessNarrationId" | "CriticalFailureNarrationId", ExtArgs["result"]["abilityCheck"]>
 export type AbilityCheckInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Action?: boolean | Prisma.ActionDefaultArgs<ExtArgs>
   SuccessNarration?: boolean | Prisma.AbilityCheck$SuccessNarrationArgs<ExtArgs>
   FailureNarration?: boolean | Prisma.AbilityCheck$FailureNarrationArgs<ExtArgs>
   CriticalSuccessNarration?: boolean | Prisma.AbilityCheck$CriticalSuccessNarrationArgs<ExtArgs>
   CriticalFailureNarration?: boolean | Prisma.AbilityCheck$CriticalFailureNarrationArgs<ExtArgs>
 }
 export type AbilityCheckIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Action?: boolean | Prisma.ActionDefaultArgs<ExtArgs>
   SuccessNarration?: boolean | Prisma.AbilityCheck$SuccessNarrationArgs<ExtArgs>
   FailureNarration?: boolean | Prisma.AbilityCheck$FailureNarrationArgs<ExtArgs>
   CriticalSuccessNarration?: boolean | Prisma.AbilityCheck$CriticalSuccessNarrationArgs<ExtArgs>
   CriticalFailureNarration?: boolean | Prisma.AbilityCheck$CriticalFailureNarrationArgs<ExtArgs>
 }
 export type AbilityCheckIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Action?: boolean | Prisma.ActionDefaultArgs<ExtArgs>
   SuccessNarration?: boolean | Prisma.AbilityCheck$SuccessNarrationArgs<ExtArgs>
   FailureNarration?: boolean | Prisma.AbilityCheck$FailureNarrationArgs<ExtArgs>
   CriticalSuccessNarration?: boolean | Prisma.AbilityCheck$CriticalSuccessNarrationArgs<ExtArgs>
@@ -1040,6 +1176,7 @@ export type AbilityCheckIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types
 export type $AbilityCheckPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "AbilityCheck"
   objects: {
+    Action: Prisma.$ActionPayload<ExtArgs>
     SuccessNarration: Prisma.$NarrationPayload<ExtArgs> | null
     FailureNarration: Prisma.$NarrationPayload<ExtArgs> | null
     CriticalSuccessNarration: Prisma.$NarrationPayload<ExtArgs> | null
@@ -1448,6 +1585,7 @@ readonly fields: AbilityCheckFieldRefs;
  */
 export interface Prisma__AbilityCheckClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  Action<T extends Prisma.ActionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ActionDefaultArgs<ExtArgs>>): Prisma.Prisma__ActionClient<runtime.Types.Result.GetResult<Prisma.$ActionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   SuccessNarration<T extends Prisma.AbilityCheck$SuccessNarrationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AbilityCheck$SuccessNarrationArgs<ExtArgs>>): Prisma.Prisma__NarrationClient<runtime.Types.Result.GetResult<Prisma.$NarrationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   FailureNarration<T extends Prisma.AbilityCheck$FailureNarrationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AbilityCheck$FailureNarrationArgs<ExtArgs>>): Prisma.Prisma__NarrationClient<runtime.Types.Result.GetResult<Prisma.$NarrationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   CriticalSuccessNarration<T extends Prisma.AbilityCheck$CriticalSuccessNarrationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AbilityCheck$CriticalSuccessNarrationArgs<ExtArgs>>): Prisma.Prisma__NarrationClient<runtime.Types.Result.GetResult<Prisma.$NarrationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
