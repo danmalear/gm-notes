@@ -1,86 +1,136 @@
-import type { IActionRepository } from '#action/action-repository.ts';
-import type { INoteRepository } from '#note/note-repository.ts';
+import type { ActionModel } from '#prisma-models/Action.ts';
 import type { ItemModel } from '#prisma-models/Item.ts';
-import { db } from '#shared/db.ts';
-import { getMessage, InternalError } from '#shared/error.ts';
-import { Repository } from '#shared/repository-old.ts';
+import type {
+	LocationItemCreateInput,
+	LocationItemInclude,
+	LocationItemModel,
+	LocationItemUpdateInput,
+} from '#prisma-models/LocationItem.ts';
+import type { NoteModel } from '#prisma-models/Note.ts';
+import { getMessage } from '#shared/error.ts';
+import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
-import type { IItemRepository, ItemIncludeAll } from './item-repository.ts';
+import type { ItemIncludeAll } from './item-repository.ts';
 
-export interface LocationItemRec {
-	LocationItemId: UUID;
-	LocationId: UUID;
-	ItemId: UUID;
-	Quantity: number;
+export interface LocationItemIncludeMin extends LocationItemModel {
+	Item: ItemModel;
 }
 
-export interface LocationItemRefRec extends ItemIncludeAll, LocationItemRec {
-	ItemId: UUID;
-	ContainedItems: (ItemModel & LocationItemRec)[];
+const includeMin = {
+	Item: true,
+} satisfies LocationItemInclude;
+
+export interface LocationItemIncludeAll extends LocationItemModel {
+	Actions: ActionModel[];
+	Contents: LocationItemIncludeMin[];
+	Item: ItemIncludeAll;
+	Notes: NoteModel[];
 }
 
-export const tableName = 'LocationItem';
-export const pkColumn = 'LocationItemId';
-export const locationIdColName = 'LocationId';
-export const itemIdColName = 'ItemId';
-export const itemTableName = 'Item';
-export const itemPkColumn = 'ItemId';
+const includeAll = {
+	Actions: true,
+	Contents: {
+		include: includeMin,
+	},
+	Item: {
+		include: {
+			Actions: true,
+			ImageFile: true,
+			Notes: true,
+		},
+	},
+	Notes: true,
+} satisfies LocationItemInclude;
 
-export interface LocationItemRepositoryConfig {
-	actionRepository: IActionRepository;
-	itemRepository: IItemRepository;
-	noteRepository: INoteRepository;
+export interface ILocationItemRepository
+	extends IRepository<
+		LocationItemIncludeMin,
+		LocationItemCreateInput,
+		LocationItemUpdateInput,
+		LocationItemIncludeAll
+	> {
+	getByLocationId(locationId: UUID): Promise<LocationItemIncludeMin[]>;
 }
 
-export class LocationItemRepository extends Repository<
-	LocationItemRec,
-	LocationItemRefRec
-> {
-	actionRepository: IActionRepository;
-	itemRepository: IItemRepository;
-	noteRepository: INoteRepository;
+export class LocationItemRepository
+	extends Repository<
+		LocationItemIncludeMin,
+		LocationItemCreateInput,
+		LocationItemUpdateInput,
+		LocationItemIncludeAll
+	>
+	implements ILocationItemRepository
+{
+	override descriptor = 'Location Item';
 
-	constructor({
-		actionRepository,
-		itemRepository,
-		noteRepository,
-	}: LocationItemRepositoryConfig) {
-		super(tableName, pkColumn);
-		this.actionRepository = actionRepository;
-		this.itemRepository = itemRepository;
-		this.noteRepository = noteRepository;
+	override async getByIdRaw(
+		locationItemId: UUID,
+	): Promise<LocationItemIncludeMin | null> {
+		try {
+			return await this.prisma.locationItem.findUnique({
+				where: {
+					LocationItemId: locationItemId,
+				},
+				include: includeMin,
+			});
+		} catch (e) {
+			throw this.getByIdError(locationItemId, e);
+		}
 	}
 
-	override async getById(id: UUID): Promise<LocationItemRefRec | undefined> {
-		const locationItemRaw = await this.getByIdRaw(id);
-		if (!locationItemRaw) return undefined;
+	override async getById(
+		locationItemId: UUID,
+	): Promise<LocationItemIncludeAll | null> {
+		try {
+			return await this.prisma.locationItem.findUnique({
+				where: {
+					LocationItemId: locationItemId,
+				},
+				include: includeAll,
+			});
+		} catch (e) {
+			throw this.getByIdError(locationItemId, e);
+		}
+	}
 
-		const item = await this.itemRepository.getById(locationItemRaw.ItemId);
-		if (!item) throw new InternalError('Item instance has no item reference');
+	override async getAll(): Promise<LocationItemIncludeMin[]> {
+		try {
+			return await this.prisma.locationItem.findMany({
+				include: includeMin,
+			});
+		} catch (e) {
+			throw this.getAllError(e);
+		}
+	}
 
-		const locationItemActions = await this.actionRepository.getByTargetId(
-			locationItemRaw.LocationItemId,
-		);
+	override async create(
+		data: LocationItemCreateInput,
+	): Promise<LocationItemIncludeMin> {
+		try {
+			return await this.prisma.locationItem.create({
+				data,
+				include: includeMin,
+			});
+		} catch (e) {
+			throw this.createError(e);
+		}
+	}
 
-		const actions = [...locationItemActions, ...item.Actions];
-
-		const locationItemNotes = await this.noteRepository.getByEntityId(
-			locationItemRaw.LocationItemId,
-		);
-
-		const notes = [...locationItemNotes, ...item.Notes];
-
-		const containedItems = item.IsContainer
-			? await this.getByLocationId(id)
-			: [];
-
-		return {
-			...item,
-			...locationItemRaw,
-			Actions: actions,
-			Notes: notes,
-			ContainedItems: containedItems,
-		};
+	override async update(
+		locationItemId: UUID,
+		data: LocationItemUpdateInput,
+	): Promise<LocationItemIncludeMin> {
+		try {
+			return await this.prisma.locationItem.update({
+				where: {
+					LocationItemId: locationItemId,
+				},
+				include: includeMin,
+				data,
+			});
+		} catch (e) {
+			throw this.updateError(locationItemId, e);
+		}
 	}
 
 	/**
@@ -88,18 +138,18 @@ export class LocationItemRepository extends Repository<
 	 * @param id UUID of the location to get items for
 	 * @returns The list of items (empty array if none found)
 	 */
-	async getByLocationId(locationId: UUID) {
+	async getByLocationId(locationId: UUID): Promise<LocationItemIncludeMin[]> {
 		try {
-			return await db<LocationItemRec>(this.tableName)
-				.innerJoin<ItemModel>(
-					itemTableName,
-					`${this.tableName}.${itemIdColName}`,
-					`${itemTableName}.${itemPkColumn}`,
-				)
-				.where(`${this.tableName}.${locationIdColName}`, locationId);
+			const locationItems = await this.prisma.locationItem.findMany({
+				where: {
+					LocationId: locationId,
+				},
+				include: includeMin,
+			});
+			return locationItems;
 		} catch (e) {
-			throw Error(
-				`Error getting ${this.tableName} records for location ID ${locationId}: ${getMessage(e)}`,
+			throw new Error(
+				`Error getting ${this.descriptor} records by Location ID ${locationId}: ${getMessage(e)}`,
 			);
 		}
 	}

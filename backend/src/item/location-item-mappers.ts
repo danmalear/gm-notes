@@ -1,20 +1,22 @@
 import { toStub as actionToStub } from '#action/action-mappers.ts';
-import type { ItemModel } from '#prisma-models/Item.ts';
+import type { UUID } from 'node:crypto';
 import type {
 	LocationItemResponse,
 	LocationItemResponseBase,
 	LocationItemStub,
 } from './item-dtos.ts';
 import type {
-	LocationItemRec,
-	LocationItemRefRec,
+	LocationItemIncludeAll,
+	LocationItemIncludeMin,
 } from './location-item-repository.ts';
 
-export const toDto = (item: LocationItemRefRec) => {
+export const toDto = (locationItem: LocationItemIncludeAll) => {
+	const item = locationItem.Item;
+
 	const locationItemResponseBase: LocationItemResponseBase = {
-		id: item.LocationItemId,
-		locationId: item.LocationId,
-		itemId: item.ItemId,
+		id: locationItem.LocationItemId as UUID,
+		locationId: locationItem.LocationId as UUID,
+		itemId: locationItem.ItemId as UUID,
 		name: item.Name,
 		value:
 			item.Value !== null
@@ -22,16 +24,19 @@ export const toDto = (item: LocationItemRefRec) => {
 				: undefined,
 		detailsLink: item.DetailsLink ?? undefined,
 		imageFileId: item.ImageFileId ?? undefined,
-		quantity: item.Quantity,
-		actions: item.Actions.map(actionToStub),
-		notes: item.Notes.map((note) => note.Description),
+		quantity: locationItem.Quantity,
+		actions: [
+			...item.Actions.map(actionToStub),
+			...locationItem.Actions.map(actionToStub),
+		],
+		notes: locationItem.Notes.map((note) => note.Description),
 	};
 
 	const locationItemResponse: LocationItemResponse = item.IsContainer
 		? {
 				...locationItemResponseBase,
 				isContainer: true,
-				containedItems: item.ContainedItems.map(toStub),
+				containedItems: locationItem.Contents.map(toStub),
 			}
 		: {
 				...locationItemResponseBase,
@@ -41,13 +46,15 @@ export const toDto = (item: LocationItemRefRec) => {
 	return locationItemResponse;
 };
 
-export const toStub = (item: ItemModel & LocationItemRec) => {
+export const toStub = (locationItem: LocationItemIncludeMin) => {
+	const item = locationItem.Item;
+
 	const locationItemStub: LocationItemStub = {
-		id: item.LocationItemId,
-		locationId: item.LocationId,
-		itemId: item.ItemId,
+		id: locationItem.LocationItemId as UUID,
+		locationId: locationItem.LocationId as UUID,
+		itemId: locationItem.ItemId as UUID,
 		name: item.Name,
-		quantity: item.Quantity,
+		quantity: locationItem.Quantity,
 		isContainer: item.IsContainer,
 	};
 

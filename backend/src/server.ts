@@ -53,11 +53,7 @@ function initRepos(prisma: PrismaClient) {
 	const conditionRepository = new ConditionRepository({ prisma });
 	const actionRepository = new ActionRepository({ prisma });
 	const itemRepository = new ItemRepository({ prisma });
-	const locationItemRepository = new LocationItemRepository({
-		actionRepository,
-		itemRepository,
-		noteRepository,
-	});
+	const locationItemRepository = new LocationItemRepository({ prisma });
 	const regionShapeRepository = new RegionShapeRepository();
 	const regionRepository = new RegionRepository({
 		actionRepository,
