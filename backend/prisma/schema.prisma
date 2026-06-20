@@ -173,14 +173,16 @@ model Item {
 }
 
 model LocationItem {
-  LocationItemId String   @id @db.Uuid
-  LocationId     String   @db.Uuid
-  Region         Region?  @relation(fields: [LocationId], references: [RegionId])
-  ItemId         String   @db.Uuid
-  Item           Item     @relation(fields: [ItemId], references: [ItemId])
-  Quantity       Int      @default(1)
-  Actions        Action[] @relation(name: "TargetLocationItem")
-  Notes          Note[]   @relation(name: "ParentLocationItem")
+  LocationItemId String         @id @db.Uuid
+  LocationId     String         @db.Uuid
+  Region         Region?        @relation(name: "RegionItem", fields: [LocationId], references: [RegionId], map: "LocationItem_RegionId_fkey")
+  Container      LocationItem?  @relation(name: "ContainerContents", fields: [LocationId], references: [LocationItemId], onUpdate: Restrict, map: "LocationItem_ContainerId_fkey")
+  ItemId         String         @db.Uuid
+  Item           Item           @relation(fields: [ItemId], references: [ItemId])
+  Quantity       Int            @default(1)
+  Actions        Action[]       @relation(name: "TargetLocationItem")
+  Notes          Note[]         @relation(name: "ParentLocationItem")
+  Contents       LocationItem[] @relation(name: "ContainerContents")
 
   @@index([LocationId])
   @@index([ItemId])
@@ -256,7 +258,7 @@ model Region {
   Name             String
   Lighting         String            @default("Default")
   Actions          Action[]          @relation(name: "TargetRegion")
-  LocationItems    LocationItem[]
+  LocationItems    LocationItem[]    @relation(name: "RegionItem")
   Notes            Note[]            @relation(name: "ParentRegion")
   RegionHandouts   RegionHandout[]
   RegionNarrations RegionNarration[]
