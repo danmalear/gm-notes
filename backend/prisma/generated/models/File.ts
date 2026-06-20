@@ -198,28 +198,28 @@ export type FileScalarWhereWithAggregatesInput = {
 export type FileCreateInput = {
   FileId: string
   FileName: string
-  Item?: Prisma.ItemCreateNestedOneWithoutFileInput
+  Item?: Prisma.ItemCreateNestedOneWithoutImageFileInput
   Map?: Prisma.MapCreateNestedOneWithoutImageFileInput
 }
 
 export type FileUncheckedCreateInput = {
   FileId: string
   FileName: string
-  Item?: Prisma.ItemUncheckedCreateNestedOneWithoutFileInput
+  Item?: Prisma.ItemUncheckedCreateNestedOneWithoutImageFileInput
   Map?: Prisma.MapUncheckedCreateNestedOneWithoutImageFileInput
 }
 
 export type FileUpdateInput = {
   FileId?: Prisma.StringFieldUpdateOperationsInput | string
   FileName?: Prisma.StringFieldUpdateOperationsInput | string
-  Item?: Prisma.ItemUpdateOneWithoutFileNestedInput
+  Item?: Prisma.ItemUpdateOneWithoutImageFileNestedInput
   Map?: Prisma.MapUpdateOneWithoutImageFileNestedInput
 }
 
 export type FileUncheckedUpdateInput = {
   FileId?: Prisma.StringFieldUpdateOperationsInput | string
   FileName?: Prisma.StringFieldUpdateOperationsInput | string
-  Item?: Prisma.ItemUncheckedUpdateOneWithoutFileNestedInput
+  Item?: Prisma.ItemUncheckedUpdateOneWithoutImageFileNestedInput
   Map?: Prisma.MapUncheckedUpdateOneWithoutImageFileNestedInput
 }
 
@@ -336,13 +336,13 @@ export type FileUncheckedUpdateWithoutItemInput = {
 export type FileCreateWithoutMapInput = {
   FileId: string
   FileName: string
-  Item?: Prisma.ItemCreateNestedOneWithoutFileInput
+  Item?: Prisma.ItemCreateNestedOneWithoutImageFileInput
 }
 
 export type FileUncheckedCreateWithoutMapInput = {
   FileId: string
   FileName: string
-  Item?: Prisma.ItemUncheckedCreateNestedOneWithoutFileInput
+  Item?: Prisma.ItemUncheckedCreateNestedOneWithoutImageFileInput
 }
 
 export type FileCreateOrConnectWithoutMapInput = {
@@ -364,13 +364,13 @@ export type FileUpdateToOneWithWhereWithoutMapInput = {
 export type FileUpdateWithoutMapInput = {
   FileId?: Prisma.StringFieldUpdateOperationsInput | string
   FileName?: Prisma.StringFieldUpdateOperationsInput | string
-  Item?: Prisma.ItemUpdateOneWithoutFileNestedInput
+  Item?: Prisma.ItemUpdateOneWithoutImageFileNestedInput
 }
 
 export type FileUncheckedUpdateWithoutMapInput = {
   FileId?: Prisma.StringFieldUpdateOperationsInput | string
   FileName?: Prisma.StringFieldUpdateOperationsInput | string
-  Item?: Prisma.ItemUncheckedUpdateOneWithoutFileNestedInput
+  Item?: Prisma.ItemUncheckedUpdateOneWithoutImageFileNestedInput
 }
 
 

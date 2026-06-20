@@ -153,7 +153,7 @@ model Item {
   ValueUnit     String?
   DetailsLink   String?
   ImageFileId   String?        @unique
-  File          File?          @relation(fields: [ImageFileId], references: [FileId])
+  ImageFile     File?          @relation(fields: [ImageFileId], references: [FileId])
   Actions       Action[]       @relation(name: "TargetItem")
   LocationItems LocationItem[]
   Notes         Note[]         @relation(name: "ParentItem")

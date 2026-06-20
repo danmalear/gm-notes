@@ -241,7 +241,7 @@ export type ItemWhereInput = {
   DetailsLink?: Prisma.StringNullableFilter<"Item"> | string | null
   ImageFileId?: Prisma.StringNullableFilter<"Item"> | string | null
   Campaign?: Prisma.XOR<Prisma.CampaignNullableScalarRelationFilter, Prisma.CampaignWhereInput> | null
-  File?: Prisma.XOR<Prisma.FileNullableScalarRelationFilter, Prisma.FileWhereInput> | null
+  ImageFile?: Prisma.XOR<Prisma.FileNullableScalarRelationFilter, Prisma.FileWhereInput> | null
   Actions?: Prisma.ActionListRelationFilter
   LocationItems?: Prisma.LocationItemListRelationFilter
   Notes?: Prisma.NoteListRelationFilter
@@ -257,7 +257,7 @@ export type ItemOrderByWithRelationInput = {
   DetailsLink?: Prisma.SortOrderInput | Prisma.SortOrder
   ImageFileId?: Prisma.SortOrderInput | Prisma.SortOrder
   Campaign?: Prisma.CampaignOrderByWithRelationInput
-  File?: Prisma.FileOrderByWithRelationInput
+  ImageFile?: Prisma.FileOrderByWithRelationInput
   Actions?: Prisma.ActionOrderByRelationAggregateInput
   LocationItems?: Prisma.LocationItemOrderByRelationAggregateInput
   Notes?: Prisma.NoteOrderByRelationAggregateInput
@@ -276,7 +276,7 @@ export type ItemWhereUniqueInput = Prisma.AtLeast<{
   ValueUnit?: Prisma.StringNullableFilter<"Item"> | string | null
   DetailsLink?: Prisma.StringNullableFilter<"Item"> | string | null
   Campaign?: Prisma.XOR<Prisma.CampaignNullableScalarRelationFilter, Prisma.CampaignWhereInput> | null
-  File?: Prisma.XOR<Prisma.FileNullableScalarRelationFilter, Prisma.FileWhereInput> | null
+  ImageFile?: Prisma.XOR<Prisma.FileNullableScalarRelationFilter, Prisma.FileWhereInput> | null
   Actions?: Prisma.ActionListRelationFilter
   LocationItems?: Prisma.LocationItemListRelationFilter
   Notes?: Prisma.NoteListRelationFilter
@@ -320,7 +320,7 @@ export type ItemCreateInput = {
   ValueUnit?: string | null
   DetailsLink?: string | null
   Campaign?: Prisma.CampaignCreateNestedOneWithoutItemsInput
-  File?: Prisma.FileCreateNestedOneWithoutItemInput
+  ImageFile?: Prisma.FileCreateNestedOneWithoutItemInput
   Actions?: Prisma.ActionCreateNestedManyWithoutItemInput
   LocationItems?: Prisma.LocationItemCreateNestedManyWithoutItemInput
   Notes?: Prisma.NoteCreateNestedManyWithoutItemInput
@@ -348,7 +348,7 @@ export type ItemUpdateInput = {
   ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Campaign?: Prisma.CampaignUpdateOneWithoutItemsNestedInput
-  File?: Prisma.FileUpdateOneWithoutItemNestedInput
+  ImageFile?: Prisma.FileUpdateOneWithoutItemNestedInput
   Actions?: Prisma.ActionUpdateManyWithoutItemNestedInput
   LocationItems?: Prisma.LocationItemUpdateManyWithoutItemNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutItemNestedInput
@@ -518,36 +518,36 @@ export type ItemUncheckedUpdateManyWithoutCampaignNestedInput = {
   deleteMany?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
 }
 
-export type ItemCreateNestedOneWithoutFileInput = {
-  create?: Prisma.XOR<Prisma.ItemCreateWithoutFileInput, Prisma.ItemUncheckedCreateWithoutFileInput>
-  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutFileInput
+export type ItemCreateNestedOneWithoutImageFileInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutImageFileInput, Prisma.ItemUncheckedCreateWithoutImageFileInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutImageFileInput
   connect?: Prisma.ItemWhereUniqueInput
 }
 
-export type ItemUncheckedCreateNestedOneWithoutFileInput = {
-  create?: Prisma.XOR<Prisma.ItemCreateWithoutFileInput, Prisma.ItemUncheckedCreateWithoutFileInput>
-  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutFileInput
+export type ItemUncheckedCreateNestedOneWithoutImageFileInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutImageFileInput, Prisma.ItemUncheckedCreateWithoutImageFileInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutImageFileInput
   connect?: Prisma.ItemWhereUniqueInput
 }
 
-export type ItemUpdateOneWithoutFileNestedInput = {
-  create?: Prisma.XOR<Prisma.ItemCreateWithoutFileInput, Prisma.ItemUncheckedCreateWithoutFileInput>
-  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutFileInput
-  upsert?: Prisma.ItemUpsertWithoutFileInput
+export type ItemUpdateOneWithoutImageFileNestedInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutImageFileInput, Prisma.ItemUncheckedCreateWithoutImageFileInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutImageFileInput
+  upsert?: Prisma.ItemUpsertWithoutImageFileInput
   disconnect?: Prisma.ItemWhereInput | boolean
   delete?: Prisma.ItemWhereInput | boolean
   connect?: Prisma.ItemWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ItemUpdateToOneWithWhereWithoutFileInput, Prisma.ItemUpdateWithoutFileInput>, Prisma.ItemUncheckedUpdateWithoutFileInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ItemUpdateToOneWithWhereWithoutImageFileInput, Prisma.ItemUpdateWithoutImageFileInput>, Prisma.ItemUncheckedUpdateWithoutImageFileInput>
 }
 
-export type ItemUncheckedUpdateOneWithoutFileNestedInput = {
-  create?: Prisma.XOR<Prisma.ItemCreateWithoutFileInput, Prisma.ItemUncheckedCreateWithoutFileInput>
-  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutFileInput
-  upsert?: Prisma.ItemUpsertWithoutFileInput
+export type ItemUncheckedUpdateOneWithoutImageFileNestedInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutImageFileInput, Prisma.ItemUncheckedCreateWithoutImageFileInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutImageFileInput
+  upsert?: Prisma.ItemUpsertWithoutImageFileInput
   disconnect?: Prisma.ItemWhereInput | boolean
   delete?: Prisma.ItemWhereInput | boolean
   connect?: Prisma.ItemWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ItemUpdateToOneWithWhereWithoutFileInput, Prisma.ItemUpdateWithoutFileInput>, Prisma.ItemUncheckedUpdateWithoutFileInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ItemUpdateToOneWithWhereWithoutImageFileInput, Prisma.ItemUpdateWithoutImageFileInput>, Prisma.ItemUncheckedUpdateWithoutImageFileInput>
 }
 
 export type NullableIntFieldUpdateOperationsInput = {
@@ -596,7 +596,7 @@ export type ItemCreateWithoutActionsInput = {
   ValueUnit?: string | null
   DetailsLink?: string | null
   Campaign?: Prisma.CampaignCreateNestedOneWithoutItemsInput
-  File?: Prisma.FileCreateNestedOneWithoutItemInput
+  ImageFile?: Prisma.FileCreateNestedOneWithoutItemInput
   LocationItems?: Prisma.LocationItemCreateNestedManyWithoutItemInput
   Notes?: Prisma.NoteCreateNestedManyWithoutItemInput
 }
@@ -638,7 +638,7 @@ export type ItemUpdateWithoutActionsInput = {
   ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Campaign?: Prisma.CampaignUpdateOneWithoutItemsNestedInput
-  File?: Prisma.FileUpdateOneWithoutItemNestedInput
+  ImageFile?: Prisma.FileUpdateOneWithoutItemNestedInput
   LocationItems?: Prisma.LocationItemUpdateManyWithoutItemNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutItemNestedInput
 }
@@ -663,7 +663,7 @@ export type ItemCreateWithoutCampaignInput = {
   Value?: number | null
   ValueUnit?: string | null
   DetailsLink?: string | null
-  File?: Prisma.FileCreateNestedOneWithoutItemInput
+  ImageFile?: Prisma.FileCreateNestedOneWithoutItemInput
   Actions?: Prisma.ActionCreateNestedManyWithoutItemInput
   LocationItems?: Prisma.LocationItemCreateNestedManyWithoutItemInput
   Notes?: Prisma.NoteCreateNestedManyWithoutItemInput
@@ -722,7 +722,7 @@ export type ItemScalarWhereInput = {
   ImageFileId?: Prisma.StringNullableFilter<"Item"> | string | null
 }
 
-export type ItemCreateWithoutFileInput = {
+export type ItemCreateWithoutImageFileInput = {
   ItemId: string
   Name: string
   IsContainer?: boolean
@@ -735,7 +735,7 @@ export type ItemCreateWithoutFileInput = {
   Notes?: Prisma.NoteCreateNestedManyWithoutItemInput
 }
 
-export type ItemUncheckedCreateWithoutFileInput = {
+export type ItemUncheckedCreateWithoutImageFileInput = {
   ItemId: string
   CampaignId?: string | null
   Name: string
@@ -748,23 +748,23 @@ export type ItemUncheckedCreateWithoutFileInput = {
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutItemInput
 }
 
-export type ItemCreateOrConnectWithoutFileInput = {
+export type ItemCreateOrConnectWithoutImageFileInput = {
   where: Prisma.ItemWhereUniqueInput
-  create: Prisma.XOR<Prisma.ItemCreateWithoutFileInput, Prisma.ItemUncheckedCreateWithoutFileInput>
+  create: Prisma.XOR<Prisma.ItemCreateWithoutImageFileInput, Prisma.ItemUncheckedCreateWithoutImageFileInput>
 }
 
-export type ItemUpsertWithoutFileInput = {
-  update: Prisma.XOR<Prisma.ItemUpdateWithoutFileInput, Prisma.ItemUncheckedUpdateWithoutFileInput>
-  create: Prisma.XOR<Prisma.ItemCreateWithoutFileInput, Prisma.ItemUncheckedCreateWithoutFileInput>
+export type ItemUpsertWithoutImageFileInput = {
+  update: Prisma.XOR<Prisma.ItemUpdateWithoutImageFileInput, Prisma.ItemUncheckedUpdateWithoutImageFileInput>
+  create: Prisma.XOR<Prisma.ItemCreateWithoutImageFileInput, Prisma.ItemUncheckedCreateWithoutImageFileInput>
   where?: Prisma.ItemWhereInput
 }
 
-export type ItemUpdateToOneWithWhereWithoutFileInput = {
+export type ItemUpdateToOneWithWhereWithoutImageFileInput = {
   where?: Prisma.ItemWhereInput
-  data: Prisma.XOR<Prisma.ItemUpdateWithoutFileInput, Prisma.ItemUncheckedUpdateWithoutFileInput>
+  data: Prisma.XOR<Prisma.ItemUpdateWithoutImageFileInput, Prisma.ItemUncheckedUpdateWithoutImageFileInput>
 }
 
-export type ItemUpdateWithoutFileInput = {
+export type ItemUpdateWithoutImageFileInput = {
   ItemId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -777,7 +777,7 @@ export type ItemUpdateWithoutFileInput = {
   Notes?: Prisma.NoteUpdateManyWithoutItemNestedInput
 }
 
-export type ItemUncheckedUpdateWithoutFileInput = {
+export type ItemUncheckedUpdateWithoutImageFileInput = {
   ItemId?: Prisma.StringFieldUpdateOperationsInput | string
   CampaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -798,7 +798,7 @@ export type ItemCreateWithoutLocationItemsInput = {
   ValueUnit?: string | null
   DetailsLink?: string | null
   Campaign?: Prisma.CampaignCreateNestedOneWithoutItemsInput
-  File?: Prisma.FileCreateNestedOneWithoutItemInput
+  ImageFile?: Prisma.FileCreateNestedOneWithoutItemInput
   Actions?: Prisma.ActionCreateNestedManyWithoutItemInput
   Notes?: Prisma.NoteCreateNestedManyWithoutItemInput
 }
@@ -840,7 +840,7 @@ export type ItemUpdateWithoutLocationItemsInput = {
   ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Campaign?: Prisma.CampaignUpdateOneWithoutItemsNestedInput
-  File?: Prisma.FileUpdateOneWithoutItemNestedInput
+  ImageFile?: Prisma.FileUpdateOneWithoutItemNestedInput
   Actions?: Prisma.ActionUpdateManyWithoutItemNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutItemNestedInput
 }
@@ -866,7 +866,7 @@ export type ItemCreateWithoutNotesInput = {
   ValueUnit?: string | null
   DetailsLink?: string | null
   Campaign?: Prisma.CampaignCreateNestedOneWithoutItemsInput
-  File?: Prisma.FileCreateNestedOneWithoutItemInput
+  ImageFile?: Prisma.FileCreateNestedOneWithoutItemInput
   Actions?: Prisma.ActionCreateNestedManyWithoutItemInput
   LocationItems?: Prisma.LocationItemCreateNestedManyWithoutItemInput
 }
@@ -908,7 +908,7 @@ export type ItemUpdateWithoutNotesInput = {
   ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Campaign?: Prisma.CampaignUpdateOneWithoutItemsNestedInput
-  File?: Prisma.FileUpdateOneWithoutItemNestedInput
+  ImageFile?: Prisma.FileUpdateOneWithoutItemNestedInput
   Actions?: Prisma.ActionUpdateManyWithoutItemNestedInput
   LocationItems?: Prisma.LocationItemUpdateManyWithoutItemNestedInput
 }
@@ -943,7 +943,7 @@ export type ItemUpdateWithoutCampaignInput = {
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  File?: Prisma.FileUpdateOneWithoutItemNestedInput
+  ImageFile?: Prisma.FileUpdateOneWithoutItemNestedInput
   Actions?: Prisma.ActionUpdateManyWithoutItemNestedInput
   LocationItems?: Prisma.LocationItemUpdateManyWithoutItemNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutItemNestedInput
@@ -1031,7 +1031,7 @@ export type ItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   DetailsLink?: boolean
   ImageFileId?: boolean
   Campaign?: boolean | Prisma.Item$CampaignArgs<ExtArgs>
-  File?: boolean | Prisma.Item$FileArgs<ExtArgs>
+  ImageFile?: boolean | Prisma.Item$ImageFileArgs<ExtArgs>
   Actions?: boolean | Prisma.Item$ActionsArgs<ExtArgs>
   LocationItems?: boolean | Prisma.Item$LocationItemsArgs<ExtArgs>
   Notes?: boolean | Prisma.Item$NotesArgs<ExtArgs>
@@ -1048,7 +1048,7 @@ export type ItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   DetailsLink?: boolean
   ImageFileId?: boolean
   Campaign?: boolean | Prisma.Item$CampaignArgs<ExtArgs>
-  File?: boolean | Prisma.Item$FileArgs<ExtArgs>
+  ImageFile?: boolean | Prisma.Item$ImageFileArgs<ExtArgs>
 }, ExtArgs["result"]["item"]>
 
 export type ItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1061,7 +1061,7 @@ export type ItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   DetailsLink?: boolean
   ImageFileId?: boolean
   Campaign?: boolean | Prisma.Item$CampaignArgs<ExtArgs>
-  File?: boolean | Prisma.Item$FileArgs<ExtArgs>
+  ImageFile?: boolean | Prisma.Item$ImageFileArgs<ExtArgs>
 }, ExtArgs["result"]["item"]>
 
 export type ItemSelectScalar = {
@@ -1078,7 +1078,7 @@ export type ItemSelectScalar = {
 export type ItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"ItemId" | "CampaignId" | "Name" | "IsContainer" | "Value" | "ValueUnit" | "DetailsLink" | "ImageFileId", ExtArgs["result"]["item"]>
 export type ItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Campaign?: boolean | Prisma.Item$CampaignArgs<ExtArgs>
-  File?: boolean | Prisma.Item$FileArgs<ExtArgs>
+  ImageFile?: boolean | Prisma.Item$ImageFileArgs<ExtArgs>
   Actions?: boolean | Prisma.Item$ActionsArgs<ExtArgs>
   LocationItems?: boolean | Prisma.Item$LocationItemsArgs<ExtArgs>
   Notes?: boolean | Prisma.Item$NotesArgs<ExtArgs>
@@ -1086,18 +1086,18 @@ export type ItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 }
 export type ItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Campaign?: boolean | Prisma.Item$CampaignArgs<ExtArgs>
-  File?: boolean | Prisma.Item$FileArgs<ExtArgs>
+  ImageFile?: boolean | Prisma.Item$ImageFileArgs<ExtArgs>
 }
 export type ItemIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Campaign?: boolean | Prisma.Item$CampaignArgs<ExtArgs>
-  File?: boolean | Prisma.Item$FileArgs<ExtArgs>
+  ImageFile?: boolean | Prisma.Item$ImageFileArgs<ExtArgs>
 }
 
 export type $ItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Item"
   objects: {
     Campaign: Prisma.$CampaignPayload<ExtArgs> | null
-    File: Prisma.$FilePayload<ExtArgs> | null
+    ImageFile: Prisma.$FilePayload<ExtArgs> | null
     Actions: Prisma.$ActionPayload<ExtArgs>[]
     LocationItems: Prisma.$LocationItemPayload<ExtArgs>[]
     Notes: Prisma.$NotePayload<ExtArgs>[]
@@ -1506,7 +1506,7 @@ readonly fields: ItemFieldRefs;
 export interface Prisma__ItemClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Campaign<T extends Prisma.Item$CampaignArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$CampaignArgs<ExtArgs>>): Prisma.Prisma__CampaignClient<runtime.Types.Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  File<T extends Prisma.Item$FileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$FileArgs<ExtArgs>>): Prisma.Prisma__FileClient<runtime.Types.Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  ImageFile<T extends Prisma.Item$ImageFileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$ImageFileArgs<ExtArgs>>): Prisma.Prisma__FileClient<runtime.Types.Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Actions<T extends Prisma.Item$ActionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$ActionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   LocationItems<T extends Prisma.Item$LocationItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$LocationItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocationItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Notes<T extends Prisma.Item$NotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$NotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1967,9 +1967,9 @@ export type Item$CampaignArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 /**
- * Item.File
+ * Item.ImageFile
  */
-export type Item$FileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Item$ImageFileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the File
    */
