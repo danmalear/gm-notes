@@ -1,10 +1,10 @@
 import { toStub as actionToStub } from '#action/action-mappers.ts';
+import type { ItemModel } from '#prisma-models/Item.ts';
 import type {
 	LocationItemResponse,
 	LocationItemResponseBase,
 	LocationItemStub,
 } from './item-dtos.ts';
-import type { ItemRec } from './item-repository.ts';
 import type {
 	LocationItemRec,
 	LocationItemRefRec,
@@ -41,7 +41,7 @@ export const toDto = (item: LocationItemRefRec) => {
 	return locationItemResponse;
 };
 
-export const toStub = (item: ItemRec & LocationItemRec) => {
+export const toStub = (item: ItemModel & LocationItemRec) => {
 	const locationItemStub: LocationItemStub = {
 		id: item.LocationItemId,
 		locationId: item.LocationId,

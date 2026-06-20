@@ -1,16 +1,11 @@
 import type { IActionRepository } from '#action/action-repository.ts';
 import type { INoteRepository } from '#note/note-repository.ts';
+import type { ItemModel } from '#prisma-models/Item.ts';
 import { db } from '#shared/db.ts';
 import { getMessage, InternalError } from '#shared/error.ts';
 import { Repository } from '#shared/repository-old.ts';
 import type { UUID } from 'crypto';
-import {
-	pkColumn as itemPkColumn,
-	tableName as itemTableName,
-	type ItemRec,
-	type ItemRefRec,
-	type ItemRepository,
-} from './item-repository.ts';
+import type { IItemRepository, ItemIncludeAll } from './item-repository.ts';
 
 export interface LocationItemRec {
 	LocationItemId: UUID;
@@ -19,18 +14,21 @@ export interface LocationItemRec {
 	Quantity: number;
 }
 
-export interface LocationItemRefRec extends ItemRefRec, LocationItemRec {
-	ContainedItems: (ItemRec & LocationItemRec)[];
+export interface LocationItemRefRec extends ItemIncludeAll, LocationItemRec {
+	ItemId: UUID;
+	ContainedItems: (ItemModel & LocationItemRec)[];
 }
 
 export const tableName = 'LocationItem';
 export const pkColumn = 'LocationItemId';
 export const locationIdColName = 'LocationId';
 export const itemIdColName = 'ItemId';
+export const itemTableName = 'Item';
+export const itemPkColumn = 'ItemId';
 
 export interface LocationItemRepositoryConfig {
 	actionRepository: IActionRepository;
-	itemRepository: ItemRepository;
+	itemRepository: IItemRepository;
 	noteRepository: INoteRepository;
 }
 
@@ -39,7 +37,7 @@ export class LocationItemRepository extends Repository<
 	LocationItemRefRec
 > {
 	actionRepository: IActionRepository;
-	itemRepository: ItemRepository;
+	itemRepository: IItemRepository;
 	noteRepository: INoteRepository;
 
 	constructor({
@@ -93,7 +91,7 @@ export class LocationItemRepository extends Repository<
 	async getByLocationId(locationId: UUID) {
 		try {
 			return await db<LocationItemRec>(this.tableName)
-				.innerJoin<ItemRec>(
+				.innerJoin<ItemModel>(
 					itemTableName,
 					`${this.tableName}.${itemIdColName}`,
 					`${itemTableName}.${itemPkColumn}`,

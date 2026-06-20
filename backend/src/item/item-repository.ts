@@ -1,70 +1,101 @@
-import type { IActionRepository } from '#action/action-repository.ts';
-import type { IFileRepository } from '#file/file-repository.ts';
-import type { INoteRepository } from '#note/note-repository.ts';
 import type { ActionModel } from '#prisma-models/Action.ts';
 import type { FileModel } from '#prisma-models/File.ts';
+import type {
+	ItemCreateInput,
+	ItemInclude,
+	ItemModel,
+	ItemUpdateInput,
+} from '#prisma-models/Item.ts';
 import type { NoteModel } from '#prisma-models/Note.ts';
-import type { CurrencyUnit } from '#shared/data-types.ts';
-import { Repository } from '#shared/repository-old.ts';
+import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 
-export interface ItemRec {
-	ItemId: UUID;
-	CampaignId: UUID | null;
-	Name: string;
-	IsContainer: boolean;
-	Value: number | null;
-	ValueUnit: CurrencyUnit | null;
-	DetailsLink: string | null;
-	ImageFileId: string | null;
-}
-
-export interface ItemRefRec extends ItemRec {
+export interface ItemIncludeAll extends ItemModel {
 	ImageFile: FileModel | null;
 	Actions: ActionModel[];
 	Notes: NoteModel[];
 }
 
-export const tableName = 'Item';
-export const pkColumn = 'ItemId';
+export type IItemRepository = IRepository<
+	ItemModel,
+	ItemCreateInput,
+	ItemUpdateInput,
+	ItemIncludeAll
+>;
 
-export interface ItemRepositoryConfig {
-	actionRepository: IActionRepository;
-	fileRepository: IFileRepository;
-	noteRepository: INoteRepository;
-}
+export class ItemRepository
+	extends Repository<
+		ItemModel,
+		ItemCreateInput,
+		ItemUpdateInput,
+		ItemIncludeAll
+	>
+	implements IItemRepository
+{
+	override descriptor = 'Item';
 
-export class ItemRepository extends Repository<ItemRec, ItemRefRec> {
-	actionRepository: IActionRepository;
-	fileRepository: IFileRepository;
-	noteRepository: INoteRepository;
-
-	constructor({
-		actionRepository,
-		fileRepository,
-		noteRepository,
-	}: ItemRepositoryConfig) {
-		super(tableName, pkColumn);
-		this.actionRepository = actionRepository;
-		this.fileRepository = fileRepository;
-		this.noteRepository = noteRepository;
+	override async getByIdRaw(itemId: UUID): Promise<ItemModel | null> {
+		try {
+			return await this.prisma.item.findUnique({
+				where: {
+					ItemId: itemId,
+				},
+			});
+		} catch (e) {
+			throw this.getByIdError(itemId, e);
+		}
 	}
 
-	override async getById(id: UUID): Promise<ItemRefRec | undefined> {
-		const itemRaw = await this.getByIdRaw(id);
-		if (!itemRaw) return undefined;
+	override async getById(itemId: UUID): Promise<ItemIncludeAll | null> {
+		const include = {
+			Actions: true,
+			ImageFile: true,
+			Notes: true,
+		} satisfies ItemInclude;
 
-		const actions = await this.actionRepository.getByTargetId(itemRaw.ItemId);
-		const imageFile = itemRaw.ImageFileId
-			? ((await this.fileRepository.getById(itemRaw.ImageFileId)) ?? null)
-			: null;
-		const notes = await this.noteRepository.getByEntityId(itemRaw.ItemId);
+		try {
+			return await this.prisma.item.findUnique({
+				where: {
+					ItemId: itemId,
+				},
+				include,
+			});
+		} catch (e) {
+			throw this.getByIdError(itemId, e);
+		}
+	}
 
-		return {
-			...itemRaw,
-			Actions: actions,
-			ImageFile: imageFile,
-			Notes: notes,
-		};
+	override async getAll(): Promise<ItemModel[]> {
+		try {
+			return await this.prisma.item.findMany();
+		} catch (e) {
+			throw this.getAllError(e);
+		}
+	}
+
+	override async create(data: ItemCreateInput): Promise<ItemModel> {
+		try {
+			return await this.prisma.item.create({
+				data,
+			});
+		} catch (e) {
+			throw this.createError(e);
+		}
+	}
+
+	override async update(
+		itemId: UUID,
+		data: ItemUpdateInput,
+	): Promise<ItemModel> {
+		try {
+			return await this.prisma.item.update({
+				where: {
+					ItemId: itemId,
+				},
+				data,
+			});
+		} catch (e) {
+			throw this.updateError(itemId, e);
+		}
 	}
 }
