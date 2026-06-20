@@ -2561,6 +2561,20 @@ export type ListEnumHandoutTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
+ * Reference to a field of type 'CurrencyUnit'
+ */
+export type EnumCurrencyUnitFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CurrencyUnit'>
+    
+
+
+/**
+ * Reference to a field of type 'CurrencyUnit[]'
+ */
+export type ListEnumCurrencyUnitFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CurrencyUnit[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>

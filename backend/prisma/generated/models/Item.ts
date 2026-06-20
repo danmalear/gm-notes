@@ -40,7 +40,7 @@ export type ItemMinAggregateOutputType = {
   Name: string | null
   IsContainer: boolean | null
   Value: number | null
-  ValueUnit: string | null
+  ValueUnit: $Enums.CurrencyUnit | null
   DetailsLink: string | null
   ImageFileId: string | null
 }
@@ -51,7 +51,7 @@ export type ItemMaxAggregateOutputType = {
   Name: string | null
   IsContainer: boolean | null
   Value: number | null
-  ValueUnit: string | null
+  ValueUnit: $Enums.CurrencyUnit | null
   DetailsLink: string | null
   ImageFileId: string | null
 }
@@ -203,7 +203,7 @@ export type ItemGroupByOutputType = {
   Name: string
   IsContainer: boolean
   Value: number | null
-  ValueUnit: string | null
+  ValueUnit: $Enums.CurrencyUnit | null
   DetailsLink: string | null
   ImageFileId: string | null
   _count: ItemCountAggregateOutputType | null
@@ -237,7 +237,7 @@ export type ItemWhereInput = {
   Name?: Prisma.StringFilter<"Item"> | string
   IsContainer?: Prisma.BoolFilter<"Item"> | boolean
   Value?: Prisma.IntNullableFilter<"Item"> | number | null
-  ValueUnit?: Prisma.StringNullableFilter<"Item"> | string | null
+  ValueUnit?: Prisma.EnumCurrencyUnitNullableFilter<"Item"> | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.StringNullableFilter<"Item"> | string | null
   ImageFileId?: Prisma.StringNullableFilter<"Item"> | string | null
   Campaign?: Prisma.XOR<Prisma.CampaignNullableScalarRelationFilter, Prisma.CampaignWhereInput> | null
@@ -273,7 +273,7 @@ export type ItemWhereUniqueInput = Prisma.AtLeast<{
   Name?: Prisma.StringFilter<"Item"> | string
   IsContainer?: Prisma.BoolFilter<"Item"> | boolean
   Value?: Prisma.IntNullableFilter<"Item"> | number | null
-  ValueUnit?: Prisma.StringNullableFilter<"Item"> | string | null
+  ValueUnit?: Prisma.EnumCurrencyUnitNullableFilter<"Item"> | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.StringNullableFilter<"Item"> | string | null
   Campaign?: Prisma.XOR<Prisma.CampaignNullableScalarRelationFilter, Prisma.CampaignWhereInput> | null
   ImageFile?: Prisma.XOR<Prisma.FileNullableScalarRelationFilter, Prisma.FileWhereInput> | null
@@ -307,7 +307,7 @@ export type ItemScalarWhereWithAggregatesInput = {
   Name?: Prisma.StringWithAggregatesFilter<"Item"> | string
   IsContainer?: Prisma.BoolWithAggregatesFilter<"Item"> | boolean
   Value?: Prisma.IntNullableWithAggregatesFilter<"Item"> | number | null
-  ValueUnit?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
+  ValueUnit?: Prisma.EnumCurrencyUnitNullableWithAggregatesFilter<"Item"> | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
   ImageFileId?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
 }
@@ -317,7 +317,7 @@ export type ItemCreateInput = {
   Name: string
   IsContainer?: boolean
   Value?: number | null
-  ValueUnit?: string | null
+  ValueUnit?: $Enums.CurrencyUnit | null
   DetailsLink?: string | null
   Campaign?: Prisma.CampaignCreateNestedOneWithoutItemsInput
   ImageFile?: Prisma.FileCreateNestedOneWithoutItemInput
@@ -332,7 +332,7 @@ export type ItemUncheckedCreateInput = {
   Name: string
   IsContainer?: boolean
   Value?: number | null
-  ValueUnit?: string | null
+  ValueUnit?: $Enums.CurrencyUnit | null
   DetailsLink?: string | null
   ImageFileId?: string | null
   Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutItemInput
@@ -345,7 +345,7 @@ export type ItemUpdateInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ValueUnit?: Prisma.NullableEnumCurrencyUnitFieldUpdateOperationsInput | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Campaign?: Prisma.CampaignUpdateOneWithoutItemsNestedInput
   ImageFile?: Prisma.FileUpdateOneWithoutItemNestedInput
@@ -360,7 +360,7 @@ export type ItemUncheckedUpdateInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ValueUnit?: Prisma.NullableEnumCurrencyUnitFieldUpdateOperationsInput | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Actions?: Prisma.ActionUncheckedUpdateManyWithoutItemNestedInput
@@ -374,7 +374,7 @@ export type ItemCreateManyInput = {
   Name: string
   IsContainer?: boolean
   Value?: number | null
-  ValueUnit?: string | null
+  ValueUnit?: $Enums.CurrencyUnit | null
   DetailsLink?: string | null
   ImageFileId?: string | null
 }
@@ -384,7 +384,7 @@ export type ItemUpdateManyMutationInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ValueUnit?: Prisma.NullableEnumCurrencyUnitFieldUpdateOperationsInput | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -394,7 +394,7 @@ export type ItemUncheckedUpdateManyInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ValueUnit?: Prisma.NullableEnumCurrencyUnitFieldUpdateOperationsInput | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -558,6 +558,10 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type NullableEnumCurrencyUnitFieldUpdateOperationsInput = {
+  set?: $Enums.CurrencyUnit | null
+}
+
 export type ItemCreateNestedOneWithoutLocationItemsInput = {
   create?: Prisma.XOR<Prisma.ItemCreateWithoutLocationItemsInput, Prisma.ItemUncheckedCreateWithoutLocationItemsInput>
   connectOrCreate?: Prisma.ItemCreateOrConnectWithoutLocationItemsInput
@@ -593,7 +597,7 @@ export type ItemCreateWithoutActionsInput = {
   Name: string
   IsContainer?: boolean
   Value?: number | null
-  ValueUnit?: string | null
+  ValueUnit?: $Enums.CurrencyUnit | null
   DetailsLink?: string | null
   Campaign?: Prisma.CampaignCreateNestedOneWithoutItemsInput
   ImageFile?: Prisma.FileCreateNestedOneWithoutItemInput
@@ -607,7 +611,7 @@ export type ItemUncheckedCreateWithoutActionsInput = {
   Name: string
   IsContainer?: boolean
   Value?: number | null
-  ValueUnit?: string | null
+  ValueUnit?: $Enums.CurrencyUnit | null
   DetailsLink?: string | null
   ImageFileId?: string | null
   LocationItems?: Prisma.LocationItemUncheckedCreateNestedManyWithoutItemInput
@@ -635,7 +639,7 @@ export type ItemUpdateWithoutActionsInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ValueUnit?: Prisma.NullableEnumCurrencyUnitFieldUpdateOperationsInput | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Campaign?: Prisma.CampaignUpdateOneWithoutItemsNestedInput
   ImageFile?: Prisma.FileUpdateOneWithoutItemNestedInput
@@ -649,7 +653,7 @@ export type ItemUncheckedUpdateWithoutActionsInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ValueUnit?: Prisma.NullableEnumCurrencyUnitFieldUpdateOperationsInput | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   LocationItems?: Prisma.LocationItemUncheckedUpdateManyWithoutItemNestedInput
@@ -661,7 +665,7 @@ export type ItemCreateWithoutCampaignInput = {
   Name: string
   IsContainer?: boolean
   Value?: number | null
-  ValueUnit?: string | null
+  ValueUnit?: $Enums.CurrencyUnit | null
   DetailsLink?: string | null
   ImageFile?: Prisma.FileCreateNestedOneWithoutItemInput
   Actions?: Prisma.ActionCreateNestedManyWithoutItemInput
@@ -674,7 +678,7 @@ export type ItemUncheckedCreateWithoutCampaignInput = {
   Name: string
   IsContainer?: boolean
   Value?: number | null
-  ValueUnit?: string | null
+  ValueUnit?: $Enums.CurrencyUnit | null
   DetailsLink?: string | null
   ImageFileId?: string | null
   Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutItemInput
@@ -717,7 +721,7 @@ export type ItemScalarWhereInput = {
   Name?: Prisma.StringFilter<"Item"> | string
   IsContainer?: Prisma.BoolFilter<"Item"> | boolean
   Value?: Prisma.IntNullableFilter<"Item"> | number | null
-  ValueUnit?: Prisma.StringNullableFilter<"Item"> | string | null
+  ValueUnit?: Prisma.EnumCurrencyUnitNullableFilter<"Item"> | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.StringNullableFilter<"Item"> | string | null
   ImageFileId?: Prisma.StringNullableFilter<"Item"> | string | null
 }
@@ -727,7 +731,7 @@ export type ItemCreateWithoutImageFileInput = {
   Name: string
   IsContainer?: boolean
   Value?: number | null
-  ValueUnit?: string | null
+  ValueUnit?: $Enums.CurrencyUnit | null
   DetailsLink?: string | null
   Campaign?: Prisma.CampaignCreateNestedOneWithoutItemsInput
   Actions?: Prisma.ActionCreateNestedManyWithoutItemInput
@@ -741,7 +745,7 @@ export type ItemUncheckedCreateWithoutImageFileInput = {
   Name: string
   IsContainer?: boolean
   Value?: number | null
-  ValueUnit?: string | null
+  ValueUnit?: $Enums.CurrencyUnit | null
   DetailsLink?: string | null
   Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutItemInput
   LocationItems?: Prisma.LocationItemUncheckedCreateNestedManyWithoutItemInput
@@ -769,7 +773,7 @@ export type ItemUpdateWithoutImageFileInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ValueUnit?: Prisma.NullableEnumCurrencyUnitFieldUpdateOperationsInput | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Campaign?: Prisma.CampaignUpdateOneWithoutItemsNestedInput
   Actions?: Prisma.ActionUpdateManyWithoutItemNestedInput
@@ -783,7 +787,7 @@ export type ItemUncheckedUpdateWithoutImageFileInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ValueUnit?: Prisma.NullableEnumCurrencyUnitFieldUpdateOperationsInput | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Actions?: Prisma.ActionUncheckedUpdateManyWithoutItemNestedInput
   LocationItems?: Prisma.LocationItemUncheckedUpdateManyWithoutItemNestedInput
@@ -795,7 +799,7 @@ export type ItemCreateWithoutLocationItemsInput = {
   Name: string
   IsContainer?: boolean
   Value?: number | null
-  ValueUnit?: string | null
+  ValueUnit?: $Enums.CurrencyUnit | null
   DetailsLink?: string | null
   Campaign?: Prisma.CampaignCreateNestedOneWithoutItemsInput
   ImageFile?: Prisma.FileCreateNestedOneWithoutItemInput
@@ -809,7 +813,7 @@ export type ItemUncheckedCreateWithoutLocationItemsInput = {
   Name: string
   IsContainer?: boolean
   Value?: number | null
-  ValueUnit?: string | null
+  ValueUnit?: $Enums.CurrencyUnit | null
   DetailsLink?: string | null
   ImageFileId?: string | null
   Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutItemInput
@@ -837,7 +841,7 @@ export type ItemUpdateWithoutLocationItemsInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ValueUnit?: Prisma.NullableEnumCurrencyUnitFieldUpdateOperationsInput | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Campaign?: Prisma.CampaignUpdateOneWithoutItemsNestedInput
   ImageFile?: Prisma.FileUpdateOneWithoutItemNestedInput
@@ -851,7 +855,7 @@ export type ItemUncheckedUpdateWithoutLocationItemsInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ValueUnit?: Prisma.NullableEnumCurrencyUnitFieldUpdateOperationsInput | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Actions?: Prisma.ActionUncheckedUpdateManyWithoutItemNestedInput
@@ -863,7 +867,7 @@ export type ItemCreateWithoutNotesInput = {
   Name: string
   IsContainer?: boolean
   Value?: number | null
-  ValueUnit?: string | null
+  ValueUnit?: $Enums.CurrencyUnit | null
   DetailsLink?: string | null
   Campaign?: Prisma.CampaignCreateNestedOneWithoutItemsInput
   ImageFile?: Prisma.FileCreateNestedOneWithoutItemInput
@@ -877,7 +881,7 @@ export type ItemUncheckedCreateWithoutNotesInput = {
   Name: string
   IsContainer?: boolean
   Value?: number | null
-  ValueUnit?: string | null
+  ValueUnit?: $Enums.CurrencyUnit | null
   DetailsLink?: string | null
   ImageFileId?: string | null
   Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutItemInput
@@ -905,7 +909,7 @@ export type ItemUpdateWithoutNotesInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ValueUnit?: Prisma.NullableEnumCurrencyUnitFieldUpdateOperationsInput | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Campaign?: Prisma.CampaignUpdateOneWithoutItemsNestedInput
   ImageFile?: Prisma.FileUpdateOneWithoutItemNestedInput
@@ -919,7 +923,7 @@ export type ItemUncheckedUpdateWithoutNotesInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ValueUnit?: Prisma.NullableEnumCurrencyUnitFieldUpdateOperationsInput | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Actions?: Prisma.ActionUncheckedUpdateManyWithoutItemNestedInput
@@ -931,7 +935,7 @@ export type ItemCreateManyCampaignInput = {
   Name: string
   IsContainer?: boolean
   Value?: number | null
-  ValueUnit?: string | null
+  ValueUnit?: $Enums.CurrencyUnit | null
   DetailsLink?: string | null
   ImageFileId?: string | null
 }
@@ -941,7 +945,7 @@ export type ItemUpdateWithoutCampaignInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ValueUnit?: Prisma.NullableEnumCurrencyUnitFieldUpdateOperationsInput | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ImageFile?: Prisma.FileUpdateOneWithoutItemNestedInput
   Actions?: Prisma.ActionUpdateManyWithoutItemNestedInput
@@ -954,7 +958,7 @@ export type ItemUncheckedUpdateWithoutCampaignInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ValueUnit?: Prisma.NullableEnumCurrencyUnitFieldUpdateOperationsInput | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Actions?: Prisma.ActionUncheckedUpdateManyWithoutItemNestedInput
@@ -967,7 +971,7 @@ export type ItemUncheckedUpdateManyWithoutCampaignInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   IsContainer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Value?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ValueUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ValueUnit?: Prisma.NullableEnumCurrencyUnitFieldUpdateOperationsInput | $Enums.CurrencyUnit | null
   DetailsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -1108,7 +1112,7 @@ export type $ItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     Name: string
     IsContainer: boolean
     Value: number | null
-    ValueUnit: string | null
+    ValueUnit: $Enums.CurrencyUnit | null
     DetailsLink: string | null
     ImageFileId: string | null
   }, ExtArgs["result"]["item"]>
@@ -1544,7 +1548,7 @@ export interface ItemFieldRefs {
   readonly Name: Prisma.FieldRef<"Item", 'String'>
   readonly IsContainer: Prisma.FieldRef<"Item", 'Boolean'>
   readonly Value: Prisma.FieldRef<"Item", 'Int'>
-  readonly ValueUnit: Prisma.FieldRef<"Item", 'String'>
+  readonly ValueUnit: Prisma.FieldRef<"Item", 'CurrencyUnit'>
   readonly DetailsLink: Prisma.FieldRef<"Item", 'String'>
   readonly ImageFileId: Prisma.FieldRef<"Item", 'String'>
 }

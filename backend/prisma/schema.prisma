@@ -113,6 +113,16 @@ model Condition {
   @@schema("public")
 }
 
+enum CurrencyUnit {
+  CP
+  SP
+  EP
+  GP
+  PP
+
+  @@schema("public")
+}
+
 model File {
   FileId   String @id @db.Uuid
   FileName String
@@ -150,7 +160,7 @@ model Item {
   Name          String
   IsContainer   Boolean        @default(false)
   Value         Int?
-  ValueUnit     String?
+  ValueUnit     CurrencyUnit?
   DetailsLink   String?
   ImageFileId   String?        @unique
   ImageFile     File?          @relation(fields: [ImageFileId], references: [FileId])

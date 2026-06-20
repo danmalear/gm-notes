@@ -27,6 +27,17 @@ export const ActionType = {
 export type ActionType = (typeof ActionType)[keyof typeof ActionType]
 
 
+export const CurrencyUnit = {
+  CP: 'CP',
+  SP: 'SP',
+  EP: 'EP',
+  GP: 'GP',
+  PP: 'PP'
+} as const
+
+export type CurrencyUnit = (typeof CurrencyUnit)[keyof typeof CurrencyUnit]
+
+
 export const HandoutType = {
   Text: 'Text',
   Image: 'Image',

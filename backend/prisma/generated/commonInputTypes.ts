@@ -284,6 +284,13 @@ export type IntNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedIntNullableFilter<$PrismaModel> | number | null
 }
 
+export type EnumCurrencyUnitNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.CurrencyUnit | Prisma.EnumCurrencyUnitFieldRefInput<$PrismaModel> | null
+  in?: $Enums.CurrencyUnit[] | Prisma.ListEnumCurrencyUnitFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.CurrencyUnit[] | Prisma.ListEnumCurrencyUnitFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumCurrencyUnitNullableFilter<$PrismaModel> | $Enums.CurrencyUnit | null
+}
+
 export type StringNullableFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
@@ -313,6 +320,16 @@ export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
+}
+
+export type EnumCurrencyUnitNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CurrencyUnit | Prisma.EnumCurrencyUnitFieldRefInput<$PrismaModel> | null
+  in?: $Enums.CurrencyUnit[] | Prisma.ListEnumCurrencyUnitFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.CurrencyUnit[] | Prisma.ListEnumCurrencyUnitFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumCurrencyUnitNullableWithAggregatesFilter<$PrismaModel> | $Enums.CurrencyUnit | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCurrencyUnitNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCurrencyUnitNullableFilter<$PrismaModel>
 }
 
 export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -590,6 +607,13 @@ export type NestedEnumHandoutTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumHandoutTypeFilter<$PrismaModel>
 }
 
+export type NestedEnumCurrencyUnitNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.CurrencyUnit | Prisma.EnumCurrencyUnitFieldRefInput<$PrismaModel> | null
+  in?: $Enums.CurrencyUnit[] | Prisma.ListEnumCurrencyUnitFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.CurrencyUnit[] | Prisma.ListEnumCurrencyUnitFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumCurrencyUnitNullableFilter<$PrismaModel> | $Enums.CurrencyUnit | null
+}
+
 export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
@@ -615,6 +639,16 @@ export type NestedFloatNullableFilter<$PrismaModel = never> = {
   gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   not?: Prisma.NestedFloatNullableFilter<$PrismaModel> | number | null
+}
+
+export type NestedEnumCurrencyUnitNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CurrencyUnit | Prisma.EnumCurrencyUnitFieldRefInput<$PrismaModel> | null
+  in?: $Enums.CurrencyUnit[] | Prisma.ListEnumCurrencyUnitFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.CurrencyUnit[] | Prisma.ListEnumCurrencyUnitFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumCurrencyUnitNullableWithAggregatesFilter<$PrismaModel> | $Enums.CurrencyUnit | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCurrencyUnitNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCurrencyUnitNullableFilter<$PrismaModel>
 }
 
 export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
