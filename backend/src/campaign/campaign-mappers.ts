@@ -11,7 +11,7 @@ export const toDto = (campaign: CampaignRefRec) => {
 			id: map.MapId,
 			campaignId: map.CampaignId,
 			name: map.Name,
-			imagePath: map.ImagePath,
+			imagePath: map.ImageFileId,
 		})),
 	};
 

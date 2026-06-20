@@ -112,7 +112,7 @@ export function mapRoutes(
 				MapId: randomUUID(),
 				CampaignId: req.body.campaignId,
 				Name: req.body.name,
-				ImagePath: req.body.imagePath,
+				ImageFileId: req.body.imagePath,
 				MapTemplateId: null,
 				DefaultLighting: req.body.defaultLighting ?? 'Bright Light',
 				Width: req.body.width,
@@ -166,7 +166,7 @@ export function mapRoutes(
 
 			const map: Partial<MapRec> = {
 				Name: req.body.name,
-				ImagePath: req.body.imagePath,
+				ImageFileId: req.body.imagePath,
 				DefaultLighting: req.body.defaultLighting,
 			};
 

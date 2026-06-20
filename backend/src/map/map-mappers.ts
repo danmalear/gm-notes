@@ -7,7 +7,7 @@ export function toDto(map: MapRefRec) {
 		id: map.MapId,
 		campaignId: map.CampaignId,
 		name: map.Name,
-		imagePath: map.ImagePath,
+		imagePath: map.ImageFileId,
 		defaultLighting: map.DefaultLighting,
 		width: map.Width,
 		height: map.Height,
@@ -22,7 +22,7 @@ export function toStub(map: MapRec) {
 		id: map.MapId,
 		campaignId: map.CampaignId,
 		name: map.Name,
-		imagePath: map.ImagePath,
+		imagePath: map.ImageFileId,
 	};
 
 	return mapStub;

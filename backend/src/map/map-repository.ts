@@ -14,7 +14,7 @@ export interface MapRec {
 	CampaignId: UUID;
 	MapTemplateId: UUID | null;
 	Name: string;
-	ImagePath: string;
+	ImageFileId: string;
 	DefaultLighting: Lighting;
 	Width: number;
 	Height: number;
