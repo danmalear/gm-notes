@@ -2,7 +2,7 @@ import type {
 	RegionRecShapes,
 	RegionRepository,
 } from '#region/region-repository.ts';
-import type { RegionShapeRepository } from '#region/region-shape-repository.ts';
+import type { IRegionShapeRepository } from '#region/region-shape-repository.ts';
 import type { Lighting } from '#shared/data-types.ts';
 import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
@@ -29,12 +29,12 @@ export const pkColumn = 'MapId';
 
 export interface MapRepositoryConfig {
 	regionRepository: RegionRepository;
-	regionShapeRepository: RegionShapeRepository;
+	regionShapeRepository: IRegionShapeRepository;
 }
 
 export class MapRepository extends Repository<MapRec, MapRefRec> {
 	regionRepository: RegionRepository;
-	regionShapeRepository: RegionShapeRepository;
+	regionShapeRepository: IRegionShapeRepository;
 
 	constructor({
 		regionRepository,

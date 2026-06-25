@@ -1,5 +1,5 @@
+import type { ShapeType } from '#prisma-enums';
 import type { Shape } from '#region/region-dtos.ts';
-import type { ShapeType } from './region-shape-repository.ts';
 
 export const isCircle = (shape: Shape) => 'r' in shape;
 export const isRectangle = (shape: Shape) => 'x1' in shape;

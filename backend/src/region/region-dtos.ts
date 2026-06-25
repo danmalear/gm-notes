@@ -5,27 +5,27 @@ import type { NarrationStub } from '#narration/narration-dtos.ts';
 import type { RelativeLighting } from '#shared/data-types.ts';
 import type { UUID } from 'crypto';
 
-export interface Rectangle {
+export type Rectangle = {
 	x1: number;
 	y1: number;
 	x2: number;
 	y2: number;
-}
+};
 
-export interface Circle {
+export type Circle = {
 	x: number;
 	y: number;
 	r: number;
-}
+};
 
-export interface Coords {
+export type Coords = {
 	x: number;
 	y: number;
-}
+};
 
-export interface Polygon {
+export type Polygon = {
 	coords: Coords[];
-}
+};
 
 export type Shape = Rectangle | Circle | Polygon;
 

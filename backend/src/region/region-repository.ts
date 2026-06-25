@@ -10,15 +10,13 @@ import type { ActionModel } from '#prisma-models/Action.ts';
 import type { HandoutModel } from '#prisma-models/Handout.ts';
 import type { NarrationModel } from '#prisma-models/Narration.ts';
 import type { NoteModel } from '#prisma-models/Note.ts';
+import type { RegionShapeModel } from '#prisma-models/RegionShape.ts';
 import type { RelativeLighting } from '#shared/data-types.ts';
 import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository } from '#shared/repository-old.ts';
 import type { UUID } from 'crypto';
-import type {
-	RegionShapeRec,
-	RegionShapeRepository,
-} from './region-shape-repository.ts';
+import type { IRegionShapeRepository } from './region-shape-repository.ts';
 
 export interface RegionRec {
 	RegionId: UUID;
@@ -29,7 +27,7 @@ export interface RegionRec {
 }
 
 export interface RegionRecShapes extends RegionRec {
-	Shapes: RegionShapeRec[];
+	Shapes: RegionShapeModel[];
 }
 
 export interface RegionRefRec extends RegionRecShapes {
@@ -52,7 +50,7 @@ export interface RegionRepositoryConfig {
 	locationItemRepository: ILocationItemRepository;
 	narrationRepository: INarrationRepository;
 	noteRepository: INoteRepository;
-	regionShapeRepository: RegionShapeRepository;
+	regionShapeRepository: IRegionShapeRepository;
 }
 
 export class RegionRepository extends Repository<RegionRec, RegionRefRec> {
@@ -62,7 +60,7 @@ export class RegionRepository extends Repository<RegionRec, RegionRefRec> {
 	locationItemRepository: ILocationItemRepository;
 	narrationRepository: INarrationRepository;
 	noteRepository: INoteRepository;
-	regionShapeRepository: RegionShapeRepository;
+	regionShapeRepository: IRegionShapeRepository;
 
 	constructor({
 		actionRepository,

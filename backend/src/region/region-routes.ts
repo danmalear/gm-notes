@@ -15,7 +15,7 @@ import type {
 } from './region-dtos.ts';
 import { toDto, toStub } from './region-mappers.ts';
 import type { RegionRepository } from './region-repository.ts';
-import type { RegionShapeRepository } from './region-shape-repository.ts';
+import type { IRegionShapeRepository } from './region-shape-repository.ts';
 import { getShapeType } from './region-shape-utils.ts';
 import {
 	validateCircle,
@@ -28,7 +28,7 @@ export function regionRoutes(
 	_commandBus: ICommandBus,
 	_eventBus: IEventBus,
 	regionRepository: RegionRepository,
-	regionShapeRepository: RegionShapeRepository,
+	regionShapeRepository: IRegionShapeRepository,
 ) {
 	const apiNamespace = 'regions';
 
@@ -136,9 +136,13 @@ export function regionRoutes(
 			});
 
 			for (const shape of req.body.shapes) {
-				await regionShapeRepository.insert({
+				await regionShapeRepository.create({
 					RegionShapeId: randomUUID(),
-					RegionId: id,
+					Region: {
+						connect: {
+							RegionId: id,
+						},
+					},
 					ShapeType: getShapeType(shape),
 					Coords: shape,
 				});

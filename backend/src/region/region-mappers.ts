@@ -2,6 +2,7 @@ import { toStub as actionToStub } from '#action/action-mappers.ts';
 import { toStub as handoutToStub } from '#handout/handout-mappers.ts';
 import { toStub as locationItemToStub } from '#item/location-item-mappers.ts';
 import { toStub as narrationToStub } from '#narration/narration-mappers.ts';
+import type { RegionShapeModel } from '#prisma-models/RegionShape.ts';
 import {
 	validateCircle,
 	validatePolygon,
@@ -18,9 +19,8 @@ import type {
 	RegionRecShapes,
 	RegionRefRec,
 } from './region-repository.ts';
-import type { RegionShapeRec } from './region-shape-repository.ts';
 
-export function shapeToStub(shape: RegionShapeRec): Shape {
+export function shapeToStub(shape: RegionShapeModel): Shape {
 	const coords = shape.Coords;
 	switch (shape.ShapeType) {
 		case 'Circle':
