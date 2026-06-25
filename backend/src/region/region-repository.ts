@@ -27,7 +27,7 @@ export interface RegionRec {
 }
 
 export interface RegionRecShapes extends RegionRec {
-	Shapes: RegionShapeModel[];
+	RegionShapes: RegionShapeModel[];
 }
 
 export interface RegionRefRec extends RegionRecShapes {
@@ -97,7 +97,7 @@ export class RegionRepository extends Repository<RegionRec, RegionRefRec> {
 			...regionRaw,
 			Narrations: narrations,
 			// Creatures: creatures,
-			Shapes: shapes,
+			RegionShapes: shapes,
 			Actions: actions,
 			Items: items,
 			Handouts: handouts,

@@ -56,7 +56,7 @@ export class MapRepository extends Repository<MapRec, MapRefRec> {
 			);
 			regionsWithShapes.push({
 				...region,
-				Shapes: shapes,
+				RegionShapes: shapes,
 			});
 		}
 		return {

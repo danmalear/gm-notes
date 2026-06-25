@@ -42,7 +42,7 @@ export function toDto(region: RegionRefRec) {
 		id: region.RegionId,
 		mapId: region.MapId,
 		name: region.Name,
-		shapes: region.Shapes.map(shapeToStub),
+		shapes: region.RegionShapes.map(shapeToStub),
 		lighting: region.Lighting,
 		narrations: region.Narrations.map(narrationToStub),
 		actions: region.Actions.map(actionToStub),
@@ -69,7 +69,7 @@ export function toStubWithShapes(region: RegionRecShapes) {
 		id: region.RegionId,
 		mapId: region.MapId,
 		name: region.Name,
-		shapes: region.Shapes.map(shapeToStub),
+		shapes: region.RegionShapes.map(shapeToStub),
 	};
 
 	return regionStub;
