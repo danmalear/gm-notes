@@ -8,12 +8,9 @@ import {
 	validatePolygon,
 	validateRectangle,
 } from '#region/shape-validators.ts';
-import type {
-	RegionResponse,
-	RegionStub,
-	RegionStubWithShapes,
-	Shape,
-} from './region-dtos.ts';
+import { mapRelativeLightingToDto } from '#shared/enum-mappers.ts';
+import type { UUID } from 'node:crypto';
+import type { RegionResponse, RegionStub, Shape } from './region-dtos.ts';
 import type {
 	RegionIncludeAll,
 	RegionIncludeMin,
@@ -39,11 +36,11 @@ export function shapeToStub(shape: RegionShapeModel): Shape {
 
 export function toDto(region: RegionIncludeAll) {
 	const regionResponse: RegionResponse = {
-		id: region.RegionId,
-		mapId: region.MapId,
+		id: region.RegionId as UUID,
+		mapId: region.MapId as UUID,
 		name: region.Name,
 		shapes: region.Shapes.map(shapeToStub),
-		lighting: region.Lighting,
+		lighting: mapRelativeLightingToDto(region.Lighting),
 		narrations: region.Narrations.map(narrationToStub),
 		actions: region.Actions.map(actionToStub),
 		items: region.Items.map(locationItemToStub),

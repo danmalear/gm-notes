@@ -1,4 +1,4 @@
-import { toStubWithShapes as regionToStub } from '#region/region-mappers.ts';
+import { toStub as regionToStub } from '#region/region-mappers.ts';
 import type { MapResponse, MapStub } from './map-dtos.ts';
 import type { MapRec, MapRefRec } from './map-repository.ts';
 
