@@ -26,7 +26,7 @@ export interface RegionModel {
 	Lighting: RelativeLighting;
 }
 
-export interface RegionModelIncludeMin extends RegionModel {
+export interface RegionIncludeMin extends RegionModel {
 	Shapes: RegionShapeModel[];
 }
 

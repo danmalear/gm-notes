@@ -1,5 +1,5 @@
 import type {
-	RegionModelIncludeMin,
+	RegionIncludeMin,
 	RegionRepository,
 } from '#region/region-repository.ts';
 import type { IRegionShapeRepository } from '#region/region-shape-repository.ts';
@@ -21,7 +21,7 @@ export interface MapRec {
 }
 
 export interface MapRefRec extends MapRec {
-	Regions: RegionModelIncludeMin[];
+	Regions: RegionIncludeMin[];
 }
 
 export const tableName = 'Map';
@@ -49,7 +49,7 @@ export class MapRepository extends Repository<MapRec, MapRefRec> {
 		const map = await this.getByIdRaw(id);
 		if (!map) return undefined;
 		const regions = await this.regionRepository.getByMapId(id);
-		const regionsWithShapes: RegionModelIncludeMin[] = [];
+		const regionsWithShapes: RegionIncludeMin[] = [];
 		for (const region of regions) {
 			const shapes = await this.regionShapeRepository.getByRegionId(
 				region.RegionId,
