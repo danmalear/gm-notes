@@ -14,7 +14,6 @@ import type { RegionResponse, RegionStub, Shape } from './region-dtos.ts';
 import type {
 	RegionIncludeAll,
 	RegionIncludeMin,
-	RegionModel,
 } from './region-repository.ts';
 
 export function shapeToStub(shape: RegionShapeModel): Shape {
@@ -41,30 +40,24 @@ export function toDto(region: RegionIncludeAll) {
 		name: region.Name,
 		shapes: region.Shapes.map(shapeToStub),
 		lighting: mapRelativeLightingToDto(region.Lighting),
-		narrations: region.Narrations.map(narrationToStub),
+		narrations: region.Narrations.map((regionNarration) =>
+			narrationToStub(regionNarration.Narration),
+		),
 		actions: region.Actions.map(actionToStub),
 		items: region.Items.map(locationItemToStub),
-		handouts: region.Handouts.map(handoutToStub),
+		handouts: region.Handouts.map((regionHandout) =>
+			handoutToStub(regionHandout.Handout),
+		),
 		notes: region.Notes.map((note) => note.Description),
 	};
 
 	return regionResponse;
 }
 
-export function toStub(region: RegionModel) {
+export function toStub(region: RegionIncludeMin) {
 	const regionStub: RegionStub = {
-		id: region.RegionId,
-		mapId: region.MapId,
-		name: region.Name,
-	};
-
-	return regionStub;
-}
-
-export function toStubWithShapes(region: RegionIncludeMin) {
-	const regionStub: RegionStubWithShapes = {
-		id: region.RegionId,
-		mapId: region.MapId,
+		id: region.RegionId as UUID,
+		mapId: region.MapId as UUID,
 		name: region.Name,
 		shapes: region.Shapes.map(shapeToStub),
 	};

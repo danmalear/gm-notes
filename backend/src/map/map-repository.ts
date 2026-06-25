@@ -1,6 +1,6 @@
 import type {
+	IRegionRepository,
 	RegionIncludeMin,
-	RegionRepository,
 } from '#region/region-repository.ts';
 import type { IRegionShapeRepository } from '#region/region-shape-repository.ts';
 import type { Lighting } from '#shared/data-types.ts';
@@ -28,12 +28,12 @@ export const tableName = 'Map';
 export const pkColumn = 'MapId';
 
 export interface MapRepositoryConfig {
-	regionRepository: RegionRepository;
+	regionRepository: IRegionRepository;
 	regionShapeRepository: IRegionShapeRepository;
 }
 
 export class MapRepository extends Repository<MapRec, MapRefRec> {
-	regionRepository: RegionRepository;
+	regionRepository: IRegionRepository;
 	regionShapeRepository: IRegionShapeRepository;
 
 	constructor({
@@ -52,7 +52,7 @@ export class MapRepository extends Repository<MapRec, MapRefRec> {
 		const regionsWithShapes: RegionIncludeMin[] = [];
 		for (const region of regions) {
 			const shapes = await this.regionShapeRepository.getByRegionId(
-				region.RegionId,
+				region.RegionId as UUID,
 			);
 			regionsWithShapes.push({
 				...region,

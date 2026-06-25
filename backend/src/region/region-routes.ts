@@ -2,7 +2,7 @@ import type { ICommandBus } from '#command/command-bus.ts';
 import type { IEventBus } from '#event/event-bus.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, InternalError } from '#shared/error.ts';
-import { getByIdDEPRECATED } from '#shared/route-utils.ts';
+import { getById } from '#shared/route-utils.ts';
 import { isUUID } from '#shared/uuid.ts';
 import { requiredFields, validatePostBody } from '#shared/validation/http.ts';
 import { randomUUID } from 'crypto';
@@ -14,7 +14,7 @@ import type {
 	RegionStub,
 } from './region-dtos.ts';
 import { toDto, toStub } from './region-mappers.ts';
-import type { RegionRepository } from './region-repository.ts';
+import type { IRegionRepository } from './region-repository.ts';
 import type { IRegionShapeRepository } from './region-shape-repository.ts';
 import { getShapeType } from './region-shape-utils.ts';
 import {
@@ -27,7 +27,7 @@ export function regionRoutes(
 	app: Express,
 	_commandBus: ICommandBus,
 	_eventBus: IEventBus,
-	regionRepository: RegionRepository,
+	regionRepository: IRegionRepository,
 	regionShapeRepository: IRegionShapeRepository,
 ) {
 	const apiNamespace = 'regions';
@@ -69,7 +69,7 @@ export function regionRoutes(
 		},
 	);
 
-	getByIdDEPRECATED(app, {
+	getById(app, {
 		apiNamespace,
 		objectDescriptor: 'Region',
 		repository: regionRepository,
