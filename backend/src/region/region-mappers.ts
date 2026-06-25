@@ -15,9 +15,9 @@ import type {
 	Shape,
 } from './region-dtos.ts';
 import type {
-	RegionRec,
-	RegionRecShapes,
-	RegionRefRec,
+	RegionModel,
+	RegionModelIncludeAll,
+	RegionModelIncludeMin,
 } from './region-repository.ts';
 
 export function shapeToStub(shape: RegionShapeModel): Shape {
@@ -37,7 +37,7 @@ export function shapeToStub(shape: RegionShapeModel): Shape {
 	}
 }
 
-export function toDto(region: RegionRefRec) {
+export function toDto(region: RegionModelIncludeAll) {
 	const regionResponse: RegionResponse = {
 		id: region.RegionId,
 		mapId: region.MapId,
@@ -54,7 +54,7 @@ export function toDto(region: RegionRefRec) {
 	return regionResponse;
 }
 
-export function toStub(region: RegionRec) {
+export function toStub(region: RegionModel) {
 	const regionStub: RegionStub = {
 		id: region.RegionId,
 		mapId: region.MapId,
@@ -64,7 +64,7 @@ export function toStub(region: RegionRec) {
 	return regionStub;
 }
 
-export function toStubWithShapes(region: RegionRecShapes) {
+export function toStubWithShapes(region: RegionModelIncludeMin) {
 	const regionStub: RegionStubWithShapes = {
 		id: region.RegionId,
 		mapId: region.MapId,

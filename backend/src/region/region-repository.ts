@@ -18,7 +18,7 @@ import { Repository } from '#shared/repository-old.ts';
 import type { UUID } from 'crypto';
 import type { IRegionShapeRepository } from './region-shape-repository.ts';
 
-export interface RegionRec {
+export interface RegionModel {
 	RegionId: UUID;
 	RegionTemplateId: UUID | null;
 	MapId: UUID;
@@ -26,11 +26,12 @@ export interface RegionRec {
 	Lighting: RelativeLighting;
 }
 
-export interface RegionRecShapes extends RegionRec {
+export interface RegionModelIncludeMin extends RegionModel {
 	Shapes: RegionShapeModel[];
 }
 
-export interface RegionRefRec extends RegionRecShapes {
+export interface RegionModelIncludeAll extends RegionModel {
+	Shapes: RegionShapeModel[];
 	Lighting: RelativeLighting;
 	Narrations: NarrationModel[];
 	// Creatures: CreatureRec[];
@@ -53,7 +54,10 @@ export interface RegionRepositoryConfig {
 	regionShapeRepository: IRegionShapeRepository;
 }
 
-export class RegionRepository extends Repository<RegionRec, RegionRefRec> {
+export class RegionRepository extends Repository<
+	RegionModel,
+	RegionModelIncludeAll
+> {
 	actionRepository: IActionRepository;
 	// creatureRepository: CreatureRepository;
 	handoutRepository: IHandoutRepository;
@@ -81,7 +85,7 @@ export class RegionRepository extends Repository<RegionRec, RegionRefRec> {
 		this.regionShapeRepository = regionShapeRepository;
 	}
 
-	override async getById(id: UUID): Promise<RegionRefRec | undefined> {
+	override async getById(id: UUID): Promise<RegionModelIncludeAll | undefined> {
 		const regionRaw = await this.getByIdRaw(id);
 		if (!regionRaw) return undefined;
 
@@ -112,7 +116,7 @@ export class RegionRepository extends Repository<RegionRec, RegionRefRec> {
 	 */
 	async getByMapId(mapId: UUID) {
 		try {
-			return await db<RegionRec>(this.tableName).where('MapId', mapId);
+			return await db<RegionModel>(this.tableName).where('MapId', mapId);
 		} catch (e) {
 			throw Error(
 				`Error getting ${this.tableName} records for map ID ${mapId}: ${getMessage(e)}`,
