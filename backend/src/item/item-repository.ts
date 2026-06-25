@@ -16,6 +16,12 @@ export interface ItemIncludeAll extends ItemModel {
 	Notes: NoteModel[];
 }
 
+export const includeAll = {
+	ImageFile: true,
+	Actions: true,
+	Notes: true,
+} satisfies ItemInclude;
+
 export type IItemRepository = IRepository<
 	ItemModel,
 	ItemCreateInput,
@@ -47,18 +53,12 @@ export class ItemRepository
 	}
 
 	override async getById(itemId: UUID): Promise<ItemIncludeAll | null> {
-		const include = {
-			Actions: true,
-			ImageFile: true,
-			Notes: true,
-		} satisfies ItemInclude;
-
 		try {
 			return await this.prisma.item.findUnique({
 				where: {
 					ItemId: itemId,
 				},
-				include,
+				include: includeAll,
 			});
 		} catch (e) {
 			throw this.getByIdError(itemId, e);

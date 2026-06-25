@@ -10,13 +10,16 @@ import type { NoteModel } from '#prisma-models/Note.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
-import type { ItemIncludeAll } from './item-repository.ts';
+import {
+	includeAll as itemIncludeAll,
+	type ItemIncludeAll,
+} from './item-repository.ts';
 
 export interface LocationItemIncludeMin extends LocationItemModel {
 	Item: ItemModel;
 }
 
-const includeMin = {
+export const includeMin = {
 	Item: true,
 } satisfies LocationItemInclude;
 
@@ -33,11 +36,7 @@ const includeAll = {
 		include: includeMin,
 	},
 	Item: {
-		include: {
-			Actions: true,
-			ImageFile: true,
-			Notes: true,
-		},
+		include: itemIncludeAll,
 	},
 	Notes: true,
 } satisfies LocationItemInclude;
