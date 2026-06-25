@@ -350,6 +350,23 @@ export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedStringNullableFilter<$PrismaModel>
 }
 
+export type EnumRelativeLightingFilter<$PrismaModel = never> = {
+  equals?: $Enums.RelativeLighting | Prisma.EnumRelativeLightingFieldRefInput<$PrismaModel>
+  in?: $Enums.RelativeLighting[] | Prisma.ListEnumRelativeLightingFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RelativeLighting[] | Prisma.ListEnumRelativeLightingFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRelativeLightingFilter<$PrismaModel> | $Enums.RelativeLighting
+}
+
+export type EnumRelativeLightingWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.RelativeLighting | Prisma.EnumRelativeLightingFieldRefInput<$PrismaModel>
+  in?: $Enums.RelativeLighting[] | Prisma.ListEnumRelativeLightingFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RelativeLighting[] | Prisma.ListEnumRelativeLightingFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRelativeLightingWithAggregatesFilter<$PrismaModel> | $Enums.RelativeLighting
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumRelativeLightingFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumRelativeLightingFilter<$PrismaModel>
+}
+
 export type EnumShapeTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.ShapeType | Prisma.EnumShapeTypeFieldRefInput<$PrismaModel>
   in?: $Enums.ShapeType[] | Prisma.ListEnumShapeTypeFieldRefInput<$PrismaModel>
@@ -683,6 +700,23 @@ export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedStringNullableFilter<$PrismaModel>
   _max?: Prisma.NestedStringNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumRelativeLightingFilter<$PrismaModel = never> = {
+  equals?: $Enums.RelativeLighting | Prisma.EnumRelativeLightingFieldRefInput<$PrismaModel>
+  in?: $Enums.RelativeLighting[] | Prisma.ListEnumRelativeLightingFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RelativeLighting[] | Prisma.ListEnumRelativeLightingFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRelativeLightingFilter<$PrismaModel> | $Enums.RelativeLighting
+}
+
+export type NestedEnumRelativeLightingWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.RelativeLighting | Prisma.EnumRelativeLightingFieldRefInput<$PrismaModel>
+  in?: $Enums.RelativeLighting[] | Prisma.ListEnumRelativeLightingFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RelativeLighting[] | Prisma.ListEnumRelativeLightingFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRelativeLightingWithAggregatesFilter<$PrismaModel> | $Enums.RelativeLighting
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumRelativeLightingFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumRelativeLightingFilter<$PrismaModel>
 }
 
 export type NestedEnumShapeTypeFilter<$PrismaModel = never> = {

@@ -256,7 +256,7 @@ model Region {
   RegionTemplateId String?           @db.Uuid
   MapId            String            @db.Uuid
   Name             String
-  Lighting         String            @default("Default")
+  Lighting         RelativeLighting  @default(Default)
   Actions          Action[]          @relation(name: "TargetRegion")
   Items            LocationItem[]    @relation(name: "RegionItem")
   Notes            Note[]            @relation(name: "ParentRegion")
