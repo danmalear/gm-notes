@@ -47,6 +47,18 @@ export const HandoutType = {
 export type HandoutType = (typeof HandoutType)[keyof typeof HandoutType]
 
 
+export const RelativeLighting = {
+  Darkness: 'Darkness',
+  DimLight: 'DimLight',
+  BrightLight: 'BrightLight',
+  Default: 'Default',
+  DefaultPlus: 'DefaultPlus',
+  DefaultMinus: 'DefaultMinus'
+} as const
+
+export type RelativeLighting = (typeof RelativeLighting)[keyof typeof RelativeLighting]
+
+
 export const ShapeType = {
   Circle: 'Circle',
   Polygon: 'Polygon',

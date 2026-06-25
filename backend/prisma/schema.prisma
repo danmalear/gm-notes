@@ -308,6 +308,17 @@ model RegionTemplate {
   @@schema("public")
 }
 
+enum RelativeLighting {
+  Darkness
+  DimLight     @map("Dim Light")
+  BrightLight  @map("Bright Light")
+  Default
+  DefaultPlus  @map("Default+")
+  DefaultMinus @map("Default-")
+
+  @@schema("public")
+}
+
 enum ShapeType {
   Circle
   Polygon
