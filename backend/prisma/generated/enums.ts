@@ -50,7 +50,7 @@ export type HandoutType = (typeof HandoutType)[keyof typeof HandoutType]
 export const ShapeType = {
   Circle: 'Circle',
   Polygon: 'Polygon',
-  Square: 'Square'
+  Rectangle: 'Rectangle'
 } as const
 
 export type ShapeType = (typeof ShapeType)[keyof typeof ShapeType]

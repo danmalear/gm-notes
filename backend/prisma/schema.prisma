@@ -311,7 +311,7 @@ model RegionTemplate {
 enum ShapeType {
   Circle
   Polygon
-  Square
+  Rectangle
 
   @@schema("public")
 }
