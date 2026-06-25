@@ -1,4 +1,4 @@
-import type { Skill } from '#prisma-enums';
+import type { SkillDto } from '#shared/data-types.ts';
 import type { UUID } from 'crypto';
 
 /**
@@ -8,7 +8,7 @@ import type { UUID } from 'crypto';
 export interface AbilityCheckResponse {
 	id: UUID;
 	actionId: UUID;
-	skill: Skill;
+	skill: SkillDto;
 	dc: number;
 	successNarration?: string;
 	failureNarration?: string;
@@ -23,7 +23,7 @@ export interface AbilityCheckResponse {
 export interface AbilityCheckStub {
 	id: UUID;
 	actionId: UUID;
-	skill: Skill;
+	skill: SkillDto;
 	dc: number;
 	successNarrationId?: UUID;
 	failureNarrationId?: UUID;
