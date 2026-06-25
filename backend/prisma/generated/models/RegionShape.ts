@@ -27,13 +27,13 @@ export type AggregateRegionShape = {
 export type RegionShapeMinAggregateOutputType = {
   RegionShapeId: string | null
   RegionId: string | null
-  ShapeType: string | null
+  ShapeType: $Enums.ShapeType | null
 }
 
 export type RegionShapeMaxAggregateOutputType = {
   RegionShapeId: string | null
   RegionId: string | null
-  ShapeType: string | null
+  ShapeType: $Enums.ShapeType | null
 }
 
 export type RegionShapeCountAggregateOutputType = {
@@ -140,7 +140,7 @@ export type RegionShapeGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 export type RegionShapeGroupByOutputType = {
   RegionShapeId: string
   RegionId: string
-  ShapeType: string
+  ShapeType: $Enums.ShapeType
   Coords: runtime.JsonValue
   _count: RegionShapeCountAggregateOutputType | null
   _min: RegionShapeMinAggregateOutputType | null
@@ -168,7 +168,7 @@ export type RegionShapeWhereInput = {
   NOT?: Prisma.RegionShapeWhereInput | Prisma.RegionShapeWhereInput[]
   RegionShapeId?: Prisma.UuidFilter<"RegionShape"> | string
   RegionId?: Prisma.UuidFilter<"RegionShape"> | string
-  ShapeType?: Prisma.StringFilter<"RegionShape"> | string
+  ShapeType?: Prisma.EnumShapeTypeFilter<"RegionShape"> | $Enums.ShapeType
   Coords?: Prisma.JsonFilter<"RegionShape">
   Region?: Prisma.XOR<Prisma.RegionScalarRelationFilter, Prisma.RegionWhereInput>
 }
@@ -187,7 +187,7 @@ export type RegionShapeWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.RegionShapeWhereInput[]
   NOT?: Prisma.RegionShapeWhereInput | Prisma.RegionShapeWhereInput[]
   RegionId?: Prisma.UuidFilter<"RegionShape"> | string
-  ShapeType?: Prisma.StringFilter<"RegionShape"> | string
+  ShapeType?: Prisma.EnumShapeTypeFilter<"RegionShape"> | $Enums.ShapeType
   Coords?: Prisma.JsonFilter<"RegionShape">
   Region?: Prisma.XOR<Prisma.RegionScalarRelationFilter, Prisma.RegionWhereInput>
 }, "RegionShapeId">
@@ -208,13 +208,13 @@ export type RegionShapeScalarWhereWithAggregatesInput = {
   NOT?: Prisma.RegionShapeScalarWhereWithAggregatesInput | Prisma.RegionShapeScalarWhereWithAggregatesInput[]
   RegionShapeId?: Prisma.UuidWithAggregatesFilter<"RegionShape"> | string
   RegionId?: Prisma.UuidWithAggregatesFilter<"RegionShape"> | string
-  ShapeType?: Prisma.StringWithAggregatesFilter<"RegionShape"> | string
+  ShapeType?: Prisma.EnumShapeTypeWithAggregatesFilter<"RegionShape"> | $Enums.ShapeType
   Coords?: Prisma.JsonWithAggregatesFilter<"RegionShape">
 }
 
 export type RegionShapeCreateInput = {
   RegionShapeId: string
-  ShapeType: string
+  ShapeType: $Enums.ShapeType
   Coords: Prisma.JsonNullValueInput | runtime.InputJsonValue
   Region: Prisma.RegionCreateNestedOneWithoutRegionShapesInput
 }
@@ -222,13 +222,13 @@ export type RegionShapeCreateInput = {
 export type RegionShapeUncheckedCreateInput = {
   RegionShapeId: string
   RegionId: string
-  ShapeType: string
+  ShapeType: $Enums.ShapeType
   Coords: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type RegionShapeUpdateInput = {
   RegionShapeId?: Prisma.StringFieldUpdateOperationsInput | string
-  ShapeType?: Prisma.StringFieldUpdateOperationsInput | string
+  ShapeType?: Prisma.EnumShapeTypeFieldUpdateOperationsInput | $Enums.ShapeType
   Coords?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   Region?: Prisma.RegionUpdateOneRequiredWithoutRegionShapesNestedInput
 }
@@ -236,27 +236,27 @@ export type RegionShapeUpdateInput = {
 export type RegionShapeUncheckedUpdateInput = {
   RegionShapeId?: Prisma.StringFieldUpdateOperationsInput | string
   RegionId?: Prisma.StringFieldUpdateOperationsInput | string
-  ShapeType?: Prisma.StringFieldUpdateOperationsInput | string
+  ShapeType?: Prisma.EnumShapeTypeFieldUpdateOperationsInput | $Enums.ShapeType
   Coords?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type RegionShapeCreateManyInput = {
   RegionShapeId: string
   RegionId: string
-  ShapeType: string
+  ShapeType: $Enums.ShapeType
   Coords: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type RegionShapeUpdateManyMutationInput = {
   RegionShapeId?: Prisma.StringFieldUpdateOperationsInput | string
-  ShapeType?: Prisma.StringFieldUpdateOperationsInput | string
+  ShapeType?: Prisma.EnumShapeTypeFieldUpdateOperationsInput | $Enums.ShapeType
   Coords?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type RegionShapeUncheckedUpdateManyInput = {
   RegionShapeId?: Prisma.StringFieldUpdateOperationsInput | string
   RegionId?: Prisma.StringFieldUpdateOperationsInput | string
-  ShapeType?: Prisma.StringFieldUpdateOperationsInput | string
+  ShapeType?: Prisma.EnumShapeTypeFieldUpdateOperationsInput | $Enums.ShapeType
   Coords?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
@@ -331,15 +331,19 @@ export type RegionShapeUncheckedUpdateManyWithoutRegionNestedInput = {
   deleteMany?: Prisma.RegionShapeScalarWhereInput | Prisma.RegionShapeScalarWhereInput[]
 }
 
+export type EnumShapeTypeFieldUpdateOperationsInput = {
+  set?: $Enums.ShapeType
+}
+
 export type RegionShapeCreateWithoutRegionInput = {
   RegionShapeId: string
-  ShapeType: string
+  ShapeType: $Enums.ShapeType
   Coords: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type RegionShapeUncheckedCreateWithoutRegionInput = {
   RegionShapeId: string
-  ShapeType: string
+  ShapeType: $Enums.ShapeType
   Coords: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
@@ -375,31 +379,31 @@ export type RegionShapeScalarWhereInput = {
   NOT?: Prisma.RegionShapeScalarWhereInput | Prisma.RegionShapeScalarWhereInput[]
   RegionShapeId?: Prisma.UuidFilter<"RegionShape"> | string
   RegionId?: Prisma.UuidFilter<"RegionShape"> | string
-  ShapeType?: Prisma.StringFilter<"RegionShape"> | string
+  ShapeType?: Prisma.EnumShapeTypeFilter<"RegionShape"> | $Enums.ShapeType
   Coords?: Prisma.JsonFilter<"RegionShape">
 }
 
 export type RegionShapeCreateManyRegionInput = {
   RegionShapeId: string
-  ShapeType: string
+  ShapeType: $Enums.ShapeType
   Coords: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type RegionShapeUpdateWithoutRegionInput = {
   RegionShapeId?: Prisma.StringFieldUpdateOperationsInput | string
-  ShapeType?: Prisma.StringFieldUpdateOperationsInput | string
+  ShapeType?: Prisma.EnumShapeTypeFieldUpdateOperationsInput | $Enums.ShapeType
   Coords?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type RegionShapeUncheckedUpdateWithoutRegionInput = {
   RegionShapeId?: Prisma.StringFieldUpdateOperationsInput | string
-  ShapeType?: Prisma.StringFieldUpdateOperationsInput | string
+  ShapeType?: Prisma.EnumShapeTypeFieldUpdateOperationsInput | $Enums.ShapeType
   Coords?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type RegionShapeUncheckedUpdateManyWithoutRegionInput = {
   RegionShapeId?: Prisma.StringFieldUpdateOperationsInput | string
-  ShapeType?: Prisma.StringFieldUpdateOperationsInput | string
+  ShapeType?: Prisma.EnumShapeTypeFieldUpdateOperationsInput | $Enums.ShapeType
   Coords?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
@@ -455,7 +459,7 @@ export type $RegionShapePayload<ExtArgs extends runtime.Types.Extensions.Interna
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     RegionShapeId: string
     RegionId: string
-    ShapeType: string
+    ShapeType: $Enums.ShapeType
     Coords: runtime.JsonValue
   }, ExtArgs["result"]["regionShape"]>
   composites: {}
@@ -883,7 +887,7 @@ export interface Prisma__RegionShapeClient<T, Null = never, ExtArgs extends runt
 export interface RegionShapeFieldRefs {
   readonly RegionShapeId: Prisma.FieldRef<"RegionShape", 'String'>
   readonly RegionId: Prisma.FieldRef<"RegionShape", 'String'>
-  readonly ShapeType: Prisma.FieldRef<"RegionShape", 'String'>
+  readonly ShapeType: Prisma.FieldRef<"RegionShape", 'ShapeType'>
   readonly Coords: Prisma.FieldRef<"RegionShape", 'Json'>
 }
     

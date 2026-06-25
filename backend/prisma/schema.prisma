@@ -290,10 +290,10 @@ model RegionNarration {
 }
 
 model RegionShape {
-  RegionShapeId String @id @db.Uuid
-  RegionId      String @db.Uuid
-  Region        Region @relation(fields: [RegionId], references: [RegionId])
-  ShapeType     String
+  RegionShapeId String    @id @db.Uuid
+  RegionId      String    @db.Uuid
+  Region        Region    @relation(fields: [RegionId], references: [RegionId])
+  ShapeType     ShapeType
   Coords        Json
 
   @@index([RegionId])
