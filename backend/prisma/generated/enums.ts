@@ -47,6 +47,15 @@ export const HandoutType = {
 export type HandoutType = (typeof HandoutType)[keyof typeof HandoutType]
 
 
+export const ShapeType = {
+  Circle: 'Circle',
+  Polygon: 'Polygon',
+  Square: 'Square'
+} as const
+
+export type ShapeType = (typeof ShapeType)[keyof typeof ShapeType]
+
+
 export const Skill = {
   Acrobatics: 'Acrobatics',
   AnimalHandling: 'AnimalHandling',

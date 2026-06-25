@@ -308,6 +308,14 @@ model RegionTemplate {
   @@schema("public")
 }
 
+enum ShapeType {
+  Circle
+  Polygon
+  Square
+
+  @@schema("public")
+}
+
 enum Skill {
   Acrobatics
   AnimalHandling @map("Animal Handling")
