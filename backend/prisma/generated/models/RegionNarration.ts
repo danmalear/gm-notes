@@ -197,7 +197,7 @@ export type RegionNarrationScalarWhereWithAggregatesInput = {
 }
 
 export type RegionNarrationCreateInput = {
-  Region: Prisma.RegionCreateNestedOneWithoutRegionNarrationsInput
+  Region: Prisma.RegionCreateNestedOneWithoutNarrationsInput
   Narration: Prisma.NarrationCreateNestedOneWithoutRegionNarrationsInput
 }
 
@@ -207,7 +207,7 @@ export type RegionNarrationUncheckedCreateInput = {
 }
 
 export type RegionNarrationUpdateInput = {
-  Region?: Prisma.RegionUpdateOneRequiredWithoutRegionNarrationsNestedInput
+  Region?: Prisma.RegionUpdateOneRequiredWithoutNarrationsNestedInput
   Narration?: Prisma.NarrationUpdateOneRequiredWithoutRegionNarrationsNestedInput
 }
 
@@ -345,7 +345,7 @@ export type RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput = {
 }
 
 export type RegionNarrationCreateWithoutNarrationInput = {
-  Region: Prisma.RegionCreateNestedOneWithoutRegionNarrationsInput
+  Region: Prisma.RegionCreateNestedOneWithoutNarrationsInput
 }
 
 export type RegionNarrationUncheckedCreateWithoutNarrationInput = {
@@ -425,7 +425,7 @@ export type RegionNarrationCreateManyNarrationInput = {
 }
 
 export type RegionNarrationUpdateWithoutNarrationInput = {
-  Region?: Prisma.RegionUpdateOneRequiredWithoutRegionNarrationsNestedInput
+  Region?: Prisma.RegionUpdateOneRequiredWithoutNarrationsNestedInput
 }
 
 export type RegionNarrationUncheckedUpdateWithoutNarrationInput = {

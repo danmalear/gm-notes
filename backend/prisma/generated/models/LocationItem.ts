@@ -270,7 +270,7 @@ export type LocationItemScalarWhereWithAggregatesInput = {
 export type LocationItemCreateInput = {
   LocationItemId: string
   Quantity?: number
-  Region?: Prisma.RegionCreateNestedOneWithoutLocationItemsInput
+  Region?: Prisma.RegionCreateNestedOneWithoutItemsInput
   Container?: Prisma.LocationItemCreateNestedOneWithoutContentsInput
   Item: Prisma.ItemCreateNestedOneWithoutLocationItemsInput
   Actions?: Prisma.ActionCreateNestedManyWithoutLocationItemInput
@@ -291,7 +291,7 @@ export type LocationItemUncheckedCreateInput = {
 export type LocationItemUpdateInput = {
   LocationItemId?: Prisma.StringFieldUpdateOperationsInput | string
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  Region?: Prisma.RegionUpdateOneWithoutLocationItemsNestedInput
+  Region?: Prisma.RegionUpdateOneWithoutItemsNestedInput
   Container?: Prisma.LocationItemUpdateOneWithoutContentsNestedInput
   Item?: Prisma.ItemUpdateOneRequiredWithoutLocationItemsNestedInput
   Actions?: Prisma.ActionUpdateManyWithoutLocationItemNestedInput
@@ -549,7 +549,7 @@ export type LocationItemUncheckedUpdateManyWithoutRegionNestedInput = {
 export type LocationItemCreateWithoutActionsInput = {
   LocationItemId: string
   Quantity?: number
-  Region?: Prisma.RegionCreateNestedOneWithoutLocationItemsInput
+  Region?: Prisma.RegionCreateNestedOneWithoutItemsInput
   Container?: Prisma.LocationItemCreateNestedOneWithoutContentsInput
   Item: Prisma.ItemCreateNestedOneWithoutLocationItemsInput
   Notes?: Prisma.NoteCreateNestedManyWithoutLocationItemInput
@@ -584,7 +584,7 @@ export type LocationItemUpdateToOneWithWhereWithoutActionsInput = {
 export type LocationItemUpdateWithoutActionsInput = {
   LocationItemId?: Prisma.StringFieldUpdateOperationsInput | string
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  Region?: Prisma.RegionUpdateOneWithoutLocationItemsNestedInput
+  Region?: Prisma.RegionUpdateOneWithoutItemsNestedInput
   Container?: Prisma.LocationItemUpdateOneWithoutContentsNestedInput
   Item?: Prisma.ItemUpdateOneRequiredWithoutLocationItemsNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutLocationItemNestedInput
@@ -603,7 +603,7 @@ export type LocationItemUncheckedUpdateWithoutActionsInput = {
 export type LocationItemCreateWithoutItemInput = {
   LocationItemId: string
   Quantity?: number
-  Region?: Prisma.RegionCreateNestedOneWithoutLocationItemsInput
+  Region?: Prisma.RegionCreateNestedOneWithoutItemsInput
   Container?: Prisma.LocationItemCreateNestedOneWithoutContentsInput
   Actions?: Prisma.ActionCreateNestedManyWithoutLocationItemInput
   Notes?: Prisma.NoteCreateNestedManyWithoutLocationItemInput
@@ -658,7 +658,7 @@ export type LocationItemScalarWhereInput = {
 export type LocationItemCreateWithoutContentsInput = {
   LocationItemId: string
   Quantity?: number
-  Region?: Prisma.RegionCreateNestedOneWithoutLocationItemsInput
+  Region?: Prisma.RegionCreateNestedOneWithoutItemsInput
   Container?: Prisma.LocationItemCreateNestedOneWithoutContentsInput
   Item: Prisma.ItemCreateNestedOneWithoutLocationItemsInput
   Actions?: Prisma.ActionCreateNestedManyWithoutLocationItemInput
@@ -682,7 +682,7 @@ export type LocationItemCreateOrConnectWithoutContentsInput = {
 export type LocationItemCreateWithoutContainerInput = {
   LocationItemId: string
   Quantity?: number
-  Region?: Prisma.RegionCreateNestedOneWithoutLocationItemsInput
+  Region?: Prisma.RegionCreateNestedOneWithoutItemsInput
   Item: Prisma.ItemCreateNestedOneWithoutLocationItemsInput
   Actions?: Prisma.ActionCreateNestedManyWithoutLocationItemInput
   Notes?: Prisma.NoteCreateNestedManyWithoutLocationItemInput
@@ -722,7 +722,7 @@ export type LocationItemUpdateToOneWithWhereWithoutContentsInput = {
 export type LocationItemUpdateWithoutContentsInput = {
   LocationItemId?: Prisma.StringFieldUpdateOperationsInput | string
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  Region?: Prisma.RegionUpdateOneWithoutLocationItemsNestedInput
+  Region?: Prisma.RegionUpdateOneWithoutItemsNestedInput
   Container?: Prisma.LocationItemUpdateOneWithoutContentsNestedInput
   Item?: Prisma.ItemUpdateOneRequiredWithoutLocationItemsNestedInput
   Actions?: Prisma.ActionUpdateManyWithoutLocationItemNestedInput
@@ -757,7 +757,7 @@ export type LocationItemUpdateManyWithWhereWithoutContainerInput = {
 export type LocationItemCreateWithoutNotesInput = {
   LocationItemId: string
   Quantity?: number
-  Region?: Prisma.RegionCreateNestedOneWithoutLocationItemsInput
+  Region?: Prisma.RegionCreateNestedOneWithoutItemsInput
   Container?: Prisma.LocationItemCreateNestedOneWithoutContentsInput
   Item: Prisma.ItemCreateNestedOneWithoutLocationItemsInput
   Actions?: Prisma.ActionCreateNestedManyWithoutLocationItemInput
@@ -792,7 +792,7 @@ export type LocationItemUpdateToOneWithWhereWithoutNotesInput = {
 export type LocationItemUpdateWithoutNotesInput = {
   LocationItemId?: Prisma.StringFieldUpdateOperationsInput | string
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  Region?: Prisma.RegionUpdateOneWithoutLocationItemsNestedInput
+  Region?: Prisma.RegionUpdateOneWithoutItemsNestedInput
   Container?: Prisma.LocationItemUpdateOneWithoutContentsNestedInput
   Item?: Prisma.ItemUpdateOneRequiredWithoutLocationItemsNestedInput
   Actions?: Prisma.ActionUpdateManyWithoutLocationItemNestedInput
@@ -862,7 +862,7 @@ export type LocationItemCreateManyItemInput = {
 export type LocationItemUpdateWithoutItemInput = {
   LocationItemId?: Prisma.StringFieldUpdateOperationsInput | string
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  Region?: Prisma.RegionUpdateOneWithoutLocationItemsNestedInput
+  Region?: Prisma.RegionUpdateOneWithoutItemsNestedInput
   Container?: Prisma.LocationItemUpdateOneWithoutContentsNestedInput
   Actions?: Prisma.ActionUpdateManyWithoutLocationItemNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutLocationItemNestedInput
@@ -893,7 +893,7 @@ export type LocationItemCreateManyContainerInput = {
 export type LocationItemUpdateWithoutContainerInput = {
   LocationItemId?: Prisma.StringFieldUpdateOperationsInput | string
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  Region?: Prisma.RegionUpdateOneWithoutLocationItemsNestedInput
+  Region?: Prisma.RegionUpdateOneWithoutItemsNestedInput
   Item?: Prisma.ItemUpdateOneRequiredWithoutLocationItemsNestedInput
   Actions?: Prisma.ActionUpdateManyWithoutLocationItemNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutLocationItemNestedInput

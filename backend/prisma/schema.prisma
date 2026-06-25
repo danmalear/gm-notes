@@ -258,10 +258,10 @@ model Region {
   Name             String
   Lighting         String            @default("Default")
   Actions          Action[]          @relation(name: "TargetRegion")
-  LocationItems    LocationItem[]    @relation(name: "RegionItem")
+  Items            LocationItem[]    @relation(name: "RegionItem")
   Notes            Note[]            @relation(name: "ParentRegion")
-  RegionHandouts   RegionHandout[]
-  RegionNarrations RegionNarration[]
+  Handouts         RegionHandout[]
+  Narrations       RegionNarration[]
   Shapes           RegionShape[]
 
   @@schema("public")

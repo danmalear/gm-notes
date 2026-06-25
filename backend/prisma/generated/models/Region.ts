@@ -183,10 +183,10 @@ export type RegionWhereInput = {
   Name?: Prisma.StringFilter<"Region"> | string
   Lighting?: Prisma.StringFilter<"Region"> | string
   Actions?: Prisma.ActionListRelationFilter
-  LocationItems?: Prisma.LocationItemListRelationFilter
+  Items?: Prisma.LocationItemListRelationFilter
   Notes?: Prisma.NoteListRelationFilter
-  RegionHandouts?: Prisma.RegionHandoutListRelationFilter
-  RegionNarrations?: Prisma.RegionNarrationListRelationFilter
+  Handouts?: Prisma.RegionHandoutListRelationFilter
+  Narrations?: Prisma.RegionNarrationListRelationFilter
   Shapes?: Prisma.RegionShapeListRelationFilter
 }
 
@@ -197,10 +197,10 @@ export type RegionOrderByWithRelationInput = {
   Name?: Prisma.SortOrder
   Lighting?: Prisma.SortOrder
   Actions?: Prisma.ActionOrderByRelationAggregateInput
-  LocationItems?: Prisma.LocationItemOrderByRelationAggregateInput
+  Items?: Prisma.LocationItemOrderByRelationAggregateInput
   Notes?: Prisma.NoteOrderByRelationAggregateInput
-  RegionHandouts?: Prisma.RegionHandoutOrderByRelationAggregateInput
-  RegionNarrations?: Prisma.RegionNarrationOrderByRelationAggregateInput
+  Handouts?: Prisma.RegionHandoutOrderByRelationAggregateInput
+  Narrations?: Prisma.RegionNarrationOrderByRelationAggregateInput
   Shapes?: Prisma.RegionShapeOrderByRelationAggregateInput
 }
 
@@ -214,10 +214,10 @@ export type RegionWhereUniqueInput = Prisma.AtLeast<{
   Name?: Prisma.StringFilter<"Region"> | string
   Lighting?: Prisma.StringFilter<"Region"> | string
   Actions?: Prisma.ActionListRelationFilter
-  LocationItems?: Prisma.LocationItemListRelationFilter
+  Items?: Prisma.LocationItemListRelationFilter
   Notes?: Prisma.NoteListRelationFilter
-  RegionHandouts?: Prisma.RegionHandoutListRelationFilter
-  RegionNarrations?: Prisma.RegionNarrationListRelationFilter
+  Handouts?: Prisma.RegionHandoutListRelationFilter
+  Narrations?: Prisma.RegionNarrationListRelationFilter
   Shapes?: Prisma.RegionShapeListRelationFilter
 }, "RegionId">
 
@@ -250,10 +250,10 @@ export type RegionCreateInput = {
   Name: string
   Lighting?: string
   Actions?: Prisma.ActionCreateNestedManyWithoutRegionInput
-  LocationItems?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
+  Items?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteCreateNestedManyWithoutRegionInput
-  RegionHandouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
-  RegionNarrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
+  Handouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
+  Narrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeCreateNestedManyWithoutRegionInput
 }
 
@@ -264,10 +264,10 @@ export type RegionUncheckedCreateInput = {
   Name: string
   Lighting?: string
   Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutRegionInput
-  LocationItems?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
+  Items?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutRegionInput
-  RegionHandouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
-  RegionNarrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
+  Handouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
+  Narrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeUncheckedCreateNestedManyWithoutRegionInput
 }
 
@@ -278,10 +278,10 @@ export type RegionUpdateInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.StringFieldUpdateOperationsInput | string
   Actions?: Prisma.ActionUpdateManyWithoutRegionNestedInput
-  LocationItems?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
+  Items?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutRegionNestedInput
-  RegionHandouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
-  RegionNarrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
+  Handouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
+  Narrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUpdateManyWithoutRegionNestedInput
 }
 
@@ -292,10 +292,10 @@ export type RegionUncheckedUpdateInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.StringFieldUpdateOperationsInput | string
   Actions?: Prisma.ActionUncheckedUpdateManyWithoutRegionNestedInput
-  LocationItems?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
+  Items?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUncheckedUpdateManyWithoutRegionNestedInput
-  RegionHandouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
-  RegionNarrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
+  Handouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
+  Narrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUncheckedUpdateManyWithoutRegionNestedInput
 }
 
@@ -373,20 +373,20 @@ export type RegionUpdateOneWithoutActionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.RegionUpdateToOneWithWhereWithoutActionsInput, Prisma.RegionUpdateWithoutActionsInput>, Prisma.RegionUncheckedUpdateWithoutActionsInput>
 }
 
-export type RegionCreateNestedOneWithoutLocationItemsInput = {
-  create?: Prisma.XOR<Prisma.RegionCreateWithoutLocationItemsInput, Prisma.RegionUncheckedCreateWithoutLocationItemsInput>
-  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutLocationItemsInput
+export type RegionCreateNestedOneWithoutItemsInput = {
+  create?: Prisma.XOR<Prisma.RegionCreateWithoutItemsInput, Prisma.RegionUncheckedCreateWithoutItemsInput>
+  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutItemsInput
   connect?: Prisma.RegionWhereUniqueInput
 }
 
-export type RegionUpdateOneWithoutLocationItemsNestedInput = {
-  create?: Prisma.XOR<Prisma.RegionCreateWithoutLocationItemsInput, Prisma.RegionUncheckedCreateWithoutLocationItemsInput>
-  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutLocationItemsInput
-  upsert?: Prisma.RegionUpsertWithoutLocationItemsInput
+export type RegionUpdateOneWithoutItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.RegionCreateWithoutItemsInput, Prisma.RegionUncheckedCreateWithoutItemsInput>
+  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutItemsInput
+  upsert?: Prisma.RegionUpsertWithoutItemsInput
   disconnect?: Prisma.RegionWhereInput | boolean
   delete?: Prisma.RegionWhereInput | boolean
   connect?: Prisma.RegionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.RegionUpdateToOneWithWhereWithoutLocationItemsInput, Prisma.RegionUpdateWithoutLocationItemsInput>, Prisma.RegionUncheckedUpdateWithoutLocationItemsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RegionUpdateToOneWithWhereWithoutItemsInput, Prisma.RegionUpdateWithoutItemsInput>, Prisma.RegionUncheckedUpdateWithoutItemsInput>
 }
 
 export type RegionCreateNestedOneWithoutNotesInput = {
@@ -405,32 +405,32 @@ export type RegionUpdateOneWithoutNotesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.RegionUpdateToOneWithWhereWithoutNotesInput, Prisma.RegionUpdateWithoutNotesInput>, Prisma.RegionUncheckedUpdateWithoutNotesInput>
 }
 
-export type RegionCreateNestedOneWithoutRegionHandoutsInput = {
-  create?: Prisma.XOR<Prisma.RegionCreateWithoutRegionHandoutsInput, Prisma.RegionUncheckedCreateWithoutRegionHandoutsInput>
-  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutRegionHandoutsInput
+export type RegionCreateNestedOneWithoutHandoutsInput = {
+  create?: Prisma.XOR<Prisma.RegionCreateWithoutHandoutsInput, Prisma.RegionUncheckedCreateWithoutHandoutsInput>
+  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutHandoutsInput
   connect?: Prisma.RegionWhereUniqueInput
 }
 
-export type RegionUpdateOneRequiredWithoutRegionHandoutsNestedInput = {
-  create?: Prisma.XOR<Prisma.RegionCreateWithoutRegionHandoutsInput, Prisma.RegionUncheckedCreateWithoutRegionHandoutsInput>
-  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutRegionHandoutsInput
-  upsert?: Prisma.RegionUpsertWithoutRegionHandoutsInput
+export type RegionUpdateOneRequiredWithoutHandoutsNestedInput = {
+  create?: Prisma.XOR<Prisma.RegionCreateWithoutHandoutsInput, Prisma.RegionUncheckedCreateWithoutHandoutsInput>
+  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutHandoutsInput
+  upsert?: Prisma.RegionUpsertWithoutHandoutsInput
   connect?: Prisma.RegionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.RegionUpdateToOneWithWhereWithoutRegionHandoutsInput, Prisma.RegionUpdateWithoutRegionHandoutsInput>, Prisma.RegionUncheckedUpdateWithoutRegionHandoutsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RegionUpdateToOneWithWhereWithoutHandoutsInput, Prisma.RegionUpdateWithoutHandoutsInput>, Prisma.RegionUncheckedUpdateWithoutHandoutsInput>
 }
 
-export type RegionCreateNestedOneWithoutRegionNarrationsInput = {
-  create?: Prisma.XOR<Prisma.RegionCreateWithoutRegionNarrationsInput, Prisma.RegionUncheckedCreateWithoutRegionNarrationsInput>
-  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutRegionNarrationsInput
+export type RegionCreateNestedOneWithoutNarrationsInput = {
+  create?: Prisma.XOR<Prisma.RegionCreateWithoutNarrationsInput, Prisma.RegionUncheckedCreateWithoutNarrationsInput>
+  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutNarrationsInput
   connect?: Prisma.RegionWhereUniqueInput
 }
 
-export type RegionUpdateOneRequiredWithoutRegionNarrationsNestedInput = {
-  create?: Prisma.XOR<Prisma.RegionCreateWithoutRegionNarrationsInput, Prisma.RegionUncheckedCreateWithoutRegionNarrationsInput>
-  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutRegionNarrationsInput
-  upsert?: Prisma.RegionUpsertWithoutRegionNarrationsInput
+export type RegionUpdateOneRequiredWithoutNarrationsNestedInput = {
+  create?: Prisma.XOR<Prisma.RegionCreateWithoutNarrationsInput, Prisma.RegionUncheckedCreateWithoutNarrationsInput>
+  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutNarrationsInput
+  upsert?: Prisma.RegionUpsertWithoutNarrationsInput
   connect?: Prisma.RegionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.RegionUpdateToOneWithWhereWithoutRegionNarrationsInput, Prisma.RegionUpdateWithoutRegionNarrationsInput>, Prisma.RegionUncheckedUpdateWithoutRegionNarrationsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RegionUpdateToOneWithWhereWithoutNarrationsInput, Prisma.RegionUpdateWithoutNarrationsInput>, Prisma.RegionUncheckedUpdateWithoutNarrationsInput>
 }
 
 export type RegionCreateNestedOneWithoutShapesInput = {
@@ -453,10 +453,10 @@ export type RegionCreateWithoutActionsInput = {
   MapId: string
   Name: string
   Lighting?: string
-  LocationItems?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
+  Items?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteCreateNestedManyWithoutRegionInput
-  RegionHandouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
-  RegionNarrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
+  Handouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
+  Narrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeCreateNestedManyWithoutRegionInput
 }
 
@@ -466,10 +466,10 @@ export type RegionUncheckedCreateWithoutActionsInput = {
   MapId: string
   Name: string
   Lighting?: string
-  LocationItems?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
+  Items?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutRegionInput
-  RegionHandouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
-  RegionNarrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
+  Handouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
+  Narrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeUncheckedCreateNestedManyWithoutRegionInput
 }
 
@@ -495,10 +495,10 @@ export type RegionUpdateWithoutActionsInput = {
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.StringFieldUpdateOperationsInput | string
-  LocationItems?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
+  Items?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutRegionNestedInput
-  RegionHandouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
-  RegionNarrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
+  Handouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
+  Narrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUpdateManyWithoutRegionNestedInput
 }
 
@@ -508,14 +508,14 @@ export type RegionUncheckedUpdateWithoutActionsInput = {
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.StringFieldUpdateOperationsInput | string
-  LocationItems?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
+  Items?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUncheckedUpdateManyWithoutRegionNestedInput
-  RegionHandouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
-  RegionNarrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
+  Handouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
+  Narrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUncheckedUpdateManyWithoutRegionNestedInput
 }
 
-export type RegionCreateWithoutLocationItemsInput = {
+export type RegionCreateWithoutItemsInput = {
   RegionId: string
   RegionTemplateId?: string | null
   MapId: string
@@ -523,12 +523,12 @@ export type RegionCreateWithoutLocationItemsInput = {
   Lighting?: string
   Actions?: Prisma.ActionCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteCreateNestedManyWithoutRegionInput
-  RegionHandouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
-  RegionNarrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
+  Handouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
+  Narrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeCreateNestedManyWithoutRegionInput
 }
 
-export type RegionUncheckedCreateWithoutLocationItemsInput = {
+export type RegionUncheckedCreateWithoutItemsInput = {
   RegionId: string
   RegionTemplateId?: string | null
   MapId: string
@@ -536,28 +536,28 @@ export type RegionUncheckedCreateWithoutLocationItemsInput = {
   Lighting?: string
   Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutRegionInput
-  RegionHandouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
-  RegionNarrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
+  Handouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
+  Narrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeUncheckedCreateNestedManyWithoutRegionInput
 }
 
-export type RegionCreateOrConnectWithoutLocationItemsInput = {
+export type RegionCreateOrConnectWithoutItemsInput = {
   where: Prisma.RegionWhereUniqueInput
-  create: Prisma.XOR<Prisma.RegionCreateWithoutLocationItemsInput, Prisma.RegionUncheckedCreateWithoutLocationItemsInput>
+  create: Prisma.XOR<Prisma.RegionCreateWithoutItemsInput, Prisma.RegionUncheckedCreateWithoutItemsInput>
 }
 
-export type RegionUpsertWithoutLocationItemsInput = {
-  update: Prisma.XOR<Prisma.RegionUpdateWithoutLocationItemsInput, Prisma.RegionUncheckedUpdateWithoutLocationItemsInput>
-  create: Prisma.XOR<Prisma.RegionCreateWithoutLocationItemsInput, Prisma.RegionUncheckedCreateWithoutLocationItemsInput>
+export type RegionUpsertWithoutItemsInput = {
+  update: Prisma.XOR<Prisma.RegionUpdateWithoutItemsInput, Prisma.RegionUncheckedUpdateWithoutItemsInput>
+  create: Prisma.XOR<Prisma.RegionCreateWithoutItemsInput, Prisma.RegionUncheckedCreateWithoutItemsInput>
   where?: Prisma.RegionWhereInput
 }
 
-export type RegionUpdateToOneWithWhereWithoutLocationItemsInput = {
+export type RegionUpdateToOneWithWhereWithoutItemsInput = {
   where?: Prisma.RegionWhereInput
-  data: Prisma.XOR<Prisma.RegionUpdateWithoutLocationItemsInput, Prisma.RegionUncheckedUpdateWithoutLocationItemsInput>
+  data: Prisma.XOR<Prisma.RegionUpdateWithoutItemsInput, Prisma.RegionUncheckedUpdateWithoutItemsInput>
 }
 
-export type RegionUpdateWithoutLocationItemsInput = {
+export type RegionUpdateWithoutItemsInput = {
   RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   RegionTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -565,12 +565,12 @@ export type RegionUpdateWithoutLocationItemsInput = {
   Lighting?: Prisma.StringFieldUpdateOperationsInput | string
   Actions?: Prisma.ActionUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutRegionNestedInput
-  RegionHandouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
-  RegionNarrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
+  Handouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
+  Narrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUpdateManyWithoutRegionNestedInput
 }
 
-export type RegionUncheckedUpdateWithoutLocationItemsInput = {
+export type RegionUncheckedUpdateWithoutItemsInput = {
   RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   RegionTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -578,8 +578,8 @@ export type RegionUncheckedUpdateWithoutLocationItemsInput = {
   Lighting?: Prisma.StringFieldUpdateOperationsInput | string
   Actions?: Prisma.ActionUncheckedUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUncheckedUpdateManyWithoutRegionNestedInput
-  RegionHandouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
-  RegionNarrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
+  Handouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
+  Narrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUncheckedUpdateManyWithoutRegionNestedInput
 }
 
@@ -590,9 +590,9 @@ export type RegionCreateWithoutNotesInput = {
   Name: string
   Lighting?: string
   Actions?: Prisma.ActionCreateNestedManyWithoutRegionInput
-  LocationItems?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
-  RegionHandouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
-  RegionNarrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
+  Items?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
+  Handouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
+  Narrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeCreateNestedManyWithoutRegionInput
 }
 
@@ -603,9 +603,9 @@ export type RegionUncheckedCreateWithoutNotesInput = {
   Name: string
   Lighting?: string
   Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutRegionInput
-  LocationItems?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
-  RegionHandouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
-  RegionNarrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
+  Items?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
+  Handouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
+  Narrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeUncheckedCreateNestedManyWithoutRegionInput
 }
 
@@ -632,9 +632,9 @@ export type RegionUpdateWithoutNotesInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.StringFieldUpdateOperationsInput | string
   Actions?: Prisma.ActionUpdateManyWithoutRegionNestedInput
-  LocationItems?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
-  RegionHandouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
-  RegionNarrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
+  Items?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
+  Handouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
+  Narrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUpdateManyWithoutRegionNestedInput
 }
 
@@ -645,145 +645,145 @@ export type RegionUncheckedUpdateWithoutNotesInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.StringFieldUpdateOperationsInput | string
   Actions?: Prisma.ActionUncheckedUpdateManyWithoutRegionNestedInput
-  LocationItems?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
-  RegionHandouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
-  RegionNarrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
+  Items?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
+  Handouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
+  Narrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUncheckedUpdateManyWithoutRegionNestedInput
 }
 
-export type RegionCreateWithoutRegionHandoutsInput = {
+export type RegionCreateWithoutHandoutsInput = {
   RegionId: string
   RegionTemplateId?: string | null
   MapId: string
   Name: string
   Lighting?: string
   Actions?: Prisma.ActionCreateNestedManyWithoutRegionInput
-  LocationItems?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
+  Items?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteCreateNestedManyWithoutRegionInput
-  RegionNarrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
+  Narrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeCreateNestedManyWithoutRegionInput
 }
 
-export type RegionUncheckedCreateWithoutRegionHandoutsInput = {
+export type RegionUncheckedCreateWithoutHandoutsInput = {
   RegionId: string
   RegionTemplateId?: string | null
   MapId: string
   Name: string
   Lighting?: string
   Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutRegionInput
-  LocationItems?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
+  Items?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutRegionInput
-  RegionNarrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
+  Narrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeUncheckedCreateNestedManyWithoutRegionInput
 }
 
-export type RegionCreateOrConnectWithoutRegionHandoutsInput = {
+export type RegionCreateOrConnectWithoutHandoutsInput = {
   where: Prisma.RegionWhereUniqueInput
-  create: Prisma.XOR<Prisma.RegionCreateWithoutRegionHandoutsInput, Prisma.RegionUncheckedCreateWithoutRegionHandoutsInput>
+  create: Prisma.XOR<Prisma.RegionCreateWithoutHandoutsInput, Prisma.RegionUncheckedCreateWithoutHandoutsInput>
 }
 
-export type RegionUpsertWithoutRegionHandoutsInput = {
-  update: Prisma.XOR<Prisma.RegionUpdateWithoutRegionHandoutsInput, Prisma.RegionUncheckedUpdateWithoutRegionHandoutsInput>
-  create: Prisma.XOR<Prisma.RegionCreateWithoutRegionHandoutsInput, Prisma.RegionUncheckedCreateWithoutRegionHandoutsInput>
+export type RegionUpsertWithoutHandoutsInput = {
+  update: Prisma.XOR<Prisma.RegionUpdateWithoutHandoutsInput, Prisma.RegionUncheckedUpdateWithoutHandoutsInput>
+  create: Prisma.XOR<Prisma.RegionCreateWithoutHandoutsInput, Prisma.RegionUncheckedCreateWithoutHandoutsInput>
   where?: Prisma.RegionWhereInput
 }
 
-export type RegionUpdateToOneWithWhereWithoutRegionHandoutsInput = {
+export type RegionUpdateToOneWithWhereWithoutHandoutsInput = {
   where?: Prisma.RegionWhereInput
-  data: Prisma.XOR<Prisma.RegionUpdateWithoutRegionHandoutsInput, Prisma.RegionUncheckedUpdateWithoutRegionHandoutsInput>
+  data: Prisma.XOR<Prisma.RegionUpdateWithoutHandoutsInput, Prisma.RegionUncheckedUpdateWithoutHandoutsInput>
 }
 
-export type RegionUpdateWithoutRegionHandoutsInput = {
+export type RegionUpdateWithoutHandoutsInput = {
   RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   RegionTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.StringFieldUpdateOperationsInput | string
   Actions?: Prisma.ActionUpdateManyWithoutRegionNestedInput
-  LocationItems?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
+  Items?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutRegionNestedInput
-  RegionNarrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
+  Narrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUpdateManyWithoutRegionNestedInput
 }
 
-export type RegionUncheckedUpdateWithoutRegionHandoutsInput = {
+export type RegionUncheckedUpdateWithoutHandoutsInput = {
   RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   RegionTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.StringFieldUpdateOperationsInput | string
   Actions?: Prisma.ActionUncheckedUpdateManyWithoutRegionNestedInput
-  LocationItems?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
+  Items?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUncheckedUpdateManyWithoutRegionNestedInput
-  RegionNarrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
+  Narrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUncheckedUpdateManyWithoutRegionNestedInput
 }
 
-export type RegionCreateWithoutRegionNarrationsInput = {
+export type RegionCreateWithoutNarrationsInput = {
   RegionId: string
   RegionTemplateId?: string | null
   MapId: string
   Name: string
   Lighting?: string
   Actions?: Prisma.ActionCreateNestedManyWithoutRegionInput
-  LocationItems?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
+  Items?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteCreateNestedManyWithoutRegionInput
-  RegionHandouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
+  Handouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeCreateNestedManyWithoutRegionInput
 }
 
-export type RegionUncheckedCreateWithoutRegionNarrationsInput = {
+export type RegionUncheckedCreateWithoutNarrationsInput = {
   RegionId: string
   RegionTemplateId?: string | null
   MapId: string
   Name: string
   Lighting?: string
   Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutRegionInput
-  LocationItems?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
+  Items?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutRegionInput
-  RegionHandouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
+  Handouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeUncheckedCreateNestedManyWithoutRegionInput
 }
 
-export type RegionCreateOrConnectWithoutRegionNarrationsInput = {
+export type RegionCreateOrConnectWithoutNarrationsInput = {
   where: Prisma.RegionWhereUniqueInput
-  create: Prisma.XOR<Prisma.RegionCreateWithoutRegionNarrationsInput, Prisma.RegionUncheckedCreateWithoutRegionNarrationsInput>
+  create: Prisma.XOR<Prisma.RegionCreateWithoutNarrationsInput, Prisma.RegionUncheckedCreateWithoutNarrationsInput>
 }
 
-export type RegionUpsertWithoutRegionNarrationsInput = {
-  update: Prisma.XOR<Prisma.RegionUpdateWithoutRegionNarrationsInput, Prisma.RegionUncheckedUpdateWithoutRegionNarrationsInput>
-  create: Prisma.XOR<Prisma.RegionCreateWithoutRegionNarrationsInput, Prisma.RegionUncheckedCreateWithoutRegionNarrationsInput>
+export type RegionUpsertWithoutNarrationsInput = {
+  update: Prisma.XOR<Prisma.RegionUpdateWithoutNarrationsInput, Prisma.RegionUncheckedUpdateWithoutNarrationsInput>
+  create: Prisma.XOR<Prisma.RegionCreateWithoutNarrationsInput, Prisma.RegionUncheckedCreateWithoutNarrationsInput>
   where?: Prisma.RegionWhereInput
 }
 
-export type RegionUpdateToOneWithWhereWithoutRegionNarrationsInput = {
+export type RegionUpdateToOneWithWhereWithoutNarrationsInput = {
   where?: Prisma.RegionWhereInput
-  data: Prisma.XOR<Prisma.RegionUpdateWithoutRegionNarrationsInput, Prisma.RegionUncheckedUpdateWithoutRegionNarrationsInput>
+  data: Prisma.XOR<Prisma.RegionUpdateWithoutNarrationsInput, Prisma.RegionUncheckedUpdateWithoutNarrationsInput>
 }
 
-export type RegionUpdateWithoutRegionNarrationsInput = {
+export type RegionUpdateWithoutNarrationsInput = {
   RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   RegionTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.StringFieldUpdateOperationsInput | string
   Actions?: Prisma.ActionUpdateManyWithoutRegionNestedInput
-  LocationItems?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
+  Items?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutRegionNestedInput
-  RegionHandouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
+  Handouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUpdateManyWithoutRegionNestedInput
 }
 
-export type RegionUncheckedUpdateWithoutRegionNarrationsInput = {
+export type RegionUncheckedUpdateWithoutNarrationsInput = {
   RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   RegionTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.StringFieldUpdateOperationsInput | string
   Actions?: Prisma.ActionUncheckedUpdateManyWithoutRegionNestedInput
-  LocationItems?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
+  Items?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUncheckedUpdateManyWithoutRegionNestedInput
-  RegionHandouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
+  Handouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUncheckedUpdateManyWithoutRegionNestedInput
 }
 
@@ -794,10 +794,10 @@ export type RegionCreateWithoutShapesInput = {
   Name: string
   Lighting?: string
   Actions?: Prisma.ActionCreateNestedManyWithoutRegionInput
-  LocationItems?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
+  Items?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteCreateNestedManyWithoutRegionInput
-  RegionHandouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
-  RegionNarrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
+  Handouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
+  Narrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
 }
 
 export type RegionUncheckedCreateWithoutShapesInput = {
@@ -807,10 +807,10 @@ export type RegionUncheckedCreateWithoutShapesInput = {
   Name: string
   Lighting?: string
   Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutRegionInput
-  LocationItems?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
+  Items?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutRegionInput
-  RegionHandouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
-  RegionNarrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
+  Handouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
+  Narrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
 }
 
 export type RegionCreateOrConnectWithoutShapesInput = {
@@ -836,10 +836,10 @@ export type RegionUpdateWithoutShapesInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.StringFieldUpdateOperationsInput | string
   Actions?: Prisma.ActionUpdateManyWithoutRegionNestedInput
-  LocationItems?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
+  Items?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutRegionNestedInput
-  RegionHandouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
-  RegionNarrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
+  Handouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
+  Narrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
 }
 
 export type RegionUncheckedUpdateWithoutShapesInput = {
@@ -849,10 +849,10 @@ export type RegionUncheckedUpdateWithoutShapesInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.StringFieldUpdateOperationsInput | string
   Actions?: Prisma.ActionUncheckedUpdateManyWithoutRegionNestedInput
-  LocationItems?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
+  Items?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUncheckedUpdateManyWithoutRegionNestedInput
-  RegionHandouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
-  RegionNarrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
+  Handouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
+  Narrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
 }
 
 
@@ -862,19 +862,19 @@ export type RegionUncheckedUpdateWithoutShapesInput = {
 
 export type RegionCountOutputType = {
   Actions: number
-  LocationItems: number
+  Items: number
   Notes: number
-  RegionHandouts: number
-  RegionNarrations: number
+  Handouts: number
+  Narrations: number
   Shapes: number
 }
 
 export type RegionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Actions?: boolean | RegionCountOutputTypeCountActionsArgs
-  LocationItems?: boolean | RegionCountOutputTypeCountLocationItemsArgs
+  Items?: boolean | RegionCountOutputTypeCountItemsArgs
   Notes?: boolean | RegionCountOutputTypeCountNotesArgs
-  RegionHandouts?: boolean | RegionCountOutputTypeCountRegionHandoutsArgs
-  RegionNarrations?: boolean | RegionCountOutputTypeCountRegionNarrationsArgs
+  Handouts?: boolean | RegionCountOutputTypeCountHandoutsArgs
+  Narrations?: boolean | RegionCountOutputTypeCountNarrationsArgs
   Shapes?: boolean | RegionCountOutputTypeCountShapesArgs
 }
 
@@ -898,7 +898,7 @@ export type RegionCountOutputTypeCountActionsArgs<ExtArgs extends runtime.Types.
 /**
  * RegionCountOutputType without action
  */
-export type RegionCountOutputTypeCountLocationItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type RegionCountOutputTypeCountItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LocationItemWhereInput
 }
 
@@ -912,14 +912,14 @@ export type RegionCountOutputTypeCountNotesArgs<ExtArgs extends runtime.Types.Ex
 /**
  * RegionCountOutputType without action
  */
-export type RegionCountOutputTypeCountRegionHandoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type RegionCountOutputTypeCountHandoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.RegionHandoutWhereInput
 }
 
 /**
  * RegionCountOutputType without action
  */
-export type RegionCountOutputTypeCountRegionNarrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type RegionCountOutputTypeCountNarrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.RegionNarrationWhereInput
 }
 
@@ -938,10 +938,10 @@ export type RegionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   Name?: boolean
   Lighting?: boolean
   Actions?: boolean | Prisma.Region$ActionsArgs<ExtArgs>
-  LocationItems?: boolean | Prisma.Region$LocationItemsArgs<ExtArgs>
+  Items?: boolean | Prisma.Region$ItemsArgs<ExtArgs>
   Notes?: boolean | Prisma.Region$NotesArgs<ExtArgs>
-  RegionHandouts?: boolean | Prisma.Region$RegionHandoutsArgs<ExtArgs>
-  RegionNarrations?: boolean | Prisma.Region$RegionNarrationsArgs<ExtArgs>
+  Handouts?: boolean | Prisma.Region$HandoutsArgs<ExtArgs>
+  Narrations?: boolean | Prisma.Region$NarrationsArgs<ExtArgs>
   Shapes?: boolean | Prisma.Region$ShapesArgs<ExtArgs>
   _count?: boolean | Prisma.RegionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["region"]>
@@ -973,10 +973,10 @@ export type RegionSelectScalar = {
 export type RegionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"RegionId" | "RegionTemplateId" | "MapId" | "Name" | "Lighting", ExtArgs["result"]["region"]>
 export type RegionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Actions?: boolean | Prisma.Region$ActionsArgs<ExtArgs>
-  LocationItems?: boolean | Prisma.Region$LocationItemsArgs<ExtArgs>
+  Items?: boolean | Prisma.Region$ItemsArgs<ExtArgs>
   Notes?: boolean | Prisma.Region$NotesArgs<ExtArgs>
-  RegionHandouts?: boolean | Prisma.Region$RegionHandoutsArgs<ExtArgs>
-  RegionNarrations?: boolean | Prisma.Region$RegionNarrationsArgs<ExtArgs>
+  Handouts?: boolean | Prisma.Region$HandoutsArgs<ExtArgs>
+  Narrations?: boolean | Prisma.Region$NarrationsArgs<ExtArgs>
   Shapes?: boolean | Prisma.Region$ShapesArgs<ExtArgs>
   _count?: boolean | Prisma.RegionCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -987,10 +987,10 @@ export type $RegionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name: "Region"
   objects: {
     Actions: Prisma.$ActionPayload<ExtArgs>[]
-    LocationItems: Prisma.$LocationItemPayload<ExtArgs>[]
+    Items: Prisma.$LocationItemPayload<ExtArgs>[]
     Notes: Prisma.$NotePayload<ExtArgs>[]
-    RegionHandouts: Prisma.$RegionHandoutPayload<ExtArgs>[]
-    RegionNarrations: Prisma.$RegionNarrationPayload<ExtArgs>[]
+    Handouts: Prisma.$RegionHandoutPayload<ExtArgs>[]
+    Narrations: Prisma.$RegionNarrationPayload<ExtArgs>[]
     Shapes: Prisma.$RegionShapePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1394,10 +1394,10 @@ readonly fields: RegionFieldRefs;
 export interface Prisma__RegionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Actions<T extends Prisma.Region$ActionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Region$ActionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  LocationItems<T extends Prisma.Region$LocationItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Region$LocationItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocationItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Items<T extends Prisma.Region$ItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Region$ItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocationItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Notes<T extends Prisma.Region$NotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Region$NotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  RegionHandouts<T extends Prisma.Region$RegionHandoutsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Region$RegionHandoutsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RegionHandoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  RegionNarrations<T extends Prisma.Region$RegionNarrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Region$RegionNarrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RegionNarrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Handouts<T extends Prisma.Region$HandoutsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Region$HandoutsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RegionHandoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Narrations<T extends Prisma.Region$NarrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Region$NarrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RegionNarrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Shapes<T extends Prisma.Region$ShapesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Region$ShapesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RegionShapePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1850,9 +1850,9 @@ export type Region$ActionsArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * Region.LocationItems
+ * Region.Items
  */
-export type Region$LocationItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Region$ItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the LocationItem
    */
@@ -1898,9 +1898,9 @@ export type Region$NotesArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 }
 
 /**
- * Region.RegionHandouts
+ * Region.Handouts
  */
-export type Region$RegionHandoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Region$HandoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the RegionHandout
    */
@@ -1922,9 +1922,9 @@ export type Region$RegionHandoutsArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
- * Region.RegionNarrations
+ * Region.Narrations
  */
-export type Region$RegionNarrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Region$NarrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the RegionNarration
    */

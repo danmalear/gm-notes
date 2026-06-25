@@ -197,7 +197,7 @@ export type RegionHandoutScalarWhereWithAggregatesInput = {
 }
 
 export type RegionHandoutCreateInput = {
-  Region: Prisma.RegionCreateNestedOneWithoutRegionHandoutsInput
+  Region: Prisma.RegionCreateNestedOneWithoutHandoutsInput
   Handout: Prisma.HandoutCreateNestedOneWithoutRegionHandoutsInput
 }
 
@@ -207,7 +207,7 @@ export type RegionHandoutUncheckedCreateInput = {
 }
 
 export type RegionHandoutUpdateInput = {
-  Region?: Prisma.RegionUpdateOneRequiredWithoutRegionHandoutsNestedInput
+  Region?: Prisma.RegionUpdateOneRequiredWithoutHandoutsNestedInput
   Handout?: Prisma.HandoutUpdateOneRequiredWithoutRegionHandoutsNestedInput
 }
 
@@ -345,7 +345,7 @@ export type RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput = {
 }
 
 export type RegionHandoutCreateWithoutHandoutInput = {
-  Region: Prisma.RegionCreateNestedOneWithoutRegionHandoutsInput
+  Region: Prisma.RegionCreateNestedOneWithoutHandoutsInput
 }
 
 export type RegionHandoutUncheckedCreateWithoutHandoutInput = {
@@ -425,7 +425,7 @@ export type RegionHandoutCreateManyHandoutInput = {
 }
 
 export type RegionHandoutUpdateWithoutHandoutInput = {
-  Region?: Prisma.RegionUpdateOneRequiredWithoutRegionHandoutsNestedInput
+  Region?: Prisma.RegionUpdateOneRequiredWithoutHandoutsNestedInput
 }
 
 export type RegionHandoutUncheckedUpdateWithoutHandoutInput = {
