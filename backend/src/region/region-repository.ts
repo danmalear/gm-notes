@@ -30,7 +30,7 @@ export interface RegionModelIncludeMin extends RegionModel {
 	Shapes: RegionShapeModel[];
 }
 
-export interface RegionModelIncludeAll extends RegionModel {
+export interface RegionIncludeAll extends RegionModel {
 	Shapes: RegionShapeModel[];
 	Lighting: RelativeLighting;
 	Narrations: NarrationModel[];
@@ -56,7 +56,7 @@ export interface RegionRepositoryConfig {
 
 export class RegionRepository extends Repository<
 	RegionModel,
-	RegionModelIncludeAll
+	RegionIncludeAll
 > {
 	actionRepository: IActionRepository;
 	// creatureRepository: CreatureRepository;
@@ -85,7 +85,7 @@ export class RegionRepository extends Repository<
 		this.regionShapeRepository = regionShapeRepository;
 	}
 
-	override async getById(id: UUID): Promise<RegionModelIncludeAll | undefined> {
+	override async getById(id: UUID): Promise<RegionIncludeAll | undefined> {
 		const regionRaw = await this.getByIdRaw(id);
 		if (!regionRaw) return undefined;
 

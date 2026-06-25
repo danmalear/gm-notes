@@ -15,8 +15,8 @@ import type {
 	Shape,
 } from './region-dtos.ts';
 import type {
+	RegionIncludeAll,
 	RegionModel,
-	RegionModelIncludeAll,
 	RegionModelIncludeMin,
 } from './region-repository.ts';
 
@@ -37,7 +37,7 @@ export function shapeToStub(shape: RegionShapeModel): Shape {
 	}
 }
 
-export function toDto(region: RegionModelIncludeAll) {
+export function toDto(region: RegionIncludeAll) {
 	const regionResponse: RegionResponse = {
 		id: region.RegionId,
 		mapId: region.MapId,
