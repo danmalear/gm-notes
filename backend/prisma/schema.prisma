@@ -262,7 +262,7 @@ model Region {
   Notes            Note[]            @relation(name: "ParentRegion")
   RegionHandouts   RegionHandout[]
   RegionNarrations RegionNarration[]
-  RegionShapes     RegionShape[]
+  Shapes           RegionShape[]
 
   @@schema("public")
 }

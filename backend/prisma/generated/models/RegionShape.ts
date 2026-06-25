@@ -216,7 +216,7 @@ export type RegionShapeCreateInput = {
   RegionShapeId: string
   ShapeType: $Enums.ShapeType
   Coords: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  Region: Prisma.RegionCreateNestedOneWithoutRegionShapesInput
+  Region: Prisma.RegionCreateNestedOneWithoutShapesInput
 }
 
 export type RegionShapeUncheckedCreateInput = {
@@ -230,7 +230,7 @@ export type RegionShapeUpdateInput = {
   RegionShapeId?: Prisma.StringFieldUpdateOperationsInput | string
   ShapeType?: Prisma.EnumShapeTypeFieldUpdateOperationsInput | $Enums.ShapeType
   Coords?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  Region?: Prisma.RegionUpdateOneRequiredWithoutRegionShapesNestedInput
+  Region?: Prisma.RegionUpdateOneRequiredWithoutShapesNestedInput
 }
 
 export type RegionShapeUncheckedUpdateInput = {
