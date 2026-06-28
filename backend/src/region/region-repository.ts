@@ -27,7 +27,7 @@ export interface RegionIncludeMin extends RegionModel {
 	Shapes: RegionShapeModel[];
 }
 
-const includeMin = {
+export const includeMin = {
 	Shapes: true,
 } satisfies RegionInclude;
 
@@ -57,7 +57,7 @@ export interface RegionIncludeAll extends RegionModel {
 	Notes: NoteModel[];
 }
 
-const includeAll = {
+export const includeAll = {
 	Shapes: true,
 	Narrations: {
 		include: regionNarrationIncludeMin,
