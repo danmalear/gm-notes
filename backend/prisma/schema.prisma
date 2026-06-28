@@ -82,7 +82,7 @@ model Campaign {
   CampaignId         String      @id @db.Uuid
   CampaignTemplateId String?     @db.Uuid
   Name               String
-  ActiveMapId        String?     @db.Uuid
+  ActiveMapId        String?     @unique @db.Uuid
   ActiveMap          Map?        @relation(name: "CampaignActiveMap", fields: [ActiveMapId], references: [MapId])
   Conditions         Condition[]
   Handouts           Handout[]
@@ -190,17 +190,18 @@ model LocationItem {
 }
 
 model Map {
-  MapId           String     @id @db.Uuid
-  CampaignId      String     @db.Uuid
-  Campaign        Campaign   @relation(name: "MapCampaign", fields: [CampaignId], references: [CampaignId], onUpdate: Restrict)
-  MapTemplateId   String?    @db.Uuid
+  MapId           String    @id @db.Uuid
+  CampaignId      String    @db.Uuid
+  Campaign        Campaign  @relation(name: "MapCampaign", fields: [CampaignId], references: [CampaignId], onUpdate: Restrict)
+  MapTemplateId   String?   @db.Uuid
   Name            String
-  ImageFileId     String     @unique
-  ImageFile       File       @relation(fields: [ImageFileId], references: [FileId])
-  DefaultLighting String     @default("Bright Light")
-  Width           Int        @default(0)
-  Height          Int        @default(0)
-  Campaigns       Campaign[] @relation(name: "CampaignActiveMap")
+  ImageFileId     String    @unique
+  ImageFile       File      @relation(fields: [ImageFileId], references: [FileId])
+  DefaultLighting String    @default("Bright Light")
+  Width           Int       @default(0)
+  Height          Int       @default(0)
+  ActiveCampaign  Campaign? @relation(name: "CampaignActiveMap")
+  Regions         Region[]
 
   @@index([CampaignId])
   @@schema("public")
@@ -255,6 +256,7 @@ model Region {
   RegionId         String            @id @db.Uuid
   RegionTemplateId String?           @db.Uuid
   MapId            String            @db.Uuid
+  Map              Map               @relation(fields: [MapId], references: [MapId])
   Name             String
   Lighting         RelativeLighting  @default(Default)
   Actions          Action[]          @relation(name: "TargetRegion")
@@ -264,6 +266,7 @@ model Region {
   Narrations       RegionNarration[]
   Shapes           RegionShape[]
 
+  @@index([MapId])
   @@schema("public")
 }
 

@@ -246,7 +246,8 @@ export type MapWhereInput = {
   Height?: Prisma.IntFilter<"Map"> | number
   Campaign?: Prisma.XOR<Prisma.CampaignScalarRelationFilter, Prisma.CampaignWhereInput>
   ImageFile?: Prisma.XOR<Prisma.FileScalarRelationFilter, Prisma.FileWhereInput>
-  Campaigns?: Prisma.CampaignListRelationFilter
+  ActiveCampaign?: Prisma.XOR<Prisma.CampaignNullableScalarRelationFilter, Prisma.CampaignWhereInput> | null
+  Regions?: Prisma.RegionListRelationFilter
 }
 
 export type MapOrderByWithRelationInput = {
@@ -260,7 +261,8 @@ export type MapOrderByWithRelationInput = {
   Height?: Prisma.SortOrder
   Campaign?: Prisma.CampaignOrderByWithRelationInput
   ImageFile?: Prisma.FileOrderByWithRelationInput
-  Campaigns?: Prisma.CampaignOrderByRelationAggregateInput
+  ActiveCampaign?: Prisma.CampaignOrderByWithRelationInput
+  Regions?: Prisma.RegionOrderByRelationAggregateInput
 }
 
 export type MapWhereUniqueInput = Prisma.AtLeast<{
@@ -277,7 +279,8 @@ export type MapWhereUniqueInput = Prisma.AtLeast<{
   Height?: Prisma.IntFilter<"Map"> | number
   Campaign?: Prisma.XOR<Prisma.CampaignScalarRelationFilter, Prisma.CampaignWhereInput>
   ImageFile?: Prisma.XOR<Prisma.FileScalarRelationFilter, Prisma.FileWhereInput>
-  Campaigns?: Prisma.CampaignListRelationFilter
+  ActiveCampaign?: Prisma.XOR<Prisma.CampaignNullableScalarRelationFilter, Prisma.CampaignWhereInput> | null
+  Regions?: Prisma.RegionListRelationFilter
 }, "MapId" | "ImageFileId">
 
 export type MapOrderByWithAggregationInput = {
@@ -319,7 +322,8 @@ export type MapCreateInput = {
   Height?: number
   Campaign: Prisma.CampaignCreateNestedOneWithoutMapsInput
   ImageFile: Prisma.FileCreateNestedOneWithoutMapInput
-  Campaigns?: Prisma.CampaignCreateNestedManyWithoutActiveMapInput
+  ActiveCampaign?: Prisma.CampaignCreateNestedOneWithoutActiveMapInput
+  Regions?: Prisma.RegionCreateNestedManyWithoutMapInput
 }
 
 export type MapUncheckedCreateInput = {
@@ -331,7 +335,8 @@ export type MapUncheckedCreateInput = {
   DefaultLighting?: string
   Width?: number
   Height?: number
-  Campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutActiveMapInput
+  ActiveCampaign?: Prisma.CampaignUncheckedCreateNestedOneWithoutActiveMapInput
+  Regions?: Prisma.RegionUncheckedCreateNestedManyWithoutMapInput
 }
 
 export type MapUpdateInput = {
@@ -343,7 +348,8 @@ export type MapUpdateInput = {
   Height?: Prisma.IntFieldUpdateOperationsInput | number
   Campaign?: Prisma.CampaignUpdateOneRequiredWithoutMapsNestedInput
   ImageFile?: Prisma.FileUpdateOneRequiredWithoutMapNestedInput
-  Campaigns?: Prisma.CampaignUpdateManyWithoutActiveMapNestedInput
+  ActiveCampaign?: Prisma.CampaignUpdateOneWithoutActiveMapNestedInput
+  Regions?: Prisma.RegionUpdateManyWithoutMapNestedInput
 }
 
 export type MapUncheckedUpdateInput = {
@@ -355,7 +361,8 @@ export type MapUncheckedUpdateInput = {
   DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
-  Campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutActiveMapNestedInput
+  ActiveCampaign?: Prisma.CampaignUncheckedUpdateOneWithoutActiveMapNestedInput
+  Regions?: Prisma.RegionUncheckedUpdateManyWithoutMapNestedInput
 }
 
 export type MapCreateManyInput = {
@@ -447,9 +454,14 @@ export type MapSumOrderByAggregateInput = {
   Height?: Prisma.SortOrder
 }
 
-export type MapCreateNestedOneWithoutCampaignsInput = {
-  create?: Prisma.XOR<Prisma.MapCreateWithoutCampaignsInput, Prisma.MapUncheckedCreateWithoutCampaignsInput>
-  connectOrCreate?: Prisma.MapCreateOrConnectWithoutCampaignsInput
+export type MapScalarRelationFilter = {
+  is?: Prisma.MapWhereInput
+  isNot?: Prisma.MapWhereInput
+}
+
+export type MapCreateNestedOneWithoutActiveCampaignInput = {
+  create?: Prisma.XOR<Prisma.MapCreateWithoutActiveCampaignInput, Prisma.MapUncheckedCreateWithoutActiveCampaignInput>
+  connectOrCreate?: Prisma.MapCreateOrConnectWithoutActiveCampaignInput
   connect?: Prisma.MapWhereUniqueInput
 }
 
@@ -467,14 +479,14 @@ export type MapUncheckedCreateNestedManyWithoutCampaignInput = {
   connect?: Prisma.MapWhereUniqueInput | Prisma.MapWhereUniqueInput[]
 }
 
-export type MapUpdateOneWithoutCampaignsNestedInput = {
-  create?: Prisma.XOR<Prisma.MapCreateWithoutCampaignsInput, Prisma.MapUncheckedCreateWithoutCampaignsInput>
-  connectOrCreate?: Prisma.MapCreateOrConnectWithoutCampaignsInput
-  upsert?: Prisma.MapUpsertWithoutCampaignsInput
+export type MapUpdateOneWithoutActiveCampaignNestedInput = {
+  create?: Prisma.XOR<Prisma.MapCreateWithoutActiveCampaignInput, Prisma.MapUncheckedCreateWithoutActiveCampaignInput>
+  connectOrCreate?: Prisma.MapCreateOrConnectWithoutActiveCampaignInput
+  upsert?: Prisma.MapUpsertWithoutActiveCampaignInput
   disconnect?: Prisma.MapWhereInput | boolean
   delete?: Prisma.MapWhereInput | boolean
   connect?: Prisma.MapWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.MapUpdateToOneWithWhereWithoutCampaignsInput, Prisma.MapUpdateWithoutCampaignsInput>, Prisma.MapUncheckedUpdateWithoutCampaignsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MapUpdateToOneWithWhereWithoutActiveCampaignInput, Prisma.MapUpdateWithoutActiveCampaignInput>, Prisma.MapUncheckedUpdateWithoutActiveCampaignInput>
 }
 
 export type MapUpdateManyWithoutCampaignNestedInput = {
@@ -537,7 +549,21 @@ export type MapUncheckedUpdateOneWithoutImageFileNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MapUpdateToOneWithWhereWithoutImageFileInput, Prisma.MapUpdateWithoutImageFileInput>, Prisma.MapUncheckedUpdateWithoutImageFileInput>
 }
 
-export type MapCreateWithoutCampaignsInput = {
+export type MapCreateNestedOneWithoutRegionsInput = {
+  create?: Prisma.XOR<Prisma.MapCreateWithoutRegionsInput, Prisma.MapUncheckedCreateWithoutRegionsInput>
+  connectOrCreate?: Prisma.MapCreateOrConnectWithoutRegionsInput
+  connect?: Prisma.MapWhereUniqueInput
+}
+
+export type MapUpdateOneRequiredWithoutRegionsNestedInput = {
+  create?: Prisma.XOR<Prisma.MapCreateWithoutRegionsInput, Prisma.MapUncheckedCreateWithoutRegionsInput>
+  connectOrCreate?: Prisma.MapCreateOrConnectWithoutRegionsInput
+  upsert?: Prisma.MapUpsertWithoutRegionsInput
+  connect?: Prisma.MapWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MapUpdateToOneWithWhereWithoutRegionsInput, Prisma.MapUpdateWithoutRegionsInput>, Prisma.MapUncheckedUpdateWithoutRegionsInput>
+}
+
+export type MapCreateWithoutActiveCampaignInput = {
   MapId: string
   MapTemplateId?: string | null
   Name: string
@@ -546,9 +572,10 @@ export type MapCreateWithoutCampaignsInput = {
   Height?: number
   Campaign: Prisma.CampaignCreateNestedOneWithoutMapsInput
   ImageFile: Prisma.FileCreateNestedOneWithoutMapInput
+  Regions?: Prisma.RegionCreateNestedManyWithoutMapInput
 }
 
-export type MapUncheckedCreateWithoutCampaignsInput = {
+export type MapUncheckedCreateWithoutActiveCampaignInput = {
   MapId: string
   CampaignId: string
   MapTemplateId?: string | null
@@ -557,11 +584,12 @@ export type MapUncheckedCreateWithoutCampaignsInput = {
   DefaultLighting?: string
   Width?: number
   Height?: number
+  Regions?: Prisma.RegionUncheckedCreateNestedManyWithoutMapInput
 }
 
-export type MapCreateOrConnectWithoutCampaignsInput = {
+export type MapCreateOrConnectWithoutActiveCampaignInput = {
   where: Prisma.MapWhereUniqueInput
-  create: Prisma.XOR<Prisma.MapCreateWithoutCampaignsInput, Prisma.MapUncheckedCreateWithoutCampaignsInput>
+  create: Prisma.XOR<Prisma.MapCreateWithoutActiveCampaignInput, Prisma.MapUncheckedCreateWithoutActiveCampaignInput>
 }
 
 export type MapCreateWithoutCampaignInput = {
@@ -572,7 +600,8 @@ export type MapCreateWithoutCampaignInput = {
   Width?: number
   Height?: number
   ImageFile: Prisma.FileCreateNestedOneWithoutMapInput
-  Campaigns?: Prisma.CampaignCreateNestedManyWithoutActiveMapInput
+  ActiveCampaign?: Prisma.CampaignCreateNestedOneWithoutActiveMapInput
+  Regions?: Prisma.RegionCreateNestedManyWithoutMapInput
 }
 
 export type MapUncheckedCreateWithoutCampaignInput = {
@@ -583,7 +612,8 @@ export type MapUncheckedCreateWithoutCampaignInput = {
   DefaultLighting?: string
   Width?: number
   Height?: number
-  Campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutActiveMapInput
+  ActiveCampaign?: Prisma.CampaignUncheckedCreateNestedOneWithoutActiveMapInput
+  Regions?: Prisma.RegionUncheckedCreateNestedManyWithoutMapInput
 }
 
 export type MapCreateOrConnectWithoutCampaignInput = {
@@ -596,18 +626,18 @@ export type MapCreateManyCampaignInputEnvelope = {
   skipDuplicates?: boolean
 }
 
-export type MapUpsertWithoutCampaignsInput = {
-  update: Prisma.XOR<Prisma.MapUpdateWithoutCampaignsInput, Prisma.MapUncheckedUpdateWithoutCampaignsInput>
-  create: Prisma.XOR<Prisma.MapCreateWithoutCampaignsInput, Prisma.MapUncheckedCreateWithoutCampaignsInput>
+export type MapUpsertWithoutActiveCampaignInput = {
+  update: Prisma.XOR<Prisma.MapUpdateWithoutActiveCampaignInput, Prisma.MapUncheckedUpdateWithoutActiveCampaignInput>
+  create: Prisma.XOR<Prisma.MapCreateWithoutActiveCampaignInput, Prisma.MapUncheckedCreateWithoutActiveCampaignInput>
   where?: Prisma.MapWhereInput
 }
 
-export type MapUpdateToOneWithWhereWithoutCampaignsInput = {
+export type MapUpdateToOneWithWhereWithoutActiveCampaignInput = {
   where?: Prisma.MapWhereInput
-  data: Prisma.XOR<Prisma.MapUpdateWithoutCampaignsInput, Prisma.MapUncheckedUpdateWithoutCampaignsInput>
+  data: Prisma.XOR<Prisma.MapUpdateWithoutActiveCampaignInput, Prisma.MapUncheckedUpdateWithoutActiveCampaignInput>
 }
 
-export type MapUpdateWithoutCampaignsInput = {
+export type MapUpdateWithoutActiveCampaignInput = {
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
   MapTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -616,9 +646,10 @@ export type MapUpdateWithoutCampaignsInput = {
   Height?: Prisma.IntFieldUpdateOperationsInput | number
   Campaign?: Prisma.CampaignUpdateOneRequiredWithoutMapsNestedInput
   ImageFile?: Prisma.FileUpdateOneRequiredWithoutMapNestedInput
+  Regions?: Prisma.RegionUpdateManyWithoutMapNestedInput
 }
 
-export type MapUncheckedUpdateWithoutCampaignsInput = {
+export type MapUncheckedUpdateWithoutActiveCampaignInput = {
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
   CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
   MapTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -627,6 +658,7 @@ export type MapUncheckedUpdateWithoutCampaignsInput = {
   DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
+  Regions?: Prisma.RegionUncheckedUpdateManyWithoutMapNestedInput
 }
 
 export type MapUpsertWithWhereUniqueWithoutCampaignInput = {
@@ -667,7 +699,8 @@ export type MapCreateWithoutImageFileInput = {
   Width?: number
   Height?: number
   Campaign: Prisma.CampaignCreateNestedOneWithoutMapsInput
-  Campaigns?: Prisma.CampaignCreateNestedManyWithoutActiveMapInput
+  ActiveCampaign?: Prisma.CampaignCreateNestedOneWithoutActiveMapInput
+  Regions?: Prisma.RegionCreateNestedManyWithoutMapInput
 }
 
 export type MapUncheckedCreateWithoutImageFileInput = {
@@ -678,7 +711,8 @@ export type MapUncheckedCreateWithoutImageFileInput = {
   DefaultLighting?: string
   Width?: number
   Height?: number
-  Campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutActiveMapInput
+  ActiveCampaign?: Prisma.CampaignUncheckedCreateNestedOneWithoutActiveMapInput
+  Regions?: Prisma.RegionUncheckedCreateNestedManyWithoutMapInput
 }
 
 export type MapCreateOrConnectWithoutImageFileInput = {
@@ -705,7 +739,8 @@ export type MapUpdateWithoutImageFileInput = {
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
   Campaign?: Prisma.CampaignUpdateOneRequiredWithoutMapsNestedInput
-  Campaigns?: Prisma.CampaignUpdateManyWithoutActiveMapNestedInput
+  ActiveCampaign?: Prisma.CampaignUpdateOneWithoutActiveMapNestedInput
+  Regions?: Prisma.RegionUpdateManyWithoutMapNestedInput
 }
 
 export type MapUncheckedUpdateWithoutImageFileInput = {
@@ -716,7 +751,72 @@ export type MapUncheckedUpdateWithoutImageFileInput = {
   DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
-  Campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutActiveMapNestedInput
+  ActiveCampaign?: Prisma.CampaignUncheckedUpdateOneWithoutActiveMapNestedInput
+  Regions?: Prisma.RegionUncheckedUpdateManyWithoutMapNestedInput
+}
+
+export type MapCreateWithoutRegionsInput = {
+  MapId: string
+  MapTemplateId?: string | null
+  Name: string
+  DefaultLighting?: string
+  Width?: number
+  Height?: number
+  Campaign: Prisma.CampaignCreateNestedOneWithoutMapsInput
+  ImageFile: Prisma.FileCreateNestedOneWithoutMapInput
+  ActiveCampaign?: Prisma.CampaignCreateNestedOneWithoutActiveMapInput
+}
+
+export type MapUncheckedCreateWithoutRegionsInput = {
+  MapId: string
+  CampaignId: string
+  MapTemplateId?: string | null
+  Name: string
+  ImageFileId: string
+  DefaultLighting?: string
+  Width?: number
+  Height?: number
+  ActiveCampaign?: Prisma.CampaignUncheckedCreateNestedOneWithoutActiveMapInput
+}
+
+export type MapCreateOrConnectWithoutRegionsInput = {
+  where: Prisma.MapWhereUniqueInput
+  create: Prisma.XOR<Prisma.MapCreateWithoutRegionsInput, Prisma.MapUncheckedCreateWithoutRegionsInput>
+}
+
+export type MapUpsertWithoutRegionsInput = {
+  update: Prisma.XOR<Prisma.MapUpdateWithoutRegionsInput, Prisma.MapUncheckedUpdateWithoutRegionsInput>
+  create: Prisma.XOR<Prisma.MapCreateWithoutRegionsInput, Prisma.MapUncheckedCreateWithoutRegionsInput>
+  where?: Prisma.MapWhereInput
+}
+
+export type MapUpdateToOneWithWhereWithoutRegionsInput = {
+  where?: Prisma.MapWhereInput
+  data: Prisma.XOR<Prisma.MapUpdateWithoutRegionsInput, Prisma.MapUncheckedUpdateWithoutRegionsInput>
+}
+
+export type MapUpdateWithoutRegionsInput = {
+  MapId?: Prisma.StringFieldUpdateOperationsInput | string
+  MapTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
+  Width?: Prisma.IntFieldUpdateOperationsInput | number
+  Height?: Prisma.IntFieldUpdateOperationsInput | number
+  Campaign?: Prisma.CampaignUpdateOneRequiredWithoutMapsNestedInput
+  ImageFile?: Prisma.FileUpdateOneRequiredWithoutMapNestedInput
+  ActiveCampaign?: Prisma.CampaignUpdateOneWithoutActiveMapNestedInput
+}
+
+export type MapUncheckedUpdateWithoutRegionsInput = {
+  MapId?: Prisma.StringFieldUpdateOperationsInput | string
+  CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
+  MapTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Name?: Prisma.StringFieldUpdateOperationsInput | string
+  ImageFileId?: Prisma.StringFieldUpdateOperationsInput | string
+  DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
+  Width?: Prisma.IntFieldUpdateOperationsInput | number
+  Height?: Prisma.IntFieldUpdateOperationsInput | number
+  ActiveCampaign?: Prisma.CampaignUncheckedUpdateOneWithoutActiveMapNestedInput
 }
 
 export type MapCreateManyCampaignInput = {
@@ -737,7 +837,8 @@ export type MapUpdateWithoutCampaignInput = {
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
   ImageFile?: Prisma.FileUpdateOneRequiredWithoutMapNestedInput
-  Campaigns?: Prisma.CampaignUpdateManyWithoutActiveMapNestedInput
+  ActiveCampaign?: Prisma.CampaignUpdateOneWithoutActiveMapNestedInput
+  Regions?: Prisma.RegionUpdateManyWithoutMapNestedInput
 }
 
 export type MapUncheckedUpdateWithoutCampaignInput = {
@@ -748,7 +849,8 @@ export type MapUncheckedUpdateWithoutCampaignInput = {
   DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
-  Campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutActiveMapNestedInput
+  ActiveCampaign?: Prisma.CampaignUncheckedUpdateOneWithoutActiveMapNestedInput
+  Regions?: Prisma.RegionUncheckedUpdateManyWithoutMapNestedInput
 }
 
 export type MapUncheckedUpdateManyWithoutCampaignInput = {
@@ -767,11 +869,11 @@ export type MapUncheckedUpdateManyWithoutCampaignInput = {
  */
 
 export type MapCountOutputType = {
-  Campaigns: number
+  Regions: number
 }
 
 export type MapCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Campaigns?: boolean | MapCountOutputTypeCountCampaignsArgs
+  Regions?: boolean | MapCountOutputTypeCountRegionsArgs
 }
 
 /**
@@ -787,8 +889,8 @@ export type MapCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensio
 /**
  * MapCountOutputType without action
  */
-export type MapCountOutputTypeCountCampaignsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CampaignWhereInput
+export type MapCountOutputTypeCountRegionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RegionWhereInput
 }
 
 
@@ -803,7 +905,8 @@ export type MapSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   Height?: boolean
   Campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
   ImageFile?: boolean | Prisma.FileDefaultArgs<ExtArgs>
-  Campaigns?: boolean | Prisma.Map$CampaignsArgs<ExtArgs>
+  ActiveCampaign?: boolean | Prisma.Map$ActiveCampaignArgs<ExtArgs>
+  Regions?: boolean | Prisma.Map$RegionsArgs<ExtArgs>
   _count?: boolean | Prisma.MapCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["map"]>
 
@@ -848,7 +951,8 @@ export type MapOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
 export type MapInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>
   ImageFile?: boolean | Prisma.FileDefaultArgs<ExtArgs>
-  Campaigns?: boolean | Prisma.Map$CampaignsArgs<ExtArgs>
+  ActiveCampaign?: boolean | Prisma.Map$ActiveCampaignArgs<ExtArgs>
+  Regions?: boolean | Prisma.Map$RegionsArgs<ExtArgs>
   _count?: boolean | Prisma.MapCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MapIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -865,7 +969,8 @@ export type $MapPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   objects: {
     Campaign: Prisma.$CampaignPayload<ExtArgs>
     ImageFile: Prisma.$FilePayload<ExtArgs>
-    Campaigns: Prisma.$CampaignPayload<ExtArgs>[]
+    ActiveCampaign: Prisma.$CampaignPayload<ExtArgs> | null
+    Regions: Prisma.$RegionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     MapId: string
@@ -1272,7 +1377,8 @@ export interface Prisma__MapClient<T, Null = never, ExtArgs extends runtime.Type
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Campaign<T extends Prisma.CampaignDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CampaignDefaultArgs<ExtArgs>>): Prisma.Prisma__CampaignClient<runtime.Types.Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   ImageFile<T extends Prisma.FileDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FileDefaultArgs<ExtArgs>>): Prisma.Prisma__FileClient<runtime.Types.Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  Campaigns<T extends Prisma.Map$CampaignsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Map$CampaignsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ActiveCampaign<T extends Prisma.Map$ActiveCampaignArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Map$ActiveCampaignArgs<ExtArgs>>): Prisma.Prisma__CampaignClient<runtime.Types.Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Regions<T extends Prisma.Map$RegionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Map$RegionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1711,9 +1817,9 @@ export type MapDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 /**
- * Map.Campaigns
+ * Map.ActiveCampaign
  */
-export type Map$CampaignsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Map$ActiveCampaignArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Campaign
    */
@@ -1727,11 +1833,30 @@ export type Map$CampaignsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   include?: Prisma.CampaignInclude<ExtArgs> | null
   where?: Prisma.CampaignWhereInput
-  orderBy?: Prisma.CampaignOrderByWithRelationInput | Prisma.CampaignOrderByWithRelationInput[]
-  cursor?: Prisma.CampaignWhereUniqueInput
+}
+
+/**
+ * Map.Regions
+ */
+export type Map$RegionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Region
+   */
+  select?: Prisma.RegionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Region
+   */
+  omit?: Prisma.RegionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionInclude<ExtArgs> | null
+  where?: Prisma.RegionWhereInput
+  orderBy?: Prisma.RegionOrderByWithRelationInput | Prisma.RegionOrderByWithRelationInput[]
+  cursor?: Prisma.RegionWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.CampaignScalarFieldEnum | Prisma.CampaignScalarFieldEnum[]
+  distinct?: Prisma.RegionScalarFieldEnum | Prisma.RegionScalarFieldEnum[]
 }
 
 /**
