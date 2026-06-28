@@ -1,68 +1,92 @@
 import type {
-	IRegionRepository,
-	RegionIncludeMin,
+	MapCreateInput,
+	MapInclude,
+	MapModel,
+	MapUpdateInput,
+} from '#prisma-models/Map.ts';
+import {
+	includeMin as regionIncludeMin,
+	type RegionIncludeMin,
 } from '#region/region-repository.ts';
-import type { IRegionShapeRepository } from '#region/region-shape-repository.ts';
-import type { Lighting } from '#shared/data-types.ts';
-import { db } from '#shared/db.ts';
 import { getMessage } from '#shared/error.ts';
-import { Repository } from '#shared/repository-old.ts';
+import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 
-export interface MapRec {
-	MapId: UUID;
-	CampaignId: UUID;
-	MapTemplateId: UUID | null;
-	Name: string;
-	ImageFileId: string;
-	DefaultLighting: Lighting;
-	Width: number;
-	Height: number;
-}
-
-export interface MapRefRec extends MapRec {
+export interface MapIncludeAll extends MapModel {
 	Regions: RegionIncludeMin[];
 }
 
-export const tableName = 'Map';
-export const pkColumn = 'MapId';
+export const includeAll = {
+	Regions: {
+		include: regionIncludeMin,
+	},
+} satisfies MapInclude;
 
-export interface MapRepositoryConfig {
-	regionRepository: IRegionRepository;
-	regionShapeRepository: IRegionShapeRepository;
+export interface IMapRepository
+	extends IRepository<MapModel, MapCreateInput, MapUpdateInput, MapIncludeAll> {
+	getByCampaignId(campaignId: UUID): Promise<MapModel[]>;
 }
 
-export class MapRepository extends Repository<MapRec, MapRefRec> {
-	regionRepository: IRegionRepository;
-	regionShapeRepository: IRegionShapeRepository;
+export class MapRepository
+	extends Repository<MapModel, MapCreateInput, MapUpdateInput, MapIncludeAll>
+	implements IMapRepository
+{
+	override descriptor = 'Map';
 
-	constructor({
-		regionRepository,
-		regionShapeRepository,
-	}: MapRepositoryConfig) {
-		super(tableName, pkColumn);
-		this.regionRepository = regionRepository;
-		this.regionShapeRepository = regionShapeRepository;
+	override async getByIdRaw(mapId: UUID): Promise<MapModel | null> {
+		try {
+			return await this.prisma.map.findUnique({
+				where: {
+					MapId: mapId,
+				},
+			});
+		} catch (e) {
+			throw this.getByIdError(mapId, e);
+		}
 	}
 
-	override async getById(id: UUID): Promise<MapRefRec | undefined> {
-		const map = await this.getByIdRaw(id);
-		if (!map) return undefined;
-		const regions = await this.regionRepository.getByMapId(id);
-		const regionsWithShapes: RegionIncludeMin[] = [];
-		for (const region of regions) {
-			const shapes = await this.regionShapeRepository.getByRegionId(
-				region.RegionId as UUID,
-			);
-			regionsWithShapes.push({
-				...region,
-				Shapes: shapes,
+	override async getById(mapId: UUID): Promise<MapIncludeAll | null> {
+		try {
+			return await this.prisma.map.findUnique({
+				where: {
+					MapId: mapId,
+				},
+				include: includeAll,
 			});
+		} catch (e) {
+			throw this.getByIdError(mapId, e);
 		}
-		return {
-			...map,
-			Regions: regionsWithShapes,
-		};
+	}
+
+	override async getAll(): Promise<MapModel[]> {
+		try {
+			return await this.prisma.map.findMany();
+		} catch (e) {
+			throw this.getAllError(e);
+		}
+	}
+
+	override async create(data: MapCreateInput): Promise<MapModel> {
+		try {
+			return await this.prisma.map.create({
+				data,
+			});
+		} catch (e) {
+			throw this.createError(e);
+		}
+	}
+
+	override async update(mapId: UUID, data: MapUpdateInput): Promise<MapModel> {
+		try {
+			return await this.prisma.map.update({
+				where: {
+					MapId: mapId,
+				},
+				data,
+			});
+		} catch (e) {
+			throw this.updateError(mapId, e);
+		}
 	}
 
 	/**
@@ -72,10 +96,15 @@ export class MapRepository extends Repository<MapRec, MapRefRec> {
 	 */
 	async getByCampaignId(campaignId: UUID) {
 		try {
-			return await db<MapRec>(this.tableName).where('CampaignId', campaignId);
+			const maps = await this.prisma.map.findMany({
+				where: {
+					CampaignId: campaignId,
+				},
+			});
+			return maps;
 		} catch (e) {
-			throw Error(
-				`Error getting ${this.tableName} records for campaign ID ${campaignId}: ${getMessage(e)}`,
+			throw new Error(
+				`Error getting ${this.descriptor} records by Campaign ID ${campaignId}: ${getMessage(e)}`,
 			);
 		}
 	}

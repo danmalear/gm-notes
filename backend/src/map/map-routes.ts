@@ -1,8 +1,10 @@
 import type { ICommandBus } from '#command/command-bus.ts';
 import type { IEventBus } from '#event/event-bus.ts';
+import type { MapCreateInput, MapUpdateInput } from '#prisma-models/Map.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
+import { mapAbsoluteLightingToModel } from '#shared/enum-mappers.ts';
 import { getMessage, InternalError } from '#shared/error.ts';
-import { getByIdDEPRECATED } from '#shared/route-utils.ts';
+import { getById } from '#shared/route-utils.ts';
 import { isUUID } from '#shared/uuid.ts';
 import { isLighting } from '#shared/validation/data-types.ts';
 import {
@@ -10,8 +12,8 @@ import {
 	validatePostBody,
 	validatePutBody,
 } from '#shared/validation/http.ts';
-import { randomUUID } from 'crypto';
 import type { Express, Request, Response } from 'express';
+import { randomUUID, type UUID } from 'node:crypto';
 import type {
 	MapCreate,
 	MapQueryParams,
@@ -20,13 +22,13 @@ import type {
 	MapUpdate,
 } from './map-dtos.ts';
 import { toDto, toStub } from './map-mappers.ts';
-import type { MapRec, MapRepository } from './map-repository.ts';
+import type { IMapRepository } from './map-repository.ts';
 
 export function mapRoutes(
 	app: Express,
 	_commandBus: ICommandBus,
 	_eventBus: IEventBus,
-	mapRepository: MapRepository,
+	mapRepository: IMapRepository,
 ) {
 	const apiNamespace = 'maps';
 
@@ -67,7 +69,7 @@ export function mapRoutes(
 		},
 	);
 
-	getByIdDEPRECATED(app, {
+	getById(app, {
 		apiNamespace,
 		objectDescriptor: 'Map',
 		repository: mapRepository,
@@ -108,20 +110,30 @@ export function mapRoutes(
 				return;
 			}
 
-			const map: MapRec = {
+			const map: MapCreateInput = {
 				MapId: randomUUID(),
-				CampaignId: req.body.campaignId,
+				Campaign: {
+					connect: {
+						CampaignId: req.body.campaignId,
+					},
+				},
 				Name: req.body.name,
-				ImageFileId: req.body.imagePath,
+				ImageFile: {
+					connect: {
+						FileId: req.body.imagePath,
+					},
+				},
 				MapTemplateId: null,
-				DefaultLighting: req.body.defaultLighting ?? 'Bright Light',
+				DefaultLighting: mapAbsoluteLightingToModel(
+					req.body.defaultLighting ?? 'Bright Light',
+				),
 				Width: req.body.width,
 				Height: req.body.height,
 			};
 
-			await mapRepository.insert(map);
+			await mapRepository.create(map);
 
-			const newMap = await mapRepository.getById(map.MapId);
+			const newMap = await mapRepository.getById(map.MapId as UUID);
 
 			if (!newMap) {
 				throw new InternalError('New map not found');
@@ -164,10 +176,16 @@ export function mapRoutes(
 				return;
 			}
 
-			const map: Partial<MapRec> = {
+			const map: MapUpdateInput = {
 				Name: req.body.name,
-				ImageFileId: req.body.imagePath,
-				DefaultLighting: req.body.defaultLighting,
+				ImageFile: {
+					connect: {
+						FileId: req.body.imagePath,
+					},
+				},
+				DefaultLighting: req.body.defaultLighting
+					? mapAbsoluteLightingToModel(req.body.defaultLighting)
+					: undefined,
 			};
 
 			await mapRepository.update(req.body.id, map);

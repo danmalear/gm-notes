@@ -127,10 +127,14 @@ export function regionRoutes(
 
 			const id = randomUUID();
 
-			await regionRepository.insert({
+			await regionRepository.create({
 				RegionId: id,
 				RegionTemplateId: null,
-				MapId: req.body.mapId,
+				Map: {
+					connect: {
+						MapId: req.body.mapId,
+					},
+				},
 				Name: req.body.name,
 				Lighting: 'Default',
 			});

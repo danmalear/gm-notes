@@ -1,4 +1,5 @@
-import type { MapRec, MapRepository } from '#map/map-repository.ts';
+import type { IMapRepository } from '#map/map-repository.ts';
+import type { MapModel } from '#prisma-models/Map.ts';
 import { Repository } from '#shared/repository-old.ts';
 import type { UUID } from 'crypto';
 
@@ -10,21 +11,21 @@ export interface CampaignRec {
 }
 
 export interface CampaignRefRec extends CampaignRec {
-	Maps: MapRec[];
+	Maps: MapModel[];
 }
 
 export const tableName = 'Campaign';
 export const pkColumn = 'CampaignId';
 
 export interface CampaignRepositoryConfig {
-	mapRepository: MapRepository;
+	mapRepository: IMapRepository;
 }
 
 export class CampaignRepository extends Repository<
 	CampaignRec,
 	CampaignRefRec
 > {
-	mapRepository: MapRepository;
+	mapRepository: IMapRepository;
 
 	constructor({ mapRepository }: CampaignRepositoryConfig) {
 		super(tableName, pkColumn);

@@ -56,10 +56,7 @@ function initRepos(prisma: PrismaClient) {
 	const locationItemRepository = new LocationItemRepository({ prisma });
 	const regionShapeRepository = new RegionShapeRepository({ prisma });
 	const regionRepository = new RegionRepository({ prisma });
-	const mapRepository = new MapRepository({
-		regionRepository,
-		regionShapeRepository,
-	});
+	const mapRepository = new MapRepository({ prisma });
 	const campaignRepository = new CampaignRepository({ mapRepository });
 
 	return {

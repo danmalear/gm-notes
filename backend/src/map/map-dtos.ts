@@ -1,12 +1,12 @@
 import type { RegionStub } from '#region/region-dtos.ts';
-import type { Lighting } from '#shared/data-types.ts';
+import type { AbsoluteLightingDto } from '#shared/data-types.ts';
 import type { UUID } from 'crypto';
 
 export interface MapCreate {
 	campaignId: UUID;
 	name: string;
 	imagePath: string;
-	defaultLighting?: Lighting;
+	defaultLighting?: AbsoluteLightingDto;
 	width: number;
 	height: number;
 }
@@ -15,7 +15,7 @@ export interface MapUpdate {
 	id: UUID;
 	name?: string;
 	imagePath?: string;
-	defaultLighting?: Lighting;
+	defaultLighting?: AbsoluteLightingDto;
 }
 
 export interface MapQueryParams {
@@ -31,7 +31,7 @@ export interface MapResponse {
 	campaignId: UUID;
 	name: string;
 	imagePath: string;
-	defaultLighting: Lighting;
+	defaultLighting: AbsoluteLightingDto;
 	width: number;
 	height: number;
 	regions: RegionStub[];

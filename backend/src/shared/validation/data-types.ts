@@ -1,7 +1,11 @@
-import type { Lighting } from '#shared/data-types.ts';
+import type { AbsoluteLightingDto } from '#shared/data-types.ts';
 
-const lightingValues: Lighting[] = ['Bright Light', 'Dim Light', 'Darkness'];
+const lightingValues: AbsoluteLightingDto[] = [
+	'Bright Light',
+	'Dim Light',
+	'Darkness',
+];
 
-export function isLighting(value: string): value is Lighting {
+export function isLighting(value: string): value is AbsoluteLightingDto {
 	return (lightingValues as string[]).includes(value);
 }

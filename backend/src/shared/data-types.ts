@@ -1,11 +1,19 @@
-import type { CurrencyUnit, RelativeLighting, Skill } from '#prisma-enums';
+import type {
+	AbsoluteLighting,
+	CurrencyUnit,
+	RelativeLighting,
+	Skill,
+} from '#prisma-enums';
 
 export type SkillDto =
 	| Exclude<Skill, 'AnimalHandling' | 'SleightOfHand'>
 	| 'Animal Handling'
 	| 'Sleight Of Hand';
 
-export type Lighting = 'Darkness' | 'Dim Light' | 'Bright Light';
+export type AbsoluteLightingDto =
+	| Exclude<AbsoluteLighting, 'BrightLight' | 'DimLight'>
+	| 'Bright Light'
+	| 'Dim Light';
 
 export type RelativeLightingDto =
 	| Exclude<

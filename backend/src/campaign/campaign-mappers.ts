@@ -1,3 +1,4 @@
+import { toStub as mapToStub } from '#map/map-mappers.ts';
 import type { CampaignResponse, CampaignStub } from './campaign-dtos.ts';
 import type { CampaignRec, CampaignRefRec } from './campaign-repository.ts';
 
@@ -6,13 +7,7 @@ export const toDto = (campaign: CampaignRefRec) => {
 		id: campaign.CampaignId,
 		name: campaign.Name,
 		activeMapId: campaign.ActiveMapId ?? undefined,
-		// @TODO map the maps
-		maps: campaign.Maps.map((map) => ({
-			id: map.MapId,
-			campaignId: map.CampaignId,
-			name: map.Name,
-			imagePath: map.ImageFileId,
-		})),
+		maps: campaign.Maps.map(mapToStub),
 	};
 
 	return campaignResponse;
