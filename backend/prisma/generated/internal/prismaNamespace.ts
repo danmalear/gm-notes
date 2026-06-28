@@ -2575,6 +2575,20 @@ export type ListEnumCurrencyUnitFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
+ * Reference to a field of type 'AbsoluteLighting'
+ */
+export type EnumAbsoluteLightingFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AbsoluteLighting'>
+    
+
+
+/**
+ * Reference to a field of type 'AbsoluteLighting[]'
+ */
+export type ListEnumAbsoluteLightingFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AbsoluteLighting[]'>
+    
+
+
+/**
  * Reference to a field of type 'RelativeLighting'
  */
 export type EnumRelativeLightingFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RelativeLighting'>

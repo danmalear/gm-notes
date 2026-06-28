@@ -42,7 +42,7 @@ export type MapMinAggregateOutputType = {
   MapTemplateId: string | null
   Name: string | null
   ImageFileId: string | null
-  DefaultLighting: string | null
+  DefaultLighting: $Enums.AbsoluteLighting | null
   Width: number | null
   Height: number | null
 }
@@ -53,7 +53,7 @@ export type MapMaxAggregateOutputType = {
   MapTemplateId: string | null
   Name: string | null
   ImageFileId: string | null
-  DefaultLighting: string | null
+  DefaultLighting: $Enums.AbsoluteLighting | null
   Width: number | null
   Height: number | null
 }
@@ -207,7 +207,7 @@ export type MapGroupByOutputType = {
   MapTemplateId: string | null
   Name: string
   ImageFileId: string
-  DefaultLighting: string
+  DefaultLighting: $Enums.AbsoluteLighting
   Width: number
   Height: number
   _count: MapCountAggregateOutputType | null
@@ -241,7 +241,7 @@ export type MapWhereInput = {
   MapTemplateId?: Prisma.UuidNullableFilter<"Map"> | string | null
   Name?: Prisma.StringFilter<"Map"> | string
   ImageFileId?: Prisma.StringFilter<"Map"> | string
-  DefaultLighting?: Prisma.StringFilter<"Map"> | string
+  DefaultLighting?: Prisma.EnumAbsoluteLightingFilter<"Map"> | $Enums.AbsoluteLighting
   Width?: Prisma.IntFilter<"Map"> | number
   Height?: Prisma.IntFilter<"Map"> | number
   Campaign?: Prisma.XOR<Prisma.CampaignScalarRelationFilter, Prisma.CampaignWhereInput>
@@ -274,7 +274,7 @@ export type MapWhereUniqueInput = Prisma.AtLeast<{
   CampaignId?: Prisma.UuidFilter<"Map"> | string
   MapTemplateId?: Prisma.UuidNullableFilter<"Map"> | string | null
   Name?: Prisma.StringFilter<"Map"> | string
-  DefaultLighting?: Prisma.StringFilter<"Map"> | string
+  DefaultLighting?: Prisma.EnumAbsoluteLightingFilter<"Map"> | $Enums.AbsoluteLighting
   Width?: Prisma.IntFilter<"Map"> | number
   Height?: Prisma.IntFilter<"Map"> | number
   Campaign?: Prisma.XOR<Prisma.CampaignScalarRelationFilter, Prisma.CampaignWhereInput>
@@ -308,7 +308,7 @@ export type MapScalarWhereWithAggregatesInput = {
   MapTemplateId?: Prisma.UuidNullableWithAggregatesFilter<"Map"> | string | null
   Name?: Prisma.StringWithAggregatesFilter<"Map"> | string
   ImageFileId?: Prisma.StringWithAggregatesFilter<"Map"> | string
-  DefaultLighting?: Prisma.StringWithAggregatesFilter<"Map"> | string
+  DefaultLighting?: Prisma.EnumAbsoluteLightingWithAggregatesFilter<"Map"> | $Enums.AbsoluteLighting
   Width?: Prisma.IntWithAggregatesFilter<"Map"> | number
   Height?: Prisma.IntWithAggregatesFilter<"Map"> | number
 }
@@ -317,7 +317,7 @@ export type MapCreateInput = {
   MapId: string
   MapTemplateId?: string | null
   Name: string
-  DefaultLighting?: string
+  DefaultLighting?: $Enums.AbsoluteLighting
   Width?: number
   Height?: number
   Campaign: Prisma.CampaignCreateNestedOneWithoutMapsInput
@@ -332,7 +332,7 @@ export type MapUncheckedCreateInput = {
   MapTemplateId?: string | null
   Name: string
   ImageFileId: string
-  DefaultLighting?: string
+  DefaultLighting?: $Enums.AbsoluteLighting
   Width?: number
   Height?: number
   ActiveCampaign?: Prisma.CampaignUncheckedCreateNestedOneWithoutActiveMapInput
@@ -343,7 +343,7 @@ export type MapUpdateInput = {
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
   MapTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
+  DefaultLighting?: Prisma.EnumAbsoluteLightingFieldUpdateOperationsInput | $Enums.AbsoluteLighting
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
   Campaign?: Prisma.CampaignUpdateOneRequiredWithoutMapsNestedInput
@@ -358,7 +358,7 @@ export type MapUncheckedUpdateInput = {
   MapTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   ImageFileId?: Prisma.StringFieldUpdateOperationsInput | string
-  DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
+  DefaultLighting?: Prisma.EnumAbsoluteLightingFieldUpdateOperationsInput | $Enums.AbsoluteLighting
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
   ActiveCampaign?: Prisma.CampaignUncheckedUpdateOneWithoutActiveMapNestedInput
@@ -371,7 +371,7 @@ export type MapCreateManyInput = {
   MapTemplateId?: string | null
   Name: string
   ImageFileId: string
-  DefaultLighting?: string
+  DefaultLighting?: $Enums.AbsoluteLighting
   Width?: number
   Height?: number
 }
@@ -380,7 +380,7 @@ export type MapUpdateManyMutationInput = {
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
   MapTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
+  DefaultLighting?: Prisma.EnumAbsoluteLightingFieldUpdateOperationsInput | $Enums.AbsoluteLighting
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
 }
@@ -391,7 +391,7 @@ export type MapUncheckedUpdateManyInput = {
   MapTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   ImageFileId?: Prisma.StringFieldUpdateOperationsInput | string
-  DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
+  DefaultLighting?: Prisma.EnumAbsoluteLightingFieldUpdateOperationsInput | $Enums.AbsoluteLighting
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
 }
@@ -549,6 +549,10 @@ export type MapUncheckedUpdateOneWithoutImageFileNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MapUpdateToOneWithWhereWithoutImageFileInput, Prisma.MapUpdateWithoutImageFileInput>, Prisma.MapUncheckedUpdateWithoutImageFileInput>
 }
 
+export type EnumAbsoluteLightingFieldUpdateOperationsInput = {
+  set?: $Enums.AbsoluteLighting
+}
+
 export type MapCreateNestedOneWithoutRegionsInput = {
   create?: Prisma.XOR<Prisma.MapCreateWithoutRegionsInput, Prisma.MapUncheckedCreateWithoutRegionsInput>
   connectOrCreate?: Prisma.MapCreateOrConnectWithoutRegionsInput
@@ -567,7 +571,7 @@ export type MapCreateWithoutActiveCampaignInput = {
   MapId: string
   MapTemplateId?: string | null
   Name: string
-  DefaultLighting?: string
+  DefaultLighting?: $Enums.AbsoluteLighting
   Width?: number
   Height?: number
   Campaign: Prisma.CampaignCreateNestedOneWithoutMapsInput
@@ -581,7 +585,7 @@ export type MapUncheckedCreateWithoutActiveCampaignInput = {
   MapTemplateId?: string | null
   Name: string
   ImageFileId: string
-  DefaultLighting?: string
+  DefaultLighting?: $Enums.AbsoluteLighting
   Width?: number
   Height?: number
   Regions?: Prisma.RegionUncheckedCreateNestedManyWithoutMapInput
@@ -596,7 +600,7 @@ export type MapCreateWithoutCampaignInput = {
   MapId: string
   MapTemplateId?: string | null
   Name: string
-  DefaultLighting?: string
+  DefaultLighting?: $Enums.AbsoluteLighting
   Width?: number
   Height?: number
   ImageFile: Prisma.FileCreateNestedOneWithoutMapInput
@@ -609,7 +613,7 @@ export type MapUncheckedCreateWithoutCampaignInput = {
   MapTemplateId?: string | null
   Name: string
   ImageFileId: string
-  DefaultLighting?: string
+  DefaultLighting?: $Enums.AbsoluteLighting
   Width?: number
   Height?: number
   ActiveCampaign?: Prisma.CampaignUncheckedCreateNestedOneWithoutActiveMapInput
@@ -641,7 +645,7 @@ export type MapUpdateWithoutActiveCampaignInput = {
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
   MapTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
+  DefaultLighting?: Prisma.EnumAbsoluteLightingFieldUpdateOperationsInput | $Enums.AbsoluteLighting
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
   Campaign?: Prisma.CampaignUpdateOneRequiredWithoutMapsNestedInput
@@ -655,7 +659,7 @@ export type MapUncheckedUpdateWithoutActiveCampaignInput = {
   MapTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   ImageFileId?: Prisma.StringFieldUpdateOperationsInput | string
-  DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
+  DefaultLighting?: Prisma.EnumAbsoluteLightingFieldUpdateOperationsInput | $Enums.AbsoluteLighting
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
   Regions?: Prisma.RegionUncheckedUpdateManyWithoutMapNestedInput
@@ -686,7 +690,7 @@ export type MapScalarWhereInput = {
   MapTemplateId?: Prisma.UuidNullableFilter<"Map"> | string | null
   Name?: Prisma.StringFilter<"Map"> | string
   ImageFileId?: Prisma.StringFilter<"Map"> | string
-  DefaultLighting?: Prisma.StringFilter<"Map"> | string
+  DefaultLighting?: Prisma.EnumAbsoluteLightingFilter<"Map"> | $Enums.AbsoluteLighting
   Width?: Prisma.IntFilter<"Map"> | number
   Height?: Prisma.IntFilter<"Map"> | number
 }
@@ -695,7 +699,7 @@ export type MapCreateWithoutImageFileInput = {
   MapId: string
   MapTemplateId?: string | null
   Name: string
-  DefaultLighting?: string
+  DefaultLighting?: $Enums.AbsoluteLighting
   Width?: number
   Height?: number
   Campaign: Prisma.CampaignCreateNestedOneWithoutMapsInput
@@ -708,7 +712,7 @@ export type MapUncheckedCreateWithoutImageFileInput = {
   CampaignId: string
   MapTemplateId?: string | null
   Name: string
-  DefaultLighting?: string
+  DefaultLighting?: $Enums.AbsoluteLighting
   Width?: number
   Height?: number
   ActiveCampaign?: Prisma.CampaignUncheckedCreateNestedOneWithoutActiveMapInput
@@ -735,7 +739,7 @@ export type MapUpdateWithoutImageFileInput = {
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
   MapTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
+  DefaultLighting?: Prisma.EnumAbsoluteLightingFieldUpdateOperationsInput | $Enums.AbsoluteLighting
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
   Campaign?: Prisma.CampaignUpdateOneRequiredWithoutMapsNestedInput
@@ -748,7 +752,7 @@ export type MapUncheckedUpdateWithoutImageFileInput = {
   CampaignId?: Prisma.StringFieldUpdateOperationsInput | string
   MapTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
+  DefaultLighting?: Prisma.EnumAbsoluteLightingFieldUpdateOperationsInput | $Enums.AbsoluteLighting
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
   ActiveCampaign?: Prisma.CampaignUncheckedUpdateOneWithoutActiveMapNestedInput
@@ -759,7 +763,7 @@ export type MapCreateWithoutRegionsInput = {
   MapId: string
   MapTemplateId?: string | null
   Name: string
-  DefaultLighting?: string
+  DefaultLighting?: $Enums.AbsoluteLighting
   Width?: number
   Height?: number
   Campaign: Prisma.CampaignCreateNestedOneWithoutMapsInput
@@ -773,7 +777,7 @@ export type MapUncheckedCreateWithoutRegionsInput = {
   MapTemplateId?: string | null
   Name: string
   ImageFileId: string
-  DefaultLighting?: string
+  DefaultLighting?: $Enums.AbsoluteLighting
   Width?: number
   Height?: number
   ActiveCampaign?: Prisma.CampaignUncheckedCreateNestedOneWithoutActiveMapInput
@@ -799,7 +803,7 @@ export type MapUpdateWithoutRegionsInput = {
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
   MapTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
+  DefaultLighting?: Prisma.EnumAbsoluteLightingFieldUpdateOperationsInput | $Enums.AbsoluteLighting
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
   Campaign?: Prisma.CampaignUpdateOneRequiredWithoutMapsNestedInput
@@ -813,7 +817,7 @@ export type MapUncheckedUpdateWithoutRegionsInput = {
   MapTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   ImageFileId?: Prisma.StringFieldUpdateOperationsInput | string
-  DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
+  DefaultLighting?: Prisma.EnumAbsoluteLightingFieldUpdateOperationsInput | $Enums.AbsoluteLighting
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
   ActiveCampaign?: Prisma.CampaignUncheckedUpdateOneWithoutActiveMapNestedInput
@@ -824,7 +828,7 @@ export type MapCreateManyCampaignInput = {
   MapTemplateId?: string | null
   Name: string
   ImageFileId: string
-  DefaultLighting?: string
+  DefaultLighting?: $Enums.AbsoluteLighting
   Width?: number
   Height?: number
 }
@@ -833,7 +837,7 @@ export type MapUpdateWithoutCampaignInput = {
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
   MapTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
-  DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
+  DefaultLighting?: Prisma.EnumAbsoluteLightingFieldUpdateOperationsInput | $Enums.AbsoluteLighting
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
   ImageFile?: Prisma.FileUpdateOneRequiredWithoutMapNestedInput
@@ -846,7 +850,7 @@ export type MapUncheckedUpdateWithoutCampaignInput = {
   MapTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   ImageFileId?: Prisma.StringFieldUpdateOperationsInput | string
-  DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
+  DefaultLighting?: Prisma.EnumAbsoluteLightingFieldUpdateOperationsInput | $Enums.AbsoluteLighting
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
   ActiveCampaign?: Prisma.CampaignUncheckedUpdateOneWithoutActiveMapNestedInput
@@ -858,7 +862,7 @@ export type MapUncheckedUpdateManyWithoutCampaignInput = {
   MapTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   ImageFileId?: Prisma.StringFieldUpdateOperationsInput | string
-  DefaultLighting?: Prisma.StringFieldUpdateOperationsInput | string
+  DefaultLighting?: Prisma.EnumAbsoluteLightingFieldUpdateOperationsInput | $Enums.AbsoluteLighting
   Width?: Prisma.IntFieldUpdateOperationsInput | number
   Height?: Prisma.IntFieldUpdateOperationsInput | number
 }
@@ -978,7 +982,7 @@ export type $MapPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     MapTemplateId: string | null
     Name: string
     ImageFileId: string
-    DefaultLighting: string
+    DefaultLighting: $Enums.AbsoluteLighting
     Width: number
     Height: number
   }, ExtArgs["result"]["map"]>
@@ -1413,7 +1417,7 @@ export interface MapFieldRefs {
   readonly MapTemplateId: Prisma.FieldRef<"Map", 'String'>
   readonly Name: Prisma.FieldRef<"Map", 'String'>
   readonly ImageFileId: Prisma.FieldRef<"Map", 'String'>
-  readonly DefaultLighting: Prisma.FieldRef<"Map", 'String'>
+  readonly DefaultLighting: Prisma.FieldRef<"Map", 'AbsoluteLighting'>
   readonly Width: Prisma.FieldRef<"Map", 'Int'>
   readonly Height: Prisma.FieldRef<"Map", 'Int'>
 }

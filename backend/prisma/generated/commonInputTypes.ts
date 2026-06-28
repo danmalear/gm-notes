@@ -350,6 +350,23 @@ export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedStringNullableFilter<$PrismaModel>
 }
 
+export type EnumAbsoluteLightingFilter<$PrismaModel = never> = {
+  equals?: $Enums.AbsoluteLighting | Prisma.EnumAbsoluteLightingFieldRefInput<$PrismaModel>
+  in?: $Enums.AbsoluteLighting[] | Prisma.ListEnumAbsoluteLightingFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AbsoluteLighting[] | Prisma.ListEnumAbsoluteLightingFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAbsoluteLightingFilter<$PrismaModel> | $Enums.AbsoluteLighting
+}
+
+export type EnumAbsoluteLightingWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AbsoluteLighting | Prisma.EnumAbsoluteLightingFieldRefInput<$PrismaModel>
+  in?: $Enums.AbsoluteLighting[] | Prisma.ListEnumAbsoluteLightingFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AbsoluteLighting[] | Prisma.ListEnumAbsoluteLightingFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAbsoluteLightingWithAggregatesFilter<$PrismaModel> | $Enums.AbsoluteLighting
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAbsoluteLightingFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAbsoluteLightingFilter<$PrismaModel>
+}
+
 export type EnumRelativeLightingFilter<$PrismaModel = never> = {
   equals?: $Enums.RelativeLighting | Prisma.EnumRelativeLightingFieldRefInput<$PrismaModel>
   in?: $Enums.RelativeLighting[] | Prisma.ListEnumRelativeLightingFieldRefInput<$PrismaModel>
@@ -700,6 +717,23 @@ export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedStringNullableFilter<$PrismaModel>
   _max?: Prisma.NestedStringNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumAbsoluteLightingFilter<$PrismaModel = never> = {
+  equals?: $Enums.AbsoluteLighting | Prisma.EnumAbsoluteLightingFieldRefInput<$PrismaModel>
+  in?: $Enums.AbsoluteLighting[] | Prisma.ListEnumAbsoluteLightingFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AbsoluteLighting[] | Prisma.ListEnumAbsoluteLightingFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAbsoluteLightingFilter<$PrismaModel> | $Enums.AbsoluteLighting
+}
+
+export type NestedEnumAbsoluteLightingWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AbsoluteLighting | Prisma.EnumAbsoluteLightingFieldRefInput<$PrismaModel>
+  in?: $Enums.AbsoluteLighting[] | Prisma.ListEnumAbsoluteLightingFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AbsoluteLighting[] | Prisma.ListEnumAbsoluteLightingFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAbsoluteLightingWithAggregatesFilter<$PrismaModel> | $Enums.AbsoluteLighting
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAbsoluteLightingFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAbsoluteLightingFilter<$PrismaModel>
 }
 
 export type NestedEnumRelativeLightingFilter<$PrismaModel = never> = {

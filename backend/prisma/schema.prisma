@@ -198,17 +198,17 @@ model LocationItem {
 }
 
 model Map {
-  MapId           String    @id @db.Uuid
-  CampaignId      String    @db.Uuid
-  Campaign        Campaign  @relation(name: "MapCampaign", fields: [CampaignId], references: [CampaignId], onUpdate: Restrict)
-  MapTemplateId   String?   @db.Uuid
+  MapId           String           @id @db.Uuid
+  CampaignId      String           @db.Uuid
+  Campaign        Campaign         @relation(name: "MapCampaign", fields: [CampaignId], references: [CampaignId], onUpdate: Restrict)
+  MapTemplateId   String?          @db.Uuid
   Name            String
-  ImageFileId     String    @unique
-  ImageFile       File      @relation(fields: [ImageFileId], references: [FileId])
-  DefaultLighting String    @default("Bright Light")
-  Width           Int       @default(0)
-  Height          Int       @default(0)
-  ActiveCampaign  Campaign? @relation(name: "CampaignActiveMap")
+  ImageFileId     String           @unique
+  ImageFile       File             @relation(fields: [ImageFileId], references: [FileId])
+  DefaultLighting AbsoluteLighting @default(BrightLight)
+  Width           Int              @default(0)
+  Height          Int              @default(0)
+  ActiveCampaign  Campaign?        @relation(name: "CampaignActiveMap")
   Regions         Region[]
 
   @@index([CampaignId])
