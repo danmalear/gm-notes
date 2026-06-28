@@ -50,7 +50,7 @@ export abstract class FakeRepository<TModel extends object, TCreate, TUpdate>
 	}
 
 	async create() {
-		this.calls.insert++;
+		this.calls.create++;
 		return this.model;
 	}
 

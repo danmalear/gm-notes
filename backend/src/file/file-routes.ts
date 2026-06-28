@@ -59,7 +59,7 @@ export function fileRoutes(app: Express, fileRepository: IFileRepository) {
 				return;
 			}
 
-			const file = await fileRepository.insert({
+			const file = await fileRepository.create({
 				FileId: req.file.filename,
 				FileName: req.file.originalname,
 			});

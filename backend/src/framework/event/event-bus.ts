@@ -48,7 +48,7 @@ export class EventBus extends MessageBus<IEvent> implements IEventBus {
 		}
 
 		if (version === 0) {
-			streamRecord = await this.streamRepository.insert({
+			streamRecord = await this.streamRepository.create({
 				StreamId: event.streamId,
 				Type: event.context,
 				Version: 1,
@@ -63,7 +63,7 @@ export class EventBus extends MessageBus<IEvent> implements IEventBus {
 			);
 		}
 
-		const eventModel: EventCreateInput = {
+		const eventCreate: EventCreateInput = {
 			EventId: id,
 			StreamId: event.streamId,
 			CorrelationId: event.correlationId,
@@ -74,7 +74,7 @@ export class EventBus extends MessageBus<IEvent> implements IEventBus {
 			OccurredAt: new Date(),
 		};
 
-		await this.eventRepository.insert(eventModel);
+		await this.eventRepository.create(eventCreate);
 
 		this.wss.emit('event', event);
 		return await super.send(event);

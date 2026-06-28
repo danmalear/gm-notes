@@ -28,7 +28,7 @@ export class CommandBus extends MessageBus<ICommand> implements ICommandBus {
 
 		const id = randomUUID();
 
-		const commandModel: CommandCreateInput = {
+		const commandCreate: CommandCreateInput = {
 			CommandId: id,
 			StreamId: command.streamId ?? null,
 			CorrelationId: command.correlationId,
@@ -38,7 +38,7 @@ export class CommandBus extends MessageBus<ICommand> implements ICommandBus {
 			CreatedAt: new Date(),
 		};
 
-		await this.commandRepository.insert(commandModel);
+		await this.commandRepository.create(commandCreate);
 		return await super.send(command);
 	}
 }
