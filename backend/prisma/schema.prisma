@@ -32,6 +32,14 @@ model AbilityCheck {
   @@schema("public")
 }
 
+enum AbsoluteLighting {
+  Darkness
+  DimLight    @map("Dim Light")
+  BrightLight @map("Bright Light")
+
+  @@schema("public")
+}
+
 model Action {
   ActionId         String            @id @db.Uuid
   TargetId         String            @db.Uuid

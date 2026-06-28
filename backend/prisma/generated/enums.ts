@@ -9,6 +9,15 @@
 * 🟢 You can import this file directly.
 */
 
+export const AbsoluteLighting = {
+  Darkness: 'Darkness',
+  DimLight: 'DimLight',
+  BrightLight: 'BrightLight'
+} as const
+
+export type AbsoluteLighting = (typeof AbsoluteLighting)[keyof typeof AbsoluteLighting]
+
+
 export const ActionType = {
   Attack: 'Attack',
   Dash: 'Dash',
