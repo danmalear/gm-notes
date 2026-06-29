@@ -1,13 +1,13 @@
 import type { IEvent } from '#event/event.ts';
 import type { StreamConfig } from '#framework/stream/stream.ts';
 import { Stream } from '#framework/stream/stream.ts';
+import type { CampaignModel } from '#prisma-models/Campaign.ts';
 import { NotImplementedError } from '#shared/error.ts';
 import type { UUID } from 'crypto';
 import { validateCampaignCreated } from './campaign-events.ts';
-import type { CampaignRec } from './campaign-repository.ts';
 
-export class Campaign extends Stream<CampaignRec> {
-	override emptyRecord: CampaignRec;
+export class Campaign extends Stream<CampaignModel> {
+	override emptyRecord: CampaignModel;
 
 	constructor(id: UUID, streamConfig: StreamConfig) {
 		super(id, streamConfig);
@@ -19,7 +19,7 @@ export class Campaign extends Stream<CampaignRec> {
 		};
 	}
 
-	override async applyEvent(aggregate: CampaignRec, event: IEvent) {
+	override async applyEvent(aggregate: CampaignModel, event: IEvent) {
 		switch (event.ref) {
 			case 'Created':
 				return this.Created(aggregate, event);
@@ -30,7 +30,7 @@ export class Campaign extends Stream<CampaignRec> {
 		}
 	}
 
-	Created(aggregate: CampaignRec, event: IEvent) {
+	Created(aggregate: CampaignModel, event: IEvent) {
 		validateCampaignCreated(event.data);
 		aggregate.CampaignId = event.data.id;
 		aggregate.Name = event.data.name;

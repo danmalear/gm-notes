@@ -1,44 +1,95 @@
-import type { IMapRepository } from '#map/map-repository.ts';
+import type {
+	CampaignCreateInput,
+	CampaignInclude,
+	CampaignModel,
+	CampaignUpdateInput,
+} from '#prisma-models/Campaign.ts';
 import type { MapModel } from '#prisma-models/Map.ts';
-import { Repository } from '#shared/repository-old.ts';
+import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 
-export interface CampaignRec {
-	CampaignId: UUID;
-	CampaignTemplateId: UUID | null;
-	Name: string;
-	ActiveMapId: UUID | null;
-}
-
-export interface CampaignRefRec extends CampaignRec {
+export interface CampaignIncludeAll extends CampaignModel {
 	Maps: MapModel[];
 }
 
-export const tableName = 'Campaign';
-export const pkColumn = 'CampaignId';
+export const includeAll = {
+	Maps: true,
+} satisfies CampaignInclude;
 
-export interface CampaignRepositoryConfig {
-	mapRepository: IMapRepository;
-}
+export type ICampaignRepository = IRepository<
+	CampaignModel,
+	CampaignCreateInput,
+	CampaignUpdateInput,
+	CampaignIncludeAll
+>;
 
-export class CampaignRepository extends Repository<
-	CampaignRec,
-	CampaignRefRec
-> {
-	mapRepository: IMapRepository;
+export class CampaignRepository
+	extends Repository<
+		CampaignModel,
+		CampaignCreateInput,
+		CampaignUpdateInput,
+		CampaignIncludeAll
+	>
+	implements ICampaignRepository
+{
+	override descriptor = 'Campaign';
 
-	constructor({ mapRepository }: CampaignRepositoryConfig) {
-		super(tableName, pkColumn);
-		this.mapRepository = mapRepository;
+	override async getByIdRaw(campaignId: UUID): Promise<CampaignModel | null> {
+		try {
+			return await this.prisma.campaign.findUnique({
+				where: {
+					CampaignId: campaignId,
+				},
+			});
+		} catch (e) {
+			throw this.getByIdError(campaignId, e);
+		}
 	}
 
-	override async getById(id: UUID): Promise<CampaignRefRec | undefined> {
-		const campaign = await this.getByIdRaw(id);
-		if (!campaign) return undefined;
-		const maps = await this.mapRepository.getByCampaignId(id);
-		return {
-			...campaign,
-			Maps: maps,
-		};
+	override async getById(campaignId: UUID): Promise<CampaignIncludeAll | null> {
+		try {
+			return await this.prisma.campaign.findUnique({
+				where: {
+					CampaignId: campaignId,
+				},
+				include: includeAll,
+			});
+		} catch (e) {
+			throw this.getByIdError(campaignId, e);
+		}
+	}
+
+	override async getAll(): Promise<CampaignModel[]> {
+		try {
+			return await this.prisma.campaign.findMany();
+		} catch (e) {
+			throw this.getAllError(e);
+		}
+	}
+
+	override async create(data: CampaignCreateInput): Promise<CampaignModel> {
+		try {
+			return await this.prisma.campaign.create({
+				data,
+			});
+		} catch (e) {
+			throw this.createError(e);
+		}
+	}
+
+	override async update(
+		campaignId: UUID,
+		data: CampaignUpdateInput,
+	): Promise<CampaignModel> {
+		try {
+			return await this.prisma.campaign.update({
+				where: {
+					CampaignId: campaignId,
+				},
+				data,
+			});
+		} catch (e) {
+			throw this.updateError(campaignId, e);
+		}
 	}
 }
