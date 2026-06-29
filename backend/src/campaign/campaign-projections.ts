@@ -33,6 +33,6 @@ export class CampaignProjections implements IEventSubscriber {
 			ActiveMapId: null,
 		};
 
-		this.campaignRepository.insert(newCampaign);
+		this.campaignRepository.create(newCampaign);
 	}
 }
