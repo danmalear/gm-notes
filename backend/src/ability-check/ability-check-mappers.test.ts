@@ -10,7 +10,7 @@ import {
 	abilityCheckRefRecMin,
 	abilityCheckStub,
 	abilityCheckStubMin,
-} from './fakes/ability-check-data-fake.ts';
+} from './fakes/fake-ability-check-data.ts';
 
 suite('Ability Check mappers', () => {
 	suite('toDto', () => {

@@ -2,7 +2,7 @@ import { BadRequestError } from '#shared/error.ts';
 import assert from 'assert';
 import test, { suite } from 'node:test';
 import { validateCommandRequest } from './command-dtos.ts';
-import { fakeCommandRequest } from './fakes/command-data-fake.ts';
+import { fakeCommandRequest } from './fakes/fake-command-data.ts';
 
 suite('Command DTOs', () => {
 	suite('validateCommandRequest', () => {

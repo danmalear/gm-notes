@@ -7,7 +7,7 @@ import type { ICloneable } from '#shared/cloneable.ts';
 import type { Faker } from '#shared/faker.ts';
 import { FakeRepository } from '#shared/fakes/fake-repository.ts';
 import type { ICommandRepository } from '../command-repository.ts';
-import { fakeCommandModel } from './command-data-fake.ts';
+import { fakeCommandModel } from './fake-command-data.ts';
 
 export class FakeCommandRepository
 	extends FakeRepository<CommandModel, CommandCreateInput, CommandUpdateInput>

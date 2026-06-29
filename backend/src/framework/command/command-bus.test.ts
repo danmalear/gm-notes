@@ -2,7 +2,7 @@ import { NotFoundError } from '#shared/error.ts';
 import assert from 'assert';
 import { beforeEach, suite, test } from 'node:test';
 import { CommandBus } from './command-bus.ts';
-import { fakeCommand } from './fakes/command-data-fake.ts';
+import { fakeCommand } from './fakes/fake-command-data.ts';
 import { FakeCommandHandler } from './fakes/fake-command-handler.ts';
 import { FakeCommandRepository } from './fakes/fake-command-repository.ts';
 

@@ -3,7 +3,7 @@ import { FakeStreamRepository } from '#framework/stream/fakes/fake-stream-reposi
 import assert from 'assert';
 import { beforeEach, suite, test } from 'node:test';
 import { EventBus } from './event-bus.ts';
-import { fakeEvent } from './fakes/event-data-fake.ts';
+import { fakeEvent } from './fakes/fake-event-data.ts';
 import { FakeEventRepository } from './fakes/fake-event-repository.ts';
 import { FakeEventSubscriber } from './fakes/fake-event-subscriber.ts';
 

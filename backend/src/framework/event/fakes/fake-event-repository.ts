@@ -10,7 +10,7 @@ import {
 	zeroCalls as baseZeroCalls,
 } from '#shared/fakes/fake-repository.ts';
 import type { IEventRepository } from '../event-repository.ts';
-import { fakeEventModel } from './event-data-fake.ts';
+import { fakeEventModel } from './fake-event-data.ts';
 
 const zeroCalls: FakerCalls<IEventRepository> = {
 	...baseZeroCalls,
