@@ -1,5 +1,6 @@
 import { MessageBus, type IMessageBus } from '#message/message-bus.ts';
 import type { EventCreateInput } from '#prisma-models/Event.ts';
+import type { StreamUpdateInput } from '#prisma/generated/models.ts';
 import { InternalError } from '#shared/error.ts';
 import type { IStreamRepository } from '#stream/stream-repository.ts';
 import { randomUUID, type UUID } from 'crypto';
@@ -63,6 +64,11 @@ export class EventBus extends MessageBus<IEvent> implements IEventBus {
 			);
 		}
 
+		const streamUpdate: StreamUpdateInput = {
+			Version: version + 1,
+			UpdatedAt: new Date().toISOString(),
+		};
+
 		const eventCreate: EventCreateInput = {
 			EventId: id,
 			StreamId: event.streamId,
@@ -75,6 +81,10 @@ export class EventBus extends MessageBus<IEvent> implements IEventBus {
 		};
 
 		await this.eventRepository.create(eventCreate);
+		await this.streamRepository.update(
+			streamRecord.StreamId as UUID,
+			streamUpdate,
+		);
 
 		this.wss.emit('event', event);
 		return await super.send(event);
