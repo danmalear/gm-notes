@@ -36,14 +36,6 @@ export interface IRepository<
 	getAll(): Promise<TModel[]>;
 
 	/**
-	 * @deprecated
-	 * Inserts a new record into the database
-	 * @param data Data to insert into database
-	 * @returns The inserted record
-	 */
-	insert(data: TCreate): Promise<TModel>;
-
-	/**
 	 * Creates a new record in the database
 	 * @param data Data to insert into database
 	 * @returns The created record
@@ -124,13 +116,6 @@ export abstract class Repository<
 	 * @returns The inserted record
 	 */
 	abstract create(data: TCreateInput): Promise<TModel>;
-
-	/**
-	 * @deprecated
-	 */
-	async insert(data: TCreateInput): Promise<TModel> {
-		return await this.create(data);
-	}
 
 	/**
 	 * Updates an existing database record with new data

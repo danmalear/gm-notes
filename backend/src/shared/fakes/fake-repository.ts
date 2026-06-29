@@ -11,7 +11,6 @@ export const zeroCalls: FakerCalls<IRepository<object, object, object>> = {
 	getByIdRaw: 0,
 	getById: 0,
 	create: 0,
-	insert: 0,
 	update: 0,
 };
 
@@ -52,10 +51,6 @@ export abstract class FakeRepository<TModel extends object, TCreate, TUpdate>
 	async create() {
 		this.calls.create++;
 		return this.model;
-	}
-
-	async insert() {
-		return this.create();
 	}
 
 	async update() {
