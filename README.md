@@ -20,8 +20,8 @@ Data layer: Prisma, Postgres
 
 ## Future improvements
 
-- Currently only one map available through hard-coding. Move this data back to the database and allow for expanding data library
-- Allow for multiple ongoing campaigns to be saved and loaded
+- Currently only one map available through hard-coding. Move this data back to the database and allow for expanding data library (in progress)
+- Allow for multiple ongoing campaigns to be saved and loaded (in progress)
 - Expand current state from active map and time of day to any of:
   - Party size, PC status
   - Monster/NPC status
