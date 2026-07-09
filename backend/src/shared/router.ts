@@ -59,7 +59,7 @@ export class BaseRouter<
 	get(_opts: GetOpts) {
 		this.app.get(`/${this.namespace}`, async (_req, res) => {
 			res.status(400).send({
-				message: 'GET requests not supported for the given namespace',
+				message: `GET requests not supported for namespace ${this.namespace}`,
 			});
 		});
 	}
@@ -67,7 +67,7 @@ export class BaseRouter<
 	post(_opts: PostOpts) {
 		this.app.post(`/${this.namespace}`, async (_req, res) => {
 			res.status(400).send({
-				message: 'POST requests not supported for the given namespace',
+				message: `POST requests not supported for namespace ${this.namespace}`,
 			});
 		});
 	}
@@ -75,7 +75,7 @@ export class BaseRouter<
 	put(_opts: PutOpts) {
 		this.app.put(`/${this.namespace}`, async (_req, res) => {
 			res.status(400).send({
-				message: 'PUT requests not supported for the given namespace',
+				message: `PUT requests not supported for namespace ${this.namespace}`,
 			});
 		});
 	}
@@ -83,7 +83,7 @@ export class BaseRouter<
 	patch(_opts: PatchOpts) {
 		this.app.patch(`/${this.namespace}`, async (_req, res) => {
 			res.status(400).send({
-				message: 'PATCH requests not supported for the given namespace',
+				message: `PATCH requests not supported for namespace ${this.namespace}`,
 			});
 		});
 	}
@@ -91,7 +91,7 @@ export class BaseRouter<
 	delete(_opts: DeleteOpts) {
 		this.app.delete(`/${this.namespace}`, async (_req, res) => {
 			res.status(400).send({
-				message: 'DELETE requests not supported for the given namespace',
+				message: `DELETE requests not supported for namespace ${this.namespace}`,
 			});
 		});
 	}
