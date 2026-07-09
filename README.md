@@ -16,7 +16,7 @@ UI layer: React, TypeScript
 
 Server layer: Node, Express, TypeScript
 
-Data layer: Knex, SQLite
+Data layer: Prisma, Postgres
 
 ## Future improvements
 
