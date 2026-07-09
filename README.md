@@ -1,4 +1,4 @@
-# GM Map Notes
+# GM Notes App
 
 This app provides game masters a quick and easy way to navigate any prep notes associated with specific areas on a dungeon map, by offering a customizable, clickable, collapsible interface.
 
