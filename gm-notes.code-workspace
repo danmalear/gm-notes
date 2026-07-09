@@ -1,8 +1,38 @@
 {
 	"folders": [
 		{
-			"path": "."
-		}
+			"path": ".",
+		},
 	],
-	"settings": {}
+	"settings": {
+		"github.copilot.enable": {
+			"*": false,
+			"plaintext": false,
+			"markdown": false,
+			"scminput": false,
+		},
+		"cSpell.words": [
+			"collapsibles",
+			"crystalware",
+			"Darklord",
+			"Darkvision",
+			"Drasha",
+			"DTOs",
+			"Graveborn",
+			"grick",
+			"halfling",
+			"Klara",
+			"longsword",
+			"Mantine",
+			"nothic",
+			"Rosavalda",
+			"silphium",
+			"spellbook",
+			"Strahd",
+			"Thornboldt",
+		],
+		"[prisma]": {
+			"editor.defaultFormatter": "Prisma.prisma",
+		},
+	},
 }
