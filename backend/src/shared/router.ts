@@ -10,7 +10,13 @@ interface PrivateRouterOpts {
 
 type AllBaseRouterOpts = BaseRouterOpts & PrivateRouterOpts;
 
-interface RouteInitOpts<GetOpts, PostOpts, PutOpts, PatchOpts, DeleteOpts> {
+export interface BaseRouterInitOpts<
+	GetOpts,
+	PostOpts,
+	PutOpts,
+	PatchOpts,
+	DeleteOpts,
+> {
 	getOpts: GetOpts;
 	postOpts: PostOpts;
 	putOpts: PutOpts;
@@ -39,7 +45,7 @@ export class BaseRouter<
 		putOpts,
 		patchOpts,
 		deleteOpts,
-	}: RouteInitOpts<GetOpts, PostOpts, PutOpts, PatchOpts, DeleteOpts>) {
+	}: BaseRouterInitOpts<GetOpts, PostOpts, PutOpts, PatchOpts, DeleteOpts>) {
 		this.get(getOpts);
 		this.post(postOpts);
 		this.put(putOpts);
