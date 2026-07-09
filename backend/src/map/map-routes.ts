@@ -24,12 +24,14 @@ import type {
 import { toDto, toStub } from './map-mappers.ts';
 import type { IMapRepository } from './map-repository.ts';
 
-export function mapRoutes(
-	app: Express,
-	_commandBus: ICommandBus,
-	_eventBus: IEventBus,
-	mapRepository: IMapRepository,
-) {
+export interface MapRouteOpts {
+	app: Express;
+	commandBus: ICommandBus;
+	eventBus: IEventBus;
+	mapRepository: IMapRepository;
+}
+
+export function mapRoutes({ app, mapRepository }: MapRouteOpts) {
 	const apiNamespace = 'maps';
 
 	app.get(

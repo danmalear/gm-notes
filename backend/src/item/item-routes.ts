@@ -6,13 +6,15 @@ import type { IItemRepository } from './item-repository.ts';
 import { toDto } from './location-item-mappers.ts';
 import type { ILocationItemRepository } from './location-item-repository.ts';
 
-export function itemRoutes(
-	app: Express,
-	_commandBus: ICommandBus,
-	_eventBus: IEventBus,
-	_itemRepository: IItemRepository,
-	locationItemRepository: ILocationItemRepository,
-) {
+export interface ItemRouteOpts {
+	app: Express;
+	commandBus: ICommandBus;
+	eventBus: IEventBus;
+	itemRepository: IItemRepository;
+	locationItemRepository: ILocationItemRepository;
+}
+
+export function itemRoutes({ app, locationItemRepository }: ItemRouteOpts) {
 	const apiNamespace = 'items';
 
 	getById(app, {

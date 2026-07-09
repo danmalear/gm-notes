@@ -8,12 +8,17 @@ import type { NarrationQueryParams, NarrationStub } from './narration-dtos.ts';
 import { toDto, toStub } from './narration-mappers.ts';
 import type { INarrationRepository } from './narration-repository.ts';
 
-export function narrationRoutes(
-	app: Express,
-	_commandBus: ICommandBus,
-	_eventBus: IEventBus,
-	narrationRepository: INarrationRepository,
-) {
+export interface NarrationRouteOpts {
+	app: Express;
+	commandBus: ICommandBus;
+	eventBus: IEventBus;
+	narrationRepository: INarrationRepository;
+}
+
+export function narrationRoutes({
+	app,
+	narrationRepository,
+}: NarrationRouteOpts) {
 	const apiNamespace = 'narrations';
 
 	app.get(

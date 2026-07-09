@@ -10,14 +10,23 @@ import type { CampaignStub } from './campaign-dtos.ts';
 import { toDto, toStub } from './campaign-mappers.ts';
 import type { CampaignRepository } from './campaign-repository.ts';
 
-export function campaignRoutes(
-	app: Express,
-	commandBus: ICommandBus,
-	eventBus: IEventBus,
-	eventRepository: IEventRepository,
-	streamRepository: IStreamRepository,
-	campaignRepository: CampaignRepository,
-) {
+export interface CampaignRouteOpts {
+	app: Express;
+	commandBus: ICommandBus;
+	eventBus: IEventBus;
+	eventRepository: IEventRepository;
+	streamRepository: IStreamRepository;
+	campaignRepository: CampaignRepository;
+}
+
+export function campaignRoutes({
+	app,
+	commandBus,
+	eventBus,
+	eventRepository,
+	streamRepository,
+	campaignRepository,
+}: CampaignRouteOpts) {
 	const apiNamespace = 'campaigns';
 
 	const campaignCommandHandler = new CampaignCommandHandler({

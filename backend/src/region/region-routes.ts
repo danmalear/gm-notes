@@ -23,13 +23,19 @@ import {
 	validateRectangle,
 } from './shape-validators.ts';
 
-export function regionRoutes(
-	app: Express,
-	_commandBus: ICommandBus,
-	_eventBus: IEventBus,
-	regionRepository: IRegionRepository,
-	regionShapeRepository: IRegionShapeRepository,
-) {
+export interface RegionRouteOpts {
+	app: Express;
+	commandBus: ICommandBus;
+	eventBus: IEventBus;
+	regionRepository: IRegionRepository;
+	regionShapeRepository: IRegionShapeRepository;
+}
+
+export function regionRoutes({
+	app,
+	regionRepository,
+	regionShapeRepository,
+}: RegionRouteOpts) {
 	const apiNamespace = 'regions';
 
 	app.get(

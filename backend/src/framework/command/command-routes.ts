@@ -9,7 +9,12 @@ import {
 } from './command-dtos.ts';
 import type { ICommand } from './command.ts';
 
-export function commandRoutes(app: Express, commandBus: ICommandBus) {
+export interface CommandRouteOpts {
+	app: Express;
+	commandBus: ICommandBus;
+}
+
+export function commandRoutes({ app, commandBus }: CommandRouteOpts) {
 	const apiNamespace = 'commands';
 
 	app.post(

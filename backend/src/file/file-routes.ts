@@ -1,14 +1,23 @@
 import type { MessageResponse } from '#shared/dtos.ts';
 import type { Express, Request, Response } from 'express';
 import multer from 'multer';
-import path from 'path';
 import type { FileStub } from './file-dtos.ts';
 import type { IFileRepository } from './file-repository.ts';
 
-const upload = multer({ dest: path.resolve('uploads') });
+export interface FileRouteOpts {
+	app: Express;
+	fileRepository: IFileRepository;
+	uploadsPath: string;
+}
 
-export function fileRoutes(app: Express, fileRepository: IFileRepository) {
+export function fileRoutes({
+	app,
+	fileRepository,
+	uploadsPath,
+}: FileRouteOpts) {
 	const apiNamespace = 'files';
+
+	const upload = multer({ dest: uploadsPath });
 
 	app.get(
 		`/${apiNamespace}/:fileId`,
@@ -30,7 +39,7 @@ export function fileRoutes(app: Express, fileRepository: IFileRepository) {
 			}
 
 			res.download(
-				`${path.resolve('uploads')}/${req.params.fileId}`,
+				`${uploadsPath}/${req.params.fileId}`,
 				fileRecord.FileName,
 				(err) => {
 					if (err) {

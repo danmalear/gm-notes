@@ -5,12 +5,14 @@ import type { Express } from 'express';
 import { toDto } from './action-mappers.ts';
 import type { IActionRepository } from './action-repository.ts';
 
-export function actionRoutes(
-	app: Express,
-	_commandBus: ICommandBus,
-	_eventBus: IEventBus,
-	actionRepository: IActionRepository,
-) {
+export interface ActionRouteOpts {
+	app: Express;
+	commandBus: ICommandBus;
+	eventBus: IEventBus;
+	actionRepository: IActionRepository;
+}
+
+export function actionRoutes({ app, actionRepository }: ActionRouteOpts) {
 	const apiNamespace = 'actions';
 
 	getById(app, {

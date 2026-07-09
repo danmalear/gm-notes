@@ -39,6 +39,7 @@ import express, {
 	type Response,
 } from 'express';
 import { createServer } from 'http';
+import path from 'path';
 
 function initRepos(prisma: PrismaClient) {
 	const commandRepository = new CommandRepository({ prisma });
@@ -92,6 +93,8 @@ function createAppServer() {
 	const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 	const prisma = new PrismaClient({ adapter });
 
+	const uploadsPath = path.resolve('uploads');
+
 	const {
 		commandRepository,
 		eventRepository,
@@ -119,29 +122,35 @@ function createAppServer() {
 
 	eventBus.subscribe('Campaign', campaignProjections);
 
-	commandRoutes(app, commandBus);
+	commandRoutes({ app, commandBus });
 
-	campaignRoutes(
+	campaignRoutes({
 		app,
 		commandBus,
 		eventBus,
 		eventRepository,
 		streamRepository,
 		campaignRepository,
-	);
-	mapRoutes(app, commandBus, eventBus, mapRepository);
-	regionRoutes(
+	});
+	mapRoutes({ app, commandBus, eventBus, mapRepository });
+	regionRoutes({
 		app,
 		commandBus,
 		eventBus,
 		regionRepository,
 		regionShapeRepository,
-	);
-	abilityCheckRoutes(app, commandBus, eventBus, abilityCheckRepository);
-	narrationRoutes(app, commandBus, eventBus, narrationRepository);
-	actionRoutes(app, commandBus, eventBus, actionRepository);
-	itemRoutes(app, commandBus, eventBus, itemRepository, locationItemRepository);
-	fileRoutes(app, fileRepository);
+	});
+	abilityCheckRoutes({ app, commandBus, eventBus, abilityCheckRepository });
+	narrationRoutes({ app, commandBus, eventBus, narrationRepository });
+	actionRoutes({ app, commandBus, eventBus, actionRepository });
+	itemRoutes({
+		app,
+		commandBus,
+		eventBus,
+		itemRepository,
+		locationItemRepository,
+	});
+	fileRoutes({ app, fileRepository, uploadsPath });
 
 	app.use((req: Request, res: Response<MessageResponse>) => {
 		console.error('Unhandled request received');

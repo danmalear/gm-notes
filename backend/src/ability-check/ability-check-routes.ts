@@ -5,12 +5,17 @@ import type { Express } from 'express';
 import { toDto } from './ability-check-mappers.ts';
 import type { AbilityCheckRepository } from './ability-check-repository.ts';
 
-export function abilityCheckRoutes(
-	app: Express,
-	_commandBus: ICommandBus, // @TODO
-	_eventBus: IEventBus, // @TODO
-	abilityCheckRepository: AbilityCheckRepository,
-) {
+export interface AbilityCheckRouteOpts {
+	app: Express;
+	commandBus: ICommandBus;
+	eventBus: IEventBus;
+	abilityCheckRepository: AbilityCheckRepository;
+}
+
+export function abilityCheckRoutes({
+	app,
+	abilityCheckRepository,
+}: AbilityCheckRouteOpts) {
 	const apiNamespace = 'ability-checks';
 
 	getById(app, {
