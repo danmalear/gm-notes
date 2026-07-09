@@ -24,6 +24,9 @@ export interface BaseRouterInitOpts<
 	deleteOpts: DeleteOpts;
 }
 
+/**
+ * Base class to establish basic routes for a given namespace
+ */
 export class BaseRouter<
 	GetOpts = unknown,
 	PostOpts = unknown,
