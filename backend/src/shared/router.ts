@@ -195,8 +195,6 @@ export class BaseStreamRouter<
 
 	/**
 	 * Add a default get by ID route
-	 *
-	 * @param opts Option params for get by ID route
 	 */
 	defaultGetById() {
 		this.app.get(
@@ -226,6 +224,30 @@ export class BaseStreamRouter<
 						message: getMessage(e),
 					});
 				}
+			},
+		);
+	}
+
+	/**
+	 * Add a default get all route
+	 */
+	defaultGetAll() {
+		this.app.get(
+			`/${this.namespace}`,
+			async (_req, res: Response<MessageResponse | DataResponse<TStub[]>>) => {
+				console.log(`${this.descriptor} GET all request received.`);
+
+				const campaigns = await this.repository.getAll();
+
+				const data: TStub[] = [];
+
+				for (const campaign of campaigns) {
+					data.push(this.toStub(campaign));
+				}
+
+				res.send({
+					data,
+				});
 			},
 		);
 	}
