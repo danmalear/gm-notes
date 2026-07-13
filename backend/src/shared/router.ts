@@ -237,12 +237,12 @@ export class BaseStreamRouter<
 			async (_req, res: Response<MessageResponse | DataResponse<TStub[]>>) => {
 				console.log(`${this.descriptor} GET all request received.`);
 
-				const campaigns = await this.repository.getAll();
+				const records = await this.repository.getAll();
 
 				const data: TStub[] = [];
 
-				for (const campaign of campaigns) {
-					data.push(this.toStub(campaign));
+				for (const record of records) {
+					data.push(this.toStub(record));
 				}
 
 				res.send({
