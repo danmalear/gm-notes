@@ -3,12 +3,12 @@ import type { IEvent } from '#event/event.ts';
 import type { CampaignModel } from '#prisma-models/Campaign.ts';
 import { NotImplementedError } from '#shared/error.ts';
 import { validateCampaignCreated } from './campaign-events.ts';
-import type { CampaignRepository } from './campaign-repository.ts';
+import type { ICampaignRepository } from './campaign-repository.ts';
 
 export class CampaignProjections implements IEventSubscriber {
-	campaignRepository: CampaignRepository;
+	campaignRepository: ICampaignRepository;
 
-	constructor(campaignRepository: CampaignRepository) {
+	constructor(campaignRepository: ICampaignRepository) {
 		this.campaignRepository = campaignRepository;
 	}
 
