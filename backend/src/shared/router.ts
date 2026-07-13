@@ -112,10 +112,10 @@ export class BaseRouter<
 }
 
 export interface BaseStreamRouterOpts<
-	TModel,
-	TCreate,
-	TUpdate,
-	TModelIncludeAll extends TModel,
+	TModel = unknown,
+	TCreate = unknown,
+	TUpdate = unknown,
+	TModelIncludeAll extends TModel = TModel,
 > extends BaseRouterOpts {
 	repository: IRepository<TModel, TCreate, TUpdate, TModelIncludeAll>;
 	commandBus: ICommandBus;
