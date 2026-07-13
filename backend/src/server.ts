@@ -1,35 +1,76 @@
-import { AbilityCheckRepository } from '#ability-check/ability-check-repository.ts';
+import {
+	AbilityCheckRepository,
+	type IAbilityCheckRepository,
+} from '#ability-check/ability-check-repository.ts';
 import { abilityCheckRoutes } from '#ability-check/ability-check-routes.ts';
-import { ActionRepository } from '#action/action-repository.ts';
+import {
+	ActionRepository,
+	type IActionRepository,
+} from '#action/action-repository.ts';
 import { actionRoutes } from '#action/action-routes.ts';
+import { CampaignCommandHandler } from '#campaign/campaign-commands.ts';
 import { CampaignProjections } from '#campaign/campaign-projections.ts';
-import { CampaignRepository } from '#campaign/campaign-repository.ts';
-import { campaignRoutes } from '#campaign/campaign-routes.ts';
+import {
+	CampaignRepository,
+	type ICampaignRepository,
+} from '#campaign/campaign-repository.ts';
+import { CampaignRouter } from '#campaign/campaign-router.ts';
+import type { ICommandBus } from '#command/command-bus.ts';
 import { CommandBus } from '#command/command-bus.ts';
-import { CommandRepository } from '#command/command-repository.ts';
+import {
+	CommandRepository,
+	type ICommandRepository,
+} from '#command/command-repository.ts';
 import { commandRoutes } from '#command/command-routes.ts';
-import { ConditionRepository } from '#condition/condition-repository.ts';
+import {
+	ConditionRepository,
+	type IConditionRepository,
+} from '#condition/condition-repository.ts';
+import type { IEventBus } from '#event/event-bus.ts';
 import { EventBus } from '#event/event-bus.ts';
-import { EventRepository } from '#event/event-repository.ts';
-import { FileRepository } from '#file/file-repository.ts';
+import { EventCommandHandler } from '#event/event-commands.ts';
+import {
+	EventRepository,
+	type IEventRepository,
+} from '#event/event-repository.ts';
+import { FileRepository, type IFileRepository } from '#file/file-repository.ts';
 import { fileRoutes } from '#file/file-routes.ts';
 import createWsServer from '#framework/websocket.ts';
-import { HandoutRepository } from '#handout/handout-repository.ts';
-import { ItemRepository } from '#item/item-repository.ts';
+import {
+	HandoutRepository,
+	type IHandoutRepository,
+} from '#handout/handout-repository.ts';
+import { ItemRepository, type IItemRepository } from '#item/item-repository.ts';
 import { itemRoutes } from '#item/item-routes.ts';
-import { LocationItemRepository } from '#item/location-item-repository.ts';
-import { MapRepository } from '#map/map-repository.ts';
+import {
+	LocationItemRepository,
+	type ILocationItemRepository,
+} from '#item/location-item-repository.ts';
+import { MapRepository, type IMapRepository } from '#map/map-repository.ts';
 import { mapRoutes } from '#map/map-routes.ts';
-import { NarrationRepository } from '#narration/narration-repository.ts';
+import {
+	NarrationRepository,
+	type INarrationRepository,
+} from '#narration/narration-repository.ts';
 import { narrationRoutes } from '#narration/narration-routes.ts';
-import { NoteRepository } from '#note/note-repository.ts';
+import { NoteRepository, type INoteRepository } from '#note/note-repository.ts';
 import { PrismaClient } from '#prisma-client';
-import { RegionRepository } from '#region/region-repository.ts';
+import {
+	RegionRepository,
+	type IRegionRepository,
+} from '#region/region-repository.ts';
 import { regionRoutes } from '#region/region-routes.ts';
-import { RegionShapeRepository } from '#region/region-shape-repository.ts';
+import {
+	RegionShapeRepository,
+	type IRegionShapeRepository,
+} from '#region/region-shape-repository.ts';
 import type { MessageResponse } from '#shared/dtos.ts';
 import { getMessage } from '#shared/error.ts';
-import { StreamRepository } from '#stream/stream-repository.ts';
+import type { BaseRouterOpts, BaseStreamRouterOpts } from '#shared/router.ts';
+import {
+	StreamRepository,
+	type IStreamRepository,
+} from '#stream/stream-repository.ts';
 import { PrismaPg } from '@prisma/adapter-pg';
 import cors from 'cors';
 import 'dotenv/config';
@@ -41,42 +82,133 @@ import express, {
 import { createServer } from 'http';
 import path from 'path';
 
-function initRepos(prisma: PrismaClient) {
-	const commandRepository = new CommandRepository({ prisma });
-	const eventRepository = new EventRepository({ prisma });
-	const streamRepository = new StreamRepository({ prisma });
+interface Repositories {
+	command: ICommandRepository;
+	event: IEventRepository;
+	stream: IStreamRepository;
+	file: IFileRepository;
+	note: INoteRepository;
+	narration: INarrationRepository;
+	handout: IHandoutRepository;
+	abilityCheck: IAbilityCheckRepository;
+	condition: IConditionRepository;
+	action: IActionRepository;
+	item: IItemRepository;
+	locationItem: ILocationItemRepository;
+	regionShape: IRegionShapeRepository;
+	region: IRegionRepository;
+	map: IMapRepository;
+	campaign: ICampaignRepository;
+}
 
-	const fileRepository = new FileRepository({ prisma });
-	const noteRepository = new NoteRepository({ prisma });
-	const narrationRepository = new NarrationRepository({ prisma });
-	const handoutRepository = new HandoutRepository({ prisma });
-	const abilityCheckRepository = new AbilityCheckRepository({ prisma });
-	const conditionRepository = new ConditionRepository({ prisma });
-	const actionRepository = new ActionRepository({ prisma });
-	const itemRepository = new ItemRepository({ prisma });
-	const locationItemRepository = new LocationItemRepository({ prisma });
-	const regionShapeRepository = new RegionShapeRepository({ prisma });
-	const regionRepository = new RegionRepository({ prisma });
-	const mapRepository = new MapRepository({ prisma });
-	const campaignRepository = new CampaignRepository({ prisma });
+function initRepos(prisma: PrismaClient): Repositories {
+	const command = new CommandRepository({ prisma });
+	const event = new EventRepository({ prisma });
+	const stream = new StreamRepository({ prisma });
+
+	const file = new FileRepository({ prisma });
+	const note = new NoteRepository({ prisma });
+	const narration = new NarrationRepository({ prisma });
+	const handout = new HandoutRepository({ prisma });
+	const abilityCheck = new AbilityCheckRepository({ prisma });
+	const condition = new ConditionRepository({ prisma });
+	const action = new ActionRepository({ prisma });
+	const item = new ItemRepository({ prisma });
+	const locationItem = new LocationItemRepository({ prisma });
+	const regionShape = new RegionShapeRepository({ prisma });
+	const region = new RegionRepository({ prisma });
+	const map = new MapRepository({ prisma });
+	const campaign = new CampaignRepository({ prisma });
 
 	return {
-		commandRepository,
-		eventRepository,
-		streamRepository,
-		fileRepository,
-		noteRepository,
-		narrationRepository,
-		handoutRepository,
-		abilityCheckRepository,
-		conditionRepository,
-		actionRepository,
-		itemRepository,
-		locationItemRepository,
-		regionShapeRepository,
-		regionRepository,
-		mapRepository,
-		campaignRepository,
+		command,
+		event,
+		stream,
+		file,
+		note,
+		narration,
+		handout,
+		abilityCheck,
+		condition,
+		action,
+		item,
+		locationItem,
+		regionShape,
+		region,
+		map,
+		campaign,
+	};
+}
+
+interface InitCommandHandlersOpts {
+	repositories: Repositories;
+	eventBus: IEventBus;
+	commandBus: ICommandBus;
+}
+
+interface CommandHandlers {
+	event: EventCommandHandler;
+	campaign: CampaignCommandHandler;
+}
+
+function initCommandHandlers({
+	repositories,
+	eventBus,
+	commandBus,
+}: InitCommandHandlersOpts): CommandHandlers {
+	// Initialize
+	const event = new EventCommandHandler({
+		eventBus,
+		eventRepository: repositories.event,
+		streamRepository: repositories.stream,
+	});
+
+	const campaign = new CampaignCommandHandler({
+		eventBus,
+		eventRepository: repositories.event,
+		streamRepository: repositories.stream,
+		campaignRepository: repositories.campaign,
+	});
+
+	// Subscribe
+	commandBus.subscribe('Event', event);
+	commandBus.subscribe('Campaign', campaign);
+
+	// Return
+	return {
+		event,
+		campaign,
+	};
+}
+
+interface InitEventSubscribersOpts {
+	repositories: Repositories;
+	eventBus: IEventBus;
+}
+
+interface Projections {
+	campaign: CampaignProjections;
+}
+
+interface EventSubscribers {
+	projections: Projections;
+}
+
+function initEventSubscribers({
+	repositories,
+	eventBus,
+}: InitEventSubscribersOpts): EventSubscribers {
+	// Initialize
+	const campaignProjections = new CampaignProjections(repositories.campaign);
+
+	// Subscribe
+	eventBus.subscribe('Campaign', campaignProjections);
+
+	// Return
+	return {
+		projections: {
+			campaign: campaignProjections,
+		},
 	};
 }
 
@@ -95,62 +227,80 @@ function createAppServer() {
 
 	const uploadsPath = path.resolve('uploads');
 
-	const {
-		commandRepository,
-		eventRepository,
-		streamRepository,
-		fileRepository,
-		narrationRepository,
-		abilityCheckRepository,
-		actionRepository,
-		itemRepository,
-		locationItemRepository,
-		regionShapeRepository,
-		regionRepository,
-		mapRepository,
-		campaignRepository,
-	} = initRepos(prisma);
+	const repositories = initRepos(prisma);
 
-	const commandBus = new CommandBus({ commandRepository });
+	const commandBus = new CommandBus({
+		commandRepository: repositories.command,
+	});
 	const eventBus = new EventBus({
-		eventRepository,
-		streamRepository,
+		eventRepository: repositories.event,
+		streamRepository: repositories.stream,
 		wss: wsServer,
 	});
 
-	const campaignProjections = new CampaignProjections(campaignRepository);
+	initEventSubscribers({ repositories, eventBus });
 
-	eventBus.subscribe('Campaign', campaignProjections);
+	initCommandHandlers({
+		repositories,
+		eventBus,
+		commandBus,
+	});
+
+	const baseRouterOpts: BaseRouterOpts = {
+		app,
+	};
+
+	const baseStreamRouterOpts: Omit<BaseStreamRouterOpts, 'repository'> = {
+		...baseRouterOpts,
+		commandBus,
+		eventBus,
+		eventRepository: repositories.event,
+		streamRepository: repositories.stream,
+	};
 
 	commandRoutes({ app, commandBus });
 
-	campaignRoutes({
-		app,
-		commandBus,
-		eventBus,
-		eventRepository,
-		streamRepository,
-		campaignRepository,
+	const campaignRouter = new CampaignRouter({
+		...baseStreamRouterOpts,
+		repository: repositories.campaign,
 	});
-	mapRoutes({ app, commandBus, eventBus, mapRepository });
+
+	campaignRouter.init();
+
+	mapRoutes({ app, commandBus, eventBus, mapRepository: repositories.map });
 	regionRoutes({
 		app,
 		commandBus,
 		eventBus,
-		regionRepository,
-		regionShapeRepository,
+		regionRepository: repositories.region,
+		regionShapeRepository: repositories.regionShape,
 	});
-	abilityCheckRoutes({ app, commandBus, eventBus, abilityCheckRepository });
-	narrationRoutes({ app, commandBus, eventBus, narrationRepository });
-	actionRoutes({ app, commandBus, eventBus, actionRepository });
+	abilityCheckRoutes({
+		app,
+		commandBus,
+		eventBus,
+		abilityCheckRepository: repositories.abilityCheck,
+	});
+	narrationRoutes({
+		app,
+		commandBus,
+		eventBus,
+		narrationRepository: repositories.narration,
+	});
+	actionRoutes({
+		app,
+		commandBus,
+		eventBus,
+		actionRepository: repositories.action,
+	});
 	itemRoutes({
 		app,
 		commandBus,
 		eventBus,
-		itemRepository,
-		locationItemRepository,
+		itemRepository: repositories.item,
+		locationItemRepository: repositories.locationItem,
 	});
-	fileRoutes({ app, fileRepository, uploadsPath });
+	fileRoutes({ app, fileRepository: repositories.file, uploadsPath });
 
 	app.use((req: Request, res: Response<MessageResponse>) => {
 		console.error('Unhandled request received');
