@@ -5,7 +5,7 @@ import type { ICommand } from '#command/command.ts';
 import { BadRequestError } from '#shared/error.ts';
 import { randomUUID } from 'crypto';
 import { CampaignCreatedEvent } from './campaign-events.ts';
-import type { CampaignRepository } from './campaign-repository.ts';
+import type { ICampaignRepository } from './campaign-repository.ts';
 import { Campaign } from './campaign.ts';
 
 export interface CreateCampaign {
@@ -26,11 +26,11 @@ function validateCreateCampaign(
 }
 
 interface CampaignCommandHandlerConfig extends CommandHandlerConfig {
-	campaignRepository: CampaignRepository;
+	campaignRepository: ICampaignRepository;
 }
 
 export class CampaignCommandHandler extends CommandHandler {
-	campaignRepository: CampaignRepository;
+	campaignRepository: ICampaignRepository;
 
 	constructor(config: CampaignCommandHandlerConfig) {
 		super(config);
