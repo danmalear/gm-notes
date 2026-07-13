@@ -25,22 +25,22 @@ export interface BaseRouterInitOpts<
 	PatchOpts,
 	DeleteOpts,
 > {
-	getOpts: GetOpts;
-	postOpts: PostOpts;
-	putOpts: PutOpts;
-	patchOpts: PatchOpts;
-	deleteOpts: DeleteOpts;
+	getOpts?: GetOpts;
+	postOpts?: PostOpts;
+	putOpts?: PutOpts;
+	patchOpts?: PatchOpts;
+	deleteOpts?: DeleteOpts;
 }
 
 /**
  * Base class to establish basic routes for a given namespace
  */
 export class BaseRouter<
-	GetOpts = unknown,
-	PostOpts = unknown,
-	PutOpts = unknown,
-	PatchOpts = unknown,
-	DeleteOpts = unknown,
+	GetOpts = undefined,
+	PostOpts = undefined,
+	PutOpts = undefined,
+	PatchOpts = undefined,
+	DeleteOpts = undefined,
 > {
 	app: Express;
 	namespace: string;
@@ -56,7 +56,13 @@ export class BaseRouter<
 		putOpts,
 		patchOpts,
 		deleteOpts,
-	}: BaseRouterInitOpts<GetOpts, PostOpts, PutOpts, PatchOpts, DeleteOpts>) {
+	}: BaseRouterInitOpts<
+		GetOpts,
+		PostOpts,
+		PutOpts,
+		PatchOpts,
+		DeleteOpts
+	> = {}) {
 		this.get(getOpts);
 		this.post(postOpts);
 		this.put(putOpts);
@@ -64,7 +70,7 @@ export class BaseRouter<
 		this.delete(deleteOpts);
 	}
 
-	get(_opts: GetOpts) {
+	get(_opts?: GetOpts) {
 		this.app.get(`/${this.namespace}`, async (_req, res) => {
 			res.status(400).send({
 				message: `GET requests not supported for namespace ${this.namespace}`,
@@ -72,7 +78,7 @@ export class BaseRouter<
 		});
 	}
 
-	post(_opts: PostOpts) {
+	post(_opts?: PostOpts) {
 		this.app.post(`/${this.namespace}`, async (_req, res) => {
 			res.status(400).send({
 				message: `POST requests not supported for namespace ${this.namespace}`,
@@ -80,7 +86,7 @@ export class BaseRouter<
 		});
 	}
 
-	put(_opts: PutOpts) {
+	put(_opts?: PutOpts) {
 		this.app.put(`/${this.namespace}`, async (_req, res) => {
 			res.status(400).send({
 				message: `PUT requests not supported for namespace ${this.namespace}`,
@@ -88,7 +94,7 @@ export class BaseRouter<
 		});
 	}
 
-	patch(_opts: PatchOpts) {
+	patch(_opts?: PatchOpts) {
 		this.app.patch(`/${this.namespace}`, async (_req, res) => {
 			res.status(400).send({
 				message: `PATCH requests not supported for namespace ${this.namespace}`,
@@ -96,7 +102,7 @@ export class BaseRouter<
 		});
 	}
 
-	delete(_opts: DeleteOpts) {
+	delete(_opts?: DeleteOpts) {
 		this.app.delete(`/${this.namespace}`, async (_req, res) => {
 			res.status(400).send({
 				message: `DELETE requests not supported for namespace ${this.namespace}`,
@@ -141,11 +147,11 @@ export class BaseStreamRouter<
 	TModelIncludeAll extends TModel,
 	TDto,
 	TStub = TDto,
-	GetOpts = unknown,
-	PostOpts = unknown,
-	PutOpts = unknown,
-	PatchOpts = unknown,
-	DeleteOpts = unknown,
+	GetOpts = undefined,
+	PostOpts = undefined,
+	PutOpts = undefined,
+	PatchOpts = undefined,
+	DeleteOpts = undefined,
 > extends BaseRouter<GetOpts, PostOpts, PutOpts, PatchOpts, DeleteOpts> {
 	descriptor: string;
 	descriptors: string;
