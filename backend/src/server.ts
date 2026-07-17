@@ -47,7 +47,7 @@ import {
 	type ILocationItemRepository,
 } from '#item/location-item-repository.ts';
 import { MapRepository, type IMapRepository } from '#map/map-repository.ts';
-import { mapRoutes } from '#map/map-routes.ts';
+import { MapRouter } from '#map/map-router.ts';
 import {
 	NarrationRepository,
 	type INarrationRepository,
@@ -265,9 +265,14 @@ function createAppServer() {
 		repository: repositories.campaign,
 	});
 
-	campaignRouter.init();
+	const mapRouter = new MapRouter({
+		...baseStreamRouterOpts,
+		repository: repositories.map,
+	});
 
-	mapRoutes({ app, commandBus, eventBus, mapRepository: repositories.map });
+	campaignRouter.init();
+	mapRouter.init();
+
 	regionRoutes({
 		app,
 		commandBus,
