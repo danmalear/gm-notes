@@ -21,7 +21,7 @@ import {
 	CommandRepository,
 	type ICommandRepository,
 } from '#command/command-repository.ts';
-import { commandRoutes } from '#command/command-routes.ts';
+import { CommandRouter } from '#command/command-router.ts';
 import {
 	ConditionRepository,
 	type IConditionRepository,
@@ -258,7 +258,10 @@ function createAppServer() {
 		streamRepository: repositories.stream,
 	};
 
-	commandRoutes({ app, commandBus });
+	const commandRouter = new CommandRouter({
+		app,
+		commandBus,
+	});
 
 	const campaignRouter = new CampaignRouter({
 		...baseStreamRouterOpts,
@@ -270,6 +273,7 @@ function createAppServer() {
 		repository: repositories.map,
 	});
 
+	commandRouter.init();
 	campaignRouter.init();
 	mapRouter.init();
 
