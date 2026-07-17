@@ -75,6 +75,7 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import cors from 'cors';
 import 'dotenv/config';
 import express, {
+	type Express,
 	type NextFunction,
 	type Request,
 	type Response,
@@ -212,6 +213,68 @@ function initEventSubscribers({
 	};
 }
 
+interface InitRoutersOpts {
+	app: Express;
+	repositories: Repositories;
+	eventBus: IEventBus;
+	commandBus: ICommandBus;
+}
+
+interface Routers {
+	command: CommandRouter;
+
+	campaign: CampaignRouter;
+	map: MapRouter;
+}
+
+function initRouters({
+	app,
+	repositories,
+	eventBus,
+	commandBus,
+}: InitRoutersOpts): Routers {
+	// Define shared router opts
+	const baseRouterOpts: BaseRouterOpts = {
+		app,
+	};
+
+	const baseStreamRouterOpts: Omit<BaseStreamRouterOpts, 'repository'> = {
+		...baseRouterOpts,
+		commandBus,
+		eventBus,
+		eventRepository: repositories.event,
+		streamRepository: repositories.stream,
+	};
+
+	// Initialize routers
+	const commandRouter = new CommandRouter({
+		...baseRouterOpts,
+		commandBus,
+	});
+
+	const campaignRouter = new CampaignRouter({
+		...baseStreamRouterOpts,
+		repository: repositories.campaign,
+	});
+
+	const mapRouter = new MapRouter({
+		...baseStreamRouterOpts,
+		repository: repositories.map,
+	});
+
+	// Initialize routes
+	commandRouter.init();
+	campaignRouter.init();
+	mapRouter.init();
+
+	// Return
+	return {
+		command: commandRouter,
+		campaign: campaignRouter,
+		map: mapRouter,
+	};
+}
+
 function createAppServer() {
 	const app = express();
 
@@ -246,36 +309,12 @@ function createAppServer() {
 		commandBus,
 	});
 
-	const baseRouterOpts: BaseRouterOpts = {
+	initRouters({
 		app,
-	};
-
-	const baseStreamRouterOpts: Omit<BaseStreamRouterOpts, 'repository'> = {
-		...baseRouterOpts,
-		commandBus,
+		repositories,
 		eventBus,
-		eventRepository: repositories.event,
-		streamRepository: repositories.stream,
-	};
-
-	const commandRouter = new CommandRouter({
-		app,
 		commandBus,
 	});
-
-	const campaignRouter = new CampaignRouter({
-		...baseStreamRouterOpts,
-		repository: repositories.campaign,
-	});
-
-	const mapRouter = new MapRouter({
-		...baseStreamRouterOpts,
-		repository: repositories.map,
-	});
-
-	commandRouter.init();
-	campaignRouter.init();
-	mapRouter.init();
 
 	regionRoutes({
 		app,
