@@ -9,13 +9,17 @@ import type {
 	AbilityCheckResponse,
 	AbilityCheckStub,
 } from './ability-check-dtos.ts';
-import type { IAbilityCheckRepository } from './ability-check-repository.ts';
+import { toDto, toStub } from './ability-check-mappers.ts';
+import type {
+	AbilityCheckIncludeAll,
+	IAbilityCheckRepository,
+} from './ability-check-repository.ts';
 
 export type AbilityCheckRouterOpts = BaseStreamRouterOpts<
 	AbilityCheckModel,
 	AbilityCheckCreateInput,
 	AbilityCheckUpdateInput,
-	AbilityCheckModel,
+	AbilityCheckIncludeAll,
 	IAbilityCheckRepository
 >;
 
@@ -23,7 +27,7 @@ export class AbilityCheckRouter extends BaseStreamRouter<
 	AbilityCheckModel,
 	AbilityCheckCreateInput,
 	AbilityCheckUpdateInput,
-	AbilityCheckModel,
+	AbilityCheckIncludeAll,
 	AbilityCheckResponse,
 	AbilityCheckStub,
 	IAbilityCheckRepository
@@ -47,6 +51,14 @@ export class AbilityCheckRouter extends BaseStreamRouter<
 			descriptor: 'Ability Check',
 			descriptors: 'Ability Checks',
 		});
+	}
+
+	override toDto(model: AbilityCheckIncludeAll): AbilityCheckResponse {
+		return toDto(model);
+	}
+
+	override toStub(model: AbilityCheckModel): AbilityCheckStub {
+		return toStub(model);
 	}
 
 	override get() {
