@@ -2,7 +2,7 @@ import {
 	AbilityCheckRepository,
 	type IAbilityCheckRepository,
 } from '#ability-check/ability-check-repository.ts';
-import { abilityCheckRoutes } from '#ability-check/ability-check-routes.ts';
+import { AbilityCheckRouter } from '#ability-check/ability-check-router.ts';
 import {
 	ActionRepository,
 	type IActionRepository,
@@ -268,11 +268,17 @@ function initRouters({
 		shapeRepository: repositories.regionShape,
 	});
 
+	const abilityCheckRouter = new AbilityCheckRouter({
+		...baseStreamRouterOpts,
+		repository: repositories.abilityCheck,
+	});
+
 	// Initialize routes
 	commandRouter.init();
 	campaignRouter.init();
 	mapRouter.init();
 	regionRouter.init();
+	abilityCheckRouter.init();
 
 	// Return
 	return {
@@ -323,12 +329,6 @@ function createAppServer() {
 		commandBus,
 	});
 
-	abilityCheckRoutes({
-		app,
-		commandBus,
-		eventBus,
-		abilityCheckRepository: repositories.abilityCheck,
-	});
 	narrationRoutes({
 		app,
 		commandBus,
