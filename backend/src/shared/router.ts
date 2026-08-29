@@ -116,8 +116,14 @@ export interface BaseStreamRouterOpts<
 	TCreate = unknown,
 	TUpdate = unknown,
 	TModelIncludeAll extends TModel = TModel,
+	TRepository extends IRepository<
+		TModel,
+		TCreate,
+		TUpdate,
+		TModelIncludeAll
+	> = IRepository<TModel, TCreate, TUpdate, TModelIncludeAll>,
 > extends BaseRouterOpts {
-	repository: IRepository<TModel, TCreate, TUpdate, TModelIncludeAll>;
+	repository: TRepository;
 	commandBus: ICommandBus;
 	eventBus: IEventBus;
 	eventRepository: IEventRepository;
@@ -134,7 +140,19 @@ type AllBaseStreamRouterOpts<
 	TCreate,
 	TUpdate,
 	TModelIncludeAll extends TModel,
-> = BaseStreamRouterOpts<TModel, TCreate, TUpdate, TModelIncludeAll> &
+	TRepository extends IRepository<
+		TModel,
+		TCreate,
+		TUpdate,
+		TModelIncludeAll
+	> = IRepository<TModel, TCreate, TUpdate, TModelIncludeAll>,
+> = BaseStreamRouterOpts<
+	TModel,
+	TCreate,
+	TUpdate,
+	TModelIncludeAll,
+	TRepository
+> &
 	PrivateBaseStreamRouterOpts;
 
 /**
@@ -147,6 +165,12 @@ export class BaseStreamRouter<
 	TModelIncludeAll extends TModel,
 	TDto,
 	TStub = TDto,
+	TRepository extends IRepository<
+		TModel,
+		TCreate,
+		TUpdate,
+		TModelIncludeAll
+	> = IRepository<TModel, TCreate, TUpdate, TModelIncludeAll>,
 	GetOpts = undefined,
 	PostOpts = undefined,
 	PutOpts = undefined,
@@ -157,7 +181,7 @@ export class BaseStreamRouter<
 	descriptors: string;
 	commandBus: ICommandBus;
 	eventBus: IEventBus;
-	repository: IRepository<TModel, TCreate, TUpdate, TModelIncludeAll>;
+	repository: TRepository;
 	eventRepository: IEventRepository;
 	streamRepository: IStreamRepository;
 
@@ -171,7 +195,13 @@ export class BaseStreamRouter<
 		repository,
 		eventRepository,
 		streamRepository,
-	}: AllBaseStreamRouterOpts<TModel, TCreate, TUpdate, TModelIncludeAll>) {
+	}: AllBaseStreamRouterOpts<
+		TModel,
+		TCreate,
+		TUpdate,
+		TModelIncludeAll,
+		TRepository
+	>) {
 		super({
 			app,
 			namespace,
