@@ -59,7 +59,7 @@ import {
 	RegionRepository,
 	type IRegionRepository,
 } from '#region/region-repository.ts';
-import { RegionRouter } from '#region/region-routes.ts';
+import { RegionRouter } from '#region/region-router.ts';
 import {
 	RegionShapeRepository,
 	type IRegionShapeRepository,
