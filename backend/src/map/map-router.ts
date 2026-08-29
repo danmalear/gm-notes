@@ -7,13 +7,14 @@ import type { BaseStreamRouterOpts } from '#shared/router.ts';
 import { BaseStreamRouter } from '#shared/router.ts';
 import type { MapResponse, MapStub } from './map-dtos.ts';
 import { toDto, toStub } from './map-mappers.ts';
-import type { MapIncludeAll } from './map-repository.ts';
+import type { IMapRepository, MapIncludeAll } from './map-repository.ts';
 
 export type MapRouterOpts = BaseStreamRouterOpts<
 	MapModel,
 	MapCreateInput,
 	MapUpdateInput,
-	MapIncludeAll
+	MapIncludeAll,
+	IMapRepository
 >;
 
 export class MapRouter extends BaseStreamRouter<
@@ -22,7 +23,8 @@ export class MapRouter extends BaseStreamRouter<
 	MapUpdateInput,
 	MapIncludeAll,
 	MapResponse,
-	MapStub
+	MapStub,
+	IMapRepository
 > {
 	constructor({
 		app,

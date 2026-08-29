@@ -7,13 +7,17 @@ import type { BaseStreamRouterOpts } from '#shared/router.ts';
 import { BaseStreamRouter } from '#shared/router.ts';
 import type { CampaignResponse, CampaignStub } from './campaign-dtos.ts';
 import { toDto, toStub } from './campaign-mappers.ts';
-import type { CampaignIncludeAll } from './campaign-repository.ts';
+import type {
+	CampaignIncludeAll,
+	ICampaignRepository,
+} from './campaign-repository.ts';
 
 export type CampaignRouterOpts = BaseStreamRouterOpts<
 	CampaignModel,
 	CampaignCreateInput,
 	CampaignUpdateInput,
-	CampaignIncludeAll
+	CampaignIncludeAll,
+	ICampaignRepository
 >;
 
 export class CampaignRouter extends BaseStreamRouter<
@@ -22,7 +26,8 @@ export class CampaignRouter extends BaseStreamRouter<
 	CampaignUpdateInput,
 	CampaignIncludeAll,
 	CampaignResponse,
-	CampaignStub
+	CampaignStub,
+	ICampaignRepository
 > {
 	constructor({
 		app,
