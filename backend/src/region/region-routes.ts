@@ -1,12 +1,15 @@
-import type { ICommandBus } from '#command/command-bus.ts';
-import type { IEventBus } from '#event/event-bus.ts';
+import type {
+	RegionCreateInput,
+	RegionModel,
+	RegionUpdateInput,
+} from '#prisma/generated/models.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, InternalError } from '#shared/error.ts';
-import { getById } from '#shared/route-utils.ts';
+import { BaseStreamRouter, type BaseStreamRouterOpts } from '#shared/router.ts';
 import { isUUID } from '#shared/uuid.ts';
 import { requiredFields, validatePostBody } from '#shared/validation/http.ts';
 import { randomUUID } from 'crypto';
-import type { Express, Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import type {
 	RegionCreate,
 	RegionQueryParams,
@@ -14,7 +17,11 @@ import type {
 	RegionStub,
 } from './region-dtos.ts';
 import { toDto, toStub } from './region-mappers.ts';
-import type { IRegionRepository } from './region-repository.ts';
+import type {
+	IRegionRepository,
+	RegionIncludeAll,
+	RegionIncludeMin,
+} from './region-repository.ts';
 import type { IRegionShapeRepository } from './region-shape-repository.ts';
 import { getShapeType } from './region-shape-utils.ts';
 import {
@@ -23,151 +30,188 @@ import {
 	validateRectangle,
 } from './shape-validators.ts';
 
-export interface RegionRouteOpts {
-	app: Express;
-	commandBus: ICommandBus;
-	eventBus: IEventBus;
-	regionRepository: IRegionRepository;
-	regionShapeRepository: IRegionShapeRepository;
+export interface RegionRouterOpts
+	extends BaseStreamRouterOpts<
+		RegionModel,
+		RegionCreateInput,
+		RegionUpdateInput,
+		RegionIncludeAll,
+		IRegionRepository
+	> {
+	shapeRepository: IRegionShapeRepository;
 }
 
-export function regionRoutes({
-	app,
-	regionRepository,
-	regionShapeRepository,
-}: RegionRouteOpts) {
-	const apiNamespace = 'regions';
+export class RegionRouter extends BaseStreamRouter<
+	RegionModel,
+	RegionCreateInput,
+	RegionUpdateInput,
+	RegionIncludeAll,
+	RegionResponse,
+	RegionStub,
+	IRegionRepository
+> {
+	shapeRepository: IRegionShapeRepository;
 
-	app.get(
-		`/${apiNamespace}`,
-		async (
-			req: Request<
-				Record<string, never>,
-				MessageResponse | DataResponse<RegionStub[]>,
-				Record<string, never>,
-				RegionQueryParams
-			>,
-			res,
-		) => {
-			console.log(
-				`Region GET many request received. query: ${JSON.stringify(req.query)}`,
-			);
+	constructor({
+		app,
+		commandBus,
+		eventBus,
+		eventRepository,
+		streamRepository,
+		repository,
+		shapeRepository,
+	}: RegionRouterOpts) {
+		super({
+			app,
+			commandBus,
+			eventBus,
+			eventRepository,
+			streamRepository,
+			repository,
+			namespace: 'regions',
+			descriptor: 'Region',
+			descriptors: 'Regions',
+		});
+		this.shapeRepository = shapeRepository;
+	}
 
-			const regions = req.query.mapId
-				? await regionRepository.getByMapId(req.query.mapId)
-				: await regionRepository.getAll();
+	override toDto(model: RegionIncludeAll): RegionResponse {
+		return toDto(model);
+	}
 
-			const data: RegionStub[] = [];
+	override toStub(model: RegionIncludeMin): RegionStub {
+		return toStub(model);
+	}
 
-			try {
-				for (const region of regions) {
-					data.push(toStub(region));
-				}
-			} catch (e) {
-				res.status(500).send({
-					message: getMessage(e),
-				});
-			}
+	override get(): void {
+		this.defaultGetById();
 
-			res.send({
-				data,
-			});
-		},
-	);
+		this.app.get(
+			`/${this.namespace}`,
+			async (
+				req: Request<
+					Record<string, never>,
+					MessageResponse | DataResponse<RegionStub[]>,
+					Record<string, never>,
+					RegionQueryParams
+				>,
+				res,
+			) => {
+				console.log(
+					`Region GET many request received. query: ${JSON.stringify(req.query)}`,
+				);
 
-	getById(app, {
-		apiNamespace,
-		objectDescriptor: 'Region',
-		repository: regionRepository,
-		toDto,
-	});
+				const regions = req.query.mapId
+					? await this.repository.getByMapId(req.query.mapId)
+					: await this.repository.getAll();
 
-	app.post(
-		`/${apiNamespace}`,
-		async (
-			req,
-			res: Response<MessageResponse | DataResponse<RegionResponse>>,
-		) => {
-			console.log(
-				`Region POST request received. body: ${JSON.stringify(req.body)}`,
-			);
+				const data: RegionStub[] = [];
 
-			function validateBody(body: unknown): asserts body is RegionCreate {
-				validatePostBody(body);
-				requiredFields(body, ['name', 'mapId', 'shapes']);
-
-				// @TODO require length
-				if (typeof body.name !== 'string' /* || body.name.length <= 0 */) {
-					throw Error('Region name is in an invalid format');
-				}
-
-				if (typeof body.mapId !== 'string' || !isUUID(body.mapId)) {
-					throw Error('Map ID is in an invalid format');
-				}
-
-				if (!Array.isArray(body.shapes)) {
-					throw Error('Shape array is in an invalid format');
-				}
-
-				for (const shape of body.shapes) {
-					if ('x1' in shape) {
-						validateRectangle(shape);
-					} else if ('r' in shape) {
-						validateCircle(shape);
-					} else if ('coords' in shape) {
-						validatePolygon(shape);
-					} else {
-						throw Error('Invalid shape provided');
+				try {
+					for (const region of regions) {
+						data.push(toStub(region));
 					}
+				} catch (e) {
+					res.status(500).send({
+						message: getMessage(e),
+					});
 				}
 
-				// @TODO the other properties as they're implemented
-			}
+				res.send({
+					data,
+				});
+			},
+		);
+	}
 
-			try {
-				validateBody(req.body);
-			} catch (e) {
-				res.status(400).send({ message: getMessage(e) });
-				return;
-			}
+	override post(): void {
+		this.app.post(
+			`/${this.namespace}`,
+			async (
+				req,
+				res: Response<MessageResponse | DataResponse<RegionResponse>>,
+			) => {
+				console.log(
+					`Region POST request received. body: ${JSON.stringify(req.body)}`,
+				);
 
-			const id = randomUUID();
+				function validateBody(body: unknown): asserts body is RegionCreate {
+					validatePostBody(body);
+					requiredFields(body, ['name', 'mapId', 'shapes']);
 
-			await regionRepository.create({
-				RegionId: id,
-				RegionTemplateId: null,
-				Map: {
-					connect: {
-						MapId: req.body.mapId,
-					},
-				},
-				Name: req.body.name,
-				Lighting: 'Default',
-			});
+					// @TODO require length
+					if (typeof body.name !== 'string' /* || body.name.length <= 0 */) {
+						throw Error('Region name is in an invalid format');
+					}
 
-			for (const shape of req.body.shapes) {
-				await regionShapeRepository.create({
-					RegionShapeId: randomUUID(),
-					Region: {
+					if (typeof body.mapId !== 'string' || !isUUID(body.mapId)) {
+						throw Error('Map ID is in an invalid format');
+					}
+
+					if (!Array.isArray(body.shapes)) {
+						throw Error('Shape array is in an invalid format');
+					}
+
+					for (const shape of body.shapes) {
+						if ('x1' in shape) {
+							validateRectangle(shape);
+						} else if ('r' in shape) {
+							validateCircle(shape);
+						} else if ('coords' in shape) {
+							validatePolygon(shape);
+						} else {
+							throw Error('Invalid shape provided');
+						}
+					}
+
+					// @TODO the other properties as they're implemented
+				}
+
+				try {
+					validateBody(req.body);
+				} catch (e) {
+					res.status(400).send({ message: getMessage(e) });
+					return;
+				}
+
+				const id = randomUUID();
+
+				await this.repository.create({
+					RegionId: id,
+					RegionTemplateId: null,
+					Map: {
 						connect: {
-							RegionId: id,
+							MapId: req.body.mapId,
 						},
 					},
-					ShapeType: getShapeType(shape),
-					Coords: shape,
+					Name: req.body.name,
+					Lighting: 'Default',
 				});
-			}
 
-			const region = await regionRepository.getById(id);
-			if (!region) throw new InternalError('Newly created region not found.');
+				for (const shape of req.body.shapes) {
+					await this.shapeRepository.create({
+						RegionShapeId: randomUUID(),
+						Region: {
+							connect: {
+								RegionId: id,
+							},
+						},
+						ShapeType: getShapeType(shape),
+						Coords: shape,
+					});
+				}
 
-			try {
-				res.send({ data: toDto(region) });
-			} catch (e) {
-				res.status(500).send({
-					message: getMessage(e),
-				});
-			}
-		},
-	);
+				const region = await this.repository.getById(id);
+				if (!region) throw new InternalError('Newly created region not found.');
+
+				try {
+					res.send({ data: toDto(region) });
+				} catch (e) {
+					res.status(500).send({
+						message: getMessage(e),
+					});
+				}
+			},
+		);
+	}
 }

@@ -59,7 +59,7 @@ import {
 	RegionRepository,
 	type IRegionRepository,
 } from '#region/region-repository.ts';
-import { regionRoutes } from '#region/region-routes.ts';
+import { RegionRouter } from '#region/region-routes.ts';
 import {
 	RegionShapeRepository,
 	type IRegionShapeRepository,
@@ -262,10 +262,17 @@ function initRouters({
 		repository: repositories.map,
 	});
 
+	const regionRouter = new RegionRouter({
+		...baseStreamRouterOpts,
+		repository: repositories.region,
+		shapeRepository: repositories.regionShape,
+	});
+
 	// Initialize routes
 	commandRouter.init();
 	campaignRouter.init();
 	mapRouter.init();
+	regionRouter.init();
 
 	// Return
 	return {
@@ -316,13 +323,6 @@ function createAppServer() {
 		commandBus,
 	});
 
-	regionRoutes({
-		app,
-		commandBus,
-		eventBus,
-		regionRepository: repositories.region,
-		regionShapeRepository: repositories.regionShape,
-	});
 	abilityCheckRoutes({
 		app,
 		commandBus,
