@@ -1,5 +1,3 @@
-import type { ICommandBus } from '#command/command-bus.ts';
-import type { IEventBus } from '#event/event-bus.ts';
 import type {
 	NarrationCreateInput,
 	NarrationModel,
@@ -8,7 +6,7 @@ import type {
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage } from '#shared/error.ts';
 import { BaseStreamRouter, type BaseStreamRouterOpts } from '#shared/router.ts';
-import type { Express, Request } from 'express';
+import type { Request } from 'express';
 import type {
 	NarrationQueryParams,
 	NarrationResponse,
@@ -103,11 +101,4 @@ export class NarrationRouter extends BaseStreamRouter<
 			},
 		);
 	}
-}
-
-export interface NarrationRouteOpts {
-	app: Express;
-	commandBus: ICommandBus;
-	eventBus: IEventBus;
-	narrationRepository: INarrationRepository;
 }
