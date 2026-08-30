@@ -52,7 +52,7 @@ import {
 	NarrationRepository,
 	type INarrationRepository,
 } from '#narration/narration-repository.ts';
-import { narrationRoutes } from '#narration/narration-routes.ts';
+import { NarrationRouter } from '#narration/narration-router.ts';
 import { NoteRepository, type INoteRepository } from '#note/note-repository.ts';
 import { PrismaClient } from '#prisma-client';
 import {
@@ -273,12 +273,18 @@ function initRouters({
 		repository: repositories.abilityCheck,
 	});
 
+	const narrationRouter = new NarrationRouter({
+		...baseStreamRouterOpts,
+		repository: repositories.narration,
+	});
+
 	// Initialize routes
 	commandRouter.init();
 	campaignRouter.init();
 	mapRouter.init();
 	regionRouter.init();
 	abilityCheckRouter.init();
+	narrationRouter.init();
 
 	// Return
 	return {
@@ -329,12 +335,6 @@ function createAppServer() {
 		commandBus,
 	});
 
-	narrationRoutes({
-		app,
-		commandBus,
-		eventBus,
-		narrationRepository: repositories.narration,
-	});
 	actionRoutes({
 		app,
 		commandBus,
