@@ -3,8 +3,7 @@ import type {
 	CampaignModel,
 	CampaignUpdateInput,
 } from '#prisma-models/Campaign.ts';
-import type { BaseStreamRouterOpts } from '#shared/router.ts';
-import { BaseStreamRouter } from '#shared/router.ts';
+import { BaseStreamRouter, type BaseStreamRouterOpts } from '#shared/router.ts';
 import type { CampaignResponse, CampaignStub } from './campaign-dtos.ts';
 import { toDto, toStub } from './campaign-mappers.ts';
 import type {

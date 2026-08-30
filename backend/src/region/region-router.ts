@@ -2,7 +2,7 @@ import type {
 	RegionCreateInput,
 	RegionModel,
 	RegionUpdateInput,
-} from '#prisma/generated/models.ts';
+} from '#prisma-models/Region.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, InternalError } from '#shared/error.ts';
 import { BaseStreamRouter, type BaseStreamRouterOpts } from '#shared/router.ts';

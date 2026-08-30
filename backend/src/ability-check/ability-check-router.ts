@@ -3,8 +3,7 @@ import type {
 	AbilityCheckModel,
 	AbilityCheckUpdateInput,
 } from '#prisma-models/AbilityCheck.ts';
-import type { BaseStreamRouterOpts } from '#shared/router.ts';
-import { BaseStreamRouter } from '#shared/router.ts';
+import { BaseStreamRouter, type BaseStreamRouterOpts } from '#shared/router.ts';
 import type {
 	AbilityCheckResponse,
 	AbilityCheckStub,
