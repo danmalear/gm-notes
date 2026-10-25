@@ -1,58 +1,58 @@
+import { db } from '#db';
+import type { Models } from '#prisma';
+import type { INoteEntityModel } from '#prisma-models/INoteEntity.ts';
 import type {
 	NoteCreateInput,
 	NoteModel,
 	NoteUpdateInput,
 } from '#prisma-models/Note.ts';
-import type { INoteEntityModel } from '#prisma/generated/models.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
+
+export type NoteMin = Omit<Models.public_Note, 'INoteEntity'>;
+export type INoteEntityMin = Omit<
+	Omit<Omit<Models.public_INoteEntity, 'Item'>, 'LocationItem'>,
+	'Region'
+>;
 
 export interface INoteEntityIncludeMin extends INoteEntityModel {
 	Notes: NoteModel[];
 }
 
 export interface INoteRepository
-	extends IRepository<NoteModel, NoteCreateInput, NoteUpdateInput> {
-	getByEntityId(entityId: UUID): Promise<NoteModel[]>;
+	extends IRepository<NoteMin, NoteCreateInput, NoteUpdateInput> {
+	getByEntityId(entityId: UUID): Promise<NoteMin[]>;
 }
 
-export class NoteRepository extends Repository<
-	NoteModel,
-	NoteCreateInput,
-	NoteUpdateInput
-> {
+export class NoteRepository extends Repository<NoteMin, NoteMin, NoteMin> {
 	override descriptor = 'Note';
 
-	override async getByIdRaw(noteId: UUID): Promise<NoteModel | null> {
+	override async getByIdRaw(noteId: UUID): Promise<NoteMin | null> {
 		try {
-			return await this.prisma.note.findUnique({
-				where: {
-					NoteId: noteId,
-				},
+			return await db.orm.public.Note.first({
+				NoteId: noteId,
 			});
 		} catch (e) {
 			throw this.getByIdError(noteId, e);
 		}
 	}
 
-	override async getById(noteId: UUID): Promise<NoteModel | null> {
+	override async getById(noteId: UUID): Promise<NoteMin | null> {
 		return await this.getByIdRaw(noteId);
 	}
 
-	override async getAll(): Promise<NoteModel[]> {
+	override async getAll(): Promise<NoteMin[]> {
 		try {
-			return await this.prisma.note.findMany();
+			return await db.orm.public.Note.all();
 		} catch (e) {
 			throw this.getAllError(e);
 		}
 	}
 
-	override async create(data: NoteCreateInput): Promise<NoteModel> {
+	override async create(data: NoteMin): Promise<NoteMin> {
 		try {
-			return await this.prisma.note.create({
-				data,
-			});
+			return await db.orm.public.Note.create(data);
 		} catch (e) {
 			throw this.createError(e);
 		}
@@ -60,15 +60,12 @@ export class NoteRepository extends Repository<
 
 	override async update(
 		noteId: UUID,
-		data: NoteUpdateInput,
-	): Promise<NoteModel> {
+		data: Partial<NoteMin>,
+	): Promise<NoteMin | null> {
 		try {
-			return await this.prisma.note.update({
-				where: {
-					NoteId: noteId,
-				},
-				data,
-			});
+			return await db.orm.public.Note.where({
+				NoteId: noteId,
+			}).update(data);
 		} catch (e) {
 			throw this.updateError(noteId, e);
 		}
@@ -79,13 +76,11 @@ export class NoteRepository extends Repository<
 	 * @param entityId UUID of the entity to get notes for
 	 * @returns The list of notes (empty array if none found)
 	 */
-	async getByEntityId(entityId: UUID): Promise<NoteModel[]> {
+	async getByEntityId(entityId: UUID): Promise<NoteMin[]> {
 		try {
-			const notes = await this.prisma.note.findMany({
-				where: {
-					EntityId: entityId,
-				},
-			});
+			const notes = await db.orm.public.Note.where({
+				EntityId: entityId,
+			}).all();
 			return notes;
 		} catch (e) {
 			throw new Error(
