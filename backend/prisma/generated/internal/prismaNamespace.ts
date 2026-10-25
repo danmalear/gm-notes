@@ -401,6 +401,7 @@ export const ModelName = {
   Event: 'Event',
   Stream: 'Stream',
   AbilityCheck: 'AbilityCheck',
+  IActionTarget: 'IActionTarget',
   Action: 'Action',
   ActionCondition: 'ActionCondition',
   Campaign: 'Campaign',
@@ -436,7 +437,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "command" | "event" | "stream" | "abilityCheck" | "action" | "actionCondition" | "campaign" | "campaignTemplate" | "condition" | "file" | "handout" | "item" | "iItemLocation" | "locationItem" | "map" | "mapTemplate" | "narration" | "narrationTemplate" | "note" | "region" | "regionHandout" | "regionNarration" | "regionShape" | "regionTemplate"
+    modelProps: "command" | "event" | "stream" | "abilityCheck" | "iActionTarget" | "action" | "actionCondition" | "campaign" | "campaignTemplate" | "condition" | "file" | "handout" | "item" | "iItemLocation" | "locationItem" | "map" | "mapTemplate" | "narration" | "narrationTemplate" | "note" | "region" | "regionHandout" | "regionNarration" | "regionShape" | "regionTemplate"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -733,6 +734,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AbilityCheckCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AbilityCheckCountAggregateOutputType> | number
+        }
+      }
+    }
+    IActionTarget: {
+      payload: Prisma.$IActionTargetPayload<ExtArgs>
+      fields: Prisma.IActionTargetFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.IActionTargetFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IActionTargetPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.IActionTargetFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IActionTargetPayload>
+        }
+        findFirst: {
+          args: Prisma.IActionTargetFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IActionTargetPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.IActionTargetFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IActionTargetPayload>
+        }
+        findMany: {
+          args: Prisma.IActionTargetFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IActionTargetPayload>[]
+        }
+        create: {
+          args: Prisma.IActionTargetCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IActionTargetPayload>
+        }
+        createMany: {
+          args: Prisma.IActionTargetCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.IActionTargetCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IActionTargetPayload>[]
+        }
+        delete: {
+          args: Prisma.IActionTargetDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IActionTargetPayload>
+        }
+        update: {
+          args: Prisma.IActionTargetUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IActionTargetPayload>
+        }
+        deleteMany: {
+          args: Prisma.IActionTargetDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.IActionTargetUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.IActionTargetUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IActionTargetPayload>[]
+        }
+        upsert: {
+          args: Prisma.IActionTargetUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IActionTargetPayload>
+        }
+        aggregate: {
+          args: Prisma.IActionTargetAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateIActionTarget>
+        }
+        groupBy: {
+          args: Prisma.IActionTargetGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IActionTargetGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.IActionTargetCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IActionTargetCountAggregateOutputType> | number
         }
       }
     }
@@ -2307,6 +2382,14 @@ export const AbilityCheckScalarFieldEnum = {
 export type AbilityCheckScalarFieldEnum = (typeof AbilityCheckScalarFieldEnum)[keyof typeof AbilityCheckScalarFieldEnum]
 
 
+export const IActionTargetScalarFieldEnum = {
+  IActionTargetId: 'IActionTargetId',
+  Type: 'Type'
+} as const
+
+export type IActionTargetScalarFieldEnum = (typeof IActionTargetScalarFieldEnum)[keyof typeof IActionTargetScalarFieldEnum]
+
+
 export const ActionScalarFieldEnum = {
   ActionId: 'ActionId',
   TargetId: 'TargetId',
@@ -2622,6 +2705,20 @@ export type ListEnumSkillFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
+ * Reference to a field of type 'ActionTargetType'
+ */
+export type EnumActionTargetTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ActionTargetType'>
+    
+
+
+/**
+ * Reference to a field of type 'ActionTargetType[]'
+ */
+export type ListEnumActionTargetTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ActionTargetType[]'>
+    
+
+
+/**
  * Reference to a field of type 'ActionType'
  */
 export type EnumActionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ActionType'>
@@ -2894,6 +2991,7 @@ export type GlobalOmitConfig = {
   event?: Prisma.EventOmit
   stream?: Prisma.StreamOmit
   abilityCheck?: Prisma.AbilityCheckOmit
+  iActionTarget?: Prisma.IActionTargetOmit
   action?: Prisma.ActionOmit
   actionCondition?: Prisma.ActionConditionOmit
   campaign?: Prisma.CampaignOmit

@@ -62,6 +62,11 @@ export type Stream = Prisma.StreamModel
  */
 export type AbilityCheck = Prisma.AbilityCheckModel
 /**
+ * Model IActionTarget
+ * 
+ */
+export type IActionTarget = Prisma.IActionTargetModel
+/**
  * Model Action
  * 
  */

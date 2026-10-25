@@ -40,12 +40,29 @@ enum AbsoluteLighting {
   @@schema("public")
 }
 
+enum ActionTargetType {
+  Item
+  LocationItem
+  Region
+
+  @@schema("public")
+}
+
+model IActionTarget {
+  IActionTargetId String           @id @db.Uuid
+  Type            ActionTargetType
+	Region          Region?          @relation(name: "RegionActionTarget")
+	Item            Item?
+	LocationItem    LocationItem?    @relation(name: "LocationItemActionTarget")
+	Actions         Action[]
+
+  @@schema("public")
+}
+
 model Action {
   ActionId         String            @id @db.Uuid
   TargetId         String            @db.Uuid
-  Region           Region?           @relation(name: "TargetRegion", fields: [TargetId], references: [RegionId], map: "Action_RegionId_fkey")
-  Item             Item?             @relation(name: "TargetItem", fields: [TargetId], references: [ItemId], map: "Action_ItemId_fkey")
-  LocationItem     LocationItem?     @relation(name: "TargetLocationItem", fields: [TargetId], references: [LocationItemId], map: "Action_LocationItemId_fkey")
+	Target           IActionTarget     @relation(fields: [TargetId], references: [IActionTargetId])
   Name             String
   Type             ActionType?
   NarrationId      String?           @db.Uuid
@@ -163,6 +180,7 @@ enum HandoutType {
 
 model Item {
   ItemId        String         @id @db.Uuid
+  IActionTarget IActionTarget  @relation(fields: [ItemId], references: [IActionTargetId])
   CampaignId    String?        @db.Uuid
   Campaign      Campaign?      @relation(fields: [CampaignId], references: [CampaignId])
   Name          String
@@ -172,7 +190,6 @@ model Item {
   DetailsLink   String?
   ImageFileId   String?        @unique
   ImageFile     File?          @relation(fields: [ImageFileId], references: [FileId])
-  Actions       Action[]       @relation(name: "TargetItem")
   LocationItems LocationItem[]
   Notes         Note[]         @relation(name: "ParentItem")
 
@@ -184,7 +201,7 @@ model IItemLocation {
   IItemLocationId  String         @id @db.Uuid
   Type             ItemLocationType
   Contents         LocationItem[] @relation(name: "ItemLocation")
-  Region           Region?
+  Region           Region?        @relation(name: "RegionItemLocation")
 	LocationItem     LocationItem?  @relation(name: "LocationItemSelf")
 
   @@schema("public")
@@ -199,13 +216,13 @@ enum ItemLocationType {
 
 model LocationItem {
   LocationItemId String         @id @db.Uuid
+  IActionTarget  IActionTarget  @relation(name: "LocationItemActionTarget", fields: [LocationItemId], references: [IActionTargetId], map: "LocationItem_IActionTargetId_fkey")
   IItemLocation  IItemLocation  @relation(name: "LocationItemSelf", fields: [LocationItemId], references: [IItemLocationId], map: "LocationItem_IItemLocationId_Self_fkey")
   LocationId     String         @db.Uuid
 	Location       IItemLocation  @relation(name: "ItemLocation", fields: [LocationId], references: [IItemLocationId], map: "LocationItem_IItemLocationId_Container_fkey")
   ItemId         String         @db.Uuid
   Item           Item           @relation(fields: [ItemId], references: [ItemId])
   Quantity       Int            @default(1)
-  Actions        Action[]       @relation(name: "TargetLocationItem")
   Notes          Note[]         @relation(name: "ParentLocationItem")
 
   @@index([LocationId])
@@ -278,13 +295,13 @@ model Note {
 
 model Region {
   RegionId         String            @id @unique @db.Uuid
-  IItemLocation    IItemLocation     @relation(fields: [RegionId], references: [IItemLocationId])
+  IActionTarget    IActionTarget     @relation(name: "RegionActionTarget", fields: [RegionId], references: [IActionTargetId], map: "Region_IActionTargetId_fkey")
+  IItemLocation    IItemLocation     @relation(name: "RegionItemLocation", fields: [RegionId], references: [IItemLocationId], map: "Region_IItemLocationId_fkey")
   RegionTemplateId String?           @db.Uuid
   MapId            String            @db.Uuid
   Map              Map               @relation(fields: [MapId], references: [MapId])
   Name             String
   Lighting         RelativeLighting  @default(Default)
-  Actions          Action[]          @relation(name: "TargetRegion")
   Notes            Note[]            @relation(name: "ParentRegion")
   Handouts         RegionHandout[]
   Narrations       RegionNarration[]

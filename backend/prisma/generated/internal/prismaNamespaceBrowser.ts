@@ -55,6 +55,7 @@ export const ModelName = {
   Event: 'Event',
   Stream: 'Stream',
   AbilityCheck: 'AbilityCheck',
+  IActionTarget: 'IActionTarget',
   Action: 'Action',
   ActionCondition: 'ActionCondition',
   Campaign: 'Campaign',
@@ -143,6 +144,14 @@ export const AbilityCheckScalarFieldEnum = {
 } as const
 
 export type AbilityCheckScalarFieldEnum = (typeof AbilityCheckScalarFieldEnum)[keyof typeof AbilityCheckScalarFieldEnum]
+
+
+export const IActionTargetScalarFieldEnum = {
+  IActionTargetId: 'IActionTargetId',
+  Type: 'Type'
+} as const
+
+export type IActionTargetScalarFieldEnum = (typeof IActionTargetScalarFieldEnum)[keyof typeof IActionTargetScalarFieldEnum]
 
 
 export const ActionScalarFieldEnum = {

@@ -208,10 +208,10 @@ export type LocationItemWhereInput = {
   LocationId?: Prisma.UuidFilter<"LocationItem"> | string
   ItemId?: Prisma.UuidFilter<"LocationItem"> | string
   Quantity?: Prisma.IntFilter<"LocationItem"> | number
+  IActionTarget?: Prisma.XOR<Prisma.IActionTargetScalarRelationFilter, Prisma.IActionTargetWhereInput>
   IItemLocation?: Prisma.XOR<Prisma.IItemLocationScalarRelationFilter, Prisma.IItemLocationWhereInput>
   Location?: Prisma.XOR<Prisma.IItemLocationScalarRelationFilter, Prisma.IItemLocationWhereInput>
   Item?: Prisma.XOR<Prisma.ItemScalarRelationFilter, Prisma.ItemWhereInput>
-  Actions?: Prisma.ActionListRelationFilter
   Notes?: Prisma.NoteListRelationFilter
 }
 
@@ -220,10 +220,10 @@ export type LocationItemOrderByWithRelationInput = {
   LocationId?: Prisma.SortOrder
   ItemId?: Prisma.SortOrder
   Quantity?: Prisma.SortOrder
+  IActionTarget?: Prisma.IActionTargetOrderByWithRelationInput
   IItemLocation?: Prisma.IItemLocationOrderByWithRelationInput
   Location?: Prisma.IItemLocationOrderByWithRelationInput
   Item?: Prisma.ItemOrderByWithRelationInput
-  Actions?: Prisma.ActionOrderByRelationAggregateInput
   Notes?: Prisma.NoteOrderByRelationAggregateInput
 }
 
@@ -235,10 +235,10 @@ export type LocationItemWhereUniqueInput = Prisma.AtLeast<{
   LocationId?: Prisma.UuidFilter<"LocationItem"> | string
   ItemId?: Prisma.UuidFilter<"LocationItem"> | string
   Quantity?: Prisma.IntFilter<"LocationItem"> | number
+  IActionTarget?: Prisma.XOR<Prisma.IActionTargetScalarRelationFilter, Prisma.IActionTargetWhereInput>
   IItemLocation?: Prisma.XOR<Prisma.IItemLocationScalarRelationFilter, Prisma.IItemLocationWhereInput>
   Location?: Prisma.XOR<Prisma.IItemLocationScalarRelationFilter, Prisma.IItemLocationWhereInput>
   Item?: Prisma.XOR<Prisma.ItemScalarRelationFilter, Prisma.ItemWhereInput>
-  Actions?: Prisma.ActionListRelationFilter
   Notes?: Prisma.NoteListRelationFilter
 }, "LocationItemId">
 
@@ -266,10 +266,10 @@ export type LocationItemScalarWhereWithAggregatesInput = {
 
 export type LocationItemCreateInput = {
   Quantity?: number
+  IActionTarget: Prisma.IActionTargetCreateNestedOneWithoutLocationItemInput
   IItemLocation: Prisma.IItemLocationCreateNestedOneWithoutLocationItemInput
   Location: Prisma.IItemLocationCreateNestedOneWithoutContentsInput
   Item: Prisma.ItemCreateNestedOneWithoutLocationItemsInput
-  Actions?: Prisma.ActionCreateNestedManyWithoutLocationItemInput
   Notes?: Prisma.NoteCreateNestedManyWithoutLocationItemInput
 }
 
@@ -278,16 +278,15 @@ export type LocationItemUncheckedCreateInput = {
   LocationId: string
   ItemId: string
   Quantity?: number
-  Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutLocationItemInput
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutLocationItemInput
 }
 
 export type LocationItemUpdateInput = {
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  IActionTarget?: Prisma.IActionTargetUpdateOneRequiredWithoutLocationItemNestedInput
   IItemLocation?: Prisma.IItemLocationUpdateOneRequiredWithoutLocationItemNestedInput
   Location?: Prisma.IItemLocationUpdateOneRequiredWithoutContentsNestedInput
   Item?: Prisma.ItemUpdateOneRequiredWithoutLocationItemsNestedInput
-  Actions?: Prisma.ActionUpdateManyWithoutLocationItemNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutLocationItemNestedInput
 }
 
@@ -296,7 +295,6 @@ export type LocationItemUncheckedUpdateInput = {
   LocationId?: Prisma.StringFieldUpdateOperationsInput | string
   ItemId?: Prisma.StringFieldUpdateOperationsInput | string
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  Actions?: Prisma.ActionUncheckedUpdateManyWithoutLocationItemNestedInput
   Notes?: Prisma.NoteUncheckedUpdateManyWithoutLocationItemNestedInput
 }
 
@@ -362,20 +360,36 @@ export type LocationItemSumOrderByAggregateInput = {
   Quantity?: Prisma.SortOrder
 }
 
-export type LocationItemCreateNestedOneWithoutActionsInput = {
-  create?: Prisma.XOR<Prisma.LocationItemCreateWithoutActionsInput, Prisma.LocationItemUncheckedCreateWithoutActionsInput>
-  connectOrCreate?: Prisma.LocationItemCreateOrConnectWithoutActionsInput
+export type LocationItemCreateNestedOneWithoutIActionTargetInput = {
+  create?: Prisma.XOR<Prisma.LocationItemCreateWithoutIActionTargetInput, Prisma.LocationItemUncheckedCreateWithoutIActionTargetInput>
+  connectOrCreate?: Prisma.LocationItemCreateOrConnectWithoutIActionTargetInput
   connect?: Prisma.LocationItemWhereUniqueInput
 }
 
-export type LocationItemUpdateOneWithoutActionsNestedInput = {
-  create?: Prisma.XOR<Prisma.LocationItemCreateWithoutActionsInput, Prisma.LocationItemUncheckedCreateWithoutActionsInput>
-  connectOrCreate?: Prisma.LocationItemCreateOrConnectWithoutActionsInput
-  upsert?: Prisma.LocationItemUpsertWithoutActionsInput
+export type LocationItemUncheckedCreateNestedOneWithoutIActionTargetInput = {
+  create?: Prisma.XOR<Prisma.LocationItemCreateWithoutIActionTargetInput, Prisma.LocationItemUncheckedCreateWithoutIActionTargetInput>
+  connectOrCreate?: Prisma.LocationItemCreateOrConnectWithoutIActionTargetInput
+  connect?: Prisma.LocationItemWhereUniqueInput
+}
+
+export type LocationItemUpdateOneWithoutIActionTargetNestedInput = {
+  create?: Prisma.XOR<Prisma.LocationItemCreateWithoutIActionTargetInput, Prisma.LocationItemUncheckedCreateWithoutIActionTargetInput>
+  connectOrCreate?: Prisma.LocationItemCreateOrConnectWithoutIActionTargetInput
+  upsert?: Prisma.LocationItemUpsertWithoutIActionTargetInput
   disconnect?: Prisma.LocationItemWhereInput | boolean
   delete?: Prisma.LocationItemWhereInput | boolean
   connect?: Prisma.LocationItemWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.LocationItemUpdateToOneWithWhereWithoutActionsInput, Prisma.LocationItemUpdateWithoutActionsInput>, Prisma.LocationItemUncheckedUpdateWithoutActionsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LocationItemUpdateToOneWithWhereWithoutIActionTargetInput, Prisma.LocationItemUpdateWithoutIActionTargetInput>, Prisma.LocationItemUncheckedUpdateWithoutIActionTargetInput>
+}
+
+export type LocationItemUncheckedUpdateOneWithoutIActionTargetNestedInput = {
+  create?: Prisma.XOR<Prisma.LocationItemCreateWithoutIActionTargetInput, Prisma.LocationItemUncheckedCreateWithoutIActionTargetInput>
+  connectOrCreate?: Prisma.LocationItemCreateOrConnectWithoutIActionTargetInput
+  upsert?: Prisma.LocationItemUpsertWithoutIActionTargetInput
+  disconnect?: Prisma.LocationItemWhereInput | boolean
+  delete?: Prisma.LocationItemWhereInput | boolean
+  connect?: Prisma.LocationItemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LocationItemUpdateToOneWithWhereWithoutIActionTargetInput, Prisma.LocationItemUpdateWithoutIActionTargetInput>, Prisma.LocationItemUncheckedUpdateWithoutIActionTargetInput>
 }
 
 export type LocationItemCreateNestedManyWithoutItemInput = {
@@ -510,7 +524,7 @@ export type LocationItemUpdateOneWithoutNotesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.LocationItemUpdateToOneWithWhereWithoutNotesInput, Prisma.LocationItemUpdateWithoutNotesInput>, Prisma.LocationItemUncheckedUpdateWithoutNotesInput>
 }
 
-export type LocationItemCreateWithoutActionsInput = {
+export type LocationItemCreateWithoutIActionTargetInput = {
   Quantity?: number
   IItemLocation: Prisma.IItemLocationCreateNestedOneWithoutLocationItemInput
   Location: Prisma.IItemLocationCreateNestedOneWithoutContentsInput
@@ -518,31 +532,30 @@ export type LocationItemCreateWithoutActionsInput = {
   Notes?: Prisma.NoteCreateNestedManyWithoutLocationItemInput
 }
 
-export type LocationItemUncheckedCreateWithoutActionsInput = {
-  LocationItemId: string
+export type LocationItemUncheckedCreateWithoutIActionTargetInput = {
   LocationId: string
   ItemId: string
   Quantity?: number
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutLocationItemInput
 }
 
-export type LocationItemCreateOrConnectWithoutActionsInput = {
+export type LocationItemCreateOrConnectWithoutIActionTargetInput = {
   where: Prisma.LocationItemWhereUniqueInput
-  create: Prisma.XOR<Prisma.LocationItemCreateWithoutActionsInput, Prisma.LocationItemUncheckedCreateWithoutActionsInput>
+  create: Prisma.XOR<Prisma.LocationItemCreateWithoutIActionTargetInput, Prisma.LocationItemUncheckedCreateWithoutIActionTargetInput>
 }
 
-export type LocationItemUpsertWithoutActionsInput = {
-  update: Prisma.XOR<Prisma.LocationItemUpdateWithoutActionsInput, Prisma.LocationItemUncheckedUpdateWithoutActionsInput>
-  create: Prisma.XOR<Prisma.LocationItemCreateWithoutActionsInput, Prisma.LocationItemUncheckedCreateWithoutActionsInput>
+export type LocationItemUpsertWithoutIActionTargetInput = {
+  update: Prisma.XOR<Prisma.LocationItemUpdateWithoutIActionTargetInput, Prisma.LocationItemUncheckedUpdateWithoutIActionTargetInput>
+  create: Prisma.XOR<Prisma.LocationItemCreateWithoutIActionTargetInput, Prisma.LocationItemUncheckedCreateWithoutIActionTargetInput>
   where?: Prisma.LocationItemWhereInput
 }
 
-export type LocationItemUpdateToOneWithWhereWithoutActionsInput = {
+export type LocationItemUpdateToOneWithWhereWithoutIActionTargetInput = {
   where?: Prisma.LocationItemWhereInput
-  data: Prisma.XOR<Prisma.LocationItemUpdateWithoutActionsInput, Prisma.LocationItemUncheckedUpdateWithoutActionsInput>
+  data: Prisma.XOR<Prisma.LocationItemUpdateWithoutIActionTargetInput, Prisma.LocationItemUncheckedUpdateWithoutIActionTargetInput>
 }
 
-export type LocationItemUpdateWithoutActionsInput = {
+export type LocationItemUpdateWithoutIActionTargetInput = {
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
   IItemLocation?: Prisma.IItemLocationUpdateOneRequiredWithoutLocationItemNestedInput
   Location?: Prisma.IItemLocationUpdateOneRequiredWithoutContentsNestedInput
@@ -550,8 +563,7 @@ export type LocationItemUpdateWithoutActionsInput = {
   Notes?: Prisma.NoteUpdateManyWithoutLocationItemNestedInput
 }
 
-export type LocationItemUncheckedUpdateWithoutActionsInput = {
-  LocationItemId?: Prisma.StringFieldUpdateOperationsInput | string
+export type LocationItemUncheckedUpdateWithoutIActionTargetInput = {
   LocationId?: Prisma.StringFieldUpdateOperationsInput | string
   ItemId?: Prisma.StringFieldUpdateOperationsInput | string
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
@@ -560,9 +572,9 @@ export type LocationItemUncheckedUpdateWithoutActionsInput = {
 
 export type LocationItemCreateWithoutItemInput = {
   Quantity?: number
+  IActionTarget: Prisma.IActionTargetCreateNestedOneWithoutLocationItemInput
   IItemLocation: Prisma.IItemLocationCreateNestedOneWithoutLocationItemInput
   Location: Prisma.IItemLocationCreateNestedOneWithoutContentsInput
-  Actions?: Prisma.ActionCreateNestedManyWithoutLocationItemInput
   Notes?: Prisma.NoteCreateNestedManyWithoutLocationItemInput
 }
 
@@ -570,7 +582,6 @@ export type LocationItemUncheckedCreateWithoutItemInput = {
   LocationItemId: string
   LocationId: string
   Quantity?: number
-  Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutLocationItemInput
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutLocationItemInput
 }
 
@@ -612,9 +623,9 @@ export type LocationItemScalarWhereInput = {
 
 export type LocationItemCreateWithoutLocationInput = {
   Quantity?: number
+  IActionTarget: Prisma.IActionTargetCreateNestedOneWithoutLocationItemInput
   IItemLocation: Prisma.IItemLocationCreateNestedOneWithoutLocationItemInput
   Item: Prisma.ItemCreateNestedOneWithoutLocationItemsInput
-  Actions?: Prisma.ActionCreateNestedManyWithoutLocationItemInput
   Notes?: Prisma.NoteCreateNestedManyWithoutLocationItemInput
 }
 
@@ -622,7 +633,6 @@ export type LocationItemUncheckedCreateWithoutLocationInput = {
   LocationItemId: string
   ItemId: string
   Quantity?: number
-  Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutLocationItemInput
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutLocationItemInput
 }
 
@@ -638,9 +648,9 @@ export type LocationItemCreateManyLocationInputEnvelope = {
 
 export type LocationItemCreateWithoutIItemLocationInput = {
   Quantity?: number
+  IActionTarget: Prisma.IActionTargetCreateNestedOneWithoutLocationItemInput
   Location: Prisma.IItemLocationCreateNestedOneWithoutContentsInput
   Item: Prisma.ItemCreateNestedOneWithoutLocationItemsInput
-  Actions?: Prisma.ActionCreateNestedManyWithoutLocationItemInput
   Notes?: Prisma.NoteCreateNestedManyWithoutLocationItemInput
 }
 
@@ -648,7 +658,6 @@ export type LocationItemUncheckedCreateWithoutIItemLocationInput = {
   LocationId: string
   ItemId: string
   Quantity?: number
-  Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutLocationItemInput
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutLocationItemInput
 }
 
@@ -686,9 +695,9 @@ export type LocationItemUpdateToOneWithWhereWithoutIItemLocationInput = {
 
 export type LocationItemUpdateWithoutIItemLocationInput = {
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  IActionTarget?: Prisma.IActionTargetUpdateOneRequiredWithoutLocationItemNestedInput
   Location?: Prisma.IItemLocationUpdateOneRequiredWithoutContentsNestedInput
   Item?: Prisma.ItemUpdateOneRequiredWithoutLocationItemsNestedInput
-  Actions?: Prisma.ActionUpdateManyWithoutLocationItemNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutLocationItemNestedInput
 }
 
@@ -696,16 +705,15 @@ export type LocationItemUncheckedUpdateWithoutIItemLocationInput = {
   LocationId?: Prisma.StringFieldUpdateOperationsInput | string
   ItemId?: Prisma.StringFieldUpdateOperationsInput | string
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  Actions?: Prisma.ActionUncheckedUpdateManyWithoutLocationItemNestedInput
   Notes?: Prisma.NoteUncheckedUpdateManyWithoutLocationItemNestedInput
 }
 
 export type LocationItemCreateWithoutNotesInput = {
   Quantity?: number
+  IActionTarget: Prisma.IActionTargetCreateNestedOneWithoutLocationItemInput
   IItemLocation: Prisma.IItemLocationCreateNestedOneWithoutLocationItemInput
   Location: Prisma.IItemLocationCreateNestedOneWithoutContentsInput
   Item: Prisma.ItemCreateNestedOneWithoutLocationItemsInput
-  Actions?: Prisma.ActionCreateNestedManyWithoutLocationItemInput
 }
 
 export type LocationItemUncheckedCreateWithoutNotesInput = {
@@ -713,7 +721,6 @@ export type LocationItemUncheckedCreateWithoutNotesInput = {
   LocationId: string
   ItemId: string
   Quantity?: number
-  Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutLocationItemInput
 }
 
 export type LocationItemCreateOrConnectWithoutNotesInput = {
@@ -734,10 +741,10 @@ export type LocationItemUpdateToOneWithWhereWithoutNotesInput = {
 
 export type LocationItemUpdateWithoutNotesInput = {
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  IActionTarget?: Prisma.IActionTargetUpdateOneRequiredWithoutLocationItemNestedInput
   IItemLocation?: Prisma.IItemLocationUpdateOneRequiredWithoutLocationItemNestedInput
   Location?: Prisma.IItemLocationUpdateOneRequiredWithoutContentsNestedInput
   Item?: Prisma.ItemUpdateOneRequiredWithoutLocationItemsNestedInput
-  Actions?: Prisma.ActionUpdateManyWithoutLocationItemNestedInput
 }
 
 export type LocationItemUncheckedUpdateWithoutNotesInput = {
@@ -745,7 +752,6 @@ export type LocationItemUncheckedUpdateWithoutNotesInput = {
   LocationId?: Prisma.StringFieldUpdateOperationsInput | string
   ItemId?: Prisma.StringFieldUpdateOperationsInput | string
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  Actions?: Prisma.ActionUncheckedUpdateManyWithoutLocationItemNestedInput
 }
 
 export type LocationItemCreateManyItemInput = {
@@ -756,9 +762,9 @@ export type LocationItemCreateManyItemInput = {
 
 export type LocationItemUpdateWithoutItemInput = {
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  IActionTarget?: Prisma.IActionTargetUpdateOneRequiredWithoutLocationItemNestedInput
   IItemLocation?: Prisma.IItemLocationUpdateOneRequiredWithoutLocationItemNestedInput
   Location?: Prisma.IItemLocationUpdateOneRequiredWithoutContentsNestedInput
-  Actions?: Prisma.ActionUpdateManyWithoutLocationItemNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutLocationItemNestedInput
 }
 
@@ -766,7 +772,6 @@ export type LocationItemUncheckedUpdateWithoutItemInput = {
   LocationItemId?: Prisma.StringFieldUpdateOperationsInput | string
   LocationId?: Prisma.StringFieldUpdateOperationsInput | string
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  Actions?: Prisma.ActionUncheckedUpdateManyWithoutLocationItemNestedInput
   Notes?: Prisma.NoteUncheckedUpdateManyWithoutLocationItemNestedInput
 }
 
@@ -784,9 +789,9 @@ export type LocationItemCreateManyLocationInput = {
 
 export type LocationItemUpdateWithoutLocationInput = {
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  IActionTarget?: Prisma.IActionTargetUpdateOneRequiredWithoutLocationItemNestedInput
   IItemLocation?: Prisma.IItemLocationUpdateOneRequiredWithoutLocationItemNestedInput
   Item?: Prisma.ItemUpdateOneRequiredWithoutLocationItemsNestedInput
-  Actions?: Prisma.ActionUpdateManyWithoutLocationItemNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutLocationItemNestedInput
 }
 
@@ -794,7 +799,6 @@ export type LocationItemUncheckedUpdateWithoutLocationInput = {
   LocationItemId?: Prisma.StringFieldUpdateOperationsInput | string
   ItemId?: Prisma.StringFieldUpdateOperationsInput | string
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  Actions?: Prisma.ActionUncheckedUpdateManyWithoutLocationItemNestedInput
   Notes?: Prisma.NoteUncheckedUpdateManyWithoutLocationItemNestedInput
 }
 
@@ -810,12 +814,10 @@ export type LocationItemUncheckedUpdateManyWithoutLocationInput = {
  */
 
 export type LocationItemCountOutputType = {
-  Actions: number
   Notes: number
 }
 
 export type LocationItemCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Actions?: boolean | LocationItemCountOutputTypeCountActionsArgs
   Notes?: boolean | LocationItemCountOutputTypeCountNotesArgs
 }
 
@@ -832,13 +834,6 @@ export type LocationItemCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types
 /**
  * LocationItemCountOutputType without action
  */
-export type LocationItemCountOutputTypeCountActionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ActionWhereInput
-}
-
-/**
- * LocationItemCountOutputType without action
- */
 export type LocationItemCountOutputTypeCountNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.NoteWhereInput
 }
@@ -849,10 +844,10 @@ export type LocationItemSelect<ExtArgs extends runtime.Types.Extensions.Internal
   LocationId?: boolean
   ItemId?: boolean
   Quantity?: boolean
+  IActionTarget?: boolean | Prisma.IActionTargetDefaultArgs<ExtArgs>
   IItemLocation?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Location?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
-  Actions?: boolean | Prisma.LocationItem$ActionsArgs<ExtArgs>
   Notes?: boolean | Prisma.LocationItem$NotesArgs<ExtArgs>
   _count?: boolean | Prisma.LocationItemCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["locationItem"]>
@@ -862,6 +857,7 @@ export type LocationItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   LocationId?: boolean
   ItemId?: boolean
   Quantity?: boolean
+  IActionTarget?: boolean | Prisma.IActionTargetDefaultArgs<ExtArgs>
   IItemLocation?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Location?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
@@ -872,6 +868,7 @@ export type LocationItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   LocationId?: boolean
   ItemId?: boolean
   Quantity?: boolean
+  IActionTarget?: boolean | Prisma.IActionTargetDefaultArgs<ExtArgs>
   IItemLocation?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Location?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
@@ -886,19 +883,21 @@ export type LocationItemSelectScalar = {
 
 export type LocationItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"LocationItemId" | "LocationId" | "ItemId" | "Quantity", ExtArgs["result"]["locationItem"]>
 export type LocationItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  IActionTarget?: boolean | Prisma.IActionTargetDefaultArgs<ExtArgs>
   IItemLocation?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Location?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
-  Actions?: boolean | Prisma.LocationItem$ActionsArgs<ExtArgs>
   Notes?: boolean | Prisma.LocationItem$NotesArgs<ExtArgs>
   _count?: boolean | Prisma.LocationItemCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LocationItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  IActionTarget?: boolean | Prisma.IActionTargetDefaultArgs<ExtArgs>
   IItemLocation?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Location?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
 }
 export type LocationItemIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  IActionTarget?: boolean | Prisma.IActionTargetDefaultArgs<ExtArgs>
   IItemLocation?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Location?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
@@ -907,10 +906,10 @@ export type LocationItemIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types
 export type $LocationItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "LocationItem"
   objects: {
+    IActionTarget: Prisma.$IActionTargetPayload<ExtArgs>
     IItemLocation: Prisma.$IItemLocationPayload<ExtArgs>
     Location: Prisma.$IItemLocationPayload<ExtArgs>
     Item: Prisma.$ItemPayload<ExtArgs>
-    Actions: Prisma.$ActionPayload<ExtArgs>[]
     Notes: Prisma.$NotePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1312,10 +1311,10 @@ readonly fields: LocationItemFieldRefs;
  */
 export interface Prisma__LocationItemClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  IActionTarget<T extends Prisma.IActionTargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IActionTargetDefaultArgs<ExtArgs>>): Prisma.Prisma__IActionTargetClient<runtime.Types.Result.GetResult<Prisma.$IActionTargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   IItemLocation<T extends Prisma.IItemLocationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IItemLocationDefaultArgs<ExtArgs>>): Prisma.Prisma__IItemLocationClient<runtime.Types.Result.GetResult<Prisma.$IItemLocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Location<T extends Prisma.IItemLocationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IItemLocationDefaultArgs<ExtArgs>>): Prisma.Prisma__IItemLocationClient<runtime.Types.Result.GetResult<Prisma.$IItemLocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Item<T extends Prisma.ItemDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ItemDefaultArgs<ExtArgs>>): Prisma.Prisma__ItemClient<runtime.Types.Result.GetResult<Prisma.$ItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  Actions<T extends Prisma.LocationItem$ActionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LocationItem$ActionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Notes<T extends Prisma.LocationItem$NotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LocationItem$NotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1748,30 +1747,6 @@ export type LocationItemDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many LocationItems to delete.
    */
   limit?: number
-}
-
-/**
- * LocationItem.Actions
- */
-export type LocationItem$ActionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Action
-   */
-  select?: Prisma.ActionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Action
-   */
-  omit?: Prisma.ActionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ActionInclude<ExtArgs> | null
-  where?: Prisma.ActionWhereInput
-  orderBy?: Prisma.ActionOrderByWithRelationInput | Prisma.ActionOrderByWithRelationInput[]
-  cursor?: Prisma.ActionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ActionScalarFieldEnum | Prisma.ActionScalarFieldEnum[]
 }
 
 /**

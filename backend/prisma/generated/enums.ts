@@ -18,6 +18,15 @@ export const AbsoluteLighting = {
 export type AbsoluteLighting = (typeof AbsoluteLighting)[keyof typeof AbsoluteLighting]
 
 
+export const ActionTargetType = {
+  Item: 'Item',
+  LocationItem: 'LocationItem',
+  Region: 'Region'
+} as const
+
+export type ActionTargetType = (typeof ActionTargetType)[keyof typeof ActionTargetType]
+
+
 export const ActionType = {
   Attack: 'Attack',
   Dash: 'Dash',
