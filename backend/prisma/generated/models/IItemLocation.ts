@@ -158,7 +158,7 @@ export type IItemLocationWhereInput = {
   NOT?: Prisma.IItemLocationWhereInput | Prisma.IItemLocationWhereInput[]
   IItemLocationId?: Prisma.UuidFilter<"IItemLocation"> | string
   Type?: Prisma.EnumItemLocationTypeFilter<"IItemLocation"> | $Enums.ItemLocationType
-  Contents?: Prisma.LocationItemListRelationFilter
+  Items?: Prisma.LocationItemListRelationFilter
   Region?: Prisma.XOR<Prisma.RegionNullableScalarRelationFilter, Prisma.RegionWhereInput> | null
   LocationItem?: Prisma.XOR<Prisma.LocationItemNullableScalarRelationFilter, Prisma.LocationItemWhereInput> | null
 }
@@ -166,7 +166,7 @@ export type IItemLocationWhereInput = {
 export type IItemLocationOrderByWithRelationInput = {
   IItemLocationId?: Prisma.SortOrder
   Type?: Prisma.SortOrder
-  Contents?: Prisma.LocationItemOrderByRelationAggregateInput
+  Items?: Prisma.LocationItemOrderByRelationAggregateInput
   Region?: Prisma.RegionOrderByWithRelationInput
   LocationItem?: Prisma.LocationItemOrderByWithRelationInput
 }
@@ -177,7 +177,7 @@ export type IItemLocationWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.IItemLocationWhereInput[]
   NOT?: Prisma.IItemLocationWhereInput | Prisma.IItemLocationWhereInput[]
   Type?: Prisma.EnumItemLocationTypeFilter<"IItemLocation"> | $Enums.ItemLocationType
-  Contents?: Prisma.LocationItemListRelationFilter
+  Items?: Prisma.LocationItemListRelationFilter
   Region?: Prisma.XOR<Prisma.RegionNullableScalarRelationFilter, Prisma.RegionWhereInput> | null
   LocationItem?: Prisma.XOR<Prisma.LocationItemNullableScalarRelationFilter, Prisma.LocationItemWhereInput> | null
 }, "IItemLocationId">
@@ -201,7 +201,7 @@ export type IItemLocationScalarWhereWithAggregatesInput = {
 export type IItemLocationCreateInput = {
   IItemLocationId: string
   Type: $Enums.ItemLocationType
-  Contents?: Prisma.LocationItemCreateNestedManyWithoutLocationInput
+  Items?: Prisma.LocationItemCreateNestedManyWithoutLocationInput
   Region?: Prisma.RegionCreateNestedOneWithoutIItemLocationInput
   LocationItem?: Prisma.LocationItemCreateNestedOneWithoutIItemLocationInput
 }
@@ -209,7 +209,7 @@ export type IItemLocationCreateInput = {
 export type IItemLocationUncheckedCreateInput = {
   IItemLocationId: string
   Type: $Enums.ItemLocationType
-  Contents?: Prisma.LocationItemUncheckedCreateNestedManyWithoutLocationInput
+  Items?: Prisma.LocationItemUncheckedCreateNestedManyWithoutLocationInput
   Region?: Prisma.RegionUncheckedCreateNestedOneWithoutIItemLocationInput
   LocationItem?: Prisma.LocationItemUncheckedCreateNestedOneWithoutIItemLocationInput
 }
@@ -217,7 +217,7 @@ export type IItemLocationUncheckedCreateInput = {
 export type IItemLocationUpdateInput = {
   IItemLocationId?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.EnumItemLocationTypeFieldUpdateOperationsInput | $Enums.ItemLocationType
-  Contents?: Prisma.LocationItemUpdateManyWithoutLocationNestedInput
+  Items?: Prisma.LocationItemUpdateManyWithoutLocationNestedInput
   Region?: Prisma.RegionUpdateOneWithoutIItemLocationNestedInput
   LocationItem?: Prisma.LocationItemUpdateOneWithoutIItemLocationNestedInput
 }
@@ -225,7 +225,7 @@ export type IItemLocationUpdateInput = {
 export type IItemLocationUncheckedUpdateInput = {
   IItemLocationId?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.EnumItemLocationTypeFieldUpdateOperationsInput | $Enums.ItemLocationType
-  Contents?: Prisma.LocationItemUncheckedUpdateManyWithoutLocationNestedInput
+  Items?: Prisma.LocationItemUncheckedUpdateManyWithoutLocationNestedInput
   Region?: Prisma.RegionUncheckedUpdateOneWithoutIItemLocationNestedInput
   LocationItem?: Prisma.LocationItemUncheckedUpdateOneWithoutIItemLocationNestedInput
 }
@@ -275,9 +275,9 @@ export type IItemLocationCreateNestedOneWithoutLocationItemInput = {
   connect?: Prisma.IItemLocationWhereUniqueInput
 }
 
-export type IItemLocationCreateNestedOneWithoutContentsInput = {
-  create?: Prisma.XOR<Prisma.IItemLocationCreateWithoutContentsInput, Prisma.IItemLocationUncheckedCreateWithoutContentsInput>
-  connectOrCreate?: Prisma.IItemLocationCreateOrConnectWithoutContentsInput
+export type IItemLocationCreateNestedOneWithoutItemsInput = {
+  create?: Prisma.XOR<Prisma.IItemLocationCreateWithoutItemsInput, Prisma.IItemLocationUncheckedCreateWithoutItemsInput>
+  connectOrCreate?: Prisma.IItemLocationCreateOrConnectWithoutItemsInput
   connect?: Prisma.IItemLocationWhereUniqueInput
 }
 
@@ -289,12 +289,12 @@ export type IItemLocationUpdateOneRequiredWithoutLocationItemNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.IItemLocationUpdateToOneWithWhereWithoutLocationItemInput, Prisma.IItemLocationUpdateWithoutLocationItemInput>, Prisma.IItemLocationUncheckedUpdateWithoutLocationItemInput>
 }
 
-export type IItemLocationUpdateOneRequiredWithoutContentsNestedInput = {
-  create?: Prisma.XOR<Prisma.IItemLocationCreateWithoutContentsInput, Prisma.IItemLocationUncheckedCreateWithoutContentsInput>
-  connectOrCreate?: Prisma.IItemLocationCreateOrConnectWithoutContentsInput
-  upsert?: Prisma.IItemLocationUpsertWithoutContentsInput
+export type IItemLocationUpdateOneRequiredWithoutItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.IItemLocationCreateWithoutItemsInput, Prisma.IItemLocationUncheckedCreateWithoutItemsInput>
+  connectOrCreate?: Prisma.IItemLocationCreateOrConnectWithoutItemsInput
+  upsert?: Prisma.IItemLocationUpsertWithoutItemsInput
   connect?: Prisma.IItemLocationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.IItemLocationUpdateToOneWithWhereWithoutContentsInput, Prisma.IItemLocationUpdateWithoutContentsInput>, Prisma.IItemLocationUncheckedUpdateWithoutContentsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.IItemLocationUpdateToOneWithWhereWithoutItemsInput, Prisma.IItemLocationUpdateWithoutItemsInput>, Prisma.IItemLocationUncheckedUpdateWithoutItemsInput>
 }
 
 export type IItemLocationCreateNestedOneWithoutRegionInput = {
@@ -314,14 +314,14 @@ export type IItemLocationUpdateOneRequiredWithoutRegionNestedInput = {
 export type IItemLocationCreateWithoutLocationItemInput = {
   IItemLocationId: string
   Type: $Enums.ItemLocationType
-  Contents?: Prisma.LocationItemCreateNestedManyWithoutLocationInput
+  Items?: Prisma.LocationItemCreateNestedManyWithoutLocationInput
   Region?: Prisma.RegionCreateNestedOneWithoutIItemLocationInput
 }
 
 export type IItemLocationUncheckedCreateWithoutLocationItemInput = {
   IItemLocationId: string
   Type: $Enums.ItemLocationType
-  Contents?: Prisma.LocationItemUncheckedCreateNestedManyWithoutLocationInput
+  Items?: Prisma.LocationItemUncheckedCreateNestedManyWithoutLocationInput
   Region?: Prisma.RegionUncheckedCreateNestedOneWithoutIItemLocationInput
 }
 
@@ -330,23 +330,23 @@ export type IItemLocationCreateOrConnectWithoutLocationItemInput = {
   create: Prisma.XOR<Prisma.IItemLocationCreateWithoutLocationItemInput, Prisma.IItemLocationUncheckedCreateWithoutLocationItemInput>
 }
 
-export type IItemLocationCreateWithoutContentsInput = {
+export type IItemLocationCreateWithoutItemsInput = {
   IItemLocationId: string
   Type: $Enums.ItemLocationType
   Region?: Prisma.RegionCreateNestedOneWithoutIItemLocationInput
   LocationItem?: Prisma.LocationItemCreateNestedOneWithoutIItemLocationInput
 }
 
-export type IItemLocationUncheckedCreateWithoutContentsInput = {
+export type IItemLocationUncheckedCreateWithoutItemsInput = {
   IItemLocationId: string
   Type: $Enums.ItemLocationType
   Region?: Prisma.RegionUncheckedCreateNestedOneWithoutIItemLocationInput
   LocationItem?: Prisma.LocationItemUncheckedCreateNestedOneWithoutIItemLocationInput
 }
 
-export type IItemLocationCreateOrConnectWithoutContentsInput = {
+export type IItemLocationCreateOrConnectWithoutItemsInput = {
   where: Prisma.IItemLocationWhereUniqueInput
-  create: Prisma.XOR<Prisma.IItemLocationCreateWithoutContentsInput, Prisma.IItemLocationUncheckedCreateWithoutContentsInput>
+  create: Prisma.XOR<Prisma.IItemLocationCreateWithoutItemsInput, Prisma.IItemLocationUncheckedCreateWithoutItemsInput>
 }
 
 export type IItemLocationUpsertWithoutLocationItemInput = {
@@ -363,36 +363,36 @@ export type IItemLocationUpdateToOneWithWhereWithoutLocationItemInput = {
 export type IItemLocationUpdateWithoutLocationItemInput = {
   IItemLocationId?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.EnumItemLocationTypeFieldUpdateOperationsInput | $Enums.ItemLocationType
-  Contents?: Prisma.LocationItemUpdateManyWithoutLocationNestedInput
+  Items?: Prisma.LocationItemUpdateManyWithoutLocationNestedInput
   Region?: Prisma.RegionUpdateOneWithoutIItemLocationNestedInput
 }
 
 export type IItemLocationUncheckedUpdateWithoutLocationItemInput = {
   IItemLocationId?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.EnumItemLocationTypeFieldUpdateOperationsInput | $Enums.ItemLocationType
-  Contents?: Prisma.LocationItemUncheckedUpdateManyWithoutLocationNestedInput
+  Items?: Prisma.LocationItemUncheckedUpdateManyWithoutLocationNestedInput
   Region?: Prisma.RegionUncheckedUpdateOneWithoutIItemLocationNestedInput
 }
 
-export type IItemLocationUpsertWithoutContentsInput = {
-  update: Prisma.XOR<Prisma.IItemLocationUpdateWithoutContentsInput, Prisma.IItemLocationUncheckedUpdateWithoutContentsInput>
-  create: Prisma.XOR<Prisma.IItemLocationCreateWithoutContentsInput, Prisma.IItemLocationUncheckedCreateWithoutContentsInput>
+export type IItemLocationUpsertWithoutItemsInput = {
+  update: Prisma.XOR<Prisma.IItemLocationUpdateWithoutItemsInput, Prisma.IItemLocationUncheckedUpdateWithoutItemsInput>
+  create: Prisma.XOR<Prisma.IItemLocationCreateWithoutItemsInput, Prisma.IItemLocationUncheckedCreateWithoutItemsInput>
   where?: Prisma.IItemLocationWhereInput
 }
 
-export type IItemLocationUpdateToOneWithWhereWithoutContentsInput = {
+export type IItemLocationUpdateToOneWithWhereWithoutItemsInput = {
   where?: Prisma.IItemLocationWhereInput
-  data: Prisma.XOR<Prisma.IItemLocationUpdateWithoutContentsInput, Prisma.IItemLocationUncheckedUpdateWithoutContentsInput>
+  data: Prisma.XOR<Prisma.IItemLocationUpdateWithoutItemsInput, Prisma.IItemLocationUncheckedUpdateWithoutItemsInput>
 }
 
-export type IItemLocationUpdateWithoutContentsInput = {
+export type IItemLocationUpdateWithoutItemsInput = {
   IItemLocationId?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.EnumItemLocationTypeFieldUpdateOperationsInput | $Enums.ItemLocationType
   Region?: Prisma.RegionUpdateOneWithoutIItemLocationNestedInput
   LocationItem?: Prisma.LocationItemUpdateOneWithoutIItemLocationNestedInput
 }
 
-export type IItemLocationUncheckedUpdateWithoutContentsInput = {
+export type IItemLocationUncheckedUpdateWithoutItemsInput = {
   IItemLocationId?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.EnumItemLocationTypeFieldUpdateOperationsInput | $Enums.ItemLocationType
   Region?: Prisma.RegionUncheckedUpdateOneWithoutIItemLocationNestedInput
@@ -402,14 +402,14 @@ export type IItemLocationUncheckedUpdateWithoutContentsInput = {
 export type IItemLocationCreateWithoutRegionInput = {
   IItemLocationId: string
   Type: $Enums.ItemLocationType
-  Contents?: Prisma.LocationItemCreateNestedManyWithoutLocationInput
+  Items?: Prisma.LocationItemCreateNestedManyWithoutLocationInput
   LocationItem?: Prisma.LocationItemCreateNestedOneWithoutIItemLocationInput
 }
 
 export type IItemLocationUncheckedCreateWithoutRegionInput = {
   IItemLocationId: string
   Type: $Enums.ItemLocationType
-  Contents?: Prisma.LocationItemUncheckedCreateNestedManyWithoutLocationInput
+  Items?: Prisma.LocationItemUncheckedCreateNestedManyWithoutLocationInput
   LocationItem?: Prisma.LocationItemUncheckedCreateNestedOneWithoutIItemLocationInput
 }
 
@@ -432,14 +432,14 @@ export type IItemLocationUpdateToOneWithWhereWithoutRegionInput = {
 export type IItemLocationUpdateWithoutRegionInput = {
   IItemLocationId?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.EnumItemLocationTypeFieldUpdateOperationsInput | $Enums.ItemLocationType
-  Contents?: Prisma.LocationItemUpdateManyWithoutLocationNestedInput
+  Items?: Prisma.LocationItemUpdateManyWithoutLocationNestedInput
   LocationItem?: Prisma.LocationItemUpdateOneWithoutIItemLocationNestedInput
 }
 
 export type IItemLocationUncheckedUpdateWithoutRegionInput = {
   IItemLocationId?: Prisma.StringFieldUpdateOperationsInput | string
   Type?: Prisma.EnumItemLocationTypeFieldUpdateOperationsInput | $Enums.ItemLocationType
-  Contents?: Prisma.LocationItemUncheckedUpdateManyWithoutLocationNestedInput
+  Items?: Prisma.LocationItemUncheckedUpdateManyWithoutLocationNestedInput
   LocationItem?: Prisma.LocationItemUncheckedUpdateOneWithoutIItemLocationNestedInput
 }
 
@@ -449,11 +449,11 @@ export type IItemLocationUncheckedUpdateWithoutRegionInput = {
  */
 
 export type IItemLocationCountOutputType = {
-  Contents: number
+  Items: number
 }
 
 export type IItemLocationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Contents?: boolean | IItemLocationCountOutputTypeCountContentsArgs
+  Items?: boolean | IItemLocationCountOutputTypeCountItemsArgs
 }
 
 /**
@@ -469,7 +469,7 @@ export type IItemLocationCountOutputTypeDefaultArgs<ExtArgs extends runtime.Type
 /**
  * IItemLocationCountOutputType without action
  */
-export type IItemLocationCountOutputTypeCountContentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type IItemLocationCountOutputTypeCountItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LocationItemWhereInput
 }
 
@@ -477,7 +477,7 @@ export type IItemLocationCountOutputTypeCountContentsArgs<ExtArgs extends runtim
 export type IItemLocationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   IItemLocationId?: boolean
   Type?: boolean
-  Contents?: boolean | Prisma.IItemLocation$ContentsArgs<ExtArgs>
+  Items?: boolean | Prisma.IItemLocation$ItemsArgs<ExtArgs>
   Region?: boolean | Prisma.IItemLocation$RegionArgs<ExtArgs>
   LocationItem?: boolean | Prisma.IItemLocation$LocationItemArgs<ExtArgs>
   _count?: boolean | Prisma.IItemLocationCountOutputTypeDefaultArgs<ExtArgs>
@@ -500,7 +500,7 @@ export type IItemLocationSelectScalar = {
 
 export type IItemLocationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"IItemLocationId" | "Type", ExtArgs["result"]["iItemLocation"]>
 export type IItemLocationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Contents?: boolean | Prisma.IItemLocation$ContentsArgs<ExtArgs>
+  Items?: boolean | Prisma.IItemLocation$ItemsArgs<ExtArgs>
   Region?: boolean | Prisma.IItemLocation$RegionArgs<ExtArgs>
   LocationItem?: boolean | Prisma.IItemLocation$LocationItemArgs<ExtArgs>
   _count?: boolean | Prisma.IItemLocationCountOutputTypeDefaultArgs<ExtArgs>
@@ -511,7 +511,7 @@ export type IItemLocationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Type
 export type $IItemLocationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "IItemLocation"
   objects: {
-    Contents: Prisma.$LocationItemPayload<ExtArgs>[]
+    Items: Prisma.$LocationItemPayload<ExtArgs>[]
     Region: Prisma.$RegionPayload<ExtArgs> | null
     LocationItem: Prisma.$LocationItemPayload<ExtArgs> | null
   }
@@ -912,7 +912,7 @@ readonly fields: IItemLocationFieldRefs;
  */
 export interface Prisma__IItemLocationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  Contents<T extends Prisma.IItemLocation$ContentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IItemLocation$ContentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocationItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Items<T extends Prisma.IItemLocation$ItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IItemLocation$ItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocationItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Region<T extends Prisma.IItemLocation$RegionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IItemLocation$RegionArgs<ExtArgs>>): Prisma.Prisma__RegionClient<runtime.Types.Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   LocationItem<T extends Prisma.IItemLocation$LocationItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IItemLocation$LocationItemArgs<ExtArgs>>): Prisma.Prisma__LocationItemClient<runtime.Types.Result.GetResult<Prisma.$LocationItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
@@ -1339,9 +1339,9 @@ export type IItemLocationDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 /**
- * IItemLocation.Contents
+ * IItemLocation.Items
  */
-export type IItemLocation$ContentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type IItemLocation$ItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the LocationItem
    */

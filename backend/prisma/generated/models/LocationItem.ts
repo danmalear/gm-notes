@@ -269,7 +269,7 @@ export type LocationItemCreateInput = {
   IActionTarget: Prisma.IActionTargetCreateNestedOneWithoutLocationItemInput
   IItemLocation: Prisma.IItemLocationCreateNestedOneWithoutLocationItemInput
   INoteEntity: Prisma.INoteEntityCreateNestedOneWithoutLocationItemInput
-  Location: Prisma.IItemLocationCreateNestedOneWithoutContentsInput
+  Location: Prisma.IItemLocationCreateNestedOneWithoutItemsInput
   Item: Prisma.ItemCreateNestedOneWithoutLocationItemsInput
 }
 
@@ -285,7 +285,7 @@ export type LocationItemUpdateInput = {
   IActionTarget?: Prisma.IActionTargetUpdateOneRequiredWithoutLocationItemNestedInput
   IItemLocation?: Prisma.IItemLocationUpdateOneRequiredWithoutLocationItemNestedInput
   INoteEntity?: Prisma.INoteEntityUpdateOneRequiredWithoutLocationItemNestedInput
-  Location?: Prisma.IItemLocationUpdateOneRequiredWithoutContentsNestedInput
+  Location?: Prisma.IItemLocationUpdateOneRequiredWithoutItemsNestedInput
   Item?: Prisma.ItemUpdateOneRequiredWithoutLocationItemsNestedInput
 }
 
@@ -542,7 +542,7 @@ export type LocationItemCreateWithoutIActionTargetInput = {
   Quantity?: number
   IItemLocation: Prisma.IItemLocationCreateNestedOneWithoutLocationItemInput
   INoteEntity: Prisma.INoteEntityCreateNestedOneWithoutLocationItemInput
-  Location: Prisma.IItemLocationCreateNestedOneWithoutContentsInput
+  Location: Prisma.IItemLocationCreateNestedOneWithoutItemsInput
   Item: Prisma.ItemCreateNestedOneWithoutLocationItemsInput
 }
 
@@ -572,7 +572,7 @@ export type LocationItemUpdateWithoutIActionTargetInput = {
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
   IItemLocation?: Prisma.IItemLocationUpdateOneRequiredWithoutLocationItemNestedInput
   INoteEntity?: Prisma.INoteEntityUpdateOneRequiredWithoutLocationItemNestedInput
-  Location?: Prisma.IItemLocationUpdateOneRequiredWithoutContentsNestedInput
+  Location?: Prisma.IItemLocationUpdateOneRequiredWithoutItemsNestedInput
   Item?: Prisma.ItemUpdateOneRequiredWithoutLocationItemsNestedInput
 }
 
@@ -587,7 +587,7 @@ export type LocationItemCreateWithoutItemInput = {
   IActionTarget: Prisma.IActionTargetCreateNestedOneWithoutLocationItemInput
   IItemLocation: Prisma.IItemLocationCreateNestedOneWithoutLocationItemInput
   INoteEntity: Prisma.INoteEntityCreateNestedOneWithoutLocationItemInput
-  Location: Prisma.IItemLocationCreateNestedOneWithoutContentsInput
+  Location: Prisma.IItemLocationCreateNestedOneWithoutItemsInput
 }
 
 export type LocationItemUncheckedCreateWithoutItemInput = {
@@ -660,7 +660,7 @@ export type LocationItemCreateWithoutIItemLocationInput = {
   Quantity?: number
   IActionTarget: Prisma.IActionTargetCreateNestedOneWithoutLocationItemInput
   INoteEntity: Prisma.INoteEntityCreateNestedOneWithoutLocationItemInput
-  Location: Prisma.IItemLocationCreateNestedOneWithoutContentsInput
+  Location: Prisma.IItemLocationCreateNestedOneWithoutItemsInput
   Item: Prisma.ItemCreateNestedOneWithoutLocationItemsInput
 }
 
@@ -706,7 +706,7 @@ export type LocationItemUpdateWithoutIItemLocationInput = {
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
   IActionTarget?: Prisma.IActionTargetUpdateOneRequiredWithoutLocationItemNestedInput
   INoteEntity?: Prisma.INoteEntityUpdateOneRequiredWithoutLocationItemNestedInput
-  Location?: Prisma.IItemLocationUpdateOneRequiredWithoutContentsNestedInput
+  Location?: Prisma.IItemLocationUpdateOneRequiredWithoutItemsNestedInput
   Item?: Prisma.ItemUpdateOneRequiredWithoutLocationItemsNestedInput
 }
 
@@ -720,7 +720,7 @@ export type LocationItemCreateWithoutINoteEntityInput = {
   Quantity?: number
   IActionTarget: Prisma.IActionTargetCreateNestedOneWithoutLocationItemInput
   IItemLocation: Prisma.IItemLocationCreateNestedOneWithoutLocationItemInput
-  Location: Prisma.IItemLocationCreateNestedOneWithoutContentsInput
+  Location: Prisma.IItemLocationCreateNestedOneWithoutItemsInput
   Item: Prisma.ItemCreateNestedOneWithoutLocationItemsInput
 }
 
@@ -750,7 +750,7 @@ export type LocationItemUpdateWithoutINoteEntityInput = {
   Quantity?: Prisma.IntFieldUpdateOperationsInput | number
   IActionTarget?: Prisma.IActionTargetUpdateOneRequiredWithoutLocationItemNestedInput
   IItemLocation?: Prisma.IItemLocationUpdateOneRequiredWithoutLocationItemNestedInput
-  Location?: Prisma.IItemLocationUpdateOneRequiredWithoutContentsNestedInput
+  Location?: Prisma.IItemLocationUpdateOneRequiredWithoutItemsNestedInput
   Item?: Prisma.ItemUpdateOneRequiredWithoutLocationItemsNestedInput
 }
 
@@ -771,7 +771,7 @@ export type LocationItemUpdateWithoutItemInput = {
   IActionTarget?: Prisma.IActionTargetUpdateOneRequiredWithoutLocationItemNestedInput
   IItemLocation?: Prisma.IItemLocationUpdateOneRequiredWithoutLocationItemNestedInput
   INoteEntity?: Prisma.INoteEntityUpdateOneRequiredWithoutLocationItemNestedInput
-  Location?: Prisma.IItemLocationUpdateOneRequiredWithoutContentsNestedInput
+  Location?: Prisma.IItemLocationUpdateOneRequiredWithoutItemsNestedInput
 }
 
 export type LocationItemUncheckedUpdateWithoutItemInput = {

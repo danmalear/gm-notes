@@ -200,7 +200,7 @@ model Item {
 model IItemLocation {
   IItemLocationId  String         @id @db.Uuid
   Type             ItemLocationType
-  Contents         LocationItem[] @relation(name: "ItemLocation")
+  Items            LocationItem[] @relation(name: "ItemLocation")
   Region           Region?        @relation(name: "RegionItemLocation")
 	LocationItem     LocationItem?  @relation(name: "LocationItemSelf")
 
