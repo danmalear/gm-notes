@@ -8,12 +8,12 @@ import type {
 	ItemModel,
 	ItemUpdateInput,
 } from '#prisma-models/Item.ts';
-import type { LocationItemModel } from '#prisma-models/LocationItem.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
+import type { LocationItemIncludeMin } from './location-item-repository.ts';
 
 export interface IItemLocationIncludeMin extends IItemLocationModel {
-	Items: LocationItemModel[];
+	Items: LocationItemIncludeMin[];
 }
 
 export interface ItemIncludeAll extends ItemModel {
