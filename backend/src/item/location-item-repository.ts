@@ -1,4 +1,5 @@
-import type { ActionModel } from '#prisma-models/Action.ts';
+import type { IActionTargetIncludeMin } from '#action/action-repository.ts';
+import type { INoteEntityIncludeMin } from '#note/note-repository.ts';
 import type { ItemModel } from '#prisma-models/Item.ts';
 import type {
 	LocationItemCreateInput,
@@ -6,10 +7,10 @@ import type {
 	LocationItemModel,
 	LocationItemUpdateInput,
 } from '#prisma-models/LocationItem.ts';
-import type { NoteModel } from '#prisma-models/Note.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
+import type { IItemLocationIncludeMin } from './item-repository.ts';
 import {
 	includeAll as itemIncludeAll,
 	type ItemIncludeAll,
@@ -24,21 +25,33 @@ export const includeMin = {
 } satisfies LocationItemInclude;
 
 export interface LocationItemIncludeAll extends LocationItemModel {
-	Actions: ActionModel[];
-	Contents: LocationItemIncludeMin[];
+	IActionTarget: IActionTargetIncludeMin;
+	IItemLocation: IItemLocationIncludeMin;
 	Item: ItemIncludeAll;
-	Notes: NoteModel[];
+	INoteEntity: INoteEntityIncludeMin;
 }
 
 const includeAll = {
-	Actions: true,
-	Contents: {
-		include: includeMin,
+	IActionTarget: {
+		include: {
+			Actions: true,
+		},
+	},
+	IItemLocation: {
+		include: {
+			Items: {
+				include: includeMin,
+			},
+		},
 	},
 	Item: {
 		include: itemIncludeAll,
 	},
-	Notes: true,
+	INoteEntity: {
+		include: {
+			Notes: true,
+		},
+	},
 } satisfies LocationItemInclude;
 
 export interface ILocationItemRepository
