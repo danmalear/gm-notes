@@ -166,18 +166,14 @@ export type NoteWhereInput = {
   NoteId?: Prisma.UuidFilter<"Note"> | string
   EntityId?: Prisma.UuidFilter<"Note"> | string
   Description?: Prisma.StringFilter<"Note"> | string
-  Region?: Prisma.XOR<Prisma.RegionNullableScalarRelationFilter, Prisma.RegionWhereInput> | null
-  Item?: Prisma.XOR<Prisma.ItemNullableScalarRelationFilter, Prisma.ItemWhereInput> | null
-  LocationItem?: Prisma.XOR<Prisma.LocationItemNullableScalarRelationFilter, Prisma.LocationItemWhereInput> | null
+  INoteEntity?: Prisma.XOR<Prisma.INoteEntityScalarRelationFilter, Prisma.INoteEntityWhereInput>
 }
 
 export type NoteOrderByWithRelationInput = {
   NoteId?: Prisma.SortOrder
   EntityId?: Prisma.SortOrder
   Description?: Prisma.SortOrder
-  Region?: Prisma.RegionOrderByWithRelationInput
-  Item?: Prisma.ItemOrderByWithRelationInput
-  LocationItem?: Prisma.LocationItemOrderByWithRelationInput
+  INoteEntity?: Prisma.INoteEntityOrderByWithRelationInput
 }
 
 export type NoteWhereUniqueInput = Prisma.AtLeast<{
@@ -187,9 +183,7 @@ export type NoteWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.NoteWhereInput | Prisma.NoteWhereInput[]
   EntityId?: Prisma.UuidFilter<"Note"> | string
   Description?: Prisma.StringFilter<"Note"> | string
-  Region?: Prisma.XOR<Prisma.RegionNullableScalarRelationFilter, Prisma.RegionWhereInput> | null
-  Item?: Prisma.XOR<Prisma.ItemNullableScalarRelationFilter, Prisma.ItemWhereInput> | null
-  LocationItem?: Prisma.XOR<Prisma.LocationItemNullableScalarRelationFilter, Prisma.LocationItemWhereInput> | null
+  INoteEntity?: Prisma.XOR<Prisma.INoteEntityScalarRelationFilter, Prisma.INoteEntityWhereInput>
 }, "NoteId">
 
 export type NoteOrderByWithAggregationInput = {
@@ -213,9 +207,7 @@ export type NoteScalarWhereWithAggregatesInput = {
 export type NoteCreateInput = {
   NoteId: string
   Description: string
-  Region?: Prisma.RegionCreateNestedOneWithoutNotesInput
-  Item?: Prisma.ItemCreateNestedOneWithoutNotesInput
-  LocationItem?: Prisma.LocationItemCreateNestedOneWithoutNotesInput
+  INoteEntity: Prisma.INoteEntityCreateNestedOneWithoutNotesInput
 }
 
 export type NoteUncheckedCreateInput = {
@@ -227,9 +219,7 @@ export type NoteUncheckedCreateInput = {
 export type NoteUpdateInput = {
   NoteId?: Prisma.StringFieldUpdateOperationsInput | string
   Description?: Prisma.StringFieldUpdateOperationsInput | string
-  Region?: Prisma.RegionUpdateOneWithoutNotesNestedInput
-  Item?: Prisma.ItemUpdateOneWithoutNotesNestedInput
-  LocationItem?: Prisma.LocationItemUpdateOneWithoutNotesNestedInput
+  INoteEntity?: Prisma.INoteEntityUpdateOneRequiredWithoutNotesNestedInput
 }
 
 export type NoteUncheckedUpdateInput = {
@@ -283,168 +273,82 @@ export type NoteMinOrderByAggregateInput = {
   Description?: Prisma.SortOrder
 }
 
-export type NoteCreateNestedManyWithoutItemInput = {
-  create?: Prisma.XOR<Prisma.NoteCreateWithoutItemInput, Prisma.NoteUncheckedCreateWithoutItemInput> | Prisma.NoteCreateWithoutItemInput[] | Prisma.NoteUncheckedCreateWithoutItemInput[]
-  connectOrCreate?: Prisma.NoteCreateOrConnectWithoutItemInput | Prisma.NoteCreateOrConnectWithoutItemInput[]
-  createMany?: Prisma.NoteCreateManyItemInputEnvelope
+export type NoteCreateNestedManyWithoutINoteEntityInput = {
+  create?: Prisma.XOR<Prisma.NoteCreateWithoutINoteEntityInput, Prisma.NoteUncheckedCreateWithoutINoteEntityInput> | Prisma.NoteCreateWithoutINoteEntityInput[] | Prisma.NoteUncheckedCreateWithoutINoteEntityInput[]
+  connectOrCreate?: Prisma.NoteCreateOrConnectWithoutINoteEntityInput | Prisma.NoteCreateOrConnectWithoutINoteEntityInput[]
+  createMany?: Prisma.NoteCreateManyINoteEntityInputEnvelope
   connect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
 }
 
-export type NoteUncheckedCreateNestedManyWithoutItemInput = {
-  create?: Prisma.XOR<Prisma.NoteCreateWithoutItemInput, Prisma.NoteUncheckedCreateWithoutItemInput> | Prisma.NoteCreateWithoutItemInput[] | Prisma.NoteUncheckedCreateWithoutItemInput[]
-  connectOrCreate?: Prisma.NoteCreateOrConnectWithoutItemInput | Prisma.NoteCreateOrConnectWithoutItemInput[]
-  createMany?: Prisma.NoteCreateManyItemInputEnvelope
+export type NoteUncheckedCreateNestedManyWithoutINoteEntityInput = {
+  create?: Prisma.XOR<Prisma.NoteCreateWithoutINoteEntityInput, Prisma.NoteUncheckedCreateWithoutINoteEntityInput> | Prisma.NoteCreateWithoutINoteEntityInput[] | Prisma.NoteUncheckedCreateWithoutINoteEntityInput[]
+  connectOrCreate?: Prisma.NoteCreateOrConnectWithoutINoteEntityInput | Prisma.NoteCreateOrConnectWithoutINoteEntityInput[]
+  createMany?: Prisma.NoteCreateManyINoteEntityInputEnvelope
   connect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
 }
 
-export type NoteUpdateManyWithoutItemNestedInput = {
-  create?: Prisma.XOR<Prisma.NoteCreateWithoutItemInput, Prisma.NoteUncheckedCreateWithoutItemInput> | Prisma.NoteCreateWithoutItemInput[] | Prisma.NoteUncheckedCreateWithoutItemInput[]
-  connectOrCreate?: Prisma.NoteCreateOrConnectWithoutItemInput | Prisma.NoteCreateOrConnectWithoutItemInput[]
-  upsert?: Prisma.NoteUpsertWithWhereUniqueWithoutItemInput | Prisma.NoteUpsertWithWhereUniqueWithoutItemInput[]
-  createMany?: Prisma.NoteCreateManyItemInputEnvelope
+export type NoteUpdateManyWithoutINoteEntityNestedInput = {
+  create?: Prisma.XOR<Prisma.NoteCreateWithoutINoteEntityInput, Prisma.NoteUncheckedCreateWithoutINoteEntityInput> | Prisma.NoteCreateWithoutINoteEntityInput[] | Prisma.NoteUncheckedCreateWithoutINoteEntityInput[]
+  connectOrCreate?: Prisma.NoteCreateOrConnectWithoutINoteEntityInput | Prisma.NoteCreateOrConnectWithoutINoteEntityInput[]
+  upsert?: Prisma.NoteUpsertWithWhereUniqueWithoutINoteEntityInput | Prisma.NoteUpsertWithWhereUniqueWithoutINoteEntityInput[]
+  createMany?: Prisma.NoteCreateManyINoteEntityInputEnvelope
   set?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
   disconnect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
   delete?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
   connect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  update?: Prisma.NoteUpdateWithWhereUniqueWithoutItemInput | Prisma.NoteUpdateWithWhereUniqueWithoutItemInput[]
-  updateMany?: Prisma.NoteUpdateManyWithWhereWithoutItemInput | Prisma.NoteUpdateManyWithWhereWithoutItemInput[]
+  update?: Prisma.NoteUpdateWithWhereUniqueWithoutINoteEntityInput | Prisma.NoteUpdateWithWhereUniqueWithoutINoteEntityInput[]
+  updateMany?: Prisma.NoteUpdateManyWithWhereWithoutINoteEntityInput | Prisma.NoteUpdateManyWithWhereWithoutINoteEntityInput[]
   deleteMany?: Prisma.NoteScalarWhereInput | Prisma.NoteScalarWhereInput[]
 }
 
-export type NoteUncheckedUpdateManyWithoutItemNestedInput = {
-  create?: Prisma.XOR<Prisma.NoteCreateWithoutItemInput, Prisma.NoteUncheckedCreateWithoutItemInput> | Prisma.NoteCreateWithoutItemInput[] | Prisma.NoteUncheckedCreateWithoutItemInput[]
-  connectOrCreate?: Prisma.NoteCreateOrConnectWithoutItemInput | Prisma.NoteCreateOrConnectWithoutItemInput[]
-  upsert?: Prisma.NoteUpsertWithWhereUniqueWithoutItemInput | Prisma.NoteUpsertWithWhereUniqueWithoutItemInput[]
-  createMany?: Prisma.NoteCreateManyItemInputEnvelope
+export type NoteUncheckedUpdateManyWithoutINoteEntityNestedInput = {
+  create?: Prisma.XOR<Prisma.NoteCreateWithoutINoteEntityInput, Prisma.NoteUncheckedCreateWithoutINoteEntityInput> | Prisma.NoteCreateWithoutINoteEntityInput[] | Prisma.NoteUncheckedCreateWithoutINoteEntityInput[]
+  connectOrCreate?: Prisma.NoteCreateOrConnectWithoutINoteEntityInput | Prisma.NoteCreateOrConnectWithoutINoteEntityInput[]
+  upsert?: Prisma.NoteUpsertWithWhereUniqueWithoutINoteEntityInput | Prisma.NoteUpsertWithWhereUniqueWithoutINoteEntityInput[]
+  createMany?: Prisma.NoteCreateManyINoteEntityInputEnvelope
   set?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
   disconnect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
   delete?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
   connect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  update?: Prisma.NoteUpdateWithWhereUniqueWithoutItemInput | Prisma.NoteUpdateWithWhereUniqueWithoutItemInput[]
-  updateMany?: Prisma.NoteUpdateManyWithWhereWithoutItemInput | Prisma.NoteUpdateManyWithWhereWithoutItemInput[]
+  update?: Prisma.NoteUpdateWithWhereUniqueWithoutINoteEntityInput | Prisma.NoteUpdateWithWhereUniqueWithoutINoteEntityInput[]
+  updateMany?: Prisma.NoteUpdateManyWithWhereWithoutINoteEntityInput | Prisma.NoteUpdateManyWithWhereWithoutINoteEntityInput[]
   deleteMany?: Prisma.NoteScalarWhereInput | Prisma.NoteScalarWhereInput[]
 }
 
-export type NoteCreateNestedManyWithoutLocationItemInput = {
-  create?: Prisma.XOR<Prisma.NoteCreateWithoutLocationItemInput, Prisma.NoteUncheckedCreateWithoutLocationItemInput> | Prisma.NoteCreateWithoutLocationItemInput[] | Prisma.NoteUncheckedCreateWithoutLocationItemInput[]
-  connectOrCreate?: Prisma.NoteCreateOrConnectWithoutLocationItemInput | Prisma.NoteCreateOrConnectWithoutLocationItemInput[]
-  createMany?: Prisma.NoteCreateManyLocationItemInputEnvelope
-  connect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-}
-
-export type NoteUncheckedCreateNestedManyWithoutLocationItemInput = {
-  create?: Prisma.XOR<Prisma.NoteCreateWithoutLocationItemInput, Prisma.NoteUncheckedCreateWithoutLocationItemInput> | Prisma.NoteCreateWithoutLocationItemInput[] | Prisma.NoteUncheckedCreateWithoutLocationItemInput[]
-  connectOrCreate?: Prisma.NoteCreateOrConnectWithoutLocationItemInput | Prisma.NoteCreateOrConnectWithoutLocationItemInput[]
-  createMany?: Prisma.NoteCreateManyLocationItemInputEnvelope
-  connect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-}
-
-export type NoteUpdateManyWithoutLocationItemNestedInput = {
-  create?: Prisma.XOR<Prisma.NoteCreateWithoutLocationItemInput, Prisma.NoteUncheckedCreateWithoutLocationItemInput> | Prisma.NoteCreateWithoutLocationItemInput[] | Prisma.NoteUncheckedCreateWithoutLocationItemInput[]
-  connectOrCreate?: Prisma.NoteCreateOrConnectWithoutLocationItemInput | Prisma.NoteCreateOrConnectWithoutLocationItemInput[]
-  upsert?: Prisma.NoteUpsertWithWhereUniqueWithoutLocationItemInput | Prisma.NoteUpsertWithWhereUniqueWithoutLocationItemInput[]
-  createMany?: Prisma.NoteCreateManyLocationItemInputEnvelope
-  set?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  disconnect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  delete?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  connect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  update?: Prisma.NoteUpdateWithWhereUniqueWithoutLocationItemInput | Prisma.NoteUpdateWithWhereUniqueWithoutLocationItemInput[]
-  updateMany?: Prisma.NoteUpdateManyWithWhereWithoutLocationItemInput | Prisma.NoteUpdateManyWithWhereWithoutLocationItemInput[]
-  deleteMany?: Prisma.NoteScalarWhereInput | Prisma.NoteScalarWhereInput[]
-}
-
-export type NoteUncheckedUpdateManyWithoutLocationItemNestedInput = {
-  create?: Prisma.XOR<Prisma.NoteCreateWithoutLocationItemInput, Prisma.NoteUncheckedCreateWithoutLocationItemInput> | Prisma.NoteCreateWithoutLocationItemInput[] | Prisma.NoteUncheckedCreateWithoutLocationItemInput[]
-  connectOrCreate?: Prisma.NoteCreateOrConnectWithoutLocationItemInput | Prisma.NoteCreateOrConnectWithoutLocationItemInput[]
-  upsert?: Prisma.NoteUpsertWithWhereUniqueWithoutLocationItemInput | Prisma.NoteUpsertWithWhereUniqueWithoutLocationItemInput[]
-  createMany?: Prisma.NoteCreateManyLocationItemInputEnvelope
-  set?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  disconnect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  delete?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  connect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  update?: Prisma.NoteUpdateWithWhereUniqueWithoutLocationItemInput | Prisma.NoteUpdateWithWhereUniqueWithoutLocationItemInput[]
-  updateMany?: Prisma.NoteUpdateManyWithWhereWithoutLocationItemInput | Prisma.NoteUpdateManyWithWhereWithoutLocationItemInput[]
-  deleteMany?: Prisma.NoteScalarWhereInput | Prisma.NoteScalarWhereInput[]
-}
-
-export type NoteCreateNestedManyWithoutRegionInput = {
-  create?: Prisma.XOR<Prisma.NoteCreateWithoutRegionInput, Prisma.NoteUncheckedCreateWithoutRegionInput> | Prisma.NoteCreateWithoutRegionInput[] | Prisma.NoteUncheckedCreateWithoutRegionInput[]
-  connectOrCreate?: Prisma.NoteCreateOrConnectWithoutRegionInput | Prisma.NoteCreateOrConnectWithoutRegionInput[]
-  createMany?: Prisma.NoteCreateManyRegionInputEnvelope
-  connect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-}
-
-export type NoteUncheckedCreateNestedManyWithoutRegionInput = {
-  create?: Prisma.XOR<Prisma.NoteCreateWithoutRegionInput, Prisma.NoteUncheckedCreateWithoutRegionInput> | Prisma.NoteCreateWithoutRegionInput[] | Prisma.NoteUncheckedCreateWithoutRegionInput[]
-  connectOrCreate?: Prisma.NoteCreateOrConnectWithoutRegionInput | Prisma.NoteCreateOrConnectWithoutRegionInput[]
-  createMany?: Prisma.NoteCreateManyRegionInputEnvelope
-  connect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-}
-
-export type NoteUpdateManyWithoutRegionNestedInput = {
-  create?: Prisma.XOR<Prisma.NoteCreateWithoutRegionInput, Prisma.NoteUncheckedCreateWithoutRegionInput> | Prisma.NoteCreateWithoutRegionInput[] | Prisma.NoteUncheckedCreateWithoutRegionInput[]
-  connectOrCreate?: Prisma.NoteCreateOrConnectWithoutRegionInput | Prisma.NoteCreateOrConnectWithoutRegionInput[]
-  upsert?: Prisma.NoteUpsertWithWhereUniqueWithoutRegionInput | Prisma.NoteUpsertWithWhereUniqueWithoutRegionInput[]
-  createMany?: Prisma.NoteCreateManyRegionInputEnvelope
-  set?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  disconnect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  delete?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  connect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  update?: Prisma.NoteUpdateWithWhereUniqueWithoutRegionInput | Prisma.NoteUpdateWithWhereUniqueWithoutRegionInput[]
-  updateMany?: Prisma.NoteUpdateManyWithWhereWithoutRegionInput | Prisma.NoteUpdateManyWithWhereWithoutRegionInput[]
-  deleteMany?: Prisma.NoteScalarWhereInput | Prisma.NoteScalarWhereInput[]
-}
-
-export type NoteUncheckedUpdateManyWithoutRegionNestedInput = {
-  create?: Prisma.XOR<Prisma.NoteCreateWithoutRegionInput, Prisma.NoteUncheckedCreateWithoutRegionInput> | Prisma.NoteCreateWithoutRegionInput[] | Prisma.NoteUncheckedCreateWithoutRegionInput[]
-  connectOrCreate?: Prisma.NoteCreateOrConnectWithoutRegionInput | Prisma.NoteCreateOrConnectWithoutRegionInput[]
-  upsert?: Prisma.NoteUpsertWithWhereUniqueWithoutRegionInput | Prisma.NoteUpsertWithWhereUniqueWithoutRegionInput[]
-  createMany?: Prisma.NoteCreateManyRegionInputEnvelope
-  set?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  disconnect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  delete?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  connect?: Prisma.NoteWhereUniqueInput | Prisma.NoteWhereUniqueInput[]
-  update?: Prisma.NoteUpdateWithWhereUniqueWithoutRegionInput | Prisma.NoteUpdateWithWhereUniqueWithoutRegionInput[]
-  updateMany?: Prisma.NoteUpdateManyWithWhereWithoutRegionInput | Prisma.NoteUpdateManyWithWhereWithoutRegionInput[]
-  deleteMany?: Prisma.NoteScalarWhereInput | Prisma.NoteScalarWhereInput[]
-}
-
-export type NoteCreateWithoutItemInput = {
-  NoteId: string
-  Description: string
-  Region?: Prisma.RegionCreateNestedOneWithoutNotesInput
-  LocationItem?: Prisma.LocationItemCreateNestedOneWithoutNotesInput
-}
-
-export type NoteUncheckedCreateWithoutItemInput = {
+export type NoteCreateWithoutINoteEntityInput = {
   NoteId: string
   Description: string
 }
 
-export type NoteCreateOrConnectWithoutItemInput = {
+export type NoteUncheckedCreateWithoutINoteEntityInput = {
+  NoteId: string
+  Description: string
+}
+
+export type NoteCreateOrConnectWithoutINoteEntityInput = {
   where: Prisma.NoteWhereUniqueInput
-  create: Prisma.XOR<Prisma.NoteCreateWithoutItemInput, Prisma.NoteUncheckedCreateWithoutItemInput>
+  create: Prisma.XOR<Prisma.NoteCreateWithoutINoteEntityInput, Prisma.NoteUncheckedCreateWithoutINoteEntityInput>
 }
 
-export type NoteCreateManyItemInputEnvelope = {
-  data: Prisma.NoteCreateManyItemInput | Prisma.NoteCreateManyItemInput[]
+export type NoteCreateManyINoteEntityInputEnvelope = {
+  data: Prisma.NoteCreateManyINoteEntityInput | Prisma.NoteCreateManyINoteEntityInput[]
   skipDuplicates?: boolean
 }
 
-export type NoteUpsertWithWhereUniqueWithoutItemInput = {
+export type NoteUpsertWithWhereUniqueWithoutINoteEntityInput = {
   where: Prisma.NoteWhereUniqueInput
-  update: Prisma.XOR<Prisma.NoteUpdateWithoutItemInput, Prisma.NoteUncheckedUpdateWithoutItemInput>
-  create: Prisma.XOR<Prisma.NoteCreateWithoutItemInput, Prisma.NoteUncheckedCreateWithoutItemInput>
+  update: Prisma.XOR<Prisma.NoteUpdateWithoutINoteEntityInput, Prisma.NoteUncheckedUpdateWithoutINoteEntityInput>
+  create: Prisma.XOR<Prisma.NoteCreateWithoutINoteEntityInput, Prisma.NoteUncheckedCreateWithoutINoteEntityInput>
 }
 
-export type NoteUpdateWithWhereUniqueWithoutItemInput = {
+export type NoteUpdateWithWhereUniqueWithoutINoteEntityInput = {
   where: Prisma.NoteWhereUniqueInput
-  data: Prisma.XOR<Prisma.NoteUpdateWithoutItemInput, Prisma.NoteUncheckedUpdateWithoutItemInput>
+  data: Prisma.XOR<Prisma.NoteUpdateWithoutINoteEntityInput, Prisma.NoteUncheckedUpdateWithoutINoteEntityInput>
 }
 
-export type NoteUpdateManyWithWhereWithoutItemInput = {
+export type NoteUpdateManyWithWhereWithoutINoteEntityInput = {
   where: Prisma.NoteScalarWhereInput
-  data: Prisma.XOR<Prisma.NoteUpdateManyMutationInput, Prisma.NoteUncheckedUpdateManyWithoutItemInput>
+  data: Prisma.XOR<Prisma.NoteUpdateManyMutationInput, Prisma.NoteUncheckedUpdateManyWithoutINoteEntityInput>
 }
 
 export type NoteScalarWhereInput = {
@@ -456,144 +360,22 @@ export type NoteScalarWhereInput = {
   Description?: Prisma.StringFilter<"Note"> | string
 }
 
-export type NoteCreateWithoutLocationItemInput = {
-  NoteId: string
-  Description: string
-  Region?: Prisma.RegionCreateNestedOneWithoutNotesInput
-  Item?: Prisma.ItemCreateNestedOneWithoutNotesInput
-}
-
-export type NoteUncheckedCreateWithoutLocationItemInput = {
+export type NoteCreateManyINoteEntityInput = {
   NoteId: string
   Description: string
 }
 
-export type NoteCreateOrConnectWithoutLocationItemInput = {
-  where: Prisma.NoteWhereUniqueInput
-  create: Prisma.XOR<Prisma.NoteCreateWithoutLocationItemInput, Prisma.NoteUncheckedCreateWithoutLocationItemInput>
-}
-
-export type NoteCreateManyLocationItemInputEnvelope = {
-  data: Prisma.NoteCreateManyLocationItemInput | Prisma.NoteCreateManyLocationItemInput[]
-  skipDuplicates?: boolean
-}
-
-export type NoteUpsertWithWhereUniqueWithoutLocationItemInput = {
-  where: Prisma.NoteWhereUniqueInput
-  update: Prisma.XOR<Prisma.NoteUpdateWithoutLocationItemInput, Prisma.NoteUncheckedUpdateWithoutLocationItemInput>
-  create: Prisma.XOR<Prisma.NoteCreateWithoutLocationItemInput, Prisma.NoteUncheckedCreateWithoutLocationItemInput>
-}
-
-export type NoteUpdateWithWhereUniqueWithoutLocationItemInput = {
-  where: Prisma.NoteWhereUniqueInput
-  data: Prisma.XOR<Prisma.NoteUpdateWithoutLocationItemInput, Prisma.NoteUncheckedUpdateWithoutLocationItemInput>
-}
-
-export type NoteUpdateManyWithWhereWithoutLocationItemInput = {
-  where: Prisma.NoteScalarWhereInput
-  data: Prisma.XOR<Prisma.NoteUpdateManyMutationInput, Prisma.NoteUncheckedUpdateManyWithoutLocationItemInput>
-}
-
-export type NoteCreateWithoutRegionInput = {
-  NoteId: string
-  Description: string
-  Item?: Prisma.ItemCreateNestedOneWithoutNotesInput
-  LocationItem?: Prisma.LocationItemCreateNestedOneWithoutNotesInput
-}
-
-export type NoteUncheckedCreateWithoutRegionInput = {
-  NoteId: string
-  Description: string
-}
-
-export type NoteCreateOrConnectWithoutRegionInput = {
-  where: Prisma.NoteWhereUniqueInput
-  create: Prisma.XOR<Prisma.NoteCreateWithoutRegionInput, Prisma.NoteUncheckedCreateWithoutRegionInput>
-}
-
-export type NoteCreateManyRegionInputEnvelope = {
-  data: Prisma.NoteCreateManyRegionInput | Prisma.NoteCreateManyRegionInput[]
-  skipDuplicates?: boolean
-}
-
-export type NoteUpsertWithWhereUniqueWithoutRegionInput = {
-  where: Prisma.NoteWhereUniqueInput
-  update: Prisma.XOR<Prisma.NoteUpdateWithoutRegionInput, Prisma.NoteUncheckedUpdateWithoutRegionInput>
-  create: Prisma.XOR<Prisma.NoteCreateWithoutRegionInput, Prisma.NoteUncheckedCreateWithoutRegionInput>
-}
-
-export type NoteUpdateWithWhereUniqueWithoutRegionInput = {
-  where: Prisma.NoteWhereUniqueInput
-  data: Prisma.XOR<Prisma.NoteUpdateWithoutRegionInput, Prisma.NoteUncheckedUpdateWithoutRegionInput>
-}
-
-export type NoteUpdateManyWithWhereWithoutRegionInput = {
-  where: Prisma.NoteScalarWhereInput
-  data: Prisma.XOR<Prisma.NoteUpdateManyMutationInput, Prisma.NoteUncheckedUpdateManyWithoutRegionInput>
-}
-
-export type NoteCreateManyItemInput = {
-  NoteId: string
-  Description: string
-}
-
-export type NoteUpdateWithoutItemInput = {
-  NoteId?: Prisma.StringFieldUpdateOperationsInput | string
-  Description?: Prisma.StringFieldUpdateOperationsInput | string
-  Region?: Prisma.RegionUpdateOneWithoutNotesNestedInput
-  LocationItem?: Prisma.LocationItemUpdateOneWithoutNotesNestedInput
-}
-
-export type NoteUncheckedUpdateWithoutItemInput = {
+export type NoteUpdateWithoutINoteEntityInput = {
   NoteId?: Prisma.StringFieldUpdateOperationsInput | string
   Description?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type NoteUncheckedUpdateManyWithoutItemInput = {
+export type NoteUncheckedUpdateWithoutINoteEntityInput = {
   NoteId?: Prisma.StringFieldUpdateOperationsInput | string
   Description?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type NoteCreateManyLocationItemInput = {
-  NoteId: string
-  Description: string
-}
-
-export type NoteUpdateWithoutLocationItemInput = {
-  NoteId?: Prisma.StringFieldUpdateOperationsInput | string
-  Description?: Prisma.StringFieldUpdateOperationsInput | string
-  Region?: Prisma.RegionUpdateOneWithoutNotesNestedInput
-  Item?: Prisma.ItemUpdateOneWithoutNotesNestedInput
-}
-
-export type NoteUncheckedUpdateWithoutLocationItemInput = {
-  NoteId?: Prisma.StringFieldUpdateOperationsInput | string
-  Description?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
-export type NoteUncheckedUpdateManyWithoutLocationItemInput = {
-  NoteId?: Prisma.StringFieldUpdateOperationsInput | string
-  Description?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
-export type NoteCreateManyRegionInput = {
-  NoteId: string
-  Description: string
-}
-
-export type NoteUpdateWithoutRegionInput = {
-  NoteId?: Prisma.StringFieldUpdateOperationsInput | string
-  Description?: Prisma.StringFieldUpdateOperationsInput | string
-  Item?: Prisma.ItemUpdateOneWithoutNotesNestedInput
-  LocationItem?: Prisma.LocationItemUpdateOneWithoutNotesNestedInput
-}
-
-export type NoteUncheckedUpdateWithoutRegionInput = {
-  NoteId?: Prisma.StringFieldUpdateOperationsInput | string
-  Description?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
-export type NoteUncheckedUpdateManyWithoutRegionInput = {
+export type NoteUncheckedUpdateManyWithoutINoteEntityInput = {
   NoteId?: Prisma.StringFieldUpdateOperationsInput | string
   Description?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -604,27 +386,21 @@ export type NoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   NoteId?: boolean
   EntityId?: boolean
   Description?: boolean
-  Region?: boolean | Prisma.Note$RegionArgs<ExtArgs>
-  Item?: boolean | Prisma.Note$ItemArgs<ExtArgs>
-  LocationItem?: boolean | Prisma.Note$LocationItemArgs<ExtArgs>
+  INoteEntity?: boolean | Prisma.INoteEntityDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["note"]>
 
 export type NoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   NoteId?: boolean
   EntityId?: boolean
   Description?: boolean
-  Region?: boolean | Prisma.Note$RegionArgs<ExtArgs>
-  Item?: boolean | Prisma.Note$ItemArgs<ExtArgs>
-  LocationItem?: boolean | Prisma.Note$LocationItemArgs<ExtArgs>
+  INoteEntity?: boolean | Prisma.INoteEntityDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["note"]>
 
 export type NoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   NoteId?: boolean
   EntityId?: boolean
   Description?: boolean
-  Region?: boolean | Prisma.Note$RegionArgs<ExtArgs>
-  Item?: boolean | Prisma.Note$ItemArgs<ExtArgs>
-  LocationItem?: boolean | Prisma.Note$LocationItemArgs<ExtArgs>
+  INoteEntity?: boolean | Prisma.INoteEntityDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["note"]>
 
 export type NoteSelectScalar = {
@@ -635,27 +411,19 @@ export type NoteSelectScalar = {
 
 export type NoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"NoteId" | "EntityId" | "Description", ExtArgs["result"]["note"]>
 export type NoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Region?: boolean | Prisma.Note$RegionArgs<ExtArgs>
-  Item?: boolean | Prisma.Note$ItemArgs<ExtArgs>
-  LocationItem?: boolean | Prisma.Note$LocationItemArgs<ExtArgs>
+  INoteEntity?: boolean | Prisma.INoteEntityDefaultArgs<ExtArgs>
 }
 export type NoteIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Region?: boolean | Prisma.Note$RegionArgs<ExtArgs>
-  Item?: boolean | Prisma.Note$ItemArgs<ExtArgs>
-  LocationItem?: boolean | Prisma.Note$LocationItemArgs<ExtArgs>
+  INoteEntity?: boolean | Prisma.INoteEntityDefaultArgs<ExtArgs>
 }
 export type NoteIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Region?: boolean | Prisma.Note$RegionArgs<ExtArgs>
-  Item?: boolean | Prisma.Note$ItemArgs<ExtArgs>
-  LocationItem?: boolean | Prisma.Note$LocationItemArgs<ExtArgs>
+  INoteEntity?: boolean | Prisma.INoteEntityDefaultArgs<ExtArgs>
 }
 
 export type $NotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Note"
   objects: {
-    Region: Prisma.$RegionPayload<ExtArgs> | null
-    Item: Prisma.$ItemPayload<ExtArgs> | null
-    LocationItem: Prisma.$LocationItemPayload<ExtArgs> | null
+    INoteEntity: Prisma.$INoteEntityPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     NoteId: string
@@ -1055,9 +823,7 @@ readonly fields: NoteFieldRefs;
  */
 export interface Prisma__NoteClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  Region<T extends Prisma.Note$RegionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Note$RegionArgs<ExtArgs>>): Prisma.Prisma__RegionClient<runtime.Types.Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  Item<T extends Prisma.Note$ItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Note$ItemArgs<ExtArgs>>): Prisma.Prisma__ItemClient<runtime.Types.Result.GetResult<Prisma.$ItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  LocationItem<T extends Prisma.Note$LocationItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Note$LocationItemArgs<ExtArgs>>): Prisma.Prisma__LocationItemClient<runtime.Types.Result.GetResult<Prisma.$LocationItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  INoteEntity<T extends Prisma.INoteEntityDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.INoteEntityDefaultArgs<ExtArgs>>): Prisma.Prisma__INoteEntityClient<runtime.Types.Result.GetResult<Prisma.$INoteEntityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1488,63 +1254,6 @@ export type NoteDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Notes to delete.
    */
   limit?: number
-}
-
-/**
- * Note.Region
- */
-export type Note$RegionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Region
-   */
-  select?: Prisma.RegionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Region
-   */
-  omit?: Prisma.RegionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.RegionInclude<ExtArgs> | null
-  where?: Prisma.RegionWhereInput
-}
-
-/**
- * Note.Item
- */
-export type Note$ItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Item
-   */
-  select?: Prisma.ItemSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Item
-   */
-  omit?: Prisma.ItemOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ItemInclude<ExtArgs> | null
-  where?: Prisma.ItemWhereInput
-}
-
-/**
- * Note.LocationItem
- */
-export type Note$LocationItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the LocationItem
-   */
-  select?: Prisma.LocationItemSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the LocationItem
-   */
-  omit?: Prisma.LocationItemOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LocationItemInclude<ExtArgs> | null
-  where?: Prisma.LocationItemWhereInput
 }
 
 /**

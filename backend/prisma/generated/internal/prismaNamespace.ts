@@ -416,6 +416,7 @@ export const ModelName = {
   MapTemplate: 'MapTemplate',
   Narration: 'Narration',
   NarrationTemplate: 'NarrationTemplate',
+  INoteEntity: 'INoteEntity',
   Note: 'Note',
   Region: 'Region',
   RegionHandout: 'RegionHandout',
@@ -437,7 +438,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "command" | "event" | "stream" | "abilityCheck" | "iActionTarget" | "action" | "actionCondition" | "campaign" | "campaignTemplate" | "condition" | "file" | "handout" | "item" | "iItemLocation" | "locationItem" | "map" | "mapTemplate" | "narration" | "narrationTemplate" | "note" | "region" | "regionHandout" | "regionNarration" | "regionShape" | "regionTemplate"
+    modelProps: "command" | "event" | "stream" | "abilityCheck" | "iActionTarget" | "action" | "actionCondition" | "campaign" | "campaignTemplate" | "condition" | "file" | "handout" | "item" | "iItemLocation" | "locationItem" | "map" | "mapTemplate" | "narration" | "narrationTemplate" | "iNoteEntity" | "note" | "region" | "regionHandout" | "regionNarration" | "regionShape" | "regionTemplate"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1847,6 +1848,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    INoteEntity: {
+      payload: Prisma.$INoteEntityPayload<ExtArgs>
+      fields: Prisma.INoteEntityFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.INoteEntityFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$INoteEntityPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.INoteEntityFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$INoteEntityPayload>
+        }
+        findFirst: {
+          args: Prisma.INoteEntityFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$INoteEntityPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.INoteEntityFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$INoteEntityPayload>
+        }
+        findMany: {
+          args: Prisma.INoteEntityFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$INoteEntityPayload>[]
+        }
+        create: {
+          args: Prisma.INoteEntityCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$INoteEntityPayload>
+        }
+        createMany: {
+          args: Prisma.INoteEntityCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.INoteEntityCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$INoteEntityPayload>[]
+        }
+        delete: {
+          args: Prisma.INoteEntityDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$INoteEntityPayload>
+        }
+        update: {
+          args: Prisma.INoteEntityUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$INoteEntityPayload>
+        }
+        deleteMany: {
+          args: Prisma.INoteEntityDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.INoteEntityUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.INoteEntityUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$INoteEntityPayload>[]
+        }
+        upsert: {
+          args: Prisma.INoteEntityUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$INoteEntityPayload>
+        }
+        aggregate: {
+          args: Prisma.INoteEntityAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateINoteEntity>
+        }
+        groupBy: {
+          args: Prisma.INoteEntityGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.INoteEntityGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.INoteEntityCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.INoteEntityCountAggregateOutputType> | number
+        }
+      }
+    }
     Note: {
       payload: Prisma.$NotePayload<ExtArgs>
       fields: Prisma.NoteFieldRefs
@@ -2533,6 +2608,14 @@ export const NarrationTemplateScalarFieldEnum = {
 export type NarrationTemplateScalarFieldEnum = (typeof NarrationTemplateScalarFieldEnum)[keyof typeof NarrationTemplateScalarFieldEnum]
 
 
+export const INoteEntityScalarFieldEnum = {
+  INoteEntityId: 'INoteEntityId',
+  Type: 'Type'
+} as const
+
+export type INoteEntityScalarFieldEnum = (typeof INoteEntityScalarFieldEnum)[keyof typeof INoteEntityScalarFieldEnum]
+
+
 export const NoteScalarFieldEnum = {
   NoteId: 'NoteId',
   EntityId: 'EntityId',
@@ -2796,6 +2879,20 @@ export type ListEnumAbsoluteLightingFieldRefInput<$PrismaModel> = FieldRefInputT
 
 
 /**
+ * Reference to a field of type 'NoteEntityType'
+ */
+export type EnumNoteEntityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NoteEntityType'>
+    
+
+
+/**
+ * Reference to a field of type 'NoteEntityType[]'
+ */
+export type ListEnumNoteEntityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NoteEntityType[]'>
+    
+
+
+/**
  * Reference to a field of type 'RelativeLighting'
  */
 export type EnumRelativeLightingFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RelativeLighting'>
@@ -3006,6 +3103,7 @@ export type GlobalOmitConfig = {
   mapTemplate?: Prisma.MapTemplateOmit
   narration?: Prisma.NarrationOmit
   narrationTemplate?: Prisma.NarrationTemplateOmit
+  iNoteEntity?: Prisma.INoteEntityOmit
   note?: Prisma.NoteOmit
   region?: Prisma.RegionOmit
   regionHandout?: Prisma.RegionHandoutOmit

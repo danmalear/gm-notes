@@ -113,6 +113,11 @@ export type Narration = Prisma.NarrationModel
  */
 export type NarrationTemplate = Prisma.NarrationTemplateModel
 /**
+ * Model INoteEntity
+ * 
+ */
+export type INoteEntity = Prisma.INoteEntityModel
+/**
  * Model Note
  * 
  */

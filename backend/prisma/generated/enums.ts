@@ -73,6 +73,15 @@ export const ItemLocationType = {
 export type ItemLocationType = (typeof ItemLocationType)[keyof typeof ItemLocationType]
 
 
+export const NoteEntityType = {
+  Item: 'Item',
+  LocationItem: 'LocationItem',
+  Region: 'Region'
+} as const
+
+export type NoteEntityType = (typeof NoteEntityType)[keyof typeof NoteEntityType]
+
+
 export const RelativeLighting = {
   Darkness: 'Darkness',
   DimLight: 'DimLight',

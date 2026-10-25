@@ -401,6 +401,23 @@ export type EnumAbsoluteLightingWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumAbsoluteLightingFilter<$PrismaModel>
 }
 
+export type EnumNoteEntityTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.NoteEntityType | Prisma.EnumNoteEntityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.NoteEntityType[] | Prisma.ListEnumNoteEntityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.NoteEntityType[] | Prisma.ListEnumNoteEntityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumNoteEntityTypeFilter<$PrismaModel> | $Enums.NoteEntityType
+}
+
+export type EnumNoteEntityTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.NoteEntityType | Prisma.EnumNoteEntityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.NoteEntityType[] | Prisma.ListEnumNoteEntityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.NoteEntityType[] | Prisma.ListEnumNoteEntityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumNoteEntityTypeWithAggregatesFilter<$PrismaModel> | $Enums.NoteEntityType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumNoteEntityTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumNoteEntityTypeFilter<$PrismaModel>
+}
+
 export type EnumRelativeLightingFilter<$PrismaModel = never> = {
   equals?: $Enums.RelativeLighting | Prisma.EnumRelativeLightingFieldRefInput<$PrismaModel>
   in?: $Enums.RelativeLighting[] | Prisma.ListEnumRelativeLightingFieldRefInput<$PrismaModel>
@@ -802,6 +819,23 @@ export type NestedEnumAbsoluteLightingWithAggregatesFilter<$PrismaModel = never>
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumAbsoluteLightingFilter<$PrismaModel>
   _max?: Prisma.NestedEnumAbsoluteLightingFilter<$PrismaModel>
+}
+
+export type NestedEnumNoteEntityTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.NoteEntityType | Prisma.EnumNoteEntityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.NoteEntityType[] | Prisma.ListEnumNoteEntityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.NoteEntityType[] | Prisma.ListEnumNoteEntityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumNoteEntityTypeFilter<$PrismaModel> | $Enums.NoteEntityType
+}
+
+export type NestedEnumNoteEntityTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.NoteEntityType | Prisma.EnumNoteEntityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.NoteEntityType[] | Prisma.ListEnumNoteEntityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.NoteEntityType[] | Prisma.ListEnumNoteEntityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumNoteEntityTypeWithAggregatesFilter<$PrismaModel> | $Enums.NoteEntityType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumNoteEntityTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumNoteEntityTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumRelativeLightingFilter<$PrismaModel = never> = {

@@ -70,6 +70,7 @@ export const ModelName = {
   MapTemplate: 'MapTemplate',
   Narration: 'Narration',
   NarrationTemplate: 'NarrationTemplate',
+  INoteEntity: 'INoteEntity',
   Note: 'Note',
   Region: 'Region',
   RegionHandout: 'RegionHandout',
@@ -295,6 +296,14 @@ export const NarrationTemplateScalarFieldEnum = {
 } as const
 
 export type NarrationTemplateScalarFieldEnum = (typeof NarrationTemplateScalarFieldEnum)[keyof typeof NarrationTemplateScalarFieldEnum]
+
+
+export const INoteEntityScalarFieldEnum = {
+  INoteEntityId: 'INoteEntityId',
+  Type: 'Type'
+} as const
+
+export type INoteEntityScalarFieldEnum = (typeof INoteEntityScalarFieldEnum)[keyof typeof INoteEntityScalarFieldEnum]
 
 
 export const NoteScalarFieldEnum = {
