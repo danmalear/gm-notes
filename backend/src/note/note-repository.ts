@@ -1,11 +1,7 @@
 import { db } from '#db';
 import type { Models } from '#prisma';
 import type { INoteEntityModel } from '#prisma-models/INoteEntity.ts';
-import type {
-	NoteCreateInput,
-	NoteModel,
-	NoteUpdateInput,
-} from '#prisma-models/Note.ts';
+import type { NoteModel } from '#prisma-models/Note.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
@@ -21,11 +17,14 @@ export interface INoteEntityIncludeMin extends INoteEntityModel {
 }
 
 export interface INoteRepository
-	extends IRepository<NoteMin, NoteCreateInput, NoteUpdateInput> {
+	extends IRepository<NoteMin, NoteMin, NoteMin> {
 	getByEntityId(entityId: UUID): Promise<NoteMin[]>;
 }
 
-export class NoteRepository extends Repository<NoteMin, NoteMin, NoteMin> {
+export class NoteRepository
+	extends Repository<NoteMin, NoteMin, NoteMin>
+	implements INoteRepository
+{
 	override descriptor = 'Note';
 
 	override async getByIdRaw(noteId: UUID): Promise<NoteMin | null> {
