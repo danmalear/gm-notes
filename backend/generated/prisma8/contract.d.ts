@@ -23,7 +23,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'5ad6ab59f543f370a9eecb0ed1026cdad93143114ce22ef3478ceb9e63f6fd40'>;
+  StorageHashBase<'82254ea3941517745782ef6b2618fcb1e52af334b127768fbed578d049166f74'>;
 export type ExecutionHash = ExecutionHashBase<string>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
@@ -318,6 +318,24 @@ type FieldTypeOverrides = {
           readonly input: 'Text' | 'Image' | 'File';
         };
       };
+      readonly IActionTarget: {
+        readonly Type: {
+          readonly output: 'Item' | 'LocationItem' | 'Region';
+          readonly input: 'Item' | 'LocationItem' | 'Region';
+        };
+      };
+      readonly IItemLocation: {
+        readonly Type: {
+          readonly output: 'Region' | 'LocationItem';
+          readonly input: 'Region' | 'LocationItem';
+        };
+      };
+      readonly INoteEntity: {
+        readonly Type: {
+          readonly output: 'Item' | 'LocationItem' | 'Region';
+          readonly input: 'Item' | 'LocationItem' | 'Region';
+        };
+      };
       readonly Item: {
         readonly ValueUnit: {
           readonly output: 'CP' | 'SP' | 'EP' | 'GP' | 'PP';
@@ -441,6 +459,24 @@ type ColumnTypeOverrides = {
         readonly input: 'Text' | 'Image' | 'File';
       };
     };
+    readonly IActionTarget: {
+      readonly Type: {
+        readonly output: 'Item' | 'LocationItem' | 'Region';
+        readonly input: 'Item' | 'LocationItem' | 'Region';
+      };
+    };
+    readonly IItemLocation: {
+      readonly Type: {
+        readonly output: 'Region' | 'LocationItem';
+        readonly input: 'Region' | 'LocationItem';
+      };
+    };
+    readonly INoteEntity: {
+      readonly Type: {
+        readonly output: 'Item' | 'LocationItem' | 'Region';
+        readonly input: 'Item' | 'LocationItem' | 'Region';
+      };
+    };
     readonly Item: {
       readonly ValueUnit: {
         readonly output: 'CP' | 'SP' | 'EP' | 'GP' | 'PP';
@@ -523,8 +559,17 @@ export namespace Models {
     FailureNarrationId: FieldOutputTypes['public']['AbilityCheck']['FailureNarrationId'];
     Skill: FieldOutputTypes['public']['AbilityCheck']['Skill'];
     SuccessNarrationId: FieldOutputTypes['public']['AbilityCheck']['SuccessNarrationId'];
+    Action: public_Action;
+    CriticalFailureNarration: public_Narration | null;
+    CriticalSuccessNarration: public_Narration | null;
+    FailureNarration: public_Narration | null;
     SuccessNarration: public_Narration | null;
-    readonly [RelationKeys]?: 'SuccessNarration';
+    readonly [RelationKeys]?:
+      | 'Action'
+      | 'CriticalFailureNarration'
+      | 'CriticalSuccessNarration'
+      | 'FailureNarration'
+      | 'SuccessNarration';
   };
   export type public_Action = {
     ActionId: FieldOutputTypes['public']['Action']['ActionId'];
@@ -532,19 +577,30 @@ export namespace Models {
     NarrationId: FieldOutputTypes['public']['Action']['NarrationId'];
     TargetId: FieldOutputTypes['public']['Action']['TargetId'];
     Type: FieldOutputTypes['public']['Action']['Type'];
-    readonly [RelationKeys]?: never;
+    AbilityChecks: public_AbilityCheck[];
+    ActionConditions: public_ActionCondition[];
+    Narration: public_Narration | null;
+    Target: public_IActionTarget;
+    readonly [RelationKeys]?: 'AbilityChecks' | 'ActionConditions' | 'Narration' | 'Target';
   };
   export type public_ActionCondition = {
     ActionId: FieldOutputTypes['public']['ActionCondition']['ActionId'];
     ConditionId: FieldOutputTypes['public']['ActionCondition']['ConditionId'];
-    readonly [RelationKeys]?: never;
+    Action: public_Action;
+    Condition: public_Condition;
+    readonly [RelationKeys]?: 'Action' | 'Condition';
   };
   export type public_Campaign = {
     ActiveMapId: FieldOutputTypes['public']['Campaign']['ActiveMapId'];
     CampaignId: FieldOutputTypes['public']['Campaign']['CampaignId'];
     CampaignTemplateId: FieldOutputTypes['public']['Campaign']['CampaignTemplateId'];
     Name: FieldOutputTypes['public']['Campaign']['Name'];
-    readonly [RelationKeys]?: never;
+    ActiveMap: public_Map | null;
+    Conditions: public_Condition[];
+    Handouts: public_Handout[];
+    Items: public_Item[];
+    Maps: public_Map[];
+    readonly [RelationKeys]?: 'ActiveMap' | 'Conditions' | 'Handouts' | 'Items' | 'Maps';
   };
   export type public_CampaignTemplate = {
     CampaignTemplateId: FieldOutputTypes['public']['CampaignTemplate']['CampaignTemplateId'];
@@ -557,12 +613,16 @@ export namespace Models {
     Description: FieldOutputTypes['public']['Condition']['Description'];
     IsMet: FieldOutputTypes['public']['Condition']['IsMet'];
     Name: FieldOutputTypes['public']['Condition']['Name'];
-    readonly [RelationKeys]?: never;
+    ActionConditions: public_ActionCondition[];
+    Campaign: public_Campaign;
+    readonly [RelationKeys]?: 'ActionConditions' | 'Campaign';
   };
   export type public_File = {
     FileId: FieldOutputTypes['public']['File']['FileId'];
     FileName: FieldOutputTypes['public']['File']['FileName'];
-    readonly [RelationKeys]?: never;
+    Item: public_Item | null;
+    Map: public_Map | null;
+    readonly [RelationKeys]?: 'Item' | 'Map';
   };
   export type public_Handout = {
     CampaignId: FieldOutputTypes['public']['Handout']['CampaignId'];
@@ -570,7 +630,35 @@ export namespace Models {
     Name: FieldOutputTypes['public']['Handout']['Name'];
     Source: FieldOutputTypes['public']['Handout']['Source'];
     Type: FieldOutputTypes['public']['Handout']['Type'];
-    readonly [RelationKeys]?: never;
+    Campaign: public_Campaign;
+    RegionHandouts: public_RegionHandout[];
+    readonly [RelationKeys]?: 'Campaign' | 'RegionHandouts';
+  };
+  export type public_IActionTarget = {
+    IActionTargetId: FieldOutputTypes['public']['IActionTarget']['IActionTargetId'];
+    Type: FieldOutputTypes['public']['IActionTarget']['Type'];
+    Actions: public_Action[];
+    Item: public_Item | null;
+    LocationItem: public_LocationItem | null;
+    Region: public_Region | null;
+    readonly [RelationKeys]?: 'Actions' | 'Item' | 'LocationItem' | 'Region';
+  };
+  export type public_IItemLocation = {
+    IItemLocationId: FieldOutputTypes['public']['IItemLocation']['IItemLocationId'];
+    Type: FieldOutputTypes['public']['IItemLocation']['Type'];
+    Items: public_LocationItem[];
+    LocationItem: public_LocationItem | null;
+    Region: public_Region | null;
+    readonly [RelationKeys]?: 'Items' | 'LocationItem' | 'Region';
+  };
+  export type public_INoteEntity = {
+    INoteEntityId: FieldOutputTypes['public']['INoteEntity']['INoteEntityId'];
+    Type: FieldOutputTypes['public']['INoteEntity']['Type'];
+    Item: public_Item | null;
+    LocationItem: public_LocationItem | null;
+    Notes: public_Note[];
+    Region: public_Region | null;
+    readonly [RelationKeys]?: 'Item' | 'LocationItem' | 'Notes' | 'Region';
   };
   export type public_Item = {
     CampaignId: FieldOutputTypes['public']['Item']['CampaignId'];
@@ -581,14 +669,26 @@ export namespace Models {
     Name: FieldOutputTypes['public']['Item']['Name'];
     Value: FieldOutputTypes['public']['Item']['Value'];
     ValueUnit: FieldOutputTypes['public']['Item']['ValueUnit'];
-    readonly [RelationKeys]?: never;
+    Campaign: public_Campaign | null;
+    IActionTarget: public_IActionTarget;
+    INoteEntity: public_INoteEntity;
+    ImageFile: public_File | null;
+    LocationItems: public_LocationItem[];
+    readonly [RelationKeys]?:
+      'Campaign' | 'IActionTarget' | 'INoteEntity' | 'ImageFile' | 'LocationItems';
   };
   export type public_LocationItem = {
     ItemId: FieldOutputTypes['public']['LocationItem']['ItemId'];
     LocationId: FieldOutputTypes['public']['LocationItem']['LocationId'];
     LocationItemId: FieldOutputTypes['public']['LocationItem']['LocationItemId'];
     Quantity: FieldOutputTypes['public']['LocationItem']['Quantity'];
-    readonly [RelationKeys]?: never;
+    IActionTarget: public_IActionTarget;
+    IItemLocation: public_IItemLocation;
+    INoteEntity: public_INoteEntity;
+    Item: public_Item;
+    Location: public_IItemLocation;
+    readonly [RelationKeys]?:
+      'IActionTarget' | 'IItemLocation' | 'INoteEntity' | 'Item' | 'Location';
   };
   export type public_Map = {
     CampaignId: FieldOutputTypes['public']['Map']['CampaignId'];
@@ -599,7 +699,11 @@ export namespace Models {
     MapTemplateId: FieldOutputTypes['public']['Map']['MapTemplateId'];
     Name: FieldOutputTypes['public']['Map']['Name'];
     Width: FieldOutputTypes['public']['Map']['Width'];
-    readonly [RelationKeys]?: never;
+    ActiveCampaign: public_Campaign | null;
+    Campaign: public_Campaign;
+    ImageFile: public_File;
+    Regions: public_Region[];
+    readonly [RelationKeys]?: 'ActiveCampaign' | 'Campaign' | 'ImageFile' | 'Regions';
   };
   export type public_MapTemplate = {
     CampaignTemplateId: FieldOutputTypes['public']['MapTemplate']['CampaignTemplateId'];
@@ -614,7 +718,19 @@ export namespace Models {
     Name: FieldOutputTypes['public']['Narration']['Name'];
     NarrationId: FieldOutputTypes['public']['Narration']['NarrationId'];
     NarrationTemplateId: FieldOutputTypes['public']['Narration']['NarrationTemplateId'];
-    readonly [RelationKeys]?: never;
+    Actions: public_Action[];
+    CriticalFailureAbilityChecks: public_AbilityCheck[];
+    CriticalSuccessAbilityChecks: public_AbilityCheck[];
+    FailureAbilityChecks: public_AbilityCheck[];
+    RegionNarrations: public_RegionNarration[];
+    SuccessAbilityChecks: public_AbilityCheck[];
+    readonly [RelationKeys]?:
+      | 'Actions'
+      | 'CriticalFailureAbilityChecks'
+      | 'CriticalSuccessAbilityChecks'
+      | 'FailureAbilityChecks'
+      | 'RegionNarrations'
+      | 'SuccessAbilityChecks';
   };
   export type public_NarrationTemplate = {
     Description: FieldOutputTypes['public']['NarrationTemplate']['Description'];
@@ -626,7 +742,8 @@ export namespace Models {
     Description: FieldOutputTypes['public']['Note']['Description'];
     EntityId: FieldOutputTypes['public']['Note']['EntityId'];
     NoteId: FieldOutputTypes['public']['Note']['NoteId'];
-    readonly [RelationKeys]?: never;
+    INoteEntity: public_INoteEntity;
+    readonly [RelationKeys]?: 'INoteEntity';
   };
   export type public_Region = {
     Lighting: FieldOutputTypes['public']['Region']['Lighting'];
@@ -634,24 +751,43 @@ export namespace Models {
     Name: FieldOutputTypes['public']['Region']['Name'];
     RegionId: FieldOutputTypes['public']['Region']['RegionId'];
     RegionTemplateId: FieldOutputTypes['public']['Region']['RegionTemplateId'];
-    readonly [RelationKeys]?: never;
+    Handouts: public_RegionHandout[];
+    IActionTarget: public_IActionTarget;
+    IItemLocation: public_IItemLocation;
+    INoteEntity: public_INoteEntity;
+    Map: public_Map;
+    Narrations: public_RegionNarration[];
+    Shapes: public_RegionShape[];
+    readonly [RelationKeys]?:
+      | 'Handouts'
+      | 'IActionTarget'
+      | 'IItemLocation'
+      | 'INoteEntity'
+      | 'Map'
+      | 'Narrations'
+      | 'Shapes';
   };
   export type public_RegionHandout = {
     HandoutId: FieldOutputTypes['public']['RegionHandout']['HandoutId'];
     RegionId: FieldOutputTypes['public']['RegionHandout']['RegionId'];
-    readonly [RelationKeys]?: never;
+    Handout: public_Handout;
+    Region: public_Region;
+    readonly [RelationKeys]?: 'Handout' | 'Region';
   };
   export type public_RegionNarration = {
     NarrationId: FieldOutputTypes['public']['RegionNarration']['NarrationId'];
     RegionId: FieldOutputTypes['public']['RegionNarration']['RegionId'];
-    readonly [RelationKeys]?: never;
+    Narration: public_Narration;
+    Region: public_Region;
+    readonly [RelationKeys]?: 'Narration' | 'Region';
   };
   export type public_RegionShape = {
     Coords: FieldOutputTypes['public']['RegionShape']['Coords'];
     RegionId: FieldOutputTypes['public']['RegionShape']['RegionId'];
     RegionShapeId: FieldOutputTypes['public']['RegionShape']['RegionShapeId'];
     ShapeType: FieldOutputTypes['public']['RegionShape']['ShapeType'];
-    readonly [RelationKeys]?: never;
+    Region: public_Region;
+    readonly [RelationKeys]?: 'Region';
   };
   export type public_RegionTemplate = {
     MapTemplateId: FieldOutputTypes['public']['RegionTemplate']['MapTemplateId'];
@@ -676,6 +812,9 @@ export declare const models: {
     Condition: Models.public_Condition;
     File: Models.public_File;
     Handout: Models.public_Handout;
+    IActionTarget: Models.public_IActionTarget;
+    IItemLocation: Models.public_IItemLocation;
+    INoteEntity: Models.public_INoteEntity;
     Item: Models.public_Item;
     LocationItem: Models.public_LocationItem;
     Map: Models.public_Map;
@@ -951,7 +1090,55 @@ type ContractBase = Omit<
                   readonly source: {
                     readonly namespaceId: 'public' & NamespaceId;
                     readonly tableName: 'AbilityCheck';
+                    readonly columns: readonly ['ActionId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Action';
+                    readonly columns: readonly ['ActionId'];
+                  };
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'AbilityCheck';
                     readonly columns: readonly ['SuccessNarrationId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Narration';
+                    readonly columns: readonly ['NarrationId'];
+                  };
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'AbilityCheck';
+                    readonly columns: readonly ['FailureNarrationId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Narration';
+                    readonly columns: readonly ['NarrationId'];
+                  };
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'AbilityCheck';
+                    readonly columns: readonly ['CriticalSuccessNarrationId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Narration';
+                    readonly columns: readonly ['NarrationId'];
+                  };
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'AbilityCheck';
+                    readonly columns: readonly ['CriticalFailureNarrationId'];
                   };
                   readonly target: {
                     readonly namespaceId: 'public' & NamespaceId;
@@ -1009,7 +1196,32 @@ type ContractBase = Omit<
                   readonly unique: false;
                 },
               ];
-              foreignKeys: readonly [];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Action';
+                    readonly columns: readonly ['TargetId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'IActionTarget';
+                    readonly columns: readonly ['IActionTargetId'];
+                  };
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Action';
+                    readonly columns: readonly ['NarrationId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Narration';
+                    readonly columns: readonly ['NarrationId'];
+                  };
+                },
+              ];
             };
             readonly ActionCondition: {
               columns: {
@@ -1030,12 +1242,43 @@ type ContractBase = Omit<
               uniques: readonly [];
               indexes: readonly [
                 {
+                  readonly name: 'ActionCondition_ActionId_idx_d108a480';
+                  readonly prefix: 'ActionCondition_ActionId_idx';
+                  readonly columns: readonly ['ActionId'];
+                  readonly unique: false;
+                },
+                {
                   readonly name: 'ActionCondition_ConditionId_idx';
                   readonly columns: readonly ['ConditionId'];
                   readonly unique: false;
                 },
               ];
-              foreignKeys: readonly [];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'ActionCondition';
+                    readonly columns: readonly ['ActionId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Action';
+                    readonly columns: readonly ['ActionId'];
+                  };
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'ActionCondition';
+                    readonly columns: readonly ['ConditionId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Condition';
+                    readonly columns: readonly ['ConditionId'];
+                  };
+                },
+              ];
             };
             readonly Campaign: {
               columns: {
@@ -1067,7 +1310,20 @@ type ContractBase = Omit<
               primaryKey: { readonly columns: readonly ['CampaignId'] };
               uniques: readonly [{ readonly columns: readonly ['ActiveMapId'] }];
               indexes: readonly [];
-              foreignKeys: readonly [];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Campaign';
+                    readonly columns: readonly ['ActiveMapId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Map';
+                    readonly columns: readonly ['MapId'];
+                  };
+                },
+              ];
             };
             readonly CampaignTemplate: {
               columns: {
@@ -1136,7 +1392,20 @@ type ContractBase = Omit<
                   readonly unique: false;
                 },
               ];
-              foreignKeys: readonly [];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Condition';
+                    readonly columns: readonly ['CampaignId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Campaign';
+                    readonly columns: readonly ['CampaignId'];
+                  };
+                },
+              ];
             };
             readonly File: {
               columns: {
@@ -1201,6 +1470,82 @@ type ContractBase = Omit<
                   readonly unique: false;
                 },
               ];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Handout';
+                    readonly columns: readonly ['CampaignId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Campaign';
+                    readonly columns: readonly ['CampaignId'];
+                  };
+                },
+              ];
+            };
+            readonly IActionTarget: {
+              columns: {
+                readonly IActionTargetId: {
+                  readonly dataType: 'pg/uuid';
+                  readonly codecId: 'pg/uuid@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly Type: {
+                  readonly dataType: 'pg/enum';
+                  readonly codecId: 'pg/enum@1';
+                  readonly nullable: false;
+                  readonly typeParams: { readonly typeName: 'ActionTargetType' };
+                  readonly many: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['IActionTargetId'] };
+              uniques: readonly [];
+              indexes: readonly [];
+              foreignKeys: readonly [];
+            };
+            readonly IItemLocation: {
+              columns: {
+                readonly IItemLocationId: {
+                  readonly dataType: 'pg/uuid';
+                  readonly codecId: 'pg/uuid@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly Type: {
+                  readonly dataType: 'pg/enum';
+                  readonly codecId: 'pg/enum@1';
+                  readonly nullable: false;
+                  readonly typeParams: { readonly typeName: 'ItemLocationType' };
+                  readonly many: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['IItemLocationId'] };
+              uniques: readonly [];
+              indexes: readonly [];
+              foreignKeys: readonly [];
+            };
+            readonly INoteEntity: {
+              columns: {
+                readonly INoteEntityId: {
+                  readonly dataType: 'pg/uuid';
+                  readonly codecId: 'pg/uuid@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly Type: {
+                  readonly dataType: 'pg/enum';
+                  readonly codecId: 'pg/enum@1';
+                  readonly nullable: false;
+                  readonly typeParams: { readonly typeName: 'NoteEntityType' };
+                  readonly many: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['INoteEntityId'] };
+              uniques: readonly [];
+              indexes: readonly [];
               foreignKeys: readonly [];
             };
             readonly Item: {
@@ -1268,7 +1613,58 @@ type ContractBase = Omit<
                   readonly unique: false;
                 },
               ];
-              foreignKeys: readonly [];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Item';
+                    readonly columns: readonly ['ItemId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'IActionTarget';
+                    readonly columns: readonly ['IActionTargetId'];
+                  };
+                  readonly name: 'Item_IActionTargetId_fkey';
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Item';
+                    readonly columns: readonly ['ItemId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'INoteEntity';
+                    readonly columns: readonly ['INoteEntityId'];
+                  };
+                  readonly name: 'Item_INoteEntityId_fkey';
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Item';
+                    readonly columns: readonly ['CampaignId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Campaign';
+                    readonly columns: readonly ['CampaignId'];
+                  };
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Item';
+                    readonly columns: readonly ['ImageFileId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'File';
+                    readonly columns: readonly ['FileId'];
+                  };
+                },
+              ];
             };
             readonly LocationItem: {
               columns: {
@@ -1315,7 +1711,72 @@ type ContractBase = Omit<
                   readonly unique: false;
                 },
               ];
-              foreignKeys: readonly [];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'LocationItem';
+                    readonly columns: readonly ['LocationItemId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'IActionTarget';
+                    readonly columns: readonly ['IActionTargetId'];
+                  };
+                  readonly name: 'LocationItem_IActionTargetId_fkey';
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'LocationItem';
+                    readonly columns: readonly ['LocationItemId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'IItemLocation';
+                    readonly columns: readonly ['IItemLocationId'];
+                  };
+                  readonly name: 'LocationItem_IItemLocationId_Self_fkey';
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'LocationItem';
+                    readonly columns: readonly ['LocationItemId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'INoteEntity';
+                    readonly columns: readonly ['INoteEntityId'];
+                  };
+                  readonly name: 'LocationItem_INoteEntityId_fkey';
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'LocationItem';
+                    readonly columns: readonly ['LocationId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'IItemLocation';
+                    readonly columns: readonly ['IItemLocationId'];
+                  };
+                  readonly name: 'LocationItem_IItemLocationId_Container_fkey';
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'LocationItem';
+                    readonly columns: readonly ['ItemId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Item';
+                    readonly columns: readonly ['ItemId'];
+                  };
+                },
+              ];
             };
             readonly Map: {
               columns: {
@@ -1390,7 +1851,32 @@ type ContractBase = Omit<
                   readonly unique: false;
                 },
               ];
-              foreignKeys: readonly [];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Map';
+                    readonly columns: readonly ['CampaignId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Campaign';
+                    readonly columns: readonly ['CampaignId'];
+                  };
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Map';
+                    readonly columns: readonly ['ImageFileId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'File';
+                    readonly columns: readonly ['FileId'];
+                  };
+                },
+              ];
             };
             readonly MapTemplate: {
               columns: {
@@ -1526,7 +2012,20 @@ type ContractBase = Omit<
                   readonly unique: false;
                 },
               ];
-              foreignKeys: readonly [];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Note';
+                    readonly columns: readonly ['EntityId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'INoteEntity';
+                    readonly columns: readonly ['INoteEntityId'];
+                  };
+                },
+              ];
             };
             readonly Region: {
               columns: {
@@ -1575,7 +2074,59 @@ type ContractBase = Omit<
                   readonly unique: false;
                 },
               ];
-              foreignKeys: readonly [];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Region';
+                    readonly columns: readonly ['RegionId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'IActionTarget';
+                    readonly columns: readonly ['IActionTargetId'];
+                  };
+                  readonly name: 'Region_IActionTargetId_fkey';
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Region';
+                    readonly columns: readonly ['RegionId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'IItemLocation';
+                    readonly columns: readonly ['IItemLocationId'];
+                  };
+                  readonly name: 'Region_IItemLocationId_fkey';
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Region';
+                    readonly columns: readonly ['RegionId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'INoteEntity';
+                    readonly columns: readonly ['INoteEntityId'];
+                  };
+                  readonly name: 'Region_INoteEntityId_fkey';
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Region';
+                    readonly columns: readonly ['MapId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Map';
+                    readonly columns: readonly ['MapId'];
+                  };
+                },
+              ];
             };
             readonly RegionHandout: {
               columns: {
@@ -1603,8 +2154,39 @@ type ContractBase = Omit<
                   readonly columns: readonly ['HandoutId'];
                   readonly unique: false;
                 },
+                {
+                  readonly name: 'RegionHandout_RegionId_idx_97fe7b25';
+                  readonly prefix: 'RegionHandout_RegionId_idx';
+                  readonly columns: readonly ['RegionId'];
+                  readonly unique: false;
+                },
               ];
-              foreignKeys: readonly [];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'RegionHandout';
+                    readonly columns: readonly ['RegionId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Region';
+                    readonly columns: readonly ['RegionId'];
+                  };
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'RegionHandout';
+                    readonly columns: readonly ['HandoutId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Handout';
+                    readonly columns: readonly ['HandoutId'];
+                  };
+                },
+              ];
             };
             readonly RegionNarration: {
               columns: {
@@ -1632,8 +2214,39 @@ type ContractBase = Omit<
                   readonly columns: readonly ['NarrationId'];
                   readonly unique: false;
                 },
+                {
+                  readonly name: 'RegionNarration_RegionId_idx_97fe7b25';
+                  readonly prefix: 'RegionNarration_RegionId_idx';
+                  readonly columns: readonly ['RegionId'];
+                  readonly unique: false;
+                },
               ];
-              foreignKeys: readonly [];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'RegionNarration';
+                    readonly columns: readonly ['RegionId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Region';
+                    readonly columns: readonly ['RegionId'];
+                  };
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'RegionNarration';
+                    readonly columns: readonly ['NarrationId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Narration';
+                    readonly columns: readonly ['NarrationId'];
+                  };
+                },
+              ];
             };
             readonly RegionShape: {
               columns: {
@@ -1672,7 +2285,20 @@ type ContractBase = Omit<
                   readonly unique: false;
                 },
               ];
-              foreignKeys: readonly [];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'RegionShape';
+                    readonly columns: readonly ['RegionId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Region';
+                    readonly columns: readonly ['RegionId'];
+                  };
+                },
+              ];
             };
             readonly RegionTemplate: {
               columns: {
@@ -1707,6 +2333,10 @@ type ContractBase = Omit<
               readonly kind: 'valueSet';
               readonly values: readonly ['Darkness', 'Dim Light', 'Bright Light'];
             };
+            readonly ActionTargetType: {
+              readonly kind: 'valueSet';
+              readonly values: readonly ['Item', 'LocationItem', 'Region'];
+            };
             readonly ActionType: {
               readonly kind: 'valueSet';
               readonly values: readonly [
@@ -1731,6 +2361,14 @@ type ContractBase = Omit<
             readonly HandoutType: {
               readonly kind: 'valueSet';
               readonly values: readonly ['Text', 'Image', 'File'];
+            };
+            readonly ItemLocationType: {
+              readonly kind: 'valueSet';
+              readonly values: readonly ['Region', 'LocationItem'];
+            };
+            readonly NoteEntityType: {
+              readonly kind: 'valueSet';
+              readonly values: readonly ['Item', 'LocationItem', 'Region'];
             };
             readonly RelativeLighting: {
               readonly kind: 'valueSet';
@@ -1800,6 +2438,18 @@ type ContractBase = Omit<
     readonly Event: { readonly namespace: 'es' & NamespaceId; readonly model: 'Event' };
     readonly File: { readonly namespace: 'public' & NamespaceId; readonly model: 'File' };
     readonly Handout: { readonly namespace: 'public' & NamespaceId; readonly model: 'Handout' };
+    readonly IActionTarget: {
+      readonly namespace: 'public' & NamespaceId;
+      readonly model: 'IActionTarget';
+    };
+    readonly IItemLocation: {
+      readonly namespace: 'public' & NamespaceId;
+      readonly model: 'IItemLocation';
+    };
+    readonly INoteEntity: {
+      readonly namespace: 'public' & NamespaceId;
+      readonly model: 'INoteEntity';
+    };
     readonly Item: { readonly namespace: 'public' & NamespaceId; readonly model: 'Item' };
     readonly LocationItem: {
       readonly namespace: 'public' & NamespaceId;
@@ -2028,6 +2678,54 @@ type ContractBase = Omit<
               };
             };
             readonly relations: {
+              readonly Action: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Action';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['ActionId'];
+                  readonly targetFields: readonly ['ActionId'];
+                };
+              };
+              readonly CriticalFailureNarration: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Narration';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['CriticalFailureNarrationId'];
+                  readonly targetFields: readonly ['NarrationId'];
+                };
+              };
+              readonly CriticalSuccessNarration: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Narration';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['CriticalSuccessNarrationId'];
+                  readonly targetFields: readonly ['NarrationId'];
+                };
+              };
+              readonly FailureNarration: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Narration';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['FailureNarrationId'];
+                  readonly targetFields: readonly ['NarrationId'];
+                };
+              };
               readonly SuccessNarration: {
                 readonly to: {
                   readonly namespace: 'public' & NamespaceId;
@@ -2087,7 +2785,54 @@ type ContractBase = Omit<
                 };
               };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly AbilityChecks: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'AbilityCheck';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['ActionId'];
+                  readonly targetFields: readonly ['ActionId'];
+                };
+              };
+              readonly ActionConditions: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'ActionCondition';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['ActionId'];
+                  readonly targetFields: readonly ['ActionId'];
+                };
+              };
+              readonly Narration: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Narration';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['NarrationId'];
+                  readonly targetFields: readonly ['NarrationId'];
+                };
+              };
+              readonly Target: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'IActionTarget';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['TargetId'];
+                  readonly targetFields: readonly ['IActionTargetId'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'Action';
               readonly namespaceId: 'public';
@@ -2111,7 +2856,32 @@ type ContractBase = Omit<
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/uuid@1' };
               };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly Action: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Action';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['ActionId'];
+                  readonly targetFields: readonly ['ActionId'];
+                };
+              };
+              readonly Condition: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Condition';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['ConditionId'];
+                  readonly targetFields: readonly ['ConditionId'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'ActionCondition';
               readonly namespaceId: 'public';
@@ -2140,7 +2910,55 @@ type ContractBase = Omit<
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly ActiveMap: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Map' };
+                readonly cardinality: 'N:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['ActiveMapId'];
+                  readonly targetFields: readonly ['MapId'];
+                };
+              };
+              readonly Conditions: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Condition';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['CampaignId'];
+                  readonly targetFields: readonly ['CampaignId'];
+                };
+              };
+              readonly Handouts: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Handout';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['CampaignId'];
+                  readonly targetFields: readonly ['CampaignId'];
+                };
+              };
+              readonly Items: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Item' };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['CampaignId'];
+                  readonly targetFields: readonly ['CampaignId'];
+                };
+              };
+              readonly Maps: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Map' };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['CampaignId'];
+                  readonly targetFields: readonly ['CampaignId'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'Campaign';
               readonly namespaceId: 'public';
@@ -2200,7 +3018,31 @@ type ContractBase = Omit<
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly ActionConditions: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'ActionCondition';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['ConditionId'];
+                  readonly targetFields: readonly ['ConditionId'];
+                };
+              };
+              readonly Campaign: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Campaign';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['CampaignId'];
+                  readonly targetFields: readonly ['CampaignId'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'Condition';
               readonly namespaceId: 'public';
@@ -2224,7 +3066,26 @@ type ContractBase = Omit<
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly Item: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Item' };
+                readonly cardinality: '1:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['FileId'];
+                  readonly targetFields: readonly ['ImageFileId'];
+                };
+              };
+              readonly Map: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Map' };
+                readonly cardinality: '1:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['FileId'];
+                  readonly targetFields: readonly ['ImageFileId'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'File';
               readonly namespaceId: 'public';
@@ -2261,7 +3122,31 @@ type ContractBase = Omit<
                 };
               };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly Campaign: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Campaign';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['CampaignId'];
+                  readonly targetFields: readonly ['CampaignId'];
+                };
+              };
+              readonly RegionHandouts: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'RegionHandout';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['HandoutId'];
+                  readonly targetFields: readonly ['HandoutId'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'Handout';
               readonly namespaceId: 'public';
@@ -2270,6 +3155,204 @@ type ContractBase = Omit<
                 readonly HandoutId: { readonly column: 'HandoutId' };
                 readonly Name: { readonly column: 'Name' };
                 readonly Source: { readonly column: 'Source' };
+                readonly Type: { readonly column: 'Type' };
+              };
+            };
+          };
+          readonly IActionTarget: {
+            readonly fields: {
+              readonly IActionTargetId: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/uuid@1' };
+              };
+              readonly Type: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/enum@1';
+                  readonly typeParams: { readonly typeName: 'ActionTargetType' };
+                };
+              };
+            };
+            readonly relations: {
+              readonly Actions: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Action';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['IActionTargetId'];
+                  readonly targetFields: readonly ['TargetId'];
+                };
+              };
+              readonly Item: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Item' };
+                readonly cardinality: '1:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['IActionTargetId'];
+                  readonly targetFields: readonly ['ItemId'];
+                };
+              };
+              readonly LocationItem: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'LocationItem';
+                };
+                readonly cardinality: '1:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['IActionTargetId'];
+                  readonly targetFields: readonly ['LocationItemId'];
+                };
+              };
+              readonly Region: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Region';
+                };
+                readonly cardinality: '1:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['IActionTargetId'];
+                  readonly targetFields: readonly ['RegionId'];
+                };
+              };
+            };
+            readonly storage: {
+              readonly table: 'IActionTarget';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly IActionTargetId: { readonly column: 'IActionTargetId' };
+                readonly Type: { readonly column: 'Type' };
+              };
+            };
+          };
+          readonly IItemLocation: {
+            readonly fields: {
+              readonly IItemLocationId: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/uuid@1' };
+              };
+              readonly Type: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/enum@1';
+                  readonly typeParams: { readonly typeName: 'ItemLocationType' };
+                };
+              };
+            };
+            readonly relations: {
+              readonly Items: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'LocationItem';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['IItemLocationId'];
+                  readonly targetFields: readonly ['LocationId'];
+                };
+              };
+              readonly LocationItem: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'LocationItem';
+                };
+                readonly cardinality: '1:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['IItemLocationId'];
+                  readonly targetFields: readonly ['LocationItemId'];
+                };
+              };
+              readonly Region: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Region';
+                };
+                readonly cardinality: '1:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['IItemLocationId'];
+                  readonly targetFields: readonly ['RegionId'];
+                };
+              };
+            };
+            readonly storage: {
+              readonly table: 'IItemLocation';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly IItemLocationId: { readonly column: 'IItemLocationId' };
+                readonly Type: { readonly column: 'Type' };
+              };
+            };
+          };
+          readonly INoteEntity: {
+            readonly fields: {
+              readonly INoteEntityId: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/uuid@1' };
+              };
+              readonly Type: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/enum@1';
+                  readonly typeParams: { readonly typeName: 'NoteEntityType' };
+                };
+              };
+            };
+            readonly relations: {
+              readonly Item: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Item' };
+                readonly cardinality: '1:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['INoteEntityId'];
+                  readonly targetFields: readonly ['ItemId'];
+                };
+              };
+              readonly LocationItem: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'LocationItem';
+                };
+                readonly cardinality: '1:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['INoteEntityId'];
+                  readonly targetFields: readonly ['LocationItemId'];
+                };
+              };
+              readonly Notes: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Note' };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['INoteEntityId'];
+                  readonly targetFields: readonly ['EntityId'];
+                };
+              };
+              readonly Region: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Region';
+                };
+                readonly cardinality: '1:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['INoteEntityId'];
+                  readonly targetFields: readonly ['RegionId'];
+                };
+              };
+            };
+            readonly storage: {
+              readonly table: 'INoteEntity';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly INoteEntityId: { readonly column: 'INoteEntityId' };
                 readonly Type: { readonly column: 'Type' };
               };
             };
@@ -2313,7 +3396,64 @@ type ContractBase = Omit<
                 };
               };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly Campaign: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Campaign';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['CampaignId'];
+                  readonly targetFields: readonly ['CampaignId'];
+                };
+              };
+              readonly IActionTarget: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'IActionTarget';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['ItemId'];
+                  readonly targetFields: readonly ['IActionTargetId'];
+                };
+              };
+              readonly INoteEntity: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'INoteEntity';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['ItemId'];
+                  readonly targetFields: readonly ['INoteEntityId'];
+                };
+              };
+              readonly ImageFile: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'File' };
+                readonly cardinality: 'N:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['ImageFileId'];
+                  readonly targetFields: readonly ['FileId'];
+                };
+              };
+              readonly LocationItems: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'LocationItem';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['ItemId'];
+                  readonly targetFields: readonly ['ItemId'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'Item';
               readonly namespaceId: 'public';
@@ -2348,7 +3488,65 @@ type ContractBase = Omit<
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
               };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly IActionTarget: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'IActionTarget';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['LocationItemId'];
+                  readonly targetFields: readonly ['IActionTargetId'];
+                };
+              };
+              readonly IItemLocation: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'IItemLocation';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['LocationItemId'];
+                  readonly targetFields: readonly ['IItemLocationId'];
+                };
+              };
+              readonly INoteEntity: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'INoteEntity';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['LocationItemId'];
+                  readonly targetFields: readonly ['INoteEntityId'];
+                };
+              };
+              readonly Item: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Item' };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['ItemId'];
+                  readonly targetFields: readonly ['ItemId'];
+                };
+              };
+              readonly Location: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'IItemLocation';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['LocationId'];
+                  readonly targetFields: readonly ['IItemLocationId'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'LocationItem';
               readonly namespaceId: 'public';
@@ -2399,7 +3597,52 @@ type ContractBase = Omit<
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
               };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly ActiveCampaign: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Campaign';
+                };
+                readonly cardinality: '1:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['MapId'];
+                  readonly targetFields: readonly ['ActiveMapId'];
+                };
+              };
+              readonly Campaign: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Campaign';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['CampaignId'];
+                  readonly targetFields: readonly ['CampaignId'];
+                };
+              };
+              readonly ImageFile: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'File' };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['ImageFileId'];
+                  readonly targetFields: readonly ['FileId'];
+                };
+              };
+              readonly Regions: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Region';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['MapId'];
+                  readonly targetFields: readonly ['MapId'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'Map';
               readonly namespaceId: 'public';
@@ -2477,7 +3720,74 @@ type ContractBase = Omit<
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/uuid@1' };
               };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly Actions: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Action';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['NarrationId'];
+                  readonly targetFields: readonly ['NarrationId'];
+                };
+              };
+              readonly CriticalFailureAbilityChecks: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'AbilityCheck';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['NarrationId'];
+                  readonly targetFields: readonly ['CriticalFailureNarrationId'];
+                };
+              };
+              readonly CriticalSuccessAbilityChecks: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'AbilityCheck';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['NarrationId'];
+                  readonly targetFields: readonly ['CriticalSuccessNarrationId'];
+                };
+              };
+              readonly FailureAbilityChecks: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'AbilityCheck';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['NarrationId'];
+                  readonly targetFields: readonly ['FailureNarrationId'];
+                };
+              };
+              readonly RegionNarrations: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'RegionNarration';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['NarrationId'];
+                  readonly targetFields: readonly ['NarrationId'];
+                };
+              };
+              readonly SuccessAbilityChecks: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'AbilityCheck';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['NarrationId'];
+                  readonly targetFields: readonly ['SuccessNarrationId'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'Narration';
               readonly namespaceId: 'public';
@@ -2539,7 +3849,20 @@ type ContractBase = Omit<
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/uuid@1' };
               };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly INoteEntity: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'INoteEntity';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['EntityId'];
+                  readonly targetFields: readonly ['INoteEntityId'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'Note';
               readonly namespaceId: 'public';
@@ -2577,7 +3900,86 @@ type ContractBase = Omit<
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/uuid@1' };
               };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly Handouts: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'RegionHandout';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['RegionId'];
+                  readonly targetFields: readonly ['RegionId'];
+                };
+              };
+              readonly IActionTarget: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'IActionTarget';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['RegionId'];
+                  readonly targetFields: readonly ['IActionTargetId'];
+                };
+              };
+              readonly IItemLocation: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'IItemLocation';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['RegionId'];
+                  readonly targetFields: readonly ['IItemLocationId'];
+                };
+              };
+              readonly INoteEntity: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'INoteEntity';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['RegionId'];
+                  readonly targetFields: readonly ['INoteEntityId'];
+                };
+              };
+              readonly Map: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Map' };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['MapId'];
+                  readonly targetFields: readonly ['MapId'];
+                };
+              };
+              readonly Narrations: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'RegionNarration';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['RegionId'];
+                  readonly targetFields: readonly ['RegionId'];
+                };
+              };
+              readonly Shapes: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'RegionShape';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['RegionId'];
+                  readonly targetFields: readonly ['RegionId'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'Region';
               readonly namespaceId: 'public';
@@ -2601,7 +4003,32 @@ type ContractBase = Omit<
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/uuid@1' };
               };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly Handout: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Handout';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['HandoutId'];
+                  readonly targetFields: readonly ['HandoutId'];
+                };
+              };
+              readonly Region: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Region';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['RegionId'];
+                  readonly targetFields: readonly ['RegionId'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'RegionHandout';
               readonly namespaceId: 'public';
@@ -2622,7 +4049,32 @@ type ContractBase = Omit<
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/uuid@1' };
               };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly Narration: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Narration';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['NarrationId'];
+                  readonly targetFields: readonly ['NarrationId'];
+                };
+              };
+              readonly Region: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Region';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['RegionId'];
+                  readonly targetFields: readonly ['RegionId'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'RegionNarration';
               readonly namespaceId: 'public';
@@ -2655,7 +4107,20 @@ type ContractBase = Omit<
                 };
               };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly Region: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Region';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['RegionId'];
+                  readonly targetFields: readonly ['RegionId'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'RegionShape';
               readonly namespaceId: 'public';

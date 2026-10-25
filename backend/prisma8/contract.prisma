@@ -25,9 +25,7 @@ namespace public {
   model Action {
     ActionId         Uuid                 @id
     TargetId         Uuid
-    Region           Region?              @relation(name: "TargetRegion", fields: [TargetId], references: [RegionId], map: "Action_RegionId_fkey")
-    Item             Item?                @relation(name: "TargetItem", fields: [TargetId], references: [ItemId], map: "Action_ItemId_fkey")
-    LocationItem     LocationItem?        @relation(name: "TargetLocationItem", fields: [TargetId], references: [LocationItemId], map: "Action_LocationItemId_fkey")
+    Target           IActionTarget        @relation(fields: [TargetId], references: [IActionTargetId])
     Name             String
     Type             pg.enum(ActionType)?
     NarrationId      Uuid?
@@ -97,8 +95,36 @@ namespace public {
     @@index([CampaignId], map: "Handout_CampaignId_idx")
   }
 
+  model IActionTarget {
+    IActionTargetId Uuid                      @id
+    Type            pg.enum(ActionTargetType)
+    Actions         Action[]
+    Region          Region?                   @relation(name: "RegionActionTarget")
+    Item            Item?                     @relation(name: "ItemActionTarget")
+    LocationItem    LocationItem?             @relation(name: "LocationItemActionTarget")
+  }
+
+  model IItemLocation {
+    IItemLocationId Uuid                      @id
+    Type            pg.enum(ItemLocationType)
+    Items           LocationItem[]            @relation(name: "ItemLocation")
+    Region          Region?                   @relation(name: "RegionItemLocation")
+    LocationItem    LocationItem?             @relation(name: "LocationItemSelf")
+  }
+
+  model INoteEntity {
+    INoteEntityId Uuid                    @id
+    Type          pg.enum(NoteEntityType)
+    Notes         Note[]
+    Region        Region?                 @relation(name: "RegionNoteEntity")
+    Item          Item?                   @relation(name: "ItemNoteEntity")
+    LocationItem  LocationItem?           @relation(name: "LocationItemNoteEntity")
+  }
+
   model Item {
     ItemId        Uuid                   @id
+    IActionTarget IActionTarget          @relation(name: "ItemActionTarget", fields: [ItemId], references: [IActionTargetId], map: "Item_IActionTargetId_fkey")
+    INoteEntity   INoteEntity            @relation(name: "ItemNoteEntity", fields: [ItemId], references: [INoteEntityId], map: "Item_INoteEntityId_fkey")
     CampaignId    Uuid?
     Campaign      Campaign?              @relation(fields: [CampaignId], references: [CampaignId])
     Name          String
@@ -108,24 +134,21 @@ namespace public {
     DetailsLink   String?
     ImageFileId   String?                @unique
     ImageFile     File?                  @relation(fields: [ImageFileId], references: [FileId])
-    Actions       Action[]               @relation(name: "TargetItem")
     LocationItems LocationItem[]
-    Notes         Note[]                 @relation(name: "ParentItem")
 
     @@index([CampaignId], map: "Item_CampaignId_idx")
   }
 
   model LocationItem {
-    LocationItemId Uuid           @id
+    LocationItemId Uuid          @id
+    IActionTarget  IActionTarget @relation(name: "LocationItemActionTarget", fields: [LocationItemId], references: [IActionTargetId], map: "LocationItem_IActionTargetId_fkey")
+    IItemLocation  IItemLocation @relation(name: "LocationItemSelf", fields: [LocationItemId], references: [IItemLocationId], map: "LocationItem_IItemLocationId_Self_fkey")
+    INoteEntity    INoteEntity   @relation(name: "LocationItemNoteEntity", fields: [LocationItemId], references: [INoteEntityId], map: "LocationItem_INoteEntityId_fkey")
     LocationId     Uuid
-    Region         Region?        @relation(name: "RegionItem", fields: [LocationId], references: [RegionId], map: "LocationItem_RegionId_fkey")
-    Container      LocationItem?  @relation(name: "ContainerContents", fields: [LocationId], references: [LocationItemId], onUpdate: Restrict, map: "LocationItem_ContainerId_fkey")
+    Location       IItemLocation @relation(name: "ItemLocation", fields: [LocationId], references: [IItemLocationId], map: "LocationItem_IItemLocationId_Container_fkey")
     ItemId         Uuid
-    Item           Item           @relation(fields: [ItemId], references: [ItemId])
-    Quantity       Int            @default(1)
-    Actions        Action[]       @relation(name: "TargetLocationItem")
-    Notes          Note[]         @relation(name: "ParentLocationItem")
-    Contents       LocationItem[] @relation(name: "ContainerContents")
+    Item           Item          @relation(fields: [ItemId], references: [ItemId])
+    Quantity       Int           @default(1)
 
     @@index([ItemId], map: "LocationItem_ItemId_idx")
     @@index([LocationId], map: "LocationItem_LocationId_idx")
@@ -176,26 +199,24 @@ namespace public {
   }
 
   model Note {
-    NoteId       Uuid          @id
-    EntityId     Uuid
-    Region       Region?       @relation(name: "ParentRegion", fields: [EntityId], references: [RegionId], map: "Note_RegionId_fkey")
-    Item         Item?         @relation(name: "ParentItem", fields: [EntityId], references: [ItemId], map: "Note_ItemId_fkey")
-    LocationItem LocationItem? @relation(name: "ParentLocationItem", fields: [EntityId], references: [LocationItemId], map: "Note_LocationItemId_fkey")
-    Description  String
+    NoteId      Uuid        @id
+    EntityId    Uuid
+    INoteEntity INoteEntity @relation(fields: [EntityId], references: [INoteEntityId])
+    Description String
 
     @@index([EntityId], map: "Note_EntityId_idx")
   }
 
   model Region {
     RegionId         Uuid                      @id
+    IActionTarget    IActionTarget             @relation(name: "RegionActionTarget", fields: [RegionId], references: [IActionTargetId], map: "Region_IActionTargetId_fkey")
+    IItemLocation    IItemLocation             @relation(name: "RegionItemLocation", fields: [RegionId], references: [IItemLocationId], map: "Region_IItemLocationId_fkey")
+    INoteEntity      INoteEntity               @relation(name: "RegionNoteEntity", fields: [RegionId], references: [INoteEntityId], map: "Region_INoteEntityId_fkey")
     RegionTemplateId Uuid?
     MapId            Uuid
     Map              Map                       @relation(fields: [MapId], references: [MapId])
     Name             String
     Lighting         pg.enum(RelativeLighting) @default("Default")
-    Actions          Action[]                  @relation(name: "TargetRegion")
-    Items            LocationItem[]            @relation(name: "RegionItem")
-    Notes            Note[]                    @relation(name: "ParentRegion")
     Handouts         RegionHandout[]
     Narrations       RegionNarration[]
     Shapes           RegionShape[]
@@ -245,6 +266,12 @@ namespace public {
     BrightLight = "Bright Light"
   }
 
+  native_enum ActionTargetType {
+    Item = "Item"
+    LocationItem = "LocationItem"
+    Region = "Region"
+  }
+
   native_enum ActionType {
     Attack = "Attack"
     Dash = "Dash"
@@ -272,6 +299,17 @@ namespace public {
     Text = "Text"
     Image = "Image"
     File = "File"
+  }
+
+  native_enum ItemLocationType {
+    Region = "Region"
+    LocationItem = "LocationItem"
+  }
+
+  native_enum NoteEntityType {
+    Item = "Item"
+    LocationItem = "LocationItem"
+    Region = "Region"
   }
 
   native_enum RelativeLighting {

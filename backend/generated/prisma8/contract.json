@@ -44,6 +44,18 @@
       "model": "Handout",
       "namespace": "public"
     },
+    "IActionTarget": {
+      "model": "IActionTarget",
+      "namespace": "public"
+    },
+    "IItemLocation": {
+      "model": "IItemLocation",
+      "namespace": "public"
+    },
+    "INoteEntity": {
+      "model": "INoteEntity",
+      "namespace": "public"
+    },
     "Item": {
       "model": "Item",
       "namespace": "public"
@@ -401,6 +413,70 @@
               }
             },
             "relations": {
+              "Action": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "ActionId"
+                  ],
+                  "targetFields": [
+                    "ActionId"
+                  ]
+                },
+                "to": {
+                  "model": "Action",
+                  "namespace": "public"
+                }
+              },
+              "CriticalFailureNarration": {
+                "cardinality": "N:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "CriticalFailureNarrationId"
+                  ],
+                  "targetFields": [
+                    "NarrationId"
+                  ]
+                },
+                "to": {
+                  "model": "Narration",
+                  "namespace": "public"
+                }
+              },
+              "CriticalSuccessNarration": {
+                "cardinality": "N:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "CriticalSuccessNarrationId"
+                  ],
+                  "targetFields": [
+                    "NarrationId"
+                  ]
+                },
+                "to": {
+                  "model": "Narration",
+                  "namespace": "public"
+                }
+              },
+              "FailureNarration": {
+                "cardinality": "N:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "FailureNarrationId"
+                  ],
+                  "targetFields": [
+                    "NarrationId"
+                  ]
+                },
+                "to": {
+                  "model": "Narration",
+                  "namespace": "public"
+                }
+              },
               "SuccessNarration": {
                 "cardinality": "N:1",
                 "nullable": true,
@@ -490,7 +566,70 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "AbilityChecks": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "ActionId"
+                  ],
+                  "targetFields": [
+                    "ActionId"
+                  ]
+                },
+                "to": {
+                  "model": "AbilityCheck",
+                  "namespace": "public"
+                }
+              },
+              "ActionConditions": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "ActionId"
+                  ],
+                  "targetFields": [
+                    "ActionId"
+                  ]
+                },
+                "to": {
+                  "model": "ActionCondition",
+                  "namespace": "public"
+                }
+              },
+              "Narration": {
+                "cardinality": "N:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "NarrationId"
+                  ],
+                  "targetFields": [
+                    "NarrationId"
+                  ]
+                },
+                "to": {
+                  "model": "Narration",
+                  "namespace": "public"
+                }
+              },
+              "Target": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "TargetId"
+                  ],
+                  "targetFields": [
+                    "IActionTargetId"
+                  ]
+                },
+                "to": {
+                  "model": "IActionTarget",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "ActionId": {
@@ -530,7 +669,40 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "Action": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "ActionId"
+                  ],
+                  "targetFields": [
+                    "ActionId"
+                  ]
+                },
+                "to": {
+                  "model": "Action",
+                  "namespace": "public"
+                }
+              },
+              "Condition": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "ConditionId"
+                  ],
+                  "targetFields": [
+                    "ConditionId"
+                  ]
+                },
+                "to": {
+                  "model": "Condition",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "ActionId": {
@@ -575,7 +747,84 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "ActiveMap": {
+                "cardinality": "N:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "ActiveMapId"
+                  ],
+                  "targetFields": [
+                    "MapId"
+                  ]
+                },
+                "to": {
+                  "model": "Map",
+                  "namespace": "public"
+                }
+              },
+              "Conditions": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "CampaignId"
+                  ],
+                  "targetFields": [
+                    "CampaignId"
+                  ]
+                },
+                "to": {
+                  "model": "Condition",
+                  "namespace": "public"
+                }
+              },
+              "Handouts": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "CampaignId"
+                  ],
+                  "targetFields": [
+                    "CampaignId"
+                  ]
+                },
+                "to": {
+                  "model": "Handout",
+                  "namespace": "public"
+                }
+              },
+              "Items": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "CampaignId"
+                  ],
+                  "targetFields": [
+                    "CampaignId"
+                  ]
+                },
+                "to": {
+                  "model": "Item",
+                  "namespace": "public"
+                }
+              },
+              "Maps": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "CampaignId"
+                  ],
+                  "targetFields": [
+                    "CampaignId"
+                  ]
+                },
+                "to": {
+                  "model": "Map",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "ActiveMapId": {
@@ -667,7 +916,39 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "ActionConditions": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "ConditionId"
+                  ],
+                  "targetFields": [
+                    "ConditionId"
+                  ]
+                },
+                "to": {
+                  "model": "ActionCondition",
+                  "namespace": "public"
+                }
+              },
+              "Campaign": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "CampaignId"
+                  ],
+                  "targetFields": [
+                    "CampaignId"
+                  ]
+                },
+                "to": {
+                  "model": "Campaign",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "CampaignId": {
@@ -707,7 +988,40 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "Item": {
+                "cardinality": "1:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "FileId"
+                  ],
+                  "targetFields": [
+                    "ImageFileId"
+                  ]
+                },
+                "to": {
+                  "model": "Item",
+                  "namespace": "public"
+                }
+              },
+              "Map": {
+                "cardinality": "1:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "FileId"
+                  ],
+                  "targetFields": [
+                    "ImageFileId"
+                  ]
+                },
+                "to": {
+                  "model": "Map",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "FileId": {
@@ -762,7 +1076,39 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "Campaign": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "CampaignId"
+                  ],
+                  "targetFields": [
+                    "CampaignId"
+                  ]
+                },
+                "to": {
+                  "model": "Campaign",
+                  "namespace": "public"
+                }
+              },
+              "RegionHandouts": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "HandoutId"
+                  ],
+                  "targetFields": [
+                    "HandoutId"
+                  ]
+                },
+                "to": {
+                  "model": "RegionHandout",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "CampaignId": {
@@ -783,6 +1129,284 @@
               },
               "namespaceId": "public",
               "table": "Handout"
+            }
+          },
+          "IActionTarget": {
+            "fields": {
+              "IActionTargetId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Type": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/enum@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "typeName": "ActionTargetType"
+                  }
+                }
+              }
+            },
+            "relations": {
+              "Actions": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "IActionTargetId"
+                  ],
+                  "targetFields": [
+                    "TargetId"
+                  ]
+                },
+                "to": {
+                  "model": "Action",
+                  "namespace": "public"
+                }
+              },
+              "Item": {
+                "cardinality": "1:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "IActionTargetId"
+                  ],
+                  "targetFields": [
+                    "ItemId"
+                  ]
+                },
+                "to": {
+                  "model": "Item",
+                  "namespace": "public"
+                }
+              },
+              "LocationItem": {
+                "cardinality": "1:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "IActionTargetId"
+                  ],
+                  "targetFields": [
+                    "LocationItemId"
+                  ]
+                },
+                "to": {
+                  "model": "LocationItem",
+                  "namespace": "public"
+                }
+              },
+              "Region": {
+                "cardinality": "1:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "IActionTargetId"
+                  ],
+                  "targetFields": [
+                    "RegionId"
+                  ]
+                },
+                "to": {
+                  "model": "Region",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "IActionTargetId": {
+                  "column": "IActionTargetId"
+                },
+                "Type": {
+                  "column": "Type"
+                }
+              },
+              "namespaceId": "public",
+              "table": "IActionTarget"
+            }
+          },
+          "IItemLocation": {
+            "fields": {
+              "IItemLocationId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Type": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/enum@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "typeName": "ItemLocationType"
+                  }
+                }
+              }
+            },
+            "relations": {
+              "Items": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "IItemLocationId"
+                  ],
+                  "targetFields": [
+                    "LocationId"
+                  ]
+                },
+                "to": {
+                  "model": "LocationItem",
+                  "namespace": "public"
+                }
+              },
+              "LocationItem": {
+                "cardinality": "1:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "IItemLocationId"
+                  ],
+                  "targetFields": [
+                    "LocationItemId"
+                  ]
+                },
+                "to": {
+                  "model": "LocationItem",
+                  "namespace": "public"
+                }
+              },
+              "Region": {
+                "cardinality": "1:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "IItemLocationId"
+                  ],
+                  "targetFields": [
+                    "RegionId"
+                  ]
+                },
+                "to": {
+                  "model": "Region",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "IItemLocationId": {
+                  "column": "IItemLocationId"
+                },
+                "Type": {
+                  "column": "Type"
+                }
+              },
+              "namespaceId": "public",
+              "table": "IItemLocation"
+            }
+          },
+          "INoteEntity": {
+            "fields": {
+              "INoteEntityId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Type": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/enum@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "typeName": "NoteEntityType"
+                  }
+                }
+              }
+            },
+            "relations": {
+              "Item": {
+                "cardinality": "1:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "INoteEntityId"
+                  ],
+                  "targetFields": [
+                    "ItemId"
+                  ]
+                },
+                "to": {
+                  "model": "Item",
+                  "namespace": "public"
+                }
+              },
+              "LocationItem": {
+                "cardinality": "1:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "INoteEntityId"
+                  ],
+                  "targetFields": [
+                    "LocationItemId"
+                  ]
+                },
+                "to": {
+                  "model": "LocationItem",
+                  "namespace": "public"
+                }
+              },
+              "Notes": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "INoteEntityId"
+                  ],
+                  "targetFields": [
+                    "EntityId"
+                  ]
+                },
+                "to": {
+                  "model": "Note",
+                  "namespace": "public"
+                }
+              },
+              "Region": {
+                "cardinality": "1:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "INoteEntityId"
+                  ],
+                  "targetFields": [
+                    "RegionId"
+                  ]
+                },
+                "to": {
+                  "model": "Region",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "INoteEntityId": {
+                  "column": "INoteEntityId"
+                },
+                "Type": {
+                  "column": "Type"
+                }
+              },
+              "namespaceId": "public",
+              "table": "INoteEntity"
             }
           },
           "Item": {
@@ -847,7 +1471,87 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "Campaign": {
+                "cardinality": "N:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "CampaignId"
+                  ],
+                  "targetFields": [
+                    "CampaignId"
+                  ]
+                },
+                "to": {
+                  "model": "Campaign",
+                  "namespace": "public"
+                }
+              },
+              "IActionTarget": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "ItemId"
+                  ],
+                  "targetFields": [
+                    "IActionTargetId"
+                  ]
+                },
+                "to": {
+                  "model": "IActionTarget",
+                  "namespace": "public"
+                }
+              },
+              "INoteEntity": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "ItemId"
+                  ],
+                  "targetFields": [
+                    "INoteEntityId"
+                  ]
+                },
+                "to": {
+                  "model": "INoteEntity",
+                  "namespace": "public"
+                }
+              },
+              "ImageFile": {
+                "cardinality": "N:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "ImageFileId"
+                  ],
+                  "targetFields": [
+                    "FileId"
+                  ]
+                },
+                "to": {
+                  "model": "File",
+                  "namespace": "public"
+                }
+              },
+              "LocationItems": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "ItemId"
+                  ],
+                  "targetFields": [
+                    "ItemId"
+                  ]
+                },
+                "to": {
+                  "model": "LocationItem",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "CampaignId": {
@@ -910,7 +1614,88 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "IActionTarget": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "LocationItemId"
+                  ],
+                  "targetFields": [
+                    "IActionTargetId"
+                  ]
+                },
+                "to": {
+                  "model": "IActionTarget",
+                  "namespace": "public"
+                }
+              },
+              "IItemLocation": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "LocationItemId"
+                  ],
+                  "targetFields": [
+                    "IItemLocationId"
+                  ]
+                },
+                "to": {
+                  "model": "IItemLocation",
+                  "namespace": "public"
+                }
+              },
+              "INoteEntity": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "LocationItemId"
+                  ],
+                  "targetFields": [
+                    "INoteEntityId"
+                  ]
+                },
+                "to": {
+                  "model": "INoteEntity",
+                  "namespace": "public"
+                }
+              },
+              "Item": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "ItemId"
+                  ],
+                  "targetFields": [
+                    "ItemId"
+                  ]
+                },
+                "to": {
+                  "model": "Item",
+                  "namespace": "public"
+                }
+              },
+              "Location": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "LocationId"
+                  ],
+                  "targetFields": [
+                    "IItemLocationId"
+                  ]
+                },
+                "to": {
+                  "model": "IItemLocation",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "ItemId": {
@@ -992,7 +1777,71 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "ActiveCampaign": {
+                "cardinality": "1:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "MapId"
+                  ],
+                  "targetFields": [
+                    "ActiveMapId"
+                  ]
+                },
+                "to": {
+                  "model": "Campaign",
+                  "namespace": "public"
+                }
+              },
+              "Campaign": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "CampaignId"
+                  ],
+                  "targetFields": [
+                    "CampaignId"
+                  ]
+                },
+                "to": {
+                  "model": "Campaign",
+                  "namespace": "public"
+                }
+              },
+              "ImageFile": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "ImageFileId"
+                  ],
+                  "targetFields": [
+                    "FileId"
+                  ]
+                },
+                "to": {
+                  "model": "File",
+                  "namespace": "public"
+                }
+              },
+              "Regions": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "MapId"
+                  ],
+                  "targetFields": [
+                    "MapId"
+                  ]
+                },
+                "to": {
+                  "model": "Region",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "CampaignId": {
@@ -1119,7 +1968,98 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "Actions": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "NarrationId"
+                  ],
+                  "targetFields": [
+                    "NarrationId"
+                  ]
+                },
+                "to": {
+                  "model": "Action",
+                  "namespace": "public"
+                }
+              },
+              "CriticalFailureAbilityChecks": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "NarrationId"
+                  ],
+                  "targetFields": [
+                    "CriticalFailureNarrationId"
+                  ]
+                },
+                "to": {
+                  "model": "AbilityCheck",
+                  "namespace": "public"
+                }
+              },
+              "CriticalSuccessAbilityChecks": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "NarrationId"
+                  ],
+                  "targetFields": [
+                    "CriticalSuccessNarrationId"
+                  ]
+                },
+                "to": {
+                  "model": "AbilityCheck",
+                  "namespace": "public"
+                }
+              },
+              "FailureAbilityChecks": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "NarrationId"
+                  ],
+                  "targetFields": [
+                    "FailureNarrationId"
+                  ]
+                },
+                "to": {
+                  "model": "AbilityCheck",
+                  "namespace": "public"
+                }
+              },
+              "RegionNarrations": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "NarrationId"
+                  ],
+                  "targetFields": [
+                    "NarrationId"
+                  ]
+                },
+                "to": {
+                  "model": "RegionNarration",
+                  "namespace": "public"
+                }
+              },
+              "SuccessAbilityChecks": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "NarrationId"
+                  ],
+                  "targetFields": [
+                    "SuccessNarrationId"
+                  ]
+                },
+                "to": {
+                  "model": "AbilityCheck",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "Description": {
@@ -1213,7 +2153,24 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "INoteEntity": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "EntityId"
+                  ],
+                  "targetFields": [
+                    "INoteEntityId"
+                  ]
+                },
+                "to": {
+                  "model": "INoteEntity",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "Description": {
@@ -1271,7 +2228,117 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "Handouts": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "RegionId"
+                  ],
+                  "targetFields": [
+                    "RegionId"
+                  ]
+                },
+                "to": {
+                  "model": "RegionHandout",
+                  "namespace": "public"
+                }
+              },
+              "IActionTarget": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "RegionId"
+                  ],
+                  "targetFields": [
+                    "IActionTargetId"
+                  ]
+                },
+                "to": {
+                  "model": "IActionTarget",
+                  "namespace": "public"
+                }
+              },
+              "IItemLocation": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "RegionId"
+                  ],
+                  "targetFields": [
+                    "IItemLocationId"
+                  ]
+                },
+                "to": {
+                  "model": "IItemLocation",
+                  "namespace": "public"
+                }
+              },
+              "INoteEntity": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "RegionId"
+                  ],
+                  "targetFields": [
+                    "INoteEntityId"
+                  ]
+                },
+                "to": {
+                  "model": "INoteEntity",
+                  "namespace": "public"
+                }
+              },
+              "Map": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "MapId"
+                  ],
+                  "targetFields": [
+                    "MapId"
+                  ]
+                },
+                "to": {
+                  "model": "Map",
+                  "namespace": "public"
+                }
+              },
+              "Narrations": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "RegionId"
+                  ],
+                  "targetFields": [
+                    "RegionId"
+                  ]
+                },
+                "to": {
+                  "model": "RegionNarration",
+                  "namespace": "public"
+                }
+              },
+              "Shapes": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "RegionId"
+                  ],
+                  "targetFields": [
+                    "RegionId"
+                  ]
+                },
+                "to": {
+                  "model": "RegionShape",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "Lighting": {
@@ -1311,7 +2378,40 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "Handout": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "HandoutId"
+                  ],
+                  "targetFields": [
+                    "HandoutId"
+                  ]
+                },
+                "to": {
+                  "model": "Handout",
+                  "namespace": "public"
+                }
+              },
+              "Region": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "RegionId"
+                  ],
+                  "targetFields": [
+                    "RegionId"
+                  ]
+                },
+                "to": {
+                  "model": "Region",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "HandoutId": {
@@ -1342,7 +2442,40 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "Narration": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "NarrationId"
+                  ],
+                  "targetFields": [
+                    "NarrationId"
+                  ]
+                },
+                "to": {
+                  "model": "Narration",
+                  "namespace": "public"
+                }
+              },
+              "Region": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "RegionId"
+                  ],
+                  "targetFields": [
+                    "RegionId"
+                  ]
+                },
+                "to": {
+                  "model": "Region",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "NarrationId": {
@@ -1390,7 +2523,24 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "Region": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "RegionId"
+                  ],
+                  "targetFields": [
+                    "RegionId"
+                  ]
+                },
+                "to": {
+                  "model": "Region",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "Coords": {
@@ -1620,6 +2770,15 @@
               ],
               "typeName": "AbsoluteLighting"
             },
+            "ActionTargetType": {
+              "kind": "postgres-enum",
+              "members": [
+                "Item",
+                "LocationItem",
+                "Region"
+              ],
+              "typeName": "ActionTargetType"
+            },
             "ActionType": {
               "kind": "postgres-enum",
               "members": [
@@ -1657,6 +2816,23 @@
                 "File"
               ],
               "typeName": "HandoutType"
+            },
+            "ItemLocationType": {
+              "kind": "postgres-enum",
+              "members": [
+                "Region",
+                "LocationItem"
+              ],
+              "typeName": "ItemLocationType"
+            },
+            "NoteEntityType": {
+              "kind": "postgres-enum",
+              "members": [
+                "Item",
+                "LocationItem",
+                "Region"
+              ],
+              "typeName": "NoteEntityType"
             },
             "RelativeLighting": {
               "kind": "postgres-enum",
@@ -1760,11 +2936,87 @@
               "foreignKeys": [
                 {
                   "index": {
+                    "name": "AbilityCheck_ActionId_idx"
+                  },
+                  "source": {
+                    "columns": [
+                      "ActionId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "AbilityCheck"
+                  },
+                  "target": {
+                    "columns": [
+                      "ActionId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Action"
+                  }
+                },
+                {
+                  "index": {
                     "name": "AbilityCheck_SuccessNarrationId_idx"
                   },
                   "source": {
                     "columns": [
                       "SuccessNarrationId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "AbilityCheck"
+                  },
+                  "target": {
+                    "columns": [
+                      "NarrationId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Narration"
+                  }
+                },
+                {
+                  "index": {
+                    "name": "AbilityCheck_FailureNarrationId_idx"
+                  },
+                  "source": {
+                    "columns": [
+                      "FailureNarrationId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "AbilityCheck"
+                  },
+                  "target": {
+                    "columns": [
+                      "NarrationId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Narration"
+                  }
+                },
+                {
+                  "index": {
+                    "name": "AbilityCheck_CriticalSuccessNarrationId_idx"
+                  },
+                  "source": {
+                    "columns": [
+                      "CriticalSuccessNarrationId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "AbilityCheck"
+                  },
+                  "target": {
+                    "columns": [
+                      "NarrationId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Narration"
+                  }
+                },
+                {
+                  "index": {
+                    "name": "AbilityCheck_CriticalFailureNarrationId_idx"
+                  },
+                  "source": {
+                    "columns": [
+                      "CriticalFailureNarrationId"
                     ],
                     "namespaceId": "public",
                     "tableName": "AbilityCheck"
@@ -1859,7 +3111,46 @@
                   }
                 }
               },
-              "foreignKeys": [],
+              "foreignKeys": [
+                {
+                  "index": {
+                    "name": "Action_TargetId_idx"
+                  },
+                  "source": {
+                    "columns": [
+                      "TargetId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Action"
+                  },
+                  "target": {
+                    "columns": [
+                      "IActionTargetId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "IActionTarget"
+                  }
+                },
+                {
+                  "index": {
+                    "name": "Action_NarrationId_idx"
+                  },
+                  "source": {
+                    "columns": [
+                      "NarrationId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Action"
+                  },
+                  "target": {
+                    "columns": [
+                      "NarrationId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Narration"
+                  }
+                }
+              ],
               "indexes": [
                 {
                   "columns": [
@@ -1896,8 +3187,55 @@
                   "nullable": false
                 }
               },
-              "foreignKeys": [],
+              "foreignKeys": [
+                {
+                  "index": {
+                    "name": "ActionCondition_ActionId_idx_d108a480"
+                  },
+                  "source": {
+                    "columns": [
+                      "ActionId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "ActionCondition"
+                  },
+                  "target": {
+                    "columns": [
+                      "ActionId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Action"
+                  }
+                },
+                {
+                  "index": {
+                    "name": "ActionCondition_ConditionId_idx"
+                  },
+                  "source": {
+                    "columns": [
+                      "ConditionId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "ActionCondition"
+                  },
+                  "target": {
+                    "columns": [
+                      "ConditionId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Condition"
+                  }
+                }
+              ],
               "indexes": [
+                {
+                  "columns": [
+                    "ActionId"
+                  ],
+                  "name": "ActionCondition_ActionId_idx_d108a480",
+                  "prefix": "ActionCondition_ActionId_idx",
+                  "unique": false
+                },
                 {
                   "columns": [
                     "ConditionId"
@@ -1937,7 +3275,29 @@
                   "nullable": false
                 }
               },
-              "foreignKeys": [],
+              "foreignKeys": [
+                {
+                  "index": {
+                    "unique": [
+                      "ActiveMapId"
+                    ]
+                  },
+                  "source": {
+                    "columns": [
+                      "ActiveMapId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Campaign"
+                  },
+                  "target": {
+                    "columns": [
+                      "MapId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Map"
+                  }
+                }
+              ],
               "indexes": [],
               "primaryKey": {
                 "columns": [
@@ -2009,7 +3369,27 @@
                   "nullable": false
                 }
               },
-              "foreignKeys": [],
+              "foreignKeys": [
+                {
+                  "index": {
+                    "name": "Condition_CampaignId_idx"
+                  },
+                  "source": {
+                    "columns": [
+                      "CampaignId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Condition"
+                  },
+                  "target": {
+                    "columns": [
+                      "CampaignId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Campaign"
+                  }
+                }
+              ],
               "indexes": [
                 {
                   "columns": [
@@ -2085,7 +3465,27 @@
                   }
                 }
               },
-              "foreignKeys": [],
+              "foreignKeys": [
+                {
+                  "index": {
+                    "name": "Handout_CampaignId_idx"
+                  },
+                  "source": {
+                    "columns": [
+                      "CampaignId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Handout"
+                  },
+                  "target": {
+                    "columns": [
+                      "CampaignId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Campaign"
+                  }
+                }
+              ],
               "indexes": [
                 {
                   "columns": [
@@ -2098,6 +3498,99 @@
               "primaryKey": {
                 "columns": [
                   "HandoutId"
+                ]
+              },
+              "uniques": []
+            },
+            "IActionTarget": {
+              "columns": {
+                "IActionTargetId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "Type": {
+                  "codecId": "pg/enum@1",
+                  "dataType": "pg/enum",
+                  "nullable": false,
+                  "typeParams": {
+                    "typeName": "ActionTargetType"
+                  },
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "ActionTargetType",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "IActionTargetId"
+                ]
+              },
+              "uniques": []
+            },
+            "IItemLocation": {
+              "columns": {
+                "IItemLocationId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "Type": {
+                  "codecId": "pg/enum@1",
+                  "dataType": "pg/enum",
+                  "nullable": false,
+                  "typeParams": {
+                    "typeName": "ItemLocationType"
+                  },
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "ItemLocationType",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "IItemLocationId"
+                ]
+              },
+              "uniques": []
+            },
+            "INoteEntity": {
+              "columns": {
+                "INoteEntityId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "Type": {
+                  "codecId": "pg/enum@1",
+                  "dataType": "pg/enum",
+                  "nullable": false,
+                  "typeParams": {
+                    "typeName": "NoteEntityType"
+                  },
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "NoteEntityType",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "INoteEntityId"
                 ]
               },
               "uniques": []
@@ -2158,7 +3651,88 @@
                   }
                 }
               },
-              "foreignKeys": [],
+              "foreignKeys": [
+                {
+                  "index": {
+                    "primaryKey": true
+                  },
+                  "name": "Item_IActionTargetId_fkey",
+                  "source": {
+                    "columns": [
+                      "ItemId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Item"
+                  },
+                  "target": {
+                    "columns": [
+                      "IActionTargetId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "IActionTarget"
+                  }
+                },
+                {
+                  "index": {
+                    "primaryKey": true
+                  },
+                  "name": "Item_INoteEntityId_fkey",
+                  "source": {
+                    "columns": [
+                      "ItemId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Item"
+                  },
+                  "target": {
+                    "columns": [
+                      "INoteEntityId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "INoteEntity"
+                  }
+                },
+                {
+                  "index": {
+                    "name": "Item_CampaignId_idx"
+                  },
+                  "source": {
+                    "columns": [
+                      "CampaignId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Item"
+                  },
+                  "target": {
+                    "columns": [
+                      "CampaignId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Campaign"
+                  }
+                },
+                {
+                  "index": {
+                    "unique": [
+                      "ImageFileId"
+                    ]
+                  },
+                  "source": {
+                    "columns": [
+                      "ImageFileId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Item"
+                  },
+                  "target": {
+                    "columns": [
+                      "FileId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "File"
+                  }
+                }
+              ],
               "indexes": [
                 {
                   "columns": [
@@ -2208,7 +3782,107 @@
                   "nullable": false
                 }
               },
-              "foreignKeys": [],
+              "foreignKeys": [
+                {
+                  "index": {
+                    "primaryKey": true
+                  },
+                  "name": "LocationItem_IActionTargetId_fkey",
+                  "source": {
+                    "columns": [
+                      "LocationItemId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "LocationItem"
+                  },
+                  "target": {
+                    "columns": [
+                      "IActionTargetId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "IActionTarget"
+                  }
+                },
+                {
+                  "index": {
+                    "primaryKey": true
+                  },
+                  "name": "LocationItem_IItemLocationId_Self_fkey",
+                  "source": {
+                    "columns": [
+                      "LocationItemId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "LocationItem"
+                  },
+                  "target": {
+                    "columns": [
+                      "IItemLocationId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "IItemLocation"
+                  }
+                },
+                {
+                  "index": {
+                    "primaryKey": true
+                  },
+                  "name": "LocationItem_INoteEntityId_fkey",
+                  "source": {
+                    "columns": [
+                      "LocationItemId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "LocationItem"
+                  },
+                  "target": {
+                    "columns": [
+                      "INoteEntityId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "INoteEntity"
+                  }
+                },
+                {
+                  "index": {
+                    "name": "LocationItem_LocationId_idx"
+                  },
+                  "name": "LocationItem_IItemLocationId_Container_fkey",
+                  "source": {
+                    "columns": [
+                      "LocationId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "LocationItem"
+                  },
+                  "target": {
+                    "columns": [
+                      "IItemLocationId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "IItemLocation"
+                  }
+                },
+                {
+                  "index": {
+                    "name": "LocationItem_ItemId_idx"
+                  },
+                  "source": {
+                    "columns": [
+                      "ItemId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "LocationItem"
+                  },
+                  "target": {
+                    "columns": [
+                      "ItemId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Item"
+                  }
+                }
+              ],
               "indexes": [
                 {
                   "columns": [
@@ -2296,7 +3970,49 @@
                   "nullable": false
                 }
               },
-              "foreignKeys": [],
+              "foreignKeys": [
+                {
+                  "index": {
+                    "name": "Map_CampaignId_idx"
+                  },
+                  "onUpdate": "restrict",
+                  "source": {
+                    "columns": [
+                      "CampaignId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Map"
+                  },
+                  "target": {
+                    "columns": [
+                      "CampaignId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Campaign"
+                  }
+                },
+                {
+                  "index": {
+                    "unique": [
+                      "ImageFileId"
+                    ]
+                  },
+                  "source": {
+                    "columns": [
+                      "ImageFileId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Map"
+                  },
+                  "target": {
+                    "columns": [
+                      "FileId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "File"
+                  }
+                }
+              ],
               "indexes": [
                 {
                   "columns": [
@@ -2449,7 +4165,27 @@
                   "nullable": false
                 }
               },
-              "foreignKeys": [],
+              "foreignKeys": [
+                {
+                  "index": {
+                    "name": "Note_EntityId_idx"
+                  },
+                  "source": {
+                    "columns": [
+                      "EntityId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Note"
+                  },
+                  "target": {
+                    "columns": [
+                      "INoteEntityId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "INoteEntity"
+                  }
+                }
+              ],
               "indexes": [
                 {
                   "columns": [
@@ -2507,7 +4243,87 @@
                   "nullable": true
                 }
               },
-              "foreignKeys": [],
+              "foreignKeys": [
+                {
+                  "index": {
+                    "primaryKey": true
+                  },
+                  "name": "Region_IActionTargetId_fkey",
+                  "source": {
+                    "columns": [
+                      "RegionId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Region"
+                  },
+                  "target": {
+                    "columns": [
+                      "IActionTargetId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "IActionTarget"
+                  }
+                },
+                {
+                  "index": {
+                    "primaryKey": true
+                  },
+                  "name": "Region_IItemLocationId_fkey",
+                  "source": {
+                    "columns": [
+                      "RegionId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Region"
+                  },
+                  "target": {
+                    "columns": [
+                      "IItemLocationId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "IItemLocation"
+                  }
+                },
+                {
+                  "index": {
+                    "primaryKey": true
+                  },
+                  "name": "Region_INoteEntityId_fkey",
+                  "source": {
+                    "columns": [
+                      "RegionId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Region"
+                  },
+                  "target": {
+                    "columns": [
+                      "INoteEntityId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "INoteEntity"
+                  }
+                },
+                {
+                  "index": {
+                    "name": "Region_MapId_idx"
+                  },
+                  "source": {
+                    "columns": [
+                      "MapId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Region"
+                  },
+                  "target": {
+                    "columns": [
+                      "MapId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Map"
+                  }
+                }
+              ],
               "indexes": [
                 {
                   "columns": [
@@ -2537,13 +4353,60 @@
                   "nullable": false
                 }
               },
-              "foreignKeys": [],
+              "foreignKeys": [
+                {
+                  "index": {
+                    "name": "RegionHandout_RegionId_idx_97fe7b25"
+                  },
+                  "source": {
+                    "columns": [
+                      "RegionId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "RegionHandout"
+                  },
+                  "target": {
+                    "columns": [
+                      "RegionId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Region"
+                  }
+                },
+                {
+                  "index": {
+                    "name": "RegionHandout_HandoutId_idx"
+                  },
+                  "source": {
+                    "columns": [
+                      "HandoutId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "RegionHandout"
+                  },
+                  "target": {
+                    "columns": [
+                      "HandoutId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Handout"
+                  }
+                }
+              ],
               "indexes": [
                 {
                   "columns": [
                     "HandoutId"
                   ],
                   "name": "RegionHandout_HandoutId_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "RegionId"
+                  ],
+                  "name": "RegionHandout_RegionId_idx_97fe7b25",
+                  "prefix": "RegionHandout_RegionId_idx",
                   "unique": false
                 }
               ],
@@ -2569,13 +4432,60 @@
                   "nullable": false
                 }
               },
-              "foreignKeys": [],
+              "foreignKeys": [
+                {
+                  "index": {
+                    "name": "RegionNarration_RegionId_idx_97fe7b25"
+                  },
+                  "source": {
+                    "columns": [
+                      "RegionId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "RegionNarration"
+                  },
+                  "target": {
+                    "columns": [
+                      "RegionId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Region"
+                  }
+                },
+                {
+                  "index": {
+                    "name": "RegionNarration_NarrationId_idx"
+                  },
+                  "source": {
+                    "columns": [
+                      "NarrationId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "RegionNarration"
+                  },
+                  "target": {
+                    "columns": [
+                      "NarrationId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Narration"
+                  }
+                }
+              ],
               "indexes": [
                 {
                   "columns": [
                     "NarrationId"
                   ],
                   "name": "RegionNarration_NarrationId_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "RegionId"
+                  ],
+                  "name": "RegionNarration_RegionId_idx_97fe7b25",
+                  "prefix": "RegionNarration_RegionId_idx",
                   "unique": false
                 }
               ],
@@ -2620,7 +4530,27 @@
                   }
                 }
               },
-              "foreignKeys": [],
+              "foreignKeys": [
+                {
+                  "index": {
+                    "name": "RegionShape_RegionId_idx"
+                  },
+                  "source": {
+                    "columns": [
+                      "RegionId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "RegionShape"
+                  },
+                  "target": {
+                    "columns": [
+                      "RegionId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Region"
+                  }
+                }
+              ],
               "indexes": [
                 {
                   "columns": [
@@ -2677,6 +4607,14 @@
                 "Bright Light"
               ]
             },
+            "ActionTargetType": {
+              "kind": "valueSet",
+              "values": [
+                "Item",
+                "LocationItem",
+                "Region"
+              ]
+            },
             "ActionType": {
               "kind": "valueSet",
               "values": [
@@ -2710,6 +4648,21 @@
                 "Text",
                 "Image",
                 "File"
+              ]
+            },
+            "ItemLocationType": {
+              "kind": "valueSet",
+              "values": [
+                "Region",
+                "LocationItem"
+              ]
+            },
+            "NoteEntityType": {
+              "kind": "valueSet",
+              "values": [
+                "Item",
+                "LocationItem",
+                "Region"
               ]
             },
             "RelativeLighting": {
@@ -2760,7 +4713,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "5ad6ab59f543f370a9eecb0ed1026cdad93143114ce22ef3478ceb9e63f6fd40"
+    "storageHash": "82254ea3941517745782ef6b2618fcb1e52af334b127768fbed578d049166f74"
   },
   "capabilities": {
     "postgres": {
