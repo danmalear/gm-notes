@@ -1,0 +1,343 @@
+// use prisma-8
+namespace public {
+  model AbilityCheck {
+    AbilityCheckId             Uuid           @id
+    ActionId                   Uuid
+    Action                     Action         @relation(fields: [ActionId], references: [ActionId])
+    Skill                      pg.enum(Skill)
+    DC                         Int
+    SuccessNarrationId         Uuid?
+    SuccessNarration           Narration?     @relation(name: "Success", fields: [SuccessNarrationId], references: [NarrationId])
+    FailureNarrationId         Uuid?
+    FailureNarration           Narration?     @relation(name: "Failure", fields: [FailureNarrationId], references: [NarrationId])
+    CriticalSuccessNarrationId Uuid?
+    CriticalSuccessNarration   Narration?     @relation(name: "CriticalSuccess", fields: [CriticalSuccessNarrationId], references: [NarrationId])
+    CriticalFailureNarrationId Uuid?
+    CriticalFailureNarration   Narration?     @relation(name: "CriticalFailure", fields: [CriticalFailureNarrationId], references: [NarrationId])
+
+    @@index([ActionId], map: "AbilityCheck_ActionId_idx")
+    @@index([CriticalFailureNarrationId], map: "AbilityCheck_CriticalFailureNarrationId_idx")
+    @@index([CriticalSuccessNarrationId], map: "AbilityCheck_CriticalSuccessNarrationId_idx")
+    @@index([FailureNarrationId], map: "AbilityCheck_FailureNarrationId_idx")
+    @@index([SuccessNarrationId], map: "AbilityCheck_SuccessNarrationId_idx")
+  }
+
+  model Action {
+    ActionId         Uuid                 @id
+    TargetId         Uuid
+    Region           Region?              @relation(name: "TargetRegion", fields: [TargetId], references: [RegionId], map: "Action_RegionId_fkey")
+    Item             Item?                @relation(name: "TargetItem", fields: [TargetId], references: [ItemId], map: "Action_ItemId_fkey")
+    LocationItem     LocationItem?        @relation(name: "TargetLocationItem", fields: [TargetId], references: [LocationItemId], map: "Action_LocationItemId_fkey")
+    Name             String
+    Type             pg.enum(ActionType)?
+    NarrationId      Uuid?
+    Narration        Narration?           @relation(fields: [NarrationId], references: [NarrationId])
+    AbilityChecks    AbilityCheck[]
+    ActionConditions ActionCondition[]
+
+    @@index([NarrationId], map: "Action_NarrationId_idx")
+    @@index([TargetId], map: "Action_TargetId_idx")
+  }
+
+  model ActionCondition {
+    ActionId    Uuid      @map("ActionId")
+    Action      Action    @relation(fields: [ActionId], references: [ActionId])
+    ConditionId Uuid      @map("ConditionId")
+    Condition   Condition @relation(fields: [ConditionId], references: [ConditionId])
+
+    @@id([ActionId, ConditionId])
+    @@index([ConditionId], map: "ActionCondition_ConditionId_idx")
+  }
+
+  model Campaign {
+    CampaignId         Uuid        @id
+    CampaignTemplateId Uuid?
+    Name               String
+    ActiveMapId        Uuid?       @unique
+    ActiveMap          Map?        @relation(name: "CampaignActiveMap", fields: [ActiveMapId], references: [MapId])
+    Conditions         Condition[]
+    Handouts           Handout[]
+    Items              Item[]
+    Maps               Map[]       @relation(name: "MapCampaign")
+  }
+
+  model CampaignTemplate {
+    CampaignTemplateId Uuid        @id
+    Name               VarChar(63)
+  }
+
+  model Condition {
+    ConditionId      Uuid              @id
+    Name             String
+    Description      String
+    IsMet            Boolean           @default(false)
+    CampaignId       Uuid
+    Campaign         Campaign          @relation(fields: [CampaignId], references: [CampaignId])
+    ActionConditions ActionCondition[]
+
+    @@index([CampaignId], map: "Condition_CampaignId_idx")
+  }
+
+  model File {
+    FileId   Uuid   @id
+    FileName String
+    Item     Item?
+    Map      Map?
+  }
+
+  model Handout {
+    HandoutId      Uuid                 @id
+    CampaignId     Uuid
+    Campaign       Campaign             @relation(fields: [CampaignId], references: [CampaignId])
+    Name           String
+    Type           pg.enum(HandoutType)
+    Source         String
+    RegionHandouts RegionHandout[]
+
+    @@index([CampaignId], map: "Handout_CampaignId_idx")
+  }
+
+  model Item {
+    ItemId        Uuid                   @id
+    CampaignId    Uuid?
+    Campaign      Campaign?              @relation(fields: [CampaignId], references: [CampaignId])
+    Name          String
+    IsContainer   Boolean                @default(false)
+    Value         Int?
+    ValueUnit     pg.enum(CurrencyUnit)?
+    DetailsLink   String?
+    ImageFileId   String?                @unique
+    ImageFile     File?                  @relation(fields: [ImageFileId], references: [FileId])
+    Actions       Action[]               @relation(name: "TargetItem")
+    LocationItems LocationItem[]
+    Notes         Note[]                 @relation(name: "ParentItem")
+
+    @@index([CampaignId], map: "Item_CampaignId_idx")
+  }
+
+  model LocationItem {
+    LocationItemId Uuid           @id
+    LocationId     Uuid
+    Region         Region?        @relation(name: "RegionItem", fields: [LocationId], references: [RegionId], map: "LocationItem_RegionId_fkey")
+    Container      LocationItem?  @relation(name: "ContainerContents", fields: [LocationId], references: [LocationItemId], onUpdate: Restrict, map: "LocationItem_ContainerId_fkey")
+    ItemId         Uuid
+    Item           Item           @relation(fields: [ItemId], references: [ItemId])
+    Quantity       Int            @default(1)
+    Actions        Action[]       @relation(name: "TargetLocationItem")
+    Notes          Note[]         @relation(name: "ParentLocationItem")
+    Contents       LocationItem[] @relation(name: "ContainerContents")
+
+    @@index([ItemId], map: "LocationItem_ItemId_idx")
+    @@index([LocationId], map: "LocationItem_LocationId_idx")
+  }
+
+  model Map {
+    MapId           Uuid                      @id
+    CampaignId      Uuid
+    Campaign        Campaign                  @relation(name: "MapCampaign", fields: [CampaignId], references: [CampaignId], onUpdate: Restrict)
+    MapTemplateId   Uuid?
+    Name            String
+    ImageFileId     String                    @unique
+    ImageFile       File                      @relation(fields: [ImageFileId], references: [FileId])
+    DefaultLighting pg.enum(AbsoluteLighting) @default("Bright Light")
+    Width           Int                       @default(0)
+    Height          Int                       @default(0)
+    ActiveCampaign  Campaign?                 @relation(name: "CampaignActiveMap")
+    Regions         Region[]
+
+    @@index([CampaignId], map: "Map_CampaignId_idx")
+  }
+
+  model MapTemplate {
+    MapTemplateId      Uuid         @id
+    CampaignTemplateId Uuid?
+    Name               VarChar(63)
+    ImagePath          VarChar(255)
+  }
+
+  model Narration {
+    NarrationId                  Uuid              @id
+    NarrationTemplateId          Uuid?
+    Name                         String
+    Description                  String
+    IsRead                       Boolean           @default(false)
+    Actions                      Action[]
+    RegionNarrations             RegionNarration[]
+    SuccessAbilityChecks         AbilityCheck[]    @relation(name: "Success")
+    FailureAbilityChecks         AbilityCheck[]    @relation(name: "Failure")
+    CriticalSuccessAbilityChecks AbilityCheck[]    @relation(name: "CriticalSuccess")
+    CriticalFailureAbilityChecks AbilityCheck[]    @relation(name: "CriticalFailure")
+  }
+
+  model NarrationTemplate {
+    NarrationTemplateId Uuid         @id
+    Name                VarChar(255)
+    Description         VarChar(255)
+  }
+
+  model Note {
+    NoteId       Uuid          @id
+    EntityId     Uuid
+    Region       Region?       @relation(name: "ParentRegion", fields: [EntityId], references: [RegionId], map: "Note_RegionId_fkey")
+    Item         Item?         @relation(name: "ParentItem", fields: [EntityId], references: [ItemId], map: "Note_ItemId_fkey")
+    LocationItem LocationItem? @relation(name: "ParentLocationItem", fields: [EntityId], references: [LocationItemId], map: "Note_LocationItemId_fkey")
+    Description  String
+
+    @@index([EntityId], map: "Note_EntityId_idx")
+  }
+
+  model Region {
+    RegionId         Uuid                      @id
+    RegionTemplateId Uuid?
+    MapId            Uuid
+    Map              Map                       @relation(fields: [MapId], references: [MapId])
+    Name             String
+    Lighting         pg.enum(RelativeLighting) @default("Default")
+    Actions          Action[]                  @relation(name: "TargetRegion")
+    Items            LocationItem[]            @relation(name: "RegionItem")
+    Notes            Note[]                    @relation(name: "ParentRegion")
+    Handouts         RegionHandout[]
+    Narrations       RegionNarration[]
+    Shapes           RegionShape[]
+
+    @@index([MapId], map: "Region_MapId_idx")
+  }
+
+  model RegionHandout {
+    RegionId  Uuid
+    Region    Region  @relation(fields: [RegionId], references: [RegionId])
+    HandoutId Uuid
+    Handout   Handout @relation(fields: [HandoutId], references: [HandoutId])
+
+    @@id([RegionId, HandoutId], map: "RegionHandout_pkey")
+    @@index([HandoutId], map: "RegionHandout_HandoutId_idx")
+  }
+
+  model RegionNarration {
+    RegionId    Uuid
+    Region      Region    @relation(fields: [RegionId], references: [RegionId])
+    NarrationId Uuid
+    Narration   Narration @relation(fields: [NarrationId], references: [NarrationId])
+
+    @@id([RegionId, NarrationId], map: "RegionNarration_pkey")
+    @@index([NarrationId], map: "RegionNarration_NarrationId_idx")
+  }
+
+  model RegionShape {
+    RegionShapeId Uuid               @id
+    RegionId      Uuid
+    Region        Region             @relation(fields: [RegionId], references: [RegionId])
+    Coords        Jsonb
+    ShapeType     pg.enum(ShapeType)
+
+    @@index([RegionId], map: "RegionShape_RegionId_idx")
+  }
+
+  model RegionTemplate {
+    RegionTemplateId Uuid        @id
+    MapTemplateId    Uuid
+    Name             VarChar(63)
+  }
+
+  native_enum AbsoluteLighting {
+    Darkness = "Darkness"
+    DimLight = "Dim Light"
+    BrightLight = "Bright Light"
+  }
+
+  native_enum ActionType {
+    Attack = "Attack"
+    Dash = "Dash"
+    Disengage = "Disengage"
+    Dodge = "Dodge"
+    Help = "Help"
+    Hide = "Hide"
+    Influence = "Influence"
+    Magic = "Magic"
+    Ready = "Ready"
+    Search = "Search"
+    Study = "Study"
+    Utilize = "Utilize"
+  }
+
+  native_enum CurrencyUnit {
+    CP = "CP"
+    SP = "SP"
+    EP = "EP"
+    GP = "GP"
+    PP = "PP"
+  }
+
+  native_enum HandoutType {
+    Text = "Text"
+    Image = "Image"
+    File = "File"
+  }
+
+  native_enum RelativeLighting {
+    Darkness = "Darkness"
+    DimLight = "Dim Light"
+    BrightLight = "Bright Light"
+    Default = "Default"
+    DefaultPlus = "Default+"
+    DefaultMinus = "Default-"
+  }
+
+  native_enum ShapeType {
+    Circle = "Circle"
+    Polygon = "Polygon"
+    Rectangle = "Rectangle"
+  }
+
+  native_enum Skill {
+    Acrobatics = "Acrobatics"
+    AnimalHandling = "Animal Handling"
+    Arcana = "Arcana"
+    Athletics = "Athletics"
+    Deception = "Deception"
+    History = "History"
+    Insight = "Insight"
+    Intimidation = "Intimidation"
+    Investigation = "Investigation"
+    Medicine = "Medicine"
+    Nature = "Nature"
+    Perception = "Perception"
+    Performance = "Performance"
+    Persuasion = "Persuasion"
+    Religion = "Religion"
+    SleightOfHand = "Sleight of Hand"
+    Stealth = "Stealth"
+    Survival = "Survival"
+  }
+}
+
+namespace es {
+  model Command {
+    CommandId     Uuid     @id
+    StreamId      Uuid?
+    CorrelationId Uuid
+    Context       String
+    Ref           String
+    Data          Json
+    CreatedAt     DateTime
+  }
+
+  model Event {
+    EventId       Uuid     @id
+    StreamId      Uuid
+    CorrelationId Uuid
+    Context       String
+    Ref           String
+    Version       Int
+    Data          Json
+    OccurredAt    DateTime
+  }
+
+  model Stream {
+    StreamId  Uuid     @id
+    Type      String
+    Version   Int      @default(0)
+    CreatedAt DateTime
+    UpdatedAt DateTime
+  }
+}

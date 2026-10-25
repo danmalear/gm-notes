@@ -1,0 +1,2799 @@
+{
+  "schemaVersion": "1",
+  "targetFamily": "sql",
+  "target": "postgres",
+  "profileHash": "3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2",
+  "roots": {
+    "AbilityCheck": {
+      "model": "AbilityCheck",
+      "namespace": "public"
+    },
+    "Action": {
+      "model": "Action",
+      "namespace": "public"
+    },
+    "ActionCondition": {
+      "model": "ActionCondition",
+      "namespace": "public"
+    },
+    "Campaign": {
+      "model": "Campaign",
+      "namespace": "public"
+    },
+    "CampaignTemplate": {
+      "model": "CampaignTemplate",
+      "namespace": "public"
+    },
+    "Command": {
+      "model": "Command",
+      "namespace": "es"
+    },
+    "Condition": {
+      "model": "Condition",
+      "namespace": "public"
+    },
+    "Event": {
+      "model": "Event",
+      "namespace": "es"
+    },
+    "File": {
+      "model": "File",
+      "namespace": "public"
+    },
+    "Handout": {
+      "model": "Handout",
+      "namespace": "public"
+    },
+    "Item": {
+      "model": "Item",
+      "namespace": "public"
+    },
+    "LocationItem": {
+      "model": "LocationItem",
+      "namespace": "public"
+    },
+    "Map": {
+      "model": "Map",
+      "namespace": "public"
+    },
+    "MapTemplate": {
+      "model": "MapTemplate",
+      "namespace": "public"
+    },
+    "Narration": {
+      "model": "Narration",
+      "namespace": "public"
+    },
+    "NarrationTemplate": {
+      "model": "NarrationTemplate",
+      "namespace": "public"
+    },
+    "Note": {
+      "model": "Note",
+      "namespace": "public"
+    },
+    "Region": {
+      "model": "Region",
+      "namespace": "public"
+    },
+    "RegionHandout": {
+      "model": "RegionHandout",
+      "namespace": "public"
+    },
+    "RegionNarration": {
+      "model": "RegionNarration",
+      "namespace": "public"
+    },
+    "RegionShape": {
+      "model": "RegionShape",
+      "namespace": "public"
+    },
+    "RegionTemplate": {
+      "model": "RegionTemplate",
+      "namespace": "public"
+    },
+    "Stream": {
+      "model": "Stream",
+      "namespace": "es"
+    }
+  },
+  "domain": {
+    "namespaces": {
+      "es": {
+        "models": {
+          "Command": {
+            "fields": {
+              "CommandId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Context": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "CorrelationId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "CreatedAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
+                }
+              },
+              "Data": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/json@1",
+                  "kind": "scalar"
+                }
+              },
+              "Ref": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "StreamId": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "CommandId": {
+                  "column": "CommandId"
+                },
+                "Context": {
+                  "column": "Context"
+                },
+                "CorrelationId": {
+                  "column": "CorrelationId"
+                },
+                "CreatedAt": {
+                  "column": "CreatedAt"
+                },
+                "Data": {
+                  "column": "Data"
+                },
+                "Ref": {
+                  "column": "Ref"
+                },
+                "StreamId": {
+                  "column": "StreamId"
+                }
+              },
+              "namespaceId": "es",
+              "table": "Command"
+            }
+          },
+          "Event": {
+            "fields": {
+              "Context": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "CorrelationId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Data": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/json@1",
+                  "kind": "scalar"
+                }
+              },
+              "EventId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "OccurredAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
+                }
+              },
+              "Ref": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "StreamId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Version": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "Context": {
+                  "column": "Context"
+                },
+                "CorrelationId": {
+                  "column": "CorrelationId"
+                },
+                "Data": {
+                  "column": "Data"
+                },
+                "EventId": {
+                  "column": "EventId"
+                },
+                "OccurredAt": {
+                  "column": "OccurredAt"
+                },
+                "Ref": {
+                  "column": "Ref"
+                },
+                "StreamId": {
+                  "column": "StreamId"
+                },
+                "Version": {
+                  "column": "Version"
+                }
+              },
+              "namespaceId": "es",
+              "table": "Event"
+            }
+          },
+          "Stream": {
+            "fields": {
+              "CreatedAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
+                }
+              },
+              "StreamId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Type": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "UpdatedAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
+                }
+              },
+              "Version": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "CreatedAt": {
+                  "column": "CreatedAt"
+                },
+                "StreamId": {
+                  "column": "StreamId"
+                },
+                "Type": {
+                  "column": "Type"
+                },
+                "UpdatedAt": {
+                  "column": "UpdatedAt"
+                },
+                "Version": {
+                  "column": "Version"
+                }
+              },
+              "namespaceId": "es",
+              "table": "Stream"
+            }
+          }
+        }
+      },
+      "public": {
+        "models": {
+          "AbilityCheck": {
+            "fields": {
+              "AbilityCheckId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "ActionId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "CriticalFailureNarrationId": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "CriticalSuccessNarrationId": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "DC": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "FailureNarrationId": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Skill": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/enum@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "typeName": "Skill"
+                  }
+                }
+              },
+              "SuccessNarrationId": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {
+              "SuccessNarration": {
+                "cardinality": "N:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "SuccessNarrationId"
+                  ],
+                  "targetFields": [
+                    "NarrationId"
+                  ]
+                },
+                "to": {
+                  "model": "Narration",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "AbilityCheckId": {
+                  "column": "AbilityCheckId"
+                },
+                "ActionId": {
+                  "column": "ActionId"
+                },
+                "CriticalFailureNarrationId": {
+                  "column": "CriticalFailureNarrationId"
+                },
+                "CriticalSuccessNarrationId": {
+                  "column": "CriticalSuccessNarrationId"
+                },
+                "DC": {
+                  "column": "DC"
+                },
+                "FailureNarrationId": {
+                  "column": "FailureNarrationId"
+                },
+                "Skill": {
+                  "column": "Skill"
+                },
+                "SuccessNarrationId": {
+                  "column": "SuccessNarrationId"
+                }
+              },
+              "namespaceId": "public",
+              "table": "AbilityCheck"
+            }
+          },
+          "Action": {
+            "fields": {
+              "ActionId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Name": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "NarrationId": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "TargetId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Type": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/enum@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "typeName": "ActionType"
+                  }
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "ActionId": {
+                  "column": "ActionId"
+                },
+                "Name": {
+                  "column": "Name"
+                },
+                "NarrationId": {
+                  "column": "NarrationId"
+                },
+                "TargetId": {
+                  "column": "TargetId"
+                },
+                "Type": {
+                  "column": "Type"
+                }
+              },
+              "namespaceId": "public",
+              "table": "Action"
+            }
+          },
+          "ActionCondition": {
+            "fields": {
+              "ActionId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "ConditionId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "ActionId": {
+                  "column": "ActionId"
+                },
+                "ConditionId": {
+                  "column": "ConditionId"
+                }
+              },
+              "namespaceId": "public",
+              "table": "ActionCondition"
+            }
+          },
+          "Campaign": {
+            "fields": {
+              "ActiveMapId": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "CampaignId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "CampaignTemplateId": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Name": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "ActiveMapId": {
+                  "column": "ActiveMapId"
+                },
+                "CampaignId": {
+                  "column": "CampaignId"
+                },
+                "CampaignTemplateId": {
+                  "column": "CampaignTemplateId"
+                },
+                "Name": {
+                  "column": "Name"
+                }
+              },
+              "namespaceId": "public",
+              "table": "Campaign"
+            }
+          },
+          "CampaignTemplate": {
+            "fields": {
+              "CampaignTemplateId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Name": {
+                "nullable": false,
+                "type": {
+                  "codecId": "sql/varchar@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "length": 63
+                  }
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "CampaignTemplateId": {
+                  "column": "CampaignTemplateId"
+                },
+                "Name": {
+                  "column": "Name"
+                }
+              },
+              "namespaceId": "public",
+              "table": "CampaignTemplate"
+            }
+          },
+          "Condition": {
+            "fields": {
+              "CampaignId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "ConditionId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Description": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "IsMet": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/bool@1",
+                  "kind": "scalar"
+                }
+              },
+              "Name": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "CampaignId": {
+                  "column": "CampaignId"
+                },
+                "ConditionId": {
+                  "column": "ConditionId"
+                },
+                "Description": {
+                  "column": "Description"
+                },
+                "IsMet": {
+                  "column": "IsMet"
+                },
+                "Name": {
+                  "column": "Name"
+                }
+              },
+              "namespaceId": "public",
+              "table": "Condition"
+            }
+          },
+          "File": {
+            "fields": {
+              "FileId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "FileName": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "FileId": {
+                  "column": "FileId"
+                },
+                "FileName": {
+                  "column": "FileName"
+                }
+              },
+              "namespaceId": "public",
+              "table": "File"
+            }
+          },
+          "Handout": {
+            "fields": {
+              "CampaignId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "HandoutId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Name": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "Source": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "Type": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/enum@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "typeName": "HandoutType"
+                  }
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "CampaignId": {
+                  "column": "CampaignId"
+                },
+                "HandoutId": {
+                  "column": "HandoutId"
+                },
+                "Name": {
+                  "column": "Name"
+                },
+                "Source": {
+                  "column": "Source"
+                },
+                "Type": {
+                  "column": "Type"
+                }
+              },
+              "namespaceId": "public",
+              "table": "Handout"
+            }
+          },
+          "Item": {
+            "fields": {
+              "CampaignId": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "DetailsLink": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "ImageFileId": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "IsContainer": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/bool@1",
+                  "kind": "scalar"
+                }
+              },
+              "ItemId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Name": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "Value": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "ValueUnit": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/enum@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "typeName": "CurrencyUnit"
+                  }
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "CampaignId": {
+                  "column": "CampaignId"
+                },
+                "DetailsLink": {
+                  "column": "DetailsLink"
+                },
+                "ImageFileId": {
+                  "column": "ImageFileId"
+                },
+                "IsContainer": {
+                  "column": "IsContainer"
+                },
+                "ItemId": {
+                  "column": "ItemId"
+                },
+                "Name": {
+                  "column": "Name"
+                },
+                "Value": {
+                  "column": "Value"
+                },
+                "ValueUnit": {
+                  "column": "ValueUnit"
+                }
+              },
+              "namespaceId": "public",
+              "table": "Item"
+            }
+          },
+          "LocationItem": {
+            "fields": {
+              "ItemId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "LocationId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "LocationItemId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Quantity": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "ItemId": {
+                  "column": "ItemId"
+                },
+                "LocationId": {
+                  "column": "LocationId"
+                },
+                "LocationItemId": {
+                  "column": "LocationItemId"
+                },
+                "Quantity": {
+                  "column": "Quantity"
+                }
+              },
+              "namespaceId": "public",
+              "table": "LocationItem"
+            }
+          },
+          "Map": {
+            "fields": {
+              "CampaignId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "DefaultLighting": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/enum@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "typeName": "AbsoluteLighting"
+                  }
+                }
+              },
+              "Height": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "ImageFileId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "MapId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "MapTemplateId": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Name": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "Width": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "CampaignId": {
+                  "column": "CampaignId"
+                },
+                "DefaultLighting": {
+                  "column": "DefaultLighting"
+                },
+                "Height": {
+                  "column": "Height"
+                },
+                "ImageFileId": {
+                  "column": "ImageFileId"
+                },
+                "MapId": {
+                  "column": "MapId"
+                },
+                "MapTemplateId": {
+                  "column": "MapTemplateId"
+                },
+                "Name": {
+                  "column": "Name"
+                },
+                "Width": {
+                  "column": "Width"
+                }
+              },
+              "namespaceId": "public",
+              "table": "Map"
+            }
+          },
+          "MapTemplate": {
+            "fields": {
+              "CampaignTemplateId": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "ImagePath": {
+                "nullable": false,
+                "type": {
+                  "codecId": "sql/varchar@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "length": 255
+                  }
+                }
+              },
+              "MapTemplateId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Name": {
+                "nullable": false,
+                "type": {
+                  "codecId": "sql/varchar@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "length": 63
+                  }
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "CampaignTemplateId": {
+                  "column": "CampaignTemplateId"
+                },
+                "ImagePath": {
+                  "column": "ImagePath"
+                },
+                "MapTemplateId": {
+                  "column": "MapTemplateId"
+                },
+                "Name": {
+                  "column": "Name"
+                }
+              },
+              "namespaceId": "public",
+              "table": "MapTemplate"
+            }
+          },
+          "Narration": {
+            "fields": {
+              "Description": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "IsRead": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/bool@1",
+                  "kind": "scalar"
+                }
+              },
+              "Name": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "NarrationId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "NarrationTemplateId": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "Description": {
+                  "column": "Description"
+                },
+                "IsRead": {
+                  "column": "IsRead"
+                },
+                "Name": {
+                  "column": "Name"
+                },
+                "NarrationId": {
+                  "column": "NarrationId"
+                },
+                "NarrationTemplateId": {
+                  "column": "NarrationTemplateId"
+                }
+              },
+              "namespaceId": "public",
+              "table": "Narration"
+            }
+          },
+          "NarrationTemplate": {
+            "fields": {
+              "Description": {
+                "nullable": false,
+                "type": {
+                  "codecId": "sql/varchar@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "length": 255
+                  }
+                }
+              },
+              "Name": {
+                "nullable": false,
+                "type": {
+                  "codecId": "sql/varchar@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "length": 255
+                  }
+                }
+              },
+              "NarrationTemplateId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "Description": {
+                  "column": "Description"
+                },
+                "Name": {
+                  "column": "Name"
+                },
+                "NarrationTemplateId": {
+                  "column": "NarrationTemplateId"
+                }
+              },
+              "namespaceId": "public",
+              "table": "NarrationTemplate"
+            }
+          },
+          "Note": {
+            "fields": {
+              "Description": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "EntityId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "NoteId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "Description": {
+                  "column": "Description"
+                },
+                "EntityId": {
+                  "column": "EntityId"
+                },
+                "NoteId": {
+                  "column": "NoteId"
+                }
+              },
+              "namespaceId": "public",
+              "table": "Note"
+            }
+          },
+          "Region": {
+            "fields": {
+              "Lighting": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/enum@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "typeName": "RelativeLighting"
+                  }
+                }
+              },
+              "MapId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Name": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "RegionId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "RegionTemplateId": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "Lighting": {
+                  "column": "Lighting"
+                },
+                "MapId": {
+                  "column": "MapId"
+                },
+                "Name": {
+                  "column": "Name"
+                },
+                "RegionId": {
+                  "column": "RegionId"
+                },
+                "RegionTemplateId": {
+                  "column": "RegionTemplateId"
+                }
+              },
+              "namespaceId": "public",
+              "table": "Region"
+            }
+          },
+          "RegionHandout": {
+            "fields": {
+              "HandoutId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "RegionId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "HandoutId": {
+                  "column": "HandoutId"
+                },
+                "RegionId": {
+                  "column": "RegionId"
+                }
+              },
+              "namespaceId": "public",
+              "table": "RegionHandout"
+            }
+          },
+          "RegionNarration": {
+            "fields": {
+              "NarrationId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "RegionId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "NarrationId": {
+                  "column": "NarrationId"
+                },
+                "RegionId": {
+                  "column": "RegionId"
+                }
+              },
+              "namespaceId": "public",
+              "table": "RegionNarration"
+            }
+          },
+          "RegionShape": {
+            "fields": {
+              "Coords": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/jsonb@1",
+                  "kind": "scalar"
+                }
+              },
+              "RegionId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "RegionShapeId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "ShapeType": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/enum@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "typeName": "ShapeType"
+                  }
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "Coords": {
+                  "column": "Coords"
+                },
+                "RegionId": {
+                  "column": "RegionId"
+                },
+                "RegionShapeId": {
+                  "column": "RegionShapeId"
+                },
+                "ShapeType": {
+                  "column": "ShapeType"
+                }
+              },
+              "namespaceId": "public",
+              "table": "RegionShape"
+            }
+          },
+          "RegionTemplate": {
+            "fields": {
+              "MapTemplateId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "Name": {
+                "nullable": false,
+                "type": {
+                  "codecId": "sql/varchar@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "length": 63
+                  }
+                }
+              },
+              "RegionTemplateId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "MapTemplateId": {
+                  "column": "MapTemplateId"
+                },
+                "Name": {
+                  "column": "Name"
+                },
+                "RegionTemplateId": {
+                  "column": "RegionTemplateId"
+                }
+              },
+              "namespaceId": "public",
+              "table": "RegionTemplate"
+            }
+          }
+        }
+      }
+    }
+  },
+  "storage": {
+    "namespaces": {
+      "es": {
+        "entries": {
+          "table": {
+            "Command": {
+              "columns": {
+                "CommandId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "Context": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "CorrelationId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "CreatedAt": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": false
+                },
+                "Data": {
+                  "codecId": "pg/json@1",
+                  "dataType": "pg/json",
+                  "nullable": false
+                },
+                "Ref": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "StreamId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": true
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "CommandId"
+                ]
+              },
+              "uniques": []
+            },
+            "Event": {
+              "columns": {
+                "Context": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "CorrelationId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "Data": {
+                  "codecId": "pg/json@1",
+                  "dataType": "pg/json",
+                  "nullable": false
+                },
+                "EventId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "OccurredAt": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": false
+                },
+                "Ref": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "StreamId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "Version": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "EventId"
+                ]
+              },
+              "uniques": []
+            },
+            "Stream": {
+              "columns": {
+                "CreatedAt": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": false
+                },
+                "StreamId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "Type": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "UpdatedAt": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": false
+                },
+                "Version": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "default": {
+                    "kind": "literal",
+                    "value": 0
+                  },
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "StreamId"
+                ]
+              },
+              "uniques": []
+            }
+          }
+        },
+        "id": "es",
+        "kind": "postgres-schema"
+      },
+      "public": {
+        "entries": {
+          "native_enum": {
+            "AbsoluteLighting": {
+              "kind": "postgres-enum",
+              "members": [
+                "Darkness",
+                "Dim Light",
+                "Bright Light"
+              ],
+              "typeName": "AbsoluteLighting"
+            },
+            "ActionType": {
+              "kind": "postgres-enum",
+              "members": [
+                "Attack",
+                "Dash",
+                "Disengage",
+                "Dodge",
+                "Help",
+                "Hide",
+                "Influence",
+                "Magic",
+                "Ready",
+                "Search",
+                "Study",
+                "Utilize"
+              ],
+              "typeName": "ActionType"
+            },
+            "CurrencyUnit": {
+              "kind": "postgres-enum",
+              "members": [
+                "CP",
+                "SP",
+                "EP",
+                "GP",
+                "PP"
+              ],
+              "typeName": "CurrencyUnit"
+            },
+            "HandoutType": {
+              "kind": "postgres-enum",
+              "members": [
+                "Text",
+                "Image",
+                "File"
+              ],
+              "typeName": "HandoutType"
+            },
+            "RelativeLighting": {
+              "kind": "postgres-enum",
+              "members": [
+                "Darkness",
+                "Dim Light",
+                "Bright Light",
+                "Default",
+                "Default+",
+                "Default-"
+              ],
+              "typeName": "RelativeLighting"
+            },
+            "ShapeType": {
+              "kind": "postgres-enum",
+              "members": [
+                "Circle",
+                "Polygon",
+                "Rectangle"
+              ],
+              "typeName": "ShapeType"
+            },
+            "Skill": {
+              "kind": "postgres-enum",
+              "members": [
+                "Acrobatics",
+                "Animal Handling",
+                "Arcana",
+                "Athletics",
+                "Deception",
+                "History",
+                "Insight",
+                "Intimidation",
+                "Investigation",
+                "Medicine",
+                "Nature",
+                "Perception",
+                "Performance",
+                "Persuasion",
+                "Religion",
+                "Sleight of Hand",
+                "Stealth",
+                "Survival"
+              ],
+              "typeName": "Skill"
+            }
+          },
+          "table": {
+            "AbilityCheck": {
+              "columns": {
+                "AbilityCheckId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "ActionId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "CriticalFailureNarrationId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": true
+                },
+                "CriticalSuccessNarrationId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": true
+                },
+                "DC": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "nullable": false
+                },
+                "FailureNarrationId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": true
+                },
+                "Skill": {
+                  "codecId": "pg/enum@1",
+                  "dataType": "pg/enum",
+                  "nullable": false,
+                  "typeParams": {
+                    "typeName": "Skill"
+                  },
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "Skill",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                },
+                "SuccessNarrationId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": true
+                }
+              },
+              "foreignKeys": [
+                {
+                  "index": {
+                    "name": "AbilityCheck_SuccessNarrationId_idx"
+                  },
+                  "source": {
+                    "columns": [
+                      "SuccessNarrationId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "AbilityCheck"
+                  },
+                  "target": {
+                    "columns": [
+                      "NarrationId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Narration"
+                  }
+                }
+              ],
+              "indexes": [
+                {
+                  "columns": [
+                    "ActionId"
+                  ],
+                  "name": "AbilityCheck_ActionId_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "CriticalFailureNarrationId"
+                  ],
+                  "name": "AbilityCheck_CriticalFailureNarrationId_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "CriticalSuccessNarrationId"
+                  ],
+                  "name": "AbilityCheck_CriticalSuccessNarrationId_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "FailureNarrationId"
+                  ],
+                  "name": "AbilityCheck_FailureNarrationId_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "SuccessNarrationId"
+                  ],
+                  "name": "AbilityCheck_SuccessNarrationId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "AbilityCheckId"
+                ]
+              },
+              "uniques": []
+            },
+            "Action": {
+              "columns": {
+                "ActionId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "Name": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "NarrationId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": true
+                },
+                "TargetId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "Type": {
+                  "codecId": "pg/enum@1",
+                  "dataType": "pg/enum",
+                  "nullable": true,
+                  "typeParams": {
+                    "typeName": "ActionType"
+                  },
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "ActionType",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "NarrationId"
+                  ],
+                  "name": "Action_NarrationId_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "TargetId"
+                  ],
+                  "name": "Action_TargetId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "ActionId"
+                ]
+              },
+              "uniques": []
+            },
+            "ActionCondition": {
+              "columns": {
+                "ActionId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "ConditionId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "ConditionId"
+                  ],
+                  "name": "ActionCondition_ConditionId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "ActionId",
+                  "ConditionId"
+                ]
+              },
+              "uniques": []
+            },
+            "Campaign": {
+              "columns": {
+                "ActiveMapId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": true
+                },
+                "CampaignId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "CampaignTemplateId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": true
+                },
+                "Name": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "CampaignId"
+                ]
+              },
+              "uniques": [
+                {
+                  "columns": [
+                    "ActiveMapId"
+                  ]
+                }
+              ]
+            },
+            "CampaignTemplate": {
+              "columns": {
+                "CampaignTemplateId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "Name": {
+                  "codecId": "sql/varchar@1",
+                  "dataType": "pg/varchar",
+                  "nullable": false,
+                  "typeParams": {
+                    "length": 63
+                  }
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "CampaignTemplateId"
+                ]
+              },
+              "uniques": []
+            },
+            "Condition": {
+              "columns": {
+                "CampaignId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "ConditionId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "Description": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "IsMet": {
+                  "codecId": "pg/bool@1",
+                  "dataType": "pg/bool",
+                  "default": {
+                    "kind": "literal",
+                    "value": false
+                  },
+                  "nullable": false
+                },
+                "Name": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "CampaignId"
+                  ],
+                  "name": "Condition_CampaignId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "ConditionId"
+                ]
+              },
+              "uniques": []
+            },
+            "File": {
+              "columns": {
+                "FileId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "FileName": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "FileId"
+                ]
+              },
+              "uniques": []
+            },
+            "Handout": {
+              "columns": {
+                "CampaignId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "HandoutId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "Name": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "Source": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "Type": {
+                  "codecId": "pg/enum@1",
+                  "dataType": "pg/enum",
+                  "nullable": false,
+                  "typeParams": {
+                    "typeName": "HandoutType"
+                  },
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "HandoutType",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "CampaignId"
+                  ],
+                  "name": "Handout_CampaignId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "HandoutId"
+                ]
+              },
+              "uniques": []
+            },
+            "Item": {
+              "columns": {
+                "CampaignId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": true
+                },
+                "DetailsLink": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
+                },
+                "ImageFileId": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
+                },
+                "IsContainer": {
+                  "codecId": "pg/bool@1",
+                  "dataType": "pg/bool",
+                  "default": {
+                    "kind": "literal",
+                    "value": false
+                  },
+                  "nullable": false
+                },
+                "ItemId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "Name": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "Value": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "nullable": true
+                },
+                "ValueUnit": {
+                  "codecId": "pg/enum@1",
+                  "dataType": "pg/enum",
+                  "nullable": true,
+                  "typeParams": {
+                    "typeName": "CurrencyUnit"
+                  },
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "CurrencyUnit",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "CampaignId"
+                  ],
+                  "name": "Item_CampaignId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "ItemId"
+                ]
+              },
+              "uniques": [
+                {
+                  "columns": [
+                    "ImageFileId"
+                  ]
+                }
+              ]
+            },
+            "LocationItem": {
+              "columns": {
+                "ItemId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "LocationId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "LocationItemId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "Quantity": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "default": {
+                    "kind": "literal",
+                    "value": 1
+                  },
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "ItemId"
+                  ],
+                  "name": "LocationItem_ItemId_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "LocationId"
+                  ],
+                  "name": "LocationItem_LocationId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "LocationItemId"
+                ]
+              },
+              "uniques": []
+            },
+            "Map": {
+              "columns": {
+                "CampaignId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "DefaultLighting": {
+                  "codecId": "pg/enum@1",
+                  "dataType": "pg/enum",
+                  "default": {
+                    "kind": "literal",
+                    "value": "Bright Light"
+                  },
+                  "nullable": false,
+                  "typeParams": {
+                    "typeName": "AbsoluteLighting"
+                  },
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "AbsoluteLighting",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                },
+                "Height": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "default": {
+                    "kind": "literal",
+                    "value": 0
+                  },
+                  "nullable": false
+                },
+                "ImageFileId": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "MapId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "MapTemplateId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": true
+                },
+                "Name": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "Width": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "default": {
+                    "kind": "literal",
+                    "value": 0
+                  },
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "CampaignId"
+                  ],
+                  "name": "Map_CampaignId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "MapId"
+                ]
+              },
+              "uniques": [
+                {
+                  "columns": [
+                    "ImageFileId"
+                  ]
+                }
+              ]
+            },
+            "MapTemplate": {
+              "columns": {
+                "CampaignTemplateId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": true
+                },
+                "ImagePath": {
+                  "codecId": "sql/varchar@1",
+                  "dataType": "pg/varchar",
+                  "nullable": false,
+                  "typeParams": {
+                    "length": 255
+                  }
+                },
+                "MapTemplateId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "Name": {
+                  "codecId": "sql/varchar@1",
+                  "dataType": "pg/varchar",
+                  "nullable": false,
+                  "typeParams": {
+                    "length": 63
+                  }
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "MapTemplateId"
+                ]
+              },
+              "uniques": []
+            },
+            "Narration": {
+              "columns": {
+                "Description": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "IsRead": {
+                  "codecId": "pg/bool@1",
+                  "dataType": "pg/bool",
+                  "default": {
+                    "kind": "literal",
+                    "value": false
+                  },
+                  "nullable": false
+                },
+                "Name": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "NarrationId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "NarrationTemplateId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": true
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "NarrationId"
+                ]
+              },
+              "uniques": []
+            },
+            "NarrationTemplate": {
+              "columns": {
+                "Description": {
+                  "codecId": "sql/varchar@1",
+                  "dataType": "pg/varchar",
+                  "nullable": false,
+                  "typeParams": {
+                    "length": 255
+                  }
+                },
+                "Name": {
+                  "codecId": "sql/varchar@1",
+                  "dataType": "pg/varchar",
+                  "nullable": false,
+                  "typeParams": {
+                    "length": 255
+                  }
+                },
+                "NarrationTemplateId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "NarrationTemplateId"
+                ]
+              },
+              "uniques": []
+            },
+            "Note": {
+              "columns": {
+                "Description": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "EntityId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "NoteId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "EntityId"
+                  ],
+                  "name": "Note_EntityId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "NoteId"
+                ]
+              },
+              "uniques": []
+            },
+            "Region": {
+              "columns": {
+                "Lighting": {
+                  "codecId": "pg/enum@1",
+                  "dataType": "pg/enum",
+                  "default": {
+                    "kind": "literal",
+                    "value": "Default"
+                  },
+                  "nullable": false,
+                  "typeParams": {
+                    "typeName": "RelativeLighting"
+                  },
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "RelativeLighting",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                },
+                "MapId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "Name": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "RegionId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "RegionTemplateId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": true
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "MapId"
+                  ],
+                  "name": "Region_MapId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "RegionId"
+                ]
+              },
+              "uniques": []
+            },
+            "RegionHandout": {
+              "columns": {
+                "HandoutId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "RegionId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "HandoutId"
+                  ],
+                  "name": "RegionHandout_HandoutId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "RegionId",
+                  "HandoutId"
+                ],
+                "name": "RegionHandout_pkey"
+              },
+              "uniques": []
+            },
+            "RegionNarration": {
+              "columns": {
+                "NarrationId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "RegionId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "NarrationId"
+                  ],
+                  "name": "RegionNarration_NarrationId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "RegionId",
+                  "NarrationId"
+                ],
+                "name": "RegionNarration_pkey"
+              },
+              "uniques": []
+            },
+            "RegionShape": {
+              "columns": {
+                "Coords": {
+                  "codecId": "pg/jsonb@1",
+                  "dataType": "pg/jsonb",
+                  "nullable": false
+                },
+                "RegionId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "RegionShapeId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "ShapeType": {
+                  "codecId": "pg/enum@1",
+                  "dataType": "pg/enum",
+                  "nullable": false,
+                  "typeParams": {
+                    "typeName": "ShapeType"
+                  },
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "ShapeType",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "RegionId"
+                  ],
+                  "name": "RegionShape_RegionId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "RegionShapeId"
+                ]
+              },
+              "uniques": []
+            },
+            "RegionTemplate": {
+              "columns": {
+                "MapTemplateId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                },
+                "Name": {
+                  "codecId": "sql/varchar@1",
+                  "dataType": "pg/varchar",
+                  "nullable": false,
+                  "typeParams": {
+                    "length": 63
+                  }
+                },
+                "RegionTemplateId": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "RegionTemplateId"
+                ]
+              },
+              "uniques": []
+            }
+          },
+          "valueSet": {
+            "AbsoluteLighting": {
+              "kind": "valueSet",
+              "values": [
+                "Darkness",
+                "Dim Light",
+                "Bright Light"
+              ]
+            },
+            "ActionType": {
+              "kind": "valueSet",
+              "values": [
+                "Attack",
+                "Dash",
+                "Disengage",
+                "Dodge",
+                "Help",
+                "Hide",
+                "Influence",
+                "Magic",
+                "Ready",
+                "Search",
+                "Study",
+                "Utilize"
+              ]
+            },
+            "CurrencyUnit": {
+              "kind": "valueSet",
+              "values": [
+                "CP",
+                "SP",
+                "EP",
+                "GP",
+                "PP"
+              ]
+            },
+            "HandoutType": {
+              "kind": "valueSet",
+              "values": [
+                "Text",
+                "Image",
+                "File"
+              ]
+            },
+            "RelativeLighting": {
+              "kind": "valueSet",
+              "values": [
+                "Darkness",
+                "Dim Light",
+                "Bright Light",
+                "Default",
+                "Default+",
+                "Default-"
+              ]
+            },
+            "ShapeType": {
+              "kind": "valueSet",
+              "values": [
+                "Circle",
+                "Polygon",
+                "Rectangle"
+              ]
+            },
+            "Skill": {
+              "kind": "valueSet",
+              "values": [
+                "Acrobatics",
+                "Animal Handling",
+                "Arcana",
+                "Athletics",
+                "Deception",
+                "History",
+                "Insight",
+                "Intimidation",
+                "Investigation",
+                "Medicine",
+                "Nature",
+                "Perception",
+                "Performance",
+                "Persuasion",
+                "Religion",
+                "Sleight of Hand",
+                "Stealth",
+                "Survival"
+              ]
+            }
+          }
+        },
+        "id": "public",
+        "kind": "postgres-schema"
+      }
+    },
+    "storageHash": "5ad6ab59f543f370a9eecb0ed1026cdad93143114ce22ef3478ceb9e63f6fd40"
+  },
+  "capabilities": {
+    "postgres": {
+      "distinctOn": true,
+      "forKeyShare": true,
+      "forNoKeyUpdate": true,
+      "jsonAgg": true,
+      "lateral": true,
+      "limit": true,
+      "orderBy": true,
+      "returning": true
+    },
+    "sql": {
+      "checkConstraint": true,
+      "defaultInInsert": true,
+      "enums": true,
+      "forShare": true,
+      "forUpdate": true,
+      "insertOnConflictSkip": true,
+      "insertOnConflictWithoutTarget": true,
+      "lateral": true,
+      "lockNowait": true,
+      "lockOf": true,
+      "lockSkipLocked": true,
+      "returning": true,
+      "scalarList": true
+    }
+  },
+  "extensions": {},
+  "meta": {},
+  "_generated": {
+    "warning": "⚠️  GENERATED FILE - DO NOT EDIT",
+    "message": "This file is automatically generated by \"prisma contract emit\".",
+    "regenerate": "To regenerate, run: prisma contract emit"
+  }
+}
