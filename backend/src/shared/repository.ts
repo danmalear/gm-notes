@@ -123,5 +123,5 @@ export abstract class Repository<
 	 * @param data New data to update the record with
 	 * @returns The updated record
 	 */
-	abstract update(id: UUID, data: TUpdateInput): Promise<TModel>;
+	abstract update(id: UUID, data: TUpdateInput): Promise<TModel | null>;
 }
