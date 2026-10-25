@@ -48,7 +48,7 @@ export interface IRepository<
 	 * @param data New data to update the record with
 	 * @returns The updated record
 	 */
-	update(id: UUID, data: TUpdate): Promise<TModel>;
+	update(id: UUID, data: Partial<TUpdate>): Promise<TModel | null>;
 }
 
 /**
