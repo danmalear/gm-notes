@@ -43,12 +43,12 @@ export function toDto(region: RegionIncludeAll) {
 		narrations: region.Narrations.map((regionNarration) =>
 			narrationToStub(regionNarration.Narration),
 		),
-		actions: region.Actions.map(actionToStub),
-		items: region.Items.map(locationItemToStub),
+		actions: region.IActionTarget.Actions.map(actionToStub),
+		items: region.IItemLocation.Items.map(locationItemToStub),
 		handouts: region.Handouts.map((regionHandout) =>
 			handoutToStub(regionHandout.Handout),
 		),
-		notes: region.Notes.map((note) => note.Description),
+		notes: region.INoteEntity.Notes.map((note) => note.Description),
 	};
 
 	return regionResponse;
