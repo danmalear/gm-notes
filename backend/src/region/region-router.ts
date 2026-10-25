@@ -177,7 +177,7 @@ export class RegionRouter extends BaseStreamRouter<
 				const id = randomUUID();
 
 				await this.repository.create({
-					RegionId: id,
+					// RegionId handled by FKs
 					RegionTemplateId: null,
 					Map: {
 						connect: {
@@ -186,6 +186,24 @@ export class RegionRouter extends BaseStreamRouter<
 					},
 					Name: req.body.name,
 					Lighting: 'Default',
+					IItemLocation: {
+						create: {
+							IItemLocationId: id,
+							Type: 'Region',
+						},
+					},
+					IActionTarget: {
+						create: {
+							IActionTargetId: id,
+							Type: 'Region',
+						},
+					},
+					INoteEntity: {
+						create: {
+							INoteEntityId: id,
+							Type: 'Region',
+						},
+					},
 				});
 
 				for (const shape of req.body.shapes) {
