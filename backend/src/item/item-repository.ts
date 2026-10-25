@@ -1,4 +1,5 @@
-import type { ActionModel } from '#prisma-models/Action.ts';
+import type { IActionTargetIncludeMin } from '#action/action-repository.ts';
+import type { INoteEntityIncludeMin } from '#note/note-repository.ts';
 import type { FileModel } from '#prisma-models/File.ts';
 import type { IItemLocationModel } from '#prisma-models/IItemLocation.ts';
 import type {
@@ -7,7 +8,6 @@ import type {
 	ItemModel,
 	ItemUpdateInput,
 } from '#prisma-models/Item.ts';
-import type { NoteModel } from '#prisma-models/Note.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 import type { LocationItemIncludeMin } from './location-item-repository.ts';
@@ -18,14 +18,22 @@ export interface IItemLocationIncludeMin extends IItemLocationModel {
 
 export interface ItemIncludeAll extends ItemModel {
 	ImageFile: FileModel | null;
-	Actions: ActionModel[];
-	Notes: NoteModel[];
+	IActionTarget: IActionTargetIncludeMin;
+	INoteEntity: INoteEntityIncludeMin;
 }
 
 export const includeAll = {
 	ImageFile: true,
-	Actions: true,
-	Notes: true,
+	IActionTarget: {
+		include: {
+			Actions: true,
+		},
+	},
+	INoteEntity: {
+		include: {
+			Notes: true,
+		},
+	},
 } satisfies ItemInclude;
 
 export type IItemRepository = IRepository<
