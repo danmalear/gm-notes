@@ -1,5 +1,6 @@
 import type { ActionModel } from '#prisma-models/Action.ts';
 import type { FileModel } from '#prisma-models/File.ts';
+import type { IItemLocationModel } from '#prisma-models/IItemLocation.ts';
 import type {
 	ItemCreateInput,
 	ItemInclude,
@@ -9,6 +10,11 @@ import type {
 import type { NoteModel } from '#prisma-models/Note.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
+import type { LocationItemIncludeMin } from './location-item-repository.ts';
+
+export interface IItemLocationIncludeMin extends IItemLocationModel {
+	Items: LocationItemIncludeMin;
+}
 
 export interface ItemIncludeAll extends ItemModel {
 	ImageFile: FileModel | null;

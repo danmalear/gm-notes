@@ -6,10 +6,15 @@ import type {
 	ActionUpdateInput,
 } from '#prisma-models/Action.ts';
 import type { ConditionModel } from '#prisma-models/Condition.ts';
+import type { IActionTargetModel } from '#prisma-models/IActionTarget.ts';
 import type { NarrationModel } from '#prisma-models/Narration.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
+
+export interface IActionTargetIncludeMin extends IActionTargetModel {
+	Actions: ActionModel[];
+}
 
 export interface ActionIncludeAll extends ActionModel {
 	Narration: NarrationModel | null;

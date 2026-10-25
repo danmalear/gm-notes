@@ -3,9 +3,14 @@ import type {
 	NoteModel,
 	NoteUpdateInput,
 } from '#prisma-models/Note.ts';
+import type { INoteEntityModel } from '#prisma/generated/models.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
+
+export interface INoteEntityIncludeMin extends INoteEntityModel {
+	Notes: NoteModel[];
+}
 
 export interface INoteRepository
 	extends IRepository<NoteModel, NoteCreateInput, NoteUpdateInput> {
