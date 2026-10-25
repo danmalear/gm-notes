@@ -1,9 +1,9 @@
-import type { LocationItemIncludeMin } from '#item/location-item-repository.ts';
+import type { IActionTargetIncludeMin } from '#action/action-repository.ts';
+import type { IItemLocationIncludeMin } from '#item/item-repository.ts';
 import { includeMin as locationItemIncludeMin } from '#item/location-item-repository.ts';
-import type { ActionModel } from '#prisma-models/Action.ts';
+import type { INoteEntityIncludeMin } from '#note/note-repository.ts';
 import type { HandoutModel } from '#prisma-models/Handout.ts';
 import type { NarrationModel } from '#prisma-models/Narration.ts';
-import type { NoteModel } from '#prisma-models/Note.ts';
 import type {
 	RegionCreateInput,
 	RegionInclude,
@@ -51,10 +51,10 @@ export interface RegionIncludeAll extends RegionModel {
 	Shapes: RegionShapeModel[];
 	Narrations: RegionNarrationIncludeMin[];
 	// Creatures: CreatureRec[];
-	Actions: ActionModel[];
-	Items: LocationItemIncludeMin[];
+	IActionTarget: IActionTargetIncludeMin;
+	IItemLocation: IItemLocationIncludeMin;
 	Handouts: RegionHandoutIncludeMin[];
-	Notes: NoteModel[];
+	INoteEntity: INoteEntityIncludeMin;
 }
 
 export const includeAll = {
@@ -63,14 +63,26 @@ export const includeAll = {
 		include: regionNarrationIncludeMin,
 	},
 	// Creatures: true;
-	Actions: true,
-	Items: {
-		include: locationItemIncludeMin,
+	IActionTarget: {
+		include: {
+			Actions: true,
+		},
+	},
+	IItemLocation: {
+		include: {
+			Items: {
+				include: locationItemIncludeMin,
+			},
+		},
 	},
 	Handouts: {
 		include: regionHandoutIncludeMin,
 	},
-	Notes: true,
+	INoteEntity: {
+		include: {
+			Notes: true,
+		},
+	},
 } satisfies RegionInclude;
 
 export interface IRegionRepository
