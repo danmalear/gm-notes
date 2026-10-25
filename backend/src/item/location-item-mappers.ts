@@ -26,17 +26,17 @@ export const toDto = (locationItem: LocationItemIncludeAll) => {
 		imageFileId: item.ImageFileId ?? undefined,
 		quantity: locationItem.Quantity,
 		actions: [
-			...item.Actions.map(actionToStub),
-			...locationItem.Actions.map(actionToStub),
+			...item.IActionTarget.Actions.map(actionToStub),
+			...locationItem.IActionTarget.Actions.map(actionToStub),
 		],
-		notes: locationItem.Notes.map((note) => note.Description),
+		notes: locationItem.INoteEntity.Notes.map((note) => note.Description),
 	};
 
 	const locationItemResponse: LocationItemResponse = item.IsContainer
 		? {
 				...locationItemResponseBase,
 				isContainer: true,
-				containedItems: locationItem.Contents.map(toStub),
+				containedItems: locationItem.IItemLocation.Items.map(toStub),
 			}
 		: {
 				...locationItemResponseBase,
