@@ -182,9 +182,9 @@ export type RegionWhereInput = {
   MapId?: Prisma.UuidFilter<"Region"> | string
   Name?: Prisma.StringFilter<"Region"> | string
   Lighting?: Prisma.EnumRelativeLightingFilter<"Region"> | $Enums.RelativeLighting
+  IItemLocation?: Prisma.XOR<Prisma.IItemLocationScalarRelationFilter, Prisma.IItemLocationWhereInput>
   Map?: Prisma.XOR<Prisma.MapScalarRelationFilter, Prisma.MapWhereInput>
   Actions?: Prisma.ActionListRelationFilter
-  Items?: Prisma.LocationItemListRelationFilter
   Notes?: Prisma.NoteListRelationFilter
   Handouts?: Prisma.RegionHandoutListRelationFilter
   Narrations?: Prisma.RegionNarrationListRelationFilter
@@ -197,9 +197,9 @@ export type RegionOrderByWithRelationInput = {
   MapId?: Prisma.SortOrder
   Name?: Prisma.SortOrder
   Lighting?: Prisma.SortOrder
+  IItemLocation?: Prisma.IItemLocationOrderByWithRelationInput
   Map?: Prisma.MapOrderByWithRelationInput
   Actions?: Prisma.ActionOrderByRelationAggregateInput
-  Items?: Prisma.LocationItemOrderByRelationAggregateInput
   Notes?: Prisma.NoteOrderByRelationAggregateInput
   Handouts?: Prisma.RegionHandoutOrderByRelationAggregateInput
   Narrations?: Prisma.RegionNarrationOrderByRelationAggregateInput
@@ -215,14 +215,14 @@ export type RegionWhereUniqueInput = Prisma.AtLeast<{
   MapId?: Prisma.UuidFilter<"Region"> | string
   Name?: Prisma.StringFilter<"Region"> | string
   Lighting?: Prisma.EnumRelativeLightingFilter<"Region"> | $Enums.RelativeLighting
+  IItemLocation?: Prisma.XOR<Prisma.IItemLocationScalarRelationFilter, Prisma.IItemLocationWhereInput>
   Map?: Prisma.XOR<Prisma.MapScalarRelationFilter, Prisma.MapWhereInput>
   Actions?: Prisma.ActionListRelationFilter
-  Items?: Prisma.LocationItemListRelationFilter
   Notes?: Prisma.NoteListRelationFilter
   Handouts?: Prisma.RegionHandoutListRelationFilter
   Narrations?: Prisma.RegionNarrationListRelationFilter
   Shapes?: Prisma.RegionShapeListRelationFilter
-}, "RegionId">
+}, "RegionId" | "RegionId">
 
 export type RegionOrderByWithAggregationInput = {
   RegionId?: Prisma.SortOrder
@@ -247,13 +247,12 @@ export type RegionScalarWhereWithAggregatesInput = {
 }
 
 export type RegionCreateInput = {
-  RegionId: string
   RegionTemplateId?: string | null
   Name: string
   Lighting?: $Enums.RelativeLighting
+  IItemLocation: Prisma.IItemLocationCreateNestedOneWithoutRegionInput
   Map: Prisma.MapCreateNestedOneWithoutRegionsInput
   Actions?: Prisma.ActionCreateNestedManyWithoutRegionInput
-  Items?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteCreateNestedManyWithoutRegionInput
   Handouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
   Narrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
@@ -267,7 +266,6 @@ export type RegionUncheckedCreateInput = {
   Name: string
   Lighting?: $Enums.RelativeLighting
   Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutRegionInput
-  Items?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutRegionInput
   Handouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
   Narrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
@@ -275,13 +273,12 @@ export type RegionUncheckedCreateInput = {
 }
 
 export type RegionUpdateInput = {
-  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   RegionTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.EnumRelativeLightingFieldUpdateOperationsInput | $Enums.RelativeLighting
+  IItemLocation?: Prisma.IItemLocationUpdateOneRequiredWithoutRegionNestedInput
   Map?: Prisma.MapUpdateOneRequiredWithoutRegionsNestedInput
   Actions?: Prisma.ActionUpdateManyWithoutRegionNestedInput
-  Items?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutRegionNestedInput
   Handouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
   Narrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
@@ -295,7 +292,6 @@ export type RegionUncheckedUpdateInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.EnumRelativeLightingFieldUpdateOperationsInput | $Enums.RelativeLighting
   Actions?: Prisma.ActionUncheckedUpdateManyWithoutRegionNestedInput
-  Items?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUncheckedUpdateManyWithoutRegionNestedInput
   Handouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
   Narrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
@@ -311,7 +307,6 @@ export type RegionCreateManyInput = {
 }
 
 export type RegionUpdateManyMutationInput = {
-  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   RegionTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.EnumRelativeLightingFieldUpdateOperationsInput | $Enums.RelativeLighting
@@ -385,20 +380,36 @@ export type RegionUpdateOneWithoutActionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.RegionUpdateToOneWithWhereWithoutActionsInput, Prisma.RegionUpdateWithoutActionsInput>, Prisma.RegionUncheckedUpdateWithoutActionsInput>
 }
 
-export type RegionCreateNestedOneWithoutItemsInput = {
-  create?: Prisma.XOR<Prisma.RegionCreateWithoutItemsInput, Prisma.RegionUncheckedCreateWithoutItemsInput>
-  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutItemsInput
+export type RegionCreateNestedOneWithoutIItemLocationInput = {
+  create?: Prisma.XOR<Prisma.RegionCreateWithoutIItemLocationInput, Prisma.RegionUncheckedCreateWithoutIItemLocationInput>
+  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutIItemLocationInput
   connect?: Prisma.RegionWhereUniqueInput
 }
 
-export type RegionUpdateOneWithoutItemsNestedInput = {
-  create?: Prisma.XOR<Prisma.RegionCreateWithoutItemsInput, Prisma.RegionUncheckedCreateWithoutItemsInput>
-  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutItemsInput
-  upsert?: Prisma.RegionUpsertWithoutItemsInput
+export type RegionUncheckedCreateNestedOneWithoutIItemLocationInput = {
+  create?: Prisma.XOR<Prisma.RegionCreateWithoutIItemLocationInput, Prisma.RegionUncheckedCreateWithoutIItemLocationInput>
+  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutIItemLocationInput
+  connect?: Prisma.RegionWhereUniqueInput
+}
+
+export type RegionUpdateOneWithoutIItemLocationNestedInput = {
+  create?: Prisma.XOR<Prisma.RegionCreateWithoutIItemLocationInput, Prisma.RegionUncheckedCreateWithoutIItemLocationInput>
+  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutIItemLocationInput
+  upsert?: Prisma.RegionUpsertWithoutIItemLocationInput
   disconnect?: Prisma.RegionWhereInput | boolean
   delete?: Prisma.RegionWhereInput | boolean
   connect?: Prisma.RegionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.RegionUpdateToOneWithWhereWithoutItemsInput, Prisma.RegionUpdateWithoutItemsInput>, Prisma.RegionUncheckedUpdateWithoutItemsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RegionUpdateToOneWithWhereWithoutIItemLocationInput, Prisma.RegionUpdateWithoutIItemLocationInput>, Prisma.RegionUncheckedUpdateWithoutIItemLocationInput>
+}
+
+export type RegionUncheckedUpdateOneWithoutIItemLocationNestedInput = {
+  create?: Prisma.XOR<Prisma.RegionCreateWithoutIItemLocationInput, Prisma.RegionUncheckedCreateWithoutIItemLocationInput>
+  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutIItemLocationInput
+  upsert?: Prisma.RegionUpsertWithoutIItemLocationInput
+  disconnect?: Prisma.RegionWhereInput | boolean
+  delete?: Prisma.RegionWhereInput | boolean
+  connect?: Prisma.RegionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RegionUpdateToOneWithWhereWithoutIItemLocationInput, Prisma.RegionUpdateWithoutIItemLocationInput>, Prisma.RegionUncheckedUpdateWithoutIItemLocationInput>
 }
 
 export type RegionCreateNestedManyWithoutMapInput = {
@@ -506,12 +517,11 @@ export type RegionUpdateOneRequiredWithoutShapesNestedInput = {
 }
 
 export type RegionCreateWithoutActionsInput = {
-  RegionId: string
   RegionTemplateId?: string | null
   Name: string
   Lighting?: $Enums.RelativeLighting
+  IItemLocation: Prisma.IItemLocationCreateNestedOneWithoutRegionInput
   Map: Prisma.MapCreateNestedOneWithoutRegionsInput
-  Items?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteCreateNestedManyWithoutRegionInput
   Handouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
   Narrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
@@ -524,7 +534,6 @@ export type RegionUncheckedCreateWithoutActionsInput = {
   MapId: string
   Name: string
   Lighting?: $Enums.RelativeLighting
-  Items?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutRegionInput
   Handouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
   Narrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
@@ -548,12 +557,11 @@ export type RegionUpdateToOneWithWhereWithoutActionsInput = {
 }
 
 export type RegionUpdateWithoutActionsInput = {
-  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   RegionTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.EnumRelativeLightingFieldUpdateOperationsInput | $Enums.RelativeLighting
+  IItemLocation?: Prisma.IItemLocationUpdateOneRequiredWithoutRegionNestedInput
   Map?: Prisma.MapUpdateOneRequiredWithoutRegionsNestedInput
-  Items?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutRegionNestedInput
   Handouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
   Narrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
@@ -566,15 +574,13 @@ export type RegionUncheckedUpdateWithoutActionsInput = {
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.EnumRelativeLightingFieldUpdateOperationsInput | $Enums.RelativeLighting
-  Items?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUncheckedUpdateManyWithoutRegionNestedInput
   Handouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
   Narrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUncheckedUpdateManyWithoutRegionNestedInput
 }
 
-export type RegionCreateWithoutItemsInput = {
-  RegionId: string
+export type RegionCreateWithoutIItemLocationInput = {
   RegionTemplateId?: string | null
   Name: string
   Lighting?: $Enums.RelativeLighting
@@ -586,8 +592,7 @@ export type RegionCreateWithoutItemsInput = {
   Shapes?: Prisma.RegionShapeCreateNestedManyWithoutRegionInput
 }
 
-export type RegionUncheckedCreateWithoutItemsInput = {
-  RegionId: string
+export type RegionUncheckedCreateWithoutIItemLocationInput = {
   RegionTemplateId?: string | null
   MapId: string
   Name: string
@@ -599,24 +604,23 @@ export type RegionUncheckedCreateWithoutItemsInput = {
   Shapes?: Prisma.RegionShapeUncheckedCreateNestedManyWithoutRegionInput
 }
 
-export type RegionCreateOrConnectWithoutItemsInput = {
+export type RegionCreateOrConnectWithoutIItemLocationInput = {
   where: Prisma.RegionWhereUniqueInput
-  create: Prisma.XOR<Prisma.RegionCreateWithoutItemsInput, Prisma.RegionUncheckedCreateWithoutItemsInput>
+  create: Prisma.XOR<Prisma.RegionCreateWithoutIItemLocationInput, Prisma.RegionUncheckedCreateWithoutIItemLocationInput>
 }
 
-export type RegionUpsertWithoutItemsInput = {
-  update: Prisma.XOR<Prisma.RegionUpdateWithoutItemsInput, Prisma.RegionUncheckedUpdateWithoutItemsInput>
-  create: Prisma.XOR<Prisma.RegionCreateWithoutItemsInput, Prisma.RegionUncheckedCreateWithoutItemsInput>
+export type RegionUpsertWithoutIItemLocationInput = {
+  update: Prisma.XOR<Prisma.RegionUpdateWithoutIItemLocationInput, Prisma.RegionUncheckedUpdateWithoutIItemLocationInput>
+  create: Prisma.XOR<Prisma.RegionCreateWithoutIItemLocationInput, Prisma.RegionUncheckedCreateWithoutIItemLocationInput>
   where?: Prisma.RegionWhereInput
 }
 
-export type RegionUpdateToOneWithWhereWithoutItemsInput = {
+export type RegionUpdateToOneWithWhereWithoutIItemLocationInput = {
   where?: Prisma.RegionWhereInput
-  data: Prisma.XOR<Prisma.RegionUpdateWithoutItemsInput, Prisma.RegionUncheckedUpdateWithoutItemsInput>
+  data: Prisma.XOR<Prisma.RegionUpdateWithoutIItemLocationInput, Prisma.RegionUncheckedUpdateWithoutIItemLocationInput>
 }
 
-export type RegionUpdateWithoutItemsInput = {
-  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
+export type RegionUpdateWithoutIItemLocationInput = {
   RegionTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.EnumRelativeLightingFieldUpdateOperationsInput | $Enums.RelativeLighting
@@ -628,8 +632,7 @@ export type RegionUpdateWithoutItemsInput = {
   Shapes?: Prisma.RegionShapeUpdateManyWithoutRegionNestedInput
 }
 
-export type RegionUncheckedUpdateWithoutItemsInput = {
-  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
+export type RegionUncheckedUpdateWithoutIItemLocationInput = {
   RegionTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   MapId?: Prisma.StringFieldUpdateOperationsInput | string
   Name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -642,12 +645,11 @@ export type RegionUncheckedUpdateWithoutItemsInput = {
 }
 
 export type RegionCreateWithoutMapInput = {
-  RegionId: string
   RegionTemplateId?: string | null
   Name: string
   Lighting?: $Enums.RelativeLighting
+  IItemLocation: Prisma.IItemLocationCreateNestedOneWithoutRegionInput
   Actions?: Prisma.ActionCreateNestedManyWithoutRegionInput
-  Items?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteCreateNestedManyWithoutRegionInput
   Handouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
   Narrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
@@ -660,7 +662,6 @@ export type RegionUncheckedCreateWithoutMapInput = {
   Name: string
   Lighting?: $Enums.RelativeLighting
   Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutRegionInput
-  Items?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutRegionInput
   Handouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
   Narrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
@@ -705,13 +706,12 @@ export type RegionScalarWhereInput = {
 }
 
 export type RegionCreateWithoutNotesInput = {
-  RegionId: string
   RegionTemplateId?: string | null
   Name: string
   Lighting?: $Enums.RelativeLighting
+  IItemLocation: Prisma.IItemLocationCreateNestedOneWithoutRegionInput
   Map: Prisma.MapCreateNestedOneWithoutRegionsInput
   Actions?: Prisma.ActionCreateNestedManyWithoutRegionInput
-  Items?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
   Handouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
   Narrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeCreateNestedManyWithoutRegionInput
@@ -724,7 +724,6 @@ export type RegionUncheckedCreateWithoutNotesInput = {
   Name: string
   Lighting?: $Enums.RelativeLighting
   Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutRegionInput
-  Items?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
   Handouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
   Narrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeUncheckedCreateNestedManyWithoutRegionInput
@@ -747,13 +746,12 @@ export type RegionUpdateToOneWithWhereWithoutNotesInput = {
 }
 
 export type RegionUpdateWithoutNotesInput = {
-  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   RegionTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.EnumRelativeLightingFieldUpdateOperationsInput | $Enums.RelativeLighting
+  IItemLocation?: Prisma.IItemLocationUpdateOneRequiredWithoutRegionNestedInput
   Map?: Prisma.MapUpdateOneRequiredWithoutRegionsNestedInput
   Actions?: Prisma.ActionUpdateManyWithoutRegionNestedInput
-  Items?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
   Handouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
   Narrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUpdateManyWithoutRegionNestedInput
@@ -766,20 +764,18 @@ export type RegionUncheckedUpdateWithoutNotesInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.EnumRelativeLightingFieldUpdateOperationsInput | $Enums.RelativeLighting
   Actions?: Prisma.ActionUncheckedUpdateManyWithoutRegionNestedInput
-  Items?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
   Handouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
   Narrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUncheckedUpdateManyWithoutRegionNestedInput
 }
 
 export type RegionCreateWithoutHandoutsInput = {
-  RegionId: string
   RegionTemplateId?: string | null
   Name: string
   Lighting?: $Enums.RelativeLighting
+  IItemLocation: Prisma.IItemLocationCreateNestedOneWithoutRegionInput
   Map: Prisma.MapCreateNestedOneWithoutRegionsInput
   Actions?: Prisma.ActionCreateNestedManyWithoutRegionInput
-  Items?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteCreateNestedManyWithoutRegionInput
   Narrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeCreateNestedManyWithoutRegionInput
@@ -792,7 +788,6 @@ export type RegionUncheckedCreateWithoutHandoutsInput = {
   Name: string
   Lighting?: $Enums.RelativeLighting
   Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutRegionInput
-  Items?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutRegionInput
   Narrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeUncheckedCreateNestedManyWithoutRegionInput
@@ -815,13 +810,12 @@ export type RegionUpdateToOneWithWhereWithoutHandoutsInput = {
 }
 
 export type RegionUpdateWithoutHandoutsInput = {
-  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   RegionTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.EnumRelativeLightingFieldUpdateOperationsInput | $Enums.RelativeLighting
+  IItemLocation?: Prisma.IItemLocationUpdateOneRequiredWithoutRegionNestedInput
   Map?: Prisma.MapUpdateOneRequiredWithoutRegionsNestedInput
   Actions?: Prisma.ActionUpdateManyWithoutRegionNestedInput
-  Items?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutRegionNestedInput
   Narrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUpdateManyWithoutRegionNestedInput
@@ -834,20 +828,18 @@ export type RegionUncheckedUpdateWithoutHandoutsInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.EnumRelativeLightingFieldUpdateOperationsInput | $Enums.RelativeLighting
   Actions?: Prisma.ActionUncheckedUpdateManyWithoutRegionNestedInput
-  Items?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUncheckedUpdateManyWithoutRegionNestedInput
   Narrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUncheckedUpdateManyWithoutRegionNestedInput
 }
 
 export type RegionCreateWithoutNarrationsInput = {
-  RegionId: string
   RegionTemplateId?: string | null
   Name: string
   Lighting?: $Enums.RelativeLighting
+  IItemLocation: Prisma.IItemLocationCreateNestedOneWithoutRegionInput
   Map: Prisma.MapCreateNestedOneWithoutRegionsInput
   Actions?: Prisma.ActionCreateNestedManyWithoutRegionInput
-  Items?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteCreateNestedManyWithoutRegionInput
   Handouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeCreateNestedManyWithoutRegionInput
@@ -860,7 +852,6 @@ export type RegionUncheckedCreateWithoutNarrationsInput = {
   Name: string
   Lighting?: $Enums.RelativeLighting
   Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutRegionInput
-  Items?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutRegionInput
   Handouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
   Shapes?: Prisma.RegionShapeUncheckedCreateNestedManyWithoutRegionInput
@@ -883,13 +874,12 @@ export type RegionUpdateToOneWithWhereWithoutNarrationsInput = {
 }
 
 export type RegionUpdateWithoutNarrationsInput = {
-  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   RegionTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.EnumRelativeLightingFieldUpdateOperationsInput | $Enums.RelativeLighting
+  IItemLocation?: Prisma.IItemLocationUpdateOneRequiredWithoutRegionNestedInput
   Map?: Prisma.MapUpdateOneRequiredWithoutRegionsNestedInput
   Actions?: Prisma.ActionUpdateManyWithoutRegionNestedInput
-  Items?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutRegionNestedInput
   Handouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUpdateManyWithoutRegionNestedInput
@@ -902,20 +892,18 @@ export type RegionUncheckedUpdateWithoutNarrationsInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.EnumRelativeLightingFieldUpdateOperationsInput | $Enums.RelativeLighting
   Actions?: Prisma.ActionUncheckedUpdateManyWithoutRegionNestedInput
-  Items?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUncheckedUpdateManyWithoutRegionNestedInput
   Handouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
   Shapes?: Prisma.RegionShapeUncheckedUpdateManyWithoutRegionNestedInput
 }
 
 export type RegionCreateWithoutShapesInput = {
-  RegionId: string
   RegionTemplateId?: string | null
   Name: string
   Lighting?: $Enums.RelativeLighting
+  IItemLocation: Prisma.IItemLocationCreateNestedOneWithoutRegionInput
   Map: Prisma.MapCreateNestedOneWithoutRegionsInput
   Actions?: Prisma.ActionCreateNestedManyWithoutRegionInput
-  Items?: Prisma.LocationItemCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteCreateNestedManyWithoutRegionInput
   Handouts?: Prisma.RegionHandoutCreateNestedManyWithoutRegionInput
   Narrations?: Prisma.RegionNarrationCreateNestedManyWithoutRegionInput
@@ -928,7 +916,6 @@ export type RegionUncheckedCreateWithoutShapesInput = {
   Name: string
   Lighting?: $Enums.RelativeLighting
   Actions?: Prisma.ActionUncheckedCreateNestedManyWithoutRegionInput
-  Items?: Prisma.LocationItemUncheckedCreateNestedManyWithoutRegionInput
   Notes?: Prisma.NoteUncheckedCreateNestedManyWithoutRegionInput
   Handouts?: Prisma.RegionHandoutUncheckedCreateNestedManyWithoutRegionInput
   Narrations?: Prisma.RegionNarrationUncheckedCreateNestedManyWithoutRegionInput
@@ -951,13 +938,12 @@ export type RegionUpdateToOneWithWhereWithoutShapesInput = {
 }
 
 export type RegionUpdateWithoutShapesInput = {
-  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   RegionTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.EnumRelativeLightingFieldUpdateOperationsInput | $Enums.RelativeLighting
+  IItemLocation?: Prisma.IItemLocationUpdateOneRequiredWithoutRegionNestedInput
   Map?: Prisma.MapUpdateOneRequiredWithoutRegionsNestedInput
   Actions?: Prisma.ActionUpdateManyWithoutRegionNestedInput
-  Items?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutRegionNestedInput
   Handouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
   Narrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
@@ -970,7 +956,6 @@ export type RegionUncheckedUpdateWithoutShapesInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.EnumRelativeLightingFieldUpdateOperationsInput | $Enums.RelativeLighting
   Actions?: Prisma.ActionUncheckedUpdateManyWithoutRegionNestedInput
-  Items?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUncheckedUpdateManyWithoutRegionNestedInput
   Handouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
   Narrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
@@ -984,12 +969,11 @@ export type RegionCreateManyMapInput = {
 }
 
 export type RegionUpdateWithoutMapInput = {
-  RegionId?: Prisma.StringFieldUpdateOperationsInput | string
   RegionTemplateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.EnumRelativeLightingFieldUpdateOperationsInput | $Enums.RelativeLighting
+  IItemLocation?: Prisma.IItemLocationUpdateOneRequiredWithoutRegionNestedInput
   Actions?: Prisma.ActionUpdateManyWithoutRegionNestedInput
-  Items?: Prisma.LocationItemUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUpdateManyWithoutRegionNestedInput
   Handouts?: Prisma.RegionHandoutUpdateManyWithoutRegionNestedInput
   Narrations?: Prisma.RegionNarrationUpdateManyWithoutRegionNestedInput
@@ -1002,7 +986,6 @@ export type RegionUncheckedUpdateWithoutMapInput = {
   Name?: Prisma.StringFieldUpdateOperationsInput | string
   Lighting?: Prisma.EnumRelativeLightingFieldUpdateOperationsInput | $Enums.RelativeLighting
   Actions?: Prisma.ActionUncheckedUpdateManyWithoutRegionNestedInput
-  Items?: Prisma.LocationItemUncheckedUpdateManyWithoutRegionNestedInput
   Notes?: Prisma.NoteUncheckedUpdateManyWithoutRegionNestedInput
   Handouts?: Prisma.RegionHandoutUncheckedUpdateManyWithoutRegionNestedInput
   Narrations?: Prisma.RegionNarrationUncheckedUpdateManyWithoutRegionNestedInput
@@ -1023,7 +1006,6 @@ export type RegionUncheckedUpdateManyWithoutMapInput = {
 
 export type RegionCountOutputType = {
   Actions: number
-  Items: number
   Notes: number
   Handouts: number
   Narrations: number
@@ -1032,7 +1014,6 @@ export type RegionCountOutputType = {
 
 export type RegionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Actions?: boolean | RegionCountOutputTypeCountActionsArgs
-  Items?: boolean | RegionCountOutputTypeCountItemsArgs
   Notes?: boolean | RegionCountOutputTypeCountNotesArgs
   Handouts?: boolean | RegionCountOutputTypeCountHandoutsArgs
   Narrations?: boolean | RegionCountOutputTypeCountNarrationsArgs
@@ -1054,13 +1035,6 @@ export type RegionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
  */
 export type RegionCountOutputTypeCountActionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ActionWhereInput
-}
-
-/**
- * RegionCountOutputType without action
- */
-export type RegionCountOutputTypeCountItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LocationItemWhereInput
 }
 
 /**
@@ -1098,9 +1072,9 @@ export type RegionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   MapId?: boolean
   Name?: boolean
   Lighting?: boolean
+  IItemLocation?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Map?: boolean | Prisma.MapDefaultArgs<ExtArgs>
   Actions?: boolean | Prisma.Region$ActionsArgs<ExtArgs>
-  Items?: boolean | Prisma.Region$ItemsArgs<ExtArgs>
   Notes?: boolean | Prisma.Region$NotesArgs<ExtArgs>
   Handouts?: boolean | Prisma.Region$HandoutsArgs<ExtArgs>
   Narrations?: boolean | Prisma.Region$NarrationsArgs<ExtArgs>
@@ -1114,6 +1088,7 @@ export type RegionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   MapId?: boolean
   Name?: boolean
   Lighting?: boolean
+  IItemLocation?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Map?: boolean | Prisma.MapDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["region"]>
 
@@ -1123,6 +1098,7 @@ export type RegionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   MapId?: boolean
   Name?: boolean
   Lighting?: boolean
+  IItemLocation?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Map?: boolean | Prisma.MapDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["region"]>
 
@@ -1136,9 +1112,9 @@ export type RegionSelectScalar = {
 
 export type RegionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"RegionId" | "RegionTemplateId" | "MapId" | "Name" | "Lighting", ExtArgs["result"]["region"]>
 export type RegionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  IItemLocation?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Map?: boolean | Prisma.MapDefaultArgs<ExtArgs>
   Actions?: boolean | Prisma.Region$ActionsArgs<ExtArgs>
-  Items?: boolean | Prisma.Region$ItemsArgs<ExtArgs>
   Notes?: boolean | Prisma.Region$NotesArgs<ExtArgs>
   Handouts?: boolean | Prisma.Region$HandoutsArgs<ExtArgs>
   Narrations?: boolean | Prisma.Region$NarrationsArgs<ExtArgs>
@@ -1146,18 +1122,20 @@ export type RegionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   _count?: boolean | Prisma.RegionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type RegionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  IItemLocation?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Map?: boolean | Prisma.MapDefaultArgs<ExtArgs>
 }
 export type RegionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  IItemLocation?: boolean | Prisma.IItemLocationDefaultArgs<ExtArgs>
   Map?: boolean | Prisma.MapDefaultArgs<ExtArgs>
 }
 
 export type $RegionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Region"
   objects: {
+    IItemLocation: Prisma.$IItemLocationPayload<ExtArgs>
     Map: Prisma.$MapPayload<ExtArgs>
     Actions: Prisma.$ActionPayload<ExtArgs>[]
-    Items: Prisma.$LocationItemPayload<ExtArgs>[]
     Notes: Prisma.$NotePayload<ExtArgs>[]
     Handouts: Prisma.$RegionHandoutPayload<ExtArgs>[]
     Narrations: Prisma.$RegionNarrationPayload<ExtArgs>[]
@@ -1563,9 +1541,9 @@ readonly fields: RegionFieldRefs;
  */
 export interface Prisma__RegionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  IItemLocation<T extends Prisma.IItemLocationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IItemLocationDefaultArgs<ExtArgs>>): Prisma.Prisma__IItemLocationClient<runtime.Types.Result.GetResult<Prisma.$IItemLocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Map<T extends Prisma.MapDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MapDefaultArgs<ExtArgs>>): Prisma.Prisma__MapClient<runtime.Types.Result.GetResult<Prisma.$MapPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Actions<T extends Prisma.Region$ActionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Region$ActionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  Items<T extends Prisma.Region$ItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Region$ItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocationItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Notes<T extends Prisma.Region$NotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Region$NotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Handouts<T extends Prisma.Region$HandoutsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Region$HandoutsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RegionHandoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Narrations<T extends Prisma.Region$NarrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Region$NarrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RegionNarrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2026,30 +2004,6 @@ export type Region$ActionsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.ActionScalarFieldEnum | Prisma.ActionScalarFieldEnum[]
-}
-
-/**
- * Region.Items
- */
-export type Region$ItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the LocationItem
-   */
-  select?: Prisma.LocationItemSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the LocationItem
-   */
-  omit?: Prisma.LocationItemOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LocationItemInclude<ExtArgs> | null
-  where?: Prisma.LocationItemWhereInput
-  orderBy?: Prisma.LocationItemOrderByWithRelationInput | Prisma.LocationItemOrderByWithRelationInput[]
-  cursor?: Prisma.LocationItemWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.LocationItemScalarFieldEnum | Prisma.LocationItemScalarFieldEnum[]
 }
 
 /**

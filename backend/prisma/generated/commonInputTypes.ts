@@ -350,6 +350,23 @@ export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedStringNullableFilter<$PrismaModel>
 }
 
+export type EnumItemLocationTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ItemLocationType | Prisma.EnumItemLocationTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ItemLocationType[] | Prisma.ListEnumItemLocationTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ItemLocationType[] | Prisma.ListEnumItemLocationTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumItemLocationTypeFilter<$PrismaModel> | $Enums.ItemLocationType
+}
+
+export type EnumItemLocationTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ItemLocationType | Prisma.EnumItemLocationTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ItemLocationType[] | Prisma.ListEnumItemLocationTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ItemLocationType[] | Prisma.ListEnumItemLocationTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumItemLocationTypeWithAggregatesFilter<$PrismaModel> | $Enums.ItemLocationType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumItemLocationTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumItemLocationTypeFilter<$PrismaModel>
+}
+
 export type EnumAbsoluteLightingFilter<$PrismaModel = never> = {
   equals?: $Enums.AbsoluteLighting | Prisma.EnumAbsoluteLightingFieldRefInput<$PrismaModel>
   in?: $Enums.AbsoluteLighting[] | Prisma.ListEnumAbsoluteLightingFieldRefInput<$PrismaModel>
@@ -717,6 +734,23 @@ export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedStringNullableFilter<$PrismaModel>
   _max?: Prisma.NestedStringNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumItemLocationTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ItemLocationType | Prisma.EnumItemLocationTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ItemLocationType[] | Prisma.ListEnumItemLocationTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ItemLocationType[] | Prisma.ListEnumItemLocationTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumItemLocationTypeFilter<$PrismaModel> | $Enums.ItemLocationType
+}
+
+export type NestedEnumItemLocationTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ItemLocationType | Prisma.EnumItemLocationTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ItemLocationType[] | Prisma.ListEnumItemLocationTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ItemLocationType[] | Prisma.ListEnumItemLocationTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumItemLocationTypeWithAggregatesFilter<$PrismaModel> | $Enums.ItemLocationType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumItemLocationTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumItemLocationTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumAbsoluteLightingFilter<$PrismaModel = never> = {

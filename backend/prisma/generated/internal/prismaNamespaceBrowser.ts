@@ -63,6 +63,7 @@ export const ModelName = {
   File: 'File',
   Handout: 'Handout',
   Item: 'Item',
+  IItemLocation: 'IItemLocation',
   LocationItem: 'LocationItem',
   Map: 'Map',
   MapTemplate: 'MapTemplate',
@@ -223,6 +224,14 @@ export const ItemScalarFieldEnum = {
 } as const
 
 export type ItemScalarFieldEnum = (typeof ItemScalarFieldEnum)[keyof typeof ItemScalarFieldEnum]
+
+
+export const IItemLocationScalarFieldEnum = {
+  IItemLocationId: 'IItemLocationId',
+  Type: 'Type'
+} as const
+
+export type IItemLocationScalarFieldEnum = (typeof IItemLocationScalarFieldEnum)[keyof typeof IItemLocationScalarFieldEnum]
 
 
 export const LocationItemScalarFieldEnum = {

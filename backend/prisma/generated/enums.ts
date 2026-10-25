@@ -56,6 +56,14 @@ export const HandoutType = {
 export type HandoutType = (typeof HandoutType)[keyof typeof HandoutType]
 
 
+export const ItemLocationType = {
+  Region: 'Region',
+  LocationItem: 'LocationItem'
+} as const
+
+export type ItemLocationType = (typeof ItemLocationType)[keyof typeof ItemLocationType]
+
+
 export const RelativeLighting = {
   Darkness: 'Darkness',
   DimLight: 'DimLight',

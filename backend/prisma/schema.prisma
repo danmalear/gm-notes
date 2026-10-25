@@ -180,17 +180,33 @@ model Item {
   @@schema("public")
 }
 
+model IItemLocation {
+  IItemLocationId  String         @id @db.Uuid
+  Type             ItemLocationType
+  Contents         LocationItem[] @relation(name: "ItemLocation")
+  Region           Region?
+	LocationItem     LocationItem?  @relation(name: "LocationItemSelf")
+
+  @@schema("public")
+}
+
+enum ItemLocationType {
+  Region
+  LocationItem
+
+  @@schema("public")
+}
+
 model LocationItem {
   LocationItemId String         @id @db.Uuid
+  IItemLocation  IItemLocation  @relation(name: "LocationItemSelf", fields: [LocationItemId], references: [IItemLocationId], map: "LocationItem_IItemLocationId_Self_fkey")
   LocationId     String         @db.Uuid
-  Region         Region?        @relation(name: "RegionItem", fields: [LocationId], references: [RegionId], map: "LocationItem_RegionId_fkey")
-  Container      LocationItem?  @relation(name: "ContainerContents", fields: [LocationId], references: [LocationItemId], onUpdate: Restrict, map: "LocationItem_ContainerId_fkey")
+	Location       IItemLocation  @relation(name: "ItemLocation", fields: [LocationId], references: [IItemLocationId], map: "LocationItem_IItemLocationId_Container_fkey")
   ItemId         String         @db.Uuid
   Item           Item           @relation(fields: [ItemId], references: [ItemId])
   Quantity       Int            @default(1)
   Actions        Action[]       @relation(name: "TargetLocationItem")
   Notes          Note[]         @relation(name: "ParentLocationItem")
-  Contents       LocationItem[] @relation(name: "ContainerContents")
 
   @@index([LocationId])
   @@index([ItemId])
@@ -261,14 +277,14 @@ model Note {
 }
 
 model Region {
-  RegionId         String            @id @db.Uuid
+  RegionId         String            @id @unique @db.Uuid
+  IItemLocation    IItemLocation     @relation(fields: [RegionId], references: [IItemLocationId])
   RegionTemplateId String?           @db.Uuid
   MapId            String            @db.Uuid
   Map              Map               @relation(fields: [MapId], references: [MapId])
   Name             String
   Lighting         RelativeLighting  @default(Default)
   Actions          Action[]          @relation(name: "TargetRegion")
-  Items            LocationItem[]    @relation(name: "RegionItem")
   Notes            Note[]            @relation(name: "ParentRegion")
   Handouts         RegionHandout[]
   Narrations       RegionNarration[]

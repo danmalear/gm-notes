@@ -78,6 +78,11 @@ export type Handout = Prisma.HandoutModel
  */
 export type Item = Prisma.ItemModel
 /**
+ * Model IItemLocation
+ * 
+ */
+export type IItemLocation = Prisma.IItemLocationModel
+/**
  * Model LocationItem
  * 
  */
