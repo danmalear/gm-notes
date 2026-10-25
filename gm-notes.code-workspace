@@ -31,8 +31,5 @@
 			"Strahd",
 			"Thornboldt",
 		],
-		"[prisma]": {
-			"editor.defaultFormatter": "Prisma.prisma",
-		},
 	},
 }
