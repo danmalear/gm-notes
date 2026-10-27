@@ -1,56 +1,62 @@
-import type {
-	NarrationCreateInput,
-	NarrationModel,
-	NarrationUpdateInput,
-} from '#prisma-models/Narration.ts';
+import { db } from '#db';
+import type { Models } from '#prisma';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 
+export type NarrationMin = Omit<
+	Omit<
+		Omit<
+			Omit<
+				Omit<
+					Omit<Models.public_Narration, 'Actions'>,
+					'CriticalFailureAbilityChecks'
+				>,
+				'CriticalSuccessAbilityChecks'
+			>,
+			'FailureAbilityChecks'
+		>,
+		'SuccessAbilityChecks'
+	>,
+	'RegionNarrations'
+>;
+
 export interface INarrationRepository
-	extends IRepository<
-		NarrationModel,
-		NarrationCreateInput,
-		NarrationUpdateInput
-	> {
-	getByRegionId(regionId: UUID): Promise<NarrationModel[]>;
+	extends IRepository<NarrationMin, NarrationMin, NarrationMin> {
+	getByRegionId(regionId: UUID): Promise<NarrationMin[]>;
 }
 
 export class NarrationRepository
-	extends Repository<NarrationModel, NarrationCreateInput, NarrationUpdateInput>
+	extends Repository<NarrationMin, NarrationMin, NarrationMin>
 	implements INarrationRepository
 {
 	override descriptor = 'Narration';
 
-	override async getByIdRaw(narrationId: UUID): Promise<NarrationModel | null> {
+	override async getByIdRaw(narrationId: UUID): Promise<NarrationMin | null> {
 		try {
-			return await this.prisma.narration.findUnique({
-				where: {
-					NarrationId: narrationId,
-				},
+			return await db.orm.public.Narration.first({
+				NarrationId: narrationId,
 			});
 		} catch (e) {
 			throw this.getByIdError(narrationId, e);
 		}
 	}
 
-	override async getById(narrationId: UUID): Promise<NarrationModel | null> {
+	override async getById(narrationId: UUID): Promise<NarrationMin | null> {
 		return await this.getByIdRaw(narrationId);
 	}
 
-	override async getAll(): Promise<NarrationModel[]> {
+	override async getAll(): Promise<NarrationMin[]> {
 		try {
-			return await this.prisma.narration.findMany();
+			return await db.orm.public.Narration.all();
 		} catch (e) {
 			throw this.getAllError(e);
 		}
 	}
 
-	override async create(data: NarrationCreateInput): Promise<NarrationModel> {
+	override async create(data: NarrationMin): Promise<NarrationMin> {
 		try {
-			return await this.prisma.narration.create({
-				data,
-			});
+			return await db.orm.public.Narration.create(data);
 		} catch (e) {
 			throw this.createError(e);
 		}
@@ -58,15 +64,12 @@ export class NarrationRepository
 
 	override async update(
 		narrationId: UUID,
-		data: NarrationUpdateInput,
-	): Promise<NarrationModel> {
+		data: Partial<NarrationMin>,
+	): Promise<NarrationMin | null> {
 		try {
-			return await this.prisma.narration.update({
-				where: {
-					NarrationId: narrationId,
-				},
-				data,
-			});
+			return await db.orm.public.Narration.where({
+				NarrationId: narrationId,
+			}).update(data);
 		} catch (e) {
 			throw this.updateError(narrationId, e);
 		}
@@ -77,17 +80,15 @@ export class NarrationRepository
 	 * @param id UUID of the region to get narrations for
 	 * @returns The list of narrations (empty array if none found)
 	 */
-	async getByRegionId(regionId: UUID) {
+	async getByRegionId(regionId: UUID): Promise<NarrationMin[]> {
 		try {
-			return await this.prisma.narration.findMany({
-				where: {
-					RegionNarrations: {
-						some: {
-							RegionId: regionId,
-						},
-					},
-				},
-			});
+			return await db.orm.public.Narration.include(
+				'RegionNarrations',
+				(regionNarration) =>
+					regionNarration.where({
+						RegionId: regionId,
+					}),
+			).all();
 		} catch (e) {
 			throw new Error(
 				`Error getting ${this.descriptor} records by Region ID ${regionId}: ${getMessage(e)}`,
