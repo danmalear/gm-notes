@@ -2,24 +2,10 @@ import { db } from '#db';
 import type { Models } from '#prisma';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
+import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
-export type NarrationMin = Omit<
-	Omit<
-		Omit<
-			Omit<
-				Omit<
-					Omit<Models.public_Narration, 'Actions'>,
-					'CriticalFailureAbilityChecks'
-				>,
-				'CriticalSuccessAbilityChecks'
-			>,
-			'FailureAbilityChecks'
-		>,
-		'SuccessAbilityChecks'
-	>,
-	'RegionNarrations'
->;
+export type NarrationMin = Scalars<Models.public_Narration>;
 
 export interface INarrationRepository
 	extends IRepository<NarrationMin, NarrationMin, NarrationMin> {

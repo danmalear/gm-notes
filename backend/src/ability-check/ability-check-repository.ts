@@ -5,21 +5,10 @@ import type { AbilityCheckModel } from '#prisma-models/AbilityCheck.ts';
 import type { NarrationModel } from '#prisma-models/Narration.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
+import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
-export type AbilityCheckMin = Omit<
-	Omit<
-		Omit<
-			Omit<
-				Omit<Models.public_AbilityCheck, 'Action'>,
-				'CriticalFailureNarration'
-			>,
-			'CriticalSuccessNarration'
-		>,
-		'FailureNarration'
-	>,
-	'SuccessNarration'
->;
+export type AbilityCheckMin = Scalars<Models.public_AbilityCheck>;
 
 export type AbilityCheckFull = AbilityCheckMin & {
 	SuccessNarration: NarrationMin | null;

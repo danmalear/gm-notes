@@ -4,9 +4,10 @@ import type { INoteEntityModel } from '#prisma-models/INoteEntity.ts';
 import type { NoteModel } from '#prisma-models/Note.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
+import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
-export type NoteMin = Omit<Models.public_Note, 'INoteEntity'>;
+export type NoteMin = Scalars<Models.public_Note>;
 export type INoteEntityMin = Omit<
 	Omit<Omit<Models.public_INoteEntity, 'Item'>, 'LocationItem'>,
 	'Region'
