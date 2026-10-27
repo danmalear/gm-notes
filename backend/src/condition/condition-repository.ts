@@ -50,7 +50,7 @@ export class ConditionRepository
 
 	override async update(
 		conditionId: UUID,
-		data: ConditionMin,
+		data: Partial<ConditionMin>,
 	): Promise<ConditionMin | null> {
 		try {
 			return await db.orm.public.Condition.where({

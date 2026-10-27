@@ -91,7 +91,7 @@ export class AbilityCheckRepository
 
 	async update(
 		abilityCheckId: UUID,
-		data: AbilityCheckMin,
+		data: Partial<AbilityCheckMin>,
 	): Promise<AbilityCheckMin | null> {
 		try {
 			return await db.orm.public.AbilityCheck.where({
