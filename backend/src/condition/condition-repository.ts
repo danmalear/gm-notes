@@ -1,56 +1,50 @@
-import type {
-	ConditionCreateInput,
-	ConditionModel,
-	ConditionUpdateInput,
-} from '#prisma-models/Condition.ts';
+import { db } from '#db';
+import type { Models } from '#prisma';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { UUID } from 'crypto';
 
+export type ConditionMin = Omit<
+	Omit<Models.public_Condition, 'ActionConditions'>,
+	'Campaign'
+>;
+
 export interface IConditionRepository
-	extends IRepository<
-		ConditionModel,
-		ConditionCreateInput,
-		ConditionUpdateInput
-	> {
-	getByActionId(actionId: UUID): Promise<ConditionModel[]>;
+	extends IRepository<ConditionMin, ConditionMin, ConditionMin> {
+	getByActionId(actionId: UUID): Promise<ConditionMin[]>;
 }
 
 export class ConditionRepository
-	extends Repository<ConditionModel, ConditionCreateInput, ConditionUpdateInput>
+	extends Repository<ConditionMin, ConditionMin, ConditionMin>
 	implements IConditionRepository
 {
 	override descriptor = 'Condition';
 
-	override async getByIdRaw(conditionId: UUID): Promise<ConditionModel | null> {
+	override async getByIdRaw(conditionId: UUID): Promise<ConditionMin | null> {
 		try {
-			return await this.prisma.condition.findUnique({
-				where: {
-					ConditionId: conditionId,
-				},
+			return await db.orm.public.Condition.first({
+				ConditionId: conditionId,
 			});
 		} catch (e) {
 			throw this.getByIdError(conditionId, e);
 		}
 	}
 
-	override async getById(id: UUID): Promise<ConditionModel | null> {
+	override async getById(id: UUID): Promise<ConditionMin | null> {
 		return await this.getByIdRaw(id);
 	}
 
-	override async getAll(): Promise<ConditionModel[]> {
+	override async getAll(): Promise<ConditionMin[]> {
 		try {
-			return await this.prisma.condition.findMany();
+			return await db.orm.public.Condition.all();
 		} catch (e) {
 			throw this.getAllError(e);
 		}
 	}
 
-	override async create(data: ConditionCreateInput): Promise<ConditionModel> {
+	override async create(data: ConditionMin): Promise<ConditionMin> {
 		try {
-			return await this.prisma.condition.create({
-				data,
-			});
+			return await db.orm.public.Condition.create(data);
 		} catch (e) {
 			throw this.createError(e);
 		}
@@ -58,15 +52,12 @@ export class ConditionRepository
 
 	override async update(
 		conditionId: UUID,
-		data: ConditionUpdateInput,
-	): Promise<ConditionModel> {
+		data: ConditionMin,
+	): Promise<ConditionMin | null> {
 		try {
-			return await this.prisma.condition.update({
-				where: {
-					ConditionId: conditionId,
-				},
-				data,
-			});
+			return await db.orm.public.Condition.where({
+				ConditionId: conditionId,
+			}).update(data);
 		} catch (e) {
 			throw this.updateError(conditionId, e);
 		}
@@ -77,17 +68,15 @@ export class ConditionRepository
 	 * @param id UUID of the action to get conditions for
 	 * @returns The list of conditions (empty array if none found)
 	 */
-	async getByActionId(actionId: UUID) {
+	async getByActionId(actionId: UUID): Promise<ConditionMin[]> {
 		try {
-			const conditions = await this.prisma.condition.findMany({
-				where: {
-					ActionConditions: {
-						some: {
-							ActionId: actionId,
-						},
-					},
-				},
-			});
+			const conditions = await db.orm.public.Condition.include(
+				'ActionConditions',
+				(actionCondition) =>
+					actionCondition.where({
+						ActionId: actionId,
+					}),
+			).all();
 			return conditions;
 		} catch (e) {
 			throw new Error(
