@@ -17,6 +17,7 @@ export type AbilityCheckFull = AbilityCheckMin & {
 	CriticalFailureNarration: NarrationMin | null;
 };
 
+/** @deprecated */
 export interface AbilityCheckIncludeAll extends AbilityCheckModel {
 	SuccessNarration: NarrationModel | null;
 	FailureNarration: NarrationModel | null;

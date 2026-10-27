@@ -12,6 +12,7 @@ export type INoteEntityMin = Scalars<Models.public_INoteEntity> & {
 	Notes: NoteMin[];
 };
 
+/** @deprecated */
 export interface INoteEntityIncludeMin extends INoteEntityModel {
 	Notes: NoteModel[];
 }
