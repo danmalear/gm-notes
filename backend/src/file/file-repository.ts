@@ -1,28 +1,26 @@
-import type {
-	FileCreateInput,
-	FileModel,
-	FileUpdateInput,
-} from '#prisma-models/File.ts';
+import { db } from '#db';
+import type { Models } from '#prisma';
 import { Repository, type IRepository } from '#shared/repository.ts';
+import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
+export type FileMin = Scalars<Models.public_File>;
+
 export interface IFileRepository
-	extends IRepository<FileModel, FileCreateInput, FileUpdateInput> {
-	getById(fileId: string): Promise<FileModel | null>;
+	extends IRepository<FileMin, FileMin, FileMin> {
+	getById(fileId: string): Promise<FileMin | null>;
 }
 
 export class FileRepository
-	extends Repository<FileModel, FileCreateInput, FileUpdateInput>
+	extends Repository<FileMin, FileMin, FileMin>
 	implements IFileRepository
 {
 	override descriptor = 'File';
 
-	override async getByIdRaw(fileId: string): Promise<FileModel | null> {
+	override async getByIdRaw(fileId: string): Promise<FileMin | null> {
 		try {
-			return await this.prisma.file.findUnique({
-				where: {
-					FileId: fileId,
-				},
+			return await db.orm.public.File.first({
+				FileId: fileId,
 			});
 		} catch (e) {
 			// @ts-expect-error This is a rare case of the ID column not being in UUID format
@@ -30,23 +28,21 @@ export class FileRepository
 		}
 	}
 
-	override async getById(fileId: string): Promise<FileModel | null> {
+	override async getById(fileId: string): Promise<FileMin | null> {
 		return await this.getByIdRaw(fileId);
 	}
 
-	override async getAll(): Promise<FileModel[]> {
+	override async getAll(): Promise<FileMin[]> {
 		try {
-			return await this.prisma.file.findMany();
+			return await db.orm.public.File.all();
 		} catch (e) {
 			throw this.getAllError(e);
 		}
 	}
 
-	override async create(data: FileCreateInput): Promise<FileModel> {
+	override async create(data: FileMin): Promise<FileMin> {
 		try {
-			return await this.prisma.file.create({
-				data,
-			});
+			return await db.orm.public.File.create(data);
 		} catch (e) {
 			throw this.createError(e);
 		}
@@ -54,15 +50,12 @@ export class FileRepository
 
 	override async update(
 		fileId: UUID,
-		data: FileUpdateInput,
-	): Promise<FileModel> {
+		data: Partial<FileMin>,
+	): Promise<FileMin | null> {
 		try {
-			return await this.prisma.file.update({
-				where: {
-					FileId: fileId,
-				},
-				data,
-			});
+			return await db.orm.public.File.where({
+				FileId: fileId,
+			}).update(data);
 		} catch (e) {
 			throw this.updateError(fileId, e);
 		}
