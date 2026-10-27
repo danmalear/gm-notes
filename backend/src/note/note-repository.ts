@@ -8,10 +8,9 @@ import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
 export type NoteMin = Scalars<Models.public_Note>;
-export type INoteEntityMin = Omit<
-	Omit<Omit<Models.public_INoteEntity, 'Item'>, 'LocationItem'>,
-	'Region'
->;
+export type INoteEntityMin = Scalars<Models.public_INoteEntity> & {
+	Notes: NoteMin[];
+};
 
 export interface INoteEntityIncludeMin extends INoteEntityModel {
 	Notes: NoteModel[];
