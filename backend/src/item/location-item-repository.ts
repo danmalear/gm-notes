@@ -1,29 +1,50 @@
-import type { IActionTargetIncludeMin } from '#action/action-repository.ts';
-import type { INoteEntityIncludeMin } from '#note/note-repository.ts';
+import type {
+	ActionMin,
+	IActionTargetIncludeMin,
+} from '#action/action-repository.ts';
+import { db } from '#db';
+import type { INoteEntityIncludeMin, NoteMin } from '#note/note-repository.ts';
+import type { Models } from '#prisma';
 import type { ItemModel } from '#prisma-models/Item.ts';
 import type {
-	LocationItemCreateInput,
 	LocationItemInclude,
 	LocationItemModel,
-	LocationItemUpdateInput,
 } from '#prisma-models/LocationItem.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
+import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
-import type { IItemLocationIncludeMin } from './item-repository.ts';
-import {
-	includeAll as itemIncludeAll,
-	type ItemIncludeAll,
+import type {
+	IItemLocationIncludeMin,
+	ItemFull,
+	ItemIncludeAll,
+	ItemMin,
 } from './item-repository.ts';
 
+export type LocationItemRaw = Scalars<Models.public_LocationItem>;
+
+export type LocationItemMin = LocationItemRaw & {
+	Item: ItemMin;
+};
+
+export type LocationItemFull = LocationItemMin & {
+	Item: ItemFull;
+	Actions: ActionMin[];
+	Contents: LocationItemMin[];
+	Notes: NoteMin[];
+};
+
+/** @deprecated */
 export interface LocationItemIncludeMin extends LocationItemModel {
 	Item: ItemModel;
 }
 
+/** @deprecated */
 export const includeMin = {
 	Item: true,
 } satisfies LocationItemInclude;
 
+/** @deprecated */
 export interface LocationItemIncludeAll extends LocationItemModel {
 	IActionTarget: IActionTargetIncludeMin;
 	IItemLocation: IItemLocationIncludeMin;
@@ -31,45 +52,22 @@ export interface LocationItemIncludeAll extends LocationItemModel {
 	INoteEntity: INoteEntityIncludeMin;
 }
 
-const includeAll = {
-	IActionTarget: {
-		include: {
-			Actions: true,
-		},
-	},
-	IItemLocation: {
-		include: {
-			Items: {
-				include: includeMin,
-			},
-		},
-	},
-	Item: {
-		include: itemIncludeAll,
-	},
-	INoteEntity: {
-		include: {
-			Notes: true,
-		},
-	},
-} satisfies LocationItemInclude;
-
 export interface ILocationItemRepository
 	extends IRepository<
-		LocationItemIncludeMin,
-		LocationItemCreateInput,
-		LocationItemUpdateInput,
-		LocationItemIncludeAll
+		LocationItemMin,
+		LocationItemRaw,
+		LocationItemRaw,
+		LocationItemFull
 	> {
 	getByLocationId(locationId: UUID): Promise<LocationItemIncludeMin[]>;
 }
 
 export class LocationItemRepository
 	extends Repository<
-		LocationItemIncludeMin,
-		LocationItemCreateInput,
-		LocationItemUpdateInput,
-		LocationItemIncludeAll
+		LocationItemMin,
+		LocationItemRaw,
+		LocationItemRaw,
+		LocationItemFull
 	>
 	implements ILocationItemRepository
 {
@@ -77,13 +75,10 @@ export class LocationItemRepository
 
 	override async getByIdRaw(
 		locationItemId: UUID,
-	): Promise<LocationItemIncludeMin | null> {
+	): Promise<LocationItemMin | null> {
 		try {
-			return await this.prisma.locationItem.findUnique({
-				where: {
-					LocationItemId: locationItemId,
-				},
-				include: includeMin,
+			return await db.orm.public.LocationItem.include('Item').first({
+				LocationItemId: locationItemId,
 			});
 		} catch (e) {
 			throw this.getByIdError(locationItemId, e);
@@ -92,37 +87,60 @@ export class LocationItemRepository
 
 	override async getById(
 		locationItemId: UUID,
-	): Promise<LocationItemIncludeAll | null> {
+	): Promise<LocationItemFull | null> {
 		try {
-			return await this.prisma.locationItem.findUnique({
-				where: {
+			const locationItem = await db.orm.public.LocationItem.include(
+				'Item',
+				(item) =>
+					item
+						.include('ImageFile')
+						.include('IActionTarget', (iActionTarget) =>
+							iActionTarget.include('Actions'),
+						)
+						.include('INoteEntity', (iNoteEntity) =>
+							iNoteEntity.include('Notes'),
+						),
+			)
+				.include('IActionTarget', (iActionTarget) =>
+					iActionTarget.include('Actions'),
+				)
+				.include('IItemLocation', (iItemLocation) =>
+					iItemLocation.include('Items', (item) => item.include('Item')),
+				)
+				.include('INoteEntity', (iNoteEntity) => iNoteEntity.include('Notes'))
+				.first({
 					LocationItemId: locationItemId,
+				});
+
+			if (!locationItem || !locationItem.Item) return null;
+
+			return {
+				...locationItem,
+				Item: {
+					...locationItem.Item,
+					Actions: locationItem.Item.IActionTarget?.Actions ?? [],
+					Notes: locationItem.Item.INoteEntity?.Notes ?? [],
 				},
-				include: includeAll,
-			});
+				Actions: locationItem.IActionTarget?.Actions ?? [],
+				Contents: locationItem.IItemLocation?.Items ?? [],
+				Notes: locationItem.INoteEntity?.Notes ?? [],
+			};
 		} catch (e) {
 			throw this.getByIdError(locationItemId, e);
 		}
 	}
 
-	override async getAll(): Promise<LocationItemIncludeMin[]> {
+	override async getAll(): Promise<LocationItemMin[]> {
 		try {
-			return await this.prisma.locationItem.findMany({
-				include: includeMin,
-			});
+			return await db.orm.public.LocationItem.include('Item').all();
 		} catch (e) {
 			throw this.getAllError(e);
 		}
 	}
 
-	override async create(
-		data: LocationItemCreateInput,
-	): Promise<LocationItemIncludeMin> {
+	override async create(data: LocationItemRaw): Promise<LocationItemMin> {
 		try {
-			return await this.prisma.locationItem.create({
-				data,
-				include: includeMin,
-			});
+			return await db.orm.public.LocationItem.include('Item').create(data);
 		} catch (e) {
 			throw this.createError(e);
 		}
@@ -130,16 +148,14 @@ export class LocationItemRepository
 
 	override async update(
 		locationItemId: UUID,
-		data: LocationItemUpdateInput,
-	): Promise<LocationItemIncludeMin> {
+		data: Partial<LocationItemRaw>,
+	): Promise<LocationItemMin | null> {
 		try {
-			return await this.prisma.locationItem.update({
-				where: {
+			return await db.orm.public.LocationItem.include('Item')
+				.where({
 					LocationItemId: locationItemId,
-				},
-				include: includeMin,
-				data,
-			});
+				})
+				.update(data);
 		} catch (e) {
 			throw this.updateError(locationItemId, e);
 		}
@@ -150,14 +166,13 @@ export class LocationItemRepository
 	 * @param id UUID of the location to get items for
 	 * @returns The list of items (empty array if none found)
 	 */
-	async getByLocationId(locationId: UUID): Promise<LocationItemIncludeMin[]> {
+	async getByLocationId(locationId: UUID): Promise<LocationItemMin[]> {
 		try {
-			const locationItems = await this.prisma.locationItem.findMany({
-				where: {
+			const locationItems = await db.orm.public.LocationItem.include('Item')
+				.where({
 					LocationId: locationId,
-				},
-				include: includeMin,
-			});
+				})
+				.all();
 			return locationItems;
 		} catch (e) {
 			throw new Error(
