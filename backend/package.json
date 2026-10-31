@@ -25,10 +25,6 @@
 		"#narration/*": "./src/narration/*",
 		"#note/*": "./src/note/*",
 		"#prisma": "./generated/prisma8/contract.d.ts",
-		"#prisma/*": "./prisma/*",
-		"#prisma-client": "./prisma/generated/client.ts",
-		"#prisma-enums": "./prisma/generated/enums.ts",
-		"#prisma-models/*": "./prisma/generated/models/*",
 		"#region/*": "./src/region/*",
 		"#shared/*": "./src/shared/*",
 		"#stream/*": "./src/framework/stream/*"
