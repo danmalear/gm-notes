@@ -59,7 +59,7 @@ export interface ILocationItemRepository
 		LocationItemRaw,
 		LocationItemFull
 	> {
-	getByLocationId(locationId: UUID): Promise<LocationItemIncludeMin[]>;
+	getByLocationId(locationId: UUID): Promise<LocationItemMin[]>;
 }
 
 export class LocationItemRepository
