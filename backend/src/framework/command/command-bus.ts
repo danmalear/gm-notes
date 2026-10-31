@@ -1,8 +1,8 @@
 import { MessageBus, type IMessageBus } from '#message/message-bus.ts';
-import type { CommandCreateInput } from '#prisma/generated/models.ts';
 import { NotFoundError } from '#shared/error.ts';
+import type { JsonObject } from '@prisma/orm-postgres/utils';
 import { randomUUID, type UUID } from 'crypto';
-import type { ICommandRepository } from './command-repository.ts';
+import type { CommandMin, ICommandRepository } from './command-repository.ts';
 import type { ICommand } from './command.ts';
 
 export type ICommandBus = IMessageBus<ICommand>;
@@ -28,13 +28,13 @@ export class CommandBus extends MessageBus<ICommand> implements ICommandBus {
 
 		const id = randomUUID();
 
-		const commandCreate: CommandCreateInput = {
+		const commandCreate: CommandMin = {
 			CommandId: id,
 			StreamId: command.streamId ?? null,
 			CorrelationId: command.correlationId,
 			Context: command.context,
 			Ref: command.ref,
-			Data: command.data,
+			Data: command.data as JsonObject,
 			CreatedAt: new Date(),
 		};
 

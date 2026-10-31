@@ -1,11 +1,13 @@
 import { MessageBus, type IMessageBus } from '#message/message-bus.ts';
-import type { EventCreateInput } from '#prisma-models/Event.ts';
-import type { StreamUpdateInput } from '#prisma/generated/models.ts';
 import { InternalError } from '#shared/error.ts';
-import type { IStreamRepository } from '#stream/stream-repository.ts';
+import type {
+	IStreamRepository,
+	StreamMin,
+} from '#stream/stream-repository.ts';
+import type { JsonObject } from '@prisma/orm-postgres/utils';
 import { randomUUID, type UUID } from 'crypto';
 import type { WebSocketServer } from 'ws';
-import type { IEventRepository } from './event-repository.ts';
+import type { EventMin, IEventRepository } from './event-repository.ts';
 import type { IEvent } from './event.ts';
 
 export type IEventBus = IMessageBus<IEvent>;
@@ -64,18 +66,18 @@ export class EventBus extends MessageBus<IEvent> implements IEventBus {
 			);
 		}
 
-		const streamUpdate: StreamUpdateInput = {
+		const streamUpdate: Partial<StreamMin> = {
 			Version: version + 1,
 			UpdatedAt: new Date().toISOString(),
 		};
 
-		const eventCreate: EventCreateInput = {
+		const eventCreate: EventMin = {
 			EventId: id,
 			StreamId: event.streamId,
 			CorrelationId: event.correlationId,
 			Context: event.context,
 			Ref: event.ref,
-			Data: event.data,
+			Data: event.data as JsonObject,
 			Version: version + 1,
 			OccurredAt: new Date(),
 		};
