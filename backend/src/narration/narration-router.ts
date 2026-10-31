@@ -1,8 +1,3 @@
-import type {
-	NarrationCreateInput,
-	NarrationModel,
-	NarrationUpdateInput,
-} from '#prisma-models/Narration.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage } from '#shared/error.ts';
 import { BaseStreamRouter, type BaseStreamRouterOpts } from '#shared/router.ts';
@@ -13,21 +8,24 @@ import type {
 	NarrationStub,
 } from './narration-dtos.ts';
 import { toDto, toStub } from './narration-mappers.ts';
-import type { INarrationRepository } from './narration-repository.ts';
+import type {
+	INarrationRepository,
+	NarrationMin,
+} from './narration-repository.ts';
 
 export type NarrationRouterOpts = BaseStreamRouterOpts<
-	NarrationModel,
-	NarrationCreateInput,
-	NarrationUpdateInput,
-	NarrationModel,
+	NarrationMin,
+	NarrationMin,
+	NarrationMin,
+	NarrationMin,
 	INarrationRepository
 >;
 
 export class NarrationRouter extends BaseStreamRouter<
-	NarrationModel,
-	NarrationCreateInput,
-	NarrationUpdateInput,
-	NarrationModel,
+	NarrationMin,
+	NarrationMin,
+	NarrationMin,
+	NarrationMin,
 	NarrationResponse,
 	NarrationStub,
 	INarrationRepository
@@ -53,13 +51,9 @@ export class NarrationRouter extends BaseStreamRouter<
 		});
 	}
 
-	override toDto(model: NarrationModel): NarrationResponse {
-		return toDto(model);
-	}
+	override toDto = toDto;
 
-	override toStub(model: NarrationModel): NarrationStub {
-		return toStub(model);
-	}
+	override toStub = toStub;
 
 	override get(): void {
 		this.defaultGetById();
@@ -83,21 +77,17 @@ export class NarrationRouter extends BaseStreamRouter<
 					? await this.repository.getByRegionId(req.query.regionId)
 					: await this.repository.getAll();
 
-				const data: NarrationStub[] = [];
-
 				try {
-					for (const narration of narrations) {
-						data.push(this.toStub(narration));
-					}
+					const data: NarrationStub[] = narrations.map(this.toStub);
+
+					res.send({
+						data,
+					});
 				} catch (e) {
 					res.status(500).send({
 						message: getMessage(e),
 					});
 				}
-
-				res.send({
-					data,
-				});
 			},
 		);
 	}
