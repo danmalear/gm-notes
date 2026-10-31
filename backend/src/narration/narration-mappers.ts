@@ -1,8 +1,8 @@
-import type { NarrationModel } from '#prisma-models/Narration.ts';
 import type { UUID } from 'node:crypto';
 import type { NarrationResponse, NarrationStub } from './narration-dtos.ts';
+import type { NarrationMin } from './narration-repository.ts';
 
-export function toDto(narration: NarrationModel) {
+export function toDto(narration: NarrationMin) {
 	const narrationResponse: NarrationResponse = {
 		id: narration.NarrationId as UUID,
 		name: narration.Name,
@@ -13,7 +13,7 @@ export function toDto(narration: NarrationModel) {
 	return narrationResponse;
 }
 
-export function toStub(narration: NarrationModel) {
+export function toStub(narration: NarrationMin) {
 	const narrationStub: NarrationStub = {
 		id: narration.NarrationId as UUID,
 		name: narration.Name,
