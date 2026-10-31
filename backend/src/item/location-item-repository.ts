@@ -140,6 +140,18 @@ export class LocationItemRepository
 
 	override async create(data: LocationItemRaw): Promise<LocationItemMin> {
 		try {
+			await db.orm.public.IActionTarget.create({
+				IActionTargetId: data.LocationItemId,
+				Type: 'LocationItem',
+			});
+			await db.orm.public.IItemLocation.create({
+				IItemLocationId: data.LocationItemId,
+				Type: 'LocationItem',
+			});
+			await db.orm.public.INoteEntity.create({
+				INoteEntityId: data.LocationItemId,
+				Type: 'LocationItem',
+			});
 			return await db.orm.public.LocationItem.include('Item').create(data);
 		} catch (e) {
 			throw this.createError(e);

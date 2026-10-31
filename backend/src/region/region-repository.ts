@@ -180,6 +180,18 @@ export class RegionRepository
 
 	override async create(data: RegionRaw): Promise<RegionMin> {
 		try {
+			await db.orm.public.IActionTarget.create({
+				IActionTargetId: data.RegionId,
+				Type: 'Region',
+			});
+			await db.orm.public.IItemLocation.create({
+				IItemLocationId: data.RegionId,
+				Type: 'Region',
+			});
+			await db.orm.public.INoteEntity.create({
+				INoteEntityId: data.RegionId,
+				Type: 'Region',
+			});
 			return await db.orm.public.Region.include('Shapes').create(data);
 		} catch (e) {
 			throw this.createError(e);

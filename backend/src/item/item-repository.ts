@@ -100,6 +100,14 @@ export class ItemRepository
 
 	override async create(data: ItemMin): Promise<ItemMin> {
 		try {
+			await db.orm.public.IActionTarget.create({
+				IActionTargetId: data.ItemId,
+				Type: 'Item',
+			});
+			await db.orm.public.INoteEntity.create({
+				INoteEntityId: data.ItemId,
+				Type: 'Item',
+			});
 			return await db.orm.public.Item.create(data);
 		} catch (e) {
 			throw this.createError(e);
