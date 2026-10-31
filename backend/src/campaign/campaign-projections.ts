@@ -1,9 +1,11 @@
 import type { IEventSubscriber } from '#event/event-subscriber.ts';
 import type { IEvent } from '#event/event.ts';
-import type { CampaignModel } from '#prisma-models/Campaign.ts';
 import { NotImplementedError } from '#shared/error.ts';
 import { validateCampaignCreated } from './campaign-events.ts';
-import type { ICampaignRepository } from './campaign-repository.ts';
+import type {
+	CampaignMin,
+	ICampaignRepository,
+} from './campaign-repository.ts';
 
 export class CampaignProjections implements IEventSubscriber {
 	campaignRepository: ICampaignRepository;
@@ -26,7 +28,7 @@ export class CampaignProjections implements IEventSubscriber {
 
 	async Created(event: object) {
 		validateCampaignCreated(event);
-		const newCampaign: CampaignModel = {
+		const newCampaign: CampaignMin = {
 			CampaignId: event.id,
 			CampaignTemplateId: null,
 			Name: event.name,
