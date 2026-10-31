@@ -8,7 +8,7 @@ import type {
 export type SkillDto =
 	| Exclude<Skill, 'AnimalHandling' | 'SleightOfHand'>
 	| 'Animal Handling'
-	| 'Sleight Of Hand';
+	| 'Sleight of Hand';
 
 export type AbsoluteLightingDto =
 	| Exclude<AbsoluteLighting, 'BrightLight' | 'DimLight'>

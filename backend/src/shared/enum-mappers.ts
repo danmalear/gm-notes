@@ -10,7 +10,7 @@ export function mapSkillToDto(skill: Skill): SkillDto {
 		case 'AnimalHandling':
 			return 'Animal Handling';
 		case 'SleightOfHand':
-			return 'Sleight Of Hand';
+			return 'Sleight of Hand';
 		default:
 			return skill;
 	}
