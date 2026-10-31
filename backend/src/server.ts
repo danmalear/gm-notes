@@ -54,7 +54,6 @@ import {
 } from '#narration/narration-repository.ts';
 import { NarrationRouter } from '#narration/narration-router.ts';
 import { NoteRepository, type INoteRepository } from '#note/note-repository.ts';
-import { PrismaClient } from '#prisma-client';
 import {
 	RegionRepository,
 	type IRegionRepository,
@@ -71,7 +70,6 @@ import {
 	StreamRepository,
 	type IStreamRepository,
 } from '#stream/stream-repository.ts';
-import { PrismaPg } from '@prisma/adapter-pg';
 import cors from 'cors';
 import 'dotenv/config';
 import express, {
@@ -102,24 +100,24 @@ interface Repositories {
 	campaign: ICampaignRepository;
 }
 
-function initRepos(prisma: PrismaClient): Repositories {
-	const command = new CommandRepository({ prisma });
-	const event = new EventRepository({ prisma });
-	const stream = new StreamRepository({ prisma });
+function initRepos(): Repositories {
+	const command = new CommandRepository();
+	const event = new EventRepository();
+	const stream = new StreamRepository();
 
-	const file = new FileRepository({ prisma });
-	const note = new NoteRepository({ prisma });
-	const narration = new NarrationRepository({ prisma });
-	const handout = new HandoutRepository({ prisma });
-	const abilityCheck = new AbilityCheckRepository({ prisma });
-	const condition = new ConditionRepository({ prisma });
-	const action = new ActionRepository({ prisma });
-	const item = new ItemRepository({ prisma });
-	const locationItem = new LocationItemRepository({ prisma });
-	const regionShape = new RegionShapeRepository({ prisma });
-	const region = new RegionRepository({ prisma });
-	const map = new MapRepository({ prisma });
-	const campaign = new CampaignRepository({ prisma });
+	const file = new FileRepository();
+	const note = new NoteRepository();
+	const narration = new NarrationRepository();
+	const handout = new HandoutRepository();
+	const abilityCheck = new AbilityCheckRepository();
+	const condition = new ConditionRepository();
+	const action = new ActionRepository();
+	const item = new ItemRepository();
+	const locationItem = new LocationItemRepository();
+	const regionShape = new RegionShapeRepository();
+	const region = new RegionRepository();
+	const map = new MapRepository();
+	const campaign = new CampaignRepository();
 
 	return {
 		command,
@@ -304,12 +302,9 @@ function createAppServer() {
 
 	const wsServer = createWsServer(server);
 
-	const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
-	const prisma = new PrismaClient({ adapter });
-
 	const uploadsPath = path.resolve('uploads');
 
-	const repositories = initRepos(prisma);
+	const repositories = initRepos();
 
 	const commandBus = new CommandBus({
 		commandRepository: repositories.command,
