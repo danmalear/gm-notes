@@ -1,8 +1,3 @@
-import type {
-	AbilityCheckCreateInput,
-	AbilityCheckModel,
-	AbilityCheckUpdateInput,
-} from '#prisma-models/AbilityCheck.ts';
 import { BaseStreamRouter, type BaseStreamRouterOpts } from '#shared/router.ts';
 import type {
 	AbilityCheckResponse,
@@ -10,23 +5,24 @@ import type {
 } from './ability-check-dtos.ts';
 import { toDto, toStub } from './ability-check-mappers.ts';
 import type {
-	AbilityCheckIncludeAll,
+	AbilityCheckFull,
+	AbilityCheckMin,
 	IAbilityCheckRepository,
 } from './ability-check-repository.ts';
 
 export type AbilityCheckRouterOpts = BaseStreamRouterOpts<
-	AbilityCheckModel,
-	AbilityCheckCreateInput,
-	AbilityCheckUpdateInput,
-	AbilityCheckIncludeAll,
+	AbilityCheckMin,
+	AbilityCheckMin,
+	AbilityCheckMin,
+	AbilityCheckFull,
 	IAbilityCheckRepository
 >;
 
 export class AbilityCheckRouter extends BaseStreamRouter<
-	AbilityCheckModel,
-	AbilityCheckCreateInput,
-	AbilityCheckUpdateInput,
-	AbilityCheckIncludeAll,
+	AbilityCheckMin,
+	AbilityCheckMin,
+	AbilityCheckMin,
+	AbilityCheckFull,
 	AbilityCheckResponse,
 	AbilityCheckStub,
 	IAbilityCheckRepository
@@ -52,13 +48,9 @@ export class AbilityCheckRouter extends BaseStreamRouter<
 		});
 	}
 
-	override toDto(model: AbilityCheckIncludeAll): AbilityCheckResponse {
-		return toDto(model);
-	}
+	override toDto = toDto;
 
-	override toStub(model: AbilityCheckModel): AbilityCheckStub {
-		return toStub(model);
-	}
+	override toStub = toStub;
 
 	override get() {
 		this.defaultGetById();
