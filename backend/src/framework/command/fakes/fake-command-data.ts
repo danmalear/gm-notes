@@ -1,5 +1,5 @@
+import type { CommandMin } from '#command/command-repository.ts';
 import type { ICommand } from '#command/command.ts';
-import type { CommandModel } from '#prisma-models/Command.ts';
 import { randomUUID } from 'crypto';
 
 const commandId = randomUUID();
@@ -31,7 +31,7 @@ export const fakeCommand: ICommand = {
 	data,
 };
 
-export const fakeCommandModel: CommandModel = {
+export const fakeCommandModel: CommandMin = {
 	CommandId: commandId,
 	Context: context,
 	Ref: ref,

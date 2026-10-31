@@ -1,5 +1,5 @@
+import type { EventMin } from '#event/event-repository.ts';
 import type { IEvent } from '#event/event.ts';
-import type { EventModel } from '#prisma-models/Event.ts';
 import { randomUUID } from 'crypto';
 
 const eventId = randomUUID();
@@ -23,7 +23,7 @@ export const fakeEvent: IEvent = {
 	streamVersion: version,
 };
 
-export const fakeEventModel: EventModel = {
+export const fakeEventModel: EventMin = {
 	EventId: eventId,
 	Context: context,
 	Ref: ref,

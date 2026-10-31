@@ -1,15 +1,10 @@
-import type {
-	EventCreateInput,
-	EventModel,
-	EventUpdateInput,
-} from '#prisma-models/Event.ts';
 import type { ICloneable } from '#shared/cloneable.ts';
 import type { Faker, FakerCalls } from '#shared/faker.ts';
 import {
 	FakeRepository,
 	zeroCalls as baseZeroCalls,
 } from '#shared/fakes/fake-repository.ts';
-import type { IEventRepository } from '../event-repository.ts';
+import type { EventMin, IEventRepository } from '../event-repository.ts';
 import { fakeEventModel } from './fake-event-data.ts';
 
 const zeroCalls: FakerCalls<IEventRepository> = {
@@ -18,7 +13,7 @@ const zeroCalls: FakerCalls<IEventRepository> = {
 };
 
 export class FakeEventRepository
-	extends FakeRepository<EventModel, EventCreateInput, EventUpdateInput>
+	extends FakeRepository<EventMin, EventMin, EventMin>
 	implements Faker<IEventRepository>, ICloneable<FakeEventRepository>
 {
 	override calls: FakerCalls<IEventRepository>;
