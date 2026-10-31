@@ -1,10 +1,5 @@
-import type { PrismaClient } from '#prisma-client';
 import type { UUID } from 'crypto';
 import { getMessage } from './error.ts';
-
-export interface IRepositoryConfig {
-	prisma: PrismaClient;
-}
 
 /**
  * Interface for data access repository - defines all baseline operations
@@ -61,12 +56,7 @@ export abstract class Repository<
 	TModelIncludeAll extends TModel = TModel,
 > implements IRepository<TModel, TCreateInput, TUpdateInput, TModelIncludeAll>
 {
-	prisma: PrismaClient;
 	abstract descriptor: string;
-
-	constructor({ prisma }: IRepositoryConfig) {
-		this.prisma = prisma;
-	}
 
 	getByIdError(id: UUID, e: unknown) {
 		return new Error(
