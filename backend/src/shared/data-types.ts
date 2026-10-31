@@ -1,28 +1,17 @@
-import type {
-	AbsoluteLighting,
-	CurrencyUnit,
-	RelativeLighting,
-	Skill,
-} from '#prisma-enums';
+import type { ContractBase } from '#prisma';
 
-export type SkillDto =
-	| Exclude<Skill, 'AnimalHandling' | 'SleightOfHand'>
-	| 'Animal Handling'
-	| 'Sleight of Hand';
+type ValueSets<
+	TEnum extends
+		keyof ContractBase['storage']['namespaces']['public']['entries']['valueSet'],
+> =
+	ContractBase['storage']['namespaces']['public']['entries']['valueSet'][TEnum]['values'][number];
 
-export type AbsoluteLightingDto =
-	| Exclude<AbsoluteLighting, 'BrightLight' | 'DimLight'>
-	| 'Bright Light'
-	| 'Dim Light';
+export type Skill = ValueSets<'Skill'>;
 
-export type RelativeLightingDto =
-	| Exclude<
-			RelativeLighting,
-			'BrightLight' | 'DimLight' | 'DefaultPlus' | 'DefaultMinus'
-	  >
-	| 'Bright Light'
-	| 'Dim Light'
-	| 'Default+'
-	| 'Default-';
+export type AbsoluteLighting = ValueSets<'AbsoluteLighting'>;
+
+export type RelativeLighting = ValueSets<'RelativeLighting'>;
+
+export type CurrencyUnit = ValueSets<'CurrencyUnit'>;
 
 export type Value = `${number} ${CurrencyUnit}`;
