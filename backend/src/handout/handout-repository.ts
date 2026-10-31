@@ -1,52 +1,48 @@
-import type {
-	HandoutCreateInput,
-	HandoutModel,
-	HandoutUpdateInput,
-} from '#prisma-models/Handout.ts';
+import { db } from '#db';
+import type { Models } from '#prisma';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
+import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
+export type HandoutMin = Scalars<Models.public_Handout>;
+
 export interface IHandoutRepository
-	extends IRepository<HandoutModel, HandoutCreateInput, HandoutUpdateInput> {
-	getByRegionId(regionId: UUID): Promise<HandoutModel[]>;
+	extends IRepository<HandoutMin, HandoutMin, HandoutMin> {
+	getByRegionId(regionId: UUID): Promise<HandoutMin[]>;
 }
 
 export class HandoutRepository
-	extends Repository<HandoutModel, HandoutCreateInput, HandoutUpdateInput>
+	extends Repository<HandoutMin, HandoutMin, HandoutMin>
 	implements IHandoutRepository
 {
 	override descriptor = 'Handout';
 
-	override async getByIdRaw(handoutId: UUID): Promise<HandoutModel | null> {
+	override async getByIdRaw(handoutId: UUID): Promise<HandoutMin | null> {
 		try {
-			return await this.prisma.handout.findUnique({
-				where: {
-					HandoutId: handoutId,
-				},
+			return await db.orm.public.Handout.first({
+				HandoutId: handoutId,
 			});
 		} catch (e) {
 			throw this.getByIdError(handoutId, e);
 		}
 	}
 
-	override async getById(id: UUID): Promise<HandoutModel | null> {
+	override async getById(id: UUID): Promise<HandoutMin | null> {
 		return await this.getByIdRaw(id);
 	}
 
-	override async getAll(): Promise<HandoutModel[]> {
+	override async getAll(): Promise<HandoutMin[]> {
 		try {
-			return await this.prisma.handout.findMany();
+			return await db.orm.public.Handout.all();
 		} catch (e) {
 			throw this.getAllError(e);
 		}
 	}
 
-	override async create(data: HandoutCreateInput): Promise<HandoutModel> {
+	override async create(data: HandoutMin): Promise<HandoutMin> {
 		try {
-			return await this.prisma.handout.create({
-				data,
-			});
+			return await db.orm.public.Handout.create(data);
 		} catch (e) {
 			throw this.createError(e);
 		}
@@ -54,15 +50,12 @@ export class HandoutRepository
 
 	override async update(
 		handoutId: UUID,
-		data: HandoutUpdateInput,
-	): Promise<HandoutModel> {
+		data: Partial<HandoutMin>,
+	): Promise<HandoutMin | null> {
 		try {
-			return await this.prisma.handout.update({
-				where: {
-					HandoutId: handoutId,
-				},
-				data,
-			});
+			return await db.orm.public.Handout.where({
+				HandoutId: handoutId,
+			}).update(data);
 		} catch (e) {
 			throw this.updateError(handoutId, e);
 		}
@@ -73,17 +66,15 @@ export class HandoutRepository
 	 * @param id UUID of the region to get handouts for
 	 * @returns The list of handouts (empty array if none found)
 	 */
-	async getByRegionId(regionId: UUID): Promise<HandoutModel[]> {
+	async getByRegionId(regionId: UUID): Promise<HandoutMin[]> {
 		try {
-			return await this.prisma.handout.findMany({
-				where: {
-					RegionHandouts: {
-						some: {
-							RegionId: regionId,
-						},
-					},
-				},
-			});
+			return await db.orm.public.Handout.include(
+				'RegionHandouts',
+				(regionHandout) =>
+					regionHandout.where({
+						RegionId: regionId,
+					}),
+			).all();
 		} catch (e) {
 			throw new Error(
 				`Error getting ${this.descriptor} records by Region ID ${regionId}: ${getMessage(e)}`,
