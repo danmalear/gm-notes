@@ -2,8 +2,10 @@ import type {
 	AbilityCheckResponse,
 	AbilityCheckStub,
 } from '#ability-check/ability-check-dtos.ts';
-import type { AbilityCheckIncludeAll } from '#ability-check/ability-check-repository.ts';
-import type { AbilityCheckModel } from '#prisma-models/AbilityCheck.ts';
+import type {
+	AbilityCheckFull,
+	AbilityCheckMin,
+} from '#ability-check/ability-check-repository.ts';
 import type { NarrationModel } from '#prisma-models/Narration.ts';
 import { randomUUID } from 'crypto';
 
@@ -46,7 +48,7 @@ const critFailure: NarrationModel = {
 	IsRead: false,
 };
 
-export const abilityCheckRec: AbilityCheckModel = {
+export const abilityCheckMin: AbilityCheckMin = {
 	AbilityCheckId: abilityCheckId,
 	ActionId: actionId,
 	Skill: skill,
@@ -57,7 +59,7 @@ export const abilityCheckRec: AbilityCheckModel = {
 	CriticalFailureNarrationId: critFailureId,
 };
 
-export const abilityCheckRecMin: AbilityCheckModel = {
+export const abilityCheckMinNulls: AbilityCheckMin = {
 	AbilityCheckId: abilityCheckId,
 	ActionId: actionId,
 	Skill: skill,
@@ -68,7 +70,7 @@ export const abilityCheckRecMin: AbilityCheckModel = {
 	CriticalFailureNarrationId: null,
 };
 
-export const abilityCheckRefRec: AbilityCheckIncludeAll = {
+export const abilityCheckFull: AbilityCheckFull = {
 	AbilityCheckId: abilityCheckId,
 	ActionId: actionId,
 	Skill: skill,
@@ -83,7 +85,7 @@ export const abilityCheckRefRec: AbilityCheckIncludeAll = {
 	CriticalFailureNarration: critFailure,
 };
 
-export const abilityCheckRefRecMin: AbilityCheckIncludeAll = {
+export const abilityCheckFullNulls: AbilityCheckFull = {
 	AbilityCheckId: abilityCheckId,
 	ActionId: actionId,
 	Skill: skill,
@@ -109,7 +111,7 @@ export const abilityCheckDto: AbilityCheckResponse = {
 	criticalFailureNarration: 'Critical Failure Narration Description',
 };
 
-export const abilityCheckDtoMin: AbilityCheckResponse = {
+export const abilityCheckDtoNulls: AbilityCheckResponse = {
 	id: abilityCheckId,
 	actionId,
 	skill,
@@ -131,7 +133,7 @@ export const abilityCheckStub: AbilityCheckStub = {
 	criticalFailureNarrationId: critFailureId,
 };
 
-export const abilityCheckStubMin: AbilityCheckStub = {
+export const abilityCheckStubNulls: AbilityCheckStub = {
 	id: abilityCheckId,
 	actionId,
 	skill,

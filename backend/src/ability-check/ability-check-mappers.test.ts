@@ -3,37 +3,37 @@ import { suite, test } from 'node:test';
 import { toDto, toStub } from './ability-check-mappers.ts';
 import {
 	abilityCheckDto,
-	abilityCheckDtoMin,
-	abilityCheckRec,
-	abilityCheckRecMin,
-	abilityCheckRefRec,
-	abilityCheckRefRecMin,
+	abilityCheckDtoNulls,
+	abilityCheckFull,
+	abilityCheckFullNulls,
+	abilityCheckMin,
+	abilityCheckMinNulls,
 	abilityCheckStub,
-	abilityCheckStubMin,
+	abilityCheckStubNulls,
 } from './fakes/fake-ability-check-data.ts';
 
 suite('Ability Check mappers', () => {
 	suite('toDto', () => {
 		test('correctly maps a complete record to a DTO', () => {
-			const testDto = toDto(abilityCheckRefRec);
+			const testDto = toDto(abilityCheckFull);
 			assert.deepStrictEqual(testDto, abilityCheckDto);
 		});
 
 		test('correctly maps a minimal record to a DTO', () => {
-			const testDto = toDto(abilityCheckRefRecMin);
-			assert.deepStrictEqual(testDto, abilityCheckDtoMin);
+			const testDto = toDto(abilityCheckFullNulls);
+			assert.deepStrictEqual(testDto, abilityCheckDtoNulls);
 		});
 	});
 
 	suite('toStub', () => {
 		test('correctly maps a complete record to a stub', () => {
-			const testStub = toStub(abilityCheckRec);
+			const testStub = toStub(abilityCheckMin);
 			assert.deepStrictEqual(testStub, abilityCheckStub);
 		});
 
 		test('correctly maps a minimal record to a stub', () => {
-			const testStub = toStub(abilityCheckRecMin);
-			assert.deepStrictEqual(testStub, abilityCheckStubMin);
+			const testStub = toStub(abilityCheckMinNulls);
+			assert.deepStrictEqual(testStub, abilityCheckStubNulls);
 		});
 	});
 });
