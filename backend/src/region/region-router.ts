@@ -1,8 +1,3 @@
-import type {
-	RegionCreateInput,
-	RegionModel,
-	RegionUpdateInput,
-} from '#prisma-models/Region.ts';
 import type { DataResponse, MessageResponse } from '#shared/dtos.ts';
 import { getMessage, InternalError } from '#shared/error.ts';
 import { BaseStreamRouter, type BaseStreamRouterOpts } from '#shared/router.ts';
@@ -19,8 +14,8 @@ import type {
 import { toDto, toStub } from './region-mappers.ts';
 import type {
 	IRegionRepository,
-	RegionIncludeAll,
-	RegionIncludeMin,
+	RegionFull,
+	RegionMin,
 } from './region-repository.ts';
 import type { IRegionShapeRepository } from './region-shape-repository.ts';
 import { getShapeType } from './region-shape-utils.ts';
@@ -32,20 +27,20 @@ import {
 
 export interface RegionRouterOpts
 	extends BaseStreamRouterOpts<
-		RegionModel,
-		RegionCreateInput,
-		RegionUpdateInput,
-		RegionIncludeAll,
+		RegionMin,
+		RegionMin,
+		RegionMin,
+		RegionFull,
 		IRegionRepository
 	> {
 	shapeRepository: IRegionShapeRepository;
 }
 
 export class RegionRouter extends BaseStreamRouter<
-	RegionModel,
-	RegionCreateInput,
-	RegionUpdateInput,
-	RegionIncludeAll,
+	RegionMin,
+	RegionMin,
+	RegionMin,
+	RegionFull,
 	RegionResponse,
 	RegionStub,
 	IRegionRepository
@@ -75,13 +70,9 @@ export class RegionRouter extends BaseStreamRouter<
 		this.shapeRepository = shapeRepository;
 	}
 
-	override toDto(model: RegionIncludeAll): RegionResponse {
-		return toDto(model);
-	}
+	override toDto = toDto;
 
-	override toStub(model: RegionIncludeMin): RegionStub {
-		return toStub(model);
-	}
+	override toStub = toStub;
 
 	override get(): void {
 		this.defaultGetById();
@@ -105,21 +96,17 @@ export class RegionRouter extends BaseStreamRouter<
 					? await this.repository.getByMapId(req.query.mapId)
 					: await this.repository.getAll();
 
-				const data: RegionStub[] = [];
-
 				try {
-					for (const region of regions) {
-						data.push(toStub(region));
-					}
+					const data: RegionStub[] = regions.map(toStub);
+
+					res.send({
+						data,
+					});
 				} catch (e) {
 					res.status(500).send({
 						message: getMessage(e),
 					});
 				}
-
-				res.send({
-					data,
-				});
 			},
 		);
 	}
@@ -177,43 +164,17 @@ export class RegionRouter extends BaseStreamRouter<
 				const id = randomUUID();
 
 				await this.repository.create({
-					// RegionId handled by FKs
+					RegionId: id,
 					RegionTemplateId: null,
-					Map: {
-						connect: {
-							MapId: req.body.mapId,
-						},
-					},
+					MapId: req.body.mapId,
 					Name: req.body.name,
 					Lighting: 'Default',
-					IItemLocation: {
-						create: {
-							IItemLocationId: id,
-							Type: 'Region',
-						},
-					},
-					IActionTarget: {
-						create: {
-							IActionTargetId: id,
-							Type: 'Region',
-						},
-					},
-					INoteEntity: {
-						create: {
-							INoteEntityId: id,
-							Type: 'Region',
-						},
-					},
 				});
 
 				for (const shape of req.body.shapes) {
 					await this.shapeRepository.create({
 						RegionShapeId: randomUUID(),
-						Region: {
-							connect: {
-								RegionId: id,
-							},
-						},
+						RegionId: id,
 						ShapeType: getShapeType(shape),
 						Coords: shape,
 					});
