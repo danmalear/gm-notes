@@ -6,11 +6,11 @@ import type {
 	LocationItemStub,
 } from './item-dtos.ts';
 import type {
-	LocationItemIncludeAll,
-	LocationItemIncludeMin,
+	LocationItemFull,
+	LocationItemMin,
 } from './location-item-repository.ts';
 
-export const toDto = (locationItem: LocationItemIncludeAll) => {
+export const toDto = (locationItem: LocationItemFull) => {
 	const item = locationItem.Item;
 
 	const locationItemResponseBase: LocationItemResponseBase = {
@@ -26,17 +26,17 @@ export const toDto = (locationItem: LocationItemIncludeAll) => {
 		imageFileId: item.ImageFileId ?? undefined,
 		quantity: locationItem.Quantity,
 		actions: [
-			...item.IActionTarget.Actions.map(actionToStub),
-			...locationItem.IActionTarget.Actions.map(actionToStub),
+			...item.Actions.map(actionToStub),
+			...locationItem.Actions.map(actionToStub),
 		],
-		notes: locationItem.INoteEntity.Notes.map((note) => note.Description),
+		notes: locationItem.Notes.map((note) => note.Description),
 	};
 
 	const locationItemResponse: LocationItemResponse = item.IsContainer
 		? {
 				...locationItemResponseBase,
 				isContainer: true,
-				containedItems: locationItem.IItemLocation.Items.map(toStub),
+				containedItems: locationItem.Contents.map(toStub),
 			}
 		: {
 				...locationItemResponseBase,
@@ -46,7 +46,7 @@ export const toDto = (locationItem: LocationItemIncludeAll) => {
 	return locationItemResponse;
 };
 
-export const toStub = (locationItem: LocationItemIncludeMin) => {
+export const toStub = (locationItem: LocationItemMin) => {
 	const item = locationItem.Item;
 
 	const locationItemStub: LocationItemStub = {
