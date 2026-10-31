@@ -1,29 +1,25 @@
-import type {
-	CampaignCreateInput,
-	CampaignModel,
-	CampaignUpdateInput,
-} from '#prisma-models/Campaign.ts';
 import { BaseStreamRouter, type BaseStreamRouterOpts } from '#shared/router.ts';
 import type { CampaignResponse, CampaignStub } from './campaign-dtos.ts';
 import { toDto, toStub } from './campaign-mappers.ts';
 import type {
-	CampaignIncludeAll,
+	CampaignFull,
+	CampaignMin,
 	ICampaignRepository,
 } from './campaign-repository.ts';
 
 export type CampaignRouterOpts = BaseStreamRouterOpts<
-	CampaignModel,
-	CampaignCreateInput,
-	CampaignUpdateInput,
-	CampaignIncludeAll,
+	CampaignMin,
+	CampaignMin,
+	CampaignMin,
+	CampaignFull,
 	ICampaignRepository
 >;
 
 export class CampaignRouter extends BaseStreamRouter<
-	CampaignModel,
-	CampaignCreateInput,
-	CampaignUpdateInput,
-	CampaignIncludeAll,
+	CampaignMin,
+	CampaignMin,
+	CampaignMin,
+	CampaignFull,
 	CampaignResponse,
 	CampaignStub,
 	ICampaignRepository
@@ -49,13 +45,9 @@ export class CampaignRouter extends BaseStreamRouter<
 		});
 	}
 
-	override toDto(model: CampaignIncludeAll): CampaignResponse {
-		return toDto(model);
-	}
+	override toDto = toDto;
 
-	override toStub(model: CampaignModel): CampaignStub {
-		return toStub(model);
-	}
+	override toStub = toStub;
 
 	override get(): void {
 		this.defaultGetById();
