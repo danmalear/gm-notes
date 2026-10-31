@@ -1,17 +1,18 @@
-import type { AbilityCheckModel } from '#prisma-models/AbilityCheck.ts';
-import { mapSkillToDto } from '#shared/enum-mappers.ts';
 import type { UUID } from 'node:crypto';
 import type {
 	AbilityCheckResponse,
 	AbilityCheckStub,
 } from './ability-check-dtos.ts';
-import type { AbilityCheckIncludeAll } from './ability-check-repository.ts';
+import type {
+	AbilityCheckFull,
+	AbilityCheckMin,
+} from './ability-check-repository.ts';
 
-export function toDto(abilityCheck: AbilityCheckIncludeAll) {
+export function toDto(abilityCheck: AbilityCheckFull) {
 	const abilityCheckResponse: AbilityCheckResponse = {
 		id: abilityCheck.AbilityCheckId as UUID,
 		actionId: abilityCheck.ActionId as UUID,
-		skill: mapSkillToDto(abilityCheck.Skill),
+		skill: abilityCheck.Skill,
 		dc: abilityCheck.DC,
 		successNarration: abilityCheck.SuccessNarration?.Description,
 		criticalSuccessNarration:
@@ -24,11 +25,11 @@ export function toDto(abilityCheck: AbilityCheckIncludeAll) {
 	return abilityCheckResponse;
 }
 
-export function toStub(abilityCheck: AbilityCheckModel) {
+export function toStub(abilityCheck: AbilityCheckMin) {
 	const abilityCheckStub: AbilityCheckStub = {
 		id: abilityCheck.AbilityCheckId as UUID,
 		actionId: abilityCheck.ActionId as UUID,
-		skill: mapSkillToDto(abilityCheck.Skill),
+		skill: abilityCheck.Skill,
 		dc: abilityCheck.DC,
 		successNarrationId: (abilityCheck.SuccessNarrationId as UUID) ?? undefined,
 		criticalSuccessNarrationId:
