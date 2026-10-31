@@ -1,52 +1,48 @@
-import type {
-	EventCreateInput,
-	EventModel,
-	EventUpdateInput,
-} from '#prisma-models/Event.ts';
+import { db } from '#db';
+import type { Models } from '#prisma';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
+import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'node:crypto';
 
+export type EventMin = Scalars<Models.es_Event>;
+
 export interface IEventRepository
-	extends IRepository<EventModel, EventCreateInput, EventUpdateInput> {
-	getByStreamId(streamId: UUID): Promise<EventModel[]>;
+	extends IRepository<EventMin, EventMin, EventMin> {
+	getByStreamId(streamId: UUID): Promise<EventMin[]>;
 }
 
 export class EventRepository
-	extends Repository<EventModel, EventCreateInput, EventUpdateInput>
+	extends Repository<EventMin, EventMin, EventMin>
 	implements IEventRepository
 {
 	override descriptor = 'Event';
 
-	override async getByIdRaw(eventId: UUID): Promise<EventModel | null> {
+	override async getByIdRaw(eventId: UUID): Promise<EventMin | null> {
 		try {
-			return await this.prisma.event.findUnique({
-				where: {
-					EventId: eventId,
-				},
+			return await db.orm.es.Event.first({
+				EventId: eventId,
 			});
 		} catch (e) {
 			throw this.getByIdError(eventId, e);
 		}
 	}
 
-	override async getById(eventId: UUID): Promise<EventModel | null> {
+	override async getById(eventId: UUID): Promise<EventMin | null> {
 		return await this.getByIdRaw(eventId);
 	}
 
-	override async getAll(): Promise<EventModel[]> {
+	override async getAll(): Promise<EventMin[]> {
 		try {
-			return await this.prisma.event.findMany();
+			return await db.orm.es.Event.all();
 		} catch (e) {
 			throw this.getAllError(e);
 		}
 	}
 
-	override async create(data: EventCreateInput): Promise<EventModel> {
+	override async create(data: EventMin): Promise<EventMin> {
 		try {
-			return await this.prisma.event.create({
-				data,
-			});
+			return await db.orm.es.Event.create(data);
 		} catch (e) {
 			throw this.createError(e);
 		}
@@ -54,15 +50,12 @@ export class EventRepository
 
 	override async update(
 		eventId: UUID,
-		data: EventUpdateInput,
-	): Promise<EventModel> {
+		data: Partial<EventMin>,
+	): Promise<EventMin | null> {
 		try {
-			return await this.prisma.event.update({
-				where: {
-					EventId: eventId,
-				},
-				data,
-			});
+			return await db.orm.es.Event.where({
+				EventId: eventId,
+			}).update(data);
 		} catch (e) {
 			throw this.updateError(eventId, e);
 		}
@@ -73,13 +66,11 @@ export class EventRepository
 	 * @param id UUID of the stream to get events for
 	 * @returns The list of events (empty array if none found)
 	 */
-	async getByStreamId(streamId: UUID): Promise<EventModel[]> {
+	async getByStreamId(streamId: UUID): Promise<EventMin[]> {
 		try {
-			return await this.prisma.event.findMany({
-				where: {
-					StreamId: streamId,
-				},
-			});
+			return await db.orm.es.Event.where({
+				StreamId: streamId,
+			}).all();
 		} catch (e) {
 			throw new Error(
 				`Error getting ${this.descriptor} records by Stream ID ${streamId}: ${getMessage(e)}`,
