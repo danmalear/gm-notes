@@ -2,7 +2,7 @@ import type { ActionStub } from '#action/action-dtos.ts';
 import type { HandoutStub } from '#handout/handout-dtos.ts';
 import type { LocationItemStub } from '#item/item-dtos.ts';
 import type { NarrationStub } from '#narration/narration-dtos.ts';
-import type { RelativeLightingDto } from '#shared/data-types.ts';
+import type { RelativeLighting } from '#shared/data-types.ts';
 import type { UUID } from 'crypto';
 
 export type Rectangle = {
@@ -60,7 +60,7 @@ export interface RegionResponse {
 	mapId: UUID;
 	name: string;
 	shapes: Shape[];
-	lighting: RelativeLightingDto;
+	lighting: RelativeLighting;
 	narrations: NarrationStub[];
 	// @TODO Some of these might be their own files
 	// creatures?: Creature[];

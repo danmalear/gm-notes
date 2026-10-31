@@ -1,4 +1,4 @@
-import type { SkillDto } from '#shared/data-types.ts';
+import type { Skill } from '#shared/data-types.ts';
 import type { UUID } from 'crypto';
 
 /**
@@ -8,7 +8,7 @@ import type { UUID } from 'crypto';
 export interface AbilityCheckResponse {
 	id: UUID;
 	actionId: UUID;
-	skill: SkillDto;
+	skill: Skill;
 	dc: number;
 	successNarration?: string;
 	failureNarration?: string;
@@ -23,7 +23,7 @@ export interface AbilityCheckResponse {
 export interface AbilityCheckStub {
 	id: UUID;
 	actionId: UUID;
-	skill: SkillDto;
+	skill: Skill;
 	dc: number;
 	successNarrationId?: UUID;
 	failureNarrationId?: UUID;
