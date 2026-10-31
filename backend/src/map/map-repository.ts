@@ -1,21 +1,28 @@
-import type {
-	MapCreateInput,
-	MapInclude,
-	MapModel,
-	MapUpdateInput,
-} from '#prisma-models/Map.ts';
+import { db } from '#db';
+import type { Models } from '#prisma';
+import type { MapInclude, MapModel } from '#prisma-models/Map.ts';
+import type { RegionMin } from '#region/region-repository.ts';
 import {
 	includeMin as regionIncludeMin,
 	type RegionIncludeMin,
 } from '#region/region-repository.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
+import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
+export type MapMin = Scalars<Models.public_Map>;
+
+export interface MapFull extends MapMin {
+	Regions: RegionMin[];
+}
+
+/** @deprecated */
 export interface MapIncludeAll extends MapModel {
 	Regions: RegionIncludeMin[];
 }
 
+/** @deprecated */
 export const includeAll = {
 	Regions: {
 		include: regionIncludeMin,
@@ -23,67 +30,62 @@ export const includeAll = {
 } satisfies MapInclude;
 
 export interface IMapRepository
-	extends IRepository<MapModel, MapCreateInput, MapUpdateInput, MapIncludeAll> {
-	getByCampaignId(campaignId: UUID): Promise<MapModel[]>;
+	extends IRepository<MapMin, MapMin, MapMin, MapFull> {
+	getByCampaignId(campaignId: UUID): Promise<MapMin[]>;
 }
 
 export class MapRepository
-	extends Repository<MapModel, MapCreateInput, MapUpdateInput, MapIncludeAll>
+	extends Repository<MapMin, MapMin, MapMin, MapFull>
 	implements IMapRepository
 {
 	override descriptor = 'Map';
 
-	override async getByIdRaw(mapId: UUID): Promise<MapModel | null> {
+	override async getByIdRaw(mapId: UUID): Promise<MapMin | null> {
 		try {
-			return await this.prisma.map.findUnique({
-				where: {
-					MapId: mapId,
-				},
+			return await db.orm.public.Map.first({
+				MapId: mapId,
 			});
 		} catch (e) {
 			throw this.getByIdError(mapId, e);
 		}
 	}
 
-	override async getById(mapId: UUID): Promise<MapIncludeAll | null> {
+	override async getById(mapId: UUID): Promise<MapFull | null> {
 		try {
-			return await this.prisma.map.findUnique({
-				where: {
-					MapId: mapId,
-				},
-				include: includeAll,
+			return await db.orm.public.Map.include('Regions', (region) =>
+				region.include('Shapes'),
+			).first({
+				MapId: mapId,
 			});
 		} catch (e) {
 			throw this.getByIdError(mapId, e);
 		}
 	}
 
-	override async getAll(): Promise<MapModel[]> {
+	override async getAll(): Promise<MapMin[]> {
 		try {
-			return await this.prisma.map.findMany();
+			return await db.orm.public.Map.all();
 		} catch (e) {
 			throw this.getAllError(e);
 		}
 	}
 
-	override async create(data: MapCreateInput): Promise<MapModel> {
+	override async create(data: MapMin): Promise<MapMin> {
 		try {
-			return await this.prisma.map.create({
-				data,
-			});
+			return await db.orm.public.Map.create(data);
 		} catch (e) {
 			throw this.createError(e);
 		}
 	}
 
-	override async update(mapId: UUID, data: MapUpdateInput): Promise<MapModel> {
+	override async update(
+		mapId: UUID,
+		data: Partial<MapMin>,
+	): Promise<MapMin | null> {
 		try {
-			return await this.prisma.map.update({
-				where: {
-					MapId: mapId,
-				},
-				data,
-			});
+			return await db.orm.public.Map.where({
+				MapId: mapId,
+			}).update(data);
 		} catch (e) {
 			throw this.updateError(mapId, e);
 		}
@@ -94,13 +96,11 @@ export class MapRepository
 	 * @param id UUID of the campaign to get maps for
 	 * @returns The list of maps (empty array if none found)
 	 */
-	async getByCampaignId(campaignId: UUID) {
+	async getByCampaignId(campaignId: UUID): Promise<MapMin[]> {
 		try {
-			const maps = await this.prisma.map.findMany({
-				where: {
-					CampaignId: campaignId,
-				},
-			});
+			const maps = await db.orm.public.Map.where({
+				CampaignId: campaignId,
+			}).all();
 			return maps;
 		} catch (e) {
 			throw new Error(
