@@ -31,10 +31,10 @@ export interface GetByIdOpts<
  */
 export function getById<
 	TDto,
-	TModel,
+	TModelMin,
 	TCreate,
 	TUpdate,
-	TModelIncludeAll extends TModel,
+	TModelFull extends TModelMin,
 >(
 	app: Express,
 	{
@@ -42,7 +42,7 @@ export function getById<
 		objectDescriptor,
 		repository,
 		toDto,
-	}: GetByIdOpts<TDto, TModel, TCreate, TUpdate, TModelIncludeAll>,
+	}: GetByIdOpts<TDto, TModelMin, TCreate, TUpdate, TModelFull>,
 ) {
 	app.get(
 		`/${apiNamespace}/:id`,
