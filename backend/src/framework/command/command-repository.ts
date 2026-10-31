@@ -1,52 +1,48 @@
-import type {
-	CommandCreateInput,
-	CommandModel,
-	CommandUpdateInput,
-} from '#prisma-models/Command.ts';
+import { db } from '#db';
+import type { Models } from '#prisma';
 import { Repository, type IRepository } from '#shared/repository.ts';
+import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
+export type CommandMin = Scalars<Models.es_Command>;
+
 export type ICommandRepository = IRepository<
-	CommandModel,
-	CommandCreateInput,
-	CommandUpdateInput
+	CommandMin,
+	CommandMin,
+	CommandMin
 >;
 
 export class CommandRepository
-	extends Repository<CommandModel, CommandCreateInput, CommandUpdateInput>
+	extends Repository<CommandMin, CommandMin, CommandMin>
 	implements ICommandRepository
 {
 	override descriptor = 'Command';
 
-	override async getByIdRaw(commandId: UUID): Promise<CommandModel | null> {
+	override async getByIdRaw(commandId: UUID): Promise<CommandMin | null> {
 		try {
-			return await this.prisma.command.findUnique({
-				where: {
-					CommandId: commandId,
-				},
+			return await db.orm.es.Command.first({
+				CommandId: commandId,
 			});
 		} catch (e) {
 			throw this.getByIdError(commandId, e);
 		}
 	}
 
-	override async getById(commandId: UUID): Promise<CommandModel | null> {
+	override async getById(commandId: UUID): Promise<CommandMin | null> {
 		return await this.getByIdRaw(commandId);
 	}
 
-	override async getAll(): Promise<CommandModel[]> {
+	override async getAll(): Promise<CommandMin[]> {
 		try {
-			return await this.prisma.command.findMany();
+			return await db.orm.es.Command.all();
 		} catch (e) {
 			throw this.getAllError(e);
 		}
 	}
 
-	override async create(data: CommandCreateInput): Promise<CommandModel> {
+	override async create(data: CommandMin): Promise<CommandMin> {
 		try {
-			return await this.prisma.command.create({
-				data,
-			});
+			return await db.orm.es.Command.create(data);
 		} catch (e) {
 			throw this.createError(e);
 		}
@@ -54,15 +50,12 @@ export class CommandRepository
 
 	override async update(
 		commandId: UUID,
-		data: CommandUpdateInput,
-	): Promise<CommandModel> {
+		data: Partial<CommandMin>,
+	): Promise<CommandMin | null> {
 		try {
-			return await this.prisma.command.update({
-				where: {
-					CommandId: commandId,
-				},
-				data,
-			});
+			return await db.orm.es.Command.where({
+				CommandId: commandId,
+			}).update(data);
 		} catch (e) {
 			throw this.updateError(commandId, e);
 		}
