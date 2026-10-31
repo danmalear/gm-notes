@@ -6,6 +6,12 @@ type ValueSets<
 > =
 	ContractBase['storage']['namespaces']['public']['entries']['valueSet'][TEnum]['values'][number];
 
+export type ActionType = ValueSets<'ActionType'>;
+
+export type HandoutType = ValueSets<'HandoutType'>;
+
+export type ShapeType = ValueSets<'ShapeType'>;
+
 export type Skill = ValueSets<'Skill'>;
 
 export type AbsoluteLighting = ValueSets<'AbsoluteLighting'>;

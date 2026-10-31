@@ -1,4 +1,4 @@
-import type { HandoutType } from '#prisma-enums';
+import type { HandoutType } from '#shared/data-types.ts';
 import type { UUID } from 'crypto';
 
 /**
