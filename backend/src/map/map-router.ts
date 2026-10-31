@@ -1,26 +1,21 @@
-import type {
-	MapCreateInput,
-	MapModel,
-	MapUpdateInput,
-} from '#prisma-models/Map.ts';
 import { BaseStreamRouter, type BaseStreamRouterOpts } from '#shared/router.ts';
 import type { MapResponse, MapStub } from './map-dtos.ts';
 import { toDto, toStub } from './map-mappers.ts';
-import type { IMapRepository, MapIncludeAll } from './map-repository.ts';
+import type { IMapRepository, MapFull, MapMin } from './map-repository.ts';
 
 export type MapRouterOpts = BaseStreamRouterOpts<
-	MapModel,
-	MapCreateInput,
-	MapUpdateInput,
-	MapIncludeAll,
+	MapMin,
+	MapMin,
+	MapMin,
+	MapFull,
 	IMapRepository
 >;
 
 export class MapRouter extends BaseStreamRouter<
-	MapModel,
-	MapCreateInput,
-	MapUpdateInput,
-	MapIncludeAll,
+	MapMin,
+	MapMin,
+	MapMin,
+	MapFull,
 	MapResponse,
 	MapStub,
 	IMapRepository
@@ -46,13 +41,9 @@ export class MapRouter extends BaseStreamRouter<
 		});
 	}
 
-	override toDto(model: MapIncludeAll): MapResponse {
-		return toDto(model);
-	}
+	override toDto = toDto;
 
-	override toStub(model: MapModel): MapStub {
-		return toStub(model);
-	}
+	override toStub = toStub;
 
 	override get(): void {
 		this.defaultGetById();
