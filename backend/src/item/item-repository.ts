@@ -1,18 +1,11 @@
-import type {
-	ActionMin,
-	IActionTargetIncludeMin,
-} from '#action/action-repository.ts';
+import type { ActionMin } from '#action/action-repository.ts';
 import { db } from '#db';
 import type { FileMin } from '#file/file-repository.ts';
-import type { INoteEntityIncludeMin, NoteMin } from '#note/note-repository.ts';
+import type { NoteMin } from '#note/note-repository.ts';
 import type { Models } from '#prisma';
-import type { FileModel } from '#prisma-models/File.ts';
-import type { IItemLocationModel } from '#prisma-models/IItemLocation.ts';
-import type { ItemInclude, ItemModel } from '#prisma-models/Item.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
-import type { LocationItemIncludeMin } from './location-item-repository.ts';
 
 export type ItemMin = Scalars<Models.public_Item>;
 
@@ -21,33 +14,6 @@ export type ItemFull = ItemMin & {
 	Actions: ActionMin[];
 	Notes: NoteMin[];
 };
-
-/** @deprecated */
-export interface IItemLocationIncludeMin extends IItemLocationModel {
-	Items: LocationItemIncludeMin[];
-}
-
-/** @deprecated */
-export interface ItemIncludeAll extends ItemModel {
-	ImageFile: FileModel | null;
-	IActionTarget: IActionTargetIncludeMin;
-	INoteEntity: INoteEntityIncludeMin;
-}
-
-/** @deprecated */
-export const includeAll = {
-	ImageFile: true,
-	IActionTarget: {
-		include: {
-			Actions: true,
-		},
-	},
-	INoteEntity: {
-		include: {
-			Notes: true,
-		},
-	},
-} satisfies ItemInclude;
 
 export type IItemRepository = IRepository<ItemMin, ItemMin, ItemMin, ItemFull>;
 

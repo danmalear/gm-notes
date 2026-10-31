@@ -1,8 +1,6 @@
 import { db } from '#db';
 import type { NarrationMin } from '#narration/narration-repository.ts';
 import type { Models } from '#prisma';
-import type { AbilityCheckModel } from '#prisma-models/AbilityCheck.ts';
-import type { NarrationModel } from '#prisma-models/Narration.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
@@ -16,14 +14,6 @@ export type AbilityCheckFull = AbilityCheckMin & {
 	CriticalSuccessNarration: NarrationMin | null;
 	CriticalFailureNarration: NarrationMin | null;
 };
-
-/** @deprecated */
-export interface AbilityCheckIncludeAll extends AbilityCheckModel {
-	SuccessNarration: NarrationModel | null;
-	FailureNarration: NarrationModel | null;
-	CriticalSuccessNarration: NarrationModel | null;
-	CriticalFailureNarration: NarrationModel | null;
-}
 
 export interface IAbilityCheckRepository
 	extends IRepository<

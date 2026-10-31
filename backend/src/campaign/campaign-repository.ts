@@ -1,11 +1,6 @@
 import { db } from '#db';
 import type { MapMin } from '#map/map-repository.ts';
 import type { Models } from '#prisma';
-import type {
-	CampaignInclude,
-	CampaignModel,
-} from '#prisma-models/Campaign.ts';
-import type { MapModel } from '#prisma-models/Map.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
@@ -15,16 +10,6 @@ export type CampaignMin = Scalars<Models.public_Campaign>;
 export interface CampaignFull extends CampaignMin {
 	Maps: MapMin[];
 }
-
-/** @deprecated */
-export interface CampaignIncludeAll extends CampaignModel {
-	Maps: MapModel[];
-}
-
-/** @deprecated */
-export const includeAll = {
-	Maps: true,
-} satisfies CampaignInclude;
 
 export type ICampaignRepository = IRepository<
 	CampaignMin,

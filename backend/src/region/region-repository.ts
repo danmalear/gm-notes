@@ -1,27 +1,10 @@
-import type {
-	ActionMin,
-	IActionTargetIncludeMin,
-} from '#action/action-repository.ts';
+import type { ActionMin } from '#action/action-repository.ts';
 import { db } from '#db';
 import type { HandoutMin } from '#handout/handout-repository.ts';
-import type { IItemLocationIncludeMin } from '#item/item-repository.ts';
 import type { LocationItemMin } from '#item/location-item-repository.ts';
-import { includeMin as locationItemIncludeMin } from '#item/location-item-repository.ts';
 import type { NarrationMin } from '#narration/narration-repository.ts';
-import type { INoteEntityIncludeMin, NoteMin } from '#note/note-repository.ts';
+import type { NoteMin } from '#note/note-repository.ts';
 import type { Models } from '#prisma';
-import type { HandoutModel } from '#prisma-models/Handout.ts';
-import type { NarrationModel } from '#prisma-models/Narration.ts';
-import type { RegionInclude, RegionModel } from '#prisma-models/Region.ts';
-import type {
-	RegionHandoutInclude,
-	RegionHandoutModel,
-} from '#prisma-models/RegionHandout.ts';
-import type {
-	RegionNarrationInclude,
-	RegionNarrationModel,
-} from '#prisma-models/RegionNarration.ts';
-import type { RegionShapeModel } from '#prisma-models/RegionShape.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
@@ -41,74 +24,6 @@ export interface RegionFull extends RegionMin {
 	Handouts: HandoutMin[];
 	Notes: NoteMin[];
 }
-
-/** @deprecated */
-export interface RegionIncludeMin extends RegionModel {
-	Shapes: RegionShapeModel[];
-}
-
-/** @deprecated */
-export const includeMin = {
-	Shapes: true,
-} satisfies RegionInclude;
-
-/** @deprecated */
-export interface RegionNarrationIncludeMin extends RegionNarrationModel {
-	Narration: NarrationModel;
-}
-
-/** @deprecated */
-const regionNarrationIncludeMin = {
-	Narration: true,
-} satisfies RegionNarrationInclude;
-
-/** @deprecated */
-export interface RegionHandoutIncludeMin extends RegionHandoutModel {
-	Handout: HandoutModel;
-}
-
-/** @deprecated */
-const regionHandoutIncludeMin = {
-	Handout: true,
-} satisfies RegionHandoutInclude;
-
-/** @deprecated */
-export interface RegionIncludeAll extends RegionModel {
-	Shapes: RegionShapeModel[];
-	Narrations: RegionNarrationIncludeMin[];
-	IActionTarget: IActionTargetIncludeMin;
-	IItemLocation: IItemLocationIncludeMin;
-	Handouts: RegionHandoutIncludeMin[];
-	INoteEntity: INoteEntityIncludeMin;
-}
-
-/** @deprecated */
-export const includeAll = {
-	Shapes: true,
-	Narrations: {
-		include: regionNarrationIncludeMin,
-	},
-	IActionTarget: {
-		include: {
-			Actions: true,
-		},
-	},
-	IItemLocation: {
-		include: {
-			Items: {
-				include: locationItemIncludeMin,
-			},
-		},
-	},
-	Handouts: {
-		include: regionHandoutIncludeMin,
-	},
-	INoteEntity: {
-		include: {
-			Notes: true,
-		},
-	},
-} satisfies RegionInclude;
 
 export interface IRegionRepository
 	extends IRepository<RegionMin, RegionRaw, RegionRaw, RegionFull> {

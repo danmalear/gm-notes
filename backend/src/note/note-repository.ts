@@ -1,7 +1,5 @@
 import { db } from '#db';
 import type { Models } from '#prisma';
-import type { INoteEntityModel } from '#prisma-models/INoteEntity.ts';
-import type { NoteModel } from '#prisma-models/Note.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
@@ -11,11 +9,6 @@ export type NoteMin = Scalars<Models.public_Note>;
 export type INoteEntityMin = Scalars<Models.public_INoteEntity> & {
 	Notes: NoteMin[];
 };
-
-/** @deprecated */
-export interface INoteEntityIncludeMin extends INoteEntityModel {
-	Notes: NoteModel[];
-}
 
 export interface INoteRepository
 	extends IRepository<NoteMin, NoteMin, NoteMin> {

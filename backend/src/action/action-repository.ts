@@ -3,11 +3,6 @@ import type { ConditionMin } from '#condition/condition-repository.ts';
 import { db } from '#db';
 import type { NarrationMin } from '#narration/narration-repository.ts';
 import type { Models } from '#prisma';
-import type { AbilityCheckModel } from '#prisma-models/AbilityCheck.ts';
-import type { ActionModel } from '#prisma-models/Action.ts';
-import type { ConditionModel } from '#prisma-models/Condition.ts';
-import type { IActionTargetModel } from '#prisma-models/IActionTarget.ts';
-import type { NarrationModel } from '#prisma-models/Narration.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
@@ -24,18 +19,6 @@ export type ActionFull = ActionMin & {
 export type IActionTargetMin = Scalars<Models.public_IActionTarget> & {
 	Actions: ActionMin[];
 };
-
-/** @deprecated */
-export interface IActionTargetIncludeMin extends IActionTargetModel {
-	Actions: ActionModel[];
-}
-
-/** @deprecated */
-export interface ActionIncludeAll extends ActionModel {
-	Narration: NarrationModel | null;
-	Conditions: ConditionModel[];
-	AbilityChecks: AbilityCheckModel[];
-}
 
 export interface IActionRepository
 	extends IRepository<ActionMin, ActionMin, ActionMin, ActionFull> {

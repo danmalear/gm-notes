@@ -1,11 +1,6 @@
 import { db } from '#db';
 import type { Models } from '#prisma';
-import type { MapInclude, MapModel } from '#prisma-models/Map.ts';
 import type { RegionMin } from '#region/region-repository.ts';
-import {
-	includeMin as regionIncludeMin,
-	type RegionIncludeMin,
-} from '#region/region-repository.ts';
 import { getMessage } from '#shared/error.ts';
 import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
@@ -16,18 +11,6 @@ export type MapMin = Scalars<Models.public_Map>;
 export interface MapFull extends MapMin {
 	Regions: RegionMin[];
 }
-
-/** @deprecated */
-export interface MapIncludeAll extends MapModel {
-	Regions: RegionIncludeMin[];
-}
-
-/** @deprecated */
-export const includeAll = {
-	Regions: {
-		include: regionIncludeMin,
-	},
-} satisfies MapInclude;
 
 export interface IMapRepository
 	extends IRepository<MapMin, MapMin, MapMin, MapFull> {
