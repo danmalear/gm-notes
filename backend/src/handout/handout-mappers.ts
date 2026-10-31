@@ -1,8 +1,8 @@
-import type { HandoutModel } from '#prisma-models/Handout.ts';
 import type { UUID } from 'node:crypto';
 import type { HandoutStub } from './handout-dtos.ts';
+import type { HandoutMin } from './handout-repository.ts';
 
-export function toStub(handout: HandoutModel) {
+export function toStub(handout: HandoutMin) {
 	const handoutStub: HandoutStub = {
 		id: handout.HandoutId as UUID,
 		campaignId: handout.CampaignId as UUID,
