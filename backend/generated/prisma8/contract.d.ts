@@ -23,7 +23,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'82254ea3941517745782ef6b2618fcb1e52af334b127768fbed578d049166f74'>;
+  StorageHashBase<'ecfc8bc27bb90d042c2e9d26e8f674cbbb21c42035e727f32007edfb9a8c6fa4'>;
 export type ExecutionHash = ExecutionHashBase<string>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
@@ -620,9 +620,9 @@ export namespace Models {
   export type public_File = {
     FileId: FieldOutputTypes['public']['File']['FileId'];
     FileName: FieldOutputTypes['public']['File']['FileName'];
-    Item: public_Item | null;
-    Map: public_Map | null;
-    readonly [RelationKeys]?: 'Item' | 'Map';
+    Items: public_Item[];
+    Maps: public_Map[];
+    readonly [RelationKeys]?: 'Items' | 'Maps';
   };
   export type public_Handout = {
     CampaignId: FieldOutputTypes['public']['Handout']['CampaignId'];
@@ -669,7 +669,7 @@ export namespace Models {
     Name: FieldOutputTypes['public']['Item']['Name'];
     Value: FieldOutputTypes['public']['Item']['Value'];
     ValueUnit: FieldOutputTypes['public']['Item']['ValueUnit'];
-    Campaign: public_Campaign | null;
+    Campaign: public_Campaign;
     IActionTarget: public_IActionTarget;
     INoteEntity: public_INoteEntity;
     ImageFile: public_File | null;
@@ -869,14 +869,15 @@ type ContractBase = Omit<
                   readonly many: false;
                 };
                 readonly CreatedAt: {
-                  readonly dataType: 'pg/timestamptz';
-                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly dataType: 'sql/raw';
+                  readonly codecId: 'sql/raw@1';
                   readonly nullable: false;
+                  readonly typeParams: { readonly sql: 'timestamp(6) with time zone' };
                   readonly many: false;
                 };
                 readonly Data: {
-                  readonly dataType: 'pg/json';
-                  readonly codecId: 'pg/json@1';
+                  readonly dataType: 'pg/jsonb';
+                  readonly codecId: 'pg/jsonb@1';
                   readonly nullable: false;
                   readonly many: false;
                 };
@@ -913,8 +914,8 @@ type ContractBase = Omit<
                   readonly many: false;
                 };
                 readonly Data: {
-                  readonly dataType: 'pg/json';
-                  readonly codecId: 'pg/json@1';
+                  readonly dataType: 'pg/jsonb';
+                  readonly codecId: 'pg/jsonb@1';
                   readonly nullable: false;
                   readonly many: false;
                 };
@@ -925,9 +926,10 @@ type ContractBase = Omit<
                   readonly many: false;
                 };
                 readonly OccurredAt: {
-                  readonly dataType: 'pg/timestamptz';
-                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly dataType: 'sql/raw';
+                  readonly codecId: 'sql/raw@1';
                   readonly nullable: false;
+                  readonly typeParams: { readonly sql: 'timestamp(6) with time zone' };
                   readonly many: false;
                 };
                 readonly Ref: {
@@ -957,9 +959,10 @@ type ContractBase = Omit<
             readonly Stream: {
               columns: {
                 readonly CreatedAt: {
-                  readonly dataType: 'pg/timestamptz';
-                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly dataType: 'sql/raw';
+                  readonly codecId: 'sql/raw@1';
                   readonly nullable: false;
+                  readonly typeParams: { readonly sql: 'timestamp(6) with time zone' };
                   readonly many: false;
                 };
                 readonly StreamId: {
@@ -975,9 +978,10 @@ type ContractBase = Omit<
                   readonly many: false;
                 };
                 readonly UpdatedAt: {
-                  readonly dataType: 'pg/timestamptz';
-                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly dataType: 'sql/raw';
+                  readonly codecId: 'sql/raw@1';
                   readonly nullable: false;
+                  readonly typeParams: { readonly sql: 'timestamp(6) with time zone' };
                   readonly many: false;
                 };
                 readonly Version: {
@@ -1060,27 +1064,32 @@ type ContractBase = Omit<
               uniques: readonly [];
               indexes: readonly [
                 {
-                  readonly name: 'AbilityCheck_ActionId_idx';
+                  readonly name: 'AbilityCheck_ActionId_idx_d108a480';
+                  readonly prefix: 'AbilityCheck_ActionId_idx';
                   readonly columns: readonly ['ActionId'];
                   readonly unique: false;
                 },
                 {
-                  readonly name: 'AbilityCheck_CriticalFailureNarrationId_idx';
+                  readonly name: 'AbilityCheck_CriticalFailureNarrationId_idx_43a04150';
+                  readonly prefix: 'AbilityCheck_CriticalFailureNarrationId_idx';
                   readonly columns: readonly ['CriticalFailureNarrationId'];
                   readonly unique: false;
                 },
                 {
-                  readonly name: 'AbilityCheck_CriticalSuccessNarrationId_idx';
+                  readonly name: 'AbilityCheck_CriticalSuccessNarrationId_idx_0ab6a207';
+                  readonly prefix: 'AbilityCheck_CriticalSuccessNarrationId_idx';
                   readonly columns: readonly ['CriticalSuccessNarrationId'];
                   readonly unique: false;
                 },
                 {
-                  readonly name: 'AbilityCheck_FailureNarrationId_idx';
+                  readonly name: 'AbilityCheck_FailureNarrationId_idx_33771aa0';
+                  readonly prefix: 'AbilityCheck_FailureNarrationId_idx';
                   readonly columns: readonly ['FailureNarrationId'];
                   readonly unique: false;
                 },
                 {
-                  readonly name: 'AbilityCheck_SuccessNarrationId_idx';
+                  readonly name: 'AbilityCheck_SuccessNarrationId_idx_436b8ade';
+                  readonly prefix: 'AbilityCheck_SuccessNarrationId_idx';
                   readonly columns: readonly ['SuccessNarrationId'];
                   readonly unique: false;
                 },
@@ -1186,12 +1195,14 @@ type ContractBase = Omit<
               uniques: readonly [];
               indexes: readonly [
                 {
-                  readonly name: 'Action_NarrationId_idx';
+                  readonly name: 'Action_NarrationId_idx_30a7cada';
+                  readonly prefix: 'Action_NarrationId_idx';
                   readonly columns: readonly ['NarrationId'];
                   readonly unique: false;
                 },
                 {
-                  readonly name: 'Action_TargetId_idx';
+                  readonly name: 'Action_TargetId_idx_acbba8cf';
+                  readonly prefix: 'Action_TargetId_idx';
                   readonly columns: readonly ['TargetId'];
                   readonly unique: false;
                 },
@@ -1248,7 +1259,8 @@ type ContractBase = Omit<
                   readonly unique: false;
                 },
                 {
-                  readonly name: 'ActionCondition_ConditionId_idx';
+                  readonly name: 'ActionCondition_ConditionId_idx_6dc3de1a';
+                  readonly prefix: 'ActionCondition_ConditionId_idx';
                   readonly columns: readonly ['ConditionId'];
                   readonly unique: false;
                 },
@@ -1387,7 +1399,8 @@ type ContractBase = Omit<
               uniques: readonly [];
               indexes: readonly [
                 {
-                  readonly name: 'Condition_CampaignId_idx';
+                  readonly name: 'Condition_CampaignId_idx_d531d270';
+                  readonly prefix: 'Condition_CampaignId_idx';
                   readonly columns: readonly ['CampaignId'];
                   readonly unique: false;
                 },
@@ -1465,7 +1478,8 @@ type ContractBase = Omit<
               uniques: readonly [];
               indexes: readonly [
                 {
-                  readonly name: 'Handout_CampaignId_idx';
+                  readonly name: 'Handout_CampaignId_idx_d531d270';
+                  readonly prefix: 'Handout_CampaignId_idx';
                   readonly columns: readonly ['CampaignId'];
                   readonly unique: false;
                 },
@@ -1553,7 +1567,7 @@ type ContractBase = Omit<
                 readonly CampaignId: {
                   readonly dataType: 'pg/uuid';
                   readonly codecId: 'pg/uuid@1';
-                  readonly nullable: true;
+                  readonly nullable: false;
                   readonly many: false;
                 };
                 readonly DetailsLink: {
@@ -1563,8 +1577,8 @@ type ContractBase = Omit<
                   readonly many: false;
                 };
                 readonly ImageFileId: {
-                  readonly dataType: 'pg/text';
-                  readonly codecId: 'pg/text@1';
+                  readonly dataType: 'pg/uuid';
+                  readonly codecId: 'pg/uuid@1';
                   readonly nullable: true;
                   readonly many: false;
                 };
@@ -1605,11 +1619,18 @@ type ContractBase = Omit<
                 };
               };
               primaryKey: { readonly columns: readonly ['ItemId'] };
-              uniques: readonly [{ readonly columns: readonly ['ImageFileId'] }];
+              uniques: readonly [];
               indexes: readonly [
                 {
-                  readonly name: 'Item_CampaignId_idx';
+                  readonly name: 'Item_CampaignId_idx_d531d270';
+                  readonly prefix: 'Item_CampaignId_idx';
                   readonly columns: readonly ['CampaignId'];
+                  readonly unique: false;
+                },
+                {
+                  readonly name: 'Item_ImageFileId_idx_c8f2c5c3';
+                  readonly prefix: 'Item_ImageFileId_idx';
+                  readonly columns: readonly ['ImageFileId'];
                   readonly unique: false;
                 },
               ];
@@ -1625,7 +1646,7 @@ type ContractBase = Omit<
                     readonly tableName: 'IActionTarget';
                     readonly columns: readonly ['IActionTargetId'];
                   };
-                  readonly name: 'Item_IActionTargetId_fkey';
+                  readonly name: 'Item_IActionTarget_fkey';
                 },
                 {
                   readonly source: {
@@ -1638,7 +1659,7 @@ type ContractBase = Omit<
                     readonly tableName: 'INoteEntity';
                     readonly columns: readonly ['INoteEntityId'];
                   };
-                  readonly name: 'Item_INoteEntityId_fkey';
+                  readonly name: 'Item_INoteEntity_fkey';
                 },
                 {
                   readonly source: {
@@ -1701,12 +1722,14 @@ type ContractBase = Omit<
               uniques: readonly [];
               indexes: readonly [
                 {
-                  readonly name: 'LocationItem_ItemId_idx';
+                  readonly name: 'LocationItem_ItemId_idx_3b8a9034';
+                  readonly prefix: 'LocationItem_ItemId_idx';
                   readonly columns: readonly ['ItemId'];
                   readonly unique: false;
                 },
                 {
-                  readonly name: 'LocationItem_LocationId_idx';
+                  readonly name: 'LocationItem_LocationId_idx_adb4faa3';
+                  readonly prefix: 'LocationItem_LocationId_idx';
                   readonly columns: readonly ['LocationId'];
                   readonly unique: false;
                 },
@@ -1723,7 +1746,7 @@ type ContractBase = Omit<
                     readonly tableName: 'IActionTarget';
                     readonly columns: readonly ['IActionTargetId'];
                   };
-                  readonly name: 'LocationItem_IActionTargetId_fkey';
+                  readonly name: 'LocationItem_IActionTarget_fkey';
                 },
                 {
                   readonly source: {
@@ -1736,7 +1759,7 @@ type ContractBase = Omit<
                     readonly tableName: 'IItemLocation';
                     readonly columns: readonly ['IItemLocationId'];
                   };
-                  readonly name: 'LocationItem_IItemLocationId_Self_fkey';
+                  readonly name: 'LocationItem_IItemLocation_fkey';
                 },
                 {
                   readonly source: {
@@ -1749,7 +1772,7 @@ type ContractBase = Omit<
                     readonly tableName: 'INoteEntity';
                     readonly columns: readonly ['INoteEntityId'];
                   };
-                  readonly name: 'LocationItem_INoteEntityId_fkey';
+                  readonly name: 'LocationItem_INoteEntity_fkey';
                 },
                 {
                   readonly source: {
@@ -1762,7 +1785,6 @@ type ContractBase = Omit<
                     readonly tableName: 'IItemLocation';
                     readonly columns: readonly ['IItemLocationId'];
                   };
-                  readonly name: 'LocationItem_IItemLocationId_Container_fkey';
                 },
                 {
                   readonly source: {
@@ -1808,8 +1830,8 @@ type ContractBase = Omit<
                   readonly many: false;
                 };
                 readonly ImageFileId: {
-                  readonly dataType: 'pg/text';
-                  readonly codecId: 'pg/text@1';
+                  readonly dataType: 'pg/uuid';
+                  readonly codecId: 'pg/uuid@1';
                   readonly nullable: false;
                   readonly many: false;
                 };
@@ -1843,11 +1865,18 @@ type ContractBase = Omit<
                 };
               };
               primaryKey: { readonly columns: readonly ['MapId'] };
-              uniques: readonly [{ readonly columns: readonly ['ImageFileId'] }];
+              uniques: readonly [];
               indexes: readonly [
                 {
-                  readonly name: 'Map_CampaignId_idx';
+                  readonly name: 'Map_CampaignId_idx_d531d270';
+                  readonly prefix: 'Map_CampaignId_idx';
                   readonly columns: readonly ['CampaignId'];
+                  readonly unique: false;
+                },
+                {
+                  readonly name: 'Map_ImageFileId_idx_c8f2c5c3';
+                  readonly prefix: 'Map_ImageFileId_idx';
+                  readonly columns: readonly ['ImageFileId'];
                   readonly unique: false;
                 },
               ];
@@ -2007,7 +2036,8 @@ type ContractBase = Omit<
               uniques: readonly [];
               indexes: readonly [
                 {
-                  readonly name: 'Note_EntityId_idx';
+                  readonly name: 'Note_EntityId_idx_d085d695';
+                  readonly prefix: 'Note_EntityId_idx';
                   readonly columns: readonly ['EntityId'];
                   readonly unique: false;
                 },
@@ -2069,7 +2099,8 @@ type ContractBase = Omit<
               uniques: readonly [];
               indexes: readonly [
                 {
-                  readonly name: 'Region_MapId_idx';
+                  readonly name: 'Region_MapId_idx_ea21d85b';
+                  readonly prefix: 'Region_MapId_idx';
                   readonly columns: readonly ['MapId'];
                   readonly unique: false;
                 },
@@ -2086,7 +2117,7 @@ type ContractBase = Omit<
                     readonly tableName: 'IActionTarget';
                     readonly columns: readonly ['IActionTargetId'];
                   };
-                  readonly name: 'Region_IActionTargetId_fkey';
+                  readonly name: 'Region_IActionTarget_fkey';
                 },
                 {
                   readonly source: {
@@ -2099,7 +2130,7 @@ type ContractBase = Omit<
                     readonly tableName: 'IItemLocation';
                     readonly columns: readonly ['IItemLocationId'];
                   };
-                  readonly name: 'Region_IItemLocationId_fkey';
+                  readonly name: 'Region_IItemLocation_fkey';
                 },
                 {
                   readonly source: {
@@ -2112,7 +2143,7 @@ type ContractBase = Omit<
                     readonly tableName: 'INoteEntity';
                     readonly columns: readonly ['INoteEntityId'];
                   };
-                  readonly name: 'Region_INoteEntityId_fkey';
+                  readonly name: 'Region_INoteEntity_fkey';
                 },
                 {
                   readonly source: {
@@ -2150,7 +2181,8 @@ type ContractBase = Omit<
               uniques: readonly [];
               indexes: readonly [
                 {
-                  readonly name: 'RegionHandout_HandoutId_idx';
+                  readonly name: 'RegionHandout_HandoutId_idx_13617cfe';
+                  readonly prefix: 'RegionHandout_HandoutId_idx';
                   readonly columns: readonly ['HandoutId'];
                   readonly unique: false;
                 },
@@ -2210,7 +2242,8 @@ type ContractBase = Omit<
               uniques: readonly [];
               indexes: readonly [
                 {
-                  readonly name: 'RegionNarration_NarrationId_idx';
+                  readonly name: 'RegionNarration_NarrationId_idx_30a7cada';
+                  readonly prefix: 'RegionNarration_NarrationId_idx';
                   readonly columns: readonly ['NarrationId'];
                   readonly unique: false;
                 },
@@ -2280,7 +2313,8 @@ type ContractBase = Omit<
               uniques: readonly [];
               indexes: readonly [
                 {
-                  readonly name: 'RegionShape_RegionId_idx';
+                  readonly name: 'RegionShape_RegionId_idx_97fe7b25';
+                  readonly prefix: 'RegionShape_RegionId_idx';
                   readonly columns: readonly ['RegionId'];
                   readonly unique: false;
                 },
@@ -2507,12 +2541,13 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: {
                   readonly kind: 'scalar';
-                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly codecId: 'sql/raw@1';
+                  readonly typeParams: { readonly sql: 'timestamp(6) with time zone' };
                 };
               };
               readonly Data: {
                 readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/json@1' };
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/jsonb@1' };
               };
               readonly Ref: {
                 readonly nullable: false;
@@ -2550,7 +2585,7 @@ type ContractBase = Omit<
               };
               readonly Data: {
                 readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/json@1' };
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/jsonb@1' };
               };
               readonly EventId: {
                 readonly nullable: false;
@@ -2560,7 +2595,8 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: {
                   readonly kind: 'scalar';
-                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly codecId: 'sql/raw@1';
+                  readonly typeParams: { readonly sql: 'timestamp(6) with time zone' };
                 };
               };
               readonly Ref: {
@@ -2598,7 +2634,8 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: {
                   readonly kind: 'scalar';
-                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly codecId: 'sql/raw@1';
+                  readonly typeParams: { readonly sql: 'timestamp(6) with time zone' };
                 };
               };
               readonly StreamId: {
@@ -2613,7 +2650,8 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: {
                   readonly kind: 'scalar';
-                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly codecId: 'sql/raw@1';
+                  readonly typeParams: { readonly sql: 'timestamp(6) with time zone' };
                 };
               };
               readonly Version: {
@@ -3067,19 +3105,17 @@ type ContractBase = Omit<
               };
             };
             readonly relations: {
-              readonly Item: {
+              readonly Items: {
                 readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Item' };
-                readonly cardinality: '1:1';
-                readonly nullable: true;
+                readonly cardinality: '1:N';
                 readonly on: {
                   readonly localFields: readonly ['FileId'];
                   readonly targetFields: readonly ['ImageFileId'];
                 };
               };
-              readonly Map: {
+              readonly Maps: {
                 readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Map' };
-                readonly cardinality: '1:1';
-                readonly nullable: true;
+                readonly cardinality: '1:N';
                 readonly on: {
                   readonly localFields: readonly ['FileId'];
                   readonly targetFields: readonly ['ImageFileId'];
@@ -3360,7 +3396,7 @@ type ContractBase = Omit<
           readonly Item: {
             readonly fields: {
               readonly CampaignId: {
-                readonly nullable: true;
+                readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/uuid@1' };
               };
               readonly DetailsLink: {
@@ -3369,7 +3405,7 @@ type ContractBase = Omit<
               };
               readonly ImageFileId: {
                 readonly nullable: true;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/uuid@1' };
               };
               readonly IsContainer: {
                 readonly nullable: false;
@@ -3403,7 +3439,7 @@ type ContractBase = Omit<
                   readonly model: 'Campaign';
                 };
                 readonly cardinality: 'N:1';
-                readonly nullable: true;
+                readonly nullable: false;
                 readonly on: {
                   readonly localFields: readonly ['CampaignId'];
                   readonly targetFields: readonly ['CampaignId'];
@@ -3578,7 +3614,7 @@ type ContractBase = Omit<
               };
               readonly ImageFileId: {
                 readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/uuid@1' };
               };
               readonly MapId: {
                 readonly nullable: false;

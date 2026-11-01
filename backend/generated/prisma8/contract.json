@@ -139,14 +139,17 @@
               "CreatedAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/timestamptz-temporal@1",
-                  "kind": "scalar"
+                  "codecId": "sql/raw@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "sql": "timestamp(6) with time zone"
+                  }
                 }
               },
               "Data": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/json@1",
+                  "codecId": "pg/jsonb@1",
                   "kind": "scalar"
                 }
               },
@@ -213,7 +216,7 @@
               "Data": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/json@1",
+                  "codecId": "pg/jsonb@1",
                   "kind": "scalar"
                 }
               },
@@ -227,8 +230,11 @@
               "OccurredAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/timestamptz-temporal@1",
-                  "kind": "scalar"
+                  "codecId": "sql/raw@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "sql": "timestamp(6) with time zone"
+                  }
                 }
               },
               "Ref": {
@@ -290,8 +296,11 @@
               "CreatedAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/timestamptz-temporal@1",
-                  "kind": "scalar"
+                  "codecId": "sql/raw@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "sql": "timestamp(6) with time zone"
+                  }
                 }
               },
               "StreamId": {
@@ -311,8 +320,11 @@
               "UpdatedAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/timestamptz-temporal@1",
-                  "kind": "scalar"
+                  "codecId": "sql/raw@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "sql": "timestamp(6) with time zone"
+                  }
                 }
               },
               "Version": {
@@ -989,9 +1001,8 @@
               }
             },
             "relations": {
-              "Item": {
-                "cardinality": "1:1",
-                "nullable": true,
+              "Items": {
+                "cardinality": "1:N",
                 "on": {
                   "localFields": [
                     "FileId"
@@ -1005,9 +1016,8 @@
                   "namespace": "public"
                 }
               },
-              "Map": {
-                "cardinality": "1:1",
-                "nullable": true,
+              "Maps": {
+                "cardinality": "1:N",
                 "on": {
                   "localFields": [
                     "FileId"
@@ -1412,7 +1422,7 @@
           "Item": {
             "fields": {
               "CampaignId": {
-                "nullable": true,
+                "nullable": false,
                 "type": {
                   "codecId": "pg/uuid@1",
                   "kind": "scalar"
@@ -1428,7 +1438,7 @@
               "ImageFileId": {
                 "nullable": true,
                 "type": {
-                  "codecId": "pg/text@1",
+                  "codecId": "pg/uuid@1",
                   "kind": "scalar"
                 }
               },
@@ -1474,7 +1484,7 @@
             "relations": {
               "Campaign": {
                 "cardinality": "N:1",
-                "nullable": true,
+                "nullable": false,
                 "on": {
                   "localFields": [
                     "CampaignId"
@@ -1744,7 +1754,7 @@
               "ImageFileId": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/text@1",
+                  "codecId": "pg/uuid@1",
                   "kind": "scalar"
                 }
               },
@@ -2631,13 +2641,16 @@
                   "nullable": false
                 },
                 "CreatedAt": {
-                  "codecId": "pg/timestamptz-temporal@1",
-                  "dataType": "pg/timestamptz",
-                  "nullable": false
+                  "codecId": "sql/raw@1",
+                  "dataType": "sql/raw",
+                  "nullable": false,
+                  "typeParams": {
+                    "sql": "timestamp(6) with time zone"
+                  }
                 },
                 "Data": {
-                  "codecId": "pg/json@1",
-                  "dataType": "pg/json",
+                  "codecId": "pg/jsonb@1",
+                  "dataType": "pg/jsonb",
                   "nullable": false
                 },
                 "Ref": {
@@ -2673,8 +2686,8 @@
                   "nullable": false
                 },
                 "Data": {
-                  "codecId": "pg/json@1",
-                  "dataType": "pg/json",
+                  "codecId": "pg/jsonb@1",
+                  "dataType": "pg/jsonb",
                   "nullable": false
                 },
                 "EventId": {
@@ -2683,9 +2696,12 @@
                   "nullable": false
                 },
                 "OccurredAt": {
-                  "codecId": "pg/timestamptz-temporal@1",
-                  "dataType": "pg/timestamptz",
-                  "nullable": false
+                  "codecId": "sql/raw@1",
+                  "dataType": "sql/raw",
+                  "nullable": false,
+                  "typeParams": {
+                    "sql": "timestamp(6) with time zone"
+                  }
                 },
                 "Ref": {
                   "codecId": "pg/text@1",
@@ -2715,9 +2731,12 @@
             "Stream": {
               "columns": {
                 "CreatedAt": {
-                  "codecId": "pg/timestamptz-temporal@1",
-                  "dataType": "pg/timestamptz",
-                  "nullable": false
+                  "codecId": "sql/raw@1",
+                  "dataType": "sql/raw",
+                  "nullable": false,
+                  "typeParams": {
+                    "sql": "timestamp(6) with time zone"
+                  }
                 },
                 "StreamId": {
                   "codecId": "pg/uuid@1",
@@ -2730,9 +2749,12 @@
                   "nullable": false
                 },
                 "UpdatedAt": {
-                  "codecId": "pg/timestamptz-temporal@1",
-                  "dataType": "pg/timestamptz",
-                  "nullable": false
+                  "codecId": "sql/raw@1",
+                  "dataType": "sql/raw",
+                  "nullable": false,
+                  "typeParams": {
+                    "sql": "timestamp(6) with time zone"
+                  }
                 },
                 "Version": {
                   "codecId": "pg/int4@1",
@@ -2936,8 +2958,10 @@
               "foreignKeys": [
                 {
                   "index": {
-                    "name": "AbilityCheck_ActionId_idx"
+                    "name": "AbilityCheck_ActionId_idx_d108a480"
                   },
+                  "onDelete": "cascade",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "ActionId"
@@ -2955,8 +2979,10 @@
                 },
                 {
                   "index": {
-                    "name": "AbilityCheck_SuccessNarrationId_idx"
+                    "name": "AbilityCheck_SuccessNarrationId_idx_436b8ade"
                   },
+                  "onDelete": "setNull",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "SuccessNarrationId"
@@ -2974,8 +3000,10 @@
                 },
                 {
                   "index": {
-                    "name": "AbilityCheck_FailureNarrationId_idx"
+                    "name": "AbilityCheck_FailureNarrationId_idx_33771aa0"
                   },
+                  "onDelete": "setNull",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "FailureNarrationId"
@@ -2993,8 +3021,10 @@
                 },
                 {
                   "index": {
-                    "name": "AbilityCheck_CriticalSuccessNarrationId_idx"
+                    "name": "AbilityCheck_CriticalSuccessNarrationId_idx_0ab6a207"
                   },
+                  "onDelete": "setNull",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "CriticalSuccessNarrationId"
@@ -3012,8 +3042,10 @@
                 },
                 {
                   "index": {
-                    "name": "AbilityCheck_CriticalFailureNarrationId_idx"
+                    "name": "AbilityCheck_CriticalFailureNarrationId_idx_43a04150"
                   },
+                  "onDelete": "setNull",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "CriticalFailureNarrationId"
@@ -3035,35 +3067,40 @@
                   "columns": [
                     "ActionId"
                   ],
-                  "name": "AbilityCheck_ActionId_idx",
+                  "name": "AbilityCheck_ActionId_idx_d108a480",
+                  "prefix": "AbilityCheck_ActionId_idx",
                   "unique": false
                 },
                 {
                   "columns": [
                     "CriticalFailureNarrationId"
                   ],
-                  "name": "AbilityCheck_CriticalFailureNarrationId_idx",
+                  "name": "AbilityCheck_CriticalFailureNarrationId_idx_43a04150",
+                  "prefix": "AbilityCheck_CriticalFailureNarrationId_idx",
                   "unique": false
                 },
                 {
                   "columns": [
                     "CriticalSuccessNarrationId"
                   ],
-                  "name": "AbilityCheck_CriticalSuccessNarrationId_idx",
+                  "name": "AbilityCheck_CriticalSuccessNarrationId_idx_0ab6a207",
+                  "prefix": "AbilityCheck_CriticalSuccessNarrationId_idx",
                   "unique": false
                 },
                 {
                   "columns": [
                     "FailureNarrationId"
                   ],
-                  "name": "AbilityCheck_FailureNarrationId_idx",
+                  "name": "AbilityCheck_FailureNarrationId_idx_33771aa0",
+                  "prefix": "AbilityCheck_FailureNarrationId_idx",
                   "unique": false
                 },
                 {
                   "columns": [
                     "SuccessNarrationId"
                   ],
-                  "name": "AbilityCheck_SuccessNarrationId_idx",
+                  "name": "AbilityCheck_SuccessNarrationId_idx_436b8ade",
+                  "prefix": "AbilityCheck_SuccessNarrationId_idx",
                   "unique": false
                 }
               ],
@@ -3114,8 +3151,10 @@
               "foreignKeys": [
                 {
                   "index": {
-                    "name": "Action_TargetId_idx"
+                    "name": "Action_TargetId_idx_acbba8cf"
                   },
+                  "onDelete": "cascade",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "TargetId"
@@ -3133,8 +3172,10 @@
                 },
                 {
                   "index": {
-                    "name": "Action_NarrationId_idx"
+                    "name": "Action_NarrationId_idx_30a7cada"
                   },
+                  "onDelete": "setNull",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "NarrationId"
@@ -3156,14 +3197,16 @@
                   "columns": [
                     "NarrationId"
                   ],
-                  "name": "Action_NarrationId_idx",
+                  "name": "Action_NarrationId_idx_30a7cada",
+                  "prefix": "Action_NarrationId_idx",
                   "unique": false
                 },
                 {
                   "columns": [
                     "TargetId"
                   ],
-                  "name": "Action_TargetId_idx",
+                  "name": "Action_TargetId_idx_acbba8cf",
+                  "prefix": "Action_TargetId_idx",
                   "unique": false
                 }
               ],
@@ -3192,6 +3235,8 @@
                   "index": {
                     "name": "ActionCondition_ActionId_idx_d108a480"
                   },
+                  "onDelete": "cascade",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "ActionId"
@@ -3209,8 +3254,10 @@
                 },
                 {
                   "index": {
-                    "name": "ActionCondition_ConditionId_idx"
+                    "name": "ActionCondition_ConditionId_idx_6dc3de1a"
                   },
+                  "onDelete": "cascade",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "ConditionId"
@@ -3240,7 +3287,8 @@
                   "columns": [
                     "ConditionId"
                   ],
-                  "name": "ActionCondition_ConditionId_idx",
+                  "name": "ActionCondition_ConditionId_idx_6dc3de1a",
+                  "prefix": "ActionCondition_ConditionId_idx",
                   "unique": false
                 }
               ],
@@ -3282,6 +3330,8 @@
                       "ActiveMapId"
                     ]
                   },
+                  "onDelete": "setNull",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "ActiveMapId"
@@ -3372,8 +3422,10 @@
               "foreignKeys": [
                 {
                   "index": {
-                    "name": "Condition_CampaignId_idx"
+                    "name": "Condition_CampaignId_idx_d531d270"
                   },
+                  "onDelete": "cascade",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "CampaignId"
@@ -3395,7 +3447,8 @@
                   "columns": [
                     "CampaignId"
                   ],
-                  "name": "Condition_CampaignId_idx",
+                  "name": "Condition_CampaignId_idx_d531d270",
+                  "prefix": "Condition_CampaignId_idx",
                   "unique": false
                 }
               ],
@@ -3468,8 +3521,10 @@
               "foreignKeys": [
                 {
                   "index": {
-                    "name": "Handout_CampaignId_idx"
+                    "name": "Handout_CampaignId_idx_d531d270"
                   },
+                  "onDelete": "cascade",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "CampaignId"
@@ -3491,7 +3546,8 @@
                   "columns": [
                     "CampaignId"
                   ],
-                  "name": "Handout_CampaignId_idx",
+                  "name": "Handout_CampaignId_idx_d531d270",
+                  "prefix": "Handout_CampaignId_idx",
                   "unique": false
                 }
               ],
@@ -3600,7 +3656,7 @@
                 "CampaignId": {
                   "codecId": "pg/uuid@1",
                   "dataType": "pg/uuid",
-                  "nullable": true
+                  "nullable": false
                 },
                 "DetailsLink": {
                   "codecId": "pg/text@1",
@@ -3608,8 +3664,8 @@
                   "nullable": true
                 },
                 "ImageFileId": {
-                  "codecId": "pg/text@1",
-                  "dataType": "pg/text",
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
                   "nullable": true
                 },
                 "IsContainer": {
@@ -3656,7 +3712,9 @@
                   "index": {
                     "primaryKey": true
                   },
-                  "name": "Item_IActionTargetId_fkey",
+                  "name": "Item_IActionTarget_fkey",
+                  "onDelete": "restrict",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "ItemId"
@@ -3676,7 +3734,9 @@
                   "index": {
                     "primaryKey": true
                   },
-                  "name": "Item_INoteEntityId_fkey",
+                  "name": "Item_INoteEntity_fkey",
+                  "onDelete": "restrict",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "ItemId"
@@ -3694,8 +3754,10 @@
                 },
                 {
                   "index": {
-                    "name": "Item_CampaignId_idx"
+                    "name": "Item_CampaignId_idx_d531d270"
                   },
+                  "onDelete": "cascade",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "CampaignId"
@@ -3713,10 +3775,10 @@
                 },
                 {
                   "index": {
-                    "unique": [
-                      "ImageFileId"
-                    ]
+                    "name": "Item_ImageFileId_idx_c8f2c5c3"
                   },
+                  "onDelete": "setNull",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "ImageFileId"
@@ -3738,7 +3800,16 @@
                   "columns": [
                     "CampaignId"
                   ],
-                  "name": "Item_CampaignId_idx",
+                  "name": "Item_CampaignId_idx_d531d270",
+                  "prefix": "Item_CampaignId_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "ImageFileId"
+                  ],
+                  "name": "Item_ImageFileId_idx_c8f2c5c3",
+                  "prefix": "Item_ImageFileId_idx",
                   "unique": false
                 }
               ],
@@ -3747,13 +3818,7 @@
                   "ItemId"
                 ]
               },
-              "uniques": [
-                {
-                  "columns": [
-                    "ImageFileId"
-                  ]
-                }
-              ]
+              "uniques": []
             },
             "LocationItem": {
               "columns": {
@@ -3787,7 +3852,9 @@
                   "index": {
                     "primaryKey": true
                   },
-                  "name": "LocationItem_IActionTargetId_fkey",
+                  "name": "LocationItem_IActionTarget_fkey",
+                  "onDelete": "restrict",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "LocationItemId"
@@ -3807,7 +3874,9 @@
                   "index": {
                     "primaryKey": true
                   },
-                  "name": "LocationItem_IItemLocationId_Self_fkey",
+                  "name": "LocationItem_IItemLocation_fkey",
+                  "onDelete": "restrict",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "LocationItemId"
@@ -3827,7 +3896,9 @@
                   "index": {
                     "primaryKey": true
                   },
-                  "name": "LocationItem_INoteEntityId_fkey",
+                  "name": "LocationItem_INoteEntity_fkey",
+                  "onDelete": "restrict",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "LocationItemId"
@@ -3845,9 +3916,10 @@
                 },
                 {
                   "index": {
-                    "name": "LocationItem_LocationId_idx"
+                    "name": "LocationItem_LocationId_idx_adb4faa3"
                   },
-                  "name": "LocationItem_IItemLocationId_Container_fkey",
+                  "onDelete": "cascade",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "LocationId"
@@ -3865,8 +3937,10 @@
                 },
                 {
                   "index": {
-                    "name": "LocationItem_ItemId_idx"
+                    "name": "LocationItem_ItemId_idx_3b8a9034"
                   },
+                  "onDelete": "cascade",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "ItemId"
@@ -3888,14 +3962,16 @@
                   "columns": [
                     "ItemId"
                   ],
-                  "name": "LocationItem_ItemId_idx",
+                  "name": "LocationItem_ItemId_idx_3b8a9034",
+                  "prefix": "LocationItem_ItemId_idx",
                   "unique": false
                 },
                 {
                   "columns": [
                     "LocationId"
                   ],
-                  "name": "LocationItem_LocationId_idx",
+                  "name": "LocationItem_LocationId_idx_adb4faa3",
+                  "prefix": "LocationItem_LocationId_idx",
                   "unique": false
                 }
               ],
@@ -3941,8 +4017,8 @@
                   "nullable": false
                 },
                 "ImageFileId": {
-                  "codecId": "pg/text@1",
-                  "dataType": "pg/text",
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
                   "nullable": false
                 },
                 "MapId": {
@@ -3973,9 +4049,10 @@
               "foreignKeys": [
                 {
                   "index": {
-                    "name": "Map_CampaignId_idx"
+                    "name": "Map_CampaignId_idx_d531d270"
                   },
-                  "onUpdate": "restrict",
+                  "onDelete": "cascade",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "CampaignId"
@@ -3993,10 +4070,10 @@
                 },
                 {
                   "index": {
-                    "unique": [
-                      "ImageFileId"
-                    ]
+                    "name": "Map_ImageFileId_idx_c8f2c5c3"
                   },
+                  "onDelete": "restrict",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "ImageFileId"
@@ -4018,7 +4095,16 @@
                   "columns": [
                     "CampaignId"
                   ],
-                  "name": "Map_CampaignId_idx",
+                  "name": "Map_CampaignId_idx_d531d270",
+                  "prefix": "Map_CampaignId_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "ImageFileId"
+                  ],
+                  "name": "Map_ImageFileId_idx_c8f2c5c3",
+                  "prefix": "Map_ImageFileId_idx",
                   "unique": false
                 }
               ],
@@ -4027,13 +4113,7 @@
                   "MapId"
                 ]
               },
-              "uniques": [
-                {
-                  "columns": [
-                    "ImageFileId"
-                  ]
-                }
-              ]
+              "uniques": []
             },
             "MapTemplate": {
               "columns": {
@@ -4168,8 +4248,10 @@
               "foreignKeys": [
                 {
                   "index": {
-                    "name": "Note_EntityId_idx"
+                    "name": "Note_EntityId_idx_d085d695"
                   },
+                  "onDelete": "cascade",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "EntityId"
@@ -4191,7 +4273,8 @@
                   "columns": [
                     "EntityId"
                   ],
-                  "name": "Note_EntityId_idx",
+                  "name": "Note_EntityId_idx_d085d695",
+                  "prefix": "Note_EntityId_idx",
                   "unique": false
                 }
               ],
@@ -4248,7 +4331,9 @@
                   "index": {
                     "primaryKey": true
                   },
-                  "name": "Region_IActionTargetId_fkey",
+                  "name": "Region_IActionTarget_fkey",
+                  "onDelete": "restrict",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "RegionId"
@@ -4268,7 +4353,9 @@
                   "index": {
                     "primaryKey": true
                   },
-                  "name": "Region_IItemLocationId_fkey",
+                  "name": "Region_IItemLocation_fkey",
+                  "onDelete": "restrict",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "RegionId"
@@ -4288,7 +4375,9 @@
                   "index": {
                     "primaryKey": true
                   },
-                  "name": "Region_INoteEntityId_fkey",
+                  "name": "Region_INoteEntity_fkey",
+                  "onDelete": "restrict",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "RegionId"
@@ -4306,8 +4395,10 @@
                 },
                 {
                   "index": {
-                    "name": "Region_MapId_idx"
+                    "name": "Region_MapId_idx_ea21d85b"
                   },
+                  "onDelete": "cascade",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "MapId"
@@ -4329,7 +4420,8 @@
                   "columns": [
                     "MapId"
                   ],
-                  "name": "Region_MapId_idx",
+                  "name": "Region_MapId_idx_ea21d85b",
+                  "prefix": "Region_MapId_idx",
                   "unique": false
                 }
               ],
@@ -4358,6 +4450,8 @@
                   "index": {
                     "name": "RegionHandout_RegionId_idx_97fe7b25"
                   },
+                  "onDelete": "cascade",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "RegionId"
@@ -4375,8 +4469,10 @@
                 },
                 {
                   "index": {
-                    "name": "RegionHandout_HandoutId_idx"
+                    "name": "RegionHandout_HandoutId_idx_13617cfe"
                   },
+                  "onDelete": "cascade",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "HandoutId"
@@ -4398,7 +4494,8 @@
                   "columns": [
                     "HandoutId"
                   ],
-                  "name": "RegionHandout_HandoutId_idx",
+                  "name": "RegionHandout_HandoutId_idx_13617cfe",
+                  "prefix": "RegionHandout_HandoutId_idx",
                   "unique": false
                 },
                 {
@@ -4437,6 +4534,8 @@
                   "index": {
                     "name": "RegionNarration_RegionId_idx_97fe7b25"
                   },
+                  "onDelete": "cascade",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "RegionId"
@@ -4454,8 +4553,10 @@
                 },
                 {
                   "index": {
-                    "name": "RegionNarration_NarrationId_idx"
+                    "name": "RegionNarration_NarrationId_idx_30a7cada"
                   },
+                  "onDelete": "cascade",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "NarrationId"
@@ -4477,7 +4578,8 @@
                   "columns": [
                     "NarrationId"
                   ],
-                  "name": "RegionNarration_NarrationId_idx",
+                  "name": "RegionNarration_NarrationId_idx_30a7cada",
+                  "prefix": "RegionNarration_NarrationId_idx",
                   "unique": false
                 },
                 {
@@ -4533,8 +4635,10 @@
               "foreignKeys": [
                 {
                   "index": {
-                    "name": "RegionShape_RegionId_idx"
+                    "name": "RegionShape_RegionId_idx_97fe7b25"
                   },
+                  "onDelete": "cascade",
+                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "RegionId"
@@ -4556,7 +4660,8 @@
                   "columns": [
                     "RegionId"
                   ],
-                  "name": "RegionShape_RegionId_idx",
+                  "name": "RegionShape_RegionId_idx_97fe7b25",
+                  "prefix": "RegionShape_RegionId_idx",
                   "unique": false
                 }
               ],
@@ -4713,7 +4818,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "82254ea3941517745782ef6b2618fcb1e52af334b127768fbed578d049166f74"
+    "storageHash": "ecfc8bc27bb90d042c2e9d26e8f674cbbb21c42035e727f32007edfb9a8c6fa4"
   },
   "capabilities": {
     "postgres": {

@@ -3,48 +3,38 @@ namespace public {
   model AbilityCheck {
     AbilityCheckId             Uuid           @id
     ActionId                   Uuid
-    Action                     Action         @relation(fields: [ActionId], references: [ActionId])
+    Action                     Action         @relation(fields: [ActionId], references: [ActionId], onUpdate: Cascade, onDelete: Cascade)
     Skill                      pg.enum(Skill)
     DC                         Int
     SuccessNarrationId         Uuid?
-    SuccessNarration           Narration?     @relation(name: "Success", fields: [SuccessNarrationId], references: [NarrationId])
+    SuccessNarration           Narration?     @relation(name: "Success", fields: [SuccessNarrationId], references: [NarrationId], onUpdate: Cascade, onDelete: SetNull)
     FailureNarrationId         Uuid?
-    FailureNarration           Narration?     @relation(name: "Failure", fields: [FailureNarrationId], references: [NarrationId])
+    FailureNarration           Narration?     @relation(name: "Failure", fields: [FailureNarrationId], references: [NarrationId], onUpdate: Cascade, onDelete: SetNull)
     CriticalSuccessNarrationId Uuid?
-    CriticalSuccessNarration   Narration?     @relation(name: "CriticalSuccess", fields: [CriticalSuccessNarrationId], references: [NarrationId])
+    CriticalSuccessNarration   Narration?     @relation(name: "CriticalSuccess", fields: [CriticalSuccessNarrationId], references: [NarrationId], onUpdate: Cascade, onDelete: SetNull)
     CriticalFailureNarrationId Uuid?
-    CriticalFailureNarration   Narration?     @relation(name: "CriticalFailure", fields: [CriticalFailureNarrationId], references: [NarrationId])
-
-    @@index([ActionId], map: "AbilityCheck_ActionId_idx")
-    @@index([CriticalFailureNarrationId], map: "AbilityCheck_CriticalFailureNarrationId_idx")
-    @@index([CriticalSuccessNarrationId], map: "AbilityCheck_CriticalSuccessNarrationId_idx")
-    @@index([FailureNarrationId], map: "AbilityCheck_FailureNarrationId_idx")
-    @@index([SuccessNarrationId], map: "AbilityCheck_SuccessNarrationId_idx")
+    CriticalFailureNarration   Narration?     @relation(name: "CriticalFailure", fields: [CriticalFailureNarrationId], references: [NarrationId], onUpdate: Cascade, onDelete: SetNull)
   }
 
   model Action {
     ActionId         Uuid                 @id
     TargetId         Uuid
-    Target           IActionTarget        @relation(fields: [TargetId], references: [IActionTargetId])
+    Target           IActionTarget        @relation(fields: [TargetId], references: [IActionTargetId], onUpdate: Cascade, onDelete: Cascade)
     Name             String
     Type             pg.enum(ActionType)?
     NarrationId      Uuid?
-    Narration        Narration?           @relation(fields: [NarrationId], references: [NarrationId])
+    Narration        Narration?           @relation(fields: [NarrationId], references: [NarrationId], onUpdate: Cascade, onDelete: SetNull)
     AbilityChecks    AbilityCheck[]
     ActionConditions ActionCondition[]
-
-    @@index([NarrationId], map: "Action_NarrationId_idx")
-    @@index([TargetId], map: "Action_TargetId_idx")
   }
 
   model ActionCondition {
     ActionId    Uuid      @map("ActionId")
-    Action      Action    @relation(fields: [ActionId], references: [ActionId])
+    Action      Action    @relation(fields: [ActionId], references: [ActionId], onUpdate: Cascade, onDelete: Cascade)
     ConditionId Uuid      @map("ConditionId")
-    Condition   Condition @relation(fields: [ConditionId], references: [ConditionId])
+    Condition   Condition @relation(fields: [ConditionId], references: [ConditionId], onUpdate: Cascade, onDelete: Cascade)
 
     @@id([ActionId, ConditionId])
-    @@index([ConditionId], map: "ActionCondition_ConditionId_idx")
   }
 
   model Campaign {
@@ -52,7 +42,7 @@ namespace public {
     CampaignTemplateId Uuid?
     Name               String
     ActiveMapId        Uuid?       @unique
-    ActiveMap          Map?        @relation(name: "CampaignActiveMap", fields: [ActiveMapId], references: [MapId])
+    ActiveMap          Map?        @relation(name: "CampaignActiveMap", fields: [ActiveMapId], references: [MapId], onUpdate: Cascade, onDelete: SetNull)
     Conditions         Condition[]
     Handouts           Handout[]
     Items              Item[]
@@ -70,29 +60,25 @@ namespace public {
     Description      String
     IsMet            Boolean           @default(false)
     CampaignId       Uuid
-    Campaign         Campaign          @relation(fields: [CampaignId], references: [CampaignId])
+    Campaign         Campaign          @relation(fields: [CampaignId], references: [CampaignId], onUpdate: Cascade, onDelete: Cascade)
     ActionConditions ActionCondition[]
-
-    @@index([CampaignId], map: "Condition_CampaignId_idx")
   }
 
   model File {
     FileId   Uuid   @id
     FileName String
-    Item     Item?
-    Map      Map?
+    Items    Item[]
+    Maps     Map[]
   }
 
   model Handout {
     HandoutId      Uuid                 @id
     CampaignId     Uuid
-    Campaign       Campaign             @relation(fields: [CampaignId], references: [CampaignId])
+    Campaign       Campaign             @relation(fields: [CampaignId], references: [CampaignId], onUpdate: Cascade, onDelete: Cascade)
     Name           String
     Type           pg.enum(HandoutType)
     Source         String
     RegionHandouts RegionHandout[]
-
-    @@index([CampaignId], map: "Handout_CampaignId_idx")
   }
 
   model IActionTarget {
@@ -123,52 +109,45 @@ namespace public {
 
   model Item {
     ItemId        Uuid                   @id
-    IActionTarget IActionTarget          @relation(name: "ItemActionTarget", fields: [ItemId], references: [IActionTargetId], map: "Item_IActionTargetId_fkey")
-    INoteEntity   INoteEntity            @relation(name: "ItemNoteEntity", fields: [ItemId], references: [INoteEntityId], map: "Item_INoteEntityId_fkey")
-    CampaignId    Uuid?
-    Campaign      Campaign?              @relation(fields: [CampaignId], references: [CampaignId])
+    IActionTarget IActionTarget          @relation(name: "ItemActionTarget", fields: [ItemId], references: [IActionTargetId], onUpdate: Cascade, onDelete: Restrict, map: "Item_IActionTarget_fkey")
+    INoteEntity   INoteEntity            @relation(name: "ItemNoteEntity", fields: [ItemId], references: [INoteEntityId], onUpdate: Cascade, onDelete: Restrict, map: "Item_INoteEntity_fkey")
+    CampaignId    Uuid
+    Campaign      Campaign               @relation(fields: [CampaignId], references: [CampaignId], onUpdate: Cascade, onDelete: Cascade)
     Name          String
     IsContainer   Boolean                @default(false)
     Value         Int?
     ValueUnit     pg.enum(CurrencyUnit)?
     DetailsLink   String?
-    ImageFileId   String?                @unique
-    ImageFile     File?                  @relation(fields: [ImageFileId], references: [FileId])
+    ImageFileId   Uuid?
+    ImageFile     File?                  @relation(fields: [ImageFileId], references: [FileId], onUpdate: Cascade, onDelete: SetNull)
     LocationItems LocationItem[]
-
-    @@index([CampaignId], map: "Item_CampaignId_idx")
   }
 
   model LocationItem {
     LocationItemId Uuid          @id
-    IActionTarget  IActionTarget @relation(name: "LocationItemActionTarget", fields: [LocationItemId], references: [IActionTargetId], map: "LocationItem_IActionTargetId_fkey")
-    IItemLocation  IItemLocation @relation(name: "LocationItemSelf", fields: [LocationItemId], references: [IItemLocationId], map: "LocationItem_IItemLocationId_Self_fkey")
-    INoteEntity    INoteEntity   @relation(name: "LocationItemNoteEntity", fields: [LocationItemId], references: [INoteEntityId], map: "LocationItem_INoteEntityId_fkey")
+    IActionTarget  IActionTarget @relation(name: "LocationItemActionTarget", fields: [LocationItemId], references: [IActionTargetId], onUpdate: Cascade, onDelete: Restrict, map: "LocationItem_IActionTarget_fkey")
+    IItemLocation  IItemLocation @relation(name: "LocationItemSelf", fields: [LocationItemId], references: [IItemLocationId], onUpdate: Cascade, onDelete: Restrict, map: "LocationItem_IItemLocation_fkey")
+    INoteEntity    INoteEntity   @relation(name: "LocationItemNoteEntity", fields: [LocationItemId], references: [INoteEntityId], onUpdate: Cascade, onDelete: Restrict, map: "LocationItem_INoteEntity_fkey")
     LocationId     Uuid
-    Location       IItemLocation @relation(name: "ItemLocation", fields: [LocationId], references: [IItemLocationId], map: "LocationItem_IItemLocationId_Container_fkey")
+    Location       IItemLocation @relation(name: "ItemLocation", fields: [LocationId], references: [IItemLocationId], onUpdate: Cascade, onDelete: Cascade)
     ItemId         Uuid
-    Item           Item          @relation(fields: [ItemId], references: [ItemId])
+    Item           Item          @relation(fields: [ItemId], references: [ItemId], onUpdate: Cascade, onDelete: Cascade)
     Quantity       Int           @default(1)
-
-    @@index([ItemId], map: "LocationItem_ItemId_idx")
-    @@index([LocationId], map: "LocationItem_LocationId_idx")
   }
 
   model Map {
     MapId           Uuid                      @id
     CampaignId      Uuid
-    Campaign        Campaign                  @relation(name: "MapCampaign", fields: [CampaignId], references: [CampaignId], onUpdate: Restrict)
+    Campaign        Campaign                  @relation(name: "MapCampaign", fields: [CampaignId], references: [CampaignId], onUpdate: Cascade, onDelete: Cascade)
     MapTemplateId   Uuid?
     Name            String
-    ImageFileId     String                    @unique
-    ImageFile       File                      @relation(fields: [ImageFileId], references: [FileId])
+    ImageFileId     Uuid
+    ImageFile       File                      @relation(fields: [ImageFileId], references: [FileId], onUpdate: Cascade, onDelete: Restrict)
     DefaultLighting pg.enum(AbsoluteLighting) @default("Bright Light")
     Width           Int                       @default(0)
     Height          Int                       @default(0)
     ActiveCampaign  Campaign?                 @relation(name: "CampaignActiveMap")
     Regions         Region[]
-
-    @@index([CampaignId], map: "Map_CampaignId_idx")
   }
 
   model MapTemplate {
@@ -201,57 +180,49 @@ namespace public {
   model Note {
     NoteId      Uuid        @id
     EntityId    Uuid
-    INoteEntity INoteEntity @relation(fields: [EntityId], references: [INoteEntityId])
+    INoteEntity INoteEntity @relation(fields: [EntityId], references: [INoteEntityId], onUpdate: Cascade, onDelete: Cascade)
     Description String
-
-    @@index([EntityId], map: "Note_EntityId_idx")
   }
 
   model Region {
     RegionId         Uuid                      @id
-    IActionTarget    IActionTarget             @relation(name: "RegionActionTarget", fields: [RegionId], references: [IActionTargetId], map: "Region_IActionTargetId_fkey")
-    IItemLocation    IItemLocation             @relation(name: "RegionItemLocation", fields: [RegionId], references: [IItemLocationId], map: "Region_IItemLocationId_fkey")
-    INoteEntity      INoteEntity               @relation(name: "RegionNoteEntity", fields: [RegionId], references: [INoteEntityId], map: "Region_INoteEntityId_fkey")
+    IActionTarget    IActionTarget             @relation(name: "RegionActionTarget", fields: [RegionId], references: [IActionTargetId], onUpdate: Cascade, onDelete: Restrict, map: "Region_IActionTarget_fkey")
+    IItemLocation    IItemLocation             @relation(name: "RegionItemLocation", fields: [RegionId], references: [IItemLocationId], onUpdate: Cascade, onDelete: Restrict, map: "Region_IItemLocation_fkey")
+    INoteEntity      INoteEntity               @relation(name: "RegionNoteEntity", fields: [RegionId], references: [INoteEntityId], onUpdate: Cascade, onDelete: Restrict, map: "Region_INoteEntity_fkey")
     RegionTemplateId Uuid?
     MapId            Uuid
-    Map              Map                       @relation(fields: [MapId], references: [MapId])
+    Map              Map                       @relation(fields: [MapId], references: [MapId], onUpdate: Cascade, onDelete: Cascade)
     Name             String
     Lighting         pg.enum(RelativeLighting) @default("Default")
     Handouts         RegionHandout[]
     Narrations       RegionNarration[]
     Shapes           RegionShape[]
-
-    @@index([MapId], map: "Region_MapId_idx")
   }
 
   model RegionHandout {
     RegionId  Uuid
-    Region    Region  @relation(fields: [RegionId], references: [RegionId])
+    Region    Region  @relation(fields: [RegionId], references: [RegionId], onUpdate: Cascade, onDelete: Cascade)
     HandoutId Uuid
-    Handout   Handout @relation(fields: [HandoutId], references: [HandoutId])
+    Handout   Handout @relation(fields: [HandoutId], references: [HandoutId], onUpdate: Cascade, onDelete: Cascade)
 
     @@id([RegionId, HandoutId], map: "RegionHandout_pkey")
-    @@index([HandoutId], map: "RegionHandout_HandoutId_idx")
   }
 
   model RegionNarration {
     RegionId    Uuid
-    Region      Region    @relation(fields: [RegionId], references: [RegionId])
+    Region      Region    @relation(fields: [RegionId], references: [RegionId], onUpdate: Cascade, onDelete: Cascade)
     NarrationId Uuid
-    Narration   Narration @relation(fields: [NarrationId], references: [NarrationId])
+    Narration   Narration @relation(fields: [NarrationId], references: [NarrationId], onUpdate: Cascade, onDelete: Cascade)
 
     @@id([RegionId, NarrationId], map: "RegionNarration_pkey")
-    @@index([NarrationId], map: "RegionNarration_NarrationId_idx")
   }
 
   model RegionShape {
     RegionShapeId Uuid               @id
     RegionId      Uuid
-    Region        Region             @relation(fields: [RegionId], references: [RegionId])
+    Region        Region             @relation(fields: [RegionId], references: [RegionId], onUpdate: Cascade, onDelete: Cascade)
     Coords        Jsonb
     ShapeType     pg.enum(ShapeType)
-
-    @@index([RegionId], map: "RegionShape_RegionId_idx")
   }
 
   model RegionTemplate {
@@ -351,31 +322,31 @@ namespace public {
 
 namespace es {
   model Command {
-    CommandId     Uuid     @id
+    CommandId     Uuid                                  @id
     StreamId      Uuid?
     CorrelationId Uuid
     Context       String
     Ref           String
-    Data          Json
-    CreatedAt     DateTime
+    Data          Jsonb
+    CreatedAt     Raw(sql`timestamp(6) with time zone`)
   }
 
   model Event {
-    EventId       Uuid     @id
+    EventId       Uuid                                  @id
     StreamId      Uuid
     CorrelationId Uuid
     Context       String
     Ref           String
     Version       Int
-    Data          Json
-    OccurredAt    DateTime
+    Data          Jsonb
+    OccurredAt    Raw(sql`timestamp(6) with time zone`)
   }
 
   model Stream {
-    StreamId  Uuid     @id
+    StreamId  Uuid                                  @id
     Type      String
-    Version   Int      @default(0)
-    CreatedAt DateTime
-    UpdatedAt DateTime
+    Version   Int                                   @default(0)
+    CreatedAt Raw(sql`timestamp(6) with time zone`)
+    UpdatedAt Raw(sql`timestamp(6) with time zone`)
   }
 }
