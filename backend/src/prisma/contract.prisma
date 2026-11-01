@@ -322,31 +322,31 @@ namespace public {
 
 namespace es {
   model Command {
-    CommandId     Uuid                                  @id
+    CommandId     Uuid           @id
     StreamId      Uuid?
     CorrelationId Uuid
     Context       String
     Ref           String
     Data          Jsonb
-    CreatedAt     Raw(sql`timestamp(6) with time zone`)
+    CreatedAt     Timestamptz(6)
   }
 
   model Event {
-    EventId       Uuid                                  @id
+    EventId       Uuid           @id
     StreamId      Uuid
     CorrelationId Uuid
     Context       String
     Ref           String
     Version       Int
     Data          Jsonb
-    OccurredAt    Raw(sql`timestamp(6) with time zone`)
+    OccurredAt    Timestamptz(6)
   }
 
   model Stream {
-    StreamId  Uuid                                  @id
+    StreamId  Uuid           @id
     Type      String
-    Version   Int                                   @default(0)
-    CreatedAt Raw(sql`timestamp(6) with time zone`)
-    UpdatedAt Raw(sql`timestamp(6) with time zone`)
+    Version   Int            @default(0)
+    CreatedAt Timestamptz(6)
+    UpdatedAt Timestamptz(6)
   }
 }

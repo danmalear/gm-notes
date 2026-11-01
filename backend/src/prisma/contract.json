@@ -139,10 +139,10 @@
               "CreatedAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "sql/raw@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar",
                   "typeParams": {
-                    "sql": "timestamp(6) with time zone"
+                    "precision": 6
                   }
                 }
               },
@@ -230,10 +230,10 @@
               "OccurredAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "sql/raw@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar",
                   "typeParams": {
-                    "sql": "timestamp(6) with time zone"
+                    "precision": 6
                   }
                 }
               },
@@ -296,10 +296,10 @@
               "CreatedAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "sql/raw@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar",
                   "typeParams": {
-                    "sql": "timestamp(6) with time zone"
+                    "precision": 6
                   }
                 }
               },
@@ -320,10 +320,10 @@
               "UpdatedAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "sql/raw@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar",
                   "typeParams": {
-                    "sql": "timestamp(6) with time zone"
+                    "precision": 6
                   }
                 }
               },
@@ -2641,11 +2641,11 @@
                   "nullable": false
                 },
                 "CreatedAt": {
-                  "codecId": "sql/raw@1",
-                  "dataType": "sql/raw",
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "dataType": "pg/timestamptz",
                   "nullable": false,
                   "typeParams": {
-                    "sql": "timestamp(6) with time zone"
+                    "precision": 6
                   }
                 },
                 "Data": {
@@ -2696,11 +2696,11 @@
                   "nullable": false
                 },
                 "OccurredAt": {
-                  "codecId": "sql/raw@1",
-                  "dataType": "sql/raw",
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "dataType": "pg/timestamptz",
                   "nullable": false,
                   "typeParams": {
-                    "sql": "timestamp(6) with time zone"
+                    "precision": 6
                   }
                 },
                 "Ref": {
@@ -2731,11 +2731,11 @@
             "Stream": {
               "columns": {
                 "CreatedAt": {
-                  "codecId": "sql/raw@1",
-                  "dataType": "sql/raw",
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "dataType": "pg/timestamptz",
                   "nullable": false,
                   "typeParams": {
-                    "sql": "timestamp(6) with time zone"
+                    "precision": 6
                   }
                 },
                 "StreamId": {
@@ -2749,11 +2749,11 @@
                   "nullable": false
                 },
                 "UpdatedAt": {
-                  "codecId": "sql/raw@1",
-                  "dataType": "sql/raw",
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "dataType": "pg/timestamptz",
                   "nullable": false,
                   "typeParams": {
-                    "sql": "timestamp(6) with time zone"
+                    "precision": 6
                   }
                 },
                 "Version": {
@@ -4818,7 +4818,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "ecfc8bc27bb90d042c2e9d26e8f674cbbb21c42035e727f32007edfb9a8c6fa4"
+    "storageHash": "68669e168609f1dac847261cc7761ffd014049d168405af34cd799179a6ea985"
   },
   "capabilities": {
     "postgres": {

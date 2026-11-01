@@ -14,7 +14,7 @@
 		"#campaign/*": "./src/campaign/*",
 		"#command/*": "./src/framework/command/*",
 		"#condition/*": "./src/condition/*",
-		"#db": "./prisma8/db.ts",
+		"#db": "./src/prisma/db.ts",
 		"#event/*": "./src/framework/event/*",
 		"#file/*": "./src/file/*",
 		"#framework/*": "./src/framework/*",
@@ -24,35 +24,36 @@
 		"#message/*": "./src/framework/message/*",
 		"#narration/*": "./src/narration/*",
 		"#note/*": "./src/note/*",
-		"#prisma": "./generated/prisma8/contract.d.ts",
+		"#prisma": "./src/prisma/contract.d.ts",
 		"#region/*": "./src/region/*",
 		"#shared/*": "./src/shared/*",
 		"#stream/*": "./src/framework/stream/*"
 	},
 	"dependencies": {
-		"@prisma/orm-postgres": "8.0.0-rc.20",
+		"@prisma/orm-postgres": "8.0.0-rc.18",
 		"cors": "2.8.6",
-		"dotenv": "17.4.0",
+		"dotenv": "17.4.2",
 		"express": "5.2.1",
 		"lodash": "4.18.1",
 		"multer": "2.1.1",
-		"pg": "8.20.0",
-		"ws": "8.20.0"
+		"pg": "8.22.0",
+		"ws": "8.21.1"
 	},
 	"devDependencies": {
-		"@eslint/js": "9.39.4",
+		"@eslint/js": "10.0.1",
+		"@prisma/cli-engine": "0.7.0",
 		"@types/cors": "2.8.19",
 		"@types/express": "5.0.6",
 		"@types/lodash": "4.17.24",
 		"@types/multer": "1.4.13",
-		"@types/node": "22.19.15",
+		"@types/node": "26.1.1",
 		"@types/ws": "8.18.1",
-		"eslint": "9.39.4",
+		"eslint": "10.7.0",
 		"eslint-config-prettier": "10.1.8",
-		"globals": "16.5.0",
-		"prettier": "3.5.3",
-		"prisma": "8.0.0-rc.27",
-		"typescript": "5.7.3",
-		"typescript-eslint": "8.58.0"
+		"globals": "17.7.0",
+		"prettier": "3.9.6",
+		"prisma": "8.0.0-rc.23",
+		"typescript": "6.0.3",
+		"typescript-eslint": "8.65.0"
 	}
 }
