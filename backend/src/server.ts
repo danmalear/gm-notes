@@ -7,7 +7,7 @@ import {
 	ActionRepository,
 	type IActionRepository,
 } from '#action/action-repository.ts';
-import { actionRoutes } from '#action/action-routes.ts';
+import { ActionRouter } from '#action/action-router.ts';
 import { CampaignCommandHandler } from '#campaign/campaign-commands.ts';
 import { CampaignProjections } from '#campaign/campaign-projections.ts';
 import {
@@ -226,6 +226,7 @@ interface Routers {
 	region: RegionRouter;
 	abilityCheck: AbilityCheckRouter;
 	narration: NarrationRouter;
+	action: ActionRouter;
 }
 
 function initRouters({
@@ -279,6 +280,11 @@ function initRouters({
 		repository: repositories.narration,
 	});
 
+	const actionRouter = new ActionRouter({
+		...baseStreamRouterOpts,
+		repository: repositories.action,
+	});
+
 	// Initialize routes
 	commandRouter.init();
 	campaignRouter.init();
@@ -286,6 +292,7 @@ function initRouters({
 	regionRouter.init();
 	abilityCheckRouter.init();
 	narrationRouter.init();
+	actionRouter.init();
 
 	// Return
 	return {
@@ -295,6 +302,7 @@ function initRouters({
 		region: regionRouter,
 		abilityCheck: abilityCheckRouter,
 		narration: narrationRouter,
+		action: actionRouter,
 	};
 }
 
@@ -336,12 +344,6 @@ function createAppServer() {
 		commandBus,
 	});
 
-	actionRoutes({
-		app,
-		commandBus,
-		eventBus,
-		actionRepository: repositories.action,
-	});
 	itemRoutes({
 		app,
 		commandBus,
