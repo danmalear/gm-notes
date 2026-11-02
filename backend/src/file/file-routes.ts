@@ -1,4 +1,5 @@
 import type { MessageResponse } from '#shared/dtos.ts';
+import { isUUID, toUUID } from '#shared/uuid.ts';
 import type { Express, Request, Response } from 'express';
 import multer from 'multer';
 import type { FileStub } from './file-dtos.ts';
@@ -17,7 +18,14 @@ export function fileRoutes({
 }: FileRouteOpts) {
 	const apiNamespace = 'files';
 
-	const upload = multer({ dest: uploadsPath });
+	const storage = multer.diskStorage({
+		destination: uploadsPath,
+		filename: (_req, file, cb) => {
+			cb(null, toUUID(file.originalname));
+		},
+	});
+
+	const upload = multer({ storage });
 
 	app.get(
 		`/${apiNamespace}/:fileId`,
@@ -26,8 +34,8 @@ export function fileRoutes({
 				`File GET request received. params: ${JSON.stringify(req.params)}`,
 			);
 
-			if (req.params.fileId.length !== 32) {
-				res.status(400).send({ message: 'Invalid file ID format' });
+			if (!isUUID(req.params.fileId)) {
+				res.status(400).send({ message: 'Invalid UUID format' });
 				return;
 			}
 
@@ -69,7 +77,7 @@ export function fileRoutes({
 			}
 
 			const file = await fileRepository.create({
-				FileId: req.file.filename,
+				FileId: toUUID(req.file.filename),
 				FileName: req.file.originalname,
 			});
 
