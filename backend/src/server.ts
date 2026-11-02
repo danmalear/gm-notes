@@ -41,11 +41,11 @@ import {
 	type IHandoutRepository,
 } from '#handout/handout-repository.ts';
 import { ItemRepository, type IItemRepository } from '#item/item-repository.ts';
-import { itemRoutes } from '#item/item-routes.ts';
 import {
 	LocationItemRepository,
 	type ILocationItemRepository,
 } from '#item/location-item-repository.ts';
+import { LocationItemRouter } from '#item/location-item-router.ts';
 import { MapRepository, type IMapRepository } from '#map/map-repository.ts';
 import { MapRouter } from '#map/map-router.ts';
 import {
@@ -227,6 +227,7 @@ interface Routers {
 	abilityCheck: AbilityCheckRouter;
 	narration: NarrationRouter;
 	action: ActionRouter;
+	locationItem: LocationItemRouter;
 }
 
 function initRouters({
@@ -285,6 +286,11 @@ function initRouters({
 		repository: repositories.action,
 	});
 
+	const locationItemRouter = new LocationItemRouter({
+		...baseStreamRouterOpts,
+		repository: repositories.locationItem,
+	});
+
 	// Initialize routes
 	commandRouter.init();
 	campaignRouter.init();
@@ -293,6 +299,7 @@ function initRouters({
 	abilityCheckRouter.init();
 	narrationRouter.init();
 	actionRouter.init();
+	locationItemRouter.init();
 
 	// Return
 	return {
@@ -303,6 +310,7 @@ function initRouters({
 		abilityCheck: abilityCheckRouter,
 		narration: narrationRouter,
 		action: actionRouter,
+		locationItem: locationItemRouter,
 	};
 }
 
@@ -344,13 +352,6 @@ function createAppServer() {
 		commandBus,
 	});
 
-	itemRoutes({
-		app,
-		commandBus,
-		eventBus,
-		itemRepository: repositories.item,
-		locationItemRepository: repositories.locationItem,
-	});
 	fileRoutes({ app, fileRepository: repositories.file, uploadsPath });
 
 	app.use((req: Request, res: Response<MessageResponse>) => {
