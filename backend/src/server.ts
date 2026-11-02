@@ -223,6 +223,9 @@ interface Routers {
 
 	campaign: CampaignRouter;
 	map: MapRouter;
+	region: RegionRouter;
+	abilityCheck: AbilityCheckRouter;
+	narration: NarrationRouter;
 }
 
 function initRouters({
@@ -289,6 +292,9 @@ function initRouters({
 		command: commandRouter,
 		campaign: campaignRouter,
 		map: mapRouter,
+		region: regionRouter,
+		abilityCheck: abilityCheckRouter,
+		narration: narrationRouter,
 	};
 }
 
