@@ -8,7 +8,9 @@ import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
-export type ActionMin = Scalars<Models.public_Action>;
+export type ActionRaw = Scalars<Models.public_Action>;
+
+export type ActionMin = ActionRaw;
 
 export type ActionFull = ActionMin & {
 	Narration: NarrationMin | null;
@@ -20,18 +22,21 @@ export type IActionTargetMin = Scalars<Models.public_IActionTarget> & {
 	Actions: ActionMin[];
 };
 
-export interface IActionRepository
-	extends IRepository<ActionMin, ActionMin, ActionMin, ActionFull> {
+export interface IActionRepository extends IRepository<
+	ActionRaw,
+	ActionMin,
+	ActionFull
+> {
 	getByTargetId(targetId: UUID): Promise<ActionMin[]>;
 }
 
 export class ActionRepository
-	extends Repository<ActionMin, ActionMin, ActionMin, ActionFull>
+	extends Repository<ActionRaw, ActionMin, ActionFull>
 	implements IActionRepository
 {
 	override descriptor = 'Action';
 
-	override async getByIdRaw(actionId: UUID): Promise<ActionMin | null> {
+	override async getByIdMin(actionId: UUID): Promise<ActionMin | null> {
 		try {
 			return await db.orm.public.Action.first({
 				ActionId: actionId,
@@ -41,7 +46,7 @@ export class ActionRepository
 		}
 	}
 
-	override async getById(actionId: UUID): Promise<ActionFull | null> {
+	override async getByIdFull(actionId: UUID): Promise<ActionFull | null> {
 		try {
 			const action = await db.orm.public.Action.include('AbilityChecks')
 				.include('ActionConditions', (actionCondition) =>
@@ -69,7 +74,7 @@ export class ActionRepository
 		}
 	}
 
-	override async create(data: ActionMin): Promise<ActionMin> {
+	override async create(data: ActionRaw): Promise<ActionMin> {
 		try {
 			return await db.orm.public.Action.create(data);
 		} catch (e) {
@@ -79,7 +84,7 @@ export class ActionRepository
 
 	async update(
 		actionId: UUID,
-		data: Partial<ActionMin>,
+		data: Partial<ActionRaw>,
 	): Promise<ActionMin | null> {
 		try {
 			return await db.orm.public.Action.where({

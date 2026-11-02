@@ -1,19 +1,22 @@
 import { BaseStreamRouter, type BaseStreamRouterOpts } from '#shared/router.ts';
 import type { MapResponse, MapStub } from './map-dtos.ts';
 import { toDto, toStub } from './map-mappers.ts';
-import type { IMapRepository, MapFull, MapMin } from './map-repository.ts';
+import type {
+	IMapRepository,
+	MapFull,
+	MapMin,
+	MapRaw,
+} from './map-repository.ts';
 
 export type MapRouterOpts = BaseStreamRouterOpts<
-	MapMin,
-	MapMin,
+	MapRaw,
 	MapMin,
 	MapFull,
 	IMapRepository
 >;
 
 export class MapRouter extends BaseStreamRouter<
-	MapMin,
-	MapMin,
+	MapRaw,
 	MapMin,
 	MapFull,
 	MapResponse,

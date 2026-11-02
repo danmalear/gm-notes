@@ -5,20 +5,25 @@ import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
-export type HandoutMin = Scalars<Models.public_Handout>;
+export type HandoutRaw = Scalars<Models.public_Handout>;
+export type HandoutMin = HandoutRaw;
+export type HandoutFull = HandoutMin;
 
-export interface IHandoutRepository
-	extends IRepository<HandoutMin, HandoutMin, HandoutMin> {
+export interface IHandoutRepository extends IRepository<
+	HandoutRaw,
+	HandoutMin,
+	HandoutFull
+> {
 	getByRegionId(regionId: UUID): Promise<HandoutMin[]>;
 }
 
 export class HandoutRepository
-	extends Repository<HandoutMin, HandoutMin, HandoutMin>
+	extends Repository<HandoutRaw, HandoutMin, HandoutFull>
 	implements IHandoutRepository
 {
 	override descriptor = 'Handout';
 
-	override async getByIdRaw(handoutId: UUID): Promise<HandoutMin | null> {
+	override async getByIdMin(handoutId: UUID): Promise<HandoutMin | null> {
 		try {
 			return await db.orm.public.Handout.first({
 				HandoutId: handoutId,
@@ -28,8 +33,8 @@ export class HandoutRepository
 		}
 	}
 
-	override async getById(id: UUID): Promise<HandoutMin | null> {
-		return await this.getByIdRaw(id);
+	override async getByIdFull(id: UUID): Promise<HandoutFull | null> {
+		return await this.getByIdMin(id);
 	}
 
 	override async getAll(): Promise<HandoutMin[]> {
@@ -40,7 +45,7 @@ export class HandoutRepository
 		}
 	}
 
-	override async create(data: HandoutMin): Promise<HandoutMin> {
+	override async create(data: HandoutRaw): Promise<HandoutMin> {
 		try {
 			return await db.orm.public.Handout.create(data);
 		} catch (e) {
@@ -50,7 +55,7 @@ export class HandoutRepository
 
 	override async update(
 		handoutId: UUID,
-		data: Partial<HandoutMin>,
+		data: Partial<HandoutRaw>,
 	): Promise<HandoutMin | null> {
 		try {
 			return await db.orm.public.Handout.where({

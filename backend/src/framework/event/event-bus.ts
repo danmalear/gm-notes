@@ -34,7 +34,7 @@ export class EventBus extends MessageBus<IEvent> implements IEventBus {
 		console.log('Processing event', event.ref);
 		const id = randomUUID();
 
-		let streamRecord = await this.streamRepository.getById(event.streamId);
+		let streamRecord = await this.streamRepository.getByIdFull(event.streamId);
 
 		if (!streamRecord && event.streamVersion > 0) {
 			throw new InternalError(

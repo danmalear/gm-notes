@@ -25,18 +25,21 @@ export interface RegionFull extends RegionMin {
 	Notes: NoteMin[];
 }
 
-export interface IRegionRepository
-	extends IRepository<RegionMin, RegionRaw, RegionRaw, RegionFull> {
+export interface IRegionRepository extends IRepository<
+	RegionRaw,
+	RegionMin,
+	RegionFull
+> {
 	getByMapId(mapId: UUID): Promise<RegionMin[]>;
 }
 
 export class RegionRepository
-	extends Repository<RegionMin, RegionRaw, RegionRaw, RegionFull>
+	extends Repository<RegionRaw, RegionMin, RegionFull>
 	implements IRegionRepository
 {
 	override descriptor = 'Region';
 
-	override async getByIdRaw(regionId: UUID): Promise<RegionMin | null> {
+	override async getByIdMin(regionId: UUID): Promise<RegionMin | null> {
 		try {
 			return await db.orm.public.Region.include('Shapes').first({
 				RegionId: regionId,
@@ -46,7 +49,7 @@ export class RegionRepository
 		}
 	}
 
-	override async getById(regionId: UUID): Promise<RegionFull | null> {
+	override async getByIdFull(regionId: UUID): Promise<RegionFull | null> {
 		try {
 			const region = await db.orm.public.Region.include('Shapes')
 				.include('Narrations', (regionNarration) =>

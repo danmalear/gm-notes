@@ -33,7 +33,7 @@ export abstract class Stream<TRec> {
 	}
 
 	async getVersion() {
-		const stream = await this.streamRepository.getById(this.id);
+		const stream = await this.streamRepository.getByIdFull(this.id);
 		return stream?.Version ?? 0;
 	}
 

@@ -5,20 +5,25 @@ import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'node:crypto';
 
-export type EventMin = Scalars<Models.es_Event>;
+export type EventRaw = Scalars<Models.es_Event>;
+export type EventMin = EventRaw;
+export type EventFull = EventMin;
 
-export interface IEventRepository
-	extends IRepository<EventMin, EventMin, EventMin> {
+export interface IEventRepository extends IRepository<
+	EventRaw,
+	EventMin,
+	EventFull
+> {
 	getByStreamId(streamId: UUID): Promise<EventMin[]>;
 }
 
 export class EventRepository
-	extends Repository<EventMin, EventMin, EventMin>
+	extends Repository<EventRaw, EventMin, EventFull>
 	implements IEventRepository
 {
 	override descriptor = 'Event';
 
-	override async getByIdRaw(eventId: UUID): Promise<EventMin | null> {
+	override async getByIdMin(eventId: UUID): Promise<EventMin | null> {
 		try {
 			return await db.orm.es.Event.first({
 				EventId: eventId,
@@ -28,8 +33,8 @@ export class EventRepository
 		}
 	}
 
-	override async getById(eventId: UUID): Promise<EventMin | null> {
-		return await this.getByIdRaw(eventId);
+	override async getByIdFull(eventId: UUID): Promise<EventFull | null> {
+		return await this.getByIdMin(eventId);
 	}
 
 	override async getAll(): Promise<EventMin[]> {
@@ -40,7 +45,7 @@ export class EventRepository
 		}
 	}
 
-	override async create(data: EventMin): Promise<EventMin> {
+	override async create(data: EventRaw): Promise<EventMin> {
 		try {
 			return await db.orm.es.Event.create(data);
 		} catch (e) {
@@ -50,7 +55,7 @@ export class EventRepository
 
 	override async update(
 		eventId: UUID,
-		data: Partial<EventMin>,
+		data: Partial<EventRaw>,
 	): Promise<EventMin | null> {
 		try {
 			return await db.orm.es.Event.where({

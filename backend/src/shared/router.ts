@@ -112,16 +112,11 @@ export class BaseRouter<
 }
 
 export interface BaseStreamRouterOpts<
-	TModel = unknown,
-	TCreate = unknown,
-	TUpdate = unknown,
-	TModelIncludeAll extends TModel = TModel,
-	TRepository extends IRepository<
-		TModel,
-		TCreate,
-		TUpdate,
-		TModelIncludeAll
-	> = IRepository<TModel, TCreate, TUpdate, TModelIncludeAll>,
+	TModelRaw = unknown,
+	TModelMin extends TModelRaw = TModelRaw,
+	TModelFull extends TModelMin = TModelMin,
+	TRepository extends IRepository<TModelRaw, TModelMin, TModelFull> =
+		IRepository<TModelRaw, TModelMin, TModelFull>,
 > extends BaseRouterOpts {
 	repository: TRepository;
 	commandBus: ICommandBus;
@@ -136,41 +131,25 @@ export interface PrivateBaseStreamRouterOpts extends PrivateBaseRouterOpts {
 }
 
 type AllBaseStreamRouterOpts<
-	TModel,
-	TCreate,
-	TUpdate,
-	TModelIncludeAll extends TModel,
-	TRepository extends IRepository<
-		TModel,
-		TCreate,
-		TUpdate,
-		TModelIncludeAll
-	> = IRepository<TModel, TCreate, TUpdate, TModelIncludeAll>,
-> = BaseStreamRouterOpts<
-	TModel,
-	TCreate,
-	TUpdate,
-	TModelIncludeAll,
-	TRepository
-> &
+	TModelRaw,
+	TModelMin extends TModelRaw,
+	TModelFull extends TModelMin,
+	TRepository extends IRepository<TModelRaw, TModelMin, TModelFull> =
+		IRepository<TModelRaw, TModelMin, TModelFull>,
+> = BaseStreamRouterOpts<TModelRaw, TModelMin, TModelFull, TRepository> &
 	PrivateBaseStreamRouterOpts;
 
 /**
  * Base class for a router that supports an event-sourced stream entity
  */
 export class BaseStreamRouter<
-	TModel,
-	TCreate,
-	TUpdate,
-	TModelIncludeAll extends TModel,
+	TModelRaw,
+	TModelMin extends TModelRaw,
+	TModelFull extends TModelMin,
 	TDto,
 	TStub = TDto,
-	TRepository extends IRepository<
-		TModel,
-		TCreate,
-		TUpdate,
-		TModelIncludeAll
-	> = IRepository<TModel, TCreate, TUpdate, TModelIncludeAll>,
+	TRepository extends IRepository<TModelRaw, TModelMin, TModelFull> =
+		IRepository<TModelRaw, TModelMin, TModelFull>,
 	GetOpts = undefined,
 	PostOpts = undefined,
 	PutOpts = undefined,
@@ -195,13 +174,7 @@ export class BaseStreamRouter<
 		repository,
 		eventRepository,
 		streamRepository,
-	}: AllBaseStreamRouterOpts<
-		TModel,
-		TCreate,
-		TUpdate,
-		TModelIncludeAll,
-		TRepository
-	>) {
+	}: AllBaseStreamRouterOpts<TModelRaw, TModelMin, TModelFull, TRepository>) {
 		super({
 			app,
 			namespace,
@@ -215,11 +188,11 @@ export class BaseStreamRouter<
 		this.streamRepository = streamRepository;
 	}
 
-	toDto(_model: TModelIncludeAll): TDto {
+	toDto(_model: TModelFull): TDto {
 		throw new NotImplementedError();
 	}
 
-	toStub(_model: TModel): TStub {
+	toStub(_model: TModelMin): TStub {
 		throw new NotImplementedError();
 	}
 
@@ -239,7 +212,7 @@ export class BaseStreamRouter<
 					return;
 				}
 
-				const model = await this.repository.getById(req.params.id);
+				const model = await this.repository.getByIdFull(req.params.id);
 				if (!model) {
 					res.status(404).send({
 						message: `${this.descriptor} with ID ${req.params.id} not found`,

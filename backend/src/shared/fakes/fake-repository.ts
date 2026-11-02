@@ -8,21 +8,25 @@ export interface FakeRepositoryConfig<TModel extends object> {
 
 export const zeroCalls: FakerCalls<IRepository<object, object, object>> = {
 	getAll: 0,
-	getByIdRaw: 0,
-	getById: 0,
+	getByIdMin: 0,
+	getByIdFull: 0,
 	create: 0,
 	update: 0,
 };
 
-export abstract class FakeRepository<TModel extends object, TCreate, TUpdate>
+export abstract class FakeRepository<
+	TRaw extends object,
+	TMin extends TRaw,
+	TFull extends TMin,
+>
 	implements
-		Faker<IRepository<TModel, TCreate, TUpdate>>,
-		ICloneable<FakeRepository<TModel, TCreate, TUpdate>>
+		Faker<IRepository<TRaw, TMin, TFull>>,
+		ICloneable<FakeRepository<TRaw, TMin, TFull>>
 {
-	model: TModel;
+	model: TFull;
 	calls: FakerCalls<IRepository<object, object, object>>;
 
-	constructor(config: FakeRepositoryConfig<TModel>) {
+	constructor(config: FakeRepositoryConfig<TFull>) {
 		this.model = config.model;
 		this.calls = { ...zeroCalls };
 	}
@@ -31,20 +35,20 @@ export abstract class FakeRepository<TModel extends object, TCreate, TUpdate>
 		this.calls = { ...zeroCalls };
 	}
 
-	abstract clone(): FakeRepository<TModel, TCreate, TUpdate>;
+	abstract clone(): FakeRepository<TRaw, TMin, TFull>;
 
 	async getAll() {
 		this.calls.getAll++;
 		return [];
 	}
 
-	async getById() {
-		this.calls.getById++;
+	async getByIdFull() {
+		this.calls.getByIdFull++;
 		return this.model;
 	}
 
-	async getByIdRaw() {
-		this.calls.getByIdRaw++;
+	async getByIdMin() {
+		this.calls.getByIdMin++;
 		return this.model;
 	}
 

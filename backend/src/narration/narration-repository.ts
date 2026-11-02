@@ -5,20 +5,25 @@ import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
-export type NarrationMin = Scalars<Models.public_Narration>;
+export type NarrationRaw = Scalars<Models.public_Narration>;
+export type NarrationMin = NarrationRaw;
+export type NarrationFull = NarrationMin;
 
-export interface INarrationRepository
-	extends IRepository<NarrationMin, NarrationMin, NarrationMin> {
+export interface INarrationRepository extends IRepository<
+	NarrationRaw,
+	NarrationMin,
+	NarrationFull
+> {
 	getByRegionId(regionId: UUID): Promise<NarrationMin[]>;
 }
 
 export class NarrationRepository
-	extends Repository<NarrationMin, NarrationMin, NarrationMin>
+	extends Repository<NarrationRaw, NarrationMin, NarrationFull>
 	implements INarrationRepository
 {
 	override descriptor = 'Narration';
 
-	override async getByIdRaw(narrationId: UUID): Promise<NarrationMin | null> {
+	override async getByIdMin(narrationId: UUID): Promise<NarrationMin | null> {
 		try {
 			return await db.orm.public.Narration.first({
 				NarrationId: narrationId,
@@ -28,8 +33,8 @@ export class NarrationRepository
 		}
 	}
 
-	override async getById(narrationId: UUID): Promise<NarrationMin | null> {
-		return await this.getByIdRaw(narrationId);
+	override async getByIdFull(narrationId: UUID): Promise<NarrationFull | null> {
+		return await this.getByIdMin(narrationId);
 	}
 
 	override async getAll(): Promise<NarrationMin[]> {
@@ -40,7 +45,7 @@ export class NarrationRepository
 		}
 	}
 
-	override async create(data: NarrationMin): Promise<NarrationMin> {
+	override async create(data: NarrationRaw): Promise<NarrationMin> {
 		try {
 			return await db.orm.public.Narration.create(data);
 		} catch (e) {
@@ -50,7 +55,7 @@ export class NarrationRepository
 
 	override async update(
 		narrationId: UUID,
-		data: Partial<NarrationMin>,
+		data: Partial<NarrationRaw>,
 	): Promise<NarrationMin | null> {
 		try {
 			return await db.orm.public.Narration.where({

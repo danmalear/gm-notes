@@ -31,7 +31,7 @@ export function fileRoutes({
 				return;
 			}
 
-			const fileRecord = await fileRepository.getById(req.params.fileId);
+			const fileRecord = await fileRepository.getByIdFull(req.params.fileId);
 
 			if (!fileRecord) {
 				res.status(404).send({ message: 'File not found' });

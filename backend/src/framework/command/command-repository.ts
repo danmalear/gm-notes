@@ -4,21 +4,23 @@ import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
-export type CommandMin = Scalars<Models.es_Command>;
+export type CommandRaw = Scalars<Models.es_Command>;
+export type CommandMin = CommandRaw;
+export type CommandFull = CommandMin;
 
 export type ICommandRepository = IRepository<
+	CommandRaw,
 	CommandMin,
-	CommandMin,
-	CommandMin
+	CommandFull
 >;
 
 export class CommandRepository
-	extends Repository<CommandMin, CommandMin, CommandMin>
+	extends Repository<CommandRaw, CommandMin, CommandFull>
 	implements ICommandRepository
 {
 	override descriptor = 'Command';
 
-	override async getByIdRaw(commandId: UUID): Promise<CommandMin | null> {
+	override async getByIdMin(commandId: UUID): Promise<CommandMin | null> {
 		try {
 			return await db.orm.es.Command.first({
 				CommandId: commandId,
@@ -28,8 +30,8 @@ export class CommandRepository
 		}
 	}
 
-	override async getById(commandId: UUID): Promise<CommandMin | null> {
-		return await this.getByIdRaw(commandId);
+	override async getByIdFull(commandId: UUID): Promise<CommandFull | null> {
+		return await this.getByIdMin(commandId);
 	}
 
 	override async getAll(): Promise<CommandMin[]> {
@@ -40,7 +42,7 @@ export class CommandRepository
 		}
 	}
 
-	override async create(data: CommandMin): Promise<CommandMin> {
+	override async create(data: CommandRaw): Promise<CommandMin> {
 		try {
 			return await db.orm.es.Command.create(data);
 		} catch (e) {
@@ -50,7 +52,7 @@ export class CommandRepository
 
 	override async update(
 		commandId: UUID,
-		data: Partial<CommandMin>,
+		data: Partial<CommandRaw>,
 	): Promise<CommandMin | null> {
 		try {
 			return await db.orm.es.Command.where({

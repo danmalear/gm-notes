@@ -10,22 +10,22 @@ import type {
 import { toDto, toStub } from './narration-mappers.ts';
 import type {
 	INarrationRepository,
+	NarrationFull,
 	NarrationMin,
+	NarrationRaw,
 } from './narration-repository.ts';
 
 export type NarrationRouterOpts = BaseStreamRouterOpts<
+	NarrationRaw,
 	NarrationMin,
-	NarrationMin,
-	NarrationMin,
-	NarrationMin,
+	NarrationFull,
 	INarrationRepository
 >;
 
 export class NarrationRouter extends BaseStreamRouter<
+	NarrationRaw,
 	NarrationMin,
-	NarrationMin,
-	NarrationMin,
-	NarrationMin,
+	NarrationFull,
 	NarrationResponse,
 	NarrationStub,
 	INarrationRepository

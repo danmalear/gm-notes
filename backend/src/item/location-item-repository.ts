@@ -21,28 +21,21 @@ export type LocationItemFull = LocationItemMin & {
 	Notes: NoteMin[];
 };
 
-export interface ILocationItemRepository
-	extends IRepository<
-		LocationItemMin,
-		LocationItemRaw,
-		LocationItemRaw,
-		LocationItemFull
-	> {
+export interface ILocationItemRepository extends IRepository<
+	LocationItemRaw,
+	LocationItemMin,
+	LocationItemFull
+> {
 	getByLocationId(locationId: UUID): Promise<LocationItemMin[]>;
 }
 
 export class LocationItemRepository
-	extends Repository<
-		LocationItemMin,
-		LocationItemRaw,
-		LocationItemRaw,
-		LocationItemFull
-	>
+	extends Repository<LocationItemRaw, LocationItemMin, LocationItemFull>
 	implements ILocationItemRepository
 {
 	override descriptor = 'Location Item';
 
-	override async getByIdRaw(
+	override async getByIdMin(
 		locationItemId: UUID,
 	): Promise<LocationItemMin | null> {
 		try {
@@ -54,7 +47,7 @@ export class LocationItemRepository
 		}
 	}
 
-	override async getById(
+	override async getByIdFull(
 		locationItemId: UUID,
 	): Promise<LocationItemFull | null> {
 		try {

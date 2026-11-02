@@ -16,6 +16,7 @@ import type {
 	IRegionRepository,
 	RegionFull,
 	RegionMin,
+	RegionRaw,
 } from './region-repository.ts';
 import type { IRegionShapeRepository } from './region-shape-repository.ts';
 import { getShapeType } from './region-shape-utils.ts';
@@ -25,20 +26,17 @@ import {
 	validateRectangle,
 } from './shape-validators.ts';
 
-export interface RegionRouterOpts
-	extends BaseStreamRouterOpts<
-		RegionMin,
-		RegionMin,
-		RegionMin,
-		RegionFull,
-		IRegionRepository
-	> {
+export interface RegionRouterOpts extends BaseStreamRouterOpts<
+	RegionRaw,
+	RegionMin,
+	RegionFull,
+	IRegionRepository
+> {
 	shapeRepository: IRegionShapeRepository;
 }
 
 export class RegionRouter extends BaseStreamRouter<
-	RegionMin,
-	RegionMin,
+	RegionRaw,
 	RegionMin,
 	RegionFull,
 	RegionResponse,
@@ -180,7 +178,7 @@ export class RegionRouter extends BaseStreamRouter<
 					});
 				}
 
-				const region = await this.repository.getById(id);
+				const region = await this.repository.getByIdFull(id);
 				if (!region) throw new InternalError('Newly created region not found.');
 
 				try {

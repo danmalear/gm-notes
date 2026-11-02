@@ -5,23 +5,29 @@ import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
-export type NoteMin = Scalars<Models.public_Note>;
+export type NoteRaw = Scalars<Models.public_Note>;
+export type NoteMin = NoteRaw;
+export type NoteFull = NoteMin;
+
 export type INoteEntityMin = Scalars<Models.public_INoteEntity> & {
 	Notes: NoteMin[];
 };
 
-export interface INoteRepository
-	extends IRepository<NoteMin, NoteMin, NoteMin> {
+export interface INoteRepository extends IRepository<
+	NoteRaw,
+	NoteMin,
+	NoteFull
+> {
 	getByEntityId(entityId: UUID): Promise<NoteMin[]>;
 }
 
 export class NoteRepository
-	extends Repository<NoteMin, NoteMin, NoteMin>
+	extends Repository<NoteRaw, NoteMin, NoteFull>
 	implements INoteRepository
 {
 	override descriptor = 'Note';
 
-	override async getByIdRaw(noteId: UUID): Promise<NoteMin | null> {
+	override async getByIdMin(noteId: UUID): Promise<NoteMin | null> {
 		try {
 			return await db.orm.public.Note.first({
 				NoteId: noteId,
@@ -31,8 +37,8 @@ export class NoteRepository
 		}
 	}
 
-	override async getById(noteId: UUID): Promise<NoteMin | null> {
-		return await this.getByIdRaw(noteId);
+	override async getByIdFull(noteId: UUID): Promise<NoteFull | null> {
+		return await this.getByIdMin(noteId);
 	}
 
 	override async getAll(): Promise<NoteMin[]> {
@@ -43,7 +49,7 @@ export class NoteRepository
 		}
 	}
 
-	override async create(data: NoteMin): Promise<NoteMin> {
+	override async create(data: NoteRaw): Promise<NoteMin> {
 		try {
 			return await db.orm.public.Note.create(data);
 		} catch (e) {
@@ -53,7 +59,7 @@ export class NoteRepository
 
 	override async update(
 		noteId: UUID,
-		data: Partial<NoteMin>,
+		data: Partial<NoteRaw>,
 	): Promise<NoteMin | null> {
 		try {
 			return await db.orm.public.Note.where({

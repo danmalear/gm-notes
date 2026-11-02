@@ -13,14 +13,13 @@ interface RouteOpts {
  */
 export interface GetByIdOpts<
 	TDto,
-	TModel,
-	TCreate,
-	TUpdate,
-	TModelIncludeAll extends TModel,
+	TRaw,
+	TMin extends TRaw = TRaw,
+	TFull extends TMin = TMin,
 > extends RouteOpts {
 	objectDescriptor: string;
-	repository: IRepository<TModel, TCreate, TUpdate, TModelIncludeAll>;
-	toDto: (model: TModelIncludeAll) => TDto;
+	repository: IRepository<TRaw, TMin, TFull>;
+	toDto: (model: TFull) => TDto;
 }
 
 /**
@@ -31,9 +30,8 @@ export interface GetByIdOpts<
  */
 export function getById<
 	TDto,
-	TModelMin,
-	TCreate,
-	TUpdate,
+	TModelRaw,
+	TModelMin extends TModelRaw,
 	TModelFull extends TModelMin,
 >(
 	app: Express,
@@ -42,7 +40,7 @@ export function getById<
 		objectDescriptor,
 		repository,
 		toDto,
-	}: GetByIdOpts<TDto, TModelMin, TCreate, TUpdate, TModelFull>,
+	}: GetByIdOpts<TDto, TModelRaw, TModelMin, TModelFull>,
 ) {
 	app.get(
 		`/${apiNamespace}/:id`,
@@ -56,7 +54,7 @@ export function getById<
 				return;
 			}
 
-			const model = await repository.getById(req.params.id);
+			const model = await repository.getByIdFull(req.params.id);
 			if (!model) {
 				res.status(404).send({
 					message: `${objectDescriptor} with ID ${req.params.id} not found`,

@@ -4,17 +4,19 @@ import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
-export type StreamMin = Scalars<Models.es_Stream>;
+export type StreamRaw = Scalars<Models.es_Stream>;
+export type StreamMin = StreamRaw;
+export type StreamFull = StreamMin;
 
-export type IStreamRepository = IRepository<StreamMin, StreamMin, StreamMin>;
+export type IStreamRepository = IRepository<StreamRaw, StreamMin, StreamFull>;
 
 export class StreamRepository
-	extends Repository<StreamMin, StreamMin, StreamMin>
+	extends Repository<StreamRaw, StreamMin, StreamFull>
 	implements IStreamRepository
 {
 	override descriptor = 'Stream';
 
-	override async getByIdRaw(streamId: UUID): Promise<StreamMin | null> {
+	override async getByIdMin(streamId: UUID): Promise<StreamMin | null> {
 		try {
 			return await db.orm.es.Stream.first({
 				StreamId: streamId,
@@ -24,8 +26,8 @@ export class StreamRepository
 		}
 	}
 
-	override async getById(commandId: UUID): Promise<StreamMin | null> {
-		return await this.getByIdRaw(commandId);
+	override async getByIdFull(commandId: UUID): Promise<StreamFull | null> {
+		return await this.getByIdMin(commandId);
 	}
 
 	override async getAll(): Promise<StreamMin[]> {
@@ -36,7 +38,7 @@ export class StreamRepository
 		}
 	}
 
-	override async create(data: StreamMin): Promise<StreamMin> {
+	override async create(data: StreamRaw): Promise<StreamMin> {
 		try {
 			return await db.orm.es.Stream.create(data);
 		} catch (e) {
@@ -46,7 +48,7 @@ export class StreamRepository
 
 	override async update(
 		streamId: UUID,
-		data: Partial<StreamMin>,
+		data: Partial<StreamRaw>,
 	): Promise<StreamMin | null> {
 		try {
 			return await db.orm.es.Stream.where({

@@ -6,37 +6,32 @@ import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
-export type AbilityCheckMin = Scalars<Models.public_AbilityCheck>;
+export type AbilityCheckRaw = Scalars<Models.public_AbilityCheck>;
 
-export type AbilityCheckFull = AbilityCheckMin & {
+export type AbilityCheckMin = AbilityCheckRaw;
+
+export type AbilityCheckFull = AbilityCheckRaw & {
 	SuccessNarration: NarrationMin | null;
 	FailureNarration: NarrationMin | null;
 	CriticalSuccessNarration: NarrationMin | null;
 	CriticalFailureNarration: NarrationMin | null;
 };
 
-export interface IAbilityCheckRepository
-	extends IRepository<
-		AbilityCheckMin,
-		AbilityCheckMin,
-		AbilityCheckMin,
-		AbilityCheckFull
-	> {
-	getByActionId(actionId: UUID): Promise<AbilityCheckMin[]>;
+export interface IAbilityCheckRepository extends IRepository<
+	AbilityCheckRaw,
+	AbilityCheckMin,
+	AbilityCheckFull
+> {
+	getByActionId(actionId: UUID): Promise<AbilityCheckRaw[]>;
 }
 
 export class AbilityCheckRepository
-	extends Repository<
-		AbilityCheckMin,
-		AbilityCheckMin,
-		AbilityCheckMin,
-		AbilityCheckFull
-	>
+	extends Repository<AbilityCheckRaw, AbilityCheckMin, AbilityCheckFull>
 	implements IAbilityCheckRepository
 {
 	override descriptor = 'Ability Check';
 
-	override async getByIdRaw(
+	override async getByIdMin(
 		abilityCheckId: UUID,
 	): Promise<AbilityCheckMin | null> {
 		try {
@@ -48,7 +43,7 @@ export class AbilityCheckRepository
 		}
 	}
 
-	override async getById(
+	override async getByIdFull(
 		abilityCheckId: UUID,
 	): Promise<AbilityCheckFull | null> {
 		try {
@@ -72,7 +67,7 @@ export class AbilityCheckRepository
 		}
 	}
 
-	override async create(data: AbilityCheckMin): Promise<AbilityCheckMin> {
+	override async create(data: AbilityCheckRaw): Promise<AbilityCheckMin> {
 		try {
 			return await db.orm.public.AbilityCheck.create(data);
 		} catch (e) {
@@ -82,7 +77,7 @@ export class AbilityCheckRepository
 
 	async update(
 		abilityCheckId: UUID,
-		data: Partial<AbilityCheckMin>,
+		data: Partial<AbilityCheckRaw>,
 	): Promise<AbilityCheckMin | null> {
 		try {
 			return await db.orm.public.AbilityCheck.where({

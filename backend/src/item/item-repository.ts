@@ -7,7 +7,8 @@ import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
-export type ItemMin = Scalars<Models.public_Item>;
+export type ItemRaw = Scalars<Models.public_Item>;
+export type ItemMin = ItemRaw;
 
 export type ItemFull = ItemMin & {
 	ImageFile: FileMin | null;
@@ -15,15 +16,15 @@ export type ItemFull = ItemMin & {
 	Notes: NoteMin[];
 };
 
-export type IItemRepository = IRepository<ItemMin, ItemMin, ItemMin, ItemFull>;
+export type IItemRepository = IRepository<ItemRaw, ItemMin, ItemFull>;
 
 export class ItemRepository
-	extends Repository<ItemMin, ItemMin, ItemMin, ItemFull>
+	extends Repository<ItemRaw, ItemMin, ItemFull>
 	implements IItemRepository
 {
 	override descriptor = 'Item';
 
-	override async getByIdRaw(itemId: UUID): Promise<ItemMin | null> {
+	override async getByIdMin(itemId: UUID): Promise<ItemMin | null> {
 		try {
 			return await db.orm.public.Item.first({
 				ItemId: itemId,
@@ -33,7 +34,7 @@ export class ItemRepository
 		}
 	}
 
-	override async getById(itemId: UUID): Promise<ItemFull | null> {
+	override async getByIdFull(itemId: UUID): Promise<ItemFull | null> {
 		try {
 			const item = await db.orm.public.Item.include('ImageFile')
 				.include('IActionTarget', (actionTarget) =>
@@ -64,7 +65,7 @@ export class ItemRepository
 		}
 	}
 
-	override async create(data: ItemMin): Promise<ItemMin> {
+	override async create(data: ItemRaw): Promise<ItemMin> {
 		try {
 			await db.orm.public.IActionTarget.create({
 				IActionTargetId: data.ItemId,
@@ -82,7 +83,7 @@ export class ItemRepository
 
 	override async update(
 		itemId: UUID,
-		data: Partial<ItemMin>,
+		data: Partial<ItemRaw>,
 	): Promise<ItemMin | null> {
 		try {
 			return await db.orm.public.Item.where({

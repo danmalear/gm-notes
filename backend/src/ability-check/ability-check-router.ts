@@ -7,20 +7,19 @@ import { toDto, toStub } from './ability-check-mappers.ts';
 import type {
 	AbilityCheckFull,
 	AbilityCheckMin,
+	AbilityCheckRaw,
 	IAbilityCheckRepository,
 } from './ability-check-repository.ts';
 
 export type AbilityCheckRouterOpts = BaseStreamRouterOpts<
-	AbilityCheckMin,
-	AbilityCheckMin,
+	AbilityCheckRaw,
 	AbilityCheckMin,
 	AbilityCheckFull,
 	IAbilityCheckRepository
 >;
 
 export class AbilityCheckRouter extends BaseStreamRouter<
-	AbilityCheckMin,
-	AbilityCheckMin,
+	AbilityCheckRaw,
 	AbilityCheckMin,
 	AbilityCheckFull,
 	AbilityCheckResponse,

@@ -6,24 +6,24 @@ import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
-export type MapMin = Scalars<Models.public_Map>;
+export type MapRaw = Scalars<Models.public_Map>;
+export type MapMin = MapRaw;
 
 export interface MapFull extends MapMin {
 	Regions: RegionMin[];
 }
 
-export interface IMapRepository
-	extends IRepository<MapMin, MapMin, MapMin, MapFull> {
+export interface IMapRepository extends IRepository<MapRaw, MapMin, MapFull> {
 	getByCampaignId(campaignId: UUID): Promise<MapMin[]>;
 }
 
 export class MapRepository
-	extends Repository<MapMin, MapMin, MapMin, MapFull>
+	extends Repository<MapRaw, MapMin, MapFull>
 	implements IMapRepository
 {
 	override descriptor = 'Map';
 
-	override async getByIdRaw(mapId: UUID): Promise<MapMin | null> {
+	override async getByIdMin(mapId: UUID): Promise<MapMin | null> {
 		try {
 			return await db.orm.public.Map.first({
 				MapId: mapId,
@@ -33,7 +33,7 @@ export class MapRepository
 		}
 	}
 
-	override async getById(mapId: UUID): Promise<MapFull | null> {
+	override async getByIdFull(mapId: UUID): Promise<MapFull | null> {
 		try {
 			return await db.orm.public.Map.include('Regions', (region) =>
 				region.include('Shapes'),
@@ -53,7 +53,7 @@ export class MapRepository
 		}
 	}
 
-	override async create(data: MapMin): Promise<MapMin> {
+	override async create(data: MapRaw): Promise<MapMin> {
 		try {
 			return await db.orm.public.Map.create(data);
 		} catch (e) {
@@ -63,7 +63,7 @@ export class MapRepository
 
 	override async update(
 		mapId: UUID,
-		data: Partial<MapMin>,
+		data: Partial<MapRaw>,
 	): Promise<MapMin | null> {
 		try {
 			return await db.orm.public.Map.where({

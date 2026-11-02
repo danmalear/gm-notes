@@ -5,20 +5,25 @@ import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
-export type RegionShapeMin = Scalars<Models.public_RegionShape>;
+export type RegionShapeRaw = Scalars<Models.public_RegionShape>;
+export type RegionShapeMin = RegionShapeRaw;
+export type RegionShapeFull = RegionShapeMin;
 
-export interface IRegionShapeRepository
-	extends IRepository<RegionShapeMin, RegionShapeMin, RegionShapeMin> {
+export interface IRegionShapeRepository extends IRepository<
+	RegionShapeRaw,
+	RegionShapeMin,
+	RegionShapeFull
+> {
 	getByRegionId(regionId: UUID): Promise<RegionShapeMin[]>;
 }
 
 export class RegionShapeRepository
-	extends Repository<RegionShapeMin, RegionShapeMin, RegionShapeMin>
+	extends Repository<RegionShapeRaw, RegionShapeMin, RegionShapeFull>
 	implements IRegionShapeRepository
 {
 	override descriptor = 'Region Shape';
 
-	override async getByIdRaw(
+	override async getByIdMin(
 		regionShapeId: UUID,
 	): Promise<RegionShapeMin | null> {
 		try {
@@ -30,8 +35,10 @@ export class RegionShapeRepository
 		}
 	}
 
-	override async getById(regionShapeId: UUID): Promise<RegionShapeMin | null> {
-		return await this.getByIdRaw(regionShapeId);
+	override async getByIdFull(
+		regionShapeId: UUID,
+	): Promise<RegionShapeFull | null> {
+		return await this.getByIdMin(regionShapeId);
 	}
 
 	override async getAll(): Promise<RegionShapeMin[]> {
@@ -42,7 +49,7 @@ export class RegionShapeRepository
 		}
 	}
 
-	override async create(data: RegionShapeMin): Promise<RegionShapeMin> {
+	override async create(data: RegionShapeRaw): Promise<RegionShapeMin> {
 		try {
 			return await db.orm.public.RegionShape.create(data);
 		} catch (e) {
@@ -52,7 +59,7 @@ export class RegionShapeRepository
 
 	override async update(
 		regionShapeId: UUID,
-		data: Partial<RegionShapeMin>,
+		data: Partial<RegionShapeRaw>,
 	): Promise<RegionShapeMin | null> {
 		try {
 			return await db.orm.public.RegionShape.where({

@@ -5,26 +5,27 @@ import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
-export type CampaignMin = Scalars<Models.public_Campaign>;
+export type CampaignRaw = Scalars<Models.public_Campaign>;
+
+export type CampaignMin = CampaignRaw;
 
 export interface CampaignFull extends CampaignMin {
 	Maps: MapMin[];
 }
 
 export type ICampaignRepository = IRepository<
-	CampaignMin,
-	CampaignMin,
+	CampaignRaw,
 	CampaignMin,
 	CampaignFull
 >;
 
 export class CampaignRepository
-	extends Repository<CampaignMin, CampaignMin, CampaignMin, CampaignFull>
+	extends Repository<CampaignRaw, CampaignMin, CampaignFull>
 	implements ICampaignRepository
 {
 	override descriptor = 'Campaign';
 
-	override async getByIdRaw(campaignId: UUID): Promise<CampaignMin | null> {
+	override async getByIdMin(campaignId: UUID): Promise<CampaignMin | null> {
 		try {
 			return await db.orm.public.Campaign.first({
 				CampaignId: campaignId,
@@ -34,7 +35,7 @@ export class CampaignRepository
 		}
 	}
 
-	override async getById(campaignId: UUID): Promise<CampaignFull | null> {
+	override async getByIdFull(campaignId: UUID): Promise<CampaignFull | null> {
 		try {
 			return await db.orm.public.Campaign.include('Maps').first({
 				CampaignId: campaignId,
@@ -52,7 +53,7 @@ export class CampaignRepository
 		}
 	}
 
-	override async create(data: CampaignMin): Promise<CampaignMin> {
+	override async create(data: CampaignRaw): Promise<CampaignMin> {
 		try {
 			return await db.orm.public.Campaign.create(data);
 		} catch (e) {
@@ -62,7 +63,7 @@ export class CampaignRepository
 
 	override async update(
 		campaignId: UUID,
-		data: Partial<CampaignMin>,
+		data: Partial<CampaignRaw>,
 	): Promise<CampaignMin | null> {
 		try {
 			return await db.orm.public.Campaign.where({

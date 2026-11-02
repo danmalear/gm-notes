@@ -4,20 +4,19 @@ import { toDto, toStub } from './campaign-mappers.ts';
 import type {
 	CampaignFull,
 	CampaignMin,
+	CampaignRaw,
 	ICampaignRepository,
 } from './campaign-repository.ts';
 
 export type CampaignRouterOpts = BaseStreamRouterOpts<
-	CampaignMin,
-	CampaignMin,
+	CampaignRaw,
 	CampaignMin,
 	CampaignFull,
 	ICampaignRepository
 >;
 
 export class CampaignRouter extends BaseStreamRouter<
-	CampaignMin,
-	CampaignMin,
+	CampaignRaw,
 	CampaignMin,
 	CampaignFull,
 	CampaignResponse,

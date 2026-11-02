@@ -4,20 +4,25 @@ import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
-export type FileMin = Scalars<Models.public_File>;
+export type FileRaw = Scalars<Models.public_File>;
+export type FileMin = FileRaw;
+export type FileFull = FileMin;
 
-export interface IFileRepository
-	extends IRepository<FileMin, FileMin, FileMin> {
-	getById(fileId: string): Promise<FileMin | null>;
+export interface IFileRepository extends IRepository<
+	FileRaw,
+	FileMin,
+	FileFull
+> {
+	getByIdFull(fileId: string): Promise<FileMin | null>;
 }
 
 export class FileRepository
-	extends Repository<FileMin, FileMin, FileMin>
+	extends Repository<FileRaw, FileMin, FileFull>
 	implements IFileRepository
 {
 	override descriptor = 'File';
 
-	override async getByIdRaw(fileId: string): Promise<FileMin | null> {
+	override async getByIdMin(fileId: string): Promise<FileMin | null> {
 		try {
 			return await db.orm.public.File.first({
 				FileId: fileId,
@@ -28,8 +33,8 @@ export class FileRepository
 		}
 	}
 
-	override async getById(fileId: string): Promise<FileMin | null> {
-		return await this.getByIdRaw(fileId);
+	override async getByIdFull(fileId: string): Promise<FileFull | null> {
+		return await this.getByIdMin(fileId);
 	}
 
 	override async getAll(): Promise<FileMin[]> {
@@ -40,7 +45,7 @@ export class FileRepository
 		}
 	}
 
-	override async create(data: FileMin): Promise<FileMin> {
+	override async create(data: FileRaw): Promise<FileMin> {
 		try {
 			return await db.orm.public.File.create(data);
 		} catch (e) {
@@ -50,7 +55,7 @@ export class FileRepository
 
 	override async update(
 		fileId: UUID,
-		data: Partial<FileMin>,
+		data: Partial<FileRaw>,
 	): Promise<FileMin | null> {
 		try {
 			return await db.orm.public.File.where({

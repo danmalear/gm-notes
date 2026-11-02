@@ -5,20 +5,25 @@ import { Repository, type IRepository } from '#shared/repository.ts';
 import type { Scalars } from '@prisma/orm-postgres/components';
 import type { UUID } from 'crypto';
 
-export type ConditionMin = Scalars<Models.public_Condition>;
+export type ConditionRaw = Scalars<Models.public_Condition>;
+export type ConditionMin = ConditionRaw;
+export type ConditionFull = ConditionMin;
 
-export interface IConditionRepository
-	extends IRepository<ConditionMin, ConditionMin, ConditionMin> {
+export interface IConditionRepository extends IRepository<
+	ConditionRaw,
+	ConditionMin,
+	ConditionFull
+> {
 	getByActionId(actionId: UUID): Promise<ConditionMin[]>;
 }
 
 export class ConditionRepository
-	extends Repository<ConditionMin, ConditionMin, ConditionMin>
+	extends Repository<ConditionRaw, ConditionMin, ConditionFull>
 	implements IConditionRepository
 {
 	override descriptor = 'Condition';
 
-	override async getByIdRaw(conditionId: UUID): Promise<ConditionMin | null> {
+	override async getByIdMin(conditionId: UUID): Promise<ConditionMin | null> {
 		try {
 			return await db.orm.public.Condition.first({
 				ConditionId: conditionId,
@@ -28,8 +33,8 @@ export class ConditionRepository
 		}
 	}
 
-	override async getById(id: UUID): Promise<ConditionMin | null> {
-		return await this.getByIdRaw(id);
+	override async getByIdFull(id: UUID): Promise<ConditionFull | null> {
+		return await this.getByIdMin(id);
 	}
 
 	override async getAll(): Promise<ConditionMin[]> {
@@ -40,7 +45,7 @@ export class ConditionRepository
 		}
 	}
 
-	override async create(data: ConditionMin): Promise<ConditionMin> {
+	override async create(data: ConditionRaw): Promise<ConditionMin> {
 		try {
 			return await db.orm.public.Condition.create(data);
 		} catch (e) {
@@ -50,7 +55,7 @@ export class ConditionRepository
 
 	override async update(
 		conditionId: UUID,
-		data: Partial<ConditionMin>,
+		data: Partial<ConditionRaw>,
 	): Promise<ConditionMin | null> {
 		try {
 			return await db.orm.public.Condition.where({
