@@ -34,7 +34,7 @@ import {
 	type IEventRepository,
 } from '#event/event-repository.ts';
 import { FileRepository, type IFileRepository } from '#file/file-repository.ts';
-import { fileRoutes } from '#file/file-routes.ts';
+import { FileRouter } from '#file/file-router.ts';
 import createWsServer from '#framework/websocket.ts';
 import {
 	HandoutRepository,
@@ -216,6 +216,7 @@ interface InitRoutersOpts {
 	repositories: Repositories;
 	eventBus: IEventBus;
 	commandBus: ICommandBus;
+	uploadsPath: string;
 }
 
 interface Routers {
@@ -228,6 +229,7 @@ interface Routers {
 	narration: NarrationRouter;
 	action: ActionRouter;
 	locationItem: LocationItemRouter;
+	file: FileRouter;
 }
 
 function initRouters({
@@ -235,6 +237,7 @@ function initRouters({
 	repositories,
 	eventBus,
 	commandBus,
+	uploadsPath,
 }: InitRoutersOpts): Routers {
 	// Define shared router opts
 	const baseRouterOpts: BaseRouterOpts = {
@@ -291,6 +294,12 @@ function initRouters({
 		repository: repositories.locationItem,
 	});
 
+	const fileRouter = new FileRouter({
+		...baseRouterOpts,
+		repository: repositories.file,
+		uploadsPath,
+	});
+
 	// Initialize routes
 	commandRouter.init();
 	campaignRouter.init();
@@ -300,6 +309,7 @@ function initRouters({
 	narrationRouter.init();
 	actionRouter.init();
 	locationItemRouter.init();
+	fileRouter.init();
 
 	// Return
 	return {
@@ -311,6 +321,7 @@ function initRouters({
 		narration: narrationRouter,
 		action: actionRouter,
 		locationItem: locationItemRouter,
+		file: fileRouter,
 	};
 }
 
@@ -350,9 +361,8 @@ function createAppServer() {
 		repositories,
 		eventBus,
 		commandBus,
+		uploadsPath,
 	});
-
-	fileRoutes({ app, fileRepository: repositories.file, uploadsPath });
 
 	app.use((req: Request, res: Response<MessageResponse>) => {
 		console.error('Unhandled request received');
